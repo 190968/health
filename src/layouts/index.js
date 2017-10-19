@@ -49,6 +49,15 @@ const asyncLogin = (store) => {
     );
 }
 
+const asyncSettings = (store) => {
+    return (
+        Loadable({
+                loader: () => import('../routes/Settings/components/SettingsLayout')
+        
+        })
+    );
+}
+
 // add
 import PrivateRoute from '../routes/privateRoute';
 
@@ -62,6 +71,7 @@ export const PageLayout = ({token, children, logout, store}) =>  {
           <Route exact path="/login" component={asyncLogin(store)} />
           <PrivateRoute exact path="/planstore" component={asyncPlantore(store)} />
           <PrivateRoute exact path="/planstore/plan/:pid" component={asyncPlantorePlan(store)} />
+          <PrivateRoute  path="/settings" component={asyncSettings(store)} />
        </Container> 
       <footer className="footer">
         <div className="container">
