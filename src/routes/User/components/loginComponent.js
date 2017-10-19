@@ -32,13 +32,14 @@ const styles = {
 
 
 const redirect = (info) => {
-    console.log(info);
+    //console.log(info);
     //history.pushState('/')
 }
 
 const LoginForm = ({
                       token,onSubmit,
                       loading,
+    from,
                        email,
                       submitButtonLabel,
                       successMessage,
@@ -56,7 +57,7 @@ const LoginForm = ({
         style={styles.form}
     >
         {token ? (
-            <Route path="/counter" component={Counter}/>
+            <Route path="/" component={Counter}/>
         ) : (
             <div>
         <input
@@ -103,12 +104,12 @@ const LoginForm = ({
 );
 
 LoginForm.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    /*onSubmit: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     submitButtonLabel: PropTypes.string,
     successMessage: PropTypes.string,
     errorMessage: PropTypes.string,
-    email: PropTypes.string,
+    email: PropTypes.string,*/
 };
 
 LoginForm.defaultProps = {

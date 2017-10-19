@@ -68,7 +68,7 @@ const FilterForm = (updateFilters, filters) => {
   </Form>
 }
 
-export const FilterList = ({ filters, loading, updateFilters }) => {
+export const FilterList = ({ filters, loading, updateFilters, plans_number }) => {
 
   if (loading) {
     //return (<div>Loading...</div>);
@@ -108,7 +108,7 @@ export const FilterList = ({ filters, loading, updateFilters }) => {
       <div className='box'>
         <div className='box__header'><h3>Filters</h3></div>
         <div className="box__body" style={{'paddingTop':20}}>
-          {FilterForm(updateFilters, filters)}
+          {/*FilterForm(updateFilters, filters)*/}
         </div>
       </div>);
 

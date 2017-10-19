@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 // add placeholders
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
+
 import { Modal, FormGroup, Label, Input, FormText, ModalHeader, ModalBody, ModalFooter, Row, Col, Button} from 'reactstrap';
 // adding filters
 // for modal
@@ -37,6 +37,9 @@ const PlanstorePlanPlaceholder = (
     </Col>
   </Row>
 );
+
+
+
 
 export class PlanstorPlanLayout extends React.Component {
   constructor(props) {
@@ -149,8 +152,8 @@ export class PlanstorPlanLayout extends React.Component {
         </div>
       );
     }
-    console.log(plan);
-    console.log(loading);
+    //console.log(plan);
+    //console.log(loading);
     var img = plan.thumb.large;
     var divStyle = {
       backgroundImage: 'url(' + img + ')'

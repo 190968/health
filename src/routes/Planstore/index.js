@@ -16,7 +16,7 @@ export default (store) =>(
       /*  Webpack - use require callback to define
           dependencies for bundling   */
 
-      const Planstore = require('./containers/PlanstoreLayout').default
+      const Planstore = require('./components/PlanstoreLayout').default
       //  console.log(Counter);
       const reducer = require('./modules/planstore').default
 

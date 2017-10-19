@@ -1,10 +1,7 @@
 import React from 'react'
 import {
-    Route,
     Link,
-    Redirect,
-    withRouter
-} from 'react-router'
+} from 'react-router-dom'
 import DuckImage from '../assets/Duck.jpg'
 import './HomeView.scss'
 

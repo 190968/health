@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { PlansList } from '../components/PlansList'
+
 import Plan from '../components/Plan';
 
 
-
 import { gql,graphql } from 'react-apollo';
-const QUERY = gql`
 
+const QUERY = gql`    
     query GET_PLANSTORE_PLANS ($filters: [String], $page: Int!, $limit: Int) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit) {

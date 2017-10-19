@@ -30,6 +30,7 @@ const withMutation = graphql(loginUser, {
 });
 
 const mapStateToProps = (state) => {
+    //console.log(state.user);
     return {
         // view store:
         //currentView:  state.views.currentView,

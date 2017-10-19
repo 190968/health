@@ -45,7 +45,7 @@ const createStore = (initialState = {}) => {
    //
   //console.log( store.asyncReducers);
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
+  //store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
 
    // console.log(store.getState());
     //if (token) {

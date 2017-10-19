@@ -40,11 +40,11 @@ const PlanstorPlanLayoutWithQuery = graphql(
     {
       options: (ownProps) => ({
         variables: {
-          pid: ownProps.params.pid
+          pid: ownProps.match.params.pid
         }
       }),
         props: ({ ownProps, data }) => {
-        console.log(ownProps);
+        //console.log(ownProps);
           //console.log(CURRENT_PLANSTORE_PLAN);
           if (!data.loading) {
             //console.log(ownProps);
@@ -88,6 +88,7 @@ const mapDispatchToProps = (dispatch) => {
         //doubleAsync
     }
 };
+
 
 export default connect(
     mapStateToProps,

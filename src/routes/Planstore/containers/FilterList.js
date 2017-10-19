@@ -23,7 +23,7 @@ const FilterListWithQuery = graphql(
     props: ({ ownProps, data }) => {
       if (!data.loading) {
         //console.log(ownProps);
-        //console.log(network);
+        //console.log(data);
         return {
           filters: data.planstore.filters,
           //modules: data.network.modules,
@@ -57,6 +57,7 @@ const mapStateToProps = (state) => {
     // view store:
     //currentView:  state.views.currentView,
     // userAuth:
+      plans_number:  state.planstore.get('plans').toJS().length,
     filters: state.planstore.get('filters').toJS(),
   };
 };

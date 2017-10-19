@@ -65,7 +65,7 @@ export class FilterBody extends React.Component {
               Object.keys(nextActiveFilters[cV]).join(',') }` :
             pV
         , '');
-    browserHistory.push(str ? `/catalog/f${ str }` : '/catalog');
+    //browserHistory.push(str ? `/catalog/f${ str }` : '/catalog');
   }
   render() {
     const {

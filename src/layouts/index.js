@@ -1,5 +1,5 @@
 import React from 'react'
-import { IndexLink, Link } from 'react-router'
+import { IndexLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import './index.scss'
@@ -14,33 +14,55 @@ import Header from './PageLayout/Header';
 import { logoutUser } from '../routes/User/modules/user';
 
 
-
 const App = require('../components/App').default
+import { Route } from "react-router-dom";
 
-export const PageLayout = ({token, children, logout}) =>  {
-  //onsole.log(loading);
+
+/** loadable **/
+import Loadable from '../components/Loadable';
+const asyncPlantore = (store) => {
+    //console.log(store);
+    return  (
+        Loadable({
+            loader: () => import('../routes/Planstore/components/PlanstoreLayout')
+        }, store)
+    );
+}
+
+const asyncPlantorePlan = () => {
+     return (
+         Loadable(     {
+               loader: () => import('../routes/Planstore/containers/PlanstorePlanLayout')
+            })
+    );
+}
+
+const asyncLogin = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/LoginContainer'),
+            reducers: {
+                'url':'User/modules/login',
+                'key': 'user'
+            }
+        }, store)
+    );
+}
+
+// add
+import PrivateRoute from '../routes/privateRoute';
+
+export const PageLayout = ({token, children, logout, store}) =>  {
   // const ready = true//state.ready || false;
+    //console.log(this);
   return (
     <div style={{height:'100%'}}>
       <Header />
       <Container>
-        <main>
-          {!token ? (
-            <div id="logout">
-              <h2>You are not authenticated!</h2>
-              <div>
-                <LoginForm/>
-                <Link to="/signup">Don't have an account? Register here! </Link>
-              </div>
-
-            </div>
-          ) : (
-            <div id="auth">
-              {children}
-            </div>
-          )}
-        </main>
-      </Container>
+          <Route exact path="/login" component={asyncLogin(store)} />
+          <PrivateRoute exact path="/planstore" component={asyncPlantore(store)} />
+          <PrivateRoute exact path="/planstore/plan/:pid" component={asyncPlantorePlan(store)} />
+       </Container> 
       <footer className="footer">
         <div className="container">
           <span className="text-muted">Place sticky footer content here.</span>
@@ -51,7 +73,7 @@ export const PageLayout = ({token, children, logout}) =>  {
 PageLayout.propTypes = {
   token: PropTypes.string,
   //logout: PropTypes.func,
-  children: PropTypes.node.isRequired,
+  //children: PropTypes.node.isRequired,
   isLoading: PropTypes.bool,
   modalChildrens: PropTypes.array,
   hideModal: PropTypes.func
@@ -81,5 +103,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageLayout);
-
+import { withRouter } from 'react-router-dom';
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageLayout));

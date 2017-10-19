@@ -1,11 +1,11 @@
 import React from 'react';
 import { Col } from 'reactstrap';
 import { gql } from 'react-apollo';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 //import PropType from 'prop-types'
 
 import './styles.scss'
-class Plan extends React.Component {
+export class Plan extends React.Component {
   // fragment for the plan info
   static fragments = {
     plan: gql`
@@ -34,6 +34,7 @@ class Plan extends React.Component {
       backgroundImage: 'url(' + img + ')'
     }
     var link = '/planstore/plan/'+id;
+    //return (<div>aaa</div>);
     return (
       <Col xs="12" sm="6" md="4" lg="3">
         <Link

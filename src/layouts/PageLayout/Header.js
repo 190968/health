@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import './PageHeader.scss'
-import { Link,  NavLink as RouterNavLink } from 'react-router';
+import { Link,  NavLink as RouterNavLink } from 'react-router-dom';
 
 import { Container, Collapse,  Badge, Navbar, NavbarToggler, NavbarBrand, NavDropdown,  DropdownItem, DropdownToggle, DropdownMenu, Nav, NavItem, NavLink } from 'reactstrap';
 

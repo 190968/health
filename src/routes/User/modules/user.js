@@ -30,7 +30,7 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
     [SET_USER_TOKEN]    : (state, action) => {
-        //console.log(action);
+        console.log(action);
         //console.log(payload);
         return {
             ...initialState,
@@ -49,8 +49,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-        token: localStorage.getItem('token')
-
+    token: localStorage.getItem('token')
 };
 export default function userReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]

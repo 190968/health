@@ -91,7 +91,7 @@ export class PlansList extends React.Component {
 
   render () {
     const {
-      plans, loading, avatarSize,loadMoreEntries
+      plans, loading,loadMoreEntries
     } = this.props;
 
     if ( loading) {
@@ -121,7 +121,7 @@ export class PlansList extends React.Component {
         rows.push(<Plan info={product} key={product.id}/>);
       });
     }
-
+//console.log(rows);
     //console.log(filters);
     return (
       <div className='box'>

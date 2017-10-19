@@ -1,11 +1,18 @@
 import React from 'react'
-import { browserHistory, Router } from 'react-router'
+import { Router, Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { ApolloProvider } from 'react-apollo';
 
 import {loadNetwork} from '../routes/Network/modules/network'
 import {loadUser} from '../routes/User/modules/user'
 import { gql } from 'react-apollo';
+
+
+/**
+ * Creating a browser history
+ */
+import { createBrowserHistory } from 'history'
+var history = createBrowserHistory();
 
 
 
@@ -56,14 +63,21 @@ const queryOptions =  {
 }
 
 
+/**** MOVE ~THIS IN A FILES***/
+/**
+ * Loading planstore link async
+ */
 
+import CoreLayout from '../layouts'
+
+/**** END MOVE ~THIS IN A FILES***/
 
 
 
 class App extends React.Component {
     static propTypes = {
         store: PropTypes.object.isRequired,
-        routes: PropTypes.object.isRequired,
+        //routes: PropTypes.object.isRequired,
         client: PropTypes.object.isRequired,
     }
 
@@ -72,13 +86,13 @@ class App extends React.Component {
         //console.log(NetworkWithQuery.query());
         //this.props.store.dispatch(loadNetwork());
 
-        this.props.client.query(queryOptions)
+        /*this.props.client.query(queryOptions)
             .then(({ data: {network, user} }) => {
             this.props.store.dispatch(loadNetwork(network));
            // this.props.store.dispatch(loadUser(user));
               // messages
               // inbox
-        })
+        })*/
         //this.fetchNetworkData();
         //console.log(this.props.fetchNetworkDataThunk());
         //console.log(this);
@@ -91,9 +105,13 @@ class App extends React.Component {
     render () {
         return (
             <ApolloProvider store={this.props.store} client={this.props.client}>
-                <Router history={browserHistory} children={this.props.routes} />
+                <main>
+                    <Router history={history}>
+                        <CoreLayout store={this.props.store} />
+                    </Router>
+                </main>
             </ApolloProvider>
-        )
+        )//<Router history={history} children={this.props.routes} />
     }
 }
 
