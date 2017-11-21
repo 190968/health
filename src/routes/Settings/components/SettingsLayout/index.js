@@ -8,23 +8,50 @@ import { Container, Row, Col} from 'reactstrap';
 import { Form, Text, Select, Textarea, Checkbox, Radio, RadioGroup, NestedForm, FormError } from 'react-form'
 // adding filters
 
+const months = ['Month','January','February','March','April','May','June','July','August','September','October','November','December'];
+const monthItems =months.map((item,index) =>
+    <option key={index}>{item}</option>
+);
 
+const datesArr=['Date'];
+
+ for (var i=1;i<32;i++){
+     datesArr.push(i);
+ }
+const dateItems = datesArr.map((item,index) =>
+    <option key={index}>{item}</option>
+);
+
+const yearArr=['Year'];
+
+for (var i=1900;i<2018;i++){
+    yearArr.push(i);
+}
+const yearItems = yearArr.map((item,index) =>
+    <option key={index}>{item}</option>
+);
 
 class SettingLayout extends React.Component {
+
 
     static propTypes = {
         //plan: propType(Plan.fragments.plan).isRequired,
         //handleCancel: React.PropTypes.func.isRequired,
     }
 
+
+
     render() {
       return (<Container>
           <Row>
-              <Col xs="3"><div className="box">
-                  <div className="box__body">aaa</div>
-              </div></Col>
-              <Col xs="9"><div className="box">
-                  <div className="box__body">
+              <Col xs="3">
+                  <div className="box">
+                    <div className="box__body">aaa</div>
+                  </div>
+              </Col>
+              <Col xs="9">
+                  <div className="box">
+                      <div className="box__body">
 
                       <Form
                           onSubmit={(values) => {
@@ -66,30 +93,108 @@ class SettingLayout extends React.Component {
                                   // When the form is submitted, call the `submitForm` callback prop
                                   <form onSubmit={submitForm}>
 
+
+
                                       <div>
-                                          <h6>Full Name</h6>
+                                          <h6>Title</h6>
+                                          <Select // This is the built-in Select formInput
+                                              placeholder="None"
+                                              field='title'
+                                              options={[{ // You can ship it some options like usual
+                label: 'Mr',
+                value: 'Mr'
+              }, {
+                label: 'Mrs',
+                value: 'Mrs'
+              }]}
+                                          />
+                                      </div>
+                                      <div>
+                                          <h6>Name</h6>
                                           <Text // This is the built-in Text formInput
                                               field='name' // field is a string version of the field location
-                                              placeholder='Your name' // all other props are sent through to the underlying component, in this case an <input />
+                                              placeholder='Name' // all other props are sent through to the underlying component, in this case an <input />
+                                          />
+
+                                          <Text // This is the built-in Text formInput
+                                              field='middle name' // field is a string version of the field location
+                                              placeholder='Middle name' // all other props are sent through to the underlying component, in this case an <input />
+                                          />
+
+                                          <Text // This is the built-in Text formInput
+                                              field='surename' // field is a string version of the field location
+                                              placeholder='Surename' // all other props are sent through to the underlying component, in this case an <input />
+                                          />
+
+
+                                      </div>
+
+                                      <div>
+                                          <h6>Sertification</h6>
+                                          <Select // This is the built-in Select formInput
+                                              placeholder="None"
+                                              field='certification'
+                                              options={[{ // You can ship it some options like usual
+                label: 'Doctor',
+                value: 'doctor'
+              }, {
+                label: 'Patient',
+                value: 'patient'
+              }]}
                                           />
                                       </div>
 
                                       <div>
-                                          <h6>Relationship Status</h6>
-                                          <Select // This is the built-in Select formInput
-                                              field='status'
-                                              options={[{ // You can ship it some options like usual
-                label: 'Single',
-                value: 'single'
-              }, {
-                label: 'In a Relationship',
-                value: 'relationship'
-              }, {
-                label: 'It\'s Complicated',
-                value: 'complicated'
-              }]}
+                                          <h6>Scype username</h6>
+                                          <Text // This is the built-in Text formInput
+                                              field='scype' // field is a string version of the field location
+
                                           />
                                       </div>
+
+                                      <div>
+
+                                          <h6>Birthday</h6>
+
+                                          <select // This is the built-in Select formInput
+                                              placeholder="Month"
+                                              field='month'>
+                                              {monthItems}
+                                          </select>
+
+                                          <select // This is the built-in Select formInput
+                                              placeholder="Date"
+                                              field='date'>
+                                              {dateItems}
+                                          </select>
+
+                                          <select // This is the built-in Select formInput
+                                              placeholder="Date"
+                                              field='date'>
+                                              {yearItems}
+                                          </select>
+
+
+                                      </div>
+
+
+                                      <div>
+                                      <h6>Gender</h6>
+                                      <Select // This is the built-in Select formInput
+                                          placeholder="None"
+                                          field='gender'
+                                          options={[{ // You can ship it some options like usual
+                label: 'Male',
+                value: 'male'
+              }, {
+                label: 'Female',
+                value: 'female'
+              }]}
+                                      />
+                                         </div>
+
+
+
 
                                       <div>
                                           <h6>Short Bio</h6>
