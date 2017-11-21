@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import './styles/main.scss'
+//import 'antd/lib/date-picker/style';
 
 
 
@@ -18,7 +19,6 @@ const MOUNT_NODE = document.getElementById('root')
 
 let render = () => {
   const App = require('./components/App').default
-  //const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
     <App store={store} client={apolloClient}  />,
@@ -59,6 +59,8 @@ if (__DEV__) {
       })
     )
   }
+    //const {whyDidYouUpdate} = require('why-did-you-update')
+    //whyDidYouUpdate(React)
 }
 
 // Let's Go!

@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   return {
     region: regions.find(region => `${ region.id }` === `${ currentRegionId }`),
     favorites: state.favorites.toJS(),
+      user:state.user
   };
 };
 

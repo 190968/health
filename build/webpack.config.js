@@ -1,9 +1,14 @@
 const path = require('path')
 const webpack = require('webpack')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('../project.config')
-
+// addng less
+const fs = require('fs');
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(project.basePath, './src/styles/ant-theme-vars.less'), 'utf8'));
+// end adding less
 const inProject = path.resolve.bind(path, project.basePath)
 const inProjectSrc = (file) => inProject(project.srcDir, file)
 
@@ -31,7 +36,11 @@ const config = {
       inProject(project.srcDir),
       'node_modules',
     ],
-    extensions: ['*', '.js', '.jsx', '.json'],
+      alias: {
+          Routes: path.resolve(__dirname, 'src/routes/'),
+          Templates: path.resolve(__dirname, 'src/templates/')
+      },
+      extensions: ['*', '.js', '.jsx', '.json'],
   },
   externals: project.externals,
   module: {
@@ -73,6 +82,7 @@ config.module.rules.push({
             useBuiltIns: true // we polyfill Object.assign in src/normalize.js
           },
         ],
+          ['import', {libraryName: "antd", style: true}]
       ],
       presets: [
         'babel-preset-react',
@@ -87,6 +97,21 @@ config.module.rules.push({
     },
   }],
 })
+
+// Ant
+/*config.module.rules.push({
+    test: /\.js$/,
+    exclude: /node_modules/,
+    use: [{
+        loader: 'babel-loader',
+        query: {
+                plugins: [
+                    ['import', {libraryName: "antd", style: true}]
+                ],
+            presets: ['@babel/preset-env']
+        }
+    }],
+})*/
 
 // Styles
 // ------------------------------------

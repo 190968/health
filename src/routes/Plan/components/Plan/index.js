@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col } from 'reactstrap';
-import { gql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 //import PropType from 'prop-types'
 
@@ -30,13 +30,19 @@ export class Plan extends React.Component {
     var name = this.props.info.title;
     var img = this.props.info.thumb.small;
     var id = this.props.info.id;
+    var upid = this.props.info.upid || 0;
     var divStyle = {
       backgroundImage: 'url(' + img + ')'
     }
-    var link = '/planstore/plan/'+id;
+    let link = '/planstore/plan/'+id;
+    const is_user = upid > 0;
+    // if the link is personal - then open user link
+      if (is_user) {
+          link = '/plan/'+upid;
+      }
     //return (<div>aaa</div>);
     return (
-      <Col xs="12" sm="6" md="4" lg="3">
+      <Col xs="12" sm="6" md="4" lg="4">
         <Link
           to={link}
           style={{ minWidth: 200 }}

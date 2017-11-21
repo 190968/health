@@ -1,5 +1,6 @@
 
 export const LOAD_NETWORK_DETAILS = 'LOAD_NETWORK_DETAILS';
+export const SET_CURRENT_ROLE = 'SET_CURRENT_ROLE';
 
 // ------------------------------------
 // Actions
@@ -11,9 +12,18 @@ export const loadNetwork = (network) => {
     }
 };
 
+export const setCurrentRole = (role) => {
+    return {
+        type: SET_CURRENT_ROLE,
+        role
+    }
+};
+
+
 
 export const actions = {
     loadNetwork,
+    setCurrentRole
 }
 
 // ------------------------------------
@@ -27,10 +37,18 @@ const ACTION_HANDLERS = {
         ...initialState,
             id:network.id,
             name:network.name,
+            logo:network.logo,
             modules:network.modules,
         };
     },
-
+    [SET_CURRENT_ROLE]    : (state, {role}) => {
+        // load network with apollo
+        //console.log(payload);
+        return {
+            ...state,
+            current_role:role,
+        };
+    },
 }
 
 // ------------------------------------
@@ -41,7 +59,9 @@ const initialState = {
     info: {id:null},
     id: null,
     name: null,
+    logo: null,
     roles: null,
+    current_role: null,
     modules: null,
     errorMessage: null,
     alertMessage: null,

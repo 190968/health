@@ -5,7 +5,7 @@ import makeRootReducer from './reducers'
 import { updateLocation } from './location'
 
 // install appolo
-import apolloClient from '../apolloClient';
+//import apolloClient from '../apolloClient';
 
 
 
@@ -35,13 +35,13 @@ const createStore = (initialState = {}) => {
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),
-      applyMiddleware(apolloClient.middleware()),
+      //applyMiddleware(apolloClient.middleware()),
       ...enhancers
     )
   )
 
   store.asyncReducers = {}
-  store.apollo = apolloClient.reducer()
+  //store.apollo = apolloClient.reducer()
    //
   //console.log( store.asyncReducers);
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime

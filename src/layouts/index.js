@@ -18,61 +18,30 @@ const App = require('../components/App').default
 import { Route } from "react-router-dom";
 
 
-/** loadable **/
-import Loadable from '../components/Loadable';
-const asyncPlantore = (store) => {
-    //console.log(store);
-    return  (
-        Loadable({
-            loader: () => import('../routes/Planstore/components/PlanstoreLayout')
-        }, store)
-    );
-}
-
-const asyncPlantorePlan = () => {
-     return (
-         Loadable(     {
-               loader: () => import('../routes/Planstore/containers/PlanstorePlanLayout')
-            })
-    );
-}
-
-const asyncLogin = (store) => {
-    return (
-        Loadable({
-            loader: () => import('../routes/User/containers/LoginContainer'),
-            reducers: {
-                'url':'User/modules/login',
-                'key': 'user'
-            }
-        }, store)
-    );
-}
-
-const asyncSettings = (store) => {
-    return (
-        Loadable({
-                loader: () => import('../routes/Settings/components/SettingsLayout')
-        
-        })
-    );
-}
 
 // add
+import {asyncPlan, asyncPlantore, asyncDash, asyncLogin, asyncLogout, asyncPlanbuilder, asyncPlantorePlan, asyncSettings } from '../routes';
 import PrivateRoute from '../routes/privateRoute';
 
-export const PageLayout = ({token, children, logout, store}) =>  {
+export const PageLayout = ({token, isLoading, children, logout, store,location}) =>  {
   // const ready = true//state.ready || false;
-    //console.log(this);
+    if (isLoading) {
+        return ('Loading app');
+    }
+    //console.log(this.props);
   return (
     <div style={{height:'100%'}}>
       <Header />
       <Container>
+          <PrivateRoute exact path="/" component={asyncDash(store)} />
           <Route exact path="/login" component={asyncLogin(store)} />
+          <Route exact path="/logout" component={asyncLogout(store)} />
+          <PrivateRoute path="/planbuilder" component={asyncPlanbuilder(store)} />
+          <PrivateRoute exact path="/plan/:upid" component={asyncPlan(store)} />
           <PrivateRoute exact path="/planstore" component={asyncPlantore(store)} />
-          <PrivateRoute exact path="/planstore/plan/:pid" component={asyncPlantorePlan(store)} />
-          <PrivateRoute  path="/settings" component={asyncSettings(store)} />
-       </Container> 
+          <PrivateRoute exact path="/planstore/plan/:id" component={asyncPlantorePlan(store)} />
+          <PrivateRoute path="/settings" component={asyncSettings(store)} />
+      </Container>
       <footer className="footer">
         <div className="container">
           <span className="text-muted">Place sticky footer content here.</span>
@@ -93,14 +62,17 @@ PageLayout.defaultProps = {
   token: null,
   children: null,
   state: null,
+    isLoading: false,
   // logout: () => {console.log (1);},
 };
 
 
 
 const mapStateToProps = (state) => {
+  //  console.log(state);
   return {
     token: state.user.token,
+      isLoading: state.user.loading,
     state: state
   }
 };

@@ -7,7 +7,8 @@ import { increment, doubleAsync } from '../modules/planstore'
     component - in this case, the counter:   */
 
 import PlanstorPlanLayout from '../components/PlanstorePlanLayout'
-import { gql,graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Plan from '../../Plan/components/Plan';
 
@@ -42,6 +43,7 @@ const PlanstorPlanLayoutWithQuery = graphql(
         variables: {
           pid: ownProps.match.params.pid
         }
+
       }),
         props: ({ ownProps, data }) => {
         //console.log(ownProps);
@@ -78,7 +80,7 @@ const mapStateToProps = (state) => {
         //currentView:  state.views.currentView,
         // userAuth:
         pid:0,
-        plan: state.plan,
+        //plan: state.plan,
     };
 };
 

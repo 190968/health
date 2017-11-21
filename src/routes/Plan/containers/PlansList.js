@@ -4,7 +4,8 @@ import { PlansList } from '../components/PlansList'
 import Plan from '../components/Plan';
 
 
-import { gql,graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const QUERY = gql`    
     query GET_PLANSTORE_PLANS ($filters: [String], $page: Int!, $limit: Int) {
@@ -30,6 +31,8 @@ const PlansListWithQuery = graphql(
         page: ownProps.page,
         limit: PLANS_PER_PAGE,
       },
+        fetchPolicy: 'network-only'
+
     }),
     props: ({ ownProps, data }) => {
       if (!data.loading) {

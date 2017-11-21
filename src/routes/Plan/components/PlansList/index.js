@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Plan from '../../components/Plan';
+import PlanWidget from '../../components/Plan';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 import { Container, Row, Col } from 'reactstrap';
+
+import { Box, BoxHeader, BoxHeaderSettings, BoxBody } from 'components/Box';
 
 
 // custom placeholder for a list of plans
@@ -118,23 +120,49 @@ export class PlansList extends React.Component {
     var rows = [];
     if (!loading) {
       plans.forEach(function (product) {
-        rows.push(<Plan info={product} key={product.id}/>);
+        rows.push(<PlanWidget info={product} key={product.id}/>);
       });
     }
+    let headerSettings =  <BoxHeaderSettings>
+      sddd
+    </BoxHeaderSettings>;
+    let headerTitle = <h3>Today's Actionplans</h3>;
 //console.log(rows);
     //console.log(filters);
-    return (
-      <div className='box'>
-        <div className="box__header"><h3>ActionPlans</h3></div>
-        <div className="box__body">
-          <Row>
-            {rows}
-          </Row>
+      const children = React.Children.toArray(this.props.children);
 
-          <div className='pointer' onClick={() => this._prevPage()}>Prev</div>
-          <div className='pointer' onClick={loadMoreEntries}>Next</div>
-        </div>
-      </div>);
+      children.forEach((child, i) => {
+          //console.log(child);
+          if (typeof child.type == 'function') {
+              switch (child.type.name) {
+                  case 'BoxHeaderSettings':
+                      headerSettings = child;
+                      break;
+                  // header settings
+              }
+          } else if (child.type == 'h3') {
+              headerTitle = child;
+          }
+
+      });
+      //console.log(children);
+    return (
+
+        <Box>
+          <BoxHeader>
+              {headerSettings}
+              {headerTitle}
+          </BoxHeader>
+          <BoxBody>
+
+            <Row>
+                {rows}
+            </Row>
+
+            <div className='pointer' onClick={() => this._prevPage()}>Prev</div>
+            <div className='pointer' onClick={loadMoreEntries}>Next</div>
+          </BoxBody>
+        </Box>);
   }
 }
 

@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
-
+import {
+    Redirect
+} from 'react-router-dom'
 import {Route } from 'react-router'
 const styles = {
     form: {
@@ -57,7 +59,9 @@ const LoginForm = ({
         style={styles.form}
     >
         {token ? (
-            <Route path="/" component={Counter}/>
+            <Redirect to={{
+                pathname: '/'
+            }}/>
         ) : (
             <div>
         <input

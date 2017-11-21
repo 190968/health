@@ -1,22 +1,46 @@
-import { ApolloClient, createNetworkInterface } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { toIdValue } from 'apollo-utilities';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
-const networkInterface = createNetworkInterface({
-    uri: 'http://2clinic.fitangolocal.com/graphql.php'
+const httpLink = createHttpLink({
+    uri: 'http://2clinic.fitangolocal.com/graphql.php',
 });
-networkInterface.use([{
-    applyMiddleware(req, next) {
-        if (!req.options.headers) {
-            req.options.headers = {};  // Create the header object if needed.
+const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token = localStorage.getItem('token');
+    // return the headers to the context so httpLink can read them
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : null,
         }
-        // get the authentication token from local storage if it exists
-        const token = localStorage.getItem('token');
-        if (token) {
-            req.options.headers.authorization = `Bearer ${token}`;
+    }
+});
+
+const cache = new InMemoryCache({
+    dataIdFromObject: object => {
+        //console.log(object.__typename);
+        switch (object.__typename) {
+            case 'Plan': return object.id; // use `key` as the primary key
+            case 'bar': return object.blah; // use `blah` as the priamry key
+            default: return object.id || object._id; // fall back to `id` and `_id` for all other types
         }
-        next();
     },
-}]);
+    cacheResolvers: {
+        Query: {
+            plan: (_, args) => {toIdValue(args.id)},
+        },
+    },
+});
+
+const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: cache
+});
+
+export default client;
 
 
 
-export default new ApolloClient({ networkInterface });

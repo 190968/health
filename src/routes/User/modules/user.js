@@ -1,16 +1,33 @@
 export const SET_USER_TOKEN = 'SET_USER_TOKEN';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const SET_USER_INFO = 'SET_USER_INFO';
+export const SET_USER_INFO_FAIL = 'SET_USER_INFO_FAIL';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 export const setUserToken = ({token}) => {
     localStorage.setItem('token', token);
+    //console.log(token);
     return {
         type: SET_USER_TOKEN,
         token: token
     }
 };
+
+export const loadUser = (user) => {
+    //console.log(user);
+    return {
+        type: SET_USER_INFO,
+        info: user
+    }
+};
+export const loadUserFAIL = () => {
+    return {
+        type: SET_USER_INFO_FAIL
+    }
+};
+
 
 export const logoutUser = () => {
     localStorage.removeItem('token');
@@ -22,6 +39,8 @@ export const logoutUser = () => {
 
 export const actions = {
     setUserToken,
+    loadUser,
+    loadUserFAIL,
     logoutUser
 }
 
@@ -30,12 +49,23 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
     [SET_USER_TOKEN]    : (state, action) => {
-        console.log(action);
-        //console.log(payload);
         return {
             ...initialState,
             loading: true,
             token: action.token,
+        };},
+    [SET_USER_INFO]    : (state, action) => {
+        return {
+            ...initialState,
+            loading: false,
+            info: action.info,
+            token: action.info.token,
+        };},
+    [SET_USER_INFO_FAIL]    : (state, action) => {
+        return {
+            ...initialState,
+            loading: false,
+            token: '',
         };},
     [LOGOUT_USER] : (state, action) => {return {
         ...state,
@@ -49,7 +79,9 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-    token: localStorage.getItem('token')
+    token: '',//localStorage.getItem('token'),
+    info: '',//localStorage.getItem('token')
+    loading:true,
 };
 export default function userReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]

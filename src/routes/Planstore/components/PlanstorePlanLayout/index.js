@@ -95,7 +95,7 @@ export class PlanstorPlanLayout extends React.Component {
       var inside = elements.map(el => {
         return <div key={el[1]}><i className={el[0]+' bump-r'}></i>{el[1]}</div>;
       });
-      console.log(inside);
+      //console.log(inside);
       details.push(['Inside',inside]);
     }
   //console.log(details);
@@ -129,7 +129,7 @@ export class PlanstorPlanLayout extends React.Component {
   render() {
     const {plan, loading} = this.props;
     if (1==12 || loading) {
-      console.log(plan);
+     // console.log(plan);
       //return (<div>Loading...</div>);
       return (
         <div>

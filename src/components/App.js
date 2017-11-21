@@ -2,10 +2,12 @@ import React from 'react'
 import { Router, Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { ApolloProvider } from 'react-apollo';
+import { Provider } from 'react-redux'
 
-import {loadNetwork} from '../routes/Network/modules/network'
-import {loadUser} from '../routes/User/modules/user'
-import { gql } from 'react-apollo';
+import {loadNetwork, setCurrentRole} from '../routes/Network/modules/network'
+import {loadUser,loadUserFAIL} from '../routes/User/modules/user'
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 
 /**
@@ -15,121 +17,95 @@ import { createBrowserHistory } from 'history'
 var history = createBrowserHistory();
 
 
-
-
+/**
+ * Preparing query
+ */
 const NETWORK_INFO = gql`
     query NETWORK_INFO {
         network {
             id,
             name,
+            logo,
             modules {
                 id,
                 name,
                 placeholder
             }
+        },
+        account {
+            user {
+                id,
+                first_name,
+                last_name,
+                token,
+                new_notifications,
+                new_messages
+            }
+            current_role
         }
-        
-        
     }
 `;
-/*
-,
-
-        user {
-            uid,
-            first_name,
-            last_name,
-            thumbs {
-                small,
-                medium,
-                large
-            }
-            current_role,
-            roles,
-            points,
-            adherence
-        },
-
-        messages {
-            new
-        },
-        notifications {
-            new
-        },
- */
 
 const queryOptions =  {
-    query: NETWORK_INFO
+    query: NETWORK_INFO,
 }
 
 
-/**** MOVE ~THIS IN A FILES***/
-/**
- * Loading planstore link async
- */
-
 import CoreLayout from '../layouts'
 
-/**** END MOVE ~THIS IN A FILES***/
-
-
-
+/**
+ * Main App
+ */
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { loading: false } ;
+    };
     static propTypes = {
         store: PropTypes.object.isRequired,
-        //routes: PropTypes.object.isRequired,
         client: PropTypes.object.isRequired,
     }
 
     // load network and token info
     componentWillMount() {
-        //console.log(NetworkWithQuery.query());
-        //this.props.store.dispatch(loadNetwork());
-
-        /*this.props.client.query(queryOptions)
-            .then(({ data: {network, user} }) => {
-            this.props.store.dispatch(loadNetwork(network));
-           // this.props.store.dispatch(loadUser(user));
-              // messages
-              // inbox
-        })*/
-        //this.fetchNetworkData();
-        //console.log(this.props.fetchNetworkDataThunk());
-        //console.log(this);
-        //console.log('app will mount');
+        this.props.client.query(queryOptions)
+            .then(({ data: {network, account: {user, current_role}} }) => {
+                this.setState({loading: false});
+                this.props.store.dispatch(loadNetwork(network));
+                if (user.token != '') {
+                    this.props.store.dispatch(loadUser(user));
+                    //console.log( this.props.store);
+                    this.props.store.dispatch(setCurrentRole(current_role));
+                } else {
+                    this.props.store.dispatch(loadUserFAIL(user));
+                }
+            })
     }
     shouldComponentUpdate () {
         return false
     }
 
     render () {
+        //console.log(this.props.store);
         return (
-            <ApolloProvider store={this.props.store} client={this.props.client}>
-                <main>
+
+            <ApolloProvider client={this.props.client}>
+                <Provider store={this.props.store}>
                     <Router history={history}>
                         <CoreLayout store={this.props.store} />
                     </Router>
-                </main>
+                </Provider>
             </ApolloProvider>
-        )//<Router history={history} children={this.props.routes} />
+
+
+        )
     }
 }
-
 
 App.defaultProps = {
     loading: false,
     successMessage: '',
-    errorMessage: '',
-    /*fetchNetworkDataThunk: (dispatch) => {
-        console.log(dispatch);
-        //dispatch(fetchNavigationBarData())
-        client.query({query}).then((results) => {
-            if (results.networkStatus === 7 && results.loading === false) {
-                dispatch(fetchNavigationBarDataFulFilled(results));
-            }
-        });
-    }*/
+    errorMessage: ''
 };
-
 
 export default App

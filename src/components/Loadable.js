@@ -13,21 +13,25 @@ const Loadable = (opts, store, reducer) => L({
         //console.log(this.props);
         let Component = loaded.default;
 
-        if (store) {
-            // add reducers
-            const reducer = require('../routes/Planstore/modules/planstore').default
-            /*  Add the reducer to the store on key */
-            injectReducer(store, {key: 'planstore', reducer})
-        }
+        //console.log(opts);
+        //console.log(loaded);
 
         if (opts.reducers) {
             //console.log(opts.reducers);
             var url = opts.reducers.url;
             var key = opts.reducers.key || 'fitango';
-            //const reducer = require('./modules/login').default
-            const reducer = require('../routes/'+url).default
-            /*  Add the reducer to the store on key 'counter'  */
-            injectReducer(store, { key: key, reducer })
+            //console.log(url);
+            if (typeof url == 'string') {
+                url = [url];
+            }
+            //console.log(url);
+            url.map(path => {
+                //const reducer = require('./modules/login').default
+                const reducer = require('../routes/'+path).default
+                /*  Add the reducer to the store on key 'counter'  */
+                injectReducer(store, { key: key, reducer })
+            })
+
         }
 
 

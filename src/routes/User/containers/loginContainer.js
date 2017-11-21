@@ -7,7 +7,8 @@ import { setUserToken} from '../modules/user'
     component - in this case, the counter:   */
 
 import LoginForm from '../components/loginComponent'
-import { gql,graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 
 const loginUser = gql`
@@ -41,7 +42,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: ({ email, password }) => {
-        dispatch(loginUserRequest({ email }));
+        //dispatch(loginUserRequest({ email }));
 
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {

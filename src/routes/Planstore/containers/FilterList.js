@@ -4,7 +4,8 @@ import { FilterList } from '../components/FilterList'
 import { setFilters } from '../modules/planstore'
 
 
-import { gql,graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const QUERY = gql`
     query GET_PLANSTORE_FILTERS {

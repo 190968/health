@@ -3,7 +3,7 @@ import locationReducer from './location'
 import userReducer from '../routes/User/modules/user';
 import networkReducer from '../routes/Network/modules/network';
 import planstoreReducer from '../routes/Planstore/modules/planstore';
-import apolloClient from '../apolloClient';
+//import apolloClient from '../apolloClient';
 
 
 //import loginReducer from '../routes/User/modules/login';
@@ -15,7 +15,7 @@ export const makeRootReducer = (asyncReducers) => {
       user: userReducer,
       network: networkReducer,
       planstore: planstoreReducer,
-      apollo: apolloClient.reducer(),
+      //apollo: apolloClient.reducer(),
       //login: loginReducer,
     ...asyncReducers
   })
@@ -26,7 +26,7 @@ export const injectReducer = (store, { key, reducer }) => {
   if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
 
   store.asyncReducers[key] = reducer
-    // console.log(store.asyncReducers);
+
   store.replaceReducer(makeRootReducer(store.asyncReducers))
 }
 
