@@ -21,7 +21,7 @@ class NormalLoginForm extends React.Component {
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('email', {
-                        rules: [{ required: true, message: 'Please input valie Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
+                        rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
                     })(
                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Email" />
                     )}
