@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import DashLayout from '../components/Todo'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import Plan from 'routes/Plan/components/Plan';
+import Plan from '../../../../Plan/components/Plan';
 
 // Query for grabbing everything for the dashboard items
 const QUERY = gql`

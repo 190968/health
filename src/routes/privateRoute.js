@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 const PrivateRoute = ({token, component: Component, ...rest }) => (
     <Route {...rest} render={props => (
-        token != '' /*fakeAuth.isAuthenticated*/ ? (
+        1===1 /*|| token != '' /*fakeAuth.isAuthenticated*/ ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
@@ -30,4 +30,3 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
-//export default PrivateRoute

@@ -1,8 +1,5 @@
 import { connect } from 'react-redux'
 import { loginUserRequest, loginUserSuccess, loginUserError} from '../modules/login'
-//import { logoutUser} from '../modules/user'
-
-//import LogoutForm from '../components/logoutComponent'
 import { gql,graphql } from 'react-apollo';
 
 
@@ -16,7 +13,7 @@ const logoutUser = gql`
 
 
 
-const withMutation = graphql(loginUser, {
+const withMutation = graphql(logoutUser, {
     props: ({ mutate }) => ({
         logoutUser: input => {
             return mutate()},
@@ -35,14 +32,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: ({ email, password }) => {
-        //dispatch(loginUserRequest({ email }));
 
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
                 //console.log(data);
                 //console.log(token);
-                dispatch(setUserToken({token}));
+                //dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
             dispatch(loginUserError({
@@ -53,4 +49,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(LogoutForm));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(withMutation));

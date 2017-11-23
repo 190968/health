@@ -17,11 +17,9 @@ export class DashUserLayout extends React.Component {
                 <div className='box'>
                     <div className="box__header"><h3>TODO</h3></div>
                     <div className="box__body">
-                        <Row>
                             <ReactPlaceholder ready={!loading} rows={3} showLoadingAnimation  >
                                 loading...
                             </ReactPlaceholder>
-                        </Row>
                     </div>
                 </div>
             );

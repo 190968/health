@@ -41,9 +41,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: ({ email, password }) => {
+    onSubmit: (props) => {
         //dispatch(loginUserRequest({ email }));
-
+        //console.log(props);
+        const{email, password} = props;
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
@@ -52,6 +53,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
+            console.log(error);
             dispatch(loginUserError({
                 error,
             }));

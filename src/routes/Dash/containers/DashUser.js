@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import DashLayout from '../components/DashUserLayout'
+import DashLayout from 'routes/Dash/components/DashUserLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Plan from 'routes/Plan/components/Plan';

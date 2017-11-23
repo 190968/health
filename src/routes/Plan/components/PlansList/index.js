@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import PlanWidget from '../../components/Plan';
+import PlanWidget from 'routes/Plan/components/Plan';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 import { Container, Row, Col } from 'reactstrap';

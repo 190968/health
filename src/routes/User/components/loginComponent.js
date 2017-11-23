@@ -1,126 +1,50 @@
 import React, { PropTypes } from 'react';
-import {
-    Redirect
-} from 'react-router-dom'
-import {Route } from 'react-router'
-const styles = {
-    form: {
-        marginBottom: 20,
-    },
-    input: {
-        display: 'block',
-        width: 200,
-        margin: '0 auto 10px auto',
-        height: 18,
-        fontSize: 14,
-        padding: 10,
-        outline: 0,
-    },
-    successMessage: {
-        backgroundColor: 'rgb(251, 161, 97)',
-        padding: 10,
-        width: 300,
-        color: 'white',
-        margin: '15px auto',
-    },
-    errorMessage: {
-        backgroundColor: 'red',
-        padding: 10,
-        width: 300,
-        color: 'white',
-        margin: '15px auto',
-    },
-};
+import {Redirect, Route} from 'react-router-dom'
+//import {Route } from 'react-router'
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
+const FormItem = Form.Item;
 
+class NormalLoginForm extends React.Component {
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const { onSubmit } = this.props;
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                return onSubmit(values);
+            }
+        });
+    }
+    render() {
 
-const redirect = (info) => {
-    //console.log(info);
-    //history.pushState('/')
+        const { getFieldDecorator } = this.props.form;
+        return (
+            <Form onSubmit={this.handleSubmit} className="login-form">
+                <FormItem>
+                    {getFieldDecorator('email', {
+                        rules: [{ required: true, message: 'Please input your username!' }],
+                    })(
+                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Email" />
+                    )}
+                </FormItem>
+                <FormItem>
+                    {getFieldDecorator('password', {
+                        /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
+                        rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password!' }],
+                    })(
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+                    )}
+                </FormItem>
+                <FormItem>
+                    <a className="login-form-forgot" href="">Forgot password</a>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                    </Button>
+                    Or <a href="">register now!</a>
+                </FormItem>
+            </Form>
+        );
+    }
 }
 
-const LoginForm = ({
-                      token,onSubmit,
-                      loading,
-    from,
-                       email,
-                      submitButtonLabel,
-                      successMessage,
-                      errorMessage,
-                  }) => (
-    <form
-        onSubmit={(event) => {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            return onSubmit({
-                email: formData.get('email'),
-                password: formData.get('password'),
-            });
-        }}
-        style={styles.form}
-    >
-        {token ? (
-            <Redirect to={{
-                pathname: '/'
-            }}/>
-        ) : (
-            <div>
-        <input
-            type="text"
-            name="email"
-            placeholder="email"
-            defaultValue={email}
-            style={styles.input}
-            required
-        />
-        <input
-            type="password"
-            name="password"
-            placeholder="password"
-            defaultValue="Fitango1"
-            style={styles.input}
-            required
-        />
-
-        <div>
-            <button
-                type="submit"
-                className="btn"
-            >submit
-            </button>
-        </div>
-
-        <div>
-            {loading && (
-                <div style={{ margin: 20 }}>Loading...</div>
-            )}
-
-            {successMessage && (
-                <div style={styles.successMessage}>{successMessage}</div>
-            )}
-
-            {errorMessage && (
-                <div style={styles.errorMessage}>{errorMessage}</div>
-            )}
-        </div>
-            </div>
-            )}
-    </form>
-);
-
-LoginForm.propTypes = {
-    /*onSubmit: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    submitButtonLabel: PropTypes.string,
-    successMessage: PropTypes.string,
-    errorMessage: PropTypes.string,
-    email: PropTypes.string,*/
-};
-
-LoginForm.defaultProps = {
-    loading: false,
-    successMessage: '',
-    errorMessage: '',
-    email: 'kicker@fit.com',
-};
-
-export default LoginForm;
+ const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+export default WrappedNormalLoginForm;

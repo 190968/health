@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import PlanBodyMenu from '../components/PlanBodyMenu'
-import {setPlanTab } from 'routes/Plan/modules/plan'
+import {setPlanTab } from '../../../../../../Plan/modules/plan'
 
 
 /* -----------------------------------------

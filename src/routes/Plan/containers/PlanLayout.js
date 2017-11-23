@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
     wiring in the actions and state necessary to render a presentational
     component - in this case, the counter:   */
 
-import PlanLayout from 'routes/Plan/components/PlanLayout'
+import PlanLayout from '../../Plan/components/PlanLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

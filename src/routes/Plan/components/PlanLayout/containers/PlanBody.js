@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 import PlanBody from '../components/PlanBody'
 // gragement
-import Plan from 'routes/Plan/components/Plan';
+import Plan from '../../../../Plan/components/Plan';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
