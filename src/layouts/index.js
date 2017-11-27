@@ -45,7 +45,7 @@ Core.propTypes = {
     token: PropTypes.string,
     //logout: PropTypes.func,
     //children: PropTypes.node.isRequired,
-    isLoading: PropTypes.bool,
+    loading: PropTypes.bool,
     modalChildrens: PropTypes.array,
     hideModal: PropTypes.func
 };
@@ -54,7 +54,7 @@ Core.defaultProps = {
     token: null,
     children: null,
     state: null,
-    isLoading: false,
+    loading: false,
     // logout: () => {console.log (1);},
 };
 

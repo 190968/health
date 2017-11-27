@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, BoxHeader, BoxHeaderSettings, BoxBody } from '../../../../components/Box';
-import UserDash from '../../components/DashUserLayout'
+import UserDash from '../../containers/DashUser'
 import ReactPlaceholder from 'react-placeholder';
 export const DashLayout = ({ current_role, loading }) => (
-    <UserDash />
-
+    <ReactPlaceholder showLoadingAnimation type='media' rows={4} ready={!loading}>
+        {current_role == 'user' && <UserDash />}
+    </ReactPlaceholder>
 )
 
 export default DashLayout

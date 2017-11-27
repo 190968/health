@@ -21,9 +21,9 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "NODE_PATH=./src react-app-rewired start",
-    "build": "NODE_PATH=./src react-app-rewired build",
-    "test": "NODE_PATH=./src react-app-rewired test --env=jsdom",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

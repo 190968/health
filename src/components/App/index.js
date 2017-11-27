@@ -8,10 +8,13 @@ import { Router } from 'react-router-dom'
 import apolloClient from '../../clients/apolloClient';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux'
+import gql from 'graphql-tag';
 //import logo from './logo.svg';
 //import './App.css';
 //core
 import Core from '../../layouts'
+import {loadNetwork, setCurrentRole} from 'routes/Network/modules/network'
+import {loadUser, loadUserFAIL} from 'routes/User/modules/user'
 /**
  * Creating a browser history
  */
@@ -24,7 +27,38 @@ var history = createBrowserHistory();
 
 
 
+/**
+ * Preparing query to grab the main info
+ */
+const NETWORK_INFO = gql`
+    query NETWORK_INFO {
+        network {
+            id,
+            name,
+            logo,
+            modules {
+                id,
+                name,
+                placeholder
+            }
+        },
+        account {
+            user {
+                id,
+                first_name,
+                last_name,
+                token,
+                new_notifications,
+                new_messages
+            }
+            current_role
+        }
+    }
+`;
 
+const queryOptions =  {
+    query: NETWORK_INFO,
+}
 
 
 class App extends React.Component {
@@ -34,6 +68,22 @@ class App extends React.Component {
     };
     static propTypes = {
         store: PropTypes.object.isRequired,
+    }
+    // load network and token info
+    componentWillMount() {
+        /*this.props.client*/apolloClient.query(queryOptions)
+            .then(({ data: {network, account: {user, current_role}} }) => {
+                //console.log(network);
+                this.setState({loading: false});
+                this.props.store.dispatch(loadNetwork(network));
+                if (user.token != '') {
+                    this.props.store.dispatch(loadUser(user));
+                    //console.log( this.props.store);
+                    this.props.store.dispatch(setCurrentRole(current_role));
+                } else {
+                    this.props.store.dispatch(loadUserFAIL(user));
+                }
+            })
     }
     shouldComponentUpdate () {
         return false
@@ -45,7 +95,7 @@ class App extends React.Component {
             <Provider store={this.props.store}>
                 <Router history={history}>
                     <LocaleProvider locale={enUS}>
-                        <Core store={this.props.store} />
+                        <Core store={this.props.store} loading={this.state.loading} />
                     </LocaleProvider>
                 </Router>
             </Provider>

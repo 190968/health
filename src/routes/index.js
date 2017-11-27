@@ -12,11 +12,11 @@ import Loadable from '../components/Loadable';
 export const asyncDash = (store) => {
     // if current user is admin
     //console.log(store.getState().network);
-    if (1==1 || store.getState().network.curret_role == 'user') {// not working
+    if (1==1 && store.getState().network.curret_role == 'user') {// not working
         //console.log(1111);
         return (
             Loadable({
-                loader: () => import('../routes/Dash/containers/DashLayout'),
+                loader: () => import('../routes/Dash/components/DashLayout'),
                 reducers: {
                     'url': 'Dash/modules/dash',
                     'key': 'dashboard'
@@ -26,7 +26,7 @@ export const asyncDash = (store) => {
     }
     return (
         Loadable({
-            loader: () => import('../routes/Dash/containers/DashLayout')
+            loader: () => import('../routes/Dash/components/DashLayout')
         })
     );
 }
