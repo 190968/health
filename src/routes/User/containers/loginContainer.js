@@ -13,10 +13,11 @@ import gql from 'graphql-tag';
 
 const loginUser = gql`
     mutation loginUser($email: Email! $password: String!){
-        account (email: $email, password: $password) {
-            login(email: $email, password: $password) {
-                user {id}, token
-            }
+        login(email: $email, password: $password) {
+            user {
+                id
+            } 
+            token
         }
     }
 `;
@@ -27,8 +28,9 @@ const withMutation = graphql(loginUser, {
     props: ({ mutate }) => ({
         loginUser: input => {
             return mutate({
-            variables: { email: input.email, password: input.password },
-        })},
+                variables: { email: input.email, password: input.password },
+            })
+        },
     }),
 });
 
