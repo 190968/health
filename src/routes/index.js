@@ -43,3 +43,15 @@ export const asyncLogin = (store) => {
         }, store)
     );
 }
+
+export const asyncRegister= (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/registerContainer'),
+            reducers: {
+        'url': 'User/modules/register',
+            'key': 'user_register'
+    }
+}, store)
+    );
+}

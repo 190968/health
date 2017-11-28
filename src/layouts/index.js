@@ -16,7 +16,7 @@ import { withRouter } from 'react-router-dom';
 
 
 // add
-import {asyncDash,  asyncLogin/*,asyncPlan, asyncPlantore, asyncLogout, asyncPlanbuilder, asyncPlantorePlan, asyncSettings */} from 'routes';
+import {asyncDash,  asyncLogin,asyncRegister/*,asyncPlan, asyncPlantore, asyncLogout, asyncPlanbuilder, asyncPlantorePlan, asyncSettings */} from 'routes';
 import PrivateRoute from '../routes/privateRoute';
 
 //const App = require('../components/App').default
@@ -31,6 +31,7 @@ export const Core = ({token, isLoading, children, logout, store,location}) =>  {
         <div style={{height:'100%'}}>
                 <PrivateRoute exact path="/" component={asyncDash(store)} />
                 <Route exact path="/login" component={asyncLogin(store)} />
+            <Route exact path="/register" component={asyncRegister(store)} />
         </div>
     )}
 
