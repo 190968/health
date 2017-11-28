@@ -5,7 +5,7 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const httpLink = createHttpLink({
-    uri: 'http://2clinic.fitangolocal.com/graphql.php',
+    uri: 'http://api.fitangodev.com/graphql.php',
 });
 const authLink = setContext((_, { headers }) => {
     // get the authentication token from local storage if it exists
