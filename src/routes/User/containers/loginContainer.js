@@ -1,4 +1,6 @@
+import React from 'react'
 import { connect } from 'react-redux'
+
 import { loginUserRequest, loginUserSuccess, loginUserError} from '../modules/login'
 import { setUserToken} from '../modules/user'
 /*  This is a container component. Notice it does not contain any JSX,
@@ -35,7 +37,9 @@ const withMutation = graphql(loginUser, {
 });
 
 const mapStateToProps = (state) => {
-    //console.log(state.user);
+    //console.log(state.user.token);
+    console.log("----------------------1");
+
     return {
         // view store:
         //currentView:  state.views.currentView,
@@ -52,10 +56,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
-                //console.log(data);
                 //console.log(token);
+                dispatch({"pasha":token});
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
+                dispatch.setState({ tokenq: {token} });
+                return;
+                if (token) {
+                    return window.location.href = "/";
+                }
             }).catch((error) => {
             console.log(error);
             dispatch(loginUserError({
@@ -67,6 +76,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 export default withMutation(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
+
+
+
 /*
 export default connect(
     mapStateToProps,

@@ -5,27 +5,29 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-const PrivateRoute = ({token, component: Component, ...rest }) => (
+var token = localStorage.getItem('token');
+const PrivateRoute = ({dispatch, component: Component, ...rest }) => (
+
     <Route {...rest} render={props => (
-        1===1 /*|| token != '' /*fakeAuth.isAuthenticated*/ ? (
+        token !='' ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
-                pathname: '/login',
-                state: { from: props.location }
-            }}/>
+        pathname: '/login',
+        state: { from: props.location }
+    }}/>
         )
     )}/>
 )
 
-const mapStateToProps = (state) => {
-    console.log(state);
+const mapStateToProps = (state,ownProps) => {
     return {
         token: state.user.token
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+
 });
 
 

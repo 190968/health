@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import {Redirect, Route} from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 //import {Route } from 'react-router'
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
@@ -25,7 +26,9 @@ class NormalLoginForm extends React.Component {
                     })(
                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Email" />
                     )}
+
                 </FormItem>
+
                 <FormItem>
                     {getFieldDecorator('password', {
                         /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/

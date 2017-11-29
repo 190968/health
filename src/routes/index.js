@@ -11,6 +11,7 @@ import Loadable from '../components/Loadable';
 /** Dash **/
 export const asyncDash = (store) => {
     // if current user is admin
+    //console.log("123456789");
     //console.log(store.getState().network);
     if (1==1 && store.getState().network.curret_role == 'user') {// not working
         //console.log(1111);
