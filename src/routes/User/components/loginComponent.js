@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import {Redirect, Route} from 'react-router-dom'
 //import {Route } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
@@ -39,7 +40,8 @@ class NormalLoginForm extends React.Component {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                         Log in
                     </Button>
-                    Or <a href="/register">register now!</a>
+                    Or
+                    <Link to={'/register'}>regiter now!</Link>
                 </FormItem>
             </Form>
         );
