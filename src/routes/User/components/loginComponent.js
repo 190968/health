@@ -1,8 +1,5 @@
 import React, { PropTypes } from 'react';
-import {Redirect, Route} from 'react-router-dom'
 import {  Link } from 'react-router-dom'
-//import {Route } from 'react-router'
-import { Link } from 'react-router-dom'
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
