@@ -6,10 +6,11 @@ import {
 import { connect } from 'react-redux'
 
 var token = localStorage.getItem('token');
-const PrivateRoute = ({dispatch, component: Component, ...rest }) => (
+//console.log( this.props.store);
+const PrivateRoute = ({state, component: Component, ...rest }) => (
 
     <Route {...rest} render={props => (
-        token !='' ? (
+       token !='' ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
@@ -21,6 +22,8 @@ const PrivateRoute = ({dispatch, component: Component, ...rest }) => (
 )
 
 const mapStateToProps = (state,ownProps) => {
+
+    console.log("---"+state.user.token);
     return {
         token: state.user.token
     };

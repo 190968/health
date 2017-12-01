@@ -21,6 +21,9 @@ export const loginUserError = ({ error }) => ({
     message: error.message,
 });
 
+//const initialState={token: };
+
+
 export const actions = {
     loginUserRequest,
     loginUserSuccess,
@@ -54,7 +57,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-    token: null,
+    token: localStorage.getItem('token'),
     loading: false,
     username: null,
     errorMessage: null,
