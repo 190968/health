@@ -38,7 +38,7 @@ const withMutation = graphql(loginUser, {
 
 const mapStateToProps = (state) => {
     //console.log(state.user.token);
-    console.log("----------------------1");
+   // console.log("----------------------1");
 
     return {
         // view store:
@@ -50,18 +50,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
-        //dispatch(loginUserRequest({ email }));
-        //console.log(props);
         const{email, password} = props;
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
-                //console.log(token);
-                dispatch({"pasha":token});
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
-                dispatch.setState({ tokenq: {token} });
-                return;
                 if (token) {
                     return window.location.href = "/";
                 }
