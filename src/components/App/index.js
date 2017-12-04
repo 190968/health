@@ -43,6 +43,7 @@ const NETWORK_INFO = gql`
             }
         },
         account {
+            checkToken
             user {
                 id,
                 first_name,
