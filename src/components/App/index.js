@@ -73,7 +73,7 @@ class App extends React.Component {
     // load network and token info
     componentWillMount() {
         apolloClient.query(queryOptions)
-            .then(({ data: {network, account: {user, current_role}} }) => {
+            .then(({ data: {network, account: {user, checkToken, current_role}} }) => {
 // const NETWORK_INFO2 =gql`query CHECK_TOKEN{account(token:"+localStorage.getItem('token')+") { checkToken }}`;
 //
 //                 const queryOptions2 =  {
@@ -82,11 +82,12 @@ class App extends React.Component {
 //                 apolloClient.query(queryOptions2)
 //                     .then(({data: { account: {checkToken}}}) => {
 
+
                         console.log("333333333311");
                        // console.log(checkToken);
                         this.setState({loading: false});
                         this.props.store.dispatch(loadNetwork(network));
-                        if (user.token != '') {
+                        if(checkToken) {
                             this.props.store.dispatch(loadUser(user));
                             console.log("123--------123");
                             //console.log( this.props.store);
