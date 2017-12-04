@@ -56,3 +56,15 @@ export const asyncRegister= (store) => {
 }, store)
     );
 }
+
+export const asyncLogout= (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/logoutContainer'),
+            reducers: {
+        'url': 'User/modules/logout',
+            'key': 'user_logout'
+    }
+}, store)
+    );
+}

@@ -43,6 +43,7 @@ const NETWORK_INFO = gql`
             }
         },
         account {
+            checkToken
             user {
                 id,
                 first_name,
@@ -52,6 +53,7 @@ const NETWORK_INFO = gql`
                 new_messages
             }
             current_role
+            
         }
     }
 `;
@@ -72,26 +74,15 @@ class App extends React.Component {
     // load network and token info
     componentWillMount() {
         apolloClient.query(queryOptions)
-            .then(({ data: {network, account: {user, current_role}} }) => {
-// const NETWORK_INFO2 =gql`query CHECK_TOKEN{account(token:"+localStorage.getItem('token')+") { checkToken }}`;
-//
-//                 const queryOptions2 =  {
-//                     query: NETWORK_INFO2
-//                 }
-//                 apolloClient.query(queryOptions2)
-//                     .then(({data: { account: {checkToken}}}) => {
-
-                        console.log("333333333311");
-                       // console.log(checkToken);
+            .then(({ data: {network, account: {user,checkToken, current_role}} }) => {
+                        console.log(checkToken);
                         this.setState({loading: false});
                         this.props.store.dispatch(loadNetwork(network));
-                        if (user.token != '') {
+                        if (checkToken) {
                             this.props.store.dispatch(loadUser(user));
-                            console.log("123--------123");
                             //console.log( this.props.store);
                             //this.props.store.dispatch(setCurrentRole(current_role));
                         } else {
-                            console.log("2222222222");
                             this.props.store.dispatch(loadUserFAIL(user));
                         }
                     })

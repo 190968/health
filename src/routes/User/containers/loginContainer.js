@@ -29,9 +29,9 @@ const loginUser = gql`
 const withMutation = graphql(loginUser, {
     props: ({ mutate }) => ({
         loginUser: input => {
-            return mutate({
-                variables: { input: {email: input.email, password: input.password} },
-            })
+                return mutate({
+                    variables: { input: {email: input.email, password: input.password} },
+                })
         },
     }),
 });
