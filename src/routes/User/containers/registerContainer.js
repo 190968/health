@@ -64,13 +64,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         //dispatch(loginUserRequest({ email }));
         //console.log(props);
         const{first_name,last_name,birthday,gender,email, password,password_repeat,phone} = props;
-        ownProps.registerUser({first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,password_repeat:password_repeat,phone:phone })
+        ownProps.registerUser({first_name:first_name,last_name:last_name,birthday:birthday.toISOString(),gender:gender, email:email, password:password,password_repeat:password_repeat,phone:phone })
             .then(({data}) => {
-                //const token = data.login.token;
+
+                console.log("----registr----");
                 console.log(data);
-                //console.log(token);
-                //dispatch(setUserToken({token}));
-               // dispatch(registerUserSuccess({token}));
             }).catch((error) => {
             console.log(error);
             dispatch(registerUserError({
