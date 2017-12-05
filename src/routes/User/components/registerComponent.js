@@ -4,8 +4,10 @@
 import React, { PropTypes } from 'react';
 import {Redirect, Route} from 'react-router-dom'
 //import {Route } from 'react-router'
-import { Form, Select, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 const Option = Select.Option;
+const RadioGroup = Radio.Group;
+const RadioButton = Radio.Button;
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -78,6 +80,36 @@ class NormalRegisterForm extends React.Component {
                         rules: [{ required: true, message: 'Please input your Last Name!', whitespace: true }],
                     })(
                         <Input />
+                    )}
+                </FormItem>
+
+                <FormItem
+                    {...formItemLayout}
+                    label="Gender"
+                >
+                    {getFieldDecorator('radio-button',{
+                        rules: [{ required: true, message: 'Please Select your gender', whitespace: true }],
+                    })(
+                        <RadioGroup>
+                            <RadioButton value="male">Male</RadioButton>
+                            <RadioButton value="female">Female</RadioButton>
+                        </RadioGroup>
+                    )}
+                </FormItem>
+
+                <FormItem
+                    {...formItemLayout}
+                    label="Birthday"
+                    hasFeedback
+                >
+                    {getFieldDecorator('birthday', {
+                        rules: [{
+                            type: 'date', message: 'The input is not valid Date!',
+                        }, {
+                            required: true, message: 'Please input your Birthday',
+                        }],
+                    })(
+                        <DatePicker />
                     )}
                 </FormItem>
 
