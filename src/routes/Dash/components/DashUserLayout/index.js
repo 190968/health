@@ -37,7 +37,7 @@ export class DashUserLayout extends React.Component {
         }
 
         return (
-           <div>Logout button here</div>);
+           <div>заливаю</div>);
     }
 }
 
