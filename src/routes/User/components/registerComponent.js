@@ -45,7 +45,16 @@ const tailFormItemLayout = {
 
 class NormalRegisterForm extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {checked:true};
+    }
+    handleCheckboxChange =()=> {
+        this.setState({checked: !this.state.checked});
+    }
+
     handleSubmit = (e) => {
+
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
@@ -201,12 +210,15 @@ class NormalRegisterForm extends React.Component {
                 <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
                     {getFieldDecorator('agreement', {
                         valuePropName: 'checked',
+
                     })(
-                        <Checkbox>I have read the <a href="">agreement</a></Checkbox>
+                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} >I have read the <a href="">agreement</a></Checkbox>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" className="register-form-button">
+
+
+                    <Button disabled={this.state.checked}  type="primary" htmlType="submit" className="register-form-button">
                        Register
                     </Button>
                     Or <a href="/login">login now!</a>
