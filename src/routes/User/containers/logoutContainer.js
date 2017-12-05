@@ -6,8 +6,7 @@ import LogoutForm from '../components/logoutComponent'
 
 const logoutUser = gql`
 mutation logout{
-
- logout(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjI0MDM4LCJleHBpcmVzIjoxNTEyNDIyNTI4fQ.OdTjMrr1GMoF5yJAng1ROEIf4NzPm_waZC80qaijFPY")
+ logout
 }
 `;
 
@@ -16,12 +15,11 @@ mutation logout{
 const withMutation = graphql(logoutUser, {
     props: ({ mutate }) => ({
         logoutUser: input => {
-            return mutate({
-                variables: {  },
-            })
+            return mutate () ;
         },
     }),
 });
+
 
 const mapStateToProps = (state) => {
     //console.log(state.user);
@@ -38,6 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.logoutUser()
             .then(({data}) => {
                 console.log(data+'qwerty');
+                localStorage.removeItem("token");
                 window.location.href = "/";
             }).catch((error) => {
             console.log('error');

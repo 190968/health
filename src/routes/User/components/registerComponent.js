@@ -87,7 +87,7 @@ class NormalRegisterForm extends React.Component {
                     label="Last Name"
                     hasFeedback
                 >
-                    {getFieldDecorator('firstName', {
+                    {getFieldDecorator('lastName', {
                         rules: [{ required: true, message: 'Please input your Last Name!', whitespace: true }],
                     })(
                         <Input />

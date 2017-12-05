@@ -9,26 +9,42 @@ import { setUserToken} from '../modules/user'
  wiring in the actions and state necessary to render a presentational
  component - in this case, the counter:   */
 
-import LoginForm from '../components/registerComponent'
+import RegisterForm from '../components/registerComponent'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const loginUser = gql`
-    mutation loginUser($email: Email! $password: String!){
-        login(email: $email, password: $password) {
-            user{id}, token
+const registerUser = gql`
+   mutation registerUser( $input:RegisterInput!){
+        register(input:$input) {
+          user {
+            id
+          }
         }
     }
 `;
 
+// {
+//     "input": {
+//
+//     "first_name": "Pavel",
+//         "last_name": "Guzu",
+//         "birthday": "2015-02-01",
+//         "gender": "male",
+//         "email": "pgutzu@gmail.com",
+//         "password": "123456789",
+//         "phone": "+1325648754"
+//
+// }
+// }
 
 
-const withMutation = graphql(loginUser, {
+
+const withMutation = graphql(registerUser, {
     props: ({ mutate }) => ({
-        loginUser: input => {
+        registerUser: input => {
             return mutate({
-                variables: { email: input.email, password: input.password },
+                variables: {first_name:input.first_name,last_name:input.last_name,birthday:input.birthday,gender:input.gender, email: input.email, password: input.password,password_repeat: input.password_repeat,phone: input.phone },
             })},
     }),
 });
@@ -47,14 +63,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
         //dispatch(loginUserRequest({ email }));
         //console.log(props);
-        const{email, password} = props;
-        ownProps.loginUser({ email:email, password:password })
+        const{first_name,last_name,birthday,gender,email, password,password_repeat,phone} = props;
+        ownProps.registerUser({first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,password_repeat:password_repeat,phone:phone })
             .then(({data}) => {
-                const token = data.login.token;
-                //console.log(data);
+                //const token = data.login.token;
+                console.log(data);
                 //console.log(token);
-                dispatch(setUserToken({token}));
-                dispatch(registerUserSuccess({token}));
+                //dispatch(setUserToken({token}));
+               // dispatch(registerUserSuccess({token}));
             }).catch((error) => {
             console.log(error);
             dispatch(registerUserError({
@@ -65,7 +81,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(RegisterForm));
 /*
  export default connect(
  mapStateToProps,
