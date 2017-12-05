@@ -36,6 +36,7 @@ var history = createBrowserHistory();
 addLocaleData([...en, ...ru, ...es]);
 
 
+
 /**
  * Preparing query to grab the main info
  */
