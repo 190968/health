@@ -4,6 +4,14 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
+    state = {
+        email: {
+            value: 'demo2patient@fitango.com',
+        },
+        password: {
+            value: 'Fitango1',
+        }
+    };
     handleSubmit = (e) => {
         e.preventDefault();
         const { onSubmit } = this.props;
@@ -20,6 +28,7 @@ class NormalLoginForm extends React.Component {
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('email', {
+                        initialValue: this.state.email.value,
                         rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
                     })(
                         <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Email" />
@@ -29,6 +38,7 @@ class NormalLoginForm extends React.Component {
 
                 <FormItem>
                     {getFieldDecorator('password', {
+                        initialValue: this.state.password.value,
                         /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
                         rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password!' }],
                     })(
