@@ -4,7 +4,10 @@
 import React, { PropTypes } from 'react';
 import {Redirect, Route} from 'react-router-dom'
 //import {Route } from 'react-router'
+//import { intl, FormattedMessage, defineMessages } from 'react-intl';
+//import Messages from './i18n/register.en.json';
 import { Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
+
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -31,6 +34,14 @@ const tailFormItemLayout = {
         },
     },
 };
+
+/*const messages = defineMessages({
+    datePicker: {
+        id: 'App.datePicker.title',
+        defaultMessage: 'Birthday',
+    },
+});*/
+
 
 class NormalRegisterForm extends React.Component {
 
@@ -99,7 +110,7 @@ class NormalRegisterForm extends React.Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label="Birthday"
+                    label={'Birthday'}
                     hasFeedback
                 >
                     {getFieldDecorator('birthday', {
