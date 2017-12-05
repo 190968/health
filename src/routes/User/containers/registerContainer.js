@@ -44,7 +44,7 @@ const withMutation = graphql(registerUser, {
     props: ({ mutate }) => ({
         registerUser: input => {
             return mutate({
-                variables: {first_name:input.first_name,last_name:input.last_name,birthday:input.birthday,gender:input.gender, email: input.email, password: input.password,password_repeat: input.password_repeat,phone: input.phone },
+                variables: {input:{first_name:input.first_name,last_name:input.last_name,birthday:input.birthday,gender:input.gender, email: input.email, password: input.password,password_repeat: input.password_repeat,phone: input.phone,prefix:input.prefix }},
             })},
     }),
 });
@@ -63,8 +63,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
         //dispatch(loginUserRequest({ email }));
         //console.log(props);
-        const{first_name,last_name,birthday,gender,email, password,password_repeat,phone} = props;
-        ownProps.registerUser({first_name:first_name,last_name:last_name,birthday:birthday.toISOString(),gender:gender, email:email, password:password,password_repeat:password_repeat,phone:phone })
+        const{first_name,last_name,birthday,gender,email, password,password_repeat,prefix,phone} = props;
+        ownProps.registerUser({first_name:first_name,last_name:last_name,birthday:birthday.toISOString(),gender:gender, email:email, password:password,password_repeat:password_repeat,phone:[prefix,phone] })
             .then(({data}) => {
 
                 console.log("----registr----");
