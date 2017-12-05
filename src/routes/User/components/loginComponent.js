@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
-import {  Link } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
+
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 const FormItem = Form.Item;
 
@@ -22,9 +23,16 @@ class NormalLoginForm extends React.Component {
         });
     }
     render() {
+        const token = this.props.token;
 
+        if (token != '') {
+            return  <Redirect to={{
+                pathname: '/'
+            }}/>;
+        }
         const { getFieldDecorator } = this.props.form;
         return (
+
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('email', {

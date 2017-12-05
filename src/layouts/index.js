@@ -23,6 +23,8 @@ import PrivateRoute from '../routes/privateRoute';
 
 export const Core = ({token, isLoading, children, logout, store,location}) =>  {
     // const ready = true//state.ready || false;
+    console.log(token);
+    console.log(isLoading);
     if (isLoading) {
         return ('Loading app');
     }

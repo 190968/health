@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { loginUserRequest, loginUserSuccess, loginUserError} from '../modules/login'
-import { setUserToken} from '../modules/user'
+import { loadUser, setUserToken} from '../modules/user'
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
     wiring in the actions and state necessary to render a presentational
@@ -17,7 +17,12 @@ const loginUser = gql`
     mutation loginUser($input: LoginInput!) {
         login(input: $input) {
             user {
-                id
+                id,
+                first_name,
+                last_name,
+                token,
+                new_notifications,
+                new_messages
             } 
             token
         }
@@ -54,6 +59,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
+                const user = data.login.user;
+
+                dispatch(loadUser(user));
+
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
                 /*if (token) {
