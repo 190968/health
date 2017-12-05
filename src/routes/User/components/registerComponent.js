@@ -102,7 +102,7 @@ class NormalRegisterForm extends React.Component {
                     label="Last Name"
                     hasFeedback
                 >
-                    {getFieldDecorator('firstName', {
+                    {getFieldDecorator('lastName', {
                         rules: [{ required: true, message: 'Please input your Last Name!', whitespace: true }],
                     })(
                         <Input />
@@ -112,6 +112,7 @@ class NormalRegisterForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="Gender"
+                    hasFeedback
                 >
                     {getFieldDecorator('radio-button',{
                         rules: [{ required: true, message: 'Please Select your gender', whitespace: true }],
@@ -188,6 +189,7 @@ class NormalRegisterForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label="Phone Number"
+                    hasFeedback
                 >
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
