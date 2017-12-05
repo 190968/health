@@ -54,6 +54,21 @@ class NormalRegisterForm extends React.Component {
             }
         });
     }
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback('Two passwords that you enter is inconsistent!');
+        } else {
+            callback();
+        }
+    }
+    checkConfirm = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value /*&& this.state.confirmDirty*/) {
+            form.validateFields(['confirm'], { force: true });
+        }
+        callback();
+    }
     render() {
 
 
@@ -115,7 +130,7 @@ class NormalRegisterForm extends React.Component {
                 >
                     {getFieldDecorator('birthday', {
                         rules: [{
-                            type: 'date', message: 'The input is not valid Date!',
+                            type: 'object', message: 'The input is not valid Date!',
                         }, {
                             required: true, message: 'Please input your Birthday',
                         }],
@@ -133,7 +148,7 @@ class NormalRegisterForm extends React.Component {
                         rules: [{
                             type: 'email', message: 'The input is not valid E-mail!',
                         }, {
-                            required: true, message: 'Please input your E-mail!',
+                            required: true,  message: 'Please input your E-mail!',
                         }],
                     })(
                         <Input />
@@ -146,7 +161,7 @@ class NormalRegisterForm extends React.Component {
                 >
                     {getFieldDecorator('password', {
                         rules: [{
-                            required: true, message: 'Please input your password!',
+                            required: true,  pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.',
                         }, {
                             validator: this.checkConfirm,
                         }],
