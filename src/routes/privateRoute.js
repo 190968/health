@@ -5,25 +5,22 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-var token = localStorage.getItem('token');
-//console.log( this.props.store);
-const PrivateRoute = ({state, component: Component, ...rest }) => (
+const PrivateRoute = ({state, token, component: Component, ...rest }) => (
 
     <Route {...rest} render={props => (
        token !='' ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-    }}/>
+            pathname: '/login',
+            state: { from: props.location }
+        }} />
         )
     )}/>
 )
 
-const mapStateToProps = (state,ownProps) => {
-
-    console.log("---"+state.user.token);
+const mapStateToProps = (state, ownProps) => {
+    //console.log(state);
     return {
         token: state.user.token
     };

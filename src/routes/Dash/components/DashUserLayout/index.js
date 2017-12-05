@@ -37,7 +37,7 @@ export class DashUserLayout extends React.Component {
         }
 
         return (
-           <div><DatePicker /></div>);
+           <div>Logout button here</div>);
     }
 }
 

@@ -56,11 +56,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 const token = data.login.token;
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
-                if (token) {
+                /*if (token) {
                     return window.location.href = "/";
-                }
+                }*/
             }).catch((error) => {
-            console.log(error);
+            //console.log(error);
             dispatch(loginUserError({
                 error,
             }));
