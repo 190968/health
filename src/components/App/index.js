@@ -53,6 +53,7 @@ const NETWORK_INFO = gql`
                 new_messages
             }
             current_role
+
         }
     }
 `;
@@ -73,50 +74,38 @@ class App extends React.Component {
     // load network and token info
     componentWillMount() {
         apolloClient.query(queryOptions)
-            .then(({ data: {network, account: {user, checkToken, current_role}} }) => {
-// const NETWORK_INFO2 =gql`query CHECK_TOKEN{account(token:"+localStorage.getItem('token')+") { checkToken }}`;
-//
-//                 const queryOptions2 =  {
-//                     query: NETWORK_INFO2
-//                 }
-//                 apolloClient.query(queryOptions2)
-//                     .then(({data: { account: {checkToken}}}) => {
-
-
-                        console.log("333333333311");
-                       // console.log(checkToken);
-                        this.setState({loading: false});
-                        this.props.store.dispatch(loadNetwork(network));
-                        if(checkToken) {
-                            this.props.store.dispatch(loadUser(user));
-                            console.log("123--------123");
-                            //console.log( this.props.store);
-                            //this.props.store.dispatch(setCurrentRole(current_role));
-                        } else {
-                            console.log("2222222222");
-                            this.props.store.dispatch(loadUserFAIL(user));
-                        }
-                    })
-            // })
-            }
+            .then(({ data: {network, account: {user,checkToken, current_role}} }) => {
+                console.log(checkToken);
+                this.setState({loading: false});
+                this.props.store.dispatch(loadNetwork(network));
+                if (checkToken) {
+                    this.props.store.dispatch(loadUser(user));
+                    //console.log( this.props.store);
+                    //this.props.store.dispatch(setCurrentRole(current_role));
+                } else {
+                    this.props.store.dispatch(loadUserFAIL(user));
+                }
+            })
+        // })
+    }
 
     shouldComponentUpdate () {
         return false
     }
 
-  render() {
-    return (
-        <ApolloProvider client={apolloClient}>
-            <Provider store={this.props.store}>
-                <Router history={history}>
-                    <LocaleProvider locale={enUS}>
-                        <Core store={this.props.store} loading={this.state.loading} />
-                    </LocaleProvider>
-                </Router>
-            </Provider>
-        </ApolloProvider>
-    );
-  }
+    render() {
+        return (
+            <ApolloProvider client={apolloClient}>
+                <Provider store={this.props.store}>
+                    <Router history={history}>
+                        <LocaleProvider locale={enUS}>
+                            <Core store={this.props.store} loading={this.state.loading} />
+                        </LocaleProvider>
+                    </Router>
+                </Provider>
+            </ApolloProvider>
+        );
+    }
 }
 
 export default App;

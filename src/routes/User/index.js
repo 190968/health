@@ -47,7 +47,7 @@ export default (store) => ({
             require.ensure([], (require) => {
                 /*  Webpack - use require callback to define
                     dependencies for bundling   */
-                const Login = require('./containers/userContainer').default
+                const Login = require('./containers/logoutContainer').default
                 // const Login1 = require('./containers/userContainer').default
                 const user_reducer = require('./modules/user').default
                 injectReducer(store, { key: 'user', reducer:user_reducer })

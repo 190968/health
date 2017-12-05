@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
-import { loginUserRequest, loginUserSuccess, loginUserError} from '../modules/login'
-import { gql,graphql } from 'react-apollo';
-
+import { logoutUserRequest, logoutUserSuccess,logoutUserError} from '../modules/logout'
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+import LogoutForm from '../components/logoutComponent'
 
 const logoutUser = gql`
-    mutation loginUser($email: Email! $password: String!){
-        login(email: $email, password: $password) {
-            user{id}, token
-        }
-    }
+mutation logout{
+
+ logout(token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOjI0MDM4LCJleHBpcmVzIjoxNTEyNDIyNTI4fQ.OdTjMrr1GMoF5yJAng1ROEIf4NzPm_waZC80qaijFPY")
+}
 `;
 
 
@@ -16,7 +16,10 @@ const logoutUser = gql`
 const withMutation = graphql(logoutUser, {
     props: ({ mutate }) => ({
         logoutUser: input => {
-            return mutate()},
+            return mutate({
+                variables: {  },
+            })
+        },
     }),
 });
 
@@ -26,22 +29,19 @@ const mapStateToProps = (state) => {
         // view store:
         //currentView:  state.views.currentView,
         // userAuth:
-        token: state.user.token
+        //token: state.user.token
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: ({ email, password }) => {
-
-        ownProps.loginUser({ email:email, password:password })
+    onSubmit: () => {
+        ownProps.logoutUser()
             .then(({data}) => {
-                const token = data.login.token;
-                //console.log(data);
-                //console.log(token);
-                //dispatch(setUserToken({token}));
-                dispatch(loginUserSuccess({token}));
+                console.log(data+'qwerty');
+                window.location.href = "/";
             }).catch((error) => {
-            dispatch(loginUserError({
+            console.log('error');
+            dispatch(logoutUserError({
                 error,
             }));
         });
@@ -49,4 +49,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(withMutation));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(LogoutForm));
