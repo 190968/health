@@ -4,7 +4,8 @@
 import React, { PropTypes } from 'react';
 import {Redirect, Route} from 'react-router-dom'
 //import {Route } from 'react-router'
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Select, Icon, Input, Button, Checkbox } from 'antd';
+const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -28,6 +29,7 @@ const tailFormItemLayout = {
         },
     },
 };
+
 class NormalRegisterForm extends React.Component {
 
     handleSubmit = (e) => {
@@ -41,7 +43,18 @@ class NormalRegisterForm extends React.Component {
     }
     render() {
 
+
         const { getFieldDecorator } = this.props.form;
+
+        const prefixSelector = getFieldDecorator('prefix', {
+            initialValue: '1',
+        })(
+            <Select style={{ width: 70 }}>
+                <Option value="1">+1</Option>
+                <Option value="2">+2</Option>
+            </Select>
+        );
+
         return (
             <Form onSubmit={this.handleSubmit}>
 
@@ -121,7 +134,7 @@ class NormalRegisterForm extends React.Component {
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: 'Please input your phone number!' }],
                     })(
-                        <Input addonBefore={"+375"} style={{ width: '100%' }} />
+                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                     )}
                 </FormItem>
 
