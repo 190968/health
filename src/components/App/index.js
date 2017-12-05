@@ -85,7 +85,6 @@ class App extends React.Component {
     componentWillMount() {
         apolloClient.query(queryOptions)
             .then(({ data: {network, account: {user,checkToken, current_role}} }) => {
-                console.log(checkToken);
                 this.setState({loading: false});
                 this.props.store.dispatch(loadNetwork(network));
                 if (checkToken) {

@@ -8,7 +8,6 @@ export const SET_USER_INFO_FAIL = 'SET_USER_INFO_FAIL';
 // ------------------------------------
 export const setUserToken = ({token}) => {
     localStorage.setItem('token', token);
-    //console.log(token);
     return {
         type: SET_USER_TOKEN,
         token: token

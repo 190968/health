@@ -23,16 +23,17 @@ import PrivateRoute from '../routes/privateRoute';
 
 export const Core = ({token, isLoading, children, logout, store,location}) =>  {
     // const ready = true//state.ready || false;
+    console.log(token);
+    console.log(isLoading);
     if (isLoading) {
-        //return ('Loading app');
+        return ('Loading app');
     }
-    //console.log(this.props);
     return (
         <div style={{height:'100%'}}>
-                <PrivateRoute exact path="/" component={asyncDash(store)} />
-                <Route exact path="/login" component={asyncLogin(store)} />
+
+            <PrivateRoute exact path="/" component={asyncDash(store)} />
+            <Route exact path="/login" component={asyncLogin(store)} />
             <Route exact path="/register" component={asyncRegister(store)} />
-            <Route exact path="/" component={asyncLogout(store)} />
         </div>
     )}
 
