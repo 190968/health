@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { DatePicker } from 'antd';
+import Logout from '../../../User/components/logoutComponent';
 
 
 export class DashUserLayout extends React.Component {
@@ -35,9 +36,14 @@ export class DashUserLayout extends React.Component {
                 </div>
             );
         }
-
+        console.log("Logkout");
         return (
-           <div>заливаю</div>);
+
+            <Logout/>//доделать
+            // <Form onSubmit={this.handleSubmit}>
+            //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>
+            // </Form>
+        );
     }
 }
 
