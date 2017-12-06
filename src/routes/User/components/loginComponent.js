@@ -28,7 +28,7 @@ class NormalLoginForm extends React.Component {
         if (token != '') {
             return  <Redirect to={{
                 pathname: '/'
-            }}/>;
+            }} />;
         }
         const { getFieldDecorator } = this.props.form;
         return (
