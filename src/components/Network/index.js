@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 const HaveModulePure = (props) => {
-    const module = props.module;
-    const modules = props.modules;
-    //console.log(modules);
+    const module = props.module || '';
+    const modules = props.modules || {};
+    //console.log(props);
     if (module in modules) {
         return [props.children];
     } else {

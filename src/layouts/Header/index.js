@@ -1,45 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavLink as RouterNavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {HaveModule} from '../../../src/components/Network/index.js'
 // add placeholders
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 
-import { Container, Row, Collapse,  Badge, Navbar, NavbarToggler, NavbarBrand, NavDropdown,  DropdownItem, DropdownToggle, DropdownMenu, Nav, NavItem, NavLink } from 'reactstrap';
-
+import { Menu, Avatar, Badge } from 'antd';
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 const HeaderPlaceholder = (
-    <header className="show-loading-animation">
-        <Container>
-            <Navbar color="faded" light className="navbar-expand-lg">
-                <NavbarBrand href="/"></NavbarBrand>
-                <NavbarToggler />
-                <Collapse navbar>
-                    <Nav className="m-auto" navbar>
-                        <NavItem>
-                            <NavLink disabled href="/"> <TextRow></TextRow></NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <TextRow></TextRow>
-                        </NavItem>
-                        <NavItem>
-                            <TextRow></TextRow>
-                        </NavItem>
-                    </Nav>
-                    <Nav navbar>
-                        <NavItem>
-                            <RoundShape></RoundShape>
-                        </NavItem>
-                    </Nav>
-                </Collapse>
-            </Navbar>
-        </Container>
-    </header>
+     <div></div>
 );
 
 
-class Header extends React.Component {
+class LHeader extends React.Component {
     constructor(props) {
         super(props);
 
@@ -63,68 +39,90 @@ class Header extends React.Component {
     }
     render() {
         const loading = this.props.loading;
+        const token = this.props.token;
         //console.log(loading);
         const new_messages = this.props.messages;
         const new_notifications = this.props.notifications;
 
+        const menu_items = [
+            ['Dashboard', '/'],
+            ['Planstore', '/planstore', 'aps'],
+            ['Community', '/community', 'community'],
+        ];
+
+
+        const user_menu_items = [
+            ['Settings', '/settings'],
+            ['Calendar', '/calendar', 'calendar'],
+            ['Health', '/health', 'health'],
+            ['Help Center', '/help', 'help'],
+            ['Logout', '/logout'],
+        ];
+
+        const menuHtml = menu_items.map((item) => {
+            //console.log(item.toString());
+            if (item[1] ) {
+                /*<HaveModule module={item[2]}>*/
+                return (
+                    <Menu.Item key={item.toString()}>
+                        <NavLink exact to={item[1]}>{item[0]}</NavLink>
+                    </Menu.Item>
+                )
+            }
+
+            return (
+                <Menu.Item key={item.toString()}>
+                    <NavLink exact to={item[1]}>{item[0]}</NavLink>
+                </Menu.Item>)
+
+        });
+
+//{/*customPlaceholder={HeaderPlaceholder}*/}
+
+        if (!token) {
+            return (
+                <div style={{'textAlign':'center'}}>
+                    <img className="logo"  src={this.props.network.logo} />
+                </div>
+            )
+        }
         return (
-            <ReactPlaceholder ready={!loading} customPlaceholder={HeaderPlaceholder}>
-                <header>
-                    <Container>
-                        <Navbar color="faded" light className="navbar-expand-lg">
-                            <NavbarBrand href="/"><img className="logo" src={this.props.network.logo} /></NavbarBrand>
-                            <NavbarToggler onClick={this.toggle} />
-                            <Collapse isOpen={this.state.isOpen} navbar>
-                                <Nav className="m-auto" navbar>
+            <ReactPlaceholder ready={!loading} >
+                <div>
+                        <img className="logo" style={{float:'left', height:'50px'}} src={this.props.network.logo} />
+                        <div style={{float:'right'}} >
+                        <Menu
+                            onClick={this.handleClick}
+                            defaultSelectedKeys={['1']}
+                            mode="horizontal"
+
+                            theme="dark"
+                        >
+
+                            {menuHtml}
+
+                            <Menu.Item key='inbox'>
+                                <NavLink exact to="/inbox">Inbox {new_messages > 0 && <Badge count={new_messages}>{new_messages}</Badge>}</NavLink>
+                            </Menu.Item>
+                            <Menu.Item key='notifications'>
+                                <NavLink exact to="/notifications">Notifications {new_notifications > 0 && <Badge count={new_notifications}>{new_notifications}</Badge>}</NavLink>
+                            </Menu.Item>
 
 
-                                    <NavItem>
-                                        <NavLink exact tag={RouterNavLink} to="/">Dashboard</NavLink>
-                                    </NavItem>
-                                    <HaveModule module="aps">
-                                        <NavItem>
-                                            <NavLink tag={RouterNavLink}  to="/planstore" >Planstore</NavLink>
-                                        </NavItem>
-                                    </HaveModule>
+                            <SubMenu key="sub1" title={<span><Avatar icon="user" size="small" /> <span>{this.props.user.first_name}!</span></span>}>
 
-                                    <HaveModule module="planstore">
-                                        <NavItem>
-                                            <NavLink  tag={RouterNavLink} to="/community">Community</NavLink>
-                                        </NavItem>
-                                    </HaveModule>
-                                </Nav>
-                                <Nav navbar>
-                                    <NavItem>
-                                        <NavLink  tag={RouterNavLink} to="/inbox">Inbox  {new_messages > 0 && <Badge color="danger" pill>{new_messages}</Badge>}</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink  tag={RouterNavLink} to="/notification">Notifications {new_notifications > 0 && <Badge color="danger" pill>{new_notifications}</Badge>}</NavLink>
-                                    </NavItem>
-                                    <HaveModule module="points">
-                                        <NavItem>
-                                            <NavLink  tag={RouterNavLink} to="/notification">Points</NavLink>
-                                        </NavItem>
-                                    </HaveModule>
-                                    <NavDropdown isOpen={this.state.isOpenUser} toggle={this.toggleUser} >
-                                        <DropdownToggle nav caret>
-                                            Hi {this.props.user.first_name}!
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem onClick={this.toggleUser}><NavLink tag={RouterNavLink} to="/settings">Settings</NavLink></DropdownItem>
-                                            <DropdownItem onClick={this.toggleUser}><NavLink tag={RouterNavLink} to="/calendar">Calendar</NavLink></DropdownItem>
-                                            <HaveModule module="health">
-                                                <DropdownItem onClick={this.toggleUser}><NavLink tag={RouterNavLink} to="/health">My Health</NavLink></DropdownItem>
-                                            </HaveModule>
-                                            <DropdownItem onClick={this.toggleUser}><NavLink tag={RouterNavLink} to="/help">Help Center</NavLink></DropdownItem>
-                                            <DropdownItem divider />
-                                            <DropdownItem><NavLink tag={RouterNavLink} to="/logout">Logout</NavLink></DropdownItem>
-                                        </DropdownMenu>
-                                    </NavDropdown>
-                                </Nav>
-                            </Collapse>
-                        </Navbar>
-                    </Container>
-                </header>
+                                {user_menu_items.map((item) => {
+                                    return (
+                                        <Menu.Item key={item.toString()}>
+                                            <NavLink exact to={item[1]}>{item[0]}</NavLink>
+                                        </Menu.Item>)
+
+                                })}
+                            </SubMenu>
+
+                        </Menu>
+                        </div>
+                </div>
             </ReactPlaceholder>
         );
     }
@@ -154,4 +152,4 @@ const mapDispatchToProps = (dispatch) => {
 export default  connect(
     mapStateToProps,
     mapDispatchToProps
-)(Header);
+)(LHeader);

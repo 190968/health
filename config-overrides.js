@@ -6,7 +6,10 @@ module.exports = function override(config, env) {
         "enforceDescriptions": false}], config);  // change importing css to less
     config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);  // change importing css to less
     config = rewireLess.withLoaderOptions({
-             modifyVars: { "@primary-color": "#1DA57A" },
+             modifyVars: {
+                 "@body-background": "#f2f2f2",
+                 "@layout-footer-background": "#303030",
+             },
     })(config, env);
     // do stuff with the webpack config...
     return config;

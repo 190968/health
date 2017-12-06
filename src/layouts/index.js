@@ -2,6 +2,11 @@ import React from 'react'
 import { Route, IndexLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+
+
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+
 //import './index.scss'
 //import './box.scss'
 
@@ -10,7 +15,7 @@ import { withRouter } from 'react-router-dom';
 
 
 //import LoginForm from '../routes/User/containers/loginContainer';
-import Header from './Header';
+import LayoutHeader from './Header';
 import { logoutUser } from '../routes/User/modules/user';
 
 
@@ -20,6 +25,7 @@ import {asyncDash,  asyncLogin,asyncRegister,asyncLogout/*,asyncPlan, asyncPlant
 import PrivateRoute from '../routes/privateRoute';
 
 //const App = require('../components/App').default
+const { Header, Content, Footer } = Layout;
 
 export const Core = ({token, isLoading, children, logout, store,location}) =>  {
     // const ready = true//state.ready || false;
@@ -29,12 +35,21 @@ export const Core = ({token, isLoading, children, logout, store,location}) =>  {
         return ('Loading app');
     }
     return (
-        <div style={{height:'100%'}}>
-            <Header />
-            <PrivateRoute exact path="/" component={asyncDash(store)} />
-            <Route exact path="/login" component={asyncLogin(store)} />
-            <Route exact path="/logout" component={asyncLogout(store)} />
-            <Route exact path="/register" component={asyncRegister(store)} />
+        <div style={{height:'100%', display: 'flex',
+            'min-height': '100vh',
+            'flex-direction':'column'}}>
+            <Header>
+                <LayoutHeader />
+            </Header>
+            <Content style={{ padding: '50px 50px 0', flex: '1' }}>
+                <PrivateRoute exact path="/" component={asyncDash(store)} />
+                <Route exact path="/login" component={asyncLogin(store)} />
+                <Route exact path="/logout" component={asyncLogout(store)} />
+                <Route exact path="/register" component={asyncRegister(store)} />
+            </Content>
+            <Footer>
+                Copyright © 2010-2017 Fitango Inc. All rights reserved
+            </Footer>
         </div>
     )}
 
