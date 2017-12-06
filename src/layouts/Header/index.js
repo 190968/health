@@ -96,7 +96,7 @@ class LHeader extends React.Component {
                             defaultSelectedKeys={['1']}
                             mode="horizontal"
 
-                            theme="dark"
+
                         >
 
                             {menuHtml}
