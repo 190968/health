@@ -10,8 +10,8 @@ import { withRouter } from 'react-router-dom';
 
 
 //import LoginForm from '../routes/User/containers/loginContainer';
-//import Header from './PageLayout/Header';
-//import { logoutUser } from '../routes/User/modules/user';
+import Header from './Header';
+import { logoutUser } from '../routes/User/modules/user';
 
 
 
@@ -23,16 +23,17 @@ import PrivateRoute from '../routes/privateRoute';
 
 export const Core = ({token, isLoading, children, logout, store,location}) =>  {
     // const ready = true//state.ready || false;
-    console.log(token);
-    console.log(isLoading);
+    //console.log(token);
+    //console.log(isLoading);
     if (isLoading) {
         return ('Loading app');
     }
     return (
         <div style={{height:'100%'}}>
-
+            <Header />
             <PrivateRoute exact path="/" component={asyncDash(store)} />
             <Route exact path="/login" component={asyncLogin(store)} />
+            <Route exact path="/logout" component={asyncLogout(store)} />
             <Route exact path="/register" component={asyncRegister(store)} />
         </div>
     )}
@@ -58,7 +59,7 @@ Core.defaultProps = {
     children: null,
     state: null,
     loading: false,
-    // logout: () => {console.log (1);},
+    logout: () => {console.log (1);},
 };
 
 
@@ -76,7 +77,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        //logout: (info) => {dispatch(logoutUser(info))},
+        logout: (info) => {
+            console.log(111);
+            dispatch(logoutUser(info));
+        },
     }
 };
 

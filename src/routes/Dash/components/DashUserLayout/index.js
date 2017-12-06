@@ -23,7 +23,7 @@ export class DashUserLayout extends React.Component {
     }
     render () {
         const {
-            plans, loading,loadMoreEntries
+            plans, loading,logout,loadMoreEntries
         } = this.props;
         if (1==5 && loading) {
             //return (<div>Loading...</div>);
@@ -36,10 +36,9 @@ export class DashUserLayout extends React.Component {
                 </div>
             );
         }
-        console.log("Logkout");
+        //onsole.log("Logkout");
         return (
-
-            <Logout />//доделать
+            <Button onclick={logout} >Logout</Button>
             // <Form onSubmit={this.handleSubmit}>
             //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>
             // </Form>

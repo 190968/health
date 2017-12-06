@@ -6,7 +6,7 @@ import LogoutForm from '../components/logoutComponent'
 
 const logoutUser = gql`
 mutation logout{
- logout
+    logout
 }
 `;
 
@@ -32,19 +32,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: () => {
-        ownProps.logoutUser()
-            .then(({data}) => {
-                console.log(data+'qwerty');
-                localStorage.removeItem("token");
-                window.location.href = "/";
-            }).catch((error) => {
-            console.log('error');
-            dispatch(logoutUserError({
-                error,
-            }));
-        });
-    },
 });
 
 

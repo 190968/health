@@ -62,9 +62,9 @@ export const asyncLogout= (store) => {
         Loadable({
             loader: () => import('../routes/User/containers/logoutContainer'),
             reducers: {
-        'url': 'User/modules/logout',
-            'key': 'user_logout'
-    }
-}, store)
+                'url': 'User/modules/logout',
+                'key': 'user_logout'
+            }
+        }, store)
     );
 }
