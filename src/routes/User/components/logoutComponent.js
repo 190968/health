@@ -28,4 +28,4 @@ return(
     }
 }
 const WrappedNormalLogoutForm = Form.create()(NormalLogoutForm);
-export default connect(WrappedNormalLogoutForm);
+export default WrappedNormalLogoutForm;
