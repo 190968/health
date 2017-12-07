@@ -76,14 +76,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props, client) => {
-        const{first_name,last_name,birthday,gender,email, password,prefix,phone} = props;
+        const{first_name,last_name,birthday,gender,email,prefix,phone} = props;
         //
 
         //console.log(client);
         //console.log(settingUserMutate);
         client.mutate({
             mutation: settingUserMutate,
-            variables: {input: {user:{first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,phone:[prefix,phone] }}}
+            variables: {input: {user:{first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email,phone:[prefix,phone] }}}
         }).then(({data}) => {
             console.log("----settings----");
             console.log(data);
