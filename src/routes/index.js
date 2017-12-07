@@ -73,10 +73,10 @@ export const asyncSettings= (store) => {
     return (
         Loadable({
             loader: () => import('../routes/Setting/containers/settingContainer'),
-            reducers: {
+            /*reducers: {
                 'url': 'Setting/modules/setting',
-                'key': 'setting'
-            }
-        }, store)
+                'key': 'settings'
+            }*/
+        })
     );
 }

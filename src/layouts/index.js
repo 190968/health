@@ -46,7 +46,7 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
-                <Route exact path="/settings" component={asyncSettings(store)} />
+                <Route path="/settings" component={asyncSettings(store)} />
             </Content>
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved
