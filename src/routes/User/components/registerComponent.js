@@ -48,13 +48,9 @@ class NormalRegisterForm extends React.Component {
 
     constructor() {
         super();
-<<<<<<< HEAD
-        this.state = {checked:true};
-}
-=======
+
         this.state = {checked:true, loading:false};
     }
->>>>>>> 72480aabc707468c4704c5573f776c606b8e18ce
     handleCheckboxChange =()=> {
         this.setState({checked: !this.state.checked});
     }
