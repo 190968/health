@@ -59,7 +59,7 @@ const withMutation = graphql(settingUserMutate, {
     props: ({ mutate }) => ({
         settingUserMutate: input => {
             return mutate({
-                variables: {input:{user:{first_name:input.first_name,last_name:input.last_name,birthday:input.birthday.format("YYYY-MM -DD"),gender:input.gender, email: input.email, password: input.password,phone: input.phone,prefix:input.prefix }}},
+                variables: {input:{user:{first_name:input.first_name,last_name:input.last_name,birthday:input.birthday.format("YYYY-MM-DD"),gender:input.gender, email: input.email, password: input.password,phone: input.phone,prefix:input.prefix }}},
             })},
     }),
 });
@@ -76,14 +76,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props, client) => {
-        const{first_name,last_name,birthday,gender,email, password,prefix,phone} = props;
+        const{first_name,last_name,birthday,gender,email,prefix,phone} = props;
         //
-
+console.log(birthday);
         //console.log(client);
         //console.log(settingUserMutate);
         client.mutate({
             mutation: settingUserMutate,
-            variables: {input: {user:{first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,phone:[prefix,phone] }}}
+            variables: {input: {user:{first_name:first_name,last_name:last_name,birthday:birthday.format("YYYY-MM-DD"),gender:gender, email:email,phone:[prefix,phone] }}}
         }).then(({data}) => {
             console.log("----settings----");
             console.log(data);

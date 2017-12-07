@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Input,Col,Select,Form, Calendar, DatePicker, InputNumber, Radio, Button, Checkbox } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import moment from 'moment';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -31,7 +32,7 @@ const tailFormItemLayout = {
         },
     },
 };
-
+const dateFormat = 'YYYY-MM-DD';
 
 
  class SettingForm extends React.Component{
@@ -69,7 +70,7 @@ const tailFormItemLayout = {
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: "+1",
+            initialValue: "+1"
         })(
             <Select style={{ width: 70 }}>
                 <Option value="+2">+2</Option>
@@ -96,53 +97,60 @@ const tailFormItemLayout = {
             >
                 <InputGroup >
                     <Col span={8}>
-                        <Input  placeholder="First name" defaultValue={this.props.account.user.first_name}/>
+                        {getFieldDecorator('first_name', {
+                            initialValue: this.props.account.user.first_name ,
+                            rules: [{ required: true, message: 'Please input your First Name!', whitespace: true }],
+                        })(
+                        <Input  placeholder="First name" />
+                        )}
                     </Col>
                     <Col span={8}>
-                        <Input  placeholder="Middle name"  />
+                        {getFieldDecorator('middle_name', {
+                            initialValue:this.props.account.user.middle_name ,
+                            rules: [{ required: true, message: 'Please input your Middle name!', whitespace: true }],
+                        })(
+                        <Input  placeholder="Middle name" />
+                        )}
                     </Col>
                     <Col span={8}>
-                        <Input placeholder="Last name" defaultValue={this.props.account.user.last_name} />
+                        {getFieldDecorator('last_name', {
+                            initialValue: this.props.account.user.last_name,
+                            rules: [{ required: true, message: 'Please input your Last name!', whitespace: true }],
+                        })(
+                        <Input  placeholder="Last name" />
+                        )}
                     </Col>
                 </InputGroup>
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label="Birthday"
+                label={'Birthday'}
+                hasFeedback
             >
-                <InputGroup >
-                    <Col span={4}>
-                        <Select   style={{ width: 120 }} >
-                            <Option value="Февраль">Февраль</Option>
-                            <Option value="Март">Март</Option>
-                            <Option value="Апрель">Апрель</Option>
-                            <Option value="Май">Май</Option>
-                        </Select>
-                    </Col>
-                    <Col span={4}>
-                        <Select placeholder="Day" style={{ width: 120 }} >
-                            <Option value="1">1</Option>
-                            <Option value="2">2</Option>
-                            <Option value="3">3</Option>
-                            <Option value="4">4</Option>
-                        </Select>
-                    </Col>
-                    <Col span={4}>
-                        <Select  placeholder="Year" style={{ width: 120 }} >
-                            <Option value="2017">2017</Option>
-                            <Option value="2016">2016</Option>
-                        </Select>
-                    </Col>
-                </InputGroup>
+                {getFieldDecorator('birthday', {
+                    initialValue: moment(this.props.account.user.birthday, dateFormat),
+                    rules: [{
+                        type: 'object', message: 'The input is not valid Date!',
+                    }, {
+                        required: true, message: 'Please input your Birthday',
+                    }],
+                })(
+                    <DatePicker  format={dateFormat}/>
+                )}
             </FormItem>
             <FormItem
                 {...formItemLayout}
                 label="Gender"
             >
-                <Select defaultValue={this.props.account.user.gender}  style={{ width: 120 }} >
+                {getFieldDecorator('gender', {
+                initialValue: this.props.account.user.gender,
+                rules: [{ required: true, message: 'Please input your gender!', whitespace: true }],
+            })(
+                <Select   style={{ width: 120 }} >
                     <Option value="female">female</Option>
                     <Option value="male">male</Option>
                 </Select>
+            )}
             </FormItem>
             <FormItem
                 {...formItemLayout}
@@ -150,6 +158,7 @@ const tailFormItemLayout = {
                 hasFeedback
             >
                 {getFieldDecorator('phone', {
+                    initialValue: this.props.account.user.phone,
                     rules: [{ required: true, message: 'Please input your phone number!' }],
                 })(
                     <Input  addonBefore={prefixSelector} style={{ width: '100%' }} />
@@ -158,29 +167,37 @@ const tailFormItemLayout = {
             <FormItem
                 {...formItemLayout}
                 label="Language"
-            >
-                <Select defaultValue={this.props.account.user.language}  style={{ width: 120 }} >
+            > {getFieldDecorator('language', {
+                initialValue: this.props.account.user.language,
+                rules: [{ required: true, message: 'Please input your language!' }],
+            })(
+                <Select   style={{ width: 120 }} >
                     <Option value="Русский">Русский</Option>
                     <Option value="Английский">Английский</Option>
                 </Select>
+            )}
             </FormItem>
-            <FormItem
-                {...formItemLayout}
-                label="Date format"
-            >
-                <Select style={{ width: 120 }} >
-                    <Option value="MM/DD/YY">MM/DD/YY</Option>
-                    <Option value="DD/MM/YY">DD/MM/YY</Option>
-                </Select>
-            </FormItem>
+            {/*<FormItem*/}
+                {/*{...formItemLayout}*/}
+                {/*label="Date format"*/}
+            {/*>*/}
+                {/*<Select style={{ width: 120 }} >*/}
+                    {/*<Option value="MM/DD/YY">MM/DD/YY</Option>*/}
+                    {/*<Option value="DD/MM/YY">DD/MM/YY</Option>*/}
+                {/*</Select>*/}
+            {/*</FormItem>*/}
             <FormItem
                 {...formItemLayout}
                 label="Email"
-            >
-                <Input defaultValue={this.props.account.user.email} placeholder="Email" />
+            >{getFieldDecorator('email', {
+                initialValue: this.props.account.user.email,
+                rules: [{ required: true, message: 'Please input your Email!' }],
+            })(
+                <Input  placeholder="Email" />
+            )}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
-                <Button loading={this.state.loading} onClick={this.enterLoading}    type="primary" htmlType="submit" className="register-form-button">
+                <Button loading={this.state.loading}     type="primary" htmlType="submit" className="register-form-button">
                     Submit
                 </Button>
             </FormItem>
