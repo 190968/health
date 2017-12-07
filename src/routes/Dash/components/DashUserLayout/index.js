@@ -38,7 +38,7 @@ export class DashUserLayout extends React.Component {
         }
         //onsole.log("Logkout");
         return (
-            <Button onclick={logout} >Logout</Button>
+           <div>This is dashboard</div>
             // <Form onSubmit={this.handleSubmit}>
             //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>
             // </Form>

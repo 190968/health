@@ -3,10 +3,11 @@
  */
 import React, { PropTypes } from 'react';
 import {Redirect, Route} from 'react-router-dom'
+import './register.css'
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
 //import Messages from './i18n/register.en.json';
-import { Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
+import { Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -47,8 +48,13 @@ class NormalRegisterForm extends React.Component {
 
     constructor() {
         super();
+<<<<<<< HEAD
         this.state = {checked:true};
 }
+=======
+        this.state = {checked:true, loading:false};
+    }
+>>>>>>> 72480aabc707468c4704c5573f776c606b8e18ce
     handleCheckboxChange =()=> {
         this.setState({checked: !this.state.checked});
     }
@@ -59,6 +65,9 @@ class NormalRegisterForm extends React.Component {
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                this.setState({
+                    loading: true
+                });
                 return onSubmit(values);
             }
         });
@@ -80,7 +89,13 @@ class NormalRegisterForm extends React.Component {
     }
     render() {
 
+        const token = this.props.token;
 
+        if (token != '') {
+            return  <Redirect to={{
+                pathname: '/'
+            }} />;
+        }
         const { getFieldDecorator } = this.props.form;
 
         const prefixSelector = getFieldDecorator('prefix', {
@@ -93,7 +108,11 @@ class NormalRegisterForm extends React.Component {
         );
 
         return (
-            <Form onSubmit={this.handleSubmit}>
+            <div className="register-form" style={{padding:'0 20%'}}>
+                <Card
+                    title="Sign Up"
+                >
+            <Form onSubmit={this.handleSubmit} >
 
                 <FormItem
                     {...formItemLayout}
@@ -218,12 +237,14 @@ class NormalRegisterForm extends React.Component {
                 <FormItem {...tailFormItemLayout}>
 
 
-                    <Button disabled={this.state.checked}  type="primary" htmlType="submit" className="register-form-button">
-                       Register
+                    <Button disabled={this.state.checked}  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
+                       Sign Up
                     </Button>
                     Or <a href="/login">login now!</a>
                 </FormItem>
             </Form>
+                </Card>
+            </div>
         );
     }
 }

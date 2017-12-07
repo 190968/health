@@ -1,8 +1,11 @@
 import React, { PropTypes } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import './login.css'
+
+import { Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
+const { Meta } = Card;
 
 class NormalLoginForm extends React.Component {
     state = {
@@ -11,13 +14,17 @@ class NormalLoginForm extends React.Component {
         },
         password: {
             value: 'Fitango1',
-        }
+        },
+        loading:false
     };
     handleSubmit = (e) => {
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                this.setState({
+                    loading: true
+                });
                 return onSubmit(values);
             }
         });
@@ -31,7 +38,10 @@ class NormalLoginForm extends React.Component {
             }} />;
         }
         const { getFieldDecorator } = this.props.form;
-        return (
+        return (<div style={{padding:'0 35%'}}>
+            <Card
+                title="Login"
+            >
 
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
@@ -54,14 +64,16 @@ class NormalLoginForm extends React.Component {
                     )}
                 </FormItem>
                 <FormItem>
-                    <a className="login-form-forgot" href="">Forgot password</a>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
+
+                    <Button type="primary" htmlType="submit"  loading={this.state.loading} className="login-form-button">
                         Log in
                     </Button>
-                    Or
-                    <Link to={'/register'}>regiter now!</Link>
+                    <Link className="login-form-forgot" to={'/forgot'}>Forgot password</Link>
+                    Or <Link to={'/register'}>Sign up</Link>
                 </FormItem>
             </Form>
+            </Card>
+            </div>
         );
     }
 }
