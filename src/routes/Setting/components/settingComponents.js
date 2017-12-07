@@ -63,8 +63,14 @@ class SettingForm extends React.Component{
 
     render(){
 
-            console.log(this.props.data.account);
-
+        if (this.props.loading) {
+            return (
+                <div className='box'>
+                    Loading...
+                </div>
+            );
+        }
+        console.log(this.props.account.user.first_name);
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {

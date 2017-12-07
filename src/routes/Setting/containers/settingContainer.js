@@ -10,26 +10,41 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const settingUser = gql`
-   query getSetting{
-account
-  {
-    user {
-      id,
-      first_name,
-      middle_name,
-      last_name,
-      birthday,
-      gender,
-      phone,
-      language,
-      email      
+   query getSettings {
+    account
+    {
+      user {
+        id,
+        first_name,
+        middle_name,
+        last_name,
+        birthday,
+        gender,
+        phone,
+        language,
+        email      
+      }
     }
-  }
 }
 `;
 
 
-const withMutation = graphql(settingUser);
+const withMutation = graphql(settingUser,
+    {
+        props: ({ ownProps, data }) => {
+            //console.log(data.loading);
+            if (!data.loading) {
+                return {
+                    account: data.account,
+                    loading: data.loading
+                }
+
+            } else {
+                return {loading: data.loading}
+            }
+        },
+    }
+);
 
 const mapStateToProps = (state) => {
 
