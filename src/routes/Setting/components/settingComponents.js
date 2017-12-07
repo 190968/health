@@ -32,7 +32,7 @@ const tailFormItemLayout = {
         },
     },
 };
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'YYYY-MM-DD';
 
 
  class SettingForm extends React.Component{
@@ -70,7 +70,7 @@ const dateFormat = 'YYYY/MM/DD';
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: this.props.account.user.prefix,
+            initialValue: "+1"
         })(
             <Select style={{ width: 70 }}>
                 <Option value="+2">+2</Option>
