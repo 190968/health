@@ -42,7 +42,7 @@ class NormalLoginForm extends React.Component {
             }} />;
         }
         const { getFieldDecorator } = this.props.form;
-        return (<div style={{padding:'0 35%'}}>
+        return (<div style={{padding:'8% 35% 20px'}}>
             <Card
                 title="Login"
             >

@@ -3,22 +3,19 @@ import { logoutUserRequest, logoutUserSuccess,logoutUserError} from '../modules/
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import LogoutForm from '../components/logoutComponent'
+import { logoutUser } from '../modules/user';
 
-const logoutUser = gql`
-mutation logout{
-    logout
-}
+const logoutUserQuery = gql`
+    mutation logout{
+        logout
+    }
 `;
 
 
 
-const withMutation = graphql(logoutUser, {
-    props: ({ mutate }) => ({
-        logoutUser: input => {
-            return mutate () ;
-        },
-    }),
-});
+const LogoutFormWithMutation = graphql(
+    logoutUserQuery
+);
 
 
 const mapStateToProps = (state) => {
@@ -32,7 +29,27 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+
+    logout: () => {
+        //console.log(ownProps);
+
+        ownProps.mutate().then((data) => {
+            console.log(data);
+            if (!data.loading) {
+
+                dispatch(logoutUser());
+
+                ownProps.history.push('/')
+
+            }
+        })
+        //
+
+    },
+
 });
 
-
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(LogoutForm));
+export default LogoutFormWithMutation(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LogoutForm));

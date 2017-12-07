@@ -65,9 +65,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
-                /*if (token) {
-                    return window.location.href = "/";
-                }*/
             }).catch((error) => {
             //console.log(error);
             dispatch(loginUserError({

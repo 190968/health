@@ -39,6 +39,7 @@ const ACTION_HANDLERS = {
             name:network.name,
             logo:network.logo,
             modules:network.modules,
+            loading:false,
         };
     },
     [SET_CURRENT_ROLE]    : (state, {role}) => {
@@ -55,7 +56,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-    loading: false,
+    loading: true,
     info: {id:null},
     id: null,
     name: null,

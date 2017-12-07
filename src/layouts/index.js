@@ -27,21 +27,21 @@ import PrivateRoute from '../routes/privateRoute';
 //const App = require('../components/App').default
 const { Header, Content, Footer } = Layout;
 
-export const Core = ({token, isLoading, children, logout, store,location}) =>  {
+export const Core = ({token, loading, children, logout, store,location}) =>  {
     // const ready = true//state.ready || false;
     //console.log(token);
-    //console.log(isLoading);
-    if (isLoading) {
+    //console.log(loading);
+    if (loading) {
         return ('Loading app');
     }
     return (
         <div style={{height:'100%', display: 'flex',
-            'min-height': '100vh',
-            'flex-direction':'column'}}>
+            'minHeight': '100vh',
+            'flexDirection':'column'}}>
             <Header>
-                <LayoutHeader />
+                <LayoutHeader loading={loading} />
             </Header>
-            <Content style={{ padding: '50px 50px 0', flex: '1' }}>
+            <Content style={{ padding: '20px 50px', flex: '1' }}>
                 <PrivateRoute exact path="/" component={asyncDash(store)} />
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
@@ -83,20 +83,20 @@ Core.defaultProps = {
 const mapStateToProps = (state) => {
     //  console.log(state);
     return {
+        loading: state.network.loading,
         token: state.user.token,
-        isLoading: state.user.loading,
         state: state
     }
 };
 
 
 
+
 const mapDispatchToProps = (dispatch) => {
+    //console.log(1);
     return {
-        logout: (info) => {
-            console.log(111);
-            dispatch(logoutUser(info));
-        },
+        /*increment: (info) => {dispatch(increment(info))},
+        doubleAsync*/
     }
 };
 

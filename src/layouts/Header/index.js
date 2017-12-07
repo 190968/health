@@ -87,7 +87,7 @@ class LHeader extends React.Component {
             )
         }
         return (
-            <ReactPlaceholder ready={!loading} >
+            <ReactPlaceholder ready={!loading} rows={3} >
                 <div>
                         <img className="logo" style={{float:'left', height:'50px'}} src={this.props.network.logo} />
                         <div style={{float:'right'}} >
@@ -131,6 +131,7 @@ class LHeader extends React.Component {
 
 const mapStateToProps = (state) => {
     //console.log(state.network);
+    //console.log(state.user);
     return {
         // view store:
         //currentView:  state.views.currentView,
@@ -138,7 +139,7 @@ const mapStateToProps = (state) => {
         messages:    state.user.info.new_messages,
         notifications:    state.user.info.new_notifications,
         network:    state.network,
-        loading: state.user.loading,
+        //loading: state.user.loading,
         user: state.user.info,
         token: state.user.token
     };

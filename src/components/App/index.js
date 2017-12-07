@@ -76,7 +76,7 @@ const queryOptions =  {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { loading: false } ;
+        //this.state = { loading: true } ;
     };
     static propTypes = {
         store: PropTypes.object.isRequired,
@@ -85,7 +85,7 @@ class App extends React.Component {
     componentWillMount() {
         apolloClient.query(queryOptions)
             .then(({ data: {network, account: {user,checkToken, current_role}} }) => {
-                this.setState({loading: false});
+                //this.setState({loading: false});
                 this.props.store.dispatch(loadNetwork(network));
                 if (checkToken) {
                     this.props.store.dispatch(loadUser(user));
@@ -103,12 +103,13 @@ class App extends React.Component {
     }
 
     render() {
+        //console.log(this.state.loading);
         return (
             <ApolloProvider client={apolloClient}>
                 <Provider store={this.props.store}>
                     <Router history={history}>
                         <LocaleProvider locale={enUS}>
-                            <Core store={this.props.store} loading={this.state.loading} />
+                            <Core store={this.props.store} />
                         </LocaleProvider>
                     </Router>
                 </Provider>

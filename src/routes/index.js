@@ -50,10 +50,10 @@ export const asyncRegister= (store) => {
         Loadable({
             loader: () => import('../routes/User/containers/registerContainer'),
             reducers: {
-        'url': 'User/modules/register',
-            'key': 'user_register'
-    }
-}, store)
+                'url': 'User/modules/register',
+                'key': 'user_register'
+            }
+        }, store)
     );
 }
 
@@ -62,10 +62,10 @@ export const asyncLogout= (store) => {
         Loadable({
             loader: () => import('../routes/User/containers/logoutContainer'),
             reducers: {
-        'url': 'User/modules/logout',
-            'key': 'user_logout'
-    }
-}, store)
+                'url': 'User/modules/logout',
+                'key': 'user_logout'
+            }
+        }, store)
     );
 }
 
@@ -74,9 +74,9 @@ export const asyncSettings= (store) => {
         Loadable({
             loader: () => import('../routes/Setting/containers/settingContainer'),
             reducers: {
-        'url': 'Setting/modules/setting',
-            'key': 'setting'
-    }
-}, store)
+                'url': 'Setting/modules/setting',
+                'key': 'setting'
+            }
+        }, store)
     );
 }
