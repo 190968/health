@@ -29,6 +29,10 @@ class NormalLoginForm extends React.Component {
             }
         });
     }
+    enterLoading = () => {
+        this.setState({ loading: true });
+    }
+
     render() {
         const token = this.props.token;
 
@@ -65,7 +69,7 @@ class NormalLoginForm extends React.Component {
                 </FormItem>
                 <FormItem>
 
-                    <Button type="primary" htmlType="submit"  loading={this.state.loading} className="login-form-button">
+                    <Button type="primary" htmlType="submit"  loading={this.state.loading} onClick={this.enterLoading} className="login-form-button">
                         Log in
                     </Button>
                     <Link className="login-form-forgot" to={'/forgot'}>Forgot password</Link>

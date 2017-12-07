@@ -24,22 +24,6 @@ const registerUser = gql`
     }
 `;
 
-// {
-//     "input": {
-//
-//     "first_name": "Pavel",
-//         "last_name": "Guzu",
-//         "birthday": "2015-02-01",
-//         "gender": "male",
-//         "email": "pgutzu@gmail.com",
-//         "password": "123456789",
-//         "phone": "+1325648754"
-//
-// }
-// }
-
-
-
 const withMutation = graphql(registerUser, {
     props: ({ mutate }) => ({
         registerUser: input => {

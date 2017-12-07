@@ -84,6 +84,9 @@ class NormalRegisterForm extends React.Component {
         }
         callback();
     }
+    enterLoading = () => {
+        this.setState({ loading: true });
+    }
     render() {
 
         const token = this.props.token;
@@ -234,7 +237,7 @@ class NormalRegisterForm extends React.Component {
                 <FormItem {...tailFormItemLayout}>
 
 
-                    <Button disabled={this.state.checked}  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
+                    <Button disabled={this.state.checked} loading={this.state.loading} onClick={this.enterLoading}    type="primary" htmlType="submit" className="register-form-button">
                        Sign Up
                     </Button>
                     Or <a href="/login">login now!</a>

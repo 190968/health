@@ -51,6 +51,10 @@ const tailFormItemLayout = {
             }
         });
     }
+     enterLoading = () => {
+         this.setState({ loading: true });
+     }
+
 
     render(){
 
@@ -176,7 +180,7 @@ const tailFormItemLayout = {
                 <Input defaultValue={this.props.account.user.email} placeholder="Email" />
             </FormItem>
             <FormItem {...tailFormItemLayout}>
-                <Button     type="primary" htmlType="submit" className="register-form-button">
+                <Button loading={this.state.loading} onClick={this.enterLoading}    type="primary" htmlType="submit" className="register-form-button">
                     Submit
                 </Button>
             </FormItem>
