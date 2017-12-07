@@ -16,7 +16,7 @@ import { logoutUser } from '../routes/User/modules/user';
 
 
 // add
-import {asyncDash,  asyncLogin,asyncRegister,asyncLogout/*,asyncPlan, asyncPlantore, asyncPlanbuilder, asyncPlantorePlan, asyncSettings */} from 'routes';
+import {asyncDash,  asyncLogin,asyncRegister,asyncLogout,asyncSettings/*,asyncPlan, asyncPlantore, asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 import PrivateRoute from '../routes/privateRoute';
 
 //const App = require('../components/App').default
@@ -32,6 +32,7 @@ export const Core = ({token, isLoading, children, logout, store,location}) =>  {
         <div style={{height:'100%'}}>
             <Header />
             <PrivateRoute exact path="/" component={asyncDash(store)} />
+            <Route exact path="/settings" component={asyncSettings(store)} />
             <Route exact path="/login" component={asyncLogin(store)} />
             <Route exact path="/logout" component={asyncLogout(store)} />
             <Route exact path="/register" component={asyncRegister(store)} />
