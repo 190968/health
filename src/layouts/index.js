@@ -35,15 +35,7 @@ export const Core = ({token, isLoading, children, logout, store,location}) =>  {
         return ('Loading app');
     }
     return (
-<<<<<<< HEAD
-        <div style={{height:'100%'}}>
-            <Header />
-            <PrivateRoute exact path="/" component={asyncDash(store)} />
-            <Route exact path="/settings" component={asyncSettings(store)} />
-            <Route exact path="/login" component={asyncLogin(store)} />
-            <Route exact path="/logout" component={asyncLogout(store)} />
-            <Route exact path="/register" component={asyncRegister(store)} />
-=======
+
         <div style={{height:'100%', display: 'flex',
             'min-height': '100vh',
             'flex-direction':'column'}}>
@@ -52,6 +44,7 @@ export const Core = ({token, isLoading, children, logout, store,location}) =>  {
             </Header>
             <Content style={{ padding: '50px 50px 0', flex: '1' }}>
                 <PrivateRoute exact path="/" component={asyncDash(store)} />
+                <Route exact path="/settings" component={asyncSettings(store)} />
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
@@ -59,7 +52,7 @@ export const Core = ({token, isLoading, children, logout, store,location}) =>  {
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved
             </Footer>
->>>>>>> 72480aabc707468c4704c5573f776c606b8e18ce
+
         </div>
     )}
 
