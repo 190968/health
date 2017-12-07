@@ -106,8 +106,7 @@ const dateFormat = 'YYYY-MM-DD';
                     </Col>
                     <Col span={8}>
                         {getFieldDecorator('middle_name', {
-                            initialValue:this.props.account.user.middle_name ,
-                            rules: [{ required: true, message: 'Please input your Middle name!', whitespace: true }],
+                            initialValue:this.props.account.user.middle_name
                         })(
                         <Input  placeholder="Middle name" />
                         )}
