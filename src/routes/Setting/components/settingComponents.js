@@ -31,18 +31,9 @@ const tailFormItemLayout = {
     },
 };
 
-// export var  testData={
-//     first_name: "Lucy",
-//     middle_name: null,
-//     last_name: "Perkins",
-//     birthday: "1988-02-03",
-//     gender: "female",
-//     phone: "12313",
-//     language: "2",
-//     email: "sdfsdf"
-// }
 
-class SettingForm extends React.Component{
+
+ class SettingForm extends React.Component{
 
     constructor(props){
         super(props);
@@ -51,7 +42,6 @@ class SettingForm extends React.Component{
     }
 
     handleSubmit = (e) => {
-
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
@@ -63,16 +53,22 @@ class SettingForm extends React.Component{
 
     render(){
 
-            console.log(this.props.data.account);
-
+        if (this.props.loading) {
+            return (
+                <div className='box'>
+                    Loading...
+                </div>
+            );
+        }
+       // console.log(this.props.account.user.birthday);
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '1',
+            initialValue: "+1",
         })(
             <Select style={{ width: 70 }}>
-                <Option value="1">+1</Option>
-                <Option value="2">+2</Option>
+                <Option value="+2">+2</Option>
+                <Option value="+1">+1</Option>
             </Select>
         );
 
@@ -84,11 +80,9 @@ class SettingForm extends React.Component{
                 {...formItemLayout}
                 label="Title"
             >
-                <Select defaultValue="lucy" style={{ width: 120 }} >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="disabled">Disabled</Option>
-                    <Option value="Yiminghe">yiminghe</Option>
+                <Select  style={{ width: 120 }} >
+                    <Option value="Ms.">Ms.</Option>
+                    <Option value="Mr.">Mr.</Option>
                 </Select>
             </FormItem>
             <FormItem
@@ -97,13 +91,13 @@ class SettingForm extends React.Component{
             >
                 <InputGroup >
                     <Col span={8}>
-                        <Input  placeholder="First name" />
+                        <Input  placeholder="First name" defaultValue={this.props.account.user.first_name}/>
                     </Col>
                     <Col span={8}>
-                        <Input  placeholder="Middle name" />
+                        <Input  placeholder="Middle name"  />
                     </Col>
                     <Col span={8}>
-                        <Input placeholder="Last name" />
+                        <Input placeholder="Last name" defaultValue={this.props.account.user.last_name} />
                     </Col>
                 </InputGroup>
             </FormItem>
@@ -113,7 +107,7 @@ class SettingForm extends React.Component{
             >
                 <InputGroup >
                     <Col span={4}>
-                        <Select  defaultValue="Январь" style={{ width: 120 }} >
+                        <Select   style={{ width: 120 }} >
                             <Option value="Февраль">Февраль</Option>
                             <Option value="Март">Март</Option>
                             <Option value="Апрель">Апрель</Option>
@@ -140,9 +134,9 @@ class SettingForm extends React.Component{
                 {...formItemLayout}
                 label="Gender"
             >
-                <Select value={this.state.displayedFamily.gender} defaultValue="Женский" style={{ width: 120 }} >
-                    <Option value="Женский">Женский</Option>
-                    <Option value="Мужской">Мужской</Option>
+                <Select defaultValue={this.props.account.user.gender}  style={{ width: 120 }} >
+                    <Option value="female">female</Option>
+                    <Option value="male">male</Option>
                 </Select>
             </FormItem>
             <FormItem
@@ -160,7 +154,7 @@ class SettingForm extends React.Component{
                 {...formItemLayout}
                 label="Language"
             >
-                <Select value={this.state.displayedFamily.language} defaultValue="Русский" style={{ width: 120 }} >
+                <Select defaultValue={this.props.account.user.language}  style={{ width: 120 }} >
                     <Option value="Русский">Русский</Option>
                     <Option value="Английский">Английский</Option>
                 </Select>
@@ -169,7 +163,7 @@ class SettingForm extends React.Component{
                 {...formItemLayout}
                 label="Date format"
             >
-                <Select defaultValue="MM/DD/YY" style={{ width: 120 }} >
+                <Select style={{ width: 120 }} >
                     <Option value="MM/DD/YY">MM/DD/YY</Option>
                     <Option value="DD/MM/YY">DD/MM/YY</Option>
                 </Select>
@@ -178,7 +172,12 @@ class SettingForm extends React.Component{
                 {...formItemLayout}
                 label="Email"
             >
-                <Input value={this.state.displayedFamily.email} placeholder="Email" />
+                <Input defaultValue={this.props.account.user.email} placeholder="Email" />
+            </FormItem>
+            <FormItem {...tailFormItemLayout}>
+                <Button     type="primary" htmlType="submit" className="register-form-button">
+                    Submit
+                </Button>
             </FormItem>
         </Form>
 
