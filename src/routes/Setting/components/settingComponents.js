@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import { Input,Col,Select,Form, Calendar, DatePicker, InputNumber, Radio, Button, Checkbox } from 'antd';
+import { withApollo, gql } from 'react-apollo'
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -46,7 +47,7 @@ const tailFormItemLayout = {
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                return onSubmit(values);
+                return onSubmit(values, this.props.client);
             }
         });
     }
@@ -187,4 +188,4 @@ const tailFormItemLayout = {
 }
 
 const WrappedSettingForm = Form.create()(SettingForm);
-export default WrappedSettingForm;
+export default withApollo(WrappedSettingForm);
