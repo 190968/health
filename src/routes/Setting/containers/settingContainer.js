@@ -8,7 +8,7 @@ import { } from '../modules/setting'
 import SettingForm from '../components/settingComponents'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-//import { compose } from 'react-apollo';
+
 
 const settingUser = gql`
    query getSettings {

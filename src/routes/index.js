@@ -80,3 +80,14 @@ export const asyncSettings= (store) => {
         })
     );
 }
+export const asyncForgot= (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/Forgot/containers/index'),
+    /*reducers: {
+     'url': 'Setting/modules/setting',
+     'key': 'settings'
+     }*/
+})
+    );
+}

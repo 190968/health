@@ -2,9 +2,9 @@ import React from 'react'
 
 export default function LoadingPage(props) {
     if (props.isLoading) {
-        // While our other component is loading...
+        // While our other components is loading...
         if (props.timedOut) {
-            // In case we've timed out loading our other component.
+            // In case we've timed out loading our other components.
             return <div>Loader timed out!</div>;
         } else if (props.pastDelay) {
             // Display a loading screen after a set delay.

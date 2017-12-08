@@ -21,7 +21,8 @@ import { logoutUser } from '../routes/User/modules/user';
 
 
 // add
-import {asyncDash,  asyncLogin,asyncRegister,asyncLogout,asyncSettings/*,asyncPlan, asyncPlantore, asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+import {asyncDash,  asyncLogin,asyncRegister,asyncLogout,asyncSettings,asyncForgot/*,asyncPlan, asyncPlantore, asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+
 import PrivateRoute from '../routes/privateRoute';
 
 //const App = require('../components/App').default
@@ -34,7 +35,9 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
     if (loading) {
         return ('Loading app');
     }
+
     return (
+
         <div style={{height:'100%', display: 'flex',
             'minHeight': '100vh',
             'flexDirection':'column'}}>
@@ -47,6 +50,7 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
                 <Route path="/settings" component={asyncSettings(store)} />
+                <Route path="/forgot/:code" component={asyncForgot(store)} />
             </Content>
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved
@@ -55,12 +59,12 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
     )}
 
 /*
-            <Route exact path="/logout" component={asyncLogout(store)} />
-            <PrivateRoute path="/planbuilder" component={asyncPlanbuilder(store)} />
-            <PrivateRoute exact path="/plan/:upid" component={asyncPlan(store)} />
-            <PrivateRoute exact path="/planstore" component={asyncPlantore(store)} />
-            <PrivateRoute exact path="/planstore/plan/:id" component={asyncPlantorePlan(store)} />
-            <PrivateRoute path="/settings" component={asyncSettings(store)} />*/
+            <Route exact path="/logout" components={asyncLogout(store)} />
+            <PrivateRoute path="/planbuilder" components={asyncPlanbuilder(store)} />
+            <PrivateRoute exact path="/plan/:upid" components={asyncPlan(store)} />
+            <PrivateRoute exact path="/planstore" components={asyncPlantore(store)} />
+            <PrivateRoute exact path="/planstore/plan/:id" components={asyncPlantorePlan(store)} />
+            <PrivateRoute path="/settings" components={asyncSettings(store)} />*/
 Core.propTypes = {
     token: PropTypes.string,
     //logout: PropTypes.func,

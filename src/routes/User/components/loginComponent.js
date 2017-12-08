@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 
 import './login.css'
 
-import { Form, Icon, Input, Button, Card } from 'antd';
+import {Modal, Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
 const { Meta } = Card;
 
@@ -13,10 +13,26 @@ class NormalLoginForm extends React.Component {
             value: 'demo2patient@fitango.com',
         },
         password: {
-            value: 'Fitango1',
+            value: 'Fitango2',
         },
-        loading:false
+        loading: false,
+        visible: false,
     };
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+    // handleOk = () => {
+    //     this.setState({ loading: true });
+    //     setTimeout(() => {
+    //         this.setState({ loading: false, visible: false });
+    //     }, 1000);
+    // }
+    handleCancel = () => {
+        this.setState({ visible: false });
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         const { onSubmit } = this.props;
@@ -29,6 +45,22 @@ class NormalLoginForm extends React.Component {
             }
         });
     }
+
+    handleClick = (e) => {
+        e.preventDefault();
+
+        const { onClick } = this.props;
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+
+                return onClick(values);
+            }
+        });
+        setTimeout(() => {
+            this.setState({visible: false });
+        }, 1000);
+    }
+
     enterLoading = () => {
         this.setState({ loading: true });
     }
@@ -42,11 +74,33 @@ class NormalLoginForm extends React.Component {
             }} />;
         }
         const { getFieldDecorator } = this.props.form;
+        const { visible, loading } = this.state;
         return (<div style={{padding:'8% 35% 20px'}}>
             <Card
                 title="Login"
             >
+                <Modal
+                    visible={visible}
+                    title="Forgot Password?"
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="submit" type="primary" onClick={this.handleClick}>
+                            Send
+                        </Button>,
+                    ]}
+                >
+                    <p>Please enter the email address you registered with to help us locate your Fitango Demo account.</p>
 
+
+                    {getFieldDecorator('forgot_email', {
+                        rules: [{ required: false, message: 'Please input your Email!', whitespace: true }],
+                    })(
+                        <Input  placeholder="Enter email" />
+
+                    )}
+
+                </Modal>
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <FormItem>
                     {getFieldDecorator('email', {
@@ -72,7 +126,7 @@ class NormalLoginForm extends React.Component {
                     <Button type="primary" htmlType="submit"  loading={this.state.loading} onClick={this.enterLoading} className="login-form-button">
                         Log in
                     </Button>
-                    <Link className="login-form-forgot" to={'/forgot'}>Forgot password</Link>
+                    <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
                     Or <Link to={'/register'}>Sign up</Link>
                 </FormItem>
             </Form>

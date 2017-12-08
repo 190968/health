@@ -19,6 +19,14 @@ const TabPane = Tabs.TabPane;
         })
     );
 }
+const AsyncPassword = () => {
+    return (
+        Loadable({
+            loader: () => import('../../../routes/Setting/components/Password/containers/index.js'),
+})
+    );
+}
+
 
 
 
@@ -28,9 +36,9 @@ class SettingForm extends React.Component{
     }
     handleChange = (tabKey) => {
         const match = this.props.match;
-        //console.log(match.url+'/'+tabKey);
+
         this.props.history.push(tabKey)
-        //return true;
+
     }
     render() {
         const match = this.props.match;
@@ -38,7 +46,7 @@ class SettingForm extends React.Component{
             <Card>
                 <Tabs tabPosition="left"  defaultActiveKey={this.props.location.pathname} onChange={this.handleChange}>
                     <TabPane tab="Basic" key={match.url}><Route exact path={match.url} component={AsyncBasic()} /></TabPane>
-                    <TabPane tab="Password" key={match.url+'/password'} >Password</TabPane>
+                    <TabPane tab="Password" key={match.url+'/password'} ><Route exact path={match.url+'/password'} component={AsyncPassword()} /></TabPane>
                     <TabPane tab="Picture" key={match.url+'/picture'} >Picture</TabPane>
                 </Tabs>
             </Card>
