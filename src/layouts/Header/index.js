@@ -40,7 +40,7 @@ class LHeader extends React.Component {
     render() {
         const loading = this.props.loading;
         const token = this.props.token;
-        //console.log(loading);
+        const location = this.props.location;
         const new_messages = this.props.messages;
         const new_notifications = this.props.notifications;
 

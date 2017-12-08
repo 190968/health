@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import PlanWidget from 'routes/Plan/components/Plan';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-import { Container, Row, Col } from 'reactstrap';
+import { Col, Row, Pagination } from 'antd';
 
 import { Box, BoxHeader, BoxHeaderSettings, BoxBody } from 'components/Box';
 
 
 // custom placeholder for a list of plans
-const planListPlaceholder = (
+/*const planListPlaceholder = (
   <Row>
     <Col xs="12" sm="6" md="4" lg="3">
   <div className="ap-card">
@@ -86,94 +86,76 @@ const planListPlaceholder = (
       </div>
     </Col>
   </Row>
-);
+);*/
 
 export class PlansList extends React.Component {
-
+    changePage = (page) => {
+        this.props.loadMoreEntries(page)
+    }
 
   render () {
     const {
-      plans, loading,loadMoreEntries
+      plans, loading, loadMoreEntries
     } = this.props;
 
-    if ( loading) {
+    if (loading) {
       //return (<div>Loading...</div>);
       return (
         <div className='box'>
           <div className="box__header"><h3>ActionPlans</h3></div>
           <div className="box__body">
-            <Row>
-              <ReactPlaceholder ready={!loading}  showLoadingAnimation customPlaceholder={planListPlaceholder} >
+              <ReactPlaceholder ready={!loading}  showLoadingAnimation   >
                loading...
               </ReactPlaceholder>
-            </Row>
           </div>
         </div>
         );
     }
-    //console.log(plans);
-    /*plans = [
-      {id:1,title:'title1', 'img':'https://kover.ru/upload/resize_cache/iblock/e0e/1100_1100_1/e0e214dd102573b254fd30567d7d3c73.jpg'},
-      {id:2,title:'title2', 'img': 'https://kover.ru/upload/resize_cache/iblock/e0e/1100_1100_1/e0e214dd102573b254fd30567d7d3c73.jpg'}
-    ];*/
 
     var rows = [];
     if (!loading) {
-      plans.forEach(function (product) {
-        rows.push(<PlanWidget info={product} key={product.id}/>);
-      });
+
     }
-    let headerSettings =  <BoxHeaderSettings>
-      sddd
-    </BoxHeaderSettings>;
-    let headerTitle = <h3>Today's Actionplans</h3>;
-//console.log(rows);
-    //console.log(filters);
-      const children = React.Children.toArray(this.props.children);
+      /*let headerSettings =  <BoxHeaderSettings>
+        sddd
+      </BoxHeaderSettings>;
+        let headerTitle = <h3>Today's Actionplans</h3>;
+        const children = React.Children.toArray(this.props.children);
 
-      children.forEach((child, i) => {
-          //console.log(child);
-          if (typeof child.type == 'function') {
-              switch (child.type.name) {
-                  case 'BoxHeaderSettings':
-                      headerSettings = child;
-                      break;
-                  // header settings
-              }
-          } else if (child.type == 'h3') {
-              headerTitle = child;
-          }
+        children.forEach((child, i) => {
+            //console.log(child);
+            if (typeof child.type == 'function') {
+                switch (child.type.name) {
+                    case 'BoxHeaderSettings':
+                        headerSettings = child;
+                        break;
+                    // header settings
+                }
+            } else if (child.type == 'h3') {
+                headerTitle = child;
+            }
 
-      });
+        });*/
       //console.log(children);
     return (
 
         <Box>
-          <BoxHeader>
-              {headerSettings}
-              {headerTitle}
-          </BoxHeader>
-          <BoxBody>
-
-            <Row>
-                {rows}
+            <Row gutter={10}>
+                {plans.map(function (product) {
+                    return <Col key={product.id} xs={24} sm={24} md={12} lg={8} xl={6} span={12}><PlanWidget info={product} key={product.id}/></Col>;
+            })}
             </Row>
 
-            <div className='pointer' onClick={() => this._prevPage()}>Prev</div>
-            <div className='pointer' onClick={loadMoreEntries}>Next</div>
-          </BoxBody>
+            <Pagination defaultCurrent={1} total={50} onChange={this.changePage} />
         </Box>);
   }
 }
 
 
-
-/*FilterList.componentWillReceiveProps = (nextProps) => {
-  console.log(111);
-}*/
-
 PlansList.propTypes = {
-  //plans: PropTypes.object.isRequired,
+  plans: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
+   // loadMoreEntries: PropTypes.function.isRequired,
 };
 
 export default PlansList;

@@ -21,7 +21,7 @@ import { logoutUser } from '../routes/User/modules/user';
 
 
 // add
-import {asyncDash,  asyncLogin,asyncRegister,asyncLogout,asyncSettings/*,asyncPlan, asyncPlantore, asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+import {asyncDash,  asyncLogin, asyncRegister,asyncLogout,asyncSettings, asyncPlanstore/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 import PrivateRoute from '../routes/privateRoute';
 
 //const App = require('../components/App').default
@@ -30,7 +30,6 @@ const { Header, Content, Footer } = Layout;
 export const Core = ({token, loading, children, logout, store,location}) =>  {
     // const ready = true//state.ready || false;
     //console.log(token);
-    //console.log(loading);
     if (loading) {
         return ('Loading app');
     }
@@ -39,7 +38,7 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
             'minHeight': '100vh',
             'flexDirection':'column'}}>
             <Header>
-                <LayoutHeader loading={loading} />
+                <LayoutHeader loading={loading} location={location} />
             </Header>
             <Content style={{ padding: '20px 50px', flex: '1' }}>
                 <PrivateRoute exact path="/" component={asyncDash(store)} />
@@ -47,6 +46,7 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
                 <Route path="/settings" component={asyncSettings(store)} />
+                <Route path="/planstore" component={asyncPlanstore(store)} />
             </Content>
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved

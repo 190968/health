@@ -80,3 +80,15 @@ export const asyncSettings= (store) => {
         })
     );
 }
+
+export const asyncPlanstore = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/Planstore/components'),
+            reducers: {
+                'url': 'Planstore/modules',
+                'key': 'planstore'
+            }
+        }, store)
+    );
+}
