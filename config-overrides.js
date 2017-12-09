@@ -8,6 +8,7 @@ module.exports = function override(config, env) {
     config = rewireLess.withLoaderOptions({
              modifyVars: {
                  "@body-background": "#f2f2f2",
+                 "@layout-body-background": "#f2f2f2",
                  "@heading-color-dark": "#565a5c",
                  "@text-color-secondary-dark": "#565a5c",
                  "@layout-header-background": "#fff",

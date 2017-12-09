@@ -80,14 +80,15 @@ export const asyncSettings= (store) => {
         })
     );
 }
-export const asyncForgot= (store) => {
+
+export const asyncPlanstore = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Forgot/containers/index'),
-    /*reducers: {
-     'url': 'Setting/modules/setting',
-     'key': 'settings'
-     }*/
-})
+            loader: () => import('../routes/Planstore/components'),
+            reducers: {
+                'url': 'Planstore/modules',
+                'key': 'planstore'
+            }
+        }, store)
     );
 }

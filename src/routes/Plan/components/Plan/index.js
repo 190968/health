@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col } from 'reactstrap';
+import { Card } from 'antd';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 //import PropType from 'prop-types'
@@ -42,18 +42,18 @@ export class Plan extends React.Component {
       }
     //return (<div>aaa</div>);
     return (
-      <Col xs="12" sm="6" md="4" lg="4">
         <Link
           to={link}
           style={{ minWidth: 200 }}
           className='link dim grow mw4 bg-white ma2 pa3 shadow-1'
         >
-        <div className="ap-card">
-          <div className="ap-card__img" style={divStyle}></div>
-          <div className="ap-card__title"><div className="ap-card__title-text"><div className="etc2Lines">{name}</div></div></div>
-        </div>
+            <Card
+                cover={<img alt="example" src={img} />}
+
+            >
+                {name}
+            </Card>
         </Link>
-      </Col>
     );
   }
 }
