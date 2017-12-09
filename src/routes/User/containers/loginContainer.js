@@ -81,8 +81,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             }));
         });
     },
-    onClick: ({email}) => {
-        ownProps.forgotPassword({ email:email})
+    onClick: ({forgot_email}) => {
+        ownProps.forgotPassword({ email:forgot_email})
             .then(({data}) => {
                 //console.log(data);
                 // redirect to Enter code

@@ -78,6 +78,7 @@ const dateFormat = 'YYYY-MM-DD';
             </Select>
         );
 
+        const {user} = this.props.account;
 
         return(
 
@@ -86,10 +87,16 @@ const dateFormat = 'YYYY-MM-DD';
                 {...formItemLayout}
                 label="Title"
             >
-                <Select  style={{ width: 120 }} >
-                    <Option value="Ms.">Ms.</Option>
-                    <Option value="Mr.">Mr.</Option>
-                </Select>
+                {getFieldDecorator('possibleTitles', {
+                    initialValue: user.title ,
+                })(
+
+                    <Select  style={{ width: 120 }} >
+                        {user.possibleTitles.map((title, i) => <Option key={i}>{title}</Option>)}
+                    </Select>
+                )}
+
+
             </FormItem>
             <FormItem
                 {...formItemLayout}
@@ -98,7 +105,7 @@ const dateFormat = 'YYYY-MM-DD';
                 <InputGroup >
                     <Col span={8}>
                         {getFieldDecorator('first_name', {
-                            initialValue: this.props.account.user.first_name ,
+                            initialValue: user.first_name ,
                             rules: [{ required: true, message: 'Please input your First Name!', whitespace: true }],
                         })(
                         <Input  placeholder="First name" />
@@ -106,14 +113,14 @@ const dateFormat = 'YYYY-MM-DD';
                     </Col>
                     <Col span={8}>
                         {getFieldDecorator('middle_name', {
-                            initialValue:this.props.account.user.middle_name
+                            initialValue:user.middle_name
                         })(
                         <Input  placeholder="Middle name" />
                         )}
                     </Col>
                     <Col span={8}>
                         {getFieldDecorator('last_name', {
-                            initialValue: this.props.account.user.last_name,
+                            initialValue: user.last_name,
                             rules: [{ required: true, message: 'Please input your Last name!', whitespace: true }],
                         })(
                         <Input  placeholder="Last name" />
@@ -127,7 +134,7 @@ const dateFormat = 'YYYY-MM-DD';
                 hasFeedback
             >
                 {getFieldDecorator('birthday', {
-                    initialValue: moment(this.props.account.user.birthday, dateFormat),
+                    initialValue: moment(user.birthday, dateFormat),
                     rules: [{
                         type: 'object', message: 'The input is not valid Date!',
                     }, {
@@ -142,12 +149,12 @@ const dateFormat = 'YYYY-MM-DD';
                 label="Gender"
             >
                 {getFieldDecorator('gender', {
-                initialValue: this.props.account.user.gender,
+                initialValue: user.gender,
                 rules: [{ required: true, message: 'Please input your gender!', whitespace: true }],
             })(
-                <Select   style={{ width: 120 }} >
-                    <Option value="female">female</Option>
-                    <Option value="male">male</Option>
+                <Select style={{ width: 120 }} >
+                    <Option value="female">Female</Option>
+                    <Option value="male">Male</Option>
                 </Select>
             )}
             </FormItem>
@@ -157,46 +164,38 @@ const dateFormat = 'YYYY-MM-DD';
                 hasFeedback
             >
                 {getFieldDecorator('phone', {
-                    initialValue: this.props.account.user.phone,
+                    initialValue: user.phone,
                     rules: [{ required: true, message: 'Please input your phone number!' }],
                 })(
-                    <Input  addonBefore={prefixSelector} style={{ width: '100%' }} />
+                    <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                 )}
             </FormItem>
             <FormItem
                 {...formItemLayout}
                 label="Language"
             > {getFieldDecorator('language', {
-                initialValue: this.props.account.user.language,
-                rules: [{ required: true, message: 'Please input your language!' }],
+                initialValue: user.language,
+                rules: [{ required: true, message: 'Please select your language!' }],
             })(
-                <Select   style={{ width: 120 }} >
-                    <Option value="Русский">Русский</Option>
-                    <Option value="Английский">Английский</Option>
+                <Select style={{ width: 120 }} >
+                    <Option value="1">English</Option>
+                    <Option value="2">Russian</Option>
                 </Select>
             )}
             </FormItem>
-            {/*<FormItem*/}
-                {/*{...formItemLayout}*/}
-                {/*label="Date format"*/}
-            {/*>*/}
-                {/*<Select style={{ width: 120 }} >*/}
-                    {/*<Option value="MM/DD/YY">MM/DD/YY</Option>*/}
-                    {/*<Option value="DD/MM/YY">DD/MM/YY</Option>*/}
-                {/*</Select>*/}
-            {/*</FormItem>*/}
+
             <FormItem
                 {...formItemLayout}
                 label="Email"
             >{getFieldDecorator('email', {
-                initialValue: this.props.account.user.email,
-                rules: [{ required: true, message: 'Please input your Email!' }],
+                initialValue: user.email,
+                rules: [{ required: true, type: 'email', message: 'The input is not valid E-mail!',}],
             })(
                 <Input  placeholder="Email" />
             )}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
-                <Button loading={this.state.loading}     type="primary" htmlType="submit" className="register-form-button">
+                <Button loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                     Submit
                 </Button>
             </FormItem>

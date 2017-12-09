@@ -15,8 +15,11 @@ const settingUser = gql`
     account
     {
       user {
+          possibleTitles
         id,
+          title,
         first_name,
+          
         middle_name,
         last_name,
         birthday,

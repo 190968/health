@@ -57,7 +57,7 @@ class NormalLoginForm extends React.Component {
     render() {
         const token = this.props.token;
 
-        if (token != '') {
+        if (token !== '') {
             return  <Redirect to={{
                 pathname: '/'
             }} />;
@@ -84,7 +84,7 @@ class NormalLoginForm extends React.Component {
 
                     {getFieldDecorator('forgot_email', {
                         initialValue: this.state.email.value,
-                        rules: [{ required: false, message: 'Please input your Email!', whitespace: true }],
+                        rules: [{ required: false, type: 'email', message: 'The input is not valid E-mail!'}],
                     })(
                         <Input  placeholder="Enter email" />
 

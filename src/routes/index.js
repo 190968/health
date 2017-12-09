@@ -82,7 +82,7 @@ export const asyncForgotPassword= (store) => {
 export const asyncSettings= (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/components/Settings/containers/settingsContainer'),
+            loader: () => import('../routes/User/components/Settings/components'),
         })
     );
 }
