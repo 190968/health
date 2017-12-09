@@ -82,7 +82,7 @@ class LHeader extends React.Component {
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
-                    <img className="logo"  src={this.props.network.logo} />
+                    <NavLink to="/"><img className="logo"  src={this.props.network.logo} /></NavLink>
                 </div>
             )
         }

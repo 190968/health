@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
-import { logoutUserRequest, logoutUserSuccess,logoutUserError} from '../modules/logout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import LogoutForm from '../components/logoutComponent'
+import LogoutForm from '../components/Logout'
 import { logoutUser } from '../modules/user';
 
 const logoutUserQuery = gql`

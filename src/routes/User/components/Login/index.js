@@ -5,7 +5,6 @@ import './login.css'
 
 import {Modal, Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
-const { Meta } = Card;
 
 class NormalLoginForm extends React.Component {
     state = {
@@ -24,12 +23,6 @@ class NormalLoginForm extends React.Component {
             visible: true,
         });
     }
-    // handleOk = () => {
-    //     this.setState({ loading: true });
-    //     setTimeout(() => {
-    //         this.setState({ loading: false, visible: false });
-    //     }, 1000);
-    // }
     handleCancel = () => {
         this.setState({ visible: false });
     }
@@ -52,13 +45,9 @@ class NormalLoginForm extends React.Component {
         const { onClick } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-
                 return onClick(values);
             }
         });
-        setTimeout(() => {
-            this.setState({visible: false });
-        }, 1000);
     }
 
     enterLoading = () => {
@@ -94,6 +83,7 @@ class NormalLoginForm extends React.Component {
 
 
                     {getFieldDecorator('forgot_email', {
+                        initialValue: this.state.email.value,
                         rules: [{ required: false, message: 'Please input your Email!', whitespace: true }],
                     })(
                         <Input  placeholder="Enter email" />

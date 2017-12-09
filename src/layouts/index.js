@@ -4,25 +4,19 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 
 
-//import './index.scss'
-//import './box.scss'
 
-//import { Container, Row, Col } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 
 
-//import LoginForm from '../routes/User/containers/loginContainer';
 import LayoutHeader from './Header';
-import { logoutUser } from '../routes/User/modules/user';
 
 
 
-// add
-
-import {asyncDash,  asyncLogin, asyncRegister,asyncLogout,asyncSettings,asyncForgot, asyncPlanstore/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+// add Routes
+import {asyncDash,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 
 import PrivateRoute from '../routes/privateRoute';
 
@@ -49,7 +43,7 @@ export const Core = ({token, loading, children, logout, store,location}) =>  {
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
-                <Route path="/forgot/:code" component={asyncForgot(store)} />
+                <Route path="/password/reset/:code?" component={asyncForgotPassword(store)} />
 
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />

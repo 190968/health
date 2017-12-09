@@ -69,6 +69,16 @@ export const asyncLogout= (store) => {
     );
 }
 
+export const asyncForgotPassword= (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/forgotPasswordContainer')
+        })
+    );
+}
+
+
+
 export const asyncSettings= (store) => {
     return (
         Loadable({

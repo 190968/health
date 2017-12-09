@@ -15,7 +15,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}` : null,
+            authorization: token ? `Bearer ${token}` : '',
         }
     }
 });
@@ -24,8 +24,8 @@ const cache = new InMemoryCache({
     dataIdFromObject: object => {
         //console.log(object.__typename);
         switch (object.__typename) {
-            case 'Plan': return object.id; // use `key` as the primary key
-            case 'bar': return object.blah; // use `blah` as the priamry key
+            //case 'Plan': return object.id; // use `key` as the primary key
+            //case 'bar': return object.blah; // use `blah` as the priamry key
             default: return object.id || object._id; // fall back to `id` and `_id` for all other types
         }
     },

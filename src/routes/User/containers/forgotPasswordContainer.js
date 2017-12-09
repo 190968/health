@@ -3,6 +3,7 @@
  */
 import React from 'react'
 import { connect } from 'react-redux'
+import { message } from 'antd';
 
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -10,14 +11,14 @@ import { connect } from 'react-redux'
  wiring in the actions and state necessary to render a presentational
  component - in this case, the counter:   */
 
-import ForgotForm from '../components'
+import ForgotForm from '../components/ForgotPassword';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
 const forgotPasswordConfirm = gql`
     mutation forgotPasswordConfirm($code:String!,$new_password:String!,$new_password_repeat:String!) {
-       forgotPasswordConfirm(code:$code,new_password:$new_password,new_password_repeat:$new_password_repeat
+       forgotPasswordConfirm(code:$code, new_password:$new_password, new_password_repeat:$new_password_repeat
       )
     }
 `;
@@ -39,11 +40,21 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props,code) => {
+    onSubmit: (props) => {
         const{new_password,new_password_repeat} = props;
+        let {code} = props;
+
+        const code_from_url = ownProps.match.params.code;
+        // if the code has been in form - use that one, otherwise - use from url
+        code = code || code_from_url;
+
         ownProps.forgotPasswordConfirm({ code:code, new_password:new_password,new_password_repeat:new_password_repeat})
             .then(({data}) => {
-                console.log(data);
+                //console.log(data);
+                // redirect to Enter code
+                ownProps.history.push('/login');
+                // show success message
+                message.success('Password has been reset');
             }).catch((error) => {
 
         });
@@ -51,9 +62,3 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 export default withMutation(connect(mapStateToProps, mapDispatchToProps)(ForgotForm));
-
-
-
-
-
-

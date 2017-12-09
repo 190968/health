@@ -1,24 +1,11 @@
-
-// const forgot = gql`
-//     mutation forgotPass($email: Email!) {
-//         forgotPassword(email: $email) {
-//             user {
-//                 id
-//             }
-//          }
-//     }
-// `;
 import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'react-apollo';
-import { loginUserRequest, loginUserSuccess, loginUserError} from '../modules/login'
+import { message } from 'antd';
+import { loginUserSuccess, loginUserError} from '../modules/login'
 import { loadUser, setUserToken} from '../modules/user'
-/*  This is a container component. Notice it does not contain any JSX,
- nor does it import React. This component is **only** responsible for
- wiring in the actions and state necessary to render a presentational
- component - in this case, the counter:   */
 
-import LoginForm from '../components/loginComponent'
+import LoginForm from '../components/Login'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -69,10 +56,7 @@ const withMutation = graphql(loginUser, {
 
 
 const mapStateToProps = (state) => {
-
-
     return {
-
         token: state.user.token
     };
 };
@@ -84,25 +68,27 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(({data}) => {
                 const token = data.login.token;
                 const user = data.login.user;
-                console.log(data);
+                //console.log(data);
                 dispatch(loadUser(user));
 
                 dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
-            //console.log(error);
+            message.error(error.message);
+
             dispatch(loginUserError({
                 error,
             }));
         });
     },
-    onClick: (props) => {
-
-        const{email} = props;
+    onClick: ({email}) => {
         ownProps.forgotPassword({ email:email})
             .then(({data}) => {
-
-                console.log(data);
+                //console.log(data);
+                // redirect to Enter code
+                ownProps.history.push('/password/reset');
+                // show success message
+                message.success('Reset password link has been sent');
 
             }).catch((error) => {
             //console.log(error);

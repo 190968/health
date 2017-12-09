@@ -2,14 +2,14 @@
  * Created by Pavel on 27.11.2017.
  */
 import { connect } from 'react-redux'
-import { registerUserRequest, registerUserSuccess, registerUserError} from '../modules/register'
+import { registerUserError} from '../modules/register'
 import { setUserToken, loadUser} from '../modules/user'
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
  wiring in the actions and state necessary to render a presentational
  component - in this case, the counter:   */
 
-import RegisterForm from '../components/registerComponent'
+import RegisterForm from '../components/Register'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { loginUserSuccess} from '../modules/login'
