@@ -86,7 +86,6 @@ class App extends React.Component {
         apolloClient.query(queryOptions)
             .then(({ data: {network, account: {user,checkToken, current_role}} }) => {
                 //this.setState({loading: false});
-                this.props.store.dispatch(loadNetwork(network));
                 if (checkToken) {
                     this.props.store.dispatch(loadUser(user));
                     //console.log( this.props.store);
@@ -94,6 +93,7 @@ class App extends React.Component {
                 } else {
                     this.props.store.dispatch(loadUserFAIL(user));
                 }
+                this.props.store.dispatch(loadNetwork(network));
             })
         // })
     }
@@ -103,7 +103,7 @@ class App extends React.Component {
     }
 
     render() {
-        //console.log(this.state.loading);
+
         return (
             <ApolloProvider client={apolloClient}>
                 <Provider store={this.props.store}>

@@ -20,7 +20,6 @@ const PrivateRoute = ({state, token, component: Component, ...rest }) => (
 )
 
 const mapStateToProps = (state, ownProps) => {
-    //console.log(state);
     return {
         token: state.user.token
     };

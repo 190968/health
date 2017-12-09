@@ -23,7 +23,7 @@ import PrivateRoute from '../routes/privateRoute';
 //const App = require('../components/App').default
 const { Header, Content, Footer } = Layout;
 
-export const Core = ({token, loading, children, logout, store,location}) =>  {
+export const Core = ({token, loading, state, store, location}) =>  {
     // const ready = true//state.ready || false;
     //console.log(token);
     if (loading) {
