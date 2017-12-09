@@ -82,11 +82,7 @@ export const asyncForgotPassword= (store) => {
 export const asyncSettings= (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Setting/containers/settingContainer'),
-            /*reducers: {
-                'url': 'Setting/modules/setting',
-                'key': 'settings'
-            }*/
+            loader: () => import('../routes/User/components/Settings/containers/settingsContainer'),
         })
     );
 }

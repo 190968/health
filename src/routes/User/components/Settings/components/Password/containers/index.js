@@ -2,7 +2,7 @@
  * Created by Pavel on 08.12.2017.
  */
 import { connect } from 'react-redux'
-import { } from '../modules/setting'
+import { message } from 'antd';
 
 
 import PasswordForm from '../components'
@@ -42,10 +42,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
-        const{current_password, password,password_repeat} = props;
+        const{current_password, password, password_repeat} = props;
         ownProps.updatePassword({current_password:current_password, password:password,password_repeat:password_repeat})
             .then(({data}) => {
-               console.log(data);
+                message.success('Saved');
             }).catch((error) => {
             console.log(error);
         });

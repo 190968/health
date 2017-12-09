@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { } from '../modules/setting'
 
 
-import SettingForm from '../components/settingComponents'
+import SettingForm from '../components/settingsComponents'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

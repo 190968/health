@@ -3,7 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import { Input,message,Form, Button } from 'antd';
-import { withApollo, gql } from 'react-apollo'
+import { withApollo } from 'react-apollo'
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -38,19 +38,19 @@ class PasswordForm extends React.Component{
         this.state = {displayedFamily: props};
     }
 
+    /**
+     * Submit the password form
+     * @param e
+     */
     handleSubmit = (e) => {
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                return onSubmit(values, this.props.client);
+                return onSubmit(values);
             }
         });
     }
-
-     info = () => {
-    message.info('Done!');
-};
 
     render(){
 
@@ -80,6 +80,7 @@ class PasswordForm extends React.Component{
                 <FormItem
                     {...formItemLayout}
                     label="New password"
+                    help="Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number"
                 >
 
                     {getFieldDecorator('password', {
@@ -88,9 +89,6 @@ class PasswordForm extends React.Component{
                         <Input  placeholder="New password" />
 
                     )}
-                    <div>
-                        Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number
-                    </div>
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
@@ -104,7 +102,7 @@ class PasswordForm extends React.Component{
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
-                    <Button loading={this.state.loading} type="primary" onClick={this.info} htmlType="submit" className="register-form-button">
+                    <Button loading={this.state.loading} type="primary" htmlType="submit">
                         Change password
                     </Button>
                 </FormItem>
