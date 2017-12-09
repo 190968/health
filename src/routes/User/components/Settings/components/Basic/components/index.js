@@ -48,7 +48,7 @@ const dateFormat = 'YYYY-MM-DD';
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                return onSubmit(values, this.props.client);
+                return onSubmit(values);
             }
         });
     }
@@ -73,7 +73,7 @@ const dateFormat = 'YYYY-MM-DD';
             initialValue: "+1"
         })(
             <Select style={{ width: 70 }}>
-                <Option value="+2">+2</Option>
+                <Option value="+375">+375</Option>
                 <Option value="+1">+1</Option>
             </Select>
         );
@@ -87,12 +87,13 @@ const dateFormat = 'YYYY-MM-DD';
                 {...formItemLayout}
                 label="Title"
             >
-                {getFieldDecorator('possibleTitles', {
-                    initialValue: user.title ,
+                {getFieldDecorator('title', {
+                    initialValue: user.title
+
                 })(
 
-                    <Select  style={{ width: 120 }} >
-                        {user.possibleTitles.map((title, i) => <Option key={i}>{title}</Option>)}
+                    <Select style={{ width: 120 }} >
+                        {user.possibleTitles.map((title, i) => <Option key={title} value={i}>{title}</Option>)}
                     </Select>
                 )}
 
@@ -101,6 +102,7 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label="Name"
+                
             >
                 <InputGroup >
                     <Col span={8}>
@@ -121,9 +123,9 @@ const dateFormat = 'YYYY-MM-DD';
                     <Col span={8}>
                         {getFieldDecorator('last_name', {
                             initialValue: user.last_name,
-                            rules: [{ required: true, message: 'Please input your Last name!', whitespace: true }],
+                            rules: [{ required: true, message: 'Please input your Last name!'}],
                         })(
-                        <Input  placeholder="Last name" />
+                        <Input placeholder="Last name" />
                         )}
                     </Col>
                 </InputGroup>
@@ -131,7 +133,7 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label={'Birthday'}
-                hasFeedback
+                
             >
                 {getFieldDecorator('birthday', {
                     initialValue: moment(user.birthday, dateFormat),
@@ -147,6 +149,7 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label="Gender"
+                
             >
                 {getFieldDecorator('gender', {
                 initialValue: user.gender,
@@ -161,7 +164,7 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label="Phone Number"
-                hasFeedback
+                
             >
                 {getFieldDecorator('phone', {
                     initialValue: user.phone,
@@ -173,13 +176,14 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label="Language"
+                
             > {getFieldDecorator('language', {
                 initialValue: user.language,
                 rules: [{ required: true, message: 'Please select your language!' }],
             })(
                 <Select style={{ width: 120 }} >
-                    <Option value="1">English</Option>
-                    <Option value="2">Russian</Option>
+                    <Option value={1}>English</Option>
+                    <Option value={2}>Russian</Option>
                 </Select>
             )}
             </FormItem>
@@ -187,6 +191,7 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label="Email"
+                
             >{getFieldDecorator('email', {
                 initialValue: user.email,
                 rules: [{ required: true, type: 'email', message: 'The input is not valid E-mail!',}],
