@@ -19,7 +19,8 @@ const loginUser = gql`
                 last_name,
                 token,
                 new_notifications,
-                new_messages
+                new_messages,
+                phoneConfirmed
             } 
             token
         }

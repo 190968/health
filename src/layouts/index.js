@@ -31,10 +31,9 @@ export const Core = ({token, loading, state, store, location}) =>  {
     if (loading) {
         return ('Loading app');
     }
-
     if(!state.user.info.phoneConfirmed){
         return(
-            <VerifyPhone/>
+            <VerifyPhone />
         )
     }
 
@@ -53,9 +52,6 @@ export const Core = ({token, loading, state, store, location}) =>  {
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
-                <Route exact path="/verifyPhone" component={asyncVerifyPhone(store)} />
-                <Route exact path="/verifyPhoneConfirm" component={asyncVerifyPhoneConfirm(store)} />
-                <Route path="/password/reset/:code?" component={asyncForgotPassword(store)} />
 
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
