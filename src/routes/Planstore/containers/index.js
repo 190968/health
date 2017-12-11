@@ -13,6 +13,15 @@ const QUERY = gql`
             plans (filters: $filters, page: $page, limit: $limit) {
                 ...PlanCardInfo
             }
+            filters {
+                code
+                name
+                fields {
+                    type
+                    text
+                    value
+                }
+            }
         }
     }
     ${Plan.fragments.plan}

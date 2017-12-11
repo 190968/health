@@ -49,9 +49,8 @@ export class Plan extends React.Component {
         >
             <Card
                 cover={<img alt="example" src={img} />}
-
             >
-                {name}
+                <div style={{height:26, overflow:'hidden', wordBreak:'break-word'}}>{name}</div>
             </Card>
         </Link>
     );
