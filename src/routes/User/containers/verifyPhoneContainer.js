@@ -18,15 +18,42 @@ const verifyPhone = gql`
        verifyPhone(phone:$phone)
     }
 `;
+// const getPhone = gql`
+//    query getPhone {
+//     account
+//     {
+//       user {
+//         phone
+//       }
+//     }
+// }
+// `;
 
 const withMutation = graphql(verifyPhone, {
     props: ({ mutate }) => ({
         verifyPhone: input => {
             return mutate({
-                variables: {phone:[input.phone,input.prefix] },
+                variables: {phone:[input[0],input[1]] },
             })},
     }),
 });
+
+// const withQuery = graphql(getPhone,
+//     {
+//         props: ({ ownProps, data }) => {
+//             if (!data.loading) {
+//                 return {
+//                     account: data.account,
+//                     loading: data.loading
+//                 }
+//
+//             } else {
+//                 return {loading: data.loading}
+//             }
+//         },
+//     }
+// )(VerifyPhoneForm);
+
 
 const mapStateToProps = (state) => {
 
@@ -47,5 +74,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         });
     },
 });
+
+// export default withMutation(connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(withQuery));
+
 
 export default withMutation(connect(mapStateToProps, mapDispatchToProps)(VerifyPhoneForm));
