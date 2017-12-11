@@ -31,9 +31,9 @@ const tailFormItemLayout = {
 
 class VerifyPhoneForm extends React.Component {
 
-    constructor() {
-        super();
-        this.state = { loading:false};
+    constructor(props){
+        super(props);
+        this.state = {displayedFamily: props};
     }
 
     handleSubmit = (e) => {
@@ -42,18 +42,20 @@ class VerifyPhoneForm extends React.Component {
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.setState({
-                    loading: true
-                });
                 return onSubmit(values);
              }
         });
     }
 
-    enterLoading = () => {
-        this.setState({ loading: true });
-    }
     render() {
+        if (this.props.loading) {
+            return (
+                <div className='box'>
+                    Loading...
+                </div>
+            );
+        }
+
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
@@ -64,6 +66,9 @@ class VerifyPhoneForm extends React.Component {
                 <Option value="+375">+375</Option>
             </Select>
         );
+
+        const {user} = this.props.account;
+
         return (
             <div className="register-form" style={{padding:'0 20%'}}>
                 <Card
@@ -76,13 +81,14 @@ class VerifyPhoneForm extends React.Component {
                             hasFeedback
                         >
                             {getFieldDecorator('phone', {
+                                initialValue: user.phone,
                                 rules: [{ required: true, message: 'Please input your phone number!' }],
                             })(
                                 <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
-                            <Button  loading={this.state.loading} onClick={this.enterLoading}    type="primary" htmlType="submit" className="register-form-button">
+                            <Button  loading={this.state.loading}    type="primary" htmlType="submit" className="register-form-button">
                                 Send
                             </Button>
                         </FormItem>

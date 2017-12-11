@@ -59,6 +59,7 @@ const NETWORK_INFO = gql`
                 first_name,
                 last_name,
                 token,
+                phoneConfirmed,
                 new_notifications,
                 new_messages
             }

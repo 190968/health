@@ -1,9 +1,11 @@
-import React from 'react'
+
 import { Route, IndexLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-
-
+import React from 'react'
+import {Redirect} from 'react-router-dom'
+// import VerifyPhone from '../routes/User/components/VerifyPhone';
+import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
 import { Layout } from 'antd';
 
 
@@ -29,6 +31,14 @@ export const Core = ({token, loading, state, store, location}) =>  {
     if (loading) {
         return ('Loading app');
     }
+
+    if(!state.user.info.phoneConfirmed){
+        return(
+            <VerifyPhone/>
+        )
+
+    }
+
 
     return (
 
