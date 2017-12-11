@@ -2,7 +2,11 @@
  * Created by Pavel on 09.12.2017.
  */
 import { connect } from 'react-redux'
-
+import React from 'react'
+import {
+    Redirect,
+} from 'react-router-dom'
+import VPConfirm from '../containers/verifyPhoneConfirmContainer';
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
  wiring in the actions and state necessary to render a presentational
@@ -70,6 +74,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(({data}) => {
                 console.log("----verifyPhone----");
                 console.log(data);
+
+               // window.location.href = "/verifyPhoneConfirm"
+               //  return(
+               //  <Redirect to={'/verifyPhoneConfirm'} />)
+                ownProps.history.push('/verifyPhoneConfirm');
+
             }).catch((error) => {
             console.log(error);
         });

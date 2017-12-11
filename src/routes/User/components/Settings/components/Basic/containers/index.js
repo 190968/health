@@ -19,7 +19,7 @@ const settingUser = gql`
         id,
           title,
         first_name,
-          
+         phoneConfirmed,
         middle_name,
         last_name,
         birthday,
@@ -44,7 +44,6 @@ const settingUserMutate=gql`
 const withQuery = graphql(settingUser,
     {
         props: ({ ownProps, data }) => {
-            //console.log(data.loading);
             if (!data.loading) {
                 return {
                     account: data.account,
@@ -79,19 +78,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (values) => {
-       //const{first_name,last_name,birthday,gender,email,prefix,phone} = props;
-
-
-        //
-
         values.birthday = values.birthday.format("YYYY-MM-DD")
         values.phone = [values.prefix, values.phone];
         delete values.prefix;
-        //console.log(birthday);
-        //console.log(client);
-        //console.log(settingUserMutate);
-
-
         console.log(values);
         ownProps.updateInfo(values).then(({data}) => {
             console.log("----settings----");

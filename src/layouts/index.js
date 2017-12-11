@@ -36,7 +36,6 @@ export const Core = ({token, loading, state, store, location}) =>  {
         return(
             <VerifyPhone/>
         )
-
     }
 
 

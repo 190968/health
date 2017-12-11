@@ -39,7 +39,6 @@ const dateFormat = 'YYYY-MM-DD';
 
     constructor(props){
         super(props);
-
         this.state = {displayedFamily: props};
     }
 

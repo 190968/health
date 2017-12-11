@@ -41,6 +41,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(({data}) => {
                 console.log("----verifyPhoneConfirm----");
                 console.log(data);
+                ownProps.history.push('/');
             }).catch((error) => {
             console.log(error);
         });
