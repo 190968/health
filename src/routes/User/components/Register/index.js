@@ -48,7 +48,6 @@ class NormalRegisterForm extends React.Component {
 
     constructor() {
         super();
-
         this.state = {checked:true, loading:false};
     }
 

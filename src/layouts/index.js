@@ -16,7 +16,7 @@ import LayoutHeader from './Header';
 
 
 // add Routes
-import {asyncDash,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+import {asyncDash,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 
 import PrivateRoute from '../routes/privateRoute';
 
@@ -35,6 +35,7 @@ export const Core = ({token, loading, state, store, location}) =>  {
         <div style={{height:'100%', display: 'flex',
             'minHeight': '100vh',
             'flexDirection':'column'}}>
+
             <Header>
                 <LayoutHeader loading={loading} location={location} />
             </Header>
@@ -43,6 +44,8 @@ export const Core = ({token, loading, state, store, location}) =>  {
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register" component={asyncRegister(store)} />
+                <Route exact path="/verifyPhone" component={asyncVerifyPhone(store)} />
+                <Route exact path="/verifyPhoneConfirm" component={asyncVerifyPhoneConfirm(store)} />
                 <Route path="/password/reset/:code?" component={asyncForgotPassword(store)} />
 
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />

@@ -98,3 +98,25 @@ export const asyncPlanstore = (store) => {
         }, store)
     );
 }
+export const asyncVerifyPhone = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/verifyPhoneContainer'),
+            reducers: {
+        'url': 'User/modules/verifyPhone',
+            'key': 'verifyPhone'
+    }
+}, store)
+    );
+}
+export const asyncVerifyPhoneConfirm = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/verifyPhoneConfirmContainer'),
+            reducers: {
+        'url': 'User/modules/verifyPhone',
+            'key': 'verifyPhone'
+    }
+}, store)
+    );
+}
