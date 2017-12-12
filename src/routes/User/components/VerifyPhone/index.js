@@ -33,6 +33,7 @@ class VerifyPhoneForm extends React.Component {
 
     constructor(props){
         super(props);
+        console.log(props);
         this.state = {displayedFamily: props};
     }
 
@@ -55,7 +56,7 @@ class VerifyPhoneForm extends React.Component {
                 </div>
             );
         }
-
+console.log("!!!!!!"+this.state)
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {

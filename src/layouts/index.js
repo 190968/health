@@ -33,7 +33,7 @@ export const Core = ({token, loading, state, store, location}) =>  {
     }
     if(!state.user.info.phoneConfirmed){
         return(
-            <VerifyPhone />
+            <VerifyPhone  />
         )
     }
 
