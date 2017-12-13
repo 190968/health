@@ -34,9 +34,7 @@ class VerifyPhoneForm extends React.Component {
 
     constructor(props){
         super(props);
-        console.log(props);
         this.state = {showCode:false};
-
     }
 
 
@@ -50,7 +48,7 @@ class VerifyPhoneForm extends React.Component {
              }
         });
     }
-    showCode =()=>{
+    showCode = () =>{
         this.setState({showCode:true})
     }
     render() {
@@ -66,19 +64,21 @@ class VerifyPhoneForm extends React.Component {
                 <VerifyPhoneConfirm />
             );
         }
-console.log(this.state,"wvwev");
-
+        //console.log();
+        //const {account} = this.props.phone;//.user.phone;
+        const phone = this.props.phone[1];
+        const code = this.props.phone[0];
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '1',
+            initialValue: code,
         })(
-            <Select style={{ width: 70 }}>
-                <Option value="+123">+123</Option>
+            <Select>
+                <Option value="+1">+1</Option>
                 <Option value="+375">+375</Option>
             </Select>
         );
 
-        const {user} = this.props.account;
+
 
         return (
             <div className="register-form" style={{padding:'0 20%'}}>
@@ -92,7 +92,7 @@ console.log(this.state,"wvwev");
                             hasFeedback
                         >
                             {getFieldDecorator('phone', {
-                                initialValue: user.phone,
+                                initialValue: phone,
                                 rules: [{ required: true, message: 'Please input your phone number!' }],
                             })(
                                 <Input addonBefore={prefixSelector} style={{ width: '100%' }} />

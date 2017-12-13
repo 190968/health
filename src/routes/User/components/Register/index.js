@@ -101,9 +101,9 @@ class NormalRegisterForm extends React.Component {
         const prefixSelector = getFieldDecorator('prefix', {
             initialValue: '1',
         })(
-            <Select style={{ width: 70 }}>
-                <Option value="1">+1</Option>
-                <Option value="2">+2</Option>
+            <Select>
+                <Option value="+1">+1</Option>
+                <Option value="+375">+375</Option>
             </Select>
         );
 

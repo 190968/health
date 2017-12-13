@@ -66,18 +66,20 @@ const dateFormat = 'YYYY-MM-DD';
             );
         }
        // console.log(this.props.account.user.birthday);
+        const {user} = this.props.account;
+        const phone = user.phone[1];
+        const code = user.phone[0];
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: "+1"
+            initialValue: code
         })(
-            <Select style={{ width: 70 }}>
-                <Option value="+375">+375</Option>
+            <Select>
                 <Option value="+1">+1</Option>
+                <Option value="+375">+375</Option>
             </Select>
         );
 
-        const {user} = this.props.account;
 
         return(
 
@@ -166,7 +168,7 @@ const dateFormat = 'YYYY-MM-DD';
                 
             >
                 {getFieldDecorator('phone', {
-                    initialValue: user.phone,
+                    initialValue: phone,
                     rules: [{ required: true, message: 'Please input your phone number!' }],
                 })(
                     <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
