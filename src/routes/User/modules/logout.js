@@ -14,7 +14,7 @@ export const logoutUserRequest = ({ email }) => ({
     email,
 });
 
-export const logoutUserSuccess = ({}) => ({
+export const logoutUserSuccess = () => ({
     type: LOGOUT_USER_SUCCESS,
     message: 'User logged in successfully!',
 });

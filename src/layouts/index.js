@@ -26,13 +26,16 @@ import PrivateRoute from '../routes/privateRoute';
 //const App = require('../components/App').default
 const { Header, Content, Footer } = Layout;
 
-export const Core = ({token, loading, state, store, location}) =>  {
+export const Core = ({loading, user, store, location}) =>  {
     // const ready = true//state.ready || false;
-    //console.log(token);
+    console.log(loading);
     if (loading) {
         return ('Loading app');
     }
-    if(!state.user.info.phoneConfirmed){
+
+    console.log(user.info.phoneConfirmed);
+    // if user is logged IN and need to confirm phone
+    if(user.info.id && !user.info.phoneConfirmed){
         return(
             <VerifyPhone  />
         )
@@ -83,19 +86,18 @@ Core.propTypes = {
 Core.defaultProps = {
     token: null,
     children: null,
-    state: null,
+    user: null,
     loading: false,
-    logout: () => {console.log (1);},
 };
 
 
 
 const mapStateToProps = (state) => {
-    //  console.log(state);
+     //console.log(state);
     return {
         loading: state.network.loading,
         token: state.user.token,
-        state: state
+        user: state.user
     }
 };
 

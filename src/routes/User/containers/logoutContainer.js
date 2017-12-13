@@ -18,22 +18,14 @@ const LogoutFormWithMutation = graphql(
 
 
 const mapStateToProps = (state) => {
-    //console.log(state.user);
     return {
-        // view store:
-        //currentView:  state.views.currentView,
-        // userAuth:
-        //token: state.user.token
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-
     logout: () => {
-        //console.log(ownProps);
-
         ownProps.mutate().then((data) => {
-            console.log(data);
+            //console.log(data);
             if (!data.loading) {
 
                 dispatch(logoutUser());
@@ -42,10 +34,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
             }
         })
-        //
-
     },
-
 });
 
 export default LogoutFormWithMutation(connect(

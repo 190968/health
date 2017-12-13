@@ -11,7 +11,7 @@ export const loginUserRequest = ({ email }) => ({
     email,
 });
 
-export const loginUserSuccess = ({}) => ({
+export const loginUserSuccess = () => ({
     type: LOGIN_USER_SUCCESS,
     message: 'User logged in successfully!',
 });

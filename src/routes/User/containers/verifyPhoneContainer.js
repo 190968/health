@@ -62,9 +62,7 @@ const withQuery = graphql(getPhone,
 
 
 const mapStateToProps = (state) => {
-console.log(...state.isShow+"wefw");
     return {
-
     };
 };
 
@@ -73,13 +71,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const{phone,prefix} = props;
         ownProps.verifyPhone({phone:[prefix,phone] })
             .then(({data}) => {
-                console.log("----verifyPhone----");
-                console.log(data);
 
                 if(data.verifyPhone){
                     showCode();
                 }
-
 
             }).catch((error) => {
             console.log(error);
