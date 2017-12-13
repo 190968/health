@@ -84,7 +84,7 @@ class App extends React.Component {
     };
     static propTypes = {
         store: PropTypes.object.isRequired,
-        locale: 'en'
+        //locale: 'en'
     }
     // load network and token info
     componentWillMount() {
@@ -111,15 +111,19 @@ class App extends React.Component {
 
         return (
             <ApolloProvider client={apolloClient}>
+                <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
                     <Router history={history}>
-                        <LocaleProvider locale={esEs}>
-                            <IntlProvider locale={this.props.locale}>
-                            <Core store={this.props.store} />
-                            </IntlProvider>
+
+                        <LocaleProvider locale={enUS}>
+
+                                <Core store={this.props.store} />
+
                         </LocaleProvider>
+
                     </Router>
                 </Provider>
+                </IntlProvider>
             </ApolloProvider>
         );
     }
