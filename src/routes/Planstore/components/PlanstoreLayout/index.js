@@ -34,15 +34,6 @@ export class PlanstoreLayout extends React.Component {
                         )}
                     />
 
-                    {/*
-             <Row gutter={10}>
-                {plans.map(function (product) {
-                    return <Col key={product.id} xs={24} sm={24} md={12} lg={8} xl={6} span={12}></Col>;
-                })}
-            </Row>
-             <PlansList plans={} loading={loading} loadMoreEntries={loadMoreEntries} />
-              <Pagination defaultCurrent={1} total={50} onChange={this.changePage} />
-            */}
 
 
                 </Content>

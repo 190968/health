@@ -75,10 +75,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 console.log("----verifyPhone----");
                 console.log(data);
 
+
+                if(data){
+                  //  ...phoneConfirmed :true;
+                }
                // window.location.href = "/verifyPhoneConfirm"
                //  return(
                //  <Redirect to={'/verifyPhoneConfirm'} />)
-                ownProps.history.push('/verifyPhoneConfirm');
+                //ownProps.history.push('/verifyPhoneConfirm');
 
             }).catch((error) => {
             console.log(error);
