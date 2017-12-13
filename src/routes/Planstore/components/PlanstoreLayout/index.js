@@ -32,9 +32,11 @@ export class PlanstoreLayout extends React.Component {
         };
 
 
-        const{loading, plans, filters,loadMoreEntries} = this.props;
-        console.log(filters);
-        console.log(filters[0].getIn('code').toJS());//не работает
+        const{loading, plans, filters, loadMoreEntries} = this.props;
+        if (loading) {
+            return ('Loading');
+        }
+        console.log(filters[0].code);
 
         return (
             <Layout style={{padding: '24px 0'}}>
