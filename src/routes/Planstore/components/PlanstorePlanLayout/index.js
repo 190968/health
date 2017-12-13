@@ -101,50 +101,50 @@ const CollectionCreateForm = Form.create()(
                         </FormItem>
                     </Card>
 
-                    {/*<Card title="Scheduling">*/}
-                        {/*<FormItem*/}
-                            {/*{...formItemLayout}*/}
-                            {/*label="Start Date"*/}
-                        {/*>*/}
-                            {/*{getFieldDecorator('start_date', {*/}
-                                {/*rules: [{*/}
-                                    {/*required: true, message: 'Please Select Start Date',*/}
-                                {/*}],*/}
-                            {/*})(*/}
-                                {/*<DatePicker/>*/}
-                            {/*)}*/}
-                        {/*</FormItem>*/}
+                    <Card title="Scheduling">
+                        <FormItem
+                            {...formItemLayout}
+                            label="Start Date"
+                        >
+                            {getFieldDecorator('start_date', {
+                                rules: [{
+                                    required: true, message: 'Please Select Start Date',
+                                }],
+                            })(
+                                <DatePicker/>
+                            )}
+                        </FormItem>
 
-                        {/*<FormItem*/}
+                        <FormItem
                             {...formItemLayout}
                             label="End Date"
                         >
-                            {/*{getFieldDecorator('end_date_set', {*/}
-                                {/*rules: [{*/}
-                                    {/*required: true, message: 'Please Select End Date',*/}
-                                {/*}],*/}
-                            {/*})(*/}
-                                {/*<RadioGroup onChange={onChangeEnd}>*/}
-                                    {/*<Radio style={radioStyle} value="0">Never</Radio>*/}
-                                    {/*<Radio style={radioStyle} value="1">*/}
-                                        {/*On {end_date == 1 ?*/}
+                            {getFieldDecorator('end_date_set', {
+                                rules: [{
+                                    required: true, message: 'Please Select End Date',
+                                }],
+                            })(
+                                <RadioGroup onChange={onChangeEnd}>
+                                    <Radio style={radioStyle} value="0">Never</Radio>
+                                    <Radio style={radioStyle} value="1">
+                                        On {end_date == 1 ?
 
-                                        {/*getFieldDecorator('end_date', {*/}
-                                            {/*rules: [{*/}
-                                                {/*required: true, message: 'Please Select End Date',*/}
-                                            {/*}, {*/}
-                                                {/*validator: checkEndDate, message: 'Please Select End Date',*/}
-                                            {/*}],*/}
-                                        {/*})(*/}
-                                            {/*<DatePicker/>*/}
-                                        {/*)*/}
+                                        getFieldDecorator('end_date', {
+                                            rules: [{
+                                                required: true, message: 'Please Select End Date',
+                                            }, {
+                                                validator: checkEndDate, message: 'Please Select End Date',
+                                            }],
+                                        })(
+                                            <DatePicker/>
+                                        )
 
-                                        {/*: null}*/}
-                                    {/*</Radio>*/}
-                                {/*</RadioGroup>*/}
+                                        : null}
+                                    </Radio>
+                                </RadioGroup>
                             )}
-                        {/*</FormItem>*/}
-                    {/*</Card>*/}
+                        </FormItem>
+                    </Card>
                 </Form>
 
 
