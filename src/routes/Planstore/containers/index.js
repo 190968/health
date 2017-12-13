@@ -45,12 +45,13 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(ownProps);
-                //
+                //console.log(data.planstore.filters);
                 return {
                     plans: data.planstore.plans,
-                    //modules: data.network.modules,
+                    filters: data.planstore.filters,
                     loading: data.loading,
+
+
                     loadMoreEntries(page) {
                         //console.log(ownProps.page);
                         return data.fetchMore({
@@ -61,27 +62,22 @@ const PlanstoreLayoutWithQuery = graphql(
                                 // variables to calculate this (see the cursor example below)
                                 page: page,
                             },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
-                                console.log(previousResult.planstore);
-                                return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                                });
-                            },
+                    updateQuery: (previousResult, {fetchMoreResult}) => {
+                        if (!fetchMoreResult) { return previousResult; }
+                        console.log(previousResult.planstore);
+                        return fetchMoreResult;
+                        return Object.assign({}, previousResult, {
+                            // Append the new feed results to the old one
+                            planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
                         });
-                    }
-                    /*increment() {
-                         ownProps.increment(data.plans['actionplans']);
                     },
-                    doubleAsync() {
-                         // reset list of plans
-                        ownProps.increment([]);
-                    }*/
+                    });
                 }
 
-            } else {
+                  }
+        }
+
+            else {
                 return {loading: data.loading, plans: []}
             }
         },
@@ -94,19 +90,14 @@ const PlanstoreLayoutWithQuery = graphql(
 
 const mapStateToProps = (state) => {
 
-    var activeFilters = state.planstore.get('activeFilters').toJS();
-    //console.log(activeFilters);
+    var filters = state.planstore.get('filters').toJS();
     var plans = state.planstore.get('plans').toJS();
-    var page = state.planstore.get('page')
-    //console.log(plans);
+    var page = state.planstore.get('page');
+  //  console.log(plans);
     return {
         plans: plans,
-        filters: activeFilters,
+        filters: filters,
         page: page,
-        // view store:
-        //currentView:  state.views.currentView,
-        // userAuth:
-        // filters: state.planstore.get('filters').toJS(),
     };
 };
 
