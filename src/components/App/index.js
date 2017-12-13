@@ -17,7 +17,7 @@ import {loadNetwork, setCurrentRole} from 'routes/Network/modules/network'
 import {loadUser, loadUserFAIL} from 'routes/User/modules/user'
 
 // adding locales
-import {addLocaleData} from 'react-intl';
+import {addLocaleData, IntlProvider} from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ru from 'react-intl/locale-data/ru';
 import es from 'react-intl/locale-data/es';
@@ -31,8 +31,11 @@ import { createBrowserHistory } from 'history'
 // locale
 import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
+import ruRu from 'antd/lib/locale-provider/ru_RU';
+import esEs from 'antd/lib/locale-provider/es_ES';
 
 var history = createBrowserHistory();
+// Adding Locale data
 addLocaleData([...en, ...ru, ...es]);
 
 
@@ -81,6 +84,7 @@ class App extends React.Component {
     };
     static propTypes = {
         store: PropTypes.object.isRequired,
+        //locale: 'en'
     }
     // load network and token info
     componentWillMount() {
@@ -107,13 +111,19 @@ class App extends React.Component {
 
         return (
             <ApolloProvider client={apolloClient}>
+                <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
                     <Router history={history}>
+
                         <LocaleProvider locale={enUS}>
-                            <Core store={this.props.store} />
+
+                                <Core store={this.props.store} />
+
                         </LocaleProvider>
+
                     </Router>
                 </Provider>
+                </IntlProvider>
             </ApolloProvider>
         );
     }

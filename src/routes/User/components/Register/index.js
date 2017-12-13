@@ -6,7 +6,7 @@ import {Redirect, Route} from 'react-router-dom'
 import './register.css'
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
-//import Messages from './i18n/register.en.json';
+import Messages from './i18n/register.en.json';
 import { Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 
 const Option = Select.Option;
@@ -36,12 +36,7 @@ const tailFormItemLayout = {
     },
 };
 
-/*const messages = defineMessages({
-    datePicker: {
-        id: 'App.datePicker.title',
-        defaultMessage: 'Birthday',
-    },
-});*/
+//const messages = defineMessages(Messages);
 
 
 class NormalRegisterForm extends React.Component {
@@ -49,6 +44,12 @@ class NormalRegisterForm extends React.Component {
     constructor() {
         super();
         this.state = {checked:true, loading:false};
+    }
+
+    componentWillMount() {
+        // Run query here(check Request api). You can check how it's done in App component.
+        // and update the state with the info.
+        // If in the query result it says, userIsRegistered, then show confirmRegistration component(need to create) with the following fields: Enter email(need to check if this request has the same email as we will enter), enter new password, confirm password.
     }
 
     handleCheckboxChange =()=> {

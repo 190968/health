@@ -52,7 +52,7 @@ export const Core = ({token, loading, state, store, location}) =>  {
                 <PrivateRoute exact path="/" component={asyncDash(store)} />
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
-                <Route exact path="/register" component={asyncRegister(store)} />
+                <Route exact path="/register/:code?" component={asyncRegister(store)} />
 
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
