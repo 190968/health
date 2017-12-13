@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { DatePicker } from 'antd';
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 
 
 export class DashUserLayout extends React.Component {
@@ -37,7 +42,15 @@ export class DashUserLayout extends React.Component {
         }
         //onsole.log("Logkout");
         return (
-           <div>This is dashboard</div>
+           <div>
+               <FormattedMessage id="dashUser.hello_world" defaultMessage="Hello World2!" description="Hello world header greeting2" />
+               <FormattedNumber value={1000} /> {' '}
+               <FormattedPlural value={1000}
+                                one="message"
+                                other="messages"
+               />.
+               <DatePicker />
+           </div>
             // <Form onSubmit={this.handleSubmit}>
             //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>
             // </Form>
