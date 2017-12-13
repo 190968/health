@@ -3,10 +3,11 @@
  */
 import { connect } from 'react-redux'
 import React from 'react'
+
 import {
     Redirect,
 } from 'react-router-dom'
-import VPConfirm from '../containers/verifyPhoneConfirmContainer';
+import VerifyPhoneConfirm from '../containers/verifyPhoneConfirmContainer';
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
  wiring in the actions and state necessary to render a presentational
@@ -61,28 +62,24 @@ const withQuery = graphql(getPhone,
 
 
 const mapStateToProps = (state) => {
-
+console.log(...state.isShow+"wefw");
     return {
 
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props) => {
+    onSubmit: (props,showCode) => {
         const{phone,prefix} = props;
         ownProps.verifyPhone({phone:[prefix,phone] })
             .then(({data}) => {
                 console.log("----verifyPhone----");
                 console.log(data);
 
-
-                if(data){
-                  //  ...phoneConfirmed :true;
+                if(data.verifyPhone){
+                    showCode();
                 }
-               // window.location.href = "/verifyPhoneConfirm"
-               //  return(
-               //  <Redirect to={'/verifyPhoneConfirm'} />)
-                //ownProps.history.push('/verifyPhoneConfirm');
+
 
             }).catch((error) => {
             console.log(error);

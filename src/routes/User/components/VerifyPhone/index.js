@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import { Card, Form, Select, Input,Button } from 'antd';
+import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -34,8 +35,10 @@ class VerifyPhoneForm extends React.Component {
     constructor(props){
         super(props);
         console.log(props);
-        this.state = {displayedFamily: props};
+        this.state = {showCode:false};
+
     }
+
 
     handleSubmit = (e) => {
 
@@ -43,11 +46,13 @@ class VerifyPhoneForm extends React.Component {
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                return onSubmit(values);
+                return onSubmit(values,this.showCode);
              }
         });
     }
-
+    showCode =()=>{
+        this.setState({showCode:true})
+    }
     render() {
         if (this.props.loading) {
             return (
@@ -56,7 +61,12 @@ class VerifyPhoneForm extends React.Component {
                 </div>
             );
         }
-console.log("!!!!!!"+this.state)
+        if (this.state.showCode) {
+            return (
+                <VerifyPhoneConfirm />
+            );
+        }
+console.log(this.state,"wvwev");
 
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
@@ -89,7 +99,7 @@ console.log("!!!!!!"+this.state)
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
-                            <Button  loading={this.state.loading}    type="primary" htmlType="submit" className="register-form-button">
+                            <Button  loading={this.state.loading}     type="primary" htmlType="submit" className="register-form-button">
                                 Send
                             </Button>
                         </FormItem>

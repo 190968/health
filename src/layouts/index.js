@@ -6,6 +6,7 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 // import VerifyPhone from '../routes/User/components/VerifyPhone';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
+import VerifyPhoneConfirm from '../routes/User/containers/verifyPhoneConfirmContainer';
 import { Layout } from 'antd';
 
 
