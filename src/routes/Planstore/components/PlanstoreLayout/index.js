@@ -32,12 +32,12 @@ export class PlanstoreLayout extends React.Component {
         };
 
 
+
         const {loading, plans, filters, loadMoreEntries} = this.props;
         if (!loading) {
-            //console.log(filters[0].fields[0].text)
+
         }
-            //console.log(filters, "22222222222");
-            //console.log(filters[0].getIn('code').toJS());//не работает
+
 
             return (
                 <Layout style={{padding: '24px 0'}}>
@@ -71,8 +71,6 @@ export class PlanstoreLayout extends React.Component {
                                 </List.Item>
                             )}
                         />
-
-
                     </Content>
                 </Layout>)
         }
