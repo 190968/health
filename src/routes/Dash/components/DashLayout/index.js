@@ -1,8 +1,10 @@
 import React from 'react';
-import UserDash from '../../components/DashUserLayout'
-import ReactPlaceholder from 'react-placeholder';
-export const DashLayout = ({ current_role, loading }) => (
-          <UserDash/>
+import UserDash from '../../containers/DashUserLayout'
+
+
+
+export const DashLayout = ({ store }) => (
+    <UserDash />
 )
 
 export default DashLayout

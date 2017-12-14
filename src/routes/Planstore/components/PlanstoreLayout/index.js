@@ -34,8 +34,8 @@ export class PlanstoreLayout extends React.Component {
 
 
         const {loading, plans, filters, loadMoreEntries} = this.props;
-        if (!loading) {
-
+        if (loading) {
+return '<div>`loading</div>';
         }
 
 

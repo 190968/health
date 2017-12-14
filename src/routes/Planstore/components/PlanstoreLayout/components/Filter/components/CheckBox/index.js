@@ -14,9 +14,8 @@ export class CheckComponent extends React.Component {
 
         const{loading,key} = this.props;
         if(!loading){
-            console.log(key,"-----key");
             return (
-                <Checkbox>{key}</Checkbox>
+                <div><Checkbox>{key}</Checkbox></div>
             )
         }
 

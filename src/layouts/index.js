@@ -28,12 +28,12 @@ const { Header, Content, Footer } = Layout;
 
 export const Core = ({loading, user, store, location}) =>  {
     // const ready = true//state.ready || false;
-    console.log(loading);
+    //console.log(loading);
     if (loading) {
         return ('Loading app');
     }
 
-    console.log(user.info.phoneConfirmed);
+    //console.log(user.info.phoneConfirmed);
     // if user is logged IN and need to confirm phone
     if(user.info.id && !user.info.phoneConfirmed){
         return(
