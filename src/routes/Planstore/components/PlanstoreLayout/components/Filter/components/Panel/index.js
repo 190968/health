@@ -34,7 +34,7 @@ export class PanelComponent extends React.Component {
             });
 
             return (
-                <Panel header="This is panel header 1" key={key} >
+                <Panel header="This is panel header 1"  >
                     {row}
                 </Panel>
             )

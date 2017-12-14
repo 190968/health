@@ -34,9 +34,9 @@ export class FormsComponent extends React.Component {
 
             });
                return (
-                    <Collapse >
+                    <div >
                             {rows}
-                    </Collapse>
+                    </div>
 
                 )
 // }
