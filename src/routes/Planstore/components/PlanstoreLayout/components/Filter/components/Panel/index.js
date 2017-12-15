@@ -17,30 +17,33 @@ export class PanelComponent extends React.Component {
     render() {
 
 
-        const{loading,field,key} = this.props;
-        if(!loading) {
+        console.log(this.props);
+
+        const{loading, filter, key} = this.props;
+        if(loading) {
+            return '<div>Loading</div>';
+        }
             var row = [];
-            field.forEach(function (fields) {
-                fields.fields.forEach(function (fields) {
-                    if (fields.type == "checkbox") {
+        filter.fields.map(function (field) {
+                    if (field.type == "checkbox") {
                         console.log("push--CheckComponent");
-                        row.push(<CheckComponent key={fields.value} fields={field}/>);
+                        row.push(<CheckComponent key={field.value} fields={field}/>);
                     }
-                    if (fields.type == "slider") {
+                    if (field.type == "range") {
                         console.log("push--SliderComponent");
-                        row.push(<SliderComponent key={fields.value} fields={field}/>);
+                        row.push(<SliderComponent key={field.value} fields={field}/>);
                     }
                 });
-            });
-
             return (
-                <Panel header="This is panel header 1"  >
+                //<div>
+               //<Panel header="This is panel header 1"  >
+                <div >
+                    {/*<Panel header="This is panel header 1"  >*/}
+                    <h1>{filter.name}</h1>
                     {row}
-                </Panel>
-            )
+                </div>
 
-    }
-
+                 )
     }
 }
 

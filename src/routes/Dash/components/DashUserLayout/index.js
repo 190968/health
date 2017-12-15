@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
 import { DatePicker } from 'antd';
 import {
     FormattedMessage,
@@ -27,9 +27,9 @@ export class DashUserLayout extends React.Component {
     }
     render () {
         const {
-            plans, loading,logout,loadMoreEntries
+            plans, loading, medicationPlan
         } = this.props;
-        if (1==5 && loading) {
+        if (loading) {
             //return (<div>Loading...</div>);
             return (
                 <div className='box'>
@@ -50,6 +50,10 @@ export class DashUserLayout extends React.Component {
                                 other="messages"
                />.
                <DatePicker />
+
+
+
+               <MedicationPlan info={medicationPlan} />
            </div>
             // <Form onSubmit={this.handleSubmit}>
             //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>

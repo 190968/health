@@ -6,21 +6,21 @@ export class CheckComponent extends React.Component {
 
     constructor(props){
         super(props);
-        //console.log(props,"PROPS--check")
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
     }
 
     render() {
-
-
-        const{loading,key} = this.props;
+        const{loading,fields} = this.props;
         if(!loading){
-            console.log(key,"-----key");
-            return (
-                <Checkbox>{key}</Checkbox>
+            return (<div>
+                <Checkbox onChange={this.handleChange}>{fields.text}</Checkbox>
+                </div>
             )
         }
-
-
     }
 }
 

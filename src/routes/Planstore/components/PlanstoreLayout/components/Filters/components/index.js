@@ -19,20 +19,21 @@ export class FormsComponent extends React.Component {
                                             {type:"slider",text:"Only Free",value:"598"}]}];
 
         const {loading, filters} = this.props;
-        if (!loading) {
+
+        if (loading) {
+            return  '<div>Loading</div>';
+        }
+
             var rows = [];
             var i =0;
-            var lastCode = null;
-            mass.forEach(function(fields) {
-                i++;
 
-                if (fields.code !== lastCode) {
-                    console.log("push--PanelComponent");
-                        rows.push(<PanelComponent key={i} field={mass}/>);
-                        lastCode = fields.code;
-                    }
+        //console.log(filters);
 
-            });
+        filters.forEach(function(filter) {
+                            i++;
+                            rows.push(<PanelComponent key={i} filter={filter}/>);
+                        });
+
                return (
                     <div >
                             {rows}
@@ -40,7 +41,6 @@ export class FormsComponent extends React.Component {
 
                 )
 // }
-            }
 
 
         }

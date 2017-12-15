@@ -45,6 +45,7 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                console.log(ownProps,"pashaguzu");
                 return {
                     plans: data.planstore.plans,
                     filters: data.planstore.filters,
