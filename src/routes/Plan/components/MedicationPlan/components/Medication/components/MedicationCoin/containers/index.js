@@ -37,7 +37,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         /*if (!is_taken) {
             report = {};
         }*/
-        ownProps.medicationReport({ report: report, is_taken:is_taken , date:ownProps.date}, id)
+        report.isTaken = is_taken;
+        report.date = ownProps.date;
+        ownProps.medicationReport({ report: report}, id)
             .then(({data}) => {
                 //const token = data.login.token;
                 //const user = data.login.user;
