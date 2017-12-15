@@ -26,6 +26,9 @@ export class MedicationPlanBody extends React.Component {
                 return <Medication key={medication.id} info={medication}  />
             })}
             <Divider>Take As Needed</Divider>
+            {takeAsNeeded.map((medication)=> {
+                return <Medication key={medication.id} info={medication}  />
+            })}
         </Card>)
     }
 }
