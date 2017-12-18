@@ -12,7 +12,7 @@ export class CheckComponent extends React.Component {
 
     handleChange(e) {
         console.log(e.target.params.value,"state --- checked");
-        setFilter();//надо передать {"filters": {"category":[1]},"page": 5}
+        setFilter({"type":"checked"});//надо передать {"filters": {"category":[1]},"page": 5}
         //this.props.fields(+e.target.innerText)
        // this.setState({ checked:!this.state.checked  });
 

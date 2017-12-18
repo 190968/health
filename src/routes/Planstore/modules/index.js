@@ -1,9 +1,6 @@
 import { fromJS } from 'immutable';
 //import { actionCreators as productsActionCreators } from 'redux/reducers/products';
 
-
-
-
 const getFilters = () => dispatch =>
     dispatch({
         type: 'GET_FILTERS',
@@ -117,6 +114,7 @@ const initialState = fromJS({
 });
 
 export default (state = fromJS(initialState), action) => {
+    console.log(action," action")
     const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 };
