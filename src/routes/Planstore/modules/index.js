@@ -39,24 +39,9 @@ export const actions = {
 
 const ACTION_HANDLERS = {
     SET_FILTERS: (state, {filters}) => {
-        //state = state.toJS();
-
-
         return state.updateIn(['activeFilters'], function (value) {
             return value.merge(filters);
         });
-       /* return fromJS(Object.assign({}, state, {
-            activeFilters: Object.assign({}, state.activeFilters, info)
-        }));*/
-
-        return fromJS({
-            ...state,
-            activeFilters : {
-                ...state.activeFilters,
-                filters
-            }
-        });
-
     },
     CLEAR_FILTERS: (state, action) => {
         let nextState;

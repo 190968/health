@@ -15,14 +15,17 @@ export class PlanstoreLayout extends React.Component {
         this.props.loadMoreEntries(page)
     }
 
+    /**
+     * Updates filter by type (category, price, etc)
+     * @param filter
+     * @param values
+     */
     updateFilters = (filter, values) => {
         const activeFilters = this.props.activeFilters;
+        // get all current info of the type
         const activeFilter = activeFilters[filter] || {};
-        console.log(activeFilter);
-        console.log(filter);
-        console.log(values);
 
-
+        // update filter by type(category or smth)
         const filter1 = {
             ...activeFilters,
             [filter]: {
@@ -30,12 +33,7 @@ export class PlanstoreLayout extends React.Component {
                 ...values
             }
         }
-        /*const filt = Object.assign({}, state, {
-            activeFilters: Object.assign({}, state.activeFilters, info)
-        });*/
-
-        console.log(filter1);
-
+        // update the store
         this.props.updateFilterStore(filter1)
     }
 

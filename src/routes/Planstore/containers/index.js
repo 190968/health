@@ -105,11 +105,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateFilterStore: (info)  => {
-        //
-        /*console.log(info);
-        console.log(this.props);
-        console.log(ownProps);*/
-        //console.log(setFilters);
         dispatch(setFilters(info))
     },
 });
