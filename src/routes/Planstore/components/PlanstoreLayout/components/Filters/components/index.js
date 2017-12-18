@@ -10,7 +10,7 @@ export class FormsComponent extends React.Component {
 
     render() {
 
-        const {loading, filters} = this.props;
+        const {loading, filters, onSuccess} = this.props;
 
         if (loading) {
             return  '<div>Loading</div>';
@@ -23,7 +23,7 @@ export class FormsComponent extends React.Component {
 
         filters.forEach(function(filter) {
                             i++;
-                            rows.push(<PanelComponent key={i} filter={filter}/>);
+                            rows.push(<PanelComponent key={i} onSuccess={onSuccess} filter={filter}/>);
                         });
 
                return (

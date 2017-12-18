@@ -6,6 +6,8 @@ import Plan from '../../Plan/components/Plan';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {setFilters} from '../modules'
+import { loadUser} from '../../User/modules/user'
 
 const QUERY = gql`
      query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
@@ -45,7 +47,7 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                console.log(data.planstore.filters,"Какой filter в props");
+                //console.log(data.planstore.filters,"Какой filter в props");
                 return {
                     plans: data.planstore.plans,
                     filters: data.planstore.filters,
@@ -92,6 +94,7 @@ const mapStateToProps = (state) => {
     var filters = state.planstore.get('filters').toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
+    //console.log(state);
     return {
         plans: plans,
         filters: filters,
@@ -99,13 +102,13 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    console.log("123-----------------------123");
-    return {
-        /*increment: (info) => {dispatch(increment(info))},
-        doubleAsync*/
-    }
-};
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    updateFilterStore: (info)  => {
+        //console.log(info);
+        //console.log(setFilters);
+        dispatch(setFilters(info))
+    },
+});
 
 export default connect(
     mapStateToProps,
