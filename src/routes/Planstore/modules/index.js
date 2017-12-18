@@ -1,12 +1,12 @@
 import { fromJS } from 'immutable';
 
-<<<<<<< HEAD
+
 const getFilters = () => dispatch =>
     dispatch({
         type: 'GET_FILTERS',
         url: '/regions/current/filters',
     });
-=======
+
 export const SET_FILTERS = 'SET_FILTERS';
 
 
@@ -18,7 +18,6 @@ export const setFilters = (info) => {
     }
 };
 
->>>>>>> c180cd52227c4323362d0a20a2fdfb46ebc6a1dd
 
 
 const clearFilters = m => (dispatch) => {
