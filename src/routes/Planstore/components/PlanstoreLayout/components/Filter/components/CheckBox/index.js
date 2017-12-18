@@ -11,38 +11,26 @@ export class CheckComponent extends React.Component {
 
     handleChange(e) {
 
-
+        //console.log(this.props);
         const value_id = e.target.params.value;
-        const code = this.props.code;
-      //  console.log(value_id);
-        this.props.onSuccess({[code]: [value_id]});
 
-        // this.props.code - this is key in filters. For c
-        //this.props.store.dispatch(setFilter({code: value_id}));
-
-        // set filter shuold update filters. {"filters": {this.props.code:[value_id]},"page": 5}
-
-        //надо передать {"filters": {"category":[1]},"page": 5}
+        const checked = e.target.checked ? 1 : 0;
+        const {code} = this.props;
+        // sending code(category) and value as key=>value, where value will be the key, and 1 (if checked) and 0 if not checked will be the value.
+        // before sending this filters to the server, we need to clean it a bit (only send the ones with 1 as value)
+        this.props.onSuccess(code,  {[value_id]:checked});// in brackets to get the value of value_id instead of using "value_id" string as key
 
     }
 
 
     render() {
-        const{loading,fields, activeFilter} = this.props;
-
-        //console.log(fields.value);
-        // checkmark the proper checkbox by activeFilter
-
-
+        const{loading,fields, code, activeFilters} = this.props;
         if(!loading){
-            var check = false;
-            console.log(activeFilter.filters,"filter");
-            if(activeFilter.filters == fields.value ){
-                check = !check;
-            }
+            const activeFilter = activeFilters[code] || {};
+            const checked = activeFilter[fields.value] || 0;
             return (
                     <div>
-                          <Checkbox checked={check} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
+                          <Checkbox checked={checked} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
                     </div>
             )
         }

@@ -8,6 +8,7 @@ const getFilters = () => dispatch =>
     });
 
 export const SET_FILTERS = 'SET_FILTERS';
+export const CLEAR_FILTERS = 'CLEAR_FILTERS';
 
 
 export const setFilters = (filters) => {
@@ -17,20 +18,12 @@ export const setFilters = (filters) => {
     }
 };
 
-
-
-const clearFilters = m => (dispatch) => {
-    if(window && window.innerWidth > 1024) {
-        window.scrollTo(0, 143);
-    } else {
-        window.scrollTo(0, 56);
+export const clearFilters = (filters) => {
+    return {
+        type: CLEAR_FILTERS,
+        filters
     }
-   return {
-        type: 'CLEAR_FILTERS',
-        m,
-    };
 };
-
 
 export const actions = {
     setFilters,
@@ -39,35 +32,13 @@ export const actions = {
 
 const ACTION_HANDLERS = {
     SET_FILTERS: (state, {filters}) => {
-        //state = state.toJS();
-
-
         return state.updateIn(['activeFilters'], function (value) {
             return value.merge(filters);
         });
-       /* return fromJS(Object.assign({}, state, {
-            activeFilters: Object.assign({}, state.activeFilters, info)
-        }));*/
-
-        return fromJS({
-            ...state,
-            activeFilters : {
-                ...state.activeFilters,
-                filters
-            }
-        });
-
     },
-    CLEAR_FILTERS: (state, action) => {
-        let nextState;
-        if(action.m) {
-            const activeFilters = state.get('activeFilters').toJS();
-            delete activeFilters[action.m.id][action.m.value];
-            nextState = state.set('activeFilters', fromJS(activeFilters));
-        } else {
-            nextState = state.set('activeFilters', fromJS({}));
-        }
-        return nextState;
+    CLEAR_FILTERS: (state) => {
+        let nextState = state.set('activeFilters', fromJS({}));
+            return nextState;
     }
 };
 
@@ -82,7 +53,6 @@ const initialState = fromJS({
 });
 
 export default (state = fromJS(initialState), action) => {
-   // console.log(action," action")
     const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 };
