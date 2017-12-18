@@ -22,6 +22,10 @@ const QUERY = gql`
                     type
                     text
                     value
+                    range {
+                        min
+                        max
+                    }
                 }
             }
         }
