@@ -15,10 +15,34 @@ export class PlanstoreLayout extends React.Component {
         this.props.loadMoreEntries(page)
     }
 
+    updateFilters = (filter, values) => {
+        const activeFilters = this.props.activeFilters;
+        const activeFilter = activeFilters[filter] || {};
+        console.log(activeFilter);
+        console.log(filter);
+        console.log(values);
+
+
+        const filter1 = {
+            ...activeFilters,
+            [filter]: {
+                ...activeFilter,
+                ...values
+            }
+        }
+        /*const filt = Object.assign({}, state, {
+            activeFilters: Object.assign({}, state.activeFilters, info)
+        });*/
+
+        console.log(filter1);
+
+        this.props.updateFilterStore(filter1)
+    }
+
 
 
     render() {
-        const {loading, plans, filters, loadMoreEntries, updateFilterStore, activeFilters} = this.props;
+        const {loading, plans, filters, loadMoreEntries, activeFilters} = this.props;
         if (loading) {
             return '<div>loading</div>';
         }
@@ -26,7 +50,7 @@ export class PlanstoreLayout extends React.Component {
             <Layout style={{padding: '24px 0'}}>
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                        collapsedWidth="0">
-                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={updateFilterStore} />
+                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
                 </Sider>
                 <Content style={{padding: '0 24px', minHeight: 280}}>
 

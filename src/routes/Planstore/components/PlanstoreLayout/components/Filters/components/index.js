@@ -21,8 +21,8 @@ export class FormsComponent extends React.Component {
 
         filters.forEach(function(filter) {
                             i++;
-                            const activeFilter = activeFilters[filter.code] || {};
-                            rows.push(<PanelComponent key={filter.code} onSuccess={onSuccess} activeFilter={activeFilter} filter={filter}/>);
+
+                            rows.push(<PanelComponent key={filter.code} onSuccess={onSuccess} activeFilters={activeFilters} filter={filter}/>);
                         });
 
                return (
