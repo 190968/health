@@ -18,7 +18,7 @@ export class PlanstoreLayout extends React.Component {
 
 
     render() {
-        const {loading, plans, filters, loadMoreEntries, updateFilterStore} = this.props;
+        const {loading, plans, filters, loadMoreEntries, updateFilterStore, activeFilters} = this.props;
         if (loading) {
             return '<div>loading</div>';
         }
@@ -27,7 +27,7 @@ export class PlanstoreLayout extends React.Component {
             <Layout style={{padding: '24px 0'}}>
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                        collapsedWidth="0">
-                    <Filters filters={filters} onSuccess={updateFilterStore} />
+                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={updateFilterStore} />
                 </Sider>
                 <Content style={{padding: '0 24px', minHeight: 280}}>
 

@@ -10,7 +10,7 @@ export class FormsComponent extends React.Component {
 
     render() {
 
-        const {loading, filters, onSuccess} = this.props;
+        const {loading, filters, onSuccess, activeFilters} = this.props;
 
         if (loading) {
             return  '<div>Loading</div>';
@@ -19,7 +19,8 @@ export class FormsComponent extends React.Component {
             var rows = [];
             var i =0;
 
-        //console.log(filters);
+        console.log(activeFilters);
+        console.log(filters);
 
         filters.forEach(function(filter) {
                             i++;

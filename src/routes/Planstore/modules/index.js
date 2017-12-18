@@ -33,8 +33,7 @@ export const actions = {
 
 const ACTION_HANDLERS = {
     SET_FILTERS: (state, action) => {
-        const nextState = state.set('filters', fromJS(action.info));
-        console.log(nextState);
+        const nextState = state.set('activeFilters', fromJS(action.info));
         return nextState;
     },
     CLEAR_FILTERS: (state, action) => {
