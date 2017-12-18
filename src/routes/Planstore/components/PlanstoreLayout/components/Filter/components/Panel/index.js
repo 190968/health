@@ -20,18 +20,17 @@ export class PanelComponent extends React.Component {
 };
 
     render() {
-        const{loading, filter, key, onSuccess} = this.props;
+        const{loading, filter, activeFilter, key, onSuccess} = this.props;
         if(loading) {
             return '<div>Loading</div>';
         }
-        //console.log(filter);
             var row = [];
         filter.fields.map(function (field) {
                     if (field.type == "checkbox") {
-                        row.push(<CheckComponent key={field.value} code={filter.code} fields={field} onSuccess={onSuccess} />);
+                        row.push(<CheckComponent key={field.value} activeFilter={activeFilter} code={filter.code} fields={field} onSuccess={onSuccess} />);
                     }
                     if (field.type == "range") {
-                        row.push(<SliderComponent key={field.value} code={filter.code} fields={field}/>);
+                        row.push(<SliderComponent key={field.value} activeFilter={activeFilter} code={filter.code} fields={field}/>);
                     }
                 });
             return (

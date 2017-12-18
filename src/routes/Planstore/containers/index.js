@@ -38,7 +38,7 @@ const PlanstoreLayoutWithQuery = graphql(
         options: (ownProps) => ({
 
             variables: {
-                filters:ownProps.filters,
+                filters:ownProps.activeFilters,
                 page: ownProps.page,
                 limit: PLANS_PER_PAGE,
             },
@@ -91,13 +91,13 @@ const PlanstoreLayoutWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-    var filters = state.planstore.get('filters').toJS();
+    var activeFilters = state.planstore.get('activeFilters').toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
     //console.log(state);
     return {
         plans: plans,
-        filters: filters,
+        activeFilters: activeFilters,
         page: page,
     };
 };
