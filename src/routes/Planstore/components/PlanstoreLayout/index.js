@@ -18,50 +18,34 @@ export class PlanstoreLayout extends React.Component {
 
 
     render() {
-        const price = {
-            0: '0$',
-            99: {
-                label: "99$",
-            },
-        };
-        const marks = {
-            0: '0',
-            99: {
-                label: "99",
-            },
-        };
-
-
-
-        const {loading, plans, filters, loadMoreEntries} = this.props;
+        const {loading, plans, filters, loadMoreEntries, updateFilterStore} = this.props;
         if (loading) {
-return '<div>`loading</div>';
+            return '<div>loading</div>';
         }
 
+        return (
+            <Layout style={{padding: '24px 0'}}>
+                <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
+                       collapsedWidth="0">
+                    <Filters filters={filters} onSuccess={updateFilterStore} />
+                </Sider>
+                <Content style={{padding: '0 24px', minHeight: 280}}>
 
-            return (
-                <Layout style={{padding: '24px 0'}}>
-                    <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
-                           collapsedWidth="0">
-                        <Filters filters={filters}/>
-                    </Sider>
-                    <Content style={{padding: '0 24px', minHeight: 280}}>
-
-                        <List
-                            split={false}
-                            header="ActionPlans"
-                            loading={loading}
-                            grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
-                            pagination={{onChange: this.changePage, total: 50}}
-                            dataSource={plans}
-                            renderItem={product => (
-                                <List.Item key={product.id}>
-                                    <PlanWidget info={product} key={product.id}/>
-                                </List.Item>
-                            )}
-                        />
-                    </Content>
-                </Layout>)
+                    <List
+                        split={false}
+                        header="ActionPlans"
+                        loading={loading}
+                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                        pagination={{onChange: this.changePage, total: 50}}
+                        dataSource={plans}
+                        renderItem={product => (
+                            <List.Item key={product.id}>
+                                <PlanWidget info={product} key={product.id}/>
+                            </List.Item>
+                        )}
+                    />
+                </Content>
+            </Layout>)
         }
 }
 
