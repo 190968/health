@@ -8,7 +8,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const QUERY = gql`
-    query GET_PLANSTORE_PLANS ($filters: [String], $page: Int!, $limit: Int) {
+    query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit) {
                 ...PlanCardInfo
