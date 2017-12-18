@@ -16,7 +16,7 @@ export class CheckComponent extends React.Component {
         const value_id = e.target.params.value;
         const code = this.props.code;
         //console.log(code);
-        this.props.onSuccess({[code]: value_id});
+        this.props.onSuccess({[code]: [value_id]});
 
         // this.props.code - this is key in filters. For c
         //this.props.store.dispatch(setFilter({code: value_id}));
