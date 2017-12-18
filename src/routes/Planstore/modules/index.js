@@ -11,6 +11,7 @@ const getFilters = () => dispatch =>
     });
 
 export const setFilters = c => (dispatch) => {
+    console.log("setFilters");
     dispatch({
         type: 'SET_FILTERS',
         c,
@@ -57,6 +58,7 @@ export const actionCreators = {
 
 const ACTION_HANDLERS = {
     GET_FILTERS_SUCCESS: (state, action) => {
+        console.log(state,"--> modules/")
         const filters = {};
         Object.values(action.responseJSON.data).forEach((el) => {
             filters[el.id] = { id: el.id, name: el.name, items: {} };
@@ -70,6 +72,7 @@ const ACTION_HANDLERS = {
                     });
                 });
             } else {
+                console.log(el.fields[0],"555555555555555555555555555555555555")
                 el.fields[0].items.forEach((item) => {
                     filters[el.id].items[`${ item.value }` || item.code] = item;
                 });

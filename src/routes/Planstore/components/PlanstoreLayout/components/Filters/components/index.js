@@ -9,14 +9,6 @@ export class FormsComponent extends React.Component {
     }
 
     render() {
-        var mass = [{code:"category",fields:[{type:"checkbox",text:"Family",value:"378"},
-                                             {type:"checkbox",text:"Live Well",value:"525"},
-                                             {type:"checkbox",text:"Medical Conditions",value:"1"},
-                                             {type:"checkbox",text:"Prevention",value:"598"}]},
-                    {code:"plans",fields:[{type:"slider",text:"Family",value:"378"},
-                                             {type:"checkbox",text:"Only Free",value:"598"}]},
-                    {code:"pasha",fields:[{type:"slider",text:"Family",value:"378"},
-                                            {type:"slider",text:"Only Free",value:"598"}]}];
 
         const {loading, filters} = this.props;
 

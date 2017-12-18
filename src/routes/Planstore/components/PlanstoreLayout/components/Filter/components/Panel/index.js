@@ -14,11 +14,12 @@ export class PanelComponent extends React.Component {
         super(props);
     }
 
+    mapStateToProps = (state) => {
+
+
+};
+
     render() {
-
-
-        console.log(this.props);
-
         const{loading, filter, key} = this.props;
         if(loading) {
             return '<div>Loading</div>';
@@ -26,11 +27,9 @@ export class PanelComponent extends React.Component {
             var row = [];
         filter.fields.map(function (field) {
                     if (field.type == "checkbox") {
-                        console.log("push--CheckComponent");
                         row.push(<CheckComponent key={field.value} fields={field}/>);
                     }
                     if (field.type == "range") {
-                        console.log("push--SliderComponent");
                         row.push(<SliderComponent key={field.value} fields={field}/>);
                     }
                 });
@@ -38,7 +37,7 @@ export class PanelComponent extends React.Component {
                 //<div>
                //<Panel header="This is panel header 1"  >
                 <div >
-                    {/*<Panel header="This is panel header 1"  >*/}
+
                     <h1>{filter.name}</h1>
                     {row}
                 </div>
