@@ -40,7 +40,7 @@ export const actions = {
 const ACTION_HANDLERS = {
     SET_FILTERS: (state, action) => {
        // console.log(action.info);
-        const nextState = state.updateIn(['activeFilters'],value => value + fromJS(action.info));
+        const nextState = state.updateIn(['activeFilters'],value => fromJS(action.info));
         console.log(nextState);
         return nextState;
     },

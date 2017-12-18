@@ -94,7 +94,6 @@ const mapStateToProps = (state) => {
     var activeFilters = state.planstore.get('activeFilters').toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
-    //console.log(state);
     return {
         plans: plans,
         activeFilters: activeFilters,
@@ -104,7 +103,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateFilterStore: (info)  => {
-        //console.log(info);
+       // console.log(info);
         //console.log(setFilters);
         dispatch(setFilters(info))
     },
