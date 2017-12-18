@@ -91,7 +91,8 @@ const PlanstoreLayoutWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-    var activeFilters = state.planstore.get('activeFilters').toJS();
+    //console.log(state.planstore);
+    var activeFilters = state.planstore.get('activeFilters');//.toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
     return {
