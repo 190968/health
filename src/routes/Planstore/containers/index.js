@@ -38,7 +38,7 @@ const PlanstoreLayoutWithQuery = graphql(
         options: (ownProps) => ({
 
             variables: {
-                filters:ownProps.filters,
+                filters:ownProps.activeFilters,
                 page: ownProps.page,
                 limit: PLANS_PER_PAGE,
             },
