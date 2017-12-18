@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import PlanstoreLayout  from '../components/PlanstoreLayout'
-
+import CheckBox  from '../components/PlanstoreLayout/components/Filter/components/CheckBox'
 import Plan from '../../Plan/components/Plan';
 
 
@@ -8,7 +8,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const QUERY = gql`
-    query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
+     query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit) {
                 ...PlanCardInfo
@@ -33,8 +33,8 @@ const PLANS_PER_PAGE = 20;
 const PlanstoreLayoutWithQuery = graphql(
     QUERY,
     {
-        //name: 'PlanstorePlans',
         options: (ownProps) => ({
+
             variables: {
                 filters:ownProps.filters,
                 page: ownProps.page,
@@ -45,6 +45,7 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                console.log(data.planstore.filters,"Какой filter в props");
                 return {
                     plans: data.planstore.plans,
                     filters: data.planstore.filters,
@@ -52,7 +53,7 @@ const PlanstoreLayoutWithQuery = graphql(
 
 
                     loadMoreEntries(page) {
-                        //console.log(ownProps.page);
+                        console.log("Какой page в props",page);
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -62,8 +63,8 @@ const PlanstoreLayoutWithQuery = graphql(
                                 page: page,
                             },
                     updateQuery: (previousResult, {fetchMoreResult}) => {
+                        console.log("Какой previousResult в updateQuery",previousResult);
                         if (!fetchMoreResult) { return previousResult; }
-                        console.log(previousResult.planstore);
                         return fetchMoreResult;
                         return Object.assign({}, previousResult, {
                             // Append the new feed results to the old one
@@ -88,7 +89,6 @@ const PlanstoreLayoutWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-
     var filters = state.planstore.get('filters').toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    //console.log(1);
+    console.log("123-----------------------123");
     return {
         /*increment: (info) => {dispatch(increment(info))},
         doubleAsync*/

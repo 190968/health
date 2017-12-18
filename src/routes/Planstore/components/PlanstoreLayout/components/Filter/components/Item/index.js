@@ -9,7 +9,6 @@ export class CheckComponent extends React.Component {
 
     constructor(props){
         super(props);
-        console.log(props,"PROPS--check")
     }
 
     render() {
@@ -17,7 +16,6 @@ export class CheckComponent extends React.Component {
 
         const{loading,filters} = this.props;
         if(!loading){
-            console.log(filters,"check");
             return (
                 <Checkbox>sevwwefewv</Checkbox>
             )

@@ -9,7 +9,6 @@ export class CheckComponent extends React.Component {
 
     constructor(props){
         super(props);
-        console.log(props,"PROPS--check")
     }
 
     render() {
@@ -22,9 +21,9 @@ export class CheckComponent extends React.Component {
 
         const{loading,key} = this.props;
         if(!loading){
-            console.log(key,"Slider");
-            return (
+            return (<div>
                 <Slider marks={marks}/>
+                </div>
             )
         }
 

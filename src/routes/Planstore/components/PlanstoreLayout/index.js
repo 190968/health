@@ -44,17 +44,6 @@ return '<div>`loading</div>';
                     <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                            collapsedWidth="0">
                         <Filters filters={filters}/>
-                        {/*<Collapse defaultActiveKey={['1']}>*/}
-                            {/*<Panel header="This is panel header 1" >*/}
-
-                            {/*</Panel>*/}
-                            {/*<Panel header="This is panel header 2" >*/}
-
-                            {/*</Panel>*/}
-                            {/*<Panel header="This is panel header 3" >*/}
-
-                            {/*</Panel>*/}
-                        {/*</Collapse>*/}
                     </Sider>
                     <Content style={{padding: '0 24px', minHeight: 280}}>
 

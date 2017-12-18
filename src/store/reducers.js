@@ -1,21 +1,22 @@
 import { combineReducers } from 'redux'
 import locationReducer from './location'
 import userReducer from 'routes/User/modules/user';
+import planstoreReducer from 'routes/Planstore/modules';
 import networkReducer from 'routes/Network/modules/network';
-//import planstoreReducer from '../routes/Planstore/modules/planstore';
-//import apolloClient from '../apolloClient';
+
 
 
 
 export const makeRootReducer = (asyncReducers) => {
-    // console.log(1);
+
     var reducers = combineReducers({
         location: locationReducer,
         user: userReducer,
         network: networkReducer,
-        //planstore: planstoreReducer,
+        planstore: planstoreReducer,
         ...asyncReducers
     })
+    console.log("---Reducer---");
     return reducers
 }
 
