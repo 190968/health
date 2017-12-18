@@ -11,12 +11,13 @@ export class CheckComponent extends React.Component {
     }
 
     handleChange(e) {
-        //console.log(e.target.params.value,"state --- checked");
+
 
         const value_id = e.target.params.value;
         const code = this.props.code;
         //console.log(code);
         this.props.onSuccess({[code]: value_id});
+
         // this.props.code - this is key in filters. For c
         //this.props.store.dispatch(setFilter({code: value_id}));
 
@@ -29,12 +30,19 @@ export class CheckComponent extends React.Component {
 
     render() {
         const{loading,fields, activeFilter} = this.props;
-        //console.log(activeFilter);
+        console.log(activeFilter);
+        //console.log(fields.value);
         // checkmark the proper checkbox by activeFilter
+
+
         if(!loading){
+            var check = false;
+            if(activeFilter == fields.value ){
+                check = !check;
+            }
             return (
                     <div>
-                          <Checkbox params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
+                          <Checkbox checked={check} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
                     </div>
             )
         }

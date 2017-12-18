@@ -11,7 +11,6 @@ export const SET_FILTERS = 'SET_FILTERS';
 
 
 export const setFilters = (info) => {
-    //console.log(user);
     return {
         type: SET_FILTERS,
         info
@@ -40,7 +39,9 @@ export const actions = {
 
 const ACTION_HANDLERS = {
     SET_FILTERS: (state, action) => {
-        const nextState = state.set('activeFilters', fromJS(action.info));
+       // console.log(action.info);
+        const nextState = state.updateIn(['activeFilters'],value => value + fromJS(action.info));
+        console.log(nextState);
         return nextState;
     },
     CLEAR_FILTERS: (state, action) => {
@@ -67,7 +68,7 @@ const initialState = fromJS({
 });
 
 export default (state = fromJS(initialState), action) => {
-    console.log(action," action")
+   // console.log(action," action")
     const handler = ACTION_HANDLERS[action.type];
     return handler ? handler(state, action) : state;
 };
