@@ -22,7 +22,6 @@ export class PlanstoreLayout extends React.Component {
         if (loading) {
             return '<div>loading</div>';
         }
-
         return (
             <Layout style={{padding: '24px 0'}}>
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"

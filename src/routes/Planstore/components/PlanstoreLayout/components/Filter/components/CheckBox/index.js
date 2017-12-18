@@ -15,8 +15,8 @@ export class CheckComponent extends React.Component {
 
         const value_id = e.target.params.value;
         const code = this.props.code;
-        //console.log(code);
-        this.props.onSuccess({[code]: [value_id]});
+        const checked = e.target.checked ? 1 : 0;
+        this.props.onSuccess({[code]: {[value_id]:checked}});
 
         // this.props.code - this is key in filters. For c
         //this.props.store.dispatch(setFilter({code: value_id}));
@@ -30,19 +30,17 @@ export class CheckComponent extends React.Component {
 
     render() {
         const{loading,fields, activeFilter} = this.props;
-        console.log(activeFilter);
+        //console.log(activeFilter);
         //console.log(fields.value);
         // checkmark the proper checkbox by activeFilter
 
 
         if(!loading){
-            var check = false;
-            if(activeFilter == fields.value ){
-                check = !check;
-            }
+            const checked = activeFilter[fields.value] || 0;
+
             return (
                     <div>
-                          <Checkbox checked={check} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
+                          <Checkbox checked={checked} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
                     </div>
             )
         }
