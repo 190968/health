@@ -28,7 +28,7 @@ export class CheckComponent extends React.Component {
         if(!loading){
             const activeFilter = activeFilters[code] || {};
             const checked = activeFilter[fields.value] || 0;
-        
+
             return (
                     <div>
                           <Checkbox checked={checked} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
