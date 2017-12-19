@@ -32,6 +32,7 @@ export const actions = {
 
 const ACTION_HANDLERS = {
     SET_FILTERS: (state, {filters}) => {
+        //onsole.log(filters);
         return state.updateIn(['activeFilters'], function (value) {
             return value.merge(filters);
         });
