@@ -57,6 +57,7 @@ export class PlanstoreLayout extends React.Component {
         if (loading) {
             return '<div>loading</div>';
         }
+        const pageOpts = {onChange: this.changePage, total: 50};
         return (
             <Layout style={{padding: '24px 0'}}>
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
@@ -70,7 +71,7 @@ export class PlanstoreLayout extends React.Component {
                         header="ActionPlans"
                         loading={loading}
                         grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
-                        pagination={{onChange: this.changePage, total: 50}}
+                        pagination={pageOpts}
                         dataSource={plans}
                         renderItem={product => (
                             <List.Item key={product.id}>
