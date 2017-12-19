@@ -51,7 +51,6 @@ export class PlanstoreLayout extends React.Component {
                     <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
                 </Sider>
                 <Content style={{padding: '0 24px', minHeight: 280}}>
-
                     <List
                         split={false}
                         header="ActionPlans"
