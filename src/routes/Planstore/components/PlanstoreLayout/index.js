@@ -65,7 +65,6 @@ export class PlanstoreLayout extends React.Component {
                     <Button onClick={this.updateZeroFilters}>Clean filter</Button>
                 </Sider>
                 <Content style={{padding: '0 24px', minHeight: 280}}>
-
                     <List
                         split={false}
                         header="ActionPlans"
