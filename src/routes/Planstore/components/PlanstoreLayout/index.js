@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, List,Collapse} from 'antd';
+import {Layout,Button, List,Collapse} from 'antd';
 import Filters from './components/Filters/components'
 import PlanWidget from '../../../Plan/components/Plan';
 const { Content, Sider } = Layout;
@@ -37,6 +37,19 @@ export class PlanstoreLayout extends React.Component {
         this.props.updateFilterStore(filter1)
     }
 
+    updateZeroFilters = (filter, ) => {
+        const activeFilters = {};
+        const activeFilter1 =  {};
+        const values =  {};
+        const filter2 = {
+        ...activeFilters,
+        [filter]: {
+            ...activeFilter1,
+            ...values
+        }
+    }
+        this.props.updateZeroFilterStore(filter2);
+    }
 
 
     render() {
@@ -49,6 +62,7 @@ export class PlanstoreLayout extends React.Component {
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                        collapsedWidth="0">
                     <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
+                    <Button onClick={this.updateZeroFilters}>Clean filter</Button>
                 </Sider>
                 <Content style={{padding: '0 24px', minHeight: 280}}>
                     <List

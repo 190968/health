@@ -30,7 +30,7 @@ export class PanelComponent extends React.Component {
                         row.push(<CheckComponent key={field.value} activeFilters={activeFilters} code={filter.code} fields={field} onSuccess={onSuccess} />);
                     }
                     if (field.type == "range") {
-                        row.push(<SliderComponent key={field.value} activeFilters={activeFilters} code={filter.code} fields={field}/>);
+                        row.push(<SliderComponent key={field.value} activeFilters={activeFilters} onSuccess={onSuccess} code={filter.code} fields={field}/>);
                     }
                 });
             return (

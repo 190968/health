@@ -6,7 +6,7 @@ import Plan from '../../Plan/components/Plan';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {setFilters} from '../modules'
+import {setFilters,clearFilters} from '../modules'
 import { loadUser} from '../../User/modules/user'
 
 const QUERY = gql`
@@ -51,8 +51,9 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(data.planstore.filters,"Какой filter в props");
+                console.log(data.planstore.filters);
                 return {
+
                     plans: data.planstore.plans,
                     filters: data.planstore.filters,
                     loading: data.loading,
@@ -95,11 +96,9 @@ const PlanstoreLayoutWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-    //console.log(state.planstore);
     var activeFilters = state.planstore.get('activeFilters').toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
-    //console.log(state);
     return {
         plans: plans,
         activeFilters: activeFilters,
@@ -110,6 +109,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     updateFilterStore: (info)  => {
         dispatch(setFilters(info))
+    },
+    updateZeroFilterStore: (info)  => {
+        dispatch(clearFilters(info))
     },
 });
 
