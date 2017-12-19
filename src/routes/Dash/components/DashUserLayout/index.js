@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactPlaceholder from 'react-placeholder';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
 import { DatePicker } from 'antd';
 import {
@@ -32,12 +33,12 @@ export class DashUserLayout extends React.Component {
         if (loading) {
             //return (<div>Loading...</div>);
             return (
-                <div className='box'>
-                    <div className="box__header"><h3>ActionPlans</h3></div>
-                    <div className="box__body">
-                      Loading
+                <center>
+                    <div  className='my-awesome-placeholder'>
+                        <ReactPlaceholder type='text'  rows={6} color='#E0E0E0'>
+                        </ReactPlaceholder>
                     </div>
-                </div>
+                </center>
             );
         }
         //onsole.log("Logkout");

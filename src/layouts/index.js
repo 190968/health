@@ -3,10 +3,9 @@ import { Route, IndexLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import React from 'react'
-import {Redirect} from 'react-router-dom'
-// import VerifyPhone from '../routes/User/components/VerifyPhone';
+import ReactPlaceholder from 'react-placeholder';
+import { Spin } from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
-import VerifyPhoneConfirm from '../routes/User/containers/verifyPhoneConfirmContainer';
 import { Layout } from 'antd';
 
 
@@ -30,7 +29,13 @@ export const Core = ({loading, user, store, location}) =>  {
     // const ready = true//state.ready || false;
     //console.log(loading);
     if (loading) {
-        return ('Loading app');
+        return (
+            <div style={{height:'100%', width:'100%',overflow: 'auto', display: 'flex',top: '50%', position: 'absolute',
+                'minHeight': '100vh',
+                'flexDirection':'column'}}>
+          <Spin />
+                </div>
+        );
     }
 
     //console.log(user.info.phoneConfirmed);

@@ -104,9 +104,12 @@ export class PlansList extends React.Component {
         <div className='box'>
           <div className="box__header"><h3>ActionPlans</h3></div>
           <div className="box__body">
-              <ReactPlaceholder ready={!loading}  showLoadingAnimation   >
-               loading...
-              </ReactPlaceholder>
+              <center>
+                  <div  className='my-awesome-placeholder'>
+                      <ReactPlaceholder type='text'  rows={6} color='#E0E0E0'>
+                      </ReactPlaceholder>
+                  </div>
+              </center>
           </div>
         </div>
         );

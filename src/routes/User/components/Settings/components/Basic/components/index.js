@@ -2,7 +2,9 @@
  * Created by Pavel on 06.12.2017.
  */
 import React, { PropTypes } from 'react';
-import { Input,Col,Select,Form, Calendar, DatePicker, InputNumber, Radio, Button, Checkbox } from 'antd';
+import ReactPlaceholder from 'react-placeholder';
+import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
+import { Input,Col,Row,Select,Form, Calendar,List, DatePicker, InputNumber, Radio, Button, Checkbox } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import moment from 'moment';
 const InputGroup = Input.Group;
@@ -57,12 +59,19 @@ const dateFormat = 'YYYY-MM-DD';
 
 
     render(){
-
+        const settingsPlaceholder = [];
+        // settingsPlaceholder.push(  {
+        //     item:
+        //
+        // })
         if (this.props.loading) {
             return (
-                <div className='box'>
-                    Loading...
-                </div>
+                <center>
+                    <div  className='my-awesome-placeholder'>
+                        <ReactPlaceholder type='text'  rows={6} color='#E0E0E0'>
+                        </ReactPlaceholder>
+                    </div>
+                </center>
             );
         }
        // console.log(this.props.account.user.birthday);
