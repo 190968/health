@@ -13,11 +13,10 @@ export class CheckComponent extends React.Component {
     }
 
     handleChange(e) {
-        //console.log(e,"slider");
-         const value1 = e[0];
+        const value1 = e[0];
         const value2 = e[1];
          const {code} = this.props;
-        this.props.onSuccess(code, [value1,value2]);
+        this.props.onSuccess(code, {"min":value1,"max":value2});
     }
 
     render() {
@@ -28,16 +27,14 @@ export class CheckComponent extends React.Component {
             },
         };
 
-        const{loading,fields, code, activeFilters} = this.props;
+        const{loading, code, activeFilters} = this.props;
         if(!loading){
-            //console.log(activeFilters[code]);
-
             const activeFilter = activeFilters[code] || {};
-            const min = activeFilter[fields.range.min];
-            const max = activeFilter[fields.range.max];
-            console.log(min,max);
+            const min = activeFilter.min || 0;
+            const max = activeFilter.max || 0;
+
             return (<div>
-                <Slider range marks={marks}  onAfterChange = {this.handleChange}/>
+                <Slider range marks={marks} defaultValue={[min,max]}  onAfterChange = {this.handleChange}/>
                 </div>
             )
         }

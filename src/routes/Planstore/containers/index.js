@@ -51,7 +51,7 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                console.log(data.planstore.filters);
+              //  console.log(data.planstore.filters);
                 return {
 
                     plans: data.planstore.plans,
