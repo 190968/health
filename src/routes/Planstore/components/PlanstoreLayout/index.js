@@ -58,38 +58,56 @@ export class PlanstoreLayout extends React.Component {
 
 
     render() {
-        let awesomePlaceholder = (
+        const planPlaceholder = [];
+        for(var i=0; i<8; i++) {
+            planPlaceholder.push(  {
+                item:   <div style={{width: 200, height: 100 }} className='my-awesome-placeholder'>
+                    <RectShape color='#E0E0E0'  style={{width: 200, height: 100}}/>
+                    <RectShape color='white'  style={{width: 200, height: 50}}/>
+                </div>
+            })
+        }
 
-            <div style={{width: 250, height: 150 }} className='my-awesome-placeholder'>
-                <RectShape color='#E0E0E0'  style={{width: 250, height: 150}}/>
-                <RectShape color='white'  style={{width: 250, height: 50}}/>
-            </div>
+        const siderPlaceholder = [];
+        for(var i=0; i<4; i++) {
+            siderPlaceholder.push(  {
+                item:   <div  className='my-awesome-placeholder'>
+                    <RectShape color='#888888'  style={{width: 199, height: 20}}/>
+                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+                </div>
+            })
+        }
 
-        );
-        let awesomePlaceholderSider = (
 
-            <div  className='my-awesome-placeholder'>
-                <TextRow color='#E0E0E0'/>
-                <TextRow color='#E0E0E0'/>
-                <TextRow color='#E0E0E0'/>
-                <TextRow color='#E0E0E0'/>
-            </div>
-
-        );
         const {loading, plans, filters, loadMoreEntries, activeFilters} = this.props;
         if (loading) {
             return (
                 <Layout style={{padding: '24px 0'}}>
                     <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                            collapsedWidth="0">
-                        <ReactPlaceholder  customPlaceholder={awesomePlaceholderSider}>
-
-                        </ReactPlaceholder>
+                        <List
+                            grid={{gutter: 5, md: 1}}
+                            dataSource={siderPlaceholder}
+                            renderItem={item => (
+                                <List.Item>
+                                    {item.item}
+                                </List.Item>
+                            )}
+                        />
                     </Sider>
                     <Content style={{padding: '0 24px', minHeight: 280}}>
-                        <ReactPlaceholder  customPlaceholder={awesomePlaceholder}>
-
-                        </ReactPlaceholder>
+                        <List
+                            grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                            dataSource={planPlaceholder}
+                            renderItem={item => (
+                                <List.Item>
+                                    {item.item}
+                                </List.Item>
+                            )}
+                        />
                     </Content>
                 </Layout>)
         }
