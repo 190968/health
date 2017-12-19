@@ -9,33 +9,52 @@ import { arrayChunk, intersperse } from '../../../../utils/main';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 
-import { Card, Modal, Row, Col, Button,  Form, Input, Tooltip, Icon, Cascader, Popover, Select, Checkbox, AutoComplete, Radio, DatePicker} from 'antd';
+import { Card, Modal, Row, Col, Button, List, Form, Input, Tooltip, Icon, Cascader, Popover, Select, Checkbox, AutoComplete, Radio, DatePicker} from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-
+const planPlaceholder = [];
+    planPlaceholder.push(  {
+        item:      <div style={{width: 400, height: 250 }} className='my-awesome-placeholder'>
+            <RectShape color='#E0E0E0'  style={{width: 400, height: 250}}/>
+        </div>
+    })
+    planPlaceholder.push(  {
+        item:     <div>
+        <ReactPlaceholder type='text' ready={false} rows={5} color='#E0E0E0'>
+               </ReactPlaceholder>
+            <ReactPlaceholder type='rect' ready={false} color='#888888' style={{ width: 100, height: 50 }}>
+            </ReactPlaceholder>
+            </div>
+    })
 
 const PlanstorePlanPlaceholder = (
-    <Row>
-        <Col >
-            <div className="ap-card__img ap-card__img--large"><RectShape color="#f2f2f2" style={{width: '100%', height: '100%'}}/></div>
-        </Col>
-        <Col >
-            <div className="ap-card__body">
-                <div className="ap-card__title ap-card__title--large">
-                    <RectShape rows={1} color="#ddd" style={{height:'25px'}} />
-                </div>
-                <div className="ap-card__description" >
-                    <TextBlock rows={3} color="#f2f2f2"/>
-                </div>
-                <div className="ap-card__action">
-                    <RectShape color="#ddd" style={{width:'100px', height:38}}/>
-                </div>
-            </div>
-        </Col>
-    </Row>
+    <div>
+                <Row>
+                    <Col >
+                        <List
+                            grid={{gutter:10,  md: 3}}
+                            dataSource={planPlaceholder}
+                            renderItem={item => (
+                                <List.Item>
+                                    {item.item}
+                                </List.Item>
+                            )}
+                        />
+
+                    </Col>
+                </Row>
+                <Row>
+                    <Col >
+                        <ReactPlaceholder type='text' ready={false} rows={5} color='#E0E0E0'>
+
+                        </ReactPlaceholder>
+
+                     </Col>
+                </Row>
+    </div>
 );
 
 
@@ -285,17 +304,17 @@ export class PlanstorPlanLayout extends React.Component {
             return (
                 <div>
                     <div className="box">
-                        <div className="box__body"><ReactPlaceholder rows={7} ready={!loading} customPlaceholder={PlanstorePlanPlaceholder}>Loading</ReactPlaceholder>
+                        <div className="box__body"><ReactPlaceholder ready={!loading} customPlaceholder={PlanstorePlanPlaceholder}>Loading</ReactPlaceholder>
                         </div>
                     </div>
                     <div className="box">
-                        <div className="box__header"><RectShape color="#ddd" style={{width:'20%', height:15}}/></div>
+                        <div className="box__header"></div>
                         <div className="box__body">
                             <TextBlock rows={3} color="#f2f2f2"/>
                         </div>
                     </div>
                     <div className="box">
-                        <div className="box__header"><RectShape color="#ddd" style={{width:'40%', height:15}}/></div>
+                        <div className="box__header"></div>
                         <div className="box__body">
                             <TextBlock rows={3} color="#f2f2f2"/>
                         </div>

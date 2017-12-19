@@ -72,12 +72,12 @@ export class PlanstoreLayout extends React.Component {
         for(var i=0; i<4; i++) {
             siderPlaceholder.push(  {
                 item:   <div  className='my-awesome-placeholder'>
-                    <RectShape color='#888888'  style={{width: 199, height: 20}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                </div>
+                <RectShape color='#888888'  style={{width: 199, height: 20}}/>
+        <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+        <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+        <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+        <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
+        </div>
             })
         }
 
