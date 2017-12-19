@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {Checkbox} from 'antd';
 import { connect } from 'react-redux'
 export class CheckComponent extends React.Component {
@@ -26,12 +27,15 @@ export class CheckComponent extends React.Component {
     render() {
         const{loading,fields, code, activeFilters} = this.props;
         if(!loading){
+
             const activeFilter = activeFilters[code] || {};
             const checked = activeFilter[fields.value] || 0;
 
             return (
                     <div>
+
                           <Checkbox checked={checked} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
+
                     </div>
             )
         }

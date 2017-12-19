@@ -1,9 +1,14 @@
 import React from 'react';
+import ReactPlaceholder from 'react-placeholder';
+import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import {Layout,Button, List,Collapse} from 'antd';
 import Filters from './components/Filters/components'
 import PlanWidget from '../../../Plan/components/Plan';
 const { Content, Sider } = Layout;
 const Panel = Collapse.Panel;
+
+
+
 
 export class PlanstoreLayout extends React.Component {
 
@@ -53,9 +58,40 @@ export class PlanstoreLayout extends React.Component {
 
 
     render() {
+        let awesomePlaceholder = (
+
+            <div style={{width: 250, height: 150 }} className='my-awesome-placeholder'>
+                <RectShape color='#E0E0E0'  style={{width: 250, height: 150}}/>
+                <RectShape color='white'  style={{width: 250, height: 50}}/>
+            </div>
+
+        );
+        let awesomePlaceholderSider = (
+
+            <div  className='my-awesome-placeholder'>
+                <TextRow color='#E0E0E0'/>
+                <TextRow color='#E0E0E0'/>
+                <TextRow color='#E0E0E0'/>
+                <TextRow color='#E0E0E0'/>
+            </div>
+
+        );
         const {loading, plans, filters, loadMoreEntries, activeFilters} = this.props;
         if (loading) {
-            return '<div>loading</div>';
+            return (
+                <Layout style={{padding: '24px 0'}}>
+                    <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
+                           collapsedWidth="0">
+                        <ReactPlaceholder  customPlaceholder={awesomePlaceholderSider}>
+
+                        </ReactPlaceholder>
+                    </Sider>
+                    <Content style={{padding: '0 24px', minHeight: 280}}>
+                        <ReactPlaceholder  customPlaceholder={awesomePlaceholder}>
+
+                        </ReactPlaceholder>
+                    </Content>
+                </Layout>)
         }
         return (
             <Layout style={{padding: '24px 0'}}>
