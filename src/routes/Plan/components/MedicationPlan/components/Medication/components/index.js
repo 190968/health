@@ -1,6 +1,7 @@
 import React from 'react'
 import MedicationCoin from './MedicationCoin/containers';
-import { Divider, Card } from 'antd';
+import MedicationInfo from './MedicationInfo/components';
+import { Table, Row, Col, Icon } from 'antd';
 import gql from 'graphql-tag';
 
 export class Medication extends React.Component {
@@ -48,22 +49,41 @@ export class Medication extends React.Component {
 
     render() {
 
-        const {info} = this.props;
-        const {id, drug, isPersonal, quantity, reports, timesPerDay} = info;
+        const {info, date} = this.props;
+        const {id, type, drug, isPersonal, quantity, reports, timesPerDay} = info;
         const {name, dosage} = drug;
-console.log(this.props);
-console.log(reports);
+        //console.log(info);
+//console.log(this.props);
         var rows = [];
-        for (var i = 0; i < timesPerDay; i++) {
-            //const report = reports[i] || {};
 
-            // note: we add a key prop here to allow react to uniquely identify each
-            // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-            //rows.push(<MedicationCoin key={i} id={id} quantity={quantity} report={report} date={'2017-08-04'} />);
+        if (type == 'at_times') {
+
+
+
+
+
+            rows = <Table  />
+        } else {
+            for (var i = 0; i < timesPerDay; i++) {
+                const report = reports && reports[i] || {};
+
+                // note: we add a key prop here to allow react to uniquely identify each
+                // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+                rows.push(<Col xs={3} key={i}><MedicationCoin id={id} quantity={quantity} report={report} date={date}/></Col>);
+            }
         }
-        return (<div>
-            {name} ({dosage}) {rows}
-        </div>)
+        return (
+            <Row type="flex" justify="start">
+                {type != 'at_times' && <Col xs={6} >
+                    <MedicationInfo info={info} />
+                </Col>}
+                <Col  xs={18} >
+                    <Row>
+                    {rows}
+                    </Row>
+                </Col>
+            </Row>
+        )
     }
 }
 

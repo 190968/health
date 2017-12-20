@@ -38,14 +38,13 @@ export class MedicationCoin extends React.Component {
     render() {
 
         const {id, quantity, report} = this.props;
-        const report_id = report.id || 0;
-        if (report_id) {
-
-            return (<Button shape="circle" onClick={this.handleClick}>
+        const hasReport = report.id || this.state.isClicked;
+        if (hasReport) {
+            return (<Button type="primary" shape="circle" onClick={this.handleClick}>
                 {quantity}
             </Button>)
         }
-        return (<Button type="primary" shape="circle" onClick={this.handleClick}>
+        return (<Button  shape="circle" onClick={this.handleClick}>
             {quantity}
         </Button>)
     }

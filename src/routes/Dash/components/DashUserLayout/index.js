@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlaceholder from 'react-placeholder';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
-import { DatePicker } from 'antd';
+import { Row, Col, Calendar, Card } from 'antd';
 import {
     FormattedMessage,
     FormattedNumber,
@@ -28,8 +28,9 @@ export class DashUserLayout extends React.Component {
     }
     render () {
         const {
-            plans, loading, medicationPlan
+            plans, loading, medicationPlan, date
         } = this.props;
+
         /*if (loading) {
             //return (<div>Loading...</div>);
             return (
@@ -44,18 +45,16 @@ export class DashUserLayout extends React.Component {
         //onsole.log("Logkout");
         console.log(loading);
         return (
-           <div>
-               <FormattedMessage id="dashUser.hello_world" defaultMessage="Hello World2!" description="Hello world header greeting2" />
-               <FormattedNumber value={1000} /> {' '}
-               <FormattedPlural value={1000}
-                                one="message"
-                                other="messages"
-               />.
-
-
-
-               <MedicationPlan loading={loading} info={medicationPlan} />
-           </div>
+           <Row gutter={15}>
+               <Col xs={24} md={16} lg={18}>
+               <MedicationPlan loading={loading} info={medicationPlan} date={date} />
+               </Col>
+               <Col xs={24} md={8} lg={6}>
+                   <Card>
+                       <Calendar fullscreen={false}  />
+                   </Card>
+               </Col>
+           </Row>
             // <Form onSubmit={this.handleSubmit}>
             //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>
             // </Form>

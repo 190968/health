@@ -7,26 +7,31 @@ import Medication from 'routes/Plan/components/MedicationPlan/components/Medicat
 
 // Query for grabbing everything for the dashboard items
 const QUERY = gql`
-    query GET_DASH_PLANS ($user_id: ID)  {
+    query GET_DASH_PLANS ($user_id: ID, $date: Date)  {
         account {
             plans (user_id: $user_id)  {
                 ...PlanCardInfo
             }
 
-            medicationPlan (user_id: $user_id) {
+            medicationPlan (user_id: $user_id, date: $date) {
                 id
                 upid
                 isPersonal
-                medicationsByType {
+                medicationsByType (date: $date) {
+                    takeAtTimes {
+                        ...MedicationCardInfo
+                        timesPerHour {
+                            id
+                            time
+                            quantity
+                        }
+                    }
                     takeDaily {
                         ...MedicationCardInfo
                     }
                     takeAsNeeded {
                         ...MedicationCardInfo
                     }
-                    
-
-                    
                 }
                 textBefore
                 textAfter
@@ -67,6 +72,7 @@ const DashLayoutWithQuery = graphql(
         options: (ownProps) => ({
             variables: {
                 user_id:ownProps.user_id,
+                date:ownProps.date
             },
             fetchPolicy: 'network-only'
         }),
@@ -80,6 +86,7 @@ const DashLayoutWithQuery = graphql(
 const mapStateToProps = (state) => {
 
     return {
+        date: '2017-12-20'
     };
 };
 
