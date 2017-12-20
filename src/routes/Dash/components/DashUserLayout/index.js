@@ -30,7 +30,7 @@ export class DashUserLayout extends React.Component {
         const {
             plans, loading, medicationPlan
         } = this.props;
-        if (loading) {
+        /*if (loading) {
             //return (<div>Loading...</div>);
             return (
                 <center>
@@ -40,8 +40,9 @@ export class DashUserLayout extends React.Component {
                     </div>
                 </center>
             );
-        }
+        }*/
         //onsole.log("Logkout");
+        console.log(loading);
         return (
            <div>
                <FormattedMessage id="dashUser.hello_world" defaultMessage="Hello World2!" description="Hello world header greeting2" />
@@ -50,11 +51,10 @@ export class DashUserLayout extends React.Component {
                                 one="message"
                                 other="messages"
                />.
-               <DatePicker />
 
 
 
-               <MedicationPlan info={medicationPlan} />
+               <MedicationPlan loading={loading} info={medicationPlan} />
            </div>
             // <Form onSubmit={this.handleSubmit}>
             //     <Button type="primary" htmlType="submit" className="logout-form-button">Logout</Button>

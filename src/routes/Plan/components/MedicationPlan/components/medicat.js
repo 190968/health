@@ -17,7 +17,7 @@ export class Medication extends React.Component {
 
         const {info} = this.props;
         console.log(this.props);
-        const {takeDaily, takeAsNeeded} = info.medicationsByType;
+        //const {takeDaily, takeAsNeeded} = info.medicationsByType;
 
         return (<Card title="Medications for Today">
             aaa
