@@ -32,7 +32,7 @@ const PlanstoreLayoutWithQuery = graphql(
                 page: ownProps.page,
                 limit: PLANS_PER_PAGE,
             },
-            //fetchPolicy: 'network-only'
+            fetchPolicy: 'cache-first'
 
         }),
         props: ({ ownProps, data }) => {

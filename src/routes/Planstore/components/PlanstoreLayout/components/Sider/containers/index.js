@@ -35,14 +35,15 @@ const PlanstoreLayoutWithQuery = graphql(
     QUERY,
     {
         options: (ownProps) => ({
-            variables: {
+            /*variables: {
                 filters:ownProps.activeFilters,
                 page: ownProps.page,
                 limit: PLANS_PER_PAGE,
             },
+            fetchPolicy: 'cache-first'*/
         }),
         props: ({ ownProps, data }) => {
-            console.log(ownProps);
+            //console.log(ownProps);
             if (!data.loading) {
                 //  console.log(data.planstore.filters);
                 return {

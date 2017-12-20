@@ -43,11 +43,11 @@ export class DashUserLayout extends React.Component {
             );
         }*/
         //onsole.log("Logkout");
-        console.log(loading);
+        //console.log(date);
         return (
            <Row gutter={15}>
                <Col xs={24} md={16} lg={18}>
-               <MedicationPlan loading={loading} info={medicationPlan} date={date} />
+               <MedicationPlan loading={loading}  date={date} />
                </Col>
                <Col xs={24} md={8} lg={6}>
                    <Card>

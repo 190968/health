@@ -6,13 +6,13 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
 const QUERY = gql`
-    query GET_MEDICATION_PLAN ($user_id: ID)  {
+    query GET_MEDICATION_PLAN ($user_id: ID, $date: Date)  {
         account {
-            medicationPlan (user_id: $user_id) {
+            medicationPlan (user_id: $user_id, date: $date) {
                 id
                 upid
                 isPersonal
-                medicationsByType {
+                medicationsByType (date: $date) {
                     takeAtTimes {
                         ...MedicationCardInfo
                         timesPerHour {
@@ -58,7 +58,7 @@ const MedicationPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
-            //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
+            fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
         }),
     }
 )(MedicationPlanBody);

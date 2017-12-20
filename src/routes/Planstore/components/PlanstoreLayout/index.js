@@ -51,6 +51,10 @@ export class PlanstoreLayout extends React.Component {
 
         const {loading} = this.props;
 
+        if (loading) {
+            return ('<div>Loading</div>');
+        }
+
         return (
             <Layout style={{padding: '24px 0'}}>
                 <Sider loading={loading}  />
