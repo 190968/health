@@ -2,9 +2,11 @@ import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import {Layout,Button, List,Collapse} from 'antd';
-import Filters from './components/Filters/components'
+
+import Sider from './components/Sider/components'
+import Content from './components/Content/components'
 import PlanWidget from '../../../Plan/components/Plan';
-const { Content, Sider } = Layout;
+
 const Panel = Collapse.Panel;
 
 
@@ -81,59 +83,18 @@ export class PlanstoreLayout extends React.Component {
             })
         }
 
-
         const {loading, plans, filters, loadMoreEntries, activeFilters} = this.props;
+         console.log(filters,"Plan store Layout");
+
         if (loading) {
-            return (
-                <Layout style={{padding: '24px 0'}}>
-                    <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
-                           collapsedWidth="0">
-                        <List
-                            grid={{gutter: 5, md: 1}}
-                            dataSource={siderPlaceholder}
-                            renderItem={item => (
-                                <List.Item>
-                                    {item.item}
-                                </List.Item>
-                            )}
-                        />
-                    </Sider>
-                    <Content style={{padding: '0 24px', minHeight: 280}}>
-                        <List
-                            grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
-                            dataSource={planPlaceholder}
-                            renderItem={item => (
-                                <List.Item>
-                                    {item.item}
-                                </List.Item>
-                            )}
-                        />
-                    </Content>
-                </Layout>)
+
         }
+
         const pageOpts = {onChange: this.changePage, total: 50};
         return (
             <Layout style={{padding: '24px 0'}}>
-                <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
-                       collapsedWidth="0">
-                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
-                    <Button onClick={this.updateZeroFilters}>Clean filter</Button>
-                </Sider>
-                <Content style={{padding: '0 24px', minHeight: 280}}>
-                    <List
-                        split={false}
-                        header="ActionPlans"
-                        loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
-                        pagination={pageOpts}
-                        dataSource={plans}
-                        renderItem={product => (
-                            <List.Item key={product.id}>
-                                <PlanWidget info={product} key={product.id}/>
-                            </List.Item>
-                        )}
-                    />
-                </Content>
+                <Sider activeFilters={activeFilters} loading={loading} filters={filters} plans={plans} onSuccess={this.updateFilters} />
+                <Content activeFilters={activeFilters}  loading={loading} filters={filters} plans={plans} />
             </Layout>)
         }
 }

@@ -51,9 +51,9 @@ class NormalRegisterForm extends React.Component {
     }
 
     componentWillMount() {
-        // Run query here(check Request api). You can check how it's done in App component.
+        // Run query here(check Request api). You can check how it's done in App components.
         // and update the state with the info.
-        // If in the query result it says, userIsRegistered, then show confirmRegistration component(need to create) with the following fields: Enter email(need to check if this request has the same email as we will enter), enter new password, confirm password.
+        // If in the query result it says, userIsRegistered, then show confirmRegistration components(need to create) with the following fields: Enter email(need to check if this request has the same email as we will enter), enter new password, confirm password.
     }
 
     handleCheckboxChange =()=> {

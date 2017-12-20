@@ -3,10 +3,10 @@
  */
 import { connect } from 'react-redux'
 
-/*  This is a container component. Notice it does not contain any JSX,
- nor does it import React. This component is **only** responsible for
+/*  This is a container components. Notice it does not contain any JSX,
+ nor does it import React. This components is **only** responsible for
  wiring in the actions and state necessary to render a presentational
- component - in this case, the counter:   */
+ components - in this case, the counter:   */
 
 import VerifyPhoneConfirmForm from '../components/VerifyPhoneConfirm'
 import { graphql } from 'react-apollo';

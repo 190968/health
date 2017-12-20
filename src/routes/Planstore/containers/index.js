@@ -60,7 +60,7 @@ const PlanstoreLayoutWithQuery = graphql(
 
 
                     loadMoreEntries(page) {
-                        console.log("Какой page в props",page);
+                        //console.log("Какой page в props",page);
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
