@@ -69,7 +69,7 @@ export class MedicationPlanBody extends React.Component {
 
                     let report = {};
                     if (reports) {
-                         report = reports.filter((e) => e.time === time_info.time);
+                         //report = reports.filter((e) => e.time === time_info.time);
                     }
                     //console.log(report);
 
