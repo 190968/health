@@ -6,17 +6,17 @@ import Content  from '../components'
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import Plan from 'routes/Plan/components/Plan';
 
 
 const QUERY = gql`
-     query GET_PLANSTORE_DASH ($filters: Json, $page: Int!, $limit: Int) {
+     query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit) {
                 ...PlanCardInfo
             }
           }
-    }
-    
+    }${Plan.fragments.plan}
 `;
 
 const PLANS_PER_PAGE = 20;

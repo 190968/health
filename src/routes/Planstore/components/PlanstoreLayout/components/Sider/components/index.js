@@ -24,9 +24,45 @@ export class PlanstoreLayout extends React.Component {
      * @param filter
      * @param values
      */
+    updateFilters = (filter, values) => {
+        const activeFilters = this.props.activeFilters;
+        // get all current info of the type
+        const activeFilter = activeFilters[filter] || {};
+
+        // update filter by type(category or smth)
+        const filter1 = {
+            ...activeFilters,
+            [filter]: {
+                ...activeFilter,
+                ...values
+            }
+        }
+        // update the store
+        this.props.updateFilterStore(filter1)
+    }
+
+    updateZeroFilters = (filter, ) => {
+        const activeFilters = {};
+        const activeFilter1 =  {};
+        const values =  {};
+        const filter2 = {
+            ...activeFilters,
+            [filter]: {
+                ...activeFilter1,
+                ...values
+            }
+        }
+        this.props.updateZeroFilterStore(filter2);
+    }
+
+    /**
+     * Updates filter by type (category, price, etc)
+     * @param filter
+     * @param values
+     */
 
     render() {
-        const {loading, filters, activeFilters,onSuccess} = this.props;
+        const {loading, filters, activeFilters} = this.props;
         const pageOpts = {onChange: this.changePage, total: 50};
         const siderPlaceholder = [];
         for(var i=0; i<4; i++) {
@@ -65,7 +101,7 @@ export class PlanstoreLayout extends React.Component {
            <div>
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                        collapsedWidth="0">
-                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={onSuccess} />
+                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
                     <Button onClick={this.updateZeroFilters}>Clean filter</Button>
                 </Sider>
                </div>

@@ -10,7 +10,7 @@ import {setFilters,clearFilters} from '../modules'
 import { loadUser} from '../../User/modules/user'
 
 const QUERY = gql`
-     query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
+     query GET_PLANSTORE_DASH ($filters: Json, $page: Int!, $limit: Int) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit) {
                 ...PlanCardInfo
@@ -42,7 +42,7 @@ const PlanstoreLayoutWithQuery = graphql(
         options: (ownProps) => ({
 
             variables: {
-                filters:ownProps.activeFilters,
+                filters: ownProps.activeFilters,
                 page: ownProps.page,
                 limit: PLANS_PER_PAGE,
             },
@@ -50,42 +50,18 @@ const PlanstoreLayoutWithQuery = graphql(
 
         }),
         props: ({ ownProps, data }) => {
+            //console.log(ownProps);
+            //console.log(data);
             if (!data.loading) {
               //  console.log(data.planstore.filters);
                 return {
 
-                    plans: data.planstore.plans,
-                    filters: data.planstore.filters,
+                    //plans: data.planstore.plans,
+                    //filters: data.planstore.filters,
                     loading: data.loading,
-
-
-                    loadMoreEntries(page) {
-                        //console.log("Какой page в props",page);
-                        return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                            variables: {
-                                // We are able to figure out which offset to use because it matches
-                                // the feed length, but we could also use state, or the previous
-                                // variables to calculate this (see the cursor example below)
-                                page: page,
-                            },
-                    updateQuery: (previousResult, {fetchMoreResult}) => {
-                        console.log("Какой previousResult в updateQuery",previousResult);
-                        if (!fetchMoreResult) { return previousResult; }
-                        return fetchMoreResult;
-                        return Object.assign({}, previousResult, {
-                            // Append the new feed results to the old one
-                            planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                        });
-                    },
-                    });
-                }
-
                   }
-        }
-
-            else {
-                return {loading: data.loading, plans: []}
+            } else {
+                return {loading: data.loading}
             }
         },
     }
@@ -97,22 +73,17 @@ const PlanstoreLayoutWithQuery = graphql(
 
 const mapStateToProps = (state) => {
     var activeFilters = state.planstore.get('activeFilters').toJS();
-    var plans = state.planstore.get('plans').toJS();
+    //var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
     return {
-        plans: plans,
+        //plans: plans,
         activeFilters: activeFilters,
         page: page,
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    updateFilterStore: (info)  => {
-        dispatch(setFilters(info))
-    },
-    updateZeroFilterStore: (info)  => {
-        dispatch(clearFilters(info))
-    },
+
 });
 
 export default connect(
