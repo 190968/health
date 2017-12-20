@@ -4,7 +4,11 @@
 import React, { PropTypes } from 'react';
 import { Input,message,Form, Button } from 'antd';
 import { withApollo } from 'react-apollo'
-
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -69,41 +73,41 @@ class PasswordForm extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label="Current password"
+                    label={<FormattedMessage id="user.settings.password.currentpassword.label" defaultMessage="Current password" description="Current password" />}
                 >
                             {getFieldDecorator('current_password', {
-                                rules: [{ required: true, message: 'Please input your Current password!', whitespace: true }],
+                                rules: [{ required: true, message: <FormattedMessage id="user.settings.password.currentpassword.rule" defaultMessage="Current password" description="Current password" />, whitespace: true }],
                             })(
-                                <Input  placeholder="Current password" />
+                                <Input  placeholder={<FormattedMessage id="user.settings.password.currentpassword" defaultMessage="Current password" description="Current password" />}/>
                             )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="New password"
-                    help="Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number"
+                    label={<FormattedMessage id="user.settings.password.newpassword.label" defaultMessage="New Password" description="New Password" />}
+                    help={<FormattedMessage id="user.settings.password.newpassword.help" defaultMessage="Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number" description="Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number" />}
                 >
 
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your New password!', whitespace: true }],
+                        rules: [{ required: true, message: <FormattedMessage id="user.settings.password.newpassword.rule" defaultMessage="Please input your new password" description="new password" />, whitespace: true }],
                     })(
-                        <Input  placeholder="New password" />
+                        <Input  placeholder={<FormattedMessage id="user.settings.password.new" defaultMessage="New password" description="New password" />} />
 
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Confirm New Password"
+                    label={<FormattedMessage id="user.settings.password.confirm.label" defaultMessage="Confirm New Password" description="Confirm New password" />}
                 >
                     {getFieldDecorator('password_repeat', {
-                        rules: [{ required: true, message: 'Please input your Confirm New Password!', whitespace: true }],
+                        rules: [{ required: true, message: <FormattedMessage id="user.settings.password.confirm.rule" defaultMessage="Please confirm your New password" description="Confirm New password" />, whitespace: true }],
                     })(
-                        <Input  placeholder="Confirm New Password" />
+                        <Input  placeholder={<FormattedMessage id="user.settings.password.confirm" defaultMessage="Confirm New Password" description="Confirm New password" />} />
                     )}
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
                     <Button loading={this.state.loading} type="primary" htmlType="submit">
-                        Change password
+                        <FormattedMessage id="user.settings.password.change" defaultMessage="Change password" description="Change password" />
                     </Button>
                 </FormItem>
             </Form>

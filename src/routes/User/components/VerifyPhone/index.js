@@ -4,7 +4,11 @@
 import React, { PropTypes } from 'react';
 import { Card, Form, Select, Input,Button } from 'antd';
 import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
-
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -88,19 +92,19 @@ class VerifyPhoneForm extends React.Component {
                     <Form onSubmit={this.handleSubmit} >
                         <FormItem
                             {...formItemLayout}
-                            label="Phone Number"
+                            label={<FormattedMessage id="user.settings.verifyphone.phone" defaultMessage="Phone" description="Phone" />}
                             hasFeedback
                         >
                             {getFieldDecorator('phone', {
                                 initialValue: phone,
-                                rules: [{ required: true, message: 'Please input your phone number!' }],
+                                rules: [{ required: true, message: <FormattedMessage id="user.settings.verifyphone.rule" defaultMessage="Please input your phone number" description="number" /> }],
                             })(
                                 <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Button  loading={this.state.loading}     type="primary" htmlType="submit" className="register-form-button">
-                                Send
+                                <FormattedMessage id="user.settings.verifyphone.send" defaultMessage="Send" description="Send" />
                             </Button>
                         </FormItem>
                     </Form>
