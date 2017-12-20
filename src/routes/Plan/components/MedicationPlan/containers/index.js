@@ -37,13 +37,16 @@ const MedicationPlanBodyWithQuery = graphql(
     QUERY,
     {
         props: ({ ownProps, data }) => {
+            console.log(ownProps);
+            console.log(data);
             if (!data.loading) {
                 return {
-                    medicationPlan: data.account.medicationPlan,
+                    info: data.account.medicationPlan,
                     loading: data.loading
                 }
 
             } else {
+
                 return {loading: data.loading}
             }
         },
