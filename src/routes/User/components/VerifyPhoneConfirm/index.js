@@ -3,7 +3,11 @@
  */
 import React, { PropTypes } from 'react';
 import { Card, Form, Select, Input,Button } from 'antd';
-
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -60,23 +64,23 @@ class VerifyPhoneConfirmForm extends React.Component {
         return (
             <div className="register-form" style={{padding:'0 20%'}}>
                 <Card
-                    title="Verify Phone Confirm"
+                    title={<FormattedMessage id="user.settings.verifyconfirm" defaultMessage="Verify Phone Confirm" description="Confirm" />}
                 >
                     <Form onSubmit={this.handleSubmit} >
                         <FormItem
                             {...formItemLayout}
-                            label="Code"
+                            label={<FormattedMessage id="user.settings.verifyconfirm.code" defaultMessage="Code" description="Code" />}
                             hasFeedback
                         >
                             {getFieldDecorator('code', {
-                                rules: [{ required: true, message: 'Please input your code!' }],
+                                rules: [{ required: true, message: <FormattedMessage id="user.settings.verifyconfirm.rule" defaultMessage="Please input your code" description="code" /> }],
                             })(
                                 <Input  style={{ width: '100%' }} />
                             )}
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Button  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
-                                Send
+                                <FormattedMessage id="user.settings.verifyconfirm.send" defaultMessage="Send" description="Send"/>
                             </Button>
                         </FormItem>
                     </Form>

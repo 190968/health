@@ -6,7 +6,11 @@ import { withApollo } from 'react-apollo'
 import {Tabs, Card} from 'antd';
 import Loadable from '../../../../../components/Loadable';
 import { Route } from 'react-router-dom'
-
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 
 const TabPane = Tabs.TabPane;
 
@@ -42,9 +46,9 @@ class SettingForm extends React.Component{
         return (
             <Card>
                 <Tabs tabPosition="left" defaultActiveKey={this.props.location.pathname} onChange={this.handleChange}>
-                    <TabPane tab="Basic" key={match.url}><Route exact path={match.url} component={AsyncBasic()} /></TabPane>
-                    <TabPane tab="Password" key={match.url+'/password'} ><Route exact path={match.url+'/password'} component={AsyncPassword()} /></TabPane>
-                    <TabPane tab="Picture" key={match.url+'/picture'} >Picture</TabPane>
+                    <TabPane tab={<FormattedMessage id="user.settings.basic" defaultMessage="Basic" description="Basic" />} key={match.url}><Route exact path={match.url} component={AsyncBasic()} /></TabPane>
+                    <TabPane tab={<FormattedMessage id="user.settings.password" defaultMessage="Password" description="Password" />} key={match.url+'/password'} ><Route exact path={match.url+'/password'} component={AsyncPassword()} /></TabPane>
+                    <TabPane tab={<FormattedMessage id="user.settings.picture" defaultMessage="Picture" description="Picture" />} key={match.url+'/picture'} >Picture</TabPane>
                 </Tabs>
             </Card>
         );

@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Redirect, Link } from 'react-router-dom'
-
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 import './login.css'
 
 import {Modal, Form, Icon, Input, Button, Card } from 'antd';
@@ -66,27 +70,27 @@ class NormalLoginForm extends React.Component {
         const { visible, loading } = this.state;
         return (<div style={{padding:'8% 35% 20px'}}>
             <Card
-                title="Login"
+                title={<FormattedMessage id="user.login.card.title" defaultMessage="Login" description="Login" />}
             >
                 <Modal
                     visible={visible}
-                    title="Forgot Password?"
+                    title={<FormattedMessage id="user.login.forgot.title" defaultMessage="Forgot password?" description="Forgot password?" />}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="submit" type="primary" onClick={this.handleClick}>
-                            Send
+                            <FormattedMessage id="user.login.forgot.send" defaultMessage="Send" description="Send" />
                         </Button>,
                     ]}
                 >
-                    <p>Please enter the email address you registered with to help us locate your Fitango Demo account.</p>
+                    <p><FormattedMessage id="user.login.forgot.rules" defaultMessage="Please enter the email address you registered with to help us locate your Fitango Demo account." description="Forgot rules" /></p>
 
 
                     {getFieldDecorator('forgot_email', {
                         initialValue: this.state.email.value,
                         rules: [{ required: false, type: 'email', message: 'The input is not valid E-mail!'}],
                     })(
-                        <Input  placeholder="Enter email" />
+                        <Input  placeholder={<FormattedMessage id="user.login.forgot.email" defaultMessage="Enter email" description="Enter email" />} />
 
                     )}
 
@@ -97,7 +101,7 @@ class NormalLoginForm extends React.Component {
                         initialValue: this.state.email.value,
                         rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Email" />
+                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />
                     )}
 
                 </FormItem>
@@ -108,7 +112,7 @@ class NormalLoginForm extends React.Component {
                         /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
                         rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />
                     )}
                 </FormItem>
                 <FormItem>
@@ -116,8 +120,10 @@ class NormalLoginForm extends React.Component {
                     <Button type="primary" htmlType="submit"  loading={this.state.loading} onClick={this.enterLoading} className="login-form-button">
                         Log in
                     </Button>
-                    <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
-                    Or <Link to={'/register'}>Sign up</Link>
+                    <a className="login-form-forgot" onClick={this.showModal} ><FormattedMessage id="user.login.forgot" defaultMessage="Forgot password" description="Forgot password" /></a>
+                    <FormattedMessage id="user.login.or" defaultMessage="Or" description="Or" /> <Link  to={'/register'}>
+                            <FormattedMessage id="user.login.sign_up" defaultMessage="Sign up" description="Sign up" />
+                        </Link>
                 </FormItem>
             </Form>
             </Card>
