@@ -6,7 +6,7 @@ import {HaveModule} from '../../../src/components/Network/index.js'
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 
-import { Row, Col, Menu, Avatar, Badge } from 'antd';
+import { Row, Col, Menu, Icon, Avatar, Badge } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -115,14 +115,14 @@ class LHeader extends React.Component {
 
 
                             <Menu.Item key='inbox'>
-                                <NavLink exact to="/inbox">Inbox {new_messages > 0 && <Badge count={new_messages}>{new_messages}</Badge>}</NavLink>
+                                <NavLink exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></NavLink>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
-                                <NavLink exact to="/notifications">Notifications {new_notifications > 0 && <Badge count={new_notifications}>{new_notifications}</Badge>}</NavLink>
+                                <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="notification" /></Badge></NavLink>
                             </Menu.Item>
 
 
-                            <SubMenu key="sub1" title={<span><Avatar icon="user" size="small" style={{ verticalAlign: 'middle' }} /> <span>{this.props.user.first_name}!</span></span>}>
+                            <SubMenu key="sub1" title={<span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{this.props.user.first_name}</Avatar> <span>{this.props.user.first_name}!</span></span>}>
 
                                 {user_menu_items.map((item) => {
                                     return (
