@@ -1,8 +1,11 @@
 import React from 'react';
 import Medication from './Medication/components';
+import MedicationCoin from './Medication/components/MedicationCoin/containers';
+import MedicationInfo from './Medication/components/MedicationInfo/components';
+
 import ReactPlaceholder from 'react-placeholder';
 
-import { Divider, Card } from 'antd';
+import { Table, List, Divider, Card } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -17,7 +20,7 @@ export class MedicationPlanBody extends React.Component {
 
     render() {
 
-        const {info, loading} = this.props;
+        const {info, date, loading} = this.props;
         if (loading) {
             const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
@@ -28,20 +31,93 @@ export class MedicationPlanBody extends React.Component {
                 </Card>
             );
         }
-        console.log(info);
-        const {takeDaily, takeAsNeeded} = info.medicationsByType;
+        //console.log(info);
+        const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
+
+/*
+ dataSource={takeAtTimes}
+                        renderItem={medication => (<List.Item><Medication key={medication.id} info={medication}  /></List.Item>)}
+ */
+    //console.log(takeAtTimes.length);
+        let columns = [];
+        let data = [];
+
+        if (takeAtTimes.length > 0/*type == 'at_times'*/) {
+            columns = [
+                {title: 'Medication', width: 300, dataIndex: 'name', key: 'name', fixed: 'left', className: 'transparent'},
+            ];
+            let cols_by_time = {};// columns by time to avoid duplicates
+
+
+
+
+            takeAtTimes.map(medication => {
+
+                const {reports} = medication;
+                //console.log(time_info);
+                //const report = reports && reports[0] || {};
+                let medic_times = {
+                    key: medication.drug.id,
+                    name: <MedicationInfo info={medication} />
+                    //age: 32,
+                    //address: 'New York Park',
+                }
+
+                const at_times = medication.timesPerHour;
+                at_times.map(function (time_info) {
+
+
+                    let report = {};
+                    if (reports) {
+                         report = reports.filter((e) => e.time === time_info.time);
+                    }
+                    //console.log(report);
+
+                        //.map(e => e)
+                    /*let report = {};
+                    if (reports && !reports.some(item => time_info.time === item.time)) {
+                        report = reports[0] || {};
+                    }*/
+
+                    if (!columns.some(item => time_info.time === item.title)) {
+                        columns.push({
+                            title: time_info.time,
+                            dataIndex: 'time_' + time_info.time,
+                            key: 'time_' + time_info.id
+                        });
+                    }
+                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id} id={time_info.id} report={report} quantity={time_info.quantity} date={date}/>;
+                });
+
+
+                data.push(
+                    medic_times
+                );
+                //return
+            });
+        }
 
 
         return (
                 <Card title="Medications for Today">
-                <Divider>Take Daily</Divider>
-                {takeDaily.map((medication)=> {
-                    return <Medication key={medication.id} info={medication}  />
-                })}
-                <Divider>Take As Needed</Divider>
-                {takeAsNeeded.map((medication)=> {
-                    return <Medication key={medication.id} info={medication}  />
-                })}
+                    {takeAtTimes.length > 0 &&
+                        [<Divider>Take At times</Divider>,
+                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
+                        ]
+                    }
+                    <Divider>Take Daily</Divider>
+                    <List
+                        dataSource={takeDaily}
+                        grid={{ column: 1}}
+                        renderItem={medication => (<List.Item>
+                            <Medication key={medication.id} info={medication} date={date} /></List.Item>)}
+                    />
+                    <Divider>Take As Needed</Divider>
+                    <List
+                        dataSource={takeAsNeeded}
+                        grid={{ column: 1}}
+                        renderItem={medication => (<List.Item><Medication key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
+                    />
             </Card>
             )
     }

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user.settings.verifyphone.phone",
+    "description": "Phone",
+    "defaultMessage": "Phone"
+  },
+  {
+    "id": "user.settings.verifyphone.rule",
+    "description": "number",
+    "defaultMessage": "Please input your phone number"
+  },
+  {
+    "id": "user.settings.verifyphone.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  }
+]

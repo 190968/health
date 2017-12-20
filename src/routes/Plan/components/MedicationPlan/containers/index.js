@@ -13,15 +13,20 @@ const QUERY = gql`
                 upid
                 isPersonal
                 medicationsByType {
+                    takeAtTimes {
+                        ...MedicationCardInfo
+                        timesPerHour {
+                            id
+                            time
+                            quantity
+                        }
+                    }
                     takeDaily {
                         ...MedicationCardInfo
                     }
                     takeAsNeeded {
                         ...MedicationCardInfo
                     }
-
-
-
                 }
                 textBefore
                 textAfter
@@ -37,8 +42,6 @@ const MedicationPlanBodyWithQuery = graphql(
     QUERY,
     {
         props: ({ ownProps, data }) => {
-            console.log(ownProps);
-            console.log(data);
             if (!data.loading) {
                 return {
                     info: data.account.medicationPlan,
@@ -53,6 +56,7 @@ const MedicationPlanBodyWithQuery = graphql(
         options: (ownProps) => ({
             variables: {
                 user_id:ownProps.user_id,
+                date:ownProps.date,
             },
             //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
         }),
