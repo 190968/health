@@ -57,10 +57,8 @@ export class MedicationPlanBody extends React.Component {
                 //console.log(time_info);
                 //const report = reports && reports[0] || {};
                 let medic_times = {
-                    key: medication.drug.id,
+                    key: medication.drug.id+'drug',
                     name: <MedicationInfo info={medication} />
-                    //age: 32,
-                    //address: 'New York Park',
                 }
 
                 const at_times = medication.timesPerHour;
@@ -86,7 +84,7 @@ export class MedicationPlanBody extends React.Component {
                             key: 'time_' + time_info.id
                         });
                     }
-                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id} id={time_info.id} report={report} quantity={time_info.quantity} date={date}/>;
+                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} id={time_info.id} report={report} quantity={time_info.quantity} date={date}/>;
                 });
 
 
@@ -101,16 +99,16 @@ export class MedicationPlanBody extends React.Component {
         return (
                 <Card title="Medications for Today">
                     {takeAtTimes.length > 0 &&
-                        [<Divider>Take At times</Divider>,
-                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
-                        ]
+                    (<div><Divider>Take At times</Divider>
+                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
+                    )
                     }
                     <Divider>Take Daily</Divider>
                     <List
                         dataSource={takeDaily}
                         grid={{ column: 1}}
                         renderItem={medication => (<List.Item>
-                            <Medication key={medication.id} info={medication} date={date} /></List.Item>)}
+                            <Medication key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
                     />
                     <Divider>Take As Needed</Divider>
                     <List

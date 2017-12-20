@@ -58,7 +58,7 @@ const MedicationPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
-            fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
+            //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
         }),
     }
 )(MedicationPlanBody);
