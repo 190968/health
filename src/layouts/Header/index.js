@@ -6,7 +6,7 @@ import {HaveModule} from '../../../src/components/Network/index.js'
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 
-import { Menu, Avatar, Badge } from 'antd';
+import { Row, Col, Menu, Avatar, Badge } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -88,16 +88,31 @@ class LHeader extends React.Component {
         }
         return (
             <ReactPlaceholder ready={!loading} rows={3} >
-                <div>
-                        <img className="logo" style={{height:'50px'}} src={this.props.network.logo} />
-                        <div style={{float:'right'}} >
+
+
+                <Row type="flex" justify="space-between" align="middle">
+                    <Col span={5}><img className="logo" style={{height:'50px'}} src={this.props.network.logo} /></Col>
+                    <Col >
                         <Menu
                             onClick={this.handleClick}
                             defaultSelectedKeys={['1']}
                             mode="horizontal"
+                            style={{'borderBottom':'none'}}
+                        >
+                            {menuHtml}
+                        </Menu>
+                    </Col>
+
+                    <Col>
+
+                        <Menu
+                            onClick={this.handleClick}
+                            defaultSelectedKeys={['1']}
+                            mode="horizontal"
+                            style={{'borderBottom':'none'}}
                         >
 
-                            {menuHtml}
+
 
                             <Menu.Item key='inbox'>
                                 <NavLink exact to="/inbox">Inbox {new_messages > 0 && <Badge count={new_messages}>{new_messages}</Badge>}</NavLink>
@@ -107,7 +122,7 @@ class LHeader extends React.Component {
                             </Menu.Item>
 
 
-                            <SubMenu key="sub1" title={<span><Avatar icon="user" size="small" /> <span>{this.props.user.first_name}!</span></span>}>
+                            <SubMenu key="sub1" title={<span><Avatar icon="user" size="small" style={{ verticalAlign: 'middle' }} /> <span>{this.props.user.first_name}!</span></span>}>
 
                                 {user_menu_items.map((item) => {
                                     return (
@@ -119,8 +134,10 @@ class LHeader extends React.Component {
                             </SubMenu>
 
                         </Menu>
-                        </div>
-                </div>
+
+                    </Col>
+
+                </Row>
             </ReactPlaceholder>
         );
     }
