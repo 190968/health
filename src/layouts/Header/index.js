@@ -82,21 +82,19 @@ class LHeader extends React.Component {
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
-                    <NavLink to="/"><img className="logo"  src={this.props.network.logo} /></NavLink>
+                    <NavLink to="/"><img className="logo" style={{height:'50px'}} src={this.props.network.logo} /></NavLink>
                 </div>
             )
         }
         return (
             <ReactPlaceholder ready={!loading} rows={3} >
                 <div>
-                        <img className="logo" style={{float:'left', height:'50px'}} src={this.props.network.logo} />
+                        <img className="logo" style={{height:'50px'}} src={this.props.network.logo} />
                         <div style={{float:'right'}} >
                         <Menu
                             onClick={this.handleClick}
                             defaultSelectedKeys={['1']}
                             mode="horizontal"
-
-
                         >
 
                             {menuHtml}

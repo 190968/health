@@ -13,7 +13,7 @@ const QUERY = gql`
                 ...PlanCardInfo
             }
 
-            medicationPlan {
+            medicationPlan (user_id: $user_id) {
                 id
                 upid
                 isPersonal
