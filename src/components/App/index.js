@@ -115,7 +115,7 @@ class App extends React.Component {
                 <Provider store={this.props.store}>
                     <Router history={history}>
 
-                        <LocaleProvider locale={enUS}>
+                        <LocaleProvider locale={ruRu}>
 
                                 <Core store={this.props.store} />
 
