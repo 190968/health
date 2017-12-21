@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 import Core from '../../layouts'
 import {loadNetwork, setCurrentRole} from 'routes/Network/modules/network'
 import {loadUser, loadUserFAIL} from 'routes/User/modules/user'
-
+// import {Modal} from 'routes/Modal/components/index'
 // adding locales
 import {addLocaleData, IntlProvider} from 'react-intl';
 import en from 'react-intl/locale-data/en';
@@ -110,24 +110,29 @@ class App extends React.Component {
     render() {
 
         return (
-        // <IdleTimer
-        //     ref="idleTimer"
-        //     element={document}
-        //     activeAction={console.log("activeAction")}
-        //     idleAction={console.log("idleAction")}
-        //     timeout={5000}>
+
             <ApolloProvider client={apolloClient}>
                 <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
                     <Router history={history}>
                         <LocaleProvider locale={ruRu}>
-                                <Core store={this.props.store} />
+                            {/*<Modal>*/}
+                            {/*<IdleTimer*/}
+                                {/*ref="idleTimer"*/}
+                                {/*element={document}*/}
+                                {/*activeAction={this._onActive}*/}
+                                {/*idleAction={онклик}*/}
+                                {/*timeout={1000}*/}
+                                {/*format="MM-DD-YYYY HH:MM:ss.SSS">*/}
+                                    <Core store={this.props.store} />
+                            {/*</IdleTimer>*/}
+                            {/*</Modal>*/}
                         </LocaleProvider>
                     </Router>
                 </Provider>
                 </IntlProvider>
             </ApolloProvider>
-        // </IdleTimer>
+
         );
     }
 }

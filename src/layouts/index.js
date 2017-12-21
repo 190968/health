@@ -4,17 +4,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import React from 'react'
 import ReactPlaceholder from 'react-placeholder';
-import { Spin } from 'antd';
+import { Spin,Modal,Button } from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
 import { Layout } from 'antd';
-
-
-
 import { withRouter } from 'react-router-dom';
-
-
 import LayoutHeader from './Header';
-
 
 
 // add Routes
@@ -26,8 +20,8 @@ import PrivateRoute from '../routes/privateRoute';
 const { Header, Content, Footer } = Layout;
 
 export const Core = ({loading, user, store, location}) =>  {
-    // const ready = true//state.ready || false;
-    //console.log(loading);
+console.log(store);
+
     if (loading) {
         return (
             <div style={{height:'100%', width:'100%',overflow: 'auto', display: 'flex',top: '50%', position: 'absolute',
@@ -38,8 +32,6 @@ export const Core = ({loading, user, store, location}) =>  {
         );
     }
 
-    //console.log(user.info.phoneConfirmed);
-    // if user is logged IN and need to confirm phone
     if(user.info.id && !user.info.phoneConfirmed){
         return(
             <VerifyPhone  />
@@ -47,11 +39,15 @@ export const Core = ({loading, user, store, location}) =>  {
     }
 
 
+
+
     return (
 
         <div style={{height:'100%', display: 'flex',
             'minHeight': '100vh',
             'flexDirection':'column'}}>
+
+
 
             <Header>
                 <LayoutHeader loading={loading} location={location} />
@@ -69,6 +65,7 @@ export const Core = ({loading, user, store, location}) =>  {
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved
             </Footer>
+
         </div>
     )}
 

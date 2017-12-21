@@ -66,10 +66,8 @@ const PlanstoreLayoutWithQuery = graphql(
                             },
                         });
                     }
-
                 }
             }
-
             else {
                 return {loading: data.loading, plans: []}
             }
