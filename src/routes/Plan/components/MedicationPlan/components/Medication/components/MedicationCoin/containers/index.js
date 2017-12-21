@@ -33,17 +33,24 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onClick: ({id, report}, is_taken, toggleCoin) => {
+    onClick: (med_id, report, is_taken, toggleCoin) => {
         /*if (!is_taken) {
             report = {};
         }*/
-        report.isTaken = is_taken;
-        report.date = ownProps.date;
-        ownProps.medicationReport({ report: report}, id)
+        let new_report = {id:report.id};
+
+        new_report.isTaken = is_taken;
+        new_report.date = ownProps.date;
+        if (ownProps.time) {
+            new_report.time = ownProps.time;
+        }
+        //console.log(new_report);
+        ownProps.medicationReport({ report: new_report}, med_id)
             .then(({data}) => {
                 //const token = data.login.token;
                 //const user = data.login.user;
                 //console.log(data);
+                //ownProps.report.id = 0;
 
                 toggleCoin();
 
