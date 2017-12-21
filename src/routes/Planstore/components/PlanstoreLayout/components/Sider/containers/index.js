@@ -28,8 +28,6 @@ const QUERY = gql`
     }
 `;
 
-const PLANS_PER_PAGE = 20;
-
 // 1- add queries:
 const PlanstoreLayoutWithQuery = graphql(
     QUERY,
