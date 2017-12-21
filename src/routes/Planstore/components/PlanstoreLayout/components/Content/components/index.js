@@ -5,6 +5,11 @@ import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import {Layout,Button, List,Collapse} from 'antd';
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 
 import PlanWidget from '../../../../../../Plan/components/Plan';
 const { Content, Sider } = Layout;
@@ -68,7 +73,7 @@ export class PlanstoreLayout extends React.Component {
                 <Content style={{padding: '0 24px', minHeight: 280}}>
                     <List
                         split={false}
-                        header="ActionPlans"
+                        header={<FormattedMessage id="planstore.content.header" defaultMessage="Action plans" description="Action plan" />}
                         loading={loading}
                         grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
                         pagination={pageOpts}

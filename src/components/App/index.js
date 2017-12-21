@@ -1,7 +1,7 @@
 import React  from 'react';
 // adding proptypes
 import PropTypes from 'prop-types'
-
+import IdleTimer from 'react-idle-timer';
 // adding router
 import { Router } from 'react-router-dom'
 
@@ -110,21 +110,24 @@ class App extends React.Component {
     render() {
 
         return (
+        // <IdleTimer
+        //     ref="idleTimer"
+        //     element={document}
+        //     activeAction={console.log("activeAction")}
+        //     idleAction={console.log("idleAction")}
+        //     timeout={5000}>
             <ApolloProvider client={apolloClient}>
                 <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
                     <Router history={history}>
-
                         <LocaleProvider locale={ruRu}>
-
                                 <Core store={this.props.store} />
-
                         </LocaleProvider>
-
                     </Router>
                 </Provider>
                 </IntlProvider>
             </ApolloProvider>
+        // </IdleTimer>
         );
     }
 }

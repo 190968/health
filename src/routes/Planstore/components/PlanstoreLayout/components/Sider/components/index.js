@@ -2,6 +2,11 @@
  * Created by Pavel on 20.12.2017.
  */
 import React from 'react';
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import {Layout,Button, List,Collapse} from 'antd';
@@ -102,7 +107,7 @@ export class PlanstoreLayout extends React.Component {
                 <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
                        collapsedWidth="0">
                     <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
-                    <Button onClick={this.updateZeroFilters}>Clean filter</Button>
+                    <Button onClick={this.updateZeroFilters}>{<FormattedMessage id="planstore.planstorelayout.cleanfilter" defaultMessage="Clean filter" description="Clean filter" />}</Button>
                 </Sider>
                </div>
         )

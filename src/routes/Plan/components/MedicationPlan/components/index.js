@@ -2,6 +2,11 @@ import React from 'react';
 import Medication from './Medication/components';
 import MedicationCoin from './Medication/components/MedicationCoin/containers';
 import MedicationInfo from './Medication/components/MedicationInfo/components';
+import {
+    FormattedMessage,
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';
 
 import ReactPlaceholder from 'react-placeholder';
 
@@ -24,7 +29,7 @@ export class MedicationPlanBody extends React.Component {
         if (loading) {
             const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
-                <Card title="Medications for Today">
+                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
                 <ReactPlaceholder showLoadingAnimation ready={!loading} type="media" rows={5} >
                     a
                 </ReactPlaceholder>
@@ -97,7 +102,7 @@ export class MedicationPlanBody extends React.Component {
 
 
         return (
-                <Card title="Medications for Today">
+                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>
                     {takeAtTimes.length > 0 &&
                     (<div><Divider>Take At times</Divider>
                             <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
