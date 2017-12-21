@@ -62,7 +62,7 @@ export class MedicationPlanBody extends React.Component {
                 //console.log(time_info);
                 //const report = reports && reports[0] || {};
                 let medic_times = {
-                    key: medication.drug.id+'drug',
+                    key: medication.id+'drug',
                     name: <MedicationInfo info={medication} />
                 }
 

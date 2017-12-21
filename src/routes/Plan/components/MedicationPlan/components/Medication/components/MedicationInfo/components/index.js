@@ -17,7 +17,7 @@ export class MedicationInfo extends React.PureComponent {
         const {name, dosage} = drug;
         return (<div>
             <div><Icon type="video-camera" /> {name}</div>
-            <div style={{'fontSize':'0.8em;'}}><Icon type="camera-o" /> {dosage}</div>
+            <div style={{fontSize:'0.8em'}}><Icon type="camera-o" /> {dosage}</div>
         </div>)
     }
 }
