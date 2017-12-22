@@ -110,13 +110,14 @@ export class MedicationPlanBody extends React.Component {
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>
                     {takeAtTimes.length > 0 &&
                     (<div><Divider>Take At times</Divider>
-                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
+                            <Table size="small" columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
                     )
                     }
                     <Divider>Take Daily</Divider>
                     <List
                         dataSource={takeDaily}
                         grid={{ column: 1}}
+                        size="small"
                         renderItem={medication => (<List.Item>
                             <Medication key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
                     />
@@ -124,6 +125,7 @@ export class MedicationPlanBody extends React.Component {
                     <List
                         dataSource={takeAsNeeded}
                         grid={{ column: 1}}
+                        size="small"
                         renderItem={medication => (<List.Item><Medication key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
                     />
             </Card>
