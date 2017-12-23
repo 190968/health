@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import VMasker from 'vanilla-masker';
 import { InputNumber } from 'antd';
 
 export class TrackerField extends React.Component {
@@ -51,17 +52,38 @@ export class TrackerField extends React.Component {
     render() {
         //console.log(this.props);
         const {info, report} = this.props;
-        const {id, label, units, inputMaskRegex} = info.measurement;
+        const {id, label, units, inputMask} = info.measurement;
         const unit_id = units.id;
         const unit_name = units.name;
         const report_value = report && report.value || '';
+        //const pattern = '/(\\d{3})(?=\\d)/g';
+        //let inputMask = '999/999';
+        //console.log(inputMask);
+        //console.log(report_value);
+        //let outputMask = '999/999';
+        //console.log(report_value);
+        //console.log(inputMask);
+        //console.log(VMasker.toPattern(report_value, inputMask));
         //const hasReport = this.state.isClicked;
         //console.log(inputMaskRegex);
         return (<InputNumber
             defaultValue={report_value}
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
-            //formatter={value => value.replace(/\d{1,3}\/\d{1,3}/g, '/')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+            formatter={value => {
+                //console.log();
+                //console.log(value);
+                if (inputMask != '') {
+                    //console.log(inputMask);
+                    //console.log(value);
+                    return VMasker.toPattern(value, inputMask)
+                } else {
+
+                    return VMasker.toNumber(value);
+                }
+
+            }}
+            //parser={value => VMasker.toPattern(value, inputMask)}
+            //parser={value => value.replace(/\$\s?|(,*)/g, '')}
 
             onChange={this.handleChange}
         />)
