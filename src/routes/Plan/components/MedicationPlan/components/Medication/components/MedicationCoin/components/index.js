@@ -30,7 +30,7 @@ export class MedicationCoin extends React.Component {
 
     handleClick = (e) => {
         e.preventDefault();
-
+console.log("qwerty");
         const { onClick } = this.props;
         return onClick(this.props, !this.state.isClicked, this.toggleCoin);
     }

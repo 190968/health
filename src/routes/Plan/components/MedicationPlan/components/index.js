@@ -99,13 +99,15 @@ export class MedicationPlanBody extends React.Component {
                 //return
             });
         }
-
+            console.log(columns);
+            console.log(data);
 
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>
                     {takeAtTimes.length > 0 &&
-                    (<div><Divider>Take At times</Divider>
-                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
+                    (   <div><Divider>Take At times</Divider>
+                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
+                        </div>
                     )
                     }
                     <Divider>Take Daily</Divider>
