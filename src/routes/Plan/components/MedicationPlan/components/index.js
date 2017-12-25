@@ -58,7 +58,7 @@ export class MedicationPlanBody extends React.Component {
 
             takeAtTimes.map(medication => {
 
-                const {reports} = medication;
+                let {reports} = medication;
                 //console.log(time_info);
                 //const report = reports && reports[0] || {};
                 let medic_times = {
@@ -67,12 +67,16 @@ export class MedicationPlanBody extends React.Component {
                 }
 
                 const at_times = medication.timesPerHour;
+                //console.log(reports);
                 at_times.map(function (time_info) {
 
 
                     let report = {};
                     if (reports) {
-                         //report = reports.filter((e) => e.time === time_info.time);
+                         report = reports.filter((e) => e.time === time_info.time);
+                         if (report.length > 0) {
+                             report = report[0];
+                         }
                     }
                     //console.log(report);
 
@@ -81,15 +85,16 @@ export class MedicationPlanBody extends React.Component {
                     if (reports && !reports.some(item => time_info.time === item.time)) {
                         report = reports[0] || {};
                     }*/
-
+                    const time = time_info.time;
                     if (!columns.some(item => time_info.time === item.title)) {
+
                         columns.push({
-                            title: time_info.time,
+                            title: time,
                             dataIndex: 'time_' + time_info.time,
                             key: 'time_' + time_info.id
                         });
                     }
-                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} id={time_info.id} report={report} quantity={time_info.quantity} date={date}/>;
+                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={time_info.quantity} time={time} date={date}/>;
                 });
 
 
@@ -105,15 +110,21 @@ export class MedicationPlanBody extends React.Component {
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>
                     {takeAtTimes.length > 0 &&
+<<<<<<< HEAD
                     (   <div><Divider>Take At times</Divider>
                             <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
                         </div>
+=======
+                    (<div><Divider>Take At times</Divider>
+                            <Table size="small" columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
+>>>>>>> 41d945334a85435f309e63fac1cc28d1a01f5623
                     )
                     }
                     <Divider>Take Daily</Divider>
                     <List
                         dataSource={takeDaily}
                         grid={{ column: 1}}
+                        size="small"
                         renderItem={medication => (<List.Item>
                             <Medication key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
                     />
@@ -121,6 +132,7 @@ export class MedicationPlanBody extends React.Component {
                     <List
                         dataSource={takeAsNeeded}
                         grid={{ column: 1}}
+                        size="small"
                         renderItem={medication => (<List.Item><Medication key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
                     />
             </Card>

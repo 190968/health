@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlaceholder from 'react-placeholder';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
+import BiometricPlan from 'routes/Plan/components/BiometricPlan/containers';
 import { Row, Col, Calendar, Card } from 'antd';
 import {
     FormattedMessage,
@@ -47,7 +48,8 @@ export class DashUserLayout extends React.Component {
         return (
            <Row gutter={15}>
                <Col xs={24} md={16} lg={18}>
-               <MedicationPlan loading={loading}  date={date} />
+               <MedicationPlan loading={loading} date={date} />
+               <BiometricPlan loading={loading} date={date} />
                </Col>
                <Col xs={24} md={8} lg={6}>
                    <Card>

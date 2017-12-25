@@ -56,21 +56,12 @@ export class Medication extends React.Component {
 //console.log(this.props);
         var rows = [];
 
-        if (type == 'at_times') {
+        for (var i = 0; i < timesPerDay; i++) {
+            let report = reports && reports[i] || {};
 
-
-
-
-
-            rows = <Table  />
-        } else {
-            for (var i = 0; i < timesPerDay; i++) {
-                const report = reports && reports[i] || {};
-
-                // note: we add a key prop here to allow react to uniquely identify each
-                // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-                rows.push(<Col xs={3} key={i}><MedicationCoin id={id} quantity={quantity} report={report} date={date}/></Col>);
-            }
+            // note: we add a key prop here to allow react to uniquely identify each
+            // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+            rows.push(<Col xs={3} key={i}><MedicationCoin med_id={id} quantity={quantity} report={report} date={date} /></Col>);
         }
         return (
             <Row type="flex" justify="start">

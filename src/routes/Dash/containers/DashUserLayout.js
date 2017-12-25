@@ -4,6 +4,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Plan from 'routes/Plan/components/Plan';
 import Medication from 'routes/Plan/components/MedicationPlan/components/Medication/components';
+import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
+
 
 // Query for grabbing everything for the dashboard items
 const QUERY = gql`
@@ -13,7 +15,7 @@ const QUERY = gql`
                 ...PlanCardInfo
             }
 
-            medicationPlan (user_id: $user_id, date: $date) {
+            medicationPlan ( date: $date) {
                 id
                 upid
                 isPersonal
@@ -36,12 +38,29 @@ const QUERY = gql`
                 textBefore
                 textAfter
             }
+
+            biometricPlan ( date: $date) {
+                id
+                upid
+                isPersonal
+                columns {
+                    id
+                    name
+                }
+                trackers {
+                    ...BiometricCardInfo
+                    columns
+                }
+                startDate
+                endDate
+            }
         }
     }
    
     
     ${Plan.fragments.plan}
     ${Medication.fragments.medication}
+    ${Biometric.fragments.tracker}
 `;
 /*
  takeAtTimes {
@@ -84,9 +103,9 @@ const DashLayoutWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-
     return {
-        date: '2017-12-20'
+        date: '2017-12-20',
+       // user_id: state.user.info.id
     };
 };
 

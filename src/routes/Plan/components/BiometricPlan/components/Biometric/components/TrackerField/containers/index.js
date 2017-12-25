@@ -1,24 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import MedicationCoin from '../components'
+import TrackerField from '../components'
 import { message } from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const reportOnMedication = gql`
-    mutation medicationReport($id: ID!, $input: MedicationInput!) {
-        medication(id:$id, input: $input) {
+const reportOnTracker = gql`
+    mutation trackerReport($id: ID!, $input: TrackerInput!) {
+        tracker(id:$id, input: $input) {
              id
         }
     }
 `;
 
 
-const withMutation = graphql(reportOnMedication, {
+const withMutation = graphql(reportOnTracker, {
     props: ({ mutate }) => ({
-        medicationReport: (input, id) => {
+        trackerReport: (input, id) => {
             return mutate({
                 variables: { input: input, id: id },
             })
@@ -33,26 +33,28 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onClick: (med_id, report, is_taken, toggleCoin) => {
+    onChange: (amid, report, list_id) => {
         /*if (!is_taken) {
             report = {};
         }*/
-        let new_report = {id:report.id};
+        /*let new_report = {};
 
         new_report.isTaken = is_taken;
         new_report.date = ownProps.date;
         if (ownProps.time) {
             new_report.time = ownProps.time;
-        }
+        }*/
         //console.log(new_report);
-        ownProps.medicationReport({ report: new_report}, med_id)
+        //const input = {value:value,date:date};
+        ownProps.trackerReport({report:report, list_id:list_id}, amid)
             .then(({data}) => {
+                //console.log(data);
                 //const token = data.login.token;
                 //const user = data.login.user;
                 //console.log(data);
                 //ownProps.report.id = 0;
 
-                toggleCoin();
+                //toggleCoin();
 
             }).catch((error) => {
             message.error(error.message);
@@ -60,7 +62,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 
 });
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MedicationCoin));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(TrackerField));
 
 
 
