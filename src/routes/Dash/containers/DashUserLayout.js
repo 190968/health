@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import DashLayout from 'routes/Dash/components/DashUserLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import moment from 'moment';
 import Plan from 'routes/Plan/components/Plan';
 import Medication from 'routes/Plan/components/MedicationPlan/components/Medication/components';
 import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
@@ -104,7 +105,7 @@ const DashLayoutWithQuery = graphql(
 
 const mapStateToProps = (state) => {
     return {
-        date: '2017-12-20',
+        date: moment().format('YYYY-MM-DD')
        // user_id: state.user.info.id
     };
 };
