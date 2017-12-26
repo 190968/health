@@ -16,38 +16,40 @@ export class MedicationInfo extends React.PureComponent {
             isClicked: false,
         };
         this.state = { flipped: false };
+        this.state = { visible: false };
     };
     static propTypes = {
     };
 
     mouseOut() {
-        console.log("Mouse out!!!");
+        //console.log("Mouse out!!!");
         this.setState({flipped: false});
     }
     mouseOver() {
-        console.log("Mouse over!!!");
+        //console.log("Mouse over!!!");
         this.setState({flipped: true});
     }
     iconClick() {
-        console.log("iconClick");
-        //this.setState({flipped: true});
+        console.log("modalVisible");
+        this.setState({visible: true});
     }
     render() {
         const {drug} = this.props.info;
         const {name, dosage} = drug;
         return (
 <div>
+    <ModalEdit key={name} name={name} visibled={this.state.visible} />
     <Row>
         <Col span={2}>
             <Icon type="video-camera" />
         </Col>
 
-          <ModalEdit visibled={true} />
+
         <Col span={9} onMouseOver={() => this.mouseOver()}  onMouseOut={() => this.mouseOut()}>
                      {name}
         </Col>
             {this.state.flipped ?
-              <Col span={3} > <Icon  type="edit" /></Col>
+              <Col span={3}> <Icon  onClick={this.iconClick()} type="edit" /></Col>
                 : null
             }
     </Row>

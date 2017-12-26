@@ -41,7 +41,7 @@ export class TrackerField extends React.Component {
 
     handleChange = (value) => {
         //e.preventDefault();
-        //console.log(this.props);
+        //console.log(value);
         const { onChange, info, report, date, list_id, reportKey, column } = this.props;
         const {id} = info.measurement;
         let report_input = {id:(report && report.id ? report.id : 0), value:value, date:date, reportKey:reportKey, column:column};
@@ -52,6 +52,7 @@ export class TrackerField extends React.Component {
     render() {
         //console.log(this.props);
         const {info, report} = this.props;
+        //console.log(info);
         const {id, label, units, inputMask} = info.measurement;
         const unit_id = units.id;
         const unit_name = units.name;

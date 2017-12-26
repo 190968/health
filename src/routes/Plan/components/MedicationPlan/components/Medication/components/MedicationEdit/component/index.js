@@ -13,8 +13,12 @@ const { Option, OptGroup } = Select;
 const RangePicker = DatePicker.RangePicker;
 
 const RadioGroup = Radio.Group;
+
 class EditMedicationForm extends React.Component {
+    //var { visibled } = this.props;
+
     state = {
+        visibled : this.props.visibled,
         visible: false,
         value : 1,
         advance:false,
@@ -23,7 +27,15 @@ class EditMedicationForm extends React.Component {
     };
 
     handleCancel = () => {
-        this.setState({ visible: false });
+        // console.log( );
+        console.log("handleCancel");
+        // visibled = false;
+    }
+
+    handleClick = () => {
+        // console.log( );
+        //console.log("handleClick");
+        // visibled = false;
     }
 
     onChange = (e) => {
@@ -58,8 +70,8 @@ class EditMedicationForm extends React.Component {
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
             Take.push(  {
-                item:     <div>
-                <Col span={12}>
+                item:     <div >
+                <Col  span={12}>
                     <Select  style={{ width: 100 }} >
                         <Option value="2">2am</Option>
                         <Option value="3">3am</Option>
@@ -79,14 +91,13 @@ class EditMedicationForm extends React.Component {
                     </div>
             })
         }
-
-        const { visibled } = this.props;
-        console.log(visibled," visibled");
-        const { visible } = this.state;
+        let { name,key } = this.props;
+        //console.log(name)
+        let { visible } = this.state;
         return (
-                    <Modal
-                        visible={visibled}
-                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication: name" description="Edit Medication" />}
+                    <Modal key={key}
+                        visible={this.props.visibled}
+                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication:" description="Edit Medication" />}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                         footer={[

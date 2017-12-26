@@ -8,7 +8,7 @@ import {
 import ReactPlaceholder from 'react-placeholder';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 
-import { Table, List, Divider, Card } from 'antd';
+import { Table, List,Icon, Divider, Card } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -19,10 +19,14 @@ export class MedicationPlanBody extends React.Component {
     };
     static propTypes = {
     };
-
+    editClick = () => {
+        console.log("editClick");
+    }
+    closeClick = () => {
+        console.log("closeClick");
+    }
 
     render() {
-
         const {info, date, loading} = this.props;
         if (loading) {
             const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
@@ -39,6 +43,7 @@ export class MedicationPlanBody extends React.Component {
 
         const listColumns = [
             { title: '', dataIndex: 'name', key: 'name' },
+            { title: '', dataIndex: 'icon', key: 'icom' },
             { title: '', dataIndex: 'input', key: 'input' },
         ];
 
@@ -105,9 +110,9 @@ export class MedicationPlanBody extends React.Component {
                     }
                     inputFields.push(<div><TrackerField info={tracker} date={date} report={report} reportKey={i} list_id={info.id} /></div>);
                 }
-                //onsole.log(inputFields);
+                console.log(inputFields);
                 //
-                dataList.push({ key: tracker.id, name: measurement.label, input: <List
+                dataList.push({ key: tracker.id, icon:<div><Icon onClick={this.editClick}  style={{ fontSize: 18 }} type="edit" /> <Divider type="vertical" /><Icon onClick={this.closeClick}  style={{ fontSize: 18 }} type="close" /> <Divider type="vertical" /></div> ,name:measurement.label, input: <List
                     size="small"
                     dataSource={inputFields}
                     renderItem={item => (<List.Item>{item}</List.Item>)}
@@ -184,7 +189,7 @@ export class MedicationPlanBody extends React.Component {
                 <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
 
                     <Divider>Report anytime</Divider>
-                    <Table size="small" columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
+                    <Table size="default" columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
                     <Divider>Report at times</Divider>
                     <Table size="small" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
             </Card>
