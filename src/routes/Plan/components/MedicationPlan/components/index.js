@@ -110,15 +110,11 @@ export class MedicationPlanBody extends React.Component {
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>
                     {takeAtTimes.length > 0 &&
-<<<<<<< HEAD
                     (   <div><Divider>Take At times</Divider>
                             <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
                         </div>
-=======
-                    (<div><Divider>Take At times</Divider>
-                            <Table size="small" columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} /></div>
->>>>>>> 41d945334a85435f309e63fac1cc28d1a01f5623
                     )
+
                     }
                     <Divider>Take Daily</Divider>
                     <List

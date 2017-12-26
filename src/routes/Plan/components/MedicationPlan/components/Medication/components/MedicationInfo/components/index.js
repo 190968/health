@@ -42,19 +42,16 @@ export class MedicationInfo extends React.PureComponent {
             <Icon type="video-camera" />
         </Col>
 
-
+          <ModalEdit visibled={true} />
         <Col span={9} onMouseOver={() => this.mouseOver()}  onMouseOut={() => this.mouseOut()}>
-            <Col span={23}>{name} </Col>
+                     {name}
+        </Col>
             {this.state.flipped ?
-               <Icon type="edit"/>
+              <Col span={3} > <Icon  type="edit" /></Col>
                 : null
             }
-        </Col>
-
     </Row>
-
-        <div style={{fontSize:'0.8em'}}><Icon type="camera-o" />{dosage}</div>
-
+        <div style={{fontSize:'0.8em'}}><Icon type="camera-o" /><label>{dosage}</label></div>
     </div>
       )
     }

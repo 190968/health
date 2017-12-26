@@ -80,12 +80,12 @@ class EditMedicationForm extends React.Component {
             })
         }
 
-        const { getFieldDecorator } = this.props.form;
+        const { visibled } = this.props;
+        console.log(visibled," visibled");
         const { visible } = this.state;
         return (
-
                     <Modal
-                        visible={true}
+                        visible={visibled}
                         title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication: name" description="Edit Medication" />}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
