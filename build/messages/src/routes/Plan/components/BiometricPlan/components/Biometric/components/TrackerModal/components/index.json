@@ -1,12 +1,12 @@
 [
   {
-    "id": "plan.medicationplan.medication.medicationedit.modal.title",
-    "description": "Edit Medication",
-    "defaultMessage": "Edit Medication:"
+    "id": "plan.biometricplan.biometric.trackermodal.modal.title",
+    "description": "Edit Tracker",
+    "defaultMessage": "Edit Tracker -"
   },
   {
-    "id": "plan.medicationplan.medication.medicationedit.modal.button",
-    "description": "Save Changes",
-    "defaultMessage": "Save Changes"
+    "id": "plan.biometricplan.biometric.trackermodal.modal.button",
+    "description": "Done",
+    "defaultMessage": "Done"
   }
 ]

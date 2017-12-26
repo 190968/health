@@ -104,8 +104,8 @@ export class MedicationPlanBody extends React.Component {
                 //return
             });
         }
-            console.log(columns);
-            console.log(data);
+            //console.log(columns);
+            //console.log(data);
 
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>

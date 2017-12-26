@@ -16,7 +16,7 @@ export class FormsComponent extends React.Component {
             console.log(filters,"filters2");
             return  '<div>Loading</div>';
         }
-        console.log(filters,"filters3");
+        //console.log(filters,"filters3");
             var rows = [];
             var i =0;
 

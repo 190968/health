@@ -20,7 +20,7 @@ import PrivateRoute from '../routes/privateRoute';
 const { Header, Content, Footer } = Layout;
 
 export const Core = ({loading, user, store, location}) =>  {
-console.log(store);
+//console.log(store);
 
     if (loading) {
         return (

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactHover from 'react-hover'
 import {Icon ,Row, Col} from 'antd';
 
-import ModalEdit from '../../MedicationEdit/component'
+import ModalEdit from '../../MedicationEdit/containers'
 const options = {
     followCursor:false,
     shiftX: 50,
@@ -30,15 +30,17 @@ export class MedicationInfo extends React.PureComponent {
         this.setState({flipped: true});
     }
     iconClick() {
-        console.log("modalVisible");
+       // console.log("modalVisible");
         this.setState({visible: true});
     }
     render() {
+        const {account} = this.props;
+       // console.log(this.props);
         const {drug} = this.props.info;
         const {name, dosage} = drug;
         return (
 <div>
-    <ModalEdit key={name} name={name} visibled={this.state.visible} />
+    <ModalEdit info={this.props} key={name} name={name} visibled={this.state.visible} />
     <Row>
         <Col span={2}>
             <Icon type="video-camera" />

@@ -65,7 +65,13 @@ class EditMedicationForm extends React.Component {
             height: '30px',
             lineHeight: '30px',
         };
+        let {info,loading} = this.props;
+        const {medications} = info;
+        if (loading) {
+           // console.log(info);
+        }
 
+             console.log(medications);
 
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
@@ -91,13 +97,13 @@ class EditMedicationForm extends React.Component {
                     </div>
             })
         }
-        let { name,key } = this.props;
-        //console.log(name)
+
+
         let { visible } = this.state;
         return (
-                    <Modal key={key}
+                    <Modal
                         visible={this.props.visibled}
-                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication:" description="Edit Medication" />}
+                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
                         onOk={this.handleOk}
                         onCancel={this.handleCancel}
                         footer={[

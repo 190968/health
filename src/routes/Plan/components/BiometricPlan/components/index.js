@@ -7,7 +7,7 @@ import {
 
 import ReactPlaceholder from 'react-placeholder';
 import TrackerField from  './Biometric/components/TrackerField/containers';
-
+import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/components'
 import { Table, List,Icon, Divider, Card } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
@@ -83,7 +83,7 @@ export class MedicationPlanBody extends React.Component {
                                 return e.reportKey === i && e.columnId === column_id
                             });
 
-                            console.log(report_arr);
+                            //console.log(report_arr);
                             if (report_arr.length > 0) {
                                 report = report_arr[0];
                             }
@@ -110,7 +110,7 @@ export class MedicationPlanBody extends React.Component {
                     }
                     inputFields.push(<div><TrackerField info={tracker} date={date} report={report} reportKey={i} list_id={info.id} /></div>);
                 }
-                console.log(inputFields);
+               // console.log(inputFields);
                 //
                 dataList.push({ key: tracker.id, icon:<div><Icon onClick={this.editClick}  style={{ fontSize: 18 }} type="edit" /> <Divider type="vertical" /><Icon onClick={this.closeClick}  style={{ fontSize: 18 }} type="close" /> <Divider type="vertical" /></div> ,name:measurement.label, input: <List
                     size="small"
@@ -187,7 +187,7 @@ export class MedicationPlanBody extends React.Component {
 
         return (
                 <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
-
+                    {/*<ModalTracker />*/}
                     <Divider>Report anytime</Divider>
                     <Table size="default" columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
                     <Divider>Report at times</Divider>
