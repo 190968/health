@@ -18,7 +18,7 @@ class EditMedicationForm extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+       // console.log(props);
         this.state = {
             visibled: false,
             visible: false,
@@ -29,7 +29,11 @@ class EditMedicationForm extends React.Component {
         };
     };
 
-
+    componentWillMount = () => {
+        const {info,loading} = this.props;
+       // const {medication} = info;
+      console.log(this.props);
+    }
 
     handleCancel = () => {
         console.log("handleCancel");
@@ -70,12 +74,12 @@ class EditMedicationForm extends React.Component {
             lineHeight: '30px',
         };
         const {info,loading} = this.props;
-        const {medication} = info;
+        //const {medication} = info;
         if (loading) {
             return  '<div>Loading</div>';
         }
 
-       console.log(this.state.value,"value");
+     //  console.log(this.state.value,"value");
 
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
@@ -134,7 +138,7 @@ class EditMedicationForm extends React.Component {
                             Times per Day
                         </Col>
                         <Col span={12}>
-                            <Select onSelect={this.onSelect} defaultValue={medication.timesPerDay+" Time"} style={{ width: 200 }}>
+                            <Select onSelect={this.onSelect} defaultValue={1+" Time"} style={{ width: 200 }}>
                                 <OptGroup >
                                     <Option value="1">1 Time</Option>
                                     <Option value="2">2 Time</Option>
@@ -207,19 +211,19 @@ class EditMedicationForm extends React.Component {
                         <Row>
                             <Col span={6}>Purpose</Col>
                             <Col span={18}>
-                                <Input defaultValue={medication.purpose} />
+                                <Input  />
                             </Col>
                         </Row><br/>
                         <Row>
                             <Col span={6}>Directions</Col>
                             <Col span={18}>
-                                <Input defaultValue={medication.directions} />
+                                <Input />
                             </Col>
                         </Row><br/>
                         <Row>
                             <Col span={6}>Side Effects</Col>
                             <Col span={18}>
-                                <Input defaultValue={medication.sideEffects} />
+                                <Input />
                             </Col>
                         </Row>
                     </div>
