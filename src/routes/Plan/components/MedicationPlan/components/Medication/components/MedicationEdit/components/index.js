@@ -69,11 +69,13 @@ class EditMedicationForm extends React.Component {
             height: '30px',
             lineHeight: '30px',
         };
-        const {info,loading} = this.props;
-        const {medication} = info;
+        const {loading} = this.props;
+
         if (loading) {
             return  '<div>Loading</div>';
         }
+        const {info} = this.props;
+        const {medication} = info;
 
        console.log(this.state.value,"value");
 

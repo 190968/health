@@ -2,7 +2,17 @@ import React from 'react'
 import ReactHover from 'react-hover'
 import {Icon ,Row, Col} from 'antd';
 
-import ModalEdit from '../../MedicationEdit/component'
+import ModalEdit from '../../MedicationEdit/containers'
+import Loadable from "../../../../../../../../../components/Loadable";
+
+/*const AsyncModalEdit = () => {
+    return (
+        Loadable({
+            loader: () => import('../../../../../../../../../routes/Plan/components/MedicationPlan/components/Medication/components/MedicationEdit/containers'),
+        })
+    );
+}*/
+
 const options = {
     followCursor:false,
     shiftX: 50,
@@ -36,11 +46,11 @@ export class MedicationInfo extends React.PureComponent {
     render() {
         const {account} = this.props;
        // console.log(this.props);
-        const {drug} = this.props.info;
+        const {id,drug} = this.props.info;
         const {name, dosage} = drug;
         return (
 <div>
-    <ModalEdit visibled={true} />
+    <ModalEdit visibled={true} id={id} user_id={13931} />
     <Row>
         <Col span={2}>
             <Icon type="video-camera" />
