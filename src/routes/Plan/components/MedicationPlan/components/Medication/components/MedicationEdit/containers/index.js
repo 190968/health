@@ -13,7 +13,8 @@ const medicationPlan = gql`
 query GET_MEDICATION_MEDICATIONPLAN($user_id: ID!) {
    account {
   		medicationPlan(user_id: $user_id) {
-   medications {
+   medication(id:569) {
+    id,
     startDate,
     endDate,
     sideEffects,
@@ -22,13 +23,13 @@ query GET_MEDICATION_MEDICATIONPLAN($user_id: ID!) {
     timesPerDay,
     timesPerHour {
       id
-    }, 
+    },
     type,
     drug {
       id
     },
     quantity
-    
+
   }
   }
 }
@@ -52,15 +53,15 @@ const withQuery = graphql(medicationPlan,
             }
         }),
         props: ({ ownProps, data }) => {
-            //console.log(data.variables.user_id);
+            //console.log(data);
             if (!data.loading) {
                 return {
                     info: data.account.medicationPlan,
                     loading: data.loading
                 }
-
-            } else {
-                return {loading: data.loading}
+            }
+             else {
+                return {loading: data.loading,info:12}
             }
         },
     }
@@ -74,10 +75,6 @@ const withMutation = graphql(settingUserMutate, {
             })},
     }),
 });
-
-
-
-
 const mapStateToProps = (state) => {
 
     return {

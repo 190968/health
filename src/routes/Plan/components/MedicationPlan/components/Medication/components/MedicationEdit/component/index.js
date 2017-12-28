@@ -15,21 +15,24 @@ const RangePicker = DatePicker.RangePicker;
 const RadioGroup = Radio.Group;
 
 class EditMedicationForm extends React.Component {
-    //var { visibled } = this.props;
 
-    state = {
-        visibled : this.props.visibled,
-        visible: false,
-        value : 1,
-        advance:false,
-        value_select:1,
-        total:0
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            visibled: false,
+            visible: false,
+            value: 1,
+            advance: false,
+            value_select: 1,
+            total: 0,
+        };
     };
 
+
+
     handleCancel = () => {
-        // console.log( );
         console.log("handleCancel");
-        // visibled = false;
     }
 
     handleClick = () => {
@@ -60,18 +63,19 @@ class EditMedicationForm extends React.Component {
         });
     }
     render() {
+
         const radioStyle = {
             display: 'block',
             height: '30px',
             lineHeight: '30px',
         };
-        let {info,loading} = this.props;
-        const {medications} = info;
+        const {info,loading} = this.props;
+        const {medication} = info;
         if (loading) {
-           // console.log(info);
+            return  '<div>Loading</div>';
         }
 
-             console.log(medications);
+       console.log(this.state.value,"value");
 
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
@@ -101,127 +105,128 @@ class EditMedicationForm extends React.Component {
 
         let { visible } = this.state;
         return (
-                    <Modal
-                        visible={this.props.visibled}
-                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
-                        footer={[
-                            <center>
-                            <Button key="submit" type="primary" onClick={this.handleClick}>
-                                <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
-                            </Button></center>,
-                        ]}
-                    >
-                        <Row>
-                            <Col span={6}>Take</Col>
-                            <Col span={6}>
-                                <RadioGroup onChange={this.onChange} value={this.state.value}>
-                                    <Radio style={radioStyle} value={1}>At specific times</Radio>
-                                    <Radio style={radioStyle} value={2}>Along the day</Radio>
-                                    <Radio style={radioStyle} value={3}>As needed</Radio>
-                                </RadioGroup>
-                            </Col>
-                        </Row>
+            <Modal
+                visible={this.props.visibled}
+                title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                footer={[
+                    <center>
+                        <Button key="submit" type="primary" onClick={this.handleClick}>
+                            <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
+                        </Button></center>,
+                ]}
+            >
+                <Row>
+                    <Col span={6}>Take</Col>
+                    <Col span={6}>
+                        <RadioGroup onChange={this.onChange}  value={this.state.value}>
+                            <Radio style={radioStyle} value={1}>At specific times</Radio>
+                            <Radio style={radioStyle} value={2}>Along the day</Radio>
+                            <Radio style={radioStyle} value={3}>As needed</Radio>
+                        </RadioGroup>
+                    </Col>
+                </Row>
 
-                            {this.state.value === 1 ?
-                            <Row>
-                                <Col span={6}>
-                                    Times per Day
-                                </Col>
-                                <Col span={12}>
-                                    <Select onSelect={this.onSelect} defaultValue="1" style={{ width: 200 }}>
-                                        <OptGroup >
-                                            <Option value="1">1 Time</Option>
-                                            <Option value="2">2 Time</Option>
-                                            <Option value="3">3 Time</Option>
-                                            <Option value="4">4 Time</Option>
-                                            <Option value="5">5 Time</Option>
-                                        </OptGroup>
-                                    </Select>
-                                    <Col span={12}><label>Take at</label></Col>
-                                    <Col span={6}><label>Quantity</label></Col>
-                                    <List
-                                        grid={{gutter: 5, md: 1}}
-                                        dataSource={Take}
-                                        renderItem={item => (
-                                            <List.Item>
-                                                {item.item}
-                                            </List.Item>
-                                        )}
-                                    />
-                                    <Col span={12}><label>Total</label></Col>
-                                    <Col span={6}><label>{this.state.total}</label></Col>
-                                </Col>
-                             </Row> : null}
-                                {this.state.value === 2|| this.state.value === 3?
-                                <Row>
-                                    <Col span={6}>
+                {this.state.value === 1 ?
+                    <Row>
+                        <Col span={6}>
+                            Times per Day
+                        </Col>
+                        <Col span={12}>
+                            <Select onSelect={this.onSelect} defaultValue={medication.timesPerDay+" Time"} style={{ width: 200 }}>
+                                <OptGroup >
+                                    <Option value="1">1 Time</Option>
+                                    <Option value="2">2 Time</Option>
+                                    <Option value="3">3 Time</Option>
+                                    <Option value="4">4 Time</Option>
+                                    <Option value="5">5 Time</Option>
+                                </OptGroup>
+                            </Select>
+                            <Col span={12}><label>Take at</label></Col>
+                            <Col span={6}><label>Quantity</label></Col>
+                            <List
+                                grid={{gutter: 5, md: 1}}
+                                dataSource={Take}
+                                renderItem={item => (
+                                    <List.Item>
+                                        {item.item}
+                                    </List.Item>
+                                )}
+                            />
+                            <Col span={12}><label>Total</label></Col>
+                            <Col span={6}><label>{this.state.total}</label></Col>
+                        </Col>
+                    </Row> : null}
+                {this.state.value === 2|| this.state.value === 3?
+                    <Row>
+                        <Col span={6}>
 
-                                    </Col>
-                                    <Col span={12}>
-                                        <Col span={15}>
-                                            <label>Take</label>
-                                            <Select  defaultValue="1" >
-                                                <OptGroup >
-                                                    <Option value="1">1 Time a Day</Option>
-                                                    <Option value="2">2 Time a Day</Option>
-                                                    <Option value="3">3 Time a Day</Option>
-                                                    <Option value="4">4 Time a Day</Option>
-                                                    <Option value="5">5 Time a Day</Option>
-                                                    <Option value="6">6 Time a Day</Option>
-                                                    <Option value="7">7 Time a Day</Option>
-                                                    <Option value="8">8 Time a Day</Option>
-                                                    <Option value="9">9 Time a Day</Option>
-                                                </OptGroup>
-                                            </Select>
-                                        </Col>
-                                        <Col span={6}><label>Quantity</label>
-                                            <Select defaultValue="1" style={{ width: 80 }} >
-                                                <Option value="1/4">1/4</Option>
-                                                <Option value="1/2">1/2</Option>
-                                                <Option value="1">1</Option>
-                                            </Select>
-                                        </Col>
-                                    </Col>
-                                </Row> : null}
-                                <br/>
-                        <Row>
-                            <Col span={6}>Period</Col>
+                        </Col>
+                        <Col span={12}>
                             <Col span={15}>
-                                <RangePicker
-                                    ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
-                                />
+                                <label>Take</label>
+                                <Select  defaultValue="1" >
+                                    <OptGroup >
+                                        <Option value="1">1 Time a Day</Option>
+                                        <Option value="2">2 Time a Day</Option>
+                                        <Option value="3">3 Time a Day</Option>
+                                        <Option value="4">4 Time a Day</Option>
+                                        <Option value="5">5 Time a Day</Option>
+                                        <Option value="6">6 Time a Day</Option>
+                                        <Option value="7">7 Time a Day</Option>
+                                        <Option value="8">8 Time a Day</Option>
+                                        <Option value="9">9 Time a Day</Option>
+                                    </OptGroup>
+                                </Select>
+                            </Col>
+                            <Col span={6}><label>Quantity</label>
+                                <Select defaultValue="1" style={{ width: 80 }} >
+                                    <Option value="1/4">1/4</Option>
+                                    <Option value="1/2">1/2</Option>
+                                    <Option value="1">1</Option>
+                                </Select>
+                            </Col>
+                        </Col>
+                    </Row> : null}
+                <br/>
+                <Row>
+                    <Col span={6}>Period</Col>
+                    <Col span={15}>
+                        <RangePicker
+                            //defaultValue={[item.startDay,item.endDay]}
+                            ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
+                        />
+                    </Col>
+                </Row>
+                <br/>
+                {!this.state.advance ?
+                    <p onClick={this.onAdvance}>Advance</p>:null}
+                {this.state.advance ?
+                    <div>
+                        <Row>
+                            <Col span={6}>Purpose</Col>
+                            <Col span={18}>
+                                <Input defaultValue={medication.purpose} />
+                            </Col>
+                        </Row><br/>
+                        <Row>
+                            <Col span={6}>Directions</Col>
+                            <Col span={18}>
+                                <Input defaultValue={medication.directions} />
+                            </Col>
+                        </Row><br/>
+                        <Row>
+                            <Col span={6}>Side Effects</Col>
+                            <Col span={18}>
+                                <Input defaultValue={medication.sideEffects} />
                             </Col>
                         </Row>
-                        <br/>
-                        {!this.state.advance ?
-                            <p onClick={this.onAdvance}>Advance</p>:null}
-                            {this.state.advance ?
-                                <div>
-                            <Row>
-                                <Col span={6}>Purpose</Col>
-                                <Col span={18}>
-                                    <Input />
-                                </Col>
-                            </Row><br/>
-                            <Row>
-                                <Col span={6}>Directions</Col>
-                                <Col span={18}>
-                                    <Input />
-                                </Col>
-                            </Row><br/>
-                            <Row>
-                                <Col span={6}>Side Effects</Col>
-                                <Col span={18}>
-                                    <Input />
-                                </Col>
-                            </Row>
-                                </div>
-                                : null
-                             }
+                    </div>
+                    : null
+                }
 
-                    </Modal>
+            </Modal>
         );
     }
 }

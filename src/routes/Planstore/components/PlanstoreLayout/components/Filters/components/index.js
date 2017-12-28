@@ -29,7 +29,6 @@ export class FormsComponent extends React.Component {
                     <div >
                             {rows}
                     </div>
-
                 )
 // }
 
