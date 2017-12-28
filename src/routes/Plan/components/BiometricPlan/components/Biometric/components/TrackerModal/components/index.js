@@ -14,31 +14,10 @@ const { Option, OptGroup } = Select;
 
 class EditTrackerForm extends React.Component {
 
-
-
-    handleCancel = () => {
-        console.log("handleCancel");
-    }
-
-    handleClick = () => {
-        console.log("handleClick");
-    }
-
     render() {
 
         return (
-            <Modal
-                   visible={true}
-                   title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker - " description="Edit Tracker" />}
-                   onOk={this.handleOk}
-                   onCancel={this.handleCancel}
-                   footer={[
-                       <center>
-                           <Button key="submit" type="primary" onClick={this.handleClick}>
-                               <FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.button" defaultMessage="Done" description="Done" />
-                           </Button></center>,
-                   ]}
-            >
+        <div>
                 <Row>
                     <Col span={6}>Critical Range</Col>
                         <Col span={6}>
@@ -84,7 +63,7 @@ class EditTrackerForm extends React.Component {
                     </Col>
                 </Row>
 
-            </Modal>
+            </div>
         );
     }
 }

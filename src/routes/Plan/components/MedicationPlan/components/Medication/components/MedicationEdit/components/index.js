@@ -18,7 +18,7 @@ class EditMedicationForm extends React.Component {
 
     constructor(props) {
         super(props);
-       // console.log(props);
+        console.log(props);
         this.state = {
             visibled: false,
             visible: false,
@@ -32,7 +32,10 @@ class EditMedicationForm extends React.Component {
     componentWillMount = () => {
         const {info,loading} = this.props;
        // const {medication} = info;
-      console.log(this.props);
+       // if (loading) {
+            console.log(loading,info);//не false
+       // }
+    //  console.log(this.props);
     }
 
     handleCancel = () => {
@@ -75,11 +78,11 @@ class EditMedicationForm extends React.Component {
         };
         const {info,loading} = this.props;
         //const {medication} = info;
-        if (loading) {
+
+      if (loading) {
             return  '<div>Loading</div>';
         }
 
-     //  console.log(this.state.value,"value");
 
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
@@ -109,18 +112,19 @@ class EditMedicationForm extends React.Component {
 
         let { visible } = this.state;
         return (
-            <Modal
-                visible={this.props.visibled}
-                title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
-                footer={[
-                    <center>
-                        <Button key="submit" type="primary" onClick={this.handleClick}>
-                            <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
-                        </Button></center>,
-                ]}
-            >
+            // <Modal
+            //     visible={this.props.visibled}
+            //     title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
+            //     onOk={this.handleOk}
+            //     onCancel={this.handleCancel}
+            //     footer={[
+            //         <center>
+            //             <Button key="submit" type="primary" onClick={this.handleClick}>
+            //                 <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
+            //             </Button></center>,
+            //     ]}
+            // >
+            <div>
                 <Row>
                     <Col span={6}>Take</Col>
                     <Col span={6}>
@@ -229,8 +233,8 @@ class EditMedicationForm extends React.Component {
                     </div>
                     : null
                 }
+                    </div>
 
-            </Modal>
         );
     }
 }

@@ -31,7 +31,7 @@ export class DashUserLayout extends React.Component {
         const {
             plans, loading, medicationPlan, date
         } = this.props;
-
+console.log(this.props,"--------------------------------------");
         /*if (loading) {
             //return (<div>Loading...</div>);
             return (

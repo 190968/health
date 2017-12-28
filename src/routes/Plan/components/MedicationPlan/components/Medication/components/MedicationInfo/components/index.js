@@ -1,8 +1,21 @@
 import React from 'react'
 import ReactHover from 'react-hover'
-import {Icon ,Row, Col} from 'antd';
+import {Icon ,Modal,Button,Row, Col} from 'antd';
+import {
+    FormattedMessage,
+} from 'react-intl';
+import { Link } from 'react-router-dom'
+import ModalEdit from '../../MedicationEdit/containers'
+import Loadable from "../../../../../../../../../components/Loadable";
 
-import ModalEdit from '../../MedicationEdit/component'
+/*const AsyncModalEdit = () => {
+    return (
+        Loadable({
+            loader: () => import('../../../../../../../../../routes/Plan/components/MedicationPlan/components/Medication/components/MedicationEdit/containers'),
+        })
+    );
+}*/
+
 const options = {
     followCursor:false,
     shiftX: 50,
@@ -20,7 +33,12 @@ export class MedicationInfo extends React.PureComponent {
     };
     static propTypes = {
     };
-
+    handleCancel = () => {
+        console.log("handleCancel");
+        this.setState({
+            visible:false,
+        });
+    }
     mouseOut() {
         //console.log("Mouse out!!!");
         this.setState({flipped: false});
@@ -30,17 +48,30 @@ export class MedicationInfo extends React.PureComponent {
         this.setState({flipped: true});
     }
     iconClick() {
-       // console.log("modalVisible");
-        this.setState({visible: true});
+        console.log("modalVisible");
+       this.setState({visible: true});
     }
     render() {
-        const {account} = this.props;
-       // console.log(this.props);
-        const {drug} = this.props.info;
+        const {account,userId} = this.props;
+        console.log(userId);
+        const {id,drug} = this.props.info;
+        //console.log(id);
         const {name, dosage} = drug;
         return (
 <div>
-    <ModalEdit visibled={true} />
+    <Modal
+        visible={this.state.visible}
+        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
+        onCancel={this.handleCancel}
+        footer={[
+            <center>
+                <Button key="submit" type="primary" >
+                    <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
+                </Button></center>,
+        ]}
+    >
+        <ModalEdit id="570" user_id={24038} />
+    </Modal>
     <Row>
         <Col span={2}>
             <Icon type="video-camera" />
@@ -50,10 +81,11 @@ export class MedicationInfo extends React.PureComponent {
         <Col span={9} onMouseOver={() => this.mouseOver()}  onMouseOut={() => this.mouseOut()}>
                      {name}
         </Col>
-            {this.state.flipped ?
-              <Col span={3}> <Icon  onClick={this.iconClick()} type="edit" /></Col>
-                : null
-            }
+        <Col span={3}> <Icon  onClick={()=> this.iconClick()} type="edit" /></Col>
+            {/*{this.state.flipped ?*/}
+
+                {/*: null*/}
+            {/*}*/}
     </Row>
         <div style={{fontSize:'0.8em'}}><Icon type="camera-o" /><label>{dosage}</label></div>
     </div>

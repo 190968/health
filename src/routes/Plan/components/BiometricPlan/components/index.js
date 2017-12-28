@@ -8,7 +8,7 @@ import {
 import ReactPlaceholder from 'react-placeholder';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/components'
-import { Table, List,Icon, Divider, Card } from 'antd';
+import { Table, List,Icon,Button, Modal,Divider, Card } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -16,14 +16,19 @@ export class MedicationPlanBody extends React.Component {
         this.state = {
             isBuilderMode: false,// if this is a builder mode
         };
+        this.state = {
+            visible: false,
+        };
     };
     static propTypes = {
     };
     editClick = () => {
         console.log("editClick");
+        this.setState({visible: true});
     }
     closeClick = () => {
         console.log("closeClick");
+        this.setState({visible: false});
     }
 
     render() {
@@ -186,6 +191,21 @@ export class MedicationPlanBody extends React.Component {
 */
 
         return (
+            <div>
+            <Modal
+                visible={this.state.visible}
+                title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker - " description="Edit Tracker" />}
+                onOk={this.handleOk}
+                onCancel={this.closeClick}
+                footer={[
+                    <center>
+                        <Button key="submit" type="primary" onClick={this.handleClick}>
+                            <FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.button" defaultMessage="Done" description="Done" />
+                        </Button></center>,
+                ]}>
+            <ModalTracker/>
+
+            </Modal>
                 <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
                     {/*<ModalTracker />*/}
                     <Divider>Report anytime</Divider>
@@ -193,6 +213,7 @@ export class MedicationPlanBody extends React.Component {
                     <Divider>Report at times</Divider>
                     <Table size="small" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
             </Card>
+                </div>
             )
     }
 }

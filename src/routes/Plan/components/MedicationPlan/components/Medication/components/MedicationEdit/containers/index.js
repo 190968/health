@@ -4,16 +4,16 @@
 import { connect } from 'react-redux'
 
 
-import MedicationModalForm from '../component'
+import MedicationEditForm from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 //import { compose } from 'react-apollo';
 
-const medicationPlan = gql`
-query GET_MEDICATION_MEDICATIONPLAN($user_id: ID!) {
+const medication = gql`
+query GET_MEDICATION($user_id: ID! $id: ID!) {
    account {
   		medicationPlan(user_id: $user_id) {
-   medication(id:569) {
+   medication(id: $id) {
     id,
     startDate,
     endDate,
@@ -45,18 +45,19 @@ const settingUserMutate=gql`
     }
 `;
 
-const withQuery = graphql(medicationPlan,
+const MedicationEditWithQuery = graphql(medication,
     {
         options: (ownProps) => ({
             variables: {
-                user_id: 24038
+                user_id: ownProps.user_id,
+                id: ownProps.id
             }
         }),
         props: ({ ownProps, data }) => {
-            //console.log(data);
             if (!data.loading) {
+              //  console.log(data.loading);//false
                 return {
-                    info: data.account.medicationPlan,
+                    info: data.account,
                     loading: data.loading
                 }
             }
@@ -65,7 +66,7 @@ const withQuery = graphql(medicationPlan,
             }
         },
     }
-)(MedicationModalForm);
+)(MedicationEditForm);
 
 const withMutation = graphql(settingUserMutate, {
     props: ({ mutate }) => ({
@@ -97,7 +98,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 
-export default withMutation(connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withQuery));
+)(MedicationEditWithQuery);
