@@ -49,7 +49,7 @@ export class DashUserLayout extends React.Component {
            <Row gutter={15}>
                <Col xs={24} md={16} lg={18}>
                <MedicationPlan loading={loading} date={date} />
-               <BiometricPlan loading={loading} date={date} />
+               <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} /></div>
                </Col>
                <Col xs={24} md={8} lg={6}>
                    <Card>

@@ -42,7 +42,7 @@ const Placeholder = (
                 key: '2',
                 name: <div><RectShape color='#afafaf' style={{ width: '80%', height: '1em'}} /><RectShape color='#E0E0E0' style={{ marginTop:5, width: '60%', height: '0.9em'}} /></div>,
                 time1: '',
-                time2: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />,
+                time2: '',
                 time3: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />
             }]} scroll={{x: 600}} pagination={false} />
         </div>
