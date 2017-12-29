@@ -14,31 +14,37 @@ import { Table,Row, Col, List, Divider, Card } from 'antd';
 
 const Placeholder = (
     <div>
-        <Row>
-            <Col span={24} >
-                <TextBlock color='#E0E0E0' rows={1} />
-                </Col>
-        </Row>
-        <br/>
-    <Row>
-        <Col span={6} >
-                    <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} /> <br/>
-                    <RectShape rows={1} color="#ddd" style={{ width: 90, height: 20 }} /> <br/>
-                    <RectShape rows={1} color="#ddd" style={{ width: 90, height: 20 }} />
-        </Col>
-        <Col span={6}>
-            <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} /> <br/>
-            <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} /><br/>
-        </Col>
-        <Col span={6}>
-            <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} /> <br/>
-            <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} /><br/>
-        </Col>
-    </Row>
-
-
-
-
+        <Divider><RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} /></Divider>
+            <Table columns={[{
+                title: <TextBlock color='#E0E0E0' rows={1} />,
+                dataIndex: 'name',
+                key: 'name',
+                width: 300
+            }, {
+                title: <RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} />,
+                dataIndex: 'time1',
+                key: 'time1',
+            }, {
+                title: <RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} />,
+                dataIndex: 'time2',
+                key: 'time2',
+            }, {
+                title: <RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} />,
+                dataIndex: 'time3',
+                key: 'time3',
+            }]} dataSource={[{
+                key: '1',
+                name: <div><RectShape color='#afafaf' style={{ width: '50%', height: '1em'}} /><RectShape color='#E0E0E0' style={{ marginTop:5, width: '60%', height: '0.9em'}} /></div>,
+                time1: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />,
+                time2: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />,
+                time3: ''
+            }, {
+                key: '2',
+                name: <div><RectShape color='#afafaf' style={{ width: '80%', height: '1em'}} /><RectShape color='#E0E0E0' style={{ marginTop:5, width: '60%', height: '0.9em'}} /></div>,
+                time1: '',
+                time2: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />,
+                time3: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />
+            }]} scroll={{x: 600}} pagination={false} />
         </div>
 );
 export class MedicationPlanBody extends React.Component {
@@ -56,10 +62,9 @@ export class MedicationPlanBody extends React.Component {
 
         const {info, date, loading} = this.props;
         if (loading) {
-            const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
-                    <ReactPlaceholder rows={7} ready={!loading} customPlaceholder={Placeholder}>Loading</ReactPlaceholder>
+                    <ReactPlaceholder showLoadingAnimation ready={!loading} customPlaceholder={Placeholder}>Loading</ReactPlaceholder>
                 </Card>
             );
         }
