@@ -67,7 +67,7 @@ export class Medication extends React.Component {
         return (
             <Row type="flex" justify="start">
                 {type != 'at_times' && <Col xs={6} >
-                    <MedicationInfo  info={info} />
+                    <MedicationInfo info={info} />
                 </Col>}
                 <Col  xs={18} >
                     <Row>

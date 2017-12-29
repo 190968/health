@@ -10,29 +10,28 @@ import gql from 'graphql-tag';
 //import { compose } from 'react-apollo';
 
 const medication = gql`
-query GET_MEDICATION($user_id: ID! $id: ID!) {
+query GET_MEDICATION($user_id: ID!, $id: ID!) {
    account {
   		medicationPlan(user_id: $user_id) {
-   medication(id: $id) {
-    id,
-    startDate,
-    endDate,
-    sideEffects,
-    purpose,
-    directions,
-    timesPerDay,
-    timesPerHour {
-      id
-    },
-    type,
-    drug {
-      id
-    },
-    quantity
-
-  }
-  }
-}
+            medication(id: $id) {
+                id,
+                startDate,
+                endDate,
+                sideEffects,
+                purpose,
+                directions,
+                timesPerDay,
+                timesPerHour {
+                  id
+                },
+                type,
+                drug {
+                  id
+                },
+                quantity
+            }
+        }
+    }
 }
 `;
 const settingUserMutate=gql`
@@ -49,20 +48,21 @@ const MedicationEditWithQuery = graphql(medication,
     {
         options: (ownProps) => ({
             variables: {
-                user_id: ownProps.user_id,
+                user_id: ownProps.userId,
                 id: ownProps.id
             }
         }),
         props: ({ ownProps, data }) => {
+            console.log(data);
             if (!data.loading) {
-              //  console.log(data.loading);//false
                 return {
-                    info: data.account,
+                    info: data.account.medicationPlan,
                     loading: data.loading
                 }
+
             }
              else {
-                return {loading: data.loading,info:12}
+                return {loading: data.loading}
             }
         },
     }

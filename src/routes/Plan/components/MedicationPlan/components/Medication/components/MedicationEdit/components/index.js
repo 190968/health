@@ -18,10 +18,9 @@ class EditMedicationForm extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+        //console.log(props, 'Constructor');
         this.state = {
-            visibled: false,
-            visible: false,
+            //visible: false,
             value: 1,
             advance: false,
             value_select: 1,
@@ -29,7 +28,14 @@ class EditMedicationForm extends React.Component {
         };
     };
 
-    componentWillMount = () => {
+
+    componentWillReceiveProps = (nextProps) => {
+        console.log(nextProps);
+    }
+    componentDidMount = () => {
+        console.log(this.props);
+
+
         const {info,loading} = this.props;
        // const {medication} = info;
        // if (loading) {
@@ -83,6 +89,8 @@ class EditMedicationForm extends React.Component {
             return  '<div>Loading</div>';
         }
 
+        console.log(info);
+
 
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
@@ -110,7 +118,7 @@ class EditMedicationForm extends React.Component {
         }
 
 
-        let { visible } = this.state;
+       //let { visible } = this.state;
         return (
             // <Modal
             //     visible={this.props.visibled}

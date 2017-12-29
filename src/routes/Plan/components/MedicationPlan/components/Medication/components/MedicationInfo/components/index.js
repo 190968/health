@@ -34,7 +34,7 @@ export class MedicationInfo extends React.PureComponent {
     static propTypes = {
     };
     handleCancel = () => {
-        console.log("handleCancel");
+        //console.log("handleCancel");
         this.setState({
             visible:false,
         });
@@ -48,12 +48,13 @@ export class MedicationInfo extends React.PureComponent {
         this.setState({flipped: true});
     }
     iconClick() {
-        console.log("modalVisible");
+       // console.log("modalVisible");
        this.setState({visible: true});
     }
     render() {
-        const {account,userId} = this.props;
-        console.log(userId);
+        const {account} = this.props;
+        //console.log(userId);
+        const userId = 13931;
         const {id,drug} = this.props.info;
         //console.log(id);
         const {name, dosage} = drug;
@@ -63,14 +64,13 @@ export class MedicationInfo extends React.PureComponent {
         visible={this.state.visible}
         title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
         onCancel={this.handleCancel}
-        footer={[
-            <center>
+        footer={
                 <Button key="submit" type="primary" >
                     <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
-                </Button></center>,
-        ]}
+                </Button>
+        }
     >
-        <ModalEdit id="570" user_id={24038} />
+        <ModalEdit id={id} userId={userId} />
     </Modal>
     <Row>
         <Col span={2}>

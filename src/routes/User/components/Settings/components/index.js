@@ -31,6 +31,14 @@ const AsyncPassword = () => {
     );
 }
 
+const AsyncPicture = () => {
+    return (
+        Loadable({
+            loader: () => import('../../../../../routes/User/components/Settings/components/Picture/components'),
+        })
+    );
+}
+
 
 
 class SettingForm extends React.Component{
@@ -48,7 +56,7 @@ class SettingForm extends React.Component{
                 <Tabs tabPosition="left" defaultActiveKey={this.props.location.pathname} onChange={this.handleChange}>
                     <TabPane tab={<FormattedMessage id="user.settings.basic" defaultMessage="Basic" description="Basic" />} key={match.url}><Route exact path={match.url} component={AsyncBasic()} /></TabPane>
                     <TabPane tab={<FormattedMessage id="user.settings.password" defaultMessage="Password" description="Password" />} key={match.url+'/password'} ><Route exact path={match.url+'/password'} component={AsyncPassword()} /></TabPane>
-                    <TabPane tab={<FormattedMessage id="user.settings.picture" defaultMessage="Picture" description="Picture" />} key={match.url+'/picture'} >Picture</TabPane>
+                    <TabPane tab={<FormattedMessage id="user.settings.picture" defaultMessage="Picture" description="Picture" />} key={match.url+'/picture'} >ff<Route exact path={match.url+'/picture'} component={AsyncPicture()} /></TabPane>
                 </Tabs>
             </Card>
         );
