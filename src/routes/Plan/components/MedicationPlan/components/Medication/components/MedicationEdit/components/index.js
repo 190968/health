@@ -10,7 +10,6 @@ import moment from 'moment';
 import {Modal, Form ,List,Radio,Row, Col,Select,Input, DatePicker , Button } from 'antd';
 const { Option, OptGroup } = Select;
 
-const RangePicker = DatePicker.RangePicker;
 
 const RadioGroup = Radio.Group;
 
@@ -19,29 +18,24 @@ class EditMedicationForm extends React.Component {
     constructor(props) {
         super(props);
         //console.log(props, 'Constructor');
-        this.state = {
-            //visible: false,
-            value: 1,
-            advance: false,
-            value_select: 1,
-            total: 0,
-        };
+
     };
 
 
     componentWillReceiveProps = (nextProps) => {
         console.log(nextProps);
-    }
-    componentDidMount = () => {
-        console.log(this.props);
+        this.state = {
+            value: nextProps.info.medication.type,
+            advance: false,
+            value_select: 1,
+            total: 0,
+            startValue: nextProps.info.medication.startDate,
+            endValue: nextProps.info.medication.endDate,
+            directions :nextProps.info.medication.directions,
+            purpose :nextProps.info.medication.purpose,
+            sideEffects :nextProps.info.medication.sideEffects,
 
-
-        const {info,loading} = this.props;
-       // const {medication} = info;
-       // if (loading) {
-            console.log(loading,info);//не false
-       // }
-    //  console.log(this.props);
+        };
     }
 
     handleCancel = () => {
@@ -70,7 +64,7 @@ class EditMedicationForm extends React.Component {
         });
     }
     onTotal = (e) => {
-        console.log(e);
+        //console.log(e);
         this.setState({
             total: Number(this.state.total)+Number(e)
         });
@@ -83,15 +77,14 @@ class EditMedicationForm extends React.Component {
             lineHeight: '30px',
         };
         const {info,loading} = this.props;
-        //const {medication} = info;
+
 
       if (loading) {
             return  '<div>Loading</div>';
         }
 
-        console.log(info);
 
-
+        const dateFormat = 'YYYY-MM-DD';
         const Take = [];
         for(var i=0; i<this.state.value_select; i++) {
             Take.push(  {
@@ -105,7 +98,7 @@ class EditMedicationForm extends React.Component {
                     </Select>
                 </Col>
                 <Col span={6}>
-                <Select onSelect={this.onTotal} style={{ width: 80 }} >
+                <Select onSelect={this.onTotal}  style={{ width: 80 }} >
                     <Option value="0.25">1/4</Option>
                     <Option value="0.5">1/2</Option>
                     <Option value="1">1</Option>
@@ -118,27 +111,15 @@ class EditMedicationForm extends React.Component {
         }
 
 
-       //let { visible } = this.state;
+
         return (
-            // <Modal
-            //     visible={this.props.visibled}
-            //     title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
-            //     onOk={this.handleOk}
-            //     onCancel={this.handleCancel}
-            //     footer={[
-            //         <center>
-            //             <Button key="submit" type="primary" onClick={this.handleClick}>
-            //                 <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
-            //             </Button></center>,
-            //     ]}
-            // >
             <div>
                 <Row>
                     <Col span={6}>Take</Col>
                     <Col span={6}>
                         <RadioGroup onChange={this.onChange}  value={this.state.value}>
                             <Radio style={radioStyle} value={1}>At specific times</Radio>
-                            <Radio style={radioStyle} value={2}>Along the day</Radio>
+                            <Radio style={radioStyle} value="at_times">Along the day</Radio>
                             <Radio style={radioStyle} value={3}>As needed</Radio>
                         </RadioGroup>
                     </Col>
@@ -150,7 +131,7 @@ class EditMedicationForm extends React.Component {
                             Times per Day
                         </Col>
                         <Col span={12}>
-                            <Select onSelect={this.onSelect} defaultValue={1+" Time"} style={{ width: 200 }}>
+                            <Select onSelect={this.onSelect}  style={{ width: 200 }}>
                                 <OptGroup >
                                     <Option value="1">1 Time</Option>
                                     <Option value="2">2 Time</Option>
@@ -174,10 +155,9 @@ class EditMedicationForm extends React.Component {
                             <Col span={6}><label>{this.state.total}</label></Col>
                         </Col>
                     </Row> : null}
-                {this.state.value === 2|| this.state.value === 3?
+                {this.state.value === "at_times"|| this.state.value === 3?
                     <Row>
                         <Col span={6}>
-
                         </Col>
                         <Col span={12}>
                             <Col span={15}>
@@ -209,10 +189,23 @@ class EditMedicationForm extends React.Component {
                 <Row>
                     <Col span={6}>Period</Col>
                     <Col span={15}>
-                        <RangePicker
-                            //defaultValue={[item.startDay,item.endDay]}
-                            ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
+                        <Col span={12}>
+                        <DatePicker
+                            format={dateFormat}
+                            value={moment(this.state.startValue, dateFormat)}
+                            placeholder="Start"
+                          //  onChange={this.onStartChange}
                         />
+                            </Col>
+                        <Col span={12}>
+                        <DatePicker
+                            format={dateFormat}
+                            value={moment(this.state.endValue, dateFormat)}
+                            placeholder="End"
+                            onChange={this.onEndChange}
+                           // open={endOpen}
+                        />
+                            </Col>
                     </Col>
                 </Row>
                 <br/>
@@ -223,19 +216,19 @@ class EditMedicationForm extends React.Component {
                         <Row>
                             <Col span={6}>Purpose</Col>
                             <Col span={18}>
-                                <Input  />
+                                <Input value={this.state.purpose} />
                             </Col>
                         </Row><br/>
                         <Row>
                             <Col span={6}>Directions</Col>
                             <Col span={18}>
-                                <Input />
+                                <Input value={this.state.directions}/>
                             </Col>
                         </Row><br/>
                         <Row>
                             <Col span={6}>Side Effects</Col>
                             <Col span={18}>
-                                <Input />
+                                <Input  value={this.state.sideEffects}/>
                             </Col>
                         </Row>
                     </div>

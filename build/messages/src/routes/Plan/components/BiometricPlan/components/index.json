@@ -1,8 +1,8 @@
 [
   {
-    "id": "plan.medicationpan.medication.card.title",
-    "description": "Medications for Today",
-    "defaultMessage": "Medications for Today"
+    "id": "plan.medicationpan.trackers.card.title",
+    "description": "Trackers for Today",
+    "defaultMessage": "Trackers for Today"
   },
   {
     "id": "plan.biometricplan.biometric.trackermodal.modal.title",
