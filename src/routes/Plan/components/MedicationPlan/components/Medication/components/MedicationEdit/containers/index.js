@@ -35,10 +35,11 @@ query GET_MEDICATION($user_id: ID!, $id: ID!) {
 }
 `;
 const settingUserMutate=gql`
- mutation settingUser( $input:AccountInput!){
-        account(input:$input) {
-          user {
-            first_name
+ mutation MedicationUpdate( $input:MedicationInput!){
+        medication(input:$input) {
+          medication {
+            id,
+            startDate
           }
         }
     }
@@ -53,7 +54,7 @@ const MedicationEditWithQuery = graphql(medication,
             }
         }),
         props: ({ ownProps, data }) => {
-            console.log(data);
+            //console.log(data);
             if (!data.loading) {
                 return {
                     info: data.account.medicationPlan,
@@ -70,7 +71,8 @@ const MedicationEditWithQuery = graphql(medication,
 
 const withMutation = graphql(settingUserMutate, {
     props: ({ mutate }) => ({
-        updateInfo: input => {
+        updateMedication: input => {
+            console.log(input);
             return mutate({
                 variables: {input: {user:input}},
             })},
@@ -98,7 +100,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 
-export default connect(
+export default withMutation(connect(
     mapStateToProps,
     mapDispatchToProps
-)(MedicationEditWithQuery);
+)(MedicationEditWithQuery));
