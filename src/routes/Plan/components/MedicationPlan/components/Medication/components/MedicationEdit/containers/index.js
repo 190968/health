@@ -35,12 +35,9 @@ query GET_MEDICATION($user_id: ID!, $id: ID!) {
 }
 `;
 const settingUserMutate=gql`
- mutation MedicationUpdate( $input:MedicationInput!){
-        medication(input:$input) {
-          medication {
-            id,
-            startDate
-          }
+ mutation MedicationUpdate($id: ID!, $input: MedicationInput!) {
+        medication(id:$id, input: $input) {
+             id
         }
     }
 `;
