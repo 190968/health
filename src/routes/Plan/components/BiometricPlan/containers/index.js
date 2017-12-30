@@ -37,7 +37,7 @@ const BiometricPlanBodyWithQuery = graphql(
            // console.log(data);
             if (!data.loading) {
                 return {
-                    info: data.account.biometricPlan,
+                    info: data.account,
                     loading: data.loading
                 }
 

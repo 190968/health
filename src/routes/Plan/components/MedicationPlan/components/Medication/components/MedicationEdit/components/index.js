@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment';
 import {Modal, Form ,List,Radio,Row, Col,Select,Input, DatePicker , Button } from 'antd';
 const { Option, OptGroup } = Select;
-
+const FormItem = Form.Item;
 
 const RadioGroup = Radio.Group;
 
@@ -17,8 +17,6 @@ class EditMedicationForm extends React.Component {
 
     constructor(props) {
         super(props);
-        //console.log(props, 'Constructor');
-
     };
 
 
@@ -42,11 +40,6 @@ class EditMedicationForm extends React.Component {
         console.log("handleCancel");
     }
 
-    handleClick = () => {
-        // console.log( );
-        //console.log("handleClick");
-        // visibled = false;
-    }
 
     onChange = (e) => {
         this.setState({
@@ -70,7 +63,18 @@ class EditMedicationForm extends React.Component {
         });
     }
     render() {
+        const { getFieldDecorator } = this.props.form;
+        const formItemLayout = {
+            labelCol: {
+                xs: { span: 20 },
+                sm: { span: 6 },
 
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 16 },
+            },
+        };
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -79,7 +83,7 @@ class EditMedicationForm extends React.Component {
         const {info,loading} = this.props;
 
 
-      if (loading) {
+        if (loading) {
             return  '<div>Loading</div>';
         }
 
@@ -89,41 +93,44 @@ class EditMedicationForm extends React.Component {
         for(var i=0; i<this.state.value_select; i++) {
             Take.push(  {
                 item:     <div >
-                <Col  span={12}>
-                    <Select  style={{ width: 100 }} >
-                        <Option value="2">2am</Option>
-                        <Option value="3">3am</Option>
-                        <Option value="4">4am</Option>
-                        <Option value="5">5am</Option>
-                    </Select>
-                </Col>
-                <Col span={6}>
-                <Select onSelect={this.onTotal}  style={{ width: 80 }} >
-                    <Option value="0.25">1/4</Option>
-                    <Option value="0.5">1/2</Option>
-                    <Option value="1">1</Option>
-                    <Option value="1.25">1.25</Option>
-                    <Option value="1.5">1.5</Option>
-                </Select>
-                </Col>
-                    </div>
+                    <Col  span={12}>
+                        <Select  style={{ width: 100 }} >
+                            <Option value="2">2am</Option>
+                            <Option value="3">3am</Option>
+                            <Option value="4">4am</Option>
+                            <Option value="5">5am</Option>
+                        </Select>
+                    </Col>
+                    <Col span={6}>
+                        <Select onSelect={this.onTotal}  style={{ width: 80 }} >
+                            <Option value="0.25">1/4</Option>
+                            <Option value="0.75">¾</Option>
+                            <Option value="1">1</Option>
+                            <Option value="1.25">1.25</Option>
+                            <Option value="1.5">1.5</Option>
+                        </Select>
+                    </Col>
+                </div>
             })
         }
 
 
 
         return (
-            <div>
-                <Row>
-                    <Col span={6}>Take</Col>
-                    <Col span={6}>
-                        <RadioGroup onChange={this.onChange}  value={this.state.value}>
-                            <Radio style={radioStyle} value={1}>At specific times</Radio>
-                            <Radio style={radioStyle} value="at_times">Along the day</Radio>
-                            <Radio style={radioStyle} value={3}>As needed</Radio>
-                        </RadioGroup>
-                    </Col>
-                </Row>
+            <Form>
+                <FormItem
+                    {...formItemLayout}
+                    label="Take"
+                >
+                        <Col offset={6} span={6}>
+                            <RadioGroup onChange={this.onChange}  value={this.state.value}>
+                                <Radio style={radioStyle} value={1}>At specific times</Radio>
+                                <Radio style={radioStyle} value="at_times">Along the day</Radio>
+                                <Radio style={radioStyle} value={3}>As needed</Radio>
+                            </RadioGroup>
+                        </Col>
+
+                </FormItem>
 
                 {this.state.value === 1 ?
                     <Row>
@@ -190,27 +197,27 @@ class EditMedicationForm extends React.Component {
                     <Col span={6}>Period</Col>
                     <Col span={15}>
                         <Col span={12}>
-                        <DatePicker
-                            format={dateFormat}
-                            value={moment(this.state.startValue, dateFormat)}
-                            placeholder="Start"
-                          //  onChange={this.onStartChange}
-                        />
-                            </Col>
+                            <DatePicker
+                                format={dateFormat}
+                                value={moment(this.state.startValue, dateFormat)}
+                                placeholder="Start"
+                                //  onChange={this.onStartChange}
+                            />
+                        </Col>
                         <Col span={12}>
-                        <DatePicker
-                            format={dateFormat}
-                            value={moment(this.state.endValue, dateFormat)}
-                            placeholder="End"
-                            onChange={this.onEndChange}
-                           // open={endOpen}
-                        />
-                            </Col>
+                            <DatePicker
+                                format={dateFormat}
+                                value={moment(this.state.endValue, dateFormat)}
+                                placeholder="End"
+                                onChange={this.onEndChange}
+                                // open={endOpen}
+                            />
+                        </Col>
                     </Col>
                 </Row>
                 <br/>
                 {!this.state.advance ?
-                    <p onClick={this.onAdvance}>Advance</p>:null}
+                    <a onClick={this.onAdvance}>Advance</a>:null}
                 {this.state.advance ?
                     <div>
                         <Row>
@@ -234,7 +241,7 @@ class EditMedicationForm extends React.Component {
                     </div>
                     : null
                 }
-                    </div>
+            </Form>
 
         );
     }

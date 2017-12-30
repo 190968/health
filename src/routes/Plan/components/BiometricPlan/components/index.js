@@ -4,45 +4,11 @@ import {
     FormattedNumber,
     FormattedPlural,
 } from 'react-intl';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
+
 import ReactPlaceholder from 'react-placeholder';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/components'
-import { Table,Row, Col, List,Icon,Button, Modal,Divider, Card } from 'antd';
-
-
-
-const Placeholder = (
-    <div>
-        <Row>
-            <Col span={24} >
-                <TextBlock color='#E0E0E0' rows={1} />
-            </Col>
-        </Row>
-        <br/>
-        <Row>
-            <Col span={6} >
-                <RectShape rows={1} color="gray" style={{ width: 100, height: 20 }} /> <br/>
-            </Col>
-            <Col span={4}>
-                <RectShape rows={1} color="gray" style={{ width: 30, height: 30 }} />
-            </Col>
-            <Col span={4}>
-                <RectShape rows={1} color="gray" style={{ width: 30, height: 30 }} />
-            </Col>
-            <Col span={8}>
-                <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} /> <br/>
-                <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} /> <br/>
-                <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} /> <br/>
-                <RectShape rows={1} color="gray" style={{ width: 90, height: 20 }} />
-            </Col>
-        </Row>
-
-
-
-
-    </div>
-);
+import { Table, List,Icon,Button, Modal,Divider, Card } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -70,9 +36,10 @@ export class MedicationPlanBody extends React.Component {
         if (loading) {
             const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
-                <Card title={<FormattedMessage id="plan.medicationpan.trackers.card.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
-                    <ReactPlaceholder rows={7} ready={!loading} customPlaceholder={Placeholder}>Loading</ReactPlaceholder>
-
+                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
+                <ReactPlaceholder showLoadingAnimation ready={!loading} type="media" rows={5} >
+                    a
+                </ReactPlaceholder>
                 </Card>
             );
         }
