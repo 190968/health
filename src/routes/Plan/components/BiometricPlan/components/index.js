@@ -44,6 +44,7 @@ s
             );
         }
 
+
         const {columns, trackers} = info;
         const listColumns = [
             { title: '', dataIndex: 'name', key: 'name' },
