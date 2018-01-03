@@ -22,7 +22,9 @@ query GET_MEDICATION($user_id: ID!, $id: ID!) {
                 directions,
                 timesPerDay,
                 timesPerHour {
-                  id
+                  id,
+                  time,
+                  quantity
                 },
                 type,
                 drug {
