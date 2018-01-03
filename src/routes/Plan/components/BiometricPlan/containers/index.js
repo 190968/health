@@ -34,10 +34,10 @@ const BiometricPlanBodyWithQuery = graphql(
     QUERY,
     {
         props: ({ ownProps, data }) => {
-           // console.log(data);
+            //console.log(data);
             if (!data.loading) {
                 return {
-                    info: data.account,
+                    info: data.account.biometricPlan,
                     loading: data.loading
                 }
 

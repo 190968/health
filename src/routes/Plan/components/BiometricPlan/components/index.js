@@ -43,7 +43,7 @@ export class MedicationPlanBody extends React.Component {
                 </Card>
             );
         }
-        //console.log(info);
+        console.log(info);
         const {columns, trackers} = info;
 
         const listColumns = [
