@@ -30,7 +30,7 @@ export class MedicationPlanBody extends React.Component {
         console.log("closeClick");
         this.setState({visible: false});
     }
-
+s
     render() {
         const {info, date, loading} = this.props;
         if (loading) {
@@ -43,9 +43,8 @@ export class MedicationPlanBody extends React.Component {
                 </Card>
             );
         }
-        //console.log(info);
-        const {columns, trackers} = info;
 
+        const {columns, trackers} = info;
         const listColumns = [
             { title: '', dataIndex: 'name', key: 'name' },
             { title: '', dataIndex: 'icon', key: 'icom' },

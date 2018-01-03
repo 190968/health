@@ -22,18 +22,6 @@ class EditMedicationForm extends React.Component {
 
     componentWillReceiveProps = (nextProps) => {
         console.log(nextProps);
-        this.state = {
-            value: nextProps.info.medication.type,
-            advance: false,
-            value_select: 1,
-            total: 0,
-            startValue: nextProps.info.medication.startDate,
-            endValue: nextProps.info.medication.endDate,
-            directions :nextProps.info.medication.directions,
-            purpose :nextProps.info.medication.purpose,
-            sideEffects :nextProps.info.medication.sideEffects,
-
-        };
     }
 
     handleCancel = () => {
