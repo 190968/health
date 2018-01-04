@@ -9,6 +9,7 @@ import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-place
 import { Row, Col, Menu, Icon, Avatar, Badge } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
+const MenuDivider = Menu.Divider;
 
 const HeaderPlaceholder = (
      <div></div>
@@ -56,6 +57,7 @@ class LHeader extends React.Component {
             ['Calendar', '/calendar', 'calendar'],
             ['Health', '/health', 'health'],
             ['Help Center', '/help', 'help'],
+            [1],
             ['Logout', '/logout'],
         ];
 
@@ -125,6 +127,9 @@ class LHeader extends React.Component {
                             <SubMenu key="sub1" title={<span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{this.props.user.first_name}</Avatar> <span>{this.props.user.first_name}!</span></span>}>
 
                                 {user_menu_items.map((item) => {
+                                    if (item.length == 1) {
+                                        return (<Menu.Divider />)
+                                    }
                                     return (
                                         <Menu.Item key={item.toString()}>
                                             <NavLink exact to={item[1]}>{item[0]}</NavLink>
