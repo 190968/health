@@ -76,7 +76,9 @@ class NormalRegisterForm extends React.Component {
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-            callback(<FormattedMessage id="user.registration.inconsistent" defaultMessage="Two passwords that you enter is inconsistent!" description="inconsistent"/>);
+            callback(<FormattedMessage id="user.registration.inconsistent"
+                                       defaultMessage="Two passwords that you enter is inconsistent!"
+                                       description="inconsistent"/>);
         } else {
             callback();
         }
