@@ -54,7 +54,7 @@ export class MedicationInfo extends React.PureComponent {
     render() {
         const {account} = this.props;
         //console.log(userId);
-        const userId = 24038;
+        const userId = 13931;
         const {id,drug} = this.props.info;
         //console.log(id);
         const {name, dosage} = drug;
