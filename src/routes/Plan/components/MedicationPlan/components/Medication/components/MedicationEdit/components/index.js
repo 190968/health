@@ -9,7 +9,7 @@ import {
 import moment from 'moment';
 import { Form ,List,Radio,Row,TimePicker, Col,Select,Input, DatePicker , Button } from 'antd';
 const { Option, OptGroup } = Select;
-
+const FormItem = Form.Item;
 const format = 'HH:mm a';
 const RadioGroup = Radio.Group;
 
@@ -21,12 +21,13 @@ class EditMedicationForm extends React.Component {
             showHours : null,
             startDate: null,
             endDate: null,
-            select_value:1
+            select_value:1,
+            total:null
         };
     };
 
-
     componentWillReceiveProps = (nextProps) => {
+
         this.setState({
             showHours: nextProps.info.medication.type,
             startDate:nextProps.info.medication.startDate,
@@ -42,11 +43,13 @@ class EditMedicationForm extends React.Component {
         this.setState({
             [field]: value,
         });
+        console.log("onChangeDate");
     }
     onChange = (e) => {
         this.setState({
             showHours: e.target.value,
         });
+        console.log("onChange");
     }
 
 
@@ -69,6 +72,7 @@ class EditMedicationForm extends React.Component {
         this.setState({
             select_value: e
         });
+        console.log("onSelect");
     }
     onAdvance = (e) => {
         this.setState({
@@ -76,7 +80,7 @@ class EditMedicationForm extends React.Component {
         });
     }
     onTotal = (e) => {
-        //console.log(e);
+        console.log(e," -- onTotal");
         this.setState({
             total: Number(this.state.total)+Number(e)
         });
@@ -117,22 +121,33 @@ class EditMedicationForm extends React.Component {
         console.log(info);
 
         const dateFormat = 'YYYY-MM-DD';
+        let quantity = 0;
+        let qwer = 0;
         const Take = [];
-        var quantity = 0;
         if(timesPerHour != null) {
             timesPerHour.forEach((item)=> {
                 quantity ++;
+                qwer += item.quantity;
                 Take.push({
                     item: <div >
                         <Col span={10}>
+                        <FormItem
+                            {...formItemLayout}
+                        >
+
                             {getFieldDecorator('takeAt', {
                                 initialValue: moment(item.time, format)
                             })(
                                 <TimePicker format={format}/>
                             )}
+                            </FormItem>
                         </Col>
-                        <Col offset={4} span={6}>
-                            {getFieldDecorator('tak5eAt', {
+                        <Col offset={1} span={6}>
+                        <FormItem
+                            {...formItemLayout}
+                        >
+
+                            {getFieldDecorator('tak5eAt'+quantity, {
                                 initialValue: item.quantity
                             })(
                                 <Select onChange={this.onTotal} style={{width: 80}}>
@@ -177,30 +192,38 @@ class EditMedicationForm extends React.Component {
                                     <Option value="9.75">9¾</Option>
                                 </Select>
                             )}
+                            </FormItem>
                         </Col>
+
                     </div>
                 })
             })
         }
         return (
             <Form>
-                 <Row>
-                     <Col span={6}>Take</Col>
-                        <Col span={6}>
-                            <RadioGroup onChange={this.onChange}  value={this.state.showHours}>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Take" description="Take" />}
+                >
+                    {getFieldDecorator('radioGroup', {
+                        initialValue: this.state.showHours
+
+                    })(
+
+                        <RadioGroup onChange={this.onChange} >
                                 <Radio style={radioStyle} value="at_times">At specific times</Radio>
                                 <Radio style={radioStyle} value="along_day">Along the day</Radio>
                                 <Radio style={radioStyle} value="as_needed">As needed</Radio>
                             </RadioGroup>
-                        </Col>
-                 </Row><br/>
+                    )}
+                </FormItem>
 
                 {this.state.showHours === "at_times" ?
-                    <Row>
-                        <Col span={6}>
-                            Times per Day
-                        </Col>
-                        <Col span={12}>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.tdsile" defaultMessage="Times per Day" description="Times per Day" />}
+                >
+
                                 {getFieldDecorator('timesPerDay', {
                                     initialValue: this.state.select_value
                                 })(
@@ -214,8 +237,9 @@ class EditMedicationForm extends React.Component {
                                 </OptGroup>
                             </Select>
                                 )}
+
                             <Col span={10}><label>Take at</label></Col>
-                            <Col offset={4} span={6}><label>Quantity</label></Col>
+                            <Col offset={1} span={6}><label>Quantity</label></Col>
                             <List
                                 grid={{gutter: 5, md: 1}}
                                 dataSource={Take}
@@ -225,16 +249,15 @@ class EditMedicationForm extends React.Component {
                                     </List.Item>
                                 )}
                             />
-                            <Col offset={10} span={5}><label>Total</label></Col>
-                            <Col span={6}><label>{this.state.total}</label></Col>
-                        </Col>
-                    </Row> : null}
+
+                            <Col offset={7} span={5}><label>Total</label></Col>
+                            <Col span={6}><label>{qwer}</label></Col>
+                </FormItem>: null}
                 {this.state.showHours === "along_day"|| this.state.showHours === "as_needed"?
-                    <Row>
-                        <Col span={6}>
-                        </Col>
-                        <Col span={12}>
-                            <Col  span={10}>
+                    <div>
+                        <FormItem
+                            {...formItemLayout}
+                        >
                                 {getFieldDecorator('takeAt1', {
                                     initialValue: this.props.info.medication.timesPerDay
                                 })(
@@ -248,7 +271,10 @@ class EditMedicationForm extends React.Component {
                                         </OptGroup>
                                     </Select>
                                 )}
-                            </Col>
+                </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                        >
                             <Col offset={4} span={6}>
                                 {getFieldDecorator('takeA2t', {
                                     initialValue: this.props.info.medication.quantity
@@ -296,14 +322,16 @@ class EditMedicationForm extends React.Component {
                                     </Select>
                                 )}
                             </Col>
-                            </Col>
-                    </Row> : null}
-                <br/>
-                <Row>
-                    <Col span={6}>Period</Col>
-                    <Col span={15}>
-                        <Col span={12}>
-                            {getFieldDecorator('startDate', {
+                </FormItem>
+                    </div>: null}
+                <Col offset={3} span={10}>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.tdsitdle" defaultMessage="Period" description="Period" />}
+                >
+
+
+                {getFieldDecorator('startDate', {
                                 initialValue: moment(this.state.startDate, dateFormat),
                             })(
                             <DatePicker
@@ -313,8 +341,13 @@ class EditMedicationForm extends React.Component {
                                 onChange={this.onStartChange}
                             />
                             )}
-                        </Col>
-                        <Col offset={1} span={11}>
+
+                    </FormItem>
+                </Col>
+                    <Col  span={10}>
+                <FormItem
+                    {...formItemLayout}
+                >
                             {getFieldDecorator('endDate', {
                                 initialValue: moment(this.state.endDate, dateFormat),
                             })(
@@ -325,45 +358,58 @@ class EditMedicationForm extends React.Component {
                                 onChange={this.onEndChange}
                             />
                             )}
+                            </FormItem>
                         </Col>
-                    </Col>
-                </Row>
-                <br/>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.tdegsiftdle" defaultMessage="Image" description="Image" />}
+                >
+                    {getFieldDecorator('purpose', {
+                        initialValue:this.props.info.medication.purpose,
+                    })(
+                        <Col>
+                        <a>Browse</a>
+                        <p>Min. dimensions: 150x150px</p>  {/*style*/}
+
+                            </Col>
+                    )}
+                </FormItem>
+
                 {!this.state.advance ?
                     <a onClick={this.onAdvance}>Advanced</a>:null}
                 {this.state.advance ?
                     <div>
-                        <Row>
-                            <Col span={6}>Purpose</Col>
-                            <Col span={18}>
+                        <FormItem
+                            {...formItemLayout}
+                            label={<FormattedMessage id="user.settings.basic.tdgsiftdle" defaultMessage="Purpose" description="Purpose" />}
+                        >
                                 {getFieldDecorator('purpose', {
                                     initialValue:this.props.info.medication.purpose,
                                 })(
                                     <Input />
                                 )}
-                            </Col>
-                        </Row><br/>
-                        <Row>
-                            <Col span={6}>Directions</Col>
-                            <Col span={18}>
+                           </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label={<FormattedMessage id="user.settings.basic.tdsitfdle" defaultMessage="Directions" description="Direcctions" />}
+                        >
                                 {getFieldDecorator('directions', {
                                     initialValue:this.props.info.medication.directions,
                                 })(
                                     <Input />
                                 )}
-                            </Col>
-                        </Row><br/>
-                        <Row>
-                            <Col span={6}>Side Effects</Col>
-                            <Col span={18}>
+                          </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label={<FormattedMessage id="user.settings.basic.tddsitdle" defaultMessage="Side Effects" description="Side Effects" />}
+                        >
                                 {getFieldDecorator('sideEffect', {
                                     initialValue:this.props.info.medication.sideEffects,
                                 })(
                                 <Input />
                                 )}
-                                </Col>
-                        </Row>
-                    </div>
+                              </FormItem>
+                        </div>
                     : null
                 }
             </Form>
