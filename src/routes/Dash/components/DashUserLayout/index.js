@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlaceholder from 'react-placeholder';
+import PlanWidget from '../../../Plan/components/Plan';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
 import BiometricPlan from 'routes/Plan/components/BiometricPlan/containers';
-import { Row, Col, Calendar, Card } from 'antd';
+import { Row, Col, Calendar, List,Card } from 'antd';
 import {
     FormattedMessage,
     FormattedNumber,
@@ -32,7 +33,7 @@ export class DashUserLayout extends React.Component {
             plans, loading, medicationPlan, date,user_id
         } = this.props;
 
-console.log(this.props);
+      console.log(this.props);
         /*if (loading) {
             //return (<div>Loading...</div>);
             return (
@@ -46,10 +47,25 @@ console.log(this.props);
         }*/
         //onsole.log("Logkout");
         //console.log(date);
+        const pageOpts = { total: 4};
         return (
            <Row gutter={15}>
                <Col xs={24} md={16} lg={18}>
-               <MedicationPlan loading={loading} date={date} />
+                   <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="TODAY'S ACTIONPLANS" description="Medications for Today" />}>
+                   <List
+                       split={false}
+                       loading={loading}
+                       grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                       pagination={pageOpts}
+                       dataSource={plans}
+                       renderItem={product => (
+                           <List.Item key={product.id}>
+                               <PlanWidget info={product} key={product.id}/>
+                           </List.Item>
+                       )}
+                   />
+                       </Card>
+                   <div style={{marginTop:10}}><MedicationPlan loading={loading} date={date} /></div>
                <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} /></div>
                </Col>
                <Col xs={24} md={8} lg={6}>

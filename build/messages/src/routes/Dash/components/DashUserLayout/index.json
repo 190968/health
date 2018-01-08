@@ -1,7 +1,7 @@
 [
   {
-    "id": "dashUser.hello_world",
-    "description": "Hello world header greeting2",
-    "defaultMessage": "Hello World2!"
+    "id": "plan.medicationpan.medication.card.title2",
+    "description": "Medications for Today",
+    "defaultMessage": "TODAY'S ACTIONPLANS"
   }
 ]
