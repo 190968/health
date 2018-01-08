@@ -58,6 +58,7 @@ s
         columns.map(column => {
             //console.log(column.id);
             tableColumns.push({ title: column.name, dataIndex: 'col_'+column.id, key: column.id },)});
+
         tableColumns.push({ title: 'Action', dataIndex: '', key: 'x', render: (info) => <a href="#">{info.name}</a> });
 
         const data = []

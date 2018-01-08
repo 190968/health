@@ -23,14 +23,14 @@ export class DashUserLayout extends React.Component {
         this.onDismiss = this.onDismiss.bind(this);
     }
     static propTypes = {
-        user_id: PropTypes.number,
+        user_id: PropTypes.string,
     }
     onDismiss() {
         this.setState({ visible: false });
     }
     render () {
         const {
-            plans, loading, medicationPlan, date,user_id
+            plans, loading, medicationPlan, date, user_id
         } = this.props;
 
       console.log(this.props);
@@ -47,7 +47,7 @@ export class DashUserLayout extends React.Component {
         }*/
         //onsole.log("Logkout");
         //console.log(date);
-        const pageOpts = { total: 4};
+        const pageOpts = { total: 4, hideOnSinglePage:true};
         return (
            <Row gutter={15}>
                <Col xs={24} md={16} lg={18}>
@@ -65,8 +65,8 @@ export class DashUserLayout extends React.Component {
                        )}
                    />
                        </Card>
-                   <div style={{marginTop:10}}><MedicationPlan loading={loading} date={date} /></div>
-               <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} /></div>
+                   <div style={{marginTop:10}}><MedicationPlan loading={loading} date={date} user_id={user_id} /></div>
+               <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} user_id={user_id} /></div>
                </Col>
                <Col xs={24} md={8} lg={6}>
                    <Card>

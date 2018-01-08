@@ -8,5 +8,25 @@
     "id": "plan.medicationpan.medication.card.title2",
     "description": "Medications for Today",
     "defaultMessage": "Medications for Today"
+  },
+  {
+    "id": "plan.prev_day",
+    "defaultMessage": "Previous day"
+  },
+  {
+    "id": "plan.next_day",
+    "defaultMessage": "Next day"
+  },
+  {
+    "id": "plan.medication.at_times",
+    "defaultMessage": "Take At Times"
+  },
+  {
+    "id": "plan.medication.daily",
+    "defaultMessage": "Take Daily"
+  },
+  {
+    "id": "plan.medication.as_needed",
+    "defaultMessage": "Take As Needed"
   }
 ]
