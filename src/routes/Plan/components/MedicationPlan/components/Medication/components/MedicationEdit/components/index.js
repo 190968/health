@@ -27,7 +27,6 @@ class EditMedicationForm extends React.Component {
     };
 
     componentWillReceiveProps = (nextProps) => {
-
         this.setState({
             showHours: nextProps.info.medication.type,
             startDate:nextProps.info.medication.startDate,
@@ -118,7 +117,7 @@ class EditMedicationForm extends React.Component {
         }
 
         const {timesPerHour} = info.medication;
-        console.log(info);
+       console.log(this.state.showHours);
 
         const dateFormat = 'YYYY-MM-DD';
         let quantity = 0;
@@ -201,22 +200,37 @@ class EditMedicationForm extends React.Component {
         }
         return (
             <Form>
-                <FormItem
-                    {...formItemLayout}
-                    label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Take" description="Take" />}
-                >
-                    {getFieldDecorator('radioGroup', {
-                        initialValue: this.state.showHours
 
-                    })(
 
-                        <RadioGroup onChange={this.onChange} >
-                                <Radio style={radioStyle} value="at_times">At specific times</Radio>
-                                <Radio style={radioStyle} value="along_day">Along the day</Radio>
-                                <Radio style={radioStyle} value="as_needed">As needed</Radio>
-                            </RadioGroup>
-                    )}
-                </FormItem>
+
+
+                        {/*<FormItem
+                         {...formItemLayout}
+                         label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Take" description="Take" />}
+                         >
+                         {getFieldDecorator('radioGroup', {
+                         initialValue: this.state.showHours
+
+                         })(
+
+                         <RadioGroup onChange={this.onChange} >
+                         <Radio style={radioStyle} value="at_times">At specific times</Radio>
+                         <Radio style={radioStyle} value="along_day">Along the day</Radio>
+                         <Radio style={radioStyle} value="as_needed">As needed</Radio>
+                         </RadioGroup>
+                         )}
+                         </FormItem>*/}
+
+
+
+                        <RadioGroup onChange={this.onChange} value={this.state.showHours} >
+                            <Radio style={radioStyle} value="at_times">At specific times</Radio>
+                            <Radio style={radioStyle} value="along_day">Along the day</Radio>
+                            <Radio style={radioStyle} value="as_needed">As needed</Radio>
+                        </RadioGroup>
+
+
+
 
                 {this.state.showHours === "at_times" ?
                 <FormItem
@@ -234,7 +248,7 @@ class EditMedicationForm extends React.Component {
                                     <Option value="3">3 Times</Option>
                                     <Option value="4">4 Times</Option>
                                     <Option value="5">5 Times</Option>
-                                </OptGroup>
+                                </OptGroup >
                             </Select>
                                 )}
 
@@ -253,8 +267,9 @@ class EditMedicationForm extends React.Component {
                             <Col offset={7} span={5}><label>Total</label></Col>
                             <Col span={6}><label>{qwer}</label></Col>
                 </FormItem>: null}
-                {this.state.showHours === "along_day"|| this.state.showHours === "as_needed"?
+                {this.state.showHours === "along_day" || this.state.showHours === "as_needed"?
                     <div>
+                    <Col offset={5} span={10}>
                         <FormItem
                             {...formItemLayout}
                         >
@@ -272,10 +287,11 @@ class EditMedicationForm extends React.Component {
                                     </Select>
                                 )}
                 </FormItem>
+                    </Col>
+                        <Col offset={1} span={6}>
                         <FormItem
                             {...formItemLayout}
                         >
-                            <Col offset={4} span={6}>
                                 {getFieldDecorator('takeA2t', {
                                     initialValue: this.props.info.medication.quantity
                                 })(
@@ -321,8 +337,8 @@ class EditMedicationForm extends React.Component {
                                         <Option value="9.75">9¾</Option>
                                     </Select>
                                 )}
-                            </Col>
                 </FormItem>
+                        </Col>
                     </div>: null}
                 <Col offset={3} span={10}>
                 <FormItem

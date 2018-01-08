@@ -1,10 +1,5 @@
 [
   {
-    "id": "user.settings.basic.title",
-    "description": "Take",
-    "defaultMessage": "Take"
-  },
-  {
     "id": "user.settings.basic.tdsile",
     "description": "Times per Day",
     "defaultMessage": "Times per Day"

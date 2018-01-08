@@ -7,7 +7,7 @@ import {
 
 import ReactPlaceholder from 'react-placeholder';
 import TrackerField from  './Biometric/components/TrackerField/containers';
-import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/components'
+import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
 import { Table, List,Icon,Button, Modal,Divider, Card } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
@@ -32,7 +32,7 @@ export class MedicationPlanBody extends React.Component {
     }
 s
     render() {
-        const {info, date, loading} = this.props;
+        const {info, date, loading,user_id} = this.props;
         if (loading) {
             const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
@@ -43,7 +43,7 @@ s
                 </Card>
             );
         }
-
+     // console.log(this.props);
 
         const {columns, trackers} = info;
         const listColumns = [
@@ -203,7 +203,7 @@ s
                             <FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.button" defaultMessage="Done" description="Done" />
                         </Button></center>,
                 ]}>
-            <ModalTracker/>
+            <ModalTracker user_id={user_id} />
 
             </Modal>
                 <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>

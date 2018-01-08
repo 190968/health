@@ -8,6 +8,9 @@ import gql from 'graphql-tag';
 const QUERY = gql`
     query GET_MEDICATION_PLAN ($user_id: ID, $date: Date)  {
         account {
+        user{
+        id
+        },
             medicationPlan (user_id: $user_id, date: $date) {
                 id
                 upid
@@ -45,6 +48,7 @@ const MedicationPlanBodyWithQuery = graphql(
             if (!data.loading) {
                 return {
                     info: data.account.medicationPlan,
+                    user_id:data.account.user.id,
                     loading: data.loading
                 }
 

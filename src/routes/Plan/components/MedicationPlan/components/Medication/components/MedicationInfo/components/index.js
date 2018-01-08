@@ -52,9 +52,12 @@ export class MedicationInfo extends React.PureComponent {
        this.setState({visible: true});
     }
     render() {
-        const {account} = this.props;
-        //console.log(userId);
-        const userId = 13931;
+        const {loading,account,user_id} = this.props;
+        if(loading){
+            return(<div>Loading</div>)
+        }
+   //     console.log(user_id);
+        // const userId = 24038;
         const {id,drug} = this.props.info;
         //console.log(id);
         const {name, dosage} = drug;
@@ -70,7 +73,7 @@ export class MedicationInfo extends React.PureComponent {
                 </Button>
         }
     >
-        <ModalEdit id={id} userId={userId} />
+        <ModalEdit id={id} userId={user_id} />
     </Modal>
     <Row>
         <Col span={2}>

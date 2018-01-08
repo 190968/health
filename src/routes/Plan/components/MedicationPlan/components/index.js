@@ -60,7 +60,7 @@ export class MedicationPlanBody extends React.Component {
 
     render() {
 
-        const {info, date, loading} = this.props;
+        const {info, date, loading,user_id} = this.props;
         if (loading) {
             return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
@@ -68,7 +68,7 @@ export class MedicationPlanBody extends React.Component {
                 </Card>
             );
         }
-        //console.log(info);
+       // console.log(user_id);
         const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
 
 /*
@@ -91,11 +91,10 @@ export class MedicationPlanBody extends React.Component {
             takeAtTimes.map(medication => {
 
                 let {reports} = medication;
-                //console.log(time_info);
                 //const report = reports && reports[0] || {};
                 let medic_times = {
                     key: medication.id+'drug',
-                    name: <MedicationInfo info={medication} />
+                    name: <MedicationInfo user_id={user_id} info={medication} />
                 }
 
                 const at_times = medication.timesPerHour;
@@ -154,14 +153,14 @@ export class MedicationPlanBody extends React.Component {
                         grid={{ column: 1}}
                         size="small"
                         renderItem={medication => (<List.Item>
-                            <Medication key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
+                            <Medication user_id={user_id} key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
                     />
                     <Divider>Take As Needed</Divider>
                     <List
                         dataSource={takeAsNeeded}
                         grid={{ column: 1}}
                         size="small"
-                        renderItem={medication => (<List.Item><Medication key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
+                        renderItem={medication => (<List.Item><Medication  key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
                     />
             </Card>
             )

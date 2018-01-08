@@ -71,7 +71,7 @@ const MedicationEditWithQuery = graphql(medication,
 const withMutation = graphql(settingUserMutate, {
     props: ({ mutate }) => ({
         updateMedication: input => {
-            console.log(input);
+      //      console.log(input);
             return mutate({
                 variables: {input: {user:input}},
             })},

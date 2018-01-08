@@ -10,9 +10,9 @@ import gql from 'graphql-tag';
 //import { compose } from 'react-apollo';
 
 const trackerPlan = gql`
-query GET_BIOMETRIC_TRACKERPLAN {
+query GET_BIOMETRIC_TRACKERPLAN($user_id: ID!) {
    account {
-  		biometricPlan(user_id: 24038) {
+  		biometricPlan(user_id: $user_id) {
   		trackers {
   		  id,
         measurement {
@@ -47,7 +47,7 @@ const withQuery = graphql(trackerPlan,
     {
         options: (ownProps) => ({
             variables: {
-                user_id: 24038
+                user_id: ownProps.user_id,
             }
         }),
         props: ({ ownProps, data }) => {

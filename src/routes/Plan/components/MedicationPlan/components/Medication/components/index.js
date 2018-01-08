@@ -50,10 +50,10 @@ export class Medication extends React.Component {
 
     render() {
 
-        const {info, date} = this.props;
+        const {info, date,user_id} = this.props;
         const {id, type, drug, isPersonal, quantity, reports, timesPerDay} = info;
         const {name, dosage} = drug;
-        //console.log(info);
+      //  console.log(user_id);
 //console.log(this.props);
         var rows = [];
 
