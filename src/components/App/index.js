@@ -127,7 +127,7 @@ class App extends React.Component {
                 <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
                     <Router history={history}>
-                        <LocaleProvider locale={ruRu}>
+                        <LocaleProvider locale={enUS}>
                             {/*<Modal>*/}
                             {/*<IdleTimer*/}
                                 {/*ref="idleTimer"*/}

@@ -34,7 +34,7 @@ export class CheckComponent extends React.Component {
             return (
                     <div>
 
-                          <Checkbox checked={checked} params={fields}  onChange={this.handleChange}>{fields.text}</Checkbox>
+                        <Checkbox checked={checked} params={fields} onChange={this.handleChange}>{fields.text}</Checkbox>
 
                     </div>
             )

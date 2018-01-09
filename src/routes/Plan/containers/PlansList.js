@@ -12,6 +12,7 @@ const QUERY = gql`
         account {
             plans (user_id: $user_id)  {
                 ...PlanCardInfo
+                upid
             }
         }
     }

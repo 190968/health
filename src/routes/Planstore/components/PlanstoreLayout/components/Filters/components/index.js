@@ -11,7 +11,7 @@ export class FormsComponent extends React.Component {
     render() {
 
         const {loading, filters, onSuccess, activeFilters} = this.props;
- console.log(filters,"filters1");
+        //console.log(filters,"filters1");
         if (loading) {
             console.log(filters,"filters2");
             return  '<div>Loading</div>';

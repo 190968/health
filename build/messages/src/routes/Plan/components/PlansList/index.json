@@ -3,5 +3,13 @@
     "id": "plan.title",
     "description": "Medications for Today",
     "defaultMessage": "TODAY'S ACTIONPLANS"
+  },
+  {
+    "id": "plan.settings",
+    "defaultMessage": "Settings"
+  },
+  {
+    "id": "plan.add",
+    "defaultMessage": "Add Actionplan"
   }
 ]

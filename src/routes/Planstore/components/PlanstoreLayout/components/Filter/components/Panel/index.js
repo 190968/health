@@ -6,6 +6,7 @@ import {Collapse} from 'antd';
 import CheckComponent from '../CheckBox';
 import SliderComponent from '../Slider';
 import ItemComponent from '../Item';
+import {Card } from 'antd';
 const Panel = Collapse.Panel;
 
 export class PanelComponent extends React.Component {
@@ -36,12 +37,10 @@ export class PanelComponent extends React.Component {
             return (
                 //<div>
                //<Panel header="This is panel header 1"  >
-                <div >
-
-                    <h1>{filter.name}</h1>
+                <div style={{marginBottom:10}}><Card title={filter.name}>
                     {row}
+                </Card>
                 </div>
-
                  )
     }
 }
