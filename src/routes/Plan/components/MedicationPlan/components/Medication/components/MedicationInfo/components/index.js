@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactHover from 'react-hover'
-import {Icon ,Modal,Button,Row, Col} from 'antd';
+import {Icon ,Modal,Button,Row, Col, Popconfirm} from 'antd';
 import {
     FormattedMessage,
 } from 'react-intl';
 import { Link } from 'react-router-dom'
-import ModalEdit from '../../MedicationEdit/containers'
+import MedicationEditForm from '../../MedicationEdit/containers'
 import Loadable from "../../../../../../../../../components/Loadable";
 
 /*const AsyncModalEdit = () => {
@@ -39,9 +39,10 @@ export class MedicationInfo extends React.PureComponent {
             visible:false,
         });
     }
-    mouseOut() {
-        //console.log("Mouse out!!!");
-        this.setState({flipped: false});
+    handleDelete = () => {
+        const { deleteMed, info, user_id } = this.props;
+        const {id} = info;
+        return deleteMed(id, user_id);//, !this.state.isClicked, this.toggleCoin);
     }
     mouseOver() {
         //console.log("Mouse over!!!");
@@ -52,7 +53,7 @@ export class MedicationInfo extends React.PureComponent {
        this.setState({visible: true});
     }
     render() {
-        const {loading,account,user_id} = this.props;
+        const {loading,user_id} = this.props;
         if(loading){
             return(<div>Loading</div>)
         }
@@ -73,16 +74,16 @@ export class MedicationInfo extends React.PureComponent {
                 </Button>
         }
     >
-        <ModalEdit id={id} userId={user_id} />
+        <MedicationEditForm id={id} userId={user_id} />
     </Modal>
         <Row>
-            <Col span={2}>
+            <Col span={2} >
                 <Icon type="video-camera" />
             </Col>
 
 
-            <Col span={22} onMouseOver={() => this.mouseOver()}  onMouseOut={() => this.mouseOut()}>
-                         {name} <Icon onClick={()=> this.iconClick()} type="edit" />
+            <Col span={22} >
+                         {name} <Icon onClick={()=> this.iconClick()} type="edit" /> <Popconfirm title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete} okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm>
             </Col>
 
         </Row>

@@ -37,14 +37,14 @@ class MotivatorsForm extends React.Component {
                         loading={loading}
                         grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
                         dataSource={edges}
-                        renderItem={people => (
+                        renderItem={person => (
 
-                            <List.Item key={people.id}>
+                            <List.Item key={person.id}>
                                 {
-                                    people.user.first_name ?
+                                    person.user.first_name ?
                                         <div>
-                                        <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>{people.user.first_name[0]}</Avatar> </span>
-                                        <label>{people.user.first_name}</label>
+                                        <span><Avatar size="large" style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.first_name[0]}</Avatar> </span>
+                                        <div style={{textAlign:'center'}}>{person.user.first_name}</div>
                                     </div> :
                                     <div>
                                         <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>N</Avatar> </span>

@@ -48,6 +48,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         //const input = {value:value,date:date};
         ownProps.trackerReport({report:report, list_id:list_id}, amid)
             .then(({data}) => {
+
+                message.success('Reported');
                 //console.log(data);
                 //const token = data.login.token;
                 //const user = data.login.user;

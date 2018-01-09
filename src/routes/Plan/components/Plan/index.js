@@ -37,8 +37,11 @@ export class Plan extends React.Component {
     let link = '/planstore/plan/'+id;
     const is_user = upid > 0;
     // if the link is personal - then open user link
+      let height = 154;
       if (is_user) {
           link = '/plan/'+upid;
+          description = '';
+          height = 130;
       }
     //return (<div>aaa</div>);
     return (
@@ -46,11 +49,11 @@ export class Plan extends React.Component {
           to={link}
         >
             <Card
-                cover={<img alt={name} height={154} src={img} />}
+                cover={<img alt={name} height={height} src={img} />}
                 hoverable={true}
             >
                 <Card.Meta
-                    title={<div style={{height:26, width:150, overflow:'hidden', wordBreak:'break-word'}}>{name}</div>}
+                    title={<div style={{height:26, maxWidth:150, overflow:'hidden', wordBreak:'break-word'}}>{name}</div>}
                     description={description}
                 />
 

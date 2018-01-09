@@ -67,15 +67,15 @@ const NETWORK_INFO = gql`
                 new_messages,
                 motivators {
                     totalCount,
-                  edges{
-                    id,
-                    user {
-                      id,
-                      first_name,
-                      email
-                    },
-                    email
-                  }
+                    edges{
+                        id,
+                        user {
+                          id,
+                          first_name,
+                          email
+                        },
+                        email
+                    }
                 }
             }
             current_role
@@ -105,7 +105,7 @@ class App extends React.Component {
                 //this.setState({loading: false});
                 if (checkToken) {
                     this.props.store.dispatch(loadUser(user));
-                    console.log(user);
+                    //console.log(user);
                     //this.props.store.dispatch(setCurrentRole(current_role));
                 } else {
                     this.props.store.dispatch(loadUserFAIL(user));

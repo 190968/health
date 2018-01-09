@@ -45,7 +45,7 @@ export class PlansList extends React.Component {
             <List
                 split={false}
                 grid={{gutter: 15, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
-                pagination={pageOpts}
+                pagination={false}
                 dataSource={plans}
                 renderItem={product => (
                     <List.Item>

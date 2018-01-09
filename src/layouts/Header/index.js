@@ -6,7 +6,7 @@ import {HaveModule} from '../../../src/components/Network/index.js'
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 
-import { Row, Col, Menu, Icon, Avatar, Badge } from 'antd';
+import { Tag, Row, Col, Menu, Icon, Avatar, Badge } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const MenuDivider = Menu.Divider;
@@ -93,7 +93,7 @@ class LHeader extends React.Component {
 
 
                 <Row type="flex" justify="space-between" align="middle">
-                    <Col span={5}><img className="logo" style={{height:'50px'}} src={this.props.network.logo} /></Col>
+                    <Col span={5}><img className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /> <Tag color="blue">Patient</Tag></Col>
                     <Col >
                         <Menu
                             onClick={this.handleClick}

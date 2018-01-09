@@ -75,7 +75,7 @@ export class PlanstoreLayout extends React.Component {
                     </Content>
                )
         }
-        const pageOpts = {onChange: this.changePage, total: 50};
+        const pageOpts = {onChange: this.changePage, total: 500, showSizeChanger:true};
         const searchText = 'Search for ActionPlan';//<FormattedMessage id="planstore.search" defaultMessage="Search for ActionPlan" description="Action plan search" />;
         return (
 

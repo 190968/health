@@ -57,33 +57,21 @@ const PlanstorePlanPlaceholder = (
     </div>
 );
 
-
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+    },
+};
 const CollectionCreateForm = Form.create()(
     (props) => {
         const { visible, onCancel, onSubmit, onChangeEnd, checkEndDate, form, plan, end_date } = props;
         const { getFieldDecorator } = form;
-        const formItemLayout = {
-            labelCol: {
-                xs: {span: 24},
-                sm: {span: 8},
-            },
-            wrapperCol: {
-                xs: {span: 24},
-                sm: {span: 16},
-            },
-        };
-        const tailFormItemLayout = {
-            wrapperCol: {
-                xs: {
-                    span: 24,
-                    offset: 0,
-                },
-                sm: {
-                    span: 16,
-                    offset: 8,
-                },
-            },
-        };
+
         const radioStyle = {
             display: 'block',
             height: '30px',
@@ -96,8 +84,8 @@ const CollectionCreateForm = Form.create()(
                 title={'Set your ActionPlan:' + plan.title}
                 visible={visible}
                 onCancel={onCancel} onOk={onSubmit}>
-                <Form layout="vertical">
-                    <Card title="Privacy">
+                <Form >
+                    <Card title="Privacy" type="inner">
                         <FormItem
                             {...formItemLayout}
                             label="Privacy"
@@ -108,11 +96,11 @@ const CollectionCreateForm = Form.create()(
                                 }],
                             })(
                                 <RadioGroup>
-                                    <Popover title="Visible to anyone">
+                                    <Popover content="Visible to anyone">
                                         <RadioButton value="open">Open
                                         </RadioButton>
                                     </Popover>
-                                    <Popover title="Visible to you">
+                                    <Popover content="Visible to you">
                                         <RadioButton value="private">Private</RadioButton>
                                     </Popover>
                                 </RadioGroup>
@@ -120,7 +108,7 @@ const CollectionCreateForm = Form.create()(
                         </FormItem>
                     </Card>
 
-                    <Card title="Scheduling">
+                    <Card title="Scheduling"  type="inner">
                         <FormItem
                             {...formItemLayout}
                             label="Start Date"
@@ -144,9 +132,9 @@ const CollectionCreateForm = Form.create()(
                                 }],
                             })(
                                 <RadioGroup onChange={onChangeEnd}>
-                                    <Radio style={radioStyle} value="0">Never</Radio>
-                                    <Radio style={radioStyle} value="1">
-                                        On {end_date == 1 ?
+                                    <Radio style={radioStyle} value={false}>Never</Radio>
+                                    <Radio style={radioStyle} value={true}>
+                                        On {end_date === true ?
 
                                         getFieldDecorator('end_date', {
                                             rules: [{
@@ -302,7 +290,7 @@ export class PlanstorPlanLayout extends React.Component {
             // console.log(plan);
             //return (<div>Loading...</div>);
             return (
-                <Card>
+                <div>
 
 
                     <Row style={{marginBottom:24}}>
@@ -323,7 +311,7 @@ export class PlanstorPlanLayout extends React.Component {
                            details
                         </Card>
                     </Row>
-                </Card>
+                </div>
             );
         }
 

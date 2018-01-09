@@ -19,7 +19,7 @@ const QUERY = gql`
             
         
          
-            medicationPlan ( date: $date) {
+            medicationPlan (user_id: $user_id) {
                 id
                 upid
                 isPersonal
@@ -43,7 +43,7 @@ const QUERY = gql`
                 textAfter
             }
 
-            biometricPlan ( date: $date) {
+            biometricPlan (user_id: $user_id,  date: $date) {
                 id
                 upid
                 isPersonal
