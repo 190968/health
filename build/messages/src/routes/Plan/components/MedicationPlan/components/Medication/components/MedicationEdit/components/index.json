@@ -1,11 +1,16 @@
 [
   {
-    "id": "user.settings.basic.tdsile",
+    "id": "user.settings.basic.title",
+    "description": "Take",
+    "defaultMessage": "Take"
+  },
+  {
+    "id": "medication.times_per_day",
     "description": "Times per Day",
     "defaultMessage": "Times per Day"
   },
   {
-    "id": "user.settings.basic.tdsitdle",
+    "id": "medication.period",
     "description": "Period",
     "defaultMessage": "Period"
   },

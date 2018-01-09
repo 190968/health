@@ -75,22 +75,25 @@ export class MedicationInfo extends React.PureComponent {
     >
         <ModalEdit id={id} userId={user_id} />
     </Modal>
-    <Row>
-        <Col span={2}>
-            <Icon type="video-camera" />
-        </Col>
+        <Row>
+            <Col span={2}>
+                <Icon type="video-camera" />
+            </Col>
 
 
-        <Col span={9} onMouseOver={() => this.mouseOver()}  onMouseOut={() => this.mouseOut()}>
-                     {name}
-        </Col>
-        <Col span={3}> <Icon  onClick={()=> this.iconClick()} type="edit" /></Col>
-            {/*{this.state.flipped ?*/}
+            <Col span={22} onMouseOver={() => this.mouseOver()}  onMouseOut={() => this.mouseOut()}>
+                         {name} <Icon onClick={()=> this.iconClick()} type="edit" />
+            </Col>
 
-                {/*: null*/}
-            {/*}*/}
-    </Row>
-        <div style={{fontSize:'0.8em'}}><Icon type="camera-o" /><label>{dosage}</label></div>
+        </Row>
+        <Row style={{fontSize:'0.8em'}}>
+            <Col span={2}>
+                <Icon type="camera-o" />
+            </Col>
+            <Col span={22}>
+                {dosage}
+            </Col>
+        </Row>
     </div>
       )
     }

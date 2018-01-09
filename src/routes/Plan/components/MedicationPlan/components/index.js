@@ -4,13 +4,14 @@ import MedicationCoin from './Medication/components/MedicationCoin/containers';
 import MedicationInfo from './Medication/components/MedicationInfo/components';
 import {
     FormattedMessage,
+    FormattedTime,
     FormattedNumber,
     FormattedPlural,
 } from 'react-intl';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 import ReactPlaceholder from 'react-placeholder';
 
-import { Table,Row, Col, List, Divider, Card } from 'antd';
+import { Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
 
 const Placeholder = (
     <div>
@@ -47,6 +48,7 @@ const Placeholder = (
             }]} scroll={{x: 600}} pagination={false} />
         </div>
 );
+
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
         super(props);
@@ -60,22 +62,16 @@ export class MedicationPlanBody extends React.Component {
 
     render() {
 
-        const {info, date, loading,user_id} = this.props;
+        const {info, date, loading, user_id} = this.props;
         if (loading) {
             return (
-                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
-                    <ReactPlaceholder showLoadingAnimation ready={!loading} customPlaceholder={Placeholder}>Loading</ReactPlaceholder>
+                <Card loading={true} title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
+                Loading
                 </Card>
             );
         }
-       // console.log(user_id);
         const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
 
-/*
- dataSource={takeAtTimes}
-                        renderItem={medication => (<List.Item><Medication key={medication.id} info={medication}  /></List.Item>)}
- */
-    //console.log(takeAtTimes.length);
         let columns = [];
         let data = [];
 
@@ -83,10 +79,6 @@ export class MedicationPlanBody extends React.Component {
             columns = [
                 {title: 'Medication', width: 300, dataIndex: 'name', key: 'name', fixed: 'left', className: 'transparent'},
             ];
-            let cols_by_time = {};// columns by time to avoid duplicates
-
-
-
 
             takeAtTimes.map(medication => {
 
@@ -118,7 +110,7 @@ export class MedicationPlanBody extends React.Component {
                     }*/
                     const time = time_info.time;
                     if (!columns.some(item => time_info.time === item.title)) {
-
+                        //console.log(<FormattedTime value={new Date(date+' '+time)} />);
                         columns.push({
                             title: time,
                             dataIndex: 'time_' + time_info.time,
@@ -135,33 +127,37 @@ export class MedicationPlanBody extends React.Component {
                 //return
             });
         }
-            //console.log(columns);
-            //console.log(data);
 
         return (
-                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}>
+                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}  extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small"><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small"><Icon type="right" /></Button></Tooltip></Button.Group>}>
                     {takeAtTimes.length > 0 &&
-                    (   <div><Divider>Take At times</Divider>
-                            <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
-                        </div>
-                    )
-
+                        (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
+                                <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
+                            </div>
+                        )
                     }
-                    <Divider>Take Daily</Divider>
-                    <List
-                        dataSource={takeDaily}
-                        grid={{ column: 1}}
-                        size="small"
-                        renderItem={medication => (<List.Item>
-                            <Medication user_id={user_id} key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
-                    />
-                    <Divider>Take As Needed</Divider>
-                    <List
-                        dataSource={takeAsNeeded}
-                        grid={{ column: 1}}
-                        size="small"
-                        renderItem={medication => (<List.Item><Medication  key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
-                    />
+                    {takeDaily.length > 0 &&
+                        (<div>
+                        <Divider><FormattedMessage id="plan.medication.daily" defaultMessage="Take Daily" /></Divider>
+                        <List
+                            dataSource={takeDaily}
+                            grid={{ column: 1}}
+                            size="small"
+                            renderItem={medication => (<List.Item>
+                                <Medication user_id={user_id} key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
+                        /></div>)
+                    }
+                    {takeDaily.length > 0 &&
+                    (<div>
+                        <Divider><FormattedMessage id="plan.medication.as_needed" defaultMessage="Take As Needed" /></Divider>
+                        <List
+                            dataSource={takeAsNeeded}
+                            grid={{ column: 1}}
+                            size="small"
+                            renderItem={medication => (<List.Item><Medication  key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
+                        />
+                        </div>)
+                    }
             </Card>
             )
     }

@@ -59,7 +59,6 @@ const MedicationEditWithQuery = graphql(medication,
                     info: data.account.medicationPlan,
                     loading: data.loading
                 }
-
             }
              else {
                 return {loading: data.loading}

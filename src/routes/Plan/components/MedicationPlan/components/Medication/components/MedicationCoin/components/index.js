@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 
 export class MedicationCoin extends React.Component {
 
@@ -16,8 +16,10 @@ export class MedicationCoin extends React.Component {
         //console.log(this.state.isClicked);
         if (this.state.isClicked) {
             this.setState({isClicked:false});
+            message.success('Untaken');
         } else {
             this.setState({isClicked:true});
+            message.success('Taken');
         }
 
     }

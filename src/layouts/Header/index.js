@@ -128,7 +128,7 @@ class LHeader extends React.Component {
 
                                 {user_menu_items.map((item) => {
                                     if (item.length == 1) {
-                                        return (<Menu.Divider />)
+                                        return (<Menu.Divider key={'div'} />)
                                     }
                                     return (
                                         <Menu.Item key={item.toString()}>
