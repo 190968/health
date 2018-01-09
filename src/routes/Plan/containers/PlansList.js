@@ -8,14 +8,14 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const QUERY = gql`    
-    query GET_PLANSTORE_PLANS ($filters: [String], $page: Int!, $limit: Int) {
-        planstore {
-            plans (filters: $filters, page: $page, limit: $limit) {
-               ...PlanCardInfo
+    query GET_USER_PLANS ($user_id: ID)  {
+        account {
+            plans (user_id: $user_id)  {
+                ...PlanCardInfo
             }
         }
     }
-  ${Plan.fragments.plan}
+    ${Plan.fragments.plan}
 `;
 
 const PLANS_PER_PAGE = 20;
@@ -27,11 +27,10 @@ const PlansListWithQuery = graphql(
     //name: 'PlanstorePlans',
     options: (ownProps) => ({
       variables: {
-        filters:ownProps.filters,
-        page: ownProps.page,
-        limit: PLANS_PER_PAGE,
+          user_id:ownProps.user_id,
+          //date:ownProps.date
       },
-        fetchPolicy: 'network-only'
+       // fetchPolicy: 'network-only'
 
     }),
     props: ({ ownProps, data }) => {
@@ -39,7 +38,7 @@ const PlansListWithQuery = graphql(
         //console.log(ownProps);
         //console.log(data);
         return {
-          plans: data.planstore.plans,
+          plans: data.account.plans,
           //modules: data.network.modules,
           loading: data.loading,
           loadMoreEntries() {
@@ -85,27 +84,13 @@ const PlansListWithQuery = graphql(
 
 const mapStateToProps = (state) => {
 
-  var activeFilters = state.planstore.get('activeFilters').toJS();
-  //console.log(activeFilters);
-  var plans = state.planstore.get('plans').toJS();
-  var page = state.planstore.get('page')
-  //console.log(plans);
+
   return {
-    plans: plans,
-    filters: activeFilters,
-    page: page,
-    // view store:
-    //currentView:  state.views.currentView,
-    // userAuth:
-   // filters: state.planstore.get('filters').toJS(),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  //console.log(1);
   return {
-    /*increment: (info) => {dispatch(increment(info))},
-    doubleAsync*/
   }
 };
 

@@ -24,7 +24,8 @@ class MotivatorsForm extends React.Component {
 
 
         if (loading) {
-            return  '<div>Loading</div>';
+            return  <Card loading title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS" description="MY MOTIVATORS" />}>
+                                 Loading</Card>;
         }
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
