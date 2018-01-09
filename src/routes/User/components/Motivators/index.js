@@ -28,7 +28,7 @@ class MotivatorsForm extends React.Component {
         }
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
-       // console.log(edges,"------------",totalCount);
+
         return (
                 <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS" description="MY MOTIVATORS" />}>
                     <List
@@ -37,11 +37,20 @@ class MotivatorsForm extends React.Component {
                         grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
                         dataSource={edges}
                         renderItem={people => (
+
                             <List.Item key={people.id}>
-                                <div>
-                                <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>{people.user.first_name[0]}</Avatar> </span>
-                                    <label>{people.user.first_name}</label>
-                                </div>
+                                {
+                                    people.user.first_name ?
+                                        <div>
+                                        <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>{people.user.first_name[0]}</Avatar> </span>
+                                        <label>{people.user.first_name}</label>
+                                    </div> :
+                                    <div>
+                                        <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
+                                        <label>No name</label>
+                                    </div>
+                                }
+
                             </List.Item>
                         )}
                     />
