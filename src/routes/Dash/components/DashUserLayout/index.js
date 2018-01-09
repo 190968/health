@@ -4,6 +4,9 @@ import ReactPlaceholder from 'react-placeholder';
 import PlanWidget from '../../../Plan/components/Plan';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
 import BiometricPlan from 'routes/Plan/components/BiometricPlan/containers';
+import Motivators from '../../../User/containers/motivatorsContainer';
+import CareTeam from '../../../User/containers/careTeamContainer';
+
 import { Row, Col, Calendar, List,Card } from 'antd';
 import {
     FormattedMessage,
@@ -33,7 +36,7 @@ export class DashUserLayout extends React.Component {
             plans, loading, medicationPlan, date,user_id
         } = this.props;
 
-      console.log(this.props);
+      //console.log(user);
         /*if (loading) {
             //return (<div>Loading...</div>);
             return (
@@ -69,9 +72,16 @@ export class DashUserLayout extends React.Component {
                <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} /></div>
                </Col>
                <Col xs={24} md={8} lg={6}>
-                   <Card>
-                       <Calendar fullscreen={false}  />
-                   </Card>
+                   <Motivators />
+
+                   <div style={{marginTop:10}}>
+                       {/*<CareTeam />*/}
+                   </div>
+                       <div style={{marginTop:10}}>
+                         <Card>
+                             <Calendar fullscreen={false}  />
+                         </Card>
+                   </div>
                </Col>
            </Row>
             // <Form onSubmit={this.handleSubmit}>

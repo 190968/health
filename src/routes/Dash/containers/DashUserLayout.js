@@ -15,7 +15,9 @@ const QUERY = gql`
             plans (user_id: $user_id)  {
                 ...PlanCardInfo
             }
-
+            
+        
+         
             medicationPlan ( date: $date) {
                 id
                 upid
@@ -82,7 +84,7 @@ const DashLayoutWithQuery = graphql(
                 return {
                     plans: data.account.plans,
                     medicationPlan: data.account.medicationPlan,
-                    loading: data.loading
+                    loading: data.loading,
                 }
 
             } else {

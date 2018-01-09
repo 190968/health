@@ -64,7 +64,19 @@ const NETWORK_INFO = gql`
                 token,
                 phoneConfirmed,
                 new_notifications,
-                new_messages
+                new_messages,
+                motivators {
+                    totalCount,
+                  edges{
+                    id,
+                    user {
+                      id,
+                      first_name,
+                      email
+                    },
+                    email
+                  }
+                }
             }
             current_role
 
@@ -93,7 +105,7 @@ class App extends React.Component {
                 //this.setState({loading: false});
                 if (checkToken) {
                     this.props.store.dispatch(loadUser(user));
-                    //console.log( this.props.store);
+                    console.log(user);
                     //this.props.store.dispatch(setCurrentRole(current_role));
                 } else {
                     this.props.store.dispatch(loadUserFAIL(user));
