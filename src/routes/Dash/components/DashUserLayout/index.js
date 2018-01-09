@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactPlaceholder from 'react-placeholder';
 import PlanWidget from '../../../Plan/components/Plan';
+import PlansList from 'routes/Plan/containers/PlansList';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
 import BiometricPlan from 'routes/Plan/components/BiometricPlan/containers';
 import Motivators from '../../../User/containers/motivatorsContainer';
@@ -50,29 +51,16 @@ export class DashUserLayout extends React.Component {
         }*/
         //onsole.log("Logkout");
         //console.log(date);
-        const pageOpts = { total: 4, hideOnSinglePage:true};
+
         return (
            <Row gutter={15}>
                <Col xs={24} md={16} lg={18}>
-                   <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="TODAY'S ACTIONPLANS" description="Medications for Today" />}>
-                   <List
-                       split={false}
-                       loading={loading}
-                       grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
-                       pagination={pageOpts}
-                       dataSource={plans}
-                       renderItem={product => (
-                           <List.Item key={product.id}>
-                               <PlanWidget info={product} key={product.id}/>
-                           </List.Item>
-                       )}
-                   />
-                       </Card>
-                   <div style={{marginTop:10}}><MedicationPlan loading={loading} date={date} user_id={user_id} /></div>
-               <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} user_id={user_id} /></div>
+                    <PlansList loading={loading} date={date} user_id={user_id} />
+                    <div style={{marginTop:10}}><MedicationPlan loading={loading} date={date} user_id={user_id} /></div>
+                    <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} user_id={user_id} /></div>
                </Col>
                <Col xs={24} md={8} lg={6}>
-                   <Motivators />
+                   <Motivators user_id={user_id} />
 
                    <div style={{marginTop:10}}>
                        {/*<CareTeam />*/}

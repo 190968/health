@@ -302,24 +302,28 @@ export class PlanstorPlanLayout extends React.Component {
             // console.log(plan);
             //return (<div>Loading...</div>);
             return (
-                <div>
-                    <div className="box">
-                        <div className="box__body"><ReactPlaceholder ready={!loading} customPlaceholder={PlanstorePlanPlaceholder}>Loading</ReactPlaceholder>
-                        </div>
-                    </div>
-                    <div className="box">
-                        <div className="box__header"></div>
-                        <div className="box__body">
-                            <TextBlock rows={3} color="#f2f2f2"/>
-                        </div>
-                    </div>
-                    <div className="box">
-                        <div className="box__header"></div>
-                        <div className="box__body">
-                            <TextBlock rows={3} color="#f2f2f2"/>
-                        </div>
-                    </div>
-                </div>
+                <Card>
+
+
+                    <Row style={{marginBottom:24}}>
+                        <Card loading>
+                           aa
+                        </Card>
+                    </Row>
+
+                    <Row style={{marginBottom:24}}>
+                        <Card loading title="Description">
+
+                            description
+                        </Card>
+                    </Row>
+                    <Row>
+                        <Card loading title="Plan Details">
+
+                           details
+                        </Card>
+                    </Row>
+                </Card>
             );
         }
 
@@ -343,7 +347,7 @@ export class PlanstorPlanLayout extends React.Component {
         return (<ReactPlaceholder showLoadingAnimation type='media' rows={4} ready={!loading}>
             <div>
 
-                    <Row>
+                    <Row style={{marginBottom:24}}>
                         <Card>
                             <Row>
                             <Col xs={24} md={8} span={8}>
@@ -372,7 +376,7 @@ export class PlanstorPlanLayout extends React.Component {
 
 
 
-                <Row>
+                <Row style={{marginBottom:24}}>
                         <Card title="Description">
 
                                 {plan.description}

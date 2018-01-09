@@ -20,11 +20,11 @@ import gql from 'graphql-tag';
 
 
 const motivators = gql`
-   query NETWORK_INFO {
+   query GET_MOTIVATORS {
         account {
             user {
             motivators {
-                    totalCount,
+                  totalCount,
                   edges{
                     id,
                     user {
@@ -41,13 +41,11 @@ const motivators = gql`
 
 const withMutation = graphql(motivators, {
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
                 info: data.account.user,
                 loading: data.loading
             }
-
         }
         else {
             return {loading: data.loading}

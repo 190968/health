@@ -120,7 +120,7 @@ class LHeader extends React.Component {
                                 <NavLink exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></NavLink>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
-                                <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="notification" /></Badge></NavLink>
+                                <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></NavLink>
                             </Menu.Item>
 
 

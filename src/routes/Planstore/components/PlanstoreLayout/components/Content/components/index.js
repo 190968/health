@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
-import {Layout,Button, List,Collapse} from 'antd';
+import {Layout,Input, List, Card,Collapse} from 'antd';
 import {
     FormattedMessage,
     FormattedNumber,
@@ -12,8 +12,7 @@ import {
 } from 'react-intl';
 
 import PlanWidget from '../../../../../../Plan/components/Plan';
-const { Content, Sider } = Layout;
-const Panel = Collapse.Panel;
+const { Content } = Layout;
 
 
 
@@ -39,10 +38,8 @@ export class PlanstoreLayout extends React.Component {
         const planPlaceholder = [];
         for(var i=0; i<8; i++) {
             planPlaceholder.push(  {
-                item:   <div style={{width: 200, height: 100 }} className='my-awesome-placeholder'>
-                    <RectShape color='#E0E0E0'  style={{width: 200, height: 100}}/>
-                    <RectShape color='white'  style={{width: 200, height: 50}}/>
-                </div>
+                item:   <Card loading >aaa
+                </Card>
             })
         }
 
@@ -55,8 +52,19 @@ export class PlanstoreLayout extends React.Component {
             return (
 
                     <Content style={{padding: '0 24px', minHeight: 280}}>
+                        <div style={{marginBottom:24}}>
+                            <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
+                                <Input.Search
+                                    placeholder={searchText}
+                                    onSearch={value => console.log(value)}
+
+                                    size="large"
+                                />
+                            </Card>
+                        </div>
+
                         <List
-                            grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                            grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
                             dataSource={planPlaceholder}
                             renderItem={item => (
                                 <List.Item>
@@ -68,14 +76,26 @@ export class PlanstoreLayout extends React.Component {
                )
         }
         const pageOpts = {onChange: this.changePage, total: 50};
+        const searchText = 'Search for ActionPlan';//<FormattedMessage id="planstore.search" defaultMessage="Search for ActionPlan" description="Action plan search" />;
         return (
 
                 <Content style={{padding: '0 24px', minHeight: 280}}>
+                    <div style={{marginBottom:24}}>
+                    <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
+                        <Input.Search
+                            placeholder={searchText}
+                            onSearch={value => console.log(value)}
+
+                            size="large"
+                        />
+                    </Card>
+                    </div>
+
                     <List
                         split={false}
-                        header={<FormattedMessage id="planstore.content.header" defaultMessage="Action plans" description="Action plan" />}
+
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                        grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
                         pagination={pageOpts}
                         dataSource={plans}
                         renderItem={product => (

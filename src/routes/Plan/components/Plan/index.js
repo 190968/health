@@ -12,6 +12,7 @@ export class Plan extends React.Component {
         fragment PlanCardInfo on Plan {
             id,
             title,
+            description,
             thumb {
                 small,
                 medium,
@@ -28,12 +29,11 @@ export class Plan extends React.Component {
 
   render() {
     var name = this.props.info.title;
+    var description = this.props.info.description;
     var img = this.props.info.thumb.small;
     var id = this.props.info.id;
     var upid = this.props.info.upid || 0;
-    var divStyle = {
-      backgroundImage: 'url(' + img + ')'
-    }
+
     let link = '/planstore/plan/'+id;
     const is_user = upid > 0;
     // if the link is personal - then open user link
@@ -44,13 +44,16 @@ export class Plan extends React.Component {
     return (
         <Link
           to={link}
-          style={{ minWidth: 200 }}
-          className='link dim grow mw4 bg-white ma2 pa3 shadow-1'
         >
             <Card
-                cover={<img alt="example" src={img} />}
+                cover={<img alt={name} height={154} src={img} />}
+                hoverable={true}
             >
-                <div style={{height:26, overflow:'hidden', wordBreak:'break-word'}}>{name}</div>
+                <Card.Meta
+                    title={<div style={{height:26, width:150, overflow:'hidden', wordBreak:'break-word'}}>{name}</div>}
+                    description={description}
+                />
+
             </Card>
         </Link>
     );

@@ -104,7 +104,7 @@ export class PlanstoreLayout extends React.Component {
 
         return (
            <div>
-                <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
+                <Sider width={200} style={{background: 'transparent' }} breakpoint="xs"
                        collapsedWidth="0">
                     <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
                     <Button onClick={this.updateZeroFilters}>{<FormattedMessage id="planstore.planstorelayout.cleanfilter" defaultMessage="Clean filter" description="Clean filter" />}</Button>
