@@ -29,16 +29,18 @@ const radioStyle = {
     height: '30px',
     lineHeight: '30px',
 };
-
+let  finishTake = [];
+var total= 0;
 class EditMedicationForm extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             //showHours : null,
             //startDate: null,
             //endDate: null,
-            //select_value:1,
+            //select_value:null,
             total:null
         };
     };
@@ -95,9 +97,9 @@ class EditMedicationForm extends React.Component {
         return endValue.valueOf() <= startValue.valueOf();
     }
     onSelect = (e) => {
-        /*this.setState({
+        this.setState({
             select_value: e
-        });*/
+        });
         //console.log("onSelect");
     }
     onAdvance = (e) => {
@@ -106,10 +108,10 @@ class EditMedicationForm extends React.Component {
         });
     }
     onTotal = (e) => {
-        console.log(e," -- onTotal");
-        this.setState({
-            total: Number(this.state.total)+Number(e)
-        });
+let notPermanent = 0;
+        notPermanent += Number(e)
+       total = notPermanent;
+        console.log(e," -- onTotal",total);
     }
 
     onStartChange = (value) => {
@@ -119,6 +121,7 @@ class EditMedicationForm extends React.Component {
     onEndChange = (value) => {
         this.onChangeDate('endDate', value);
     }
+
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
 
@@ -128,16 +131,92 @@ class EditMedicationForm extends React.Component {
             return  '<div>Loading</div>';
         }
 
-        const {type, timesPerDay, timesPerHour, startDate, endDate, purpose, sideEffects, directions} = info.medication;
+        let {type, timesPerDay, timesPerHour, startDate, endDate, purpose, sideEffects, directions} = info.medication;
 
         const dateFormat = 'YYYY-MM-DD';
-        let quantity = 0;
-        let qwer = 0;
+        let col = 0;
+
+      if(timesPerDay==0){
+          timesPerDay = 1;
+      }
+
         const Take = [];
+        const dopTake = [];
+        for(let i=0;i<this.state.select_value-timesPerHour.length;i++){
+
+            dopTake.push({
+                    item: <div >
+                        <Col span={10}>
+                            <FormItem
+                                {...formItemLayout}
+                            >
+                                {getFieldDecorator('takeAt'+col+i, {
+                                    //initialValue: moment(timesPerHour[finishTake.length-1].time, format).add(1,'hours')
+                                    initialValue: moment('00:00:00', format)
+                                })(
+                                    <TimePicker format={format} minuteStep={30} use12Hours={true} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col offset={1} span={6}>
+                            <FormItem
+                                {...formItemLayout}
+                            >
+
+                                {getFieldDecorator('quantityTake'+col, {
+                                    initialValue: 1
+                                })(
+                                    <Select onChange={this.onTotal} style={{width: 80}}>
+                                        <Option value="0.25">¼</Option>
+                                        <Option value="0.50">½</Option>
+                                        <Option value="0.75">¾</Option>
+                                        <Option value="1">1</Option>
+                                        <Option value="1.25">1¼</Option>
+                                        <Option value="1.50">1½</Option>
+                                        <Option value="1.75">1¾</Option>
+                                        <Option value="2">2</Option>
+                                        <Option value="2.25">2¼</Option>
+                                        <Option value="2.50">2½</Option>
+                                        <Option value="2.75">2¾</Option>
+                                        <Option value="3">3</Option>
+                                        <Option value="3.25">3¼</Option>
+                                        <Option value="3.50">3½</Option>
+                                        <Option value="3.75">3¾</Option>
+                                        <Option value="4">4</Option>
+                                        <Option value="4.25">4¼</Option>
+                                        <Option value="4.50">4½</Option>
+                                        <Option value="4.75">4¾</Option>
+                                        <Option value="5">5</Option>
+                                        <Option value="5.25">5¼</Option>
+                                        <Option value="5.50">5½</Option>
+                                        <Option value="5.75">5¾</Option>
+                                        <Option value="6">6</Option>
+                                        <Option value="6.25">6¼</Option>
+                                        <Option value="6.50">6½</Option>
+                                        <Option value="6.75">6¾</Option>
+                                        <Option value="7">7</Option>
+                                        <Option value="7.25">7¼</Option>
+                                        <Option value="7.50">7½</Option>
+                                        <Option value="7.75">7¾</Option>
+                                        <Option value="8">8</Option>
+                                        <Option value="8.25">8¼</Option>
+                                        <Option value="8.50">8½</Option>
+                                        <Option value="8.75">8¾</Option>
+                                        <Option value="9">9</Option>
+                                        <Option value="9.25">9¼</Option>
+                                        <Option value="9.50">9½</Option>
+                                        <Option value="9.75">9¾</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                    </div>
+                })
+        }
+
         if(timesPerHour != null) {
             timesPerHour.forEach((item)=> {
-                quantity ++;
-                qwer += item.quantity;
+                col ++;
                 Take.push({
                     item: <div >
                         <Col span={10}>
@@ -145,7 +224,7 @@ class EditMedicationForm extends React.Component {
                             {...formItemLayout}
                         >
 
-                            {getFieldDecorator('takeAt', {
+                            {getFieldDecorator('takeAt'+col, {
                                 initialValue: moment(item.time, format)
                             })(
                                 <TimePicker format={format} minuteStep={30} use12Hours={true} />
@@ -157,7 +236,7 @@ class EditMedicationForm extends React.Component {
                             {...formItemLayout}
                         >
 
-                            {getFieldDecorator('tak5eAt'+quantity, {
+                            {getFieldDecorator('quantityTake'+col, {
                                 initialValue: item.quantity
                             })(
                                 <Select onChange={this.onTotal} style={{width: 80}}>
@@ -208,7 +287,13 @@ class EditMedicationForm extends React.Component {
                     </div>
                 })
             })
+
         }
+      finishTake = Take.concat(dopTake);
+        // finishTake.forEach((item)=> {
+        //     //quantity += item._owner.memoizedProps.info.medication.timesPerHour[0].quantity;
+        //     console.log(item.item._owner.memoizedProps.info);
+        // })
 
         return (
             <Form>
@@ -221,7 +306,7 @@ class EditMedicationForm extends React.Component {
                     initialValue: type
                  })(
 
-                 <RadioGroup onChange={this.onChange} >
+                 <RadioGroup onChange={this.onTotal} >
                      <Radio style={radioStyle} value="at_times">At specific times</Radio>
                      <Radio style={radioStyle} value="along_day">Along the day</Radio>
                      <Radio style={radioStyle} value="as_needed">As needed</Radio>
@@ -257,7 +342,7 @@ class EditMedicationForm extends React.Component {
                             </Row>
                             <List
                                 grid={{gutter: 5, md: 1}}
-                                dataSource={Take}
+                                dataSource={finishTake}
                                 renderItem={item => (
                                     <List.Item>
                                         {item.item}
@@ -266,19 +351,25 @@ class EditMedicationForm extends React.Component {
                             />
 
                             <Col offset={7} span={5}><label>Total</label></Col>
-                            <Col span={6}><label>{qwer}</label></Col>
+                            <Col span={6}><label>{total}</label></Col>
                     </FormItem> :
+
+               <div>
+                   <Row>
+                       <Col offset={6}  span={10}><label>Take </label></Col>
+                       <Col offset={1} span={6}><label>Quantity</label></Col>
+                   </Row>
                     <Row>
+
                         <Col offset={6} span={10}>
                             <FormItem
                                 {...formItemLayout}
-                                label={'Take'}
-                                labelCol={{span: 3, offset: 12}}
                             >
+
                                     {getFieldDecorator('timesPerDay', {
                                         initialValue:  timesPerDay
                                     })(
-                                        <Select onSelect={this.onSelect} style={{ width: 200 }}>
+                                        <Select onSelect={this.onSelect}  style={{ width: 200 }} >
                                             <Option value="1">1 Time</Option>
                                             <Option value="2">2 Times</Option>
                                             <Option value="3">3 Times</Option>
@@ -293,7 +384,7 @@ class EditMedicationForm extends React.Component {
                             {...formItemLayout}
                         >
                                 {getFieldDecorator('quantity', {
-                                    initialValue: quantity
+                                    initialValue: col
                                 })(
                                     <Select onChange={this.onTotal} style={{ width: 80 }} >
                                         <Option value="0.25">¼</Option>
@@ -337,60 +428,57 @@ class EditMedicationForm extends React.Component {
                                         <Option value="9.75">9¾</Option>
                                     </Select>
                                 )}
+
                             </FormItem>
+
                         </Col>
-                    </Row>}
+                        <Col offset={14} span={3}><label>Total</label></Col>
+                        <Col span={2}><label>jk</label></Col>
+                    </Row>
+                   </div>
+                    }
 
 
-
-
-
-
-
-
-
-
-
-
-                    <Row>
-                    <Col span={11}>
+                { <Row>
+                    <Col offset={3} span={12}>
                         <FormItem
-                            label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period" />}
+                            {...formItemLayout}
+                            label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period"/>}
                         >
-                        {getFieldDecorator('startDate', {
+                            {getFieldDecorator('startDate', {
                                 initialValue: moment(startDate, dateFormat),
                             })(
-                            <DatePicker
-                                disabledDate={this.disabledStartDate}
-                                format={dateFormat}
-                                placeholder="Start"
-                            />
+                                <DatePicker
+                                    disabledDate={this.disabledStartDate}
+                                    format={dateFormat}
+                                    placeholder="Start"
+                                />
                             )}
-                    </FormItem>
-
+                        </FormItem>
                     </Col>
-                    <Col span={2}>
-                        <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+
+                    <Col span={1}>
+                        <span style={{ width: '100%'}}>
                           -
                         </span>
                     </Col>
-                    <Col span={11}>
+                    <Col span={8}>
                         <FormItem
                         >
                             {getFieldDecorator('endDate', {
                                 initialValue: moment(endDate, dateFormat),
                             })(
-                            <DatePicker
-                                disabledDate={this.disabledEndDate}
-                                format={dateFormat}
-                                placeholder="End"
-                            />
+                                <DatePicker
+                                    disabledDate={this.disabledEndDate}
+                                    format={dateFormat}
+                                    placeholder="End"
+                                />
                             )}
                         </FormItem>
-                            </Col>
-                    </Row>
+                    </Col>
 
-
+                </Row>
+                }
 
 
 
