@@ -64,12 +64,12 @@ export class DashUserLayout extends React.Component {
                        closeText={<Icon type="close" />}
                    />
                </Col>
-               <Col xs={24} md={16} lg={18}>
+               <Col xs={24} md={14} lg={15} xl={17}>
                    <PlansList loading={loading} date={date} user_id={user_id} />
                    <MedicationPlan loading={loading} date={date} user_id={user_id} />
                    <BiometricPlan loading={loading} date={date} user_id={user_id} />
                </Col>
-               <Col xs={24} md={8} lg={6}>
+               <Col xs={24} md={10} lg={9} xl={7}>
 
 
 

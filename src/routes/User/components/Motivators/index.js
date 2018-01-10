@@ -2,7 +2,7 @@
  * Created by Pavel on 08.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
     FormattedMessage,
     FormattedNumber,
@@ -35,19 +35,19 @@ class MotivatorsForm extends React.Component {
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                        grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
                         dataSource={edges}
                         renderItem={person => (
 
                             <List.Item key={person.id}>
                                 {
                                     person.user.first_name ?
-                                        <div>
-                                        <span><Avatar size="large" style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.first_name[0]}</Avatar> </span>
-                                        <div style={{textAlign:'center'}}>{person.user.first_name}</div>
-                                    </div> :
+                                        <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.first_name[0]}</Avatar>
+                                        <span style={{textAlign:'center','marginLeft':10}}>{person.user.first_name}</span>
+                                    </Link> :
                                     <div>
-                                        <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
+                                        <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
                                         <label>No name</label>
                                     </div>
                                 }

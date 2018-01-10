@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card } from 'antd';
+import { Card, Tooltip } from 'antd';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
+import Truncate from 'react-truncate';
 //import PropType from 'prop-types'
 
 import './styles.scss'
@@ -29,7 +30,7 @@ export class Plan extends React.Component {
 
   render() {
     var name = this.props.info.title;
-    var description = this.props.info.description;
+    let description = this.props.info.description;
     var img = this.props.info.thumb.small;
     var id = this.props.info.id;
     var upid = this.props.info.upid || 0;
@@ -38,12 +39,14 @@ export class Plan extends React.Component {
     const is_user = upid > 0;
     // if the link is personal - then open user link
       let height = 154;
+      let limit = 25;
       if (is_user) {
           link = '/plan/'+upid;
-          description = '';
-          height = 130;
+          //description = '';
+          height = 120;
+          limit = 15;
       }
-    //return (<div>aaa</div>);
+      //description = '//return (<div>aaa</div>); //handleCancel: React.PropTypes.func.isRequired';
     return (
         <Link
           to={link}
@@ -53,8 +56,8 @@ export class Plan extends React.Component {
                 hoverable={true}
             >
                 <Card.Meta
-                    title={<div style={{height:26, maxWidth:150, overflow:'hidden', wordBreak:'break-word'}}>{name}</div>}
-                    description={description}
+                    title={<Tooltip title={name}>{name.substring(0, limit)}</Tooltip>}
+                    description={<Truncate lines={1}>{description}</Truncate>}
                 />
 
             </Card>
