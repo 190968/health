@@ -12,7 +12,7 @@ import LayoutHeader from './Header';
 
 
 // add Routes
-import {asyncDash,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+import {asyncDash,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity,asyncCommynityID/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 
 import PrivateRoute from '../routes/privateRoute';
 
@@ -60,6 +60,8 @@ export const Core = ({loading, user, store, location}) =>  {
 
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
+                <PrivateRoute exact path="/community" component={asyncCommynity(store)} />
+                <PrivateRoute  path="/community/:id" component={asyncCommynityID(store)} />
 
             </Content>
             <Footer>
