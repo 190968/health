@@ -10,7 +10,7 @@ import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux'
 import gql from 'graphql-tag';
 //import logo from './logo.svg';
-//import './App.css';
+//
 //core
 import Core from '../../layouts'
 import {loadNetwork, setCurrentRole} from 'routes/Network/modules/network'

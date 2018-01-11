@@ -210,7 +210,7 @@ export class PlanstorPlanLayout extends React.Component {
             const communities = categories.map(el => {
                 return <Link to={'/community/'+el.id} key={el.id}>{el.name}</Link>;
             });
-            details.push(['Communities', intersperse(communities, ', ')]);
+            details.push(['CommunitiesDiscussions', intersperse(communities, ', ')]);
         }
         //console.log(elements);
         if (elements.length > 0) {
