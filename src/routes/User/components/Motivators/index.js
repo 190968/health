@@ -2,7 +2,7 @@
  * Created by Pavel on 08.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
     FormattedMessage,
     FormattedNumber,
@@ -35,19 +35,19 @@ class MotivatorsForm extends React.Component {
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                        grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
                         dataSource={edges}
-                        renderItem={people => (
+                        renderItem={person => (
 
-                            <List.Item key={people.id}>
+                            <List.Item key={person.id}>
                                 {
-                                    people.user.first_name ?
-                                        <div>
-                                        <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>{people.user.first_name[0]}</Avatar> </span>
-                                        <label>{people.user.first_name}</label>
-                                    </div> :
+                                    person.user.first_name ?
+                                        <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.first_name[0]}</Avatar>
+                                        <span style={{textAlign:'center','marginLeft':10}}>{person.user.first_name}</span>
+                                    </Link> :
                                     <div>
-                                        <span><Avatar size="large" style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
+                                        <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
                                         <label>No name</label>
                                     </div>
                                 }

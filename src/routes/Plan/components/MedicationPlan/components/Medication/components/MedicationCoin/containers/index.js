@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { compose } from 'react-apollo';
 
 import MedicationCoin from '../components'
 import { message } from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import LoginForm from "../../../../../../../../User/components/Login";
 
 
 const reportOnMedication = gql`
@@ -16,6 +18,7 @@ const reportOnMedication = gql`
 `;
 
 
+
 const withMutation = graphql(reportOnMedication, {
     props: ({ mutate }) => ({
         medicationReport: (input, id) => {
@@ -23,9 +26,9 @@ const withMutation = graphql(reportOnMedication, {
                 variables: { input: input, id: id },
             })
         },
+
     }),
 });
-
 
 const mapStateToProps = (state) => {
     return {
@@ -33,6 +36,24 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    /**
+     * Delete Medication
+     */
+    deleteMed: (med_id) => {
+        // delete medication
+        ownProps.medicationDelete(med_id)
+            .then(({data}) => {
+                //const token = data.login.token;
+                //const user = data.login.user;
+                //console.log(data);
+                //ownProps.report.id = 0;
+
+                //toggleCoin();
+
+            }).catch((error) => {
+            message.error(error.message);
+        });
+    },
     onClick: (med_id, report, is_taken, toggleCoin) => {
         /*if (!is_taken) {
             report = {};
@@ -60,10 +81,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 
 });
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MedicationCoin));
 
-
-
+export default withMutation(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MedicationCoin));
 
 
 

@@ -14,6 +14,9 @@ module.exports = function override(config, env) {
                  "@text-color-secondary-dark": "#565a5c",
                  "@layout-header-background": "#fff",
                  "@layout-footer-background": "#303030",
+                 // avatar
+                 "@avatar-size-lg": '60px',
+                 //"@avatar-font-size-lg": '40px',
              },
     })(config, env);
     // do stuff with the webpack config...

@@ -7,12 +7,14 @@ import { connect } from 'react-redux'
 import MedicationEditForm from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import MedicationCoin from "../../MedicationCoin/components";
 //import { compose } from 'react-apollo';
 
 const medication = gql`
 query GET_MEDICATION($user_id: ID!, $id: ID!) {
    account {
   		medicationPlan(user_id: $user_id) {
+  		id
             medication(id: $id) {
                 id,
                 startDate,
@@ -76,6 +78,7 @@ const withMutation = graphql(settingUserMutate, {
             })},
     }),
 });
+
 const mapStateToProps = (state) => {
 
     return {

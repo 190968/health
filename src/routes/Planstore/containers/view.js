@@ -12,12 +12,10 @@ import gql from 'graphql-tag';
 import Plan from '../../Plan/components/Plan';
 
 
-const getPlanMutate = gql`
-    mutation getPlan( $input:RegisterInput!){
-        register(input:$input) {
-            user {
-                id
-            }
+const getPlanMutation = gql`
+    mutation getPlan($id: ID!, $input:UserPlanInput!){
+        getPlan(id:$id, input:$input) {
+            id
         }
     }
 `;
@@ -88,25 +86,31 @@ const mapStateToProps = (state) => {
         // view store:
         //currentView:  state.views.currentView,
         // userAuth:
-        id:0,
+        //id:0,
         //plan: state.plan,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        //increment: (info) => {dispatch(increment(info))},
         getPlan: (props, client) => {
             //dispatch(loginUserRequest({ email }));
             //console.log(props);
             //const{first_name,last_name,birthday,gender,email, password,password_repeat,prefix,phone} = props;
             console.log(props);
+            const {start_date, privacy, end_date_set} = props;
+            const startDate = start_date.format("YYYY-MM-DD");
+            const endDate = end_date_set ? props.end_date.format("YYYY-MM-DD") : '';
             //var birth = birthday.substring(0,10);
             //console.log(birth);
+            const input = {start_date: startDate, privacy:privacy, end_date:endDate};
             client.mutate({
-                mutation: getPlanMutate,
-                variables: {}
+                mutation: getPlanMutation,
+                variables: { id: ownProps.match.params.id, input: input}
             }).then(({data}) => {
+
+                const upid = data.getPlan.id;
+                ownProps.history.push('/plan/'+upid)
                 console.log("----settings----");
                 console.log(data);
             })

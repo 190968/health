@@ -1,7 +1,9 @@
 import React from 'react';
 import Medication from './Medication/components';
 import MedicationCoin from './Medication/components/MedicationCoin/containers';
-import MedicationInfo from './Medication/components/MedicationInfo/components';
+import MedicationInfo from './Medication/components/MedicationInfo/containers';
+import MedicationEditForm from './Medication/components/MedicationEdit/components';
+import moment from 'moment';
 import {
     FormattedMessage,
     FormattedTime,
@@ -11,9 +13,9 @@ import {
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 import ReactPlaceholder from 'react-placeholder';
 
-import { Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
+import {Modal, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
 
-const Placeholder = (
+/*const Placeholder = (
     <div>
         <Divider><RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} /></Divider>
             <Table columns={[{
@@ -47,7 +49,7 @@ const Placeholder = (
                 time3: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />
             }]} scroll={{x: 600}} pagination={false} />
         </div>
-);
+);*/
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -55,9 +57,26 @@ export class MedicationPlanBody extends React.Component {
         this.state = {
             isBuilderMode: false,// if this is a builder mode
         };
+
+        //this.showDate = this.showDate.bind(this);
     };
     static propTypes = {
     };
+
+    showDate(type) {
+        var dateTime = new Date(this.props.date);
+        let date = '';
+        if (type === 'prev') {
+             date = moment(dateTime).add(-1, 'days').format("YYYY-MM-DD");
+        } else {
+             date = moment(dateTime).add(1, 'days').format("YYYY-MM-DD");
+        }
+        this.props.loadDate(date);
+    };
+
+    addMedication() {
+        // create a new medication
+    }
 
 
     render() {
@@ -86,7 +105,7 @@ export class MedicationPlanBody extends React.Component {
                 //const report = reports && reports[0] || {};
                 let medic_times = {
                     key: medication.id+'drug',
-                    name: <MedicationInfo user_id={user_id} info={medication} />
+                    name: <MedicationInfo user_id={user_id} date={date} info={medication} />
                 }
 
                 const at_times = medication.timesPerHour;
@@ -129,7 +148,10 @@ export class MedicationPlanBody extends React.Component {
         }
 
         return (
-                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}  extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small"><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small"><Icon type="right" /></Button></Tooltip></Button.Group>}>
+                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}
+                      extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
+                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />}><Button size="small" style={{marginLeft:10}} onClick={()=>this.addMedication()}><Icon type="plus" /></Button></Tooltip>
+                      </div>}>
                     {takeAtTimes.length > 0 &&
                         (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
                                 <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
@@ -147,17 +169,29 @@ export class MedicationPlanBody extends React.Component {
                                 <Medication user_id={user_id} key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
                         /></div>)
                     }
-                    {takeDaily.length > 0 &&
+                    {takeAsNeeded.length > 0 &&
                     (<div>
                         <Divider><FormattedMessage id="plan.medication.as_needed" defaultMessage="Take As Needed" /></Divider>
                         <List
                             dataSource={takeAsNeeded}
                             grid={{ column: 1}}
                             size="small"
-                            renderItem={medication => (<List.Item><Medication  key={medication.id+'a'} info={medication} date={date} /></List.Item>)}
+                            renderItem={medication => (<List.Item><Medication key={medication.id+'a'} user_id={user_id} info={medication} date={date} /></List.Item>)}
                         />
                         </div>)
                     }
+
+                    {/*<Modal
+                        visible={true}
+                        title={<FormattedMessage id="plan.medication.add" defaultMessage="Add Medication" description="Add Medication" />}
+                        footer={
+                            <Button key="submit" type="primary" >
+                                <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
+                            </Button>
+                        }
+                    >
+                        <MedicationEditForm  userId={user_id} />
+                    </Modal>*/}
             </Card>
             )
     }

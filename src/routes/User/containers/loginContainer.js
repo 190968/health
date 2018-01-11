@@ -18,10 +18,22 @@ const loginUser = gql`
                 first_name,
                 last_name,
                 token,
+                phoneConfirmed,
                 new_notifications,
                 new_messages,
-                phoneConfirmed
-            } 
+                motivators {
+                    totalCount,
+                    edges{
+                        id,
+                        user {
+                          id,
+                          first_name,
+                          email
+                        },
+                        email
+                    }
+                }
+            }
             token
         }
     }
@@ -68,11 +80,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
-                const user = data.login.user;
-                //console.log(data);
+                let user = data.login.user;
+                user.token = token;
                 dispatch(loadUser(user));
+                //dispatch(setUserToken(token));
 
-                dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
             message.error(error.message);

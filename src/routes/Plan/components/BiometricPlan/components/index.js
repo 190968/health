@@ -8,7 +8,7 @@ import {
 import ReactPlaceholder from 'react-placeholder';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
-import { Table, List,Icon,Button, Modal,Divider, Card } from 'antd';
+import { Table, List,Icon,Button, Modal, Divider, Card, Tooltip, Popconfirm } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -36,46 +36,37 @@ s
         if (loading) {
             const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
-                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
-                <ReactPlaceholder showLoadingAnimation ready={!loading} type="media" rows={5} >
-                    a
-                </ReactPlaceholder>
+                <Card loading title={<FormattedMessage id="plan.trackers.card.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
+                trackers
                 </Card>
             );
         }
-     // console.log(this.props);
 
         const {columns, trackers} = info;
         const listColumns = [
-            { title: '', dataIndex: 'name', key: 'name' },
-            { title: '', dataIndex: 'icon', key: 'icom' },
-            { title: '', dataIndex: 'input', key: 'input' },
+            { title: '', dataIndex: 'name', key: 'name'},
+           //
+            { title: '', dataIndex: 'input', key: 'input', width: 150  },
+            { title: '', dataIndex: 'icon', key: 'acts', width: 50, render: () =>  <div><Icon onClick={()=> this.editClick()} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?"  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}
         ];
 
         const tableColumns = [
             { title: '', dataIndex: 'name', key: 'name' },
         ];
+        // adding columns
         columns.map(column => {
-            //console.log(column.id);
-            tableColumns.push({ title: column.name, dataIndex: 'col_'+column.id, key: column.id },)});
-
-        tableColumns.push({ title: 'Action', dataIndex: '', key: 'x', render: (info) => <a href="#">{info.name}</a> });
+            tableColumns.push({ title: column.name, dataIndex: 'col_'+column.id, key: column.id, width: 150 },)
+        });
 
         const data = []
         const dataList = []
-            /*{ key: 1, name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park', description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.' },
-            { key: 2, name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park', description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.' },
-            { key: 3, name: 'Joe Black', age: 32, address: 'Sidney No. 1 Lake Park', description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.' },
-        ];*/
 
         // normalize trackers
         trackers.map(tracker => {
-            //console.log(tracker);
             const tracker_columns = tracker.columns;
             const timesToReport = tracker.timesToReport;
             const measurement = tracker.measurement;
             const reports = measurement.reports;
-            //console.log(reports);
             // if we have columns - put it into columns table
             if (tracker_columns.length > 0) {
                 let tracker_column_info = { key: tracker.id, name: measurement.label, input: <TrackerField info={tracker} date={date} list_id={info.id} />};
@@ -94,7 +85,7 @@ s
                                 report = report_arr[0];
                             }
                         }
-                        inputFields.push(<div><TrackerField info={tracker} date={date} column={column_id} report={report} reportKey={i} list_id={info.id} /></div>);
+                        inputFields.push(<TrackerField info={tracker} date={date} column={column_id} report={report} reportKey={i} list_id={info.id} />);
                     }
 
                     tracker_column_info['col_'+column_id] = <List
@@ -105,6 +96,7 @@ s
 
                 data.push(tracker_column_info);
             } else {
+                // if not -  just to table
                 let inputFields = [];
                 for (var i=0;i<timesToReport;i++) {
                     let report = null;
@@ -114,11 +106,12 @@ s
                             report = report_arr[0];
                         }
                     }
-                    inputFields.push(<div><TrackerField info={tracker} date={date} report={report} reportKey={i} list_id={info.id} /></div>);
+                    inputFields.push(<TrackerField info={tracker} date={date} report={report} reportKey={i} list_id={info.id} />);
                 }
-               // console.log(inputFields);
                 //
-                dataList.push({ key: tracker.id, icon:<div><Icon onClick={this.editClick}  style={{ fontSize: 18 }} type="edit" /> <Divider type="vertical" /><Icon onClick={this.closeClick}  style={{ fontSize: 18 }} type="close" /> <Divider type="vertical" /></div> ,name:measurement.label, input: <List
+                let trackerName = measurement.label;
+
+                dataList.push({ key: tracker.id, name: trackerName, input: <List
                     size="small"
                     dataSource={inputFields}
                     renderItem={item => (<List.Item>{item}</List.Item>)}
@@ -127,94 +120,31 @@ s
 
         });
 
-/*
- dataSource={takeAtTimes}
-                        renderItem={medication => (<List.Item><Medication key={medication.id} info={medication}  /></List.Item>)}
- */
-    //console.log(takeAtTimes.length);
-        /*let columns = [];
-        let data = [];
 
-        if (takeAtTimes.length > 0) {
-            columns = [
-                {title: 'Medication', width: 300, dataIndex: 'name', key: 'name', fixed: 'left', className: 'transparent'},
-            ];
-            let cols_by_time = {};// columns by time to avoid duplicates
-
-
-
-
-            takeAtTimes.map(medication => {
-
-                let {reports} = medication;
-                //console.log(time_info);
-                //const report = reports && reports[0] || {};
-                let medic_times = {
-                    key: medication.id+'drug',
-                    name: <MedicationInfo info={medication} />
-                }
-
-                const at_times = medication.timesPerHour;
-                //console.log(reports);
-                at_times.map(function (time_info) {
-
-
-                    let report = {};
-                    if (reports) {
-                         report = reports.filter((e) => e.time === time_info.time);
-                         if (report.length > 0) {
-                             report = report[0];
-                         }
-                    }
-                    //console.log(report);
-
-                        //.map(e => e)
-
-                    const time = time_info.time;
-                    if (!columns.some(item => time_info.time === item.title)) {
-
-                        columns.push({
-                            title: time,
-                            dataIndex: 'time_' + time_info.time,
-                            key: 'time_' + time_info.id
-                        });
-                    }
-                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={time_info.quantity} time={time} date={date}/>;
-                });
-
-
-                data.push(
-                    medic_times
-                );
-                //return
-            });
-        }
-*/
 
         return (
-            <div>
-            <Modal
-                visible={this.state.visible}
-                title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker - " description="Edit Tracker" />}
-                onOk={this.handleOk}
-                onCancel={this.closeClick}
-                footer={[
-                    <center>
-                        <Button key="submit" type="primary" onClick={this.handleClick}>
-                            <FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.button" defaultMessage="Done" description="Done" />
-                        </Button></center>,
-                ]}>
-            <ModalTracker user_id={user_id} />
 
-            </Modal>
-                <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
-                    {/*<ModalTracker />*/}
-                    <Divider>Report anytime</Divider>
-                    <Table size="default" columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
-                    <Divider>Report at times</Divider>
-                    <Table size="small" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
+                <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}
+                      extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small"><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small"><Icon type="right" /></Button></Tooltip></Button.Group>}
+                >
+                    <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
+                    <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
+
+                    <Modal
+                        visible={this.state.visible}
+                        title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker - " description="Edit Tracker" />}
+                        onOk={this.handleOk}
+                        onCancel={this.closeClick}
+                        footer={[
+                            <center>
+                                <Button key="submit" type="primary" onClick={this.handleClick}>
+                                    <FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.button" defaultMessage="Done" description="Done" />
+                                </Button></center>,
+                        ]}>
+                        <ModalTracker user_id={user_id} />
+
+                    </Modal>
             </Card>
-                </div>
             )
     }
 }

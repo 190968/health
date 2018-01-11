@@ -18,6 +18,10 @@
     "defaultMessage": "Next day"
   },
   {
+    "id": "medication.add",
+    "defaultMessage": "Add Medication"
+  },
+  {
     "id": "plan.medication.at_times",
     "defaultMessage": "Take At Times"
   },

@@ -64,7 +64,7 @@ export class PlanstoreLayout extends React.Component {
                         </div>
 
                         <List
-                            grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                            grid={{gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 4}}
                             dataSource={planPlaceholder}
                             renderItem={item => (
                                 <List.Item>
@@ -75,7 +75,7 @@ export class PlanstoreLayout extends React.Component {
                     </Content>
                )
         }
-        const pageOpts = {onChange: this.changePage, total: 50};
+        const pageOpts = {onChange: this.changePage, total: 500, showSizeChanger:true};
         const searchText = 'Search for ActionPlan';//<FormattedMessage id="planstore.search" defaultMessage="Search for ActionPlan" description="Action plan search" />;
         return (
 
@@ -95,7 +95,7 @@ export class PlanstoreLayout extends React.Component {
                         split={false}
 
                         loading={loading}
-                        grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 4}}
+                        grid={{gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 4}}
                         pagination={pageOpts}
                         dataSource={plans}
                         renderItem={product => (

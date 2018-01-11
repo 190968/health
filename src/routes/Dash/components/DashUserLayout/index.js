@@ -8,7 +8,7 @@ import BiometricPlan from 'routes/Plan/components/BiometricPlan/containers';
 import Motivators from '../../../User/containers/motivatorsContainer';
 import CareTeam from '../../../User/containers/careTeamContainer';
 
-import { Row, Col, Calendar, List,Card } from 'antd';
+import { Icon, Alert, Row, Col, Calendar, List,Card } from 'antd';
 import {
     FormattedMessage,
     FormattedNumber,
@@ -54,22 +54,32 @@ export class DashUserLayout extends React.Component {
 
         return (
            <Row gutter={15}>
-               <Col xs={24} md={16} lg={18}>
-                    <PlansList loading={loading} date={date} user_id={user_id} />
-                    <div style={{marginTop:10}}><MedicationPlan loading={loading} date={date} user_id={user_id} /></div>
-                    <div style={{marginTop:10}}><BiometricPlan loading={loading} date={date} user_id={user_id} /></div>
+               <Col>
+                   <Alert
+                       style={{marginBottom:24}}
+                       message="WELCOME TO YOUR PERSONAL HEALTH DASHBOARD"
+                       description="To start reaching your health goals, visit the Planstore to get an ActionPlan or add medications or trackers."
+                       type="info"
+                       showIcon
+                       closeText={<Icon type="close" />}
+                   />
                </Col>
-               <Col xs={24} md={8} lg={6}>
-                   <Motivators user_id={user_id} />
+               <Col xs={24} md={14} lg={15} xl={17}>
+                   <PlansList loading={loading} date={date} user_id={user_id} />
+                   <MedicationPlan loading={loading} date={date} user_id={user_id} />
+                   <BiometricPlan loading={loading} date={date} user_id={user_id} />
+               </Col>
+               <Col xs={24} md={10} lg={9} xl={7}>
 
-                   <div style={{marginTop:10}}>
-                       {/*<CareTeam />*/}
-                   </div>
-                       <div style={{marginTop:10}}>
-                         <Card>
+
+
+                         <Card title="Health Calendar"
+                         extra={<div><Icon type="calendar" /> <Icon type="plus" /></div>}
+                         >
                              <Calendar fullscreen={false}  />
                          </Card>
-                   </div>
+                       {/*<CareTeam />*/}
+                   <Motivators user_id={user_id} />
                </Col>
            </Row>
             // <Form onSubmit={this.handleSubmit}>

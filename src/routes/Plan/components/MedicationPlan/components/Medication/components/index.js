@@ -1,6 +1,6 @@
 import React from 'react'
 import MedicationCoin from './MedicationCoin/containers';
-import MedicationInfo from './MedicationInfo/components';
+import MedicationInfo from './MedicationInfo/containers';
 import { Table, Row, Col, Icon } from 'antd';
 import gql from 'graphql-tag';
 
@@ -67,7 +67,7 @@ export class Medication extends React.Component {
         return (
             <Row type="flex" justify="start">
                 {type != 'at_times' && <Col xs={6} >
-                    <MedicationInfo info={info} />
+                    <MedicationInfo info={info} date={date} user_id={user_id} />
                 </Col>}
                 <Col  xs={18} >
                     <Row>
