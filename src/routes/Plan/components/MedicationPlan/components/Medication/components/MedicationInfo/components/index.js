@@ -64,18 +64,15 @@ export class MedicationInfo extends React.PureComponent {
         const {name, dosage} = drug;
         return (
 <div>
-    <Modal
-        visible={this.state.visible}
-        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
-        onCancel={this.handleCancel}
-        footer={
-                <Button key="submit" type="primary" >
-                    <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
-                </Button>
-        }
-    >
-        <MedicationEditForm id={id} userId={user_id} />
-    </Modal>
+
+
+    {this.state.visible &&
+    <MedicationEditForm id={id}
+                        userId={user_id}
+                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
+                        onCancel={this.handleCancel} />}
+
+
         <Row>
             <Col span={2} >
                 <Icon type="video-camera" />

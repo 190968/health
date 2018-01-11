@@ -1,13 +1,15 @@
 /**
  * Created by Pavel on 21.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
     FormattedMessage,
 } from 'react-intl';
 
 import moment from 'moment';
-import { Form ,List,Radio,Row,TimePicker, Col,Select,Input, DatePicker , Button } from 'antd';
+import { Spin, Icon, Modal, Form ,List,Radio,Row,TimePicker, Col,Select,Input, DatePicker , Button } from 'antd';
+
 const { Option, OptGroup } = Select;
 const FormItem = Form.Item;
 const format = 'h:mm a';
@@ -44,6 +46,19 @@ class EditMedicationForm extends React.Component {
             total:null
         };
     };
+
+    static propTypes = {
+        userId: PropTypes.string,
+        medId: PropTypes.string,
+        id: PropTypes.string,
+
+    }
+
+    static defaultProps = {
+        medId: '',
+        id: '',
+
+    }
 
     /*componentWillMount = (nextProps) => {
         console.log(this.props);
@@ -122,16 +137,39 @@ let notPermanent = 0;
         this.onChangeDate('endDate', value);
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const { info, userId, updateMedication } = this.props;
+        const{id} = info;
+        this.props.form.validateFields((err, values) => {
+            console.log(values);
+            if (!err) {
+                // prepare fields here
+
+                return updateMedication(id, userId, values);
+            }
+        });
+
+    }
+
     render() {
         const { getFieldDecorator, getFieldValue } = this.props.form;
 
         const {info,loading} = this.props;
 
         if (loading) {
-            return  '<div>Loading</div>';
+            return   <Modal
+                        visible={true}
+                        closable={false}
+                        destroyOnClose
+                        footer={false}
+                        bodyStyle={{height:150, textAlign:'center', lineHeight:5}}
+                    >
+                <Spin tip="Loading..." />
+            </Modal>
         }
 
-        let {type, timesPerDay, timesPerHour, startDate, endDate, purpose, sideEffects, directions} = info.medication;
+        let {type, timesPerDay, timesPerHour, startDate, endDate, purpose, sideEffects, directions} = info;//.medication;
 
         const dateFormat = 'YYYY-MM-DD';
         let col = 0;
@@ -295,7 +333,18 @@ let notPermanent = 0;
         //     console.log(item.item._owner.memoizedProps.info);
         // })
 
+
+
         return (
+            <Modal
+                visible={true}
+                destroyOnClose
+                okText="Save"
+                onCancel={this.props.onCancel}
+                title={this.props.title}
+                onOk={this.handleSubmit}
+            >
+
             <Form>
 
                 {<FormItem
@@ -536,7 +585,7 @@ let notPermanent = 0;
 
                 }
             </Form>
-
+            </Modal>
         );
     }
 }

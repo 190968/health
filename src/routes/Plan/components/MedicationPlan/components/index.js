@@ -1,19 +1,16 @@
 import React from 'react';
 import Medication from './Medication/components';
 import MedicationCoin from './Medication/components/MedicationCoin/containers';
+import MedicationSelect from './Medication/components/MedicationSelect/containers';
 import MedicationInfo from './Medication/components/MedicationInfo/containers';
-import MedicationEditForm from './Medication/components/MedicationEdit/components';
+import MedicationEditForm from './Medication/components/MedicationEdit/containers';
 import moment from 'moment';
 import {
     FormattedMessage,
-    FormattedTime,
-    FormattedNumber,
-    FormattedPlural,
+    FormattedDate,
 } from 'react-intl';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-import ReactPlaceholder from 'react-placeholder';
 
-import {Modal, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
+import {Modal, Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
 
 /*const Placeholder = (
     <div>
@@ -56,32 +53,56 @@ export class MedicationPlanBody extends React.Component {
         super(props);
         this.state = {
             isBuilderMode: false,// if this is a builder mode
+            date: props.date,
+            addModal:false,
+            medId:0
         };
 
-        //this.showDate = this.showDate.bind(this);
+        this.addMedication = this.addMedication.bind(this);
     };
     static propTypes = {
     };
+    static defaultProps = {
+        date:  moment().format('YYYY-MM-DD')
+    }
 
-    showDate(type) {
-        var dateTime = new Date(this.props.date);
+    showDate = (type) => {
+        var dateTime = new Date(this.state.date);
         let date = '';
         if (type === 'prev') {
              date = moment(dateTime).add(-1, 'days').format("YYYY-MM-DD");
         } else {
              date = moment(dateTime).add(1, 'days').format("YYYY-MM-DD");
         }
-        this.props.loadDate(date);
+        this.setState({date:date});
+        this.props.loadDate(date, this.props.user_id);
     };
 
-    addMedication() {
+    addMedication = (id) => {
         // create a new medication
+        //console.log(id);
+        this.setState({
+            addModal:true,
+            medId:id
+        });
+    }
+
+    hideAddMedication = () => {
+        // create a new medication
+        //console.log(id);
+        this.setState({
+            addModal:false,
+            medId:0
+        });
     }
 
 
     render() {
-
-        const {info, date, loading, user_id} = this.props;
+        //console.log(this.props, 'Load');
+        const {info,  loading, user_id} = this.props;
+        const {date} = this.state;
+        //console.log(date);
+        //console.log(this.props);
         if (loading) {
             return (
                 <Card loading={true} title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
@@ -127,8 +148,8 @@ export class MedicationPlanBody extends React.Component {
                     if (reports && !reports.some(item => time_info.time === item.time)) {
                         report = reports[0] || {};
                     }*/
-                    const time = time_info.time;
-                    if (!columns.some(item => time_info.time === item.title)) {
+                    const {time, quantity} = time_info;
+                    if (!columns.some(item => time === item.title)) {
                         //console.log(<FormattedTime value={new Date(date+' '+time)} />);
                         columns.push({
                             title: time,
@@ -136,7 +157,8 @@ export class MedicationPlanBody extends React.Component {
                             key: 'time_' + time_info.id
                         });
                     }
-                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={time_info.quantity} time={time} date={date}/>;
+                    //console.log(report);
+                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
                 });
 
 
@@ -148,9 +170,16 @@ export class MedicationPlanBody extends React.Component {
         }
 
         return (
-                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for Today" description="Medications for Today" />}
+                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
+                    date: <FormattedDate
+                        value={new Date(date)}
+                        year='numeric'
+                        month='long'
+                        day='2-digit'
+                    />
+                }} description="Medications for Today" />}
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
-                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />}><Button size="small" style={{marginLeft:10}} onClick={()=>this.addMedication()}><Icon type="plus" /></Button></Tooltip>
+                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'bottom'}><Popover content={<MedicationSelect userId={user_id} onSelect={this.addMedication} />} title="Add Medication" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
                       </div>}>
                     {takeAtTimes.length > 0 &&
                         (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
@@ -181,17 +210,11 @@ export class MedicationPlanBody extends React.Component {
                         </div>)
                     }
 
-                    {/*<Modal
-                        visible={true}
-                        title={<FormattedMessage id="plan.medication.add" defaultMessage="Add Medication" description="Add Medication" />}
-                        footer={
-                            <Button key="submit" type="primary" >
-                                <FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.button" defaultMessage="Save Changes" description="Save Changes" />
-                            </Button>
-                        }
-                    >
-                        <MedicationEditForm  userId={user_id} />
-                    </Modal>*/}
+                    {this.state.addModal &&
+                        <MedicationEditForm medId={this.state.medId}
+                                            userId={user_id}
+                                            title={<FormattedMessage id="plan.medication.add" defaultMessage="Add Medication" description="Add Medication" />}
+                                            onCancel={this.hideAddMedication} />}
             </Card>
             )
     }

@@ -27,8 +27,23 @@ export class MedicationCoin extends React.Component {
     componentWillMount = () => {
         const {id, quantity, report} = this.props;
         const report_id = report.id || 0;
+        //console.log(report_id);
         if (report_id) {
             this.setState({isClicked: true});
+        } else {
+            this.setState({isClicked: false});
+        }
+    }
+    componentWillReceiveProps = (nextProps) => {
+        const {report} = this.props;
+        const {id} = report;
+        /*this.setState({
+            likesIncreasing: nextProps.likeCount > this.props.likeCount
+        });*/
+        if (id) {
+            this.setState({isClicked: true});
+        } else {
+            this.setState({isClicked: false});
         }
     }
 
@@ -45,7 +60,7 @@ export class MedicationCoin extends React.Component {
 
         const {quantity} = this.props;
         const hasReport = this.state.isClicked;
-        //console.log(hasReport);
+        console.log(this.props);
         if (hasReport) {
             return (<Button type="primary" shape="circle" onClick={this.handleClick}>
                 {quantity}

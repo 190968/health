@@ -7,7 +7,7 @@
   {
     "id": "plan.medicationpan.medication.card.title2",
     "description": "Medications for Today",
-    "defaultMessage": "Medications for Today"
+    "defaultMessage": "Medications for {date}"
   },
   {
     "id": "plan.prev_day",
@@ -32,5 +32,10 @@
   {
     "id": "plan.medication.as_needed",
     "defaultMessage": "Take As Needed"
+  },
+  {
+    "id": "plan.medication.add",
+    "description": "Add Medication",
+    "defaultMessage": "Add Medication"
   }
 ]

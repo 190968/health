@@ -37,6 +37,8 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                //console.log(ownProps);
+                //console.log(data);
                 //  console.log(data.planstore.filters);
                 return {
 
@@ -56,7 +58,7 @@ const PlanstoreLayoutWithQuery = graphql(
                                 page: page,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                console.log("Какой previousResult в updateQuery",previousResult);
+                                //console.log("Какой previousResult в updateQuery",previousResult);
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {
