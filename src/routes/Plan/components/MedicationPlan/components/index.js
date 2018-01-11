@@ -130,7 +130,7 @@ export class MedicationPlanBody extends React.Component {
                 }
 
                 const at_times = medication.timesPerHour;
-                //console.log(reports);
+                console.log(medication);
                 at_times.map(function (time_info) {
 
 
@@ -148,6 +148,7 @@ export class MedicationPlanBody extends React.Component {
                     if (reports && !reports.some(item => time_info.time === item.time)) {
                         report = reports[0] || {};
                     }*/
+                    //console.log(time_info);
                     const {time, quantity} = time_info;
                     if (!columns.some(item => time === item.title)) {
                         //console.log(<FormattedTime value={new Date(date+' '+time)} />);
@@ -169,6 +170,7 @@ export class MedicationPlanBody extends React.Component {
             });
         }
 
+        console.log('med render');
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
                     date: <FormattedDate
