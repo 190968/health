@@ -1,0 +1,66 @@
+/**
+ * Created by Pavel on 10.01.2018.
+ */
+import React, { PropTypes } from 'react';
+import { Carousel,Form,Card,List,Row,Col  } from 'antd';
+import { withApollo, gql } from 'react-apollo'
+import '../../style.css';
+import {
+    Route,
+    Redirect,
+} from 'react-router-dom'
+class MyCategoriesForm extends React.Component{
+
+    constructor(props){
+        super(props);
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.state = {displayedFamily: props};
+    }
+
+    handleSubmit(key) {
+        //console.log(key);
+
+        return(
+            <Redirect to={'/community/544'} />
+        )
+
+    }
+
+    render(){
+        const {info,loading} = this.props;
+        if (loading) {
+            return (
+                <p>Loading!!!</p>
+            );
+        }
+
+
+      //  console.log(info);
+
+
+        return(
+                    <Card
+                        title="MY CATEGORIES"
+                    >
+                        <List
+                            split={false}
+                            loading={loading}
+                            grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 6, xl: 6}}
+                            dataSource={info}
+                            renderItem={item => (
+                                <List.Item key={item.id}>
+                                        <img alt={item.name} key={item.id}  onClick={this.handleSubmit} src={item.thumb.large}/>
+                                        <div>{item.name}</div>
+                                </List.Item>
+                            )}
+                        />
+
+                        </Card>
+        )
+    }
+
+}
+
+const WrappedMyCategoriesForm = Form.create()(MyCategoriesForm);
+export default withApollo(WrappedMyCategoriesForm);

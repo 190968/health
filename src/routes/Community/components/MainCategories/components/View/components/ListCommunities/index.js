@@ -1,4 +1,7 @@
 /**
+ * Created by Pavel on 11.01.2018.
+ */
+/**
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
@@ -8,7 +11,7 @@ import { Carousel,Form,Card,List,Row,Col ,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 
 
-class CommunitiesForm extends React.Component{
+class ListCommunityForm extends React.Component{
 
     constructor(props){
         super(props);
@@ -17,36 +20,33 @@ class CommunitiesForm extends React.Component{
     }
 
     render(){
-        const {info,loading} = this.props;
+        const {loading} = this.props;
         if (loading) {
             return (
                 <p>Loading!!!</p>
             );
         }
-        const {discussions} = info;
-        console.log(info);
+        const {name,categories} = this.props;
 
+        console.log(categories);
 
         return(
             <Card
-                title="COMMUNITY DISCUSSIONS"
+                title={name.toUpperCase()+" COMMUNITIES"}
             >
                 <Row>
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 1, xl: 1}}
-                        dataSource={discussions}
+                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 5, xl: 5}}
+                        dataSource={categories}
                         renderItem={item => (
                             <List.Item key={item.id}>
-
-                               <Col span={1}>
-                                   <Avatar size="large"></Avatar>
-                               </Col>
-                                <Col span={10}>
-                                    <h4>{item.title}</h4>
-                                    <p>{item.text.substr(0, 100)}</p>
-                                </Col>
+                                <Card
+                                    //cover={ <img alt={item.id}  onClick={this.handleSubmit} src={item.thumb.large}/>}
+                                >
+                                    <p>{item.name}</p>
+                                </Card>
 
                             </List.Item>
                         )}
@@ -58,5 +58,5 @@ class CommunitiesForm extends React.Component{
 
 }
 
-const WrappedCommunitiesForm = Form.create()(CommunitiesForm);
-export default withApollo(WrappedCommunitiesForm);
+const WrappedListCommunityForm = Form.create()(ListCommunityForm);
+export default withApollo(WrappedListCommunityForm);

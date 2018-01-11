@@ -124,7 +124,7 @@ export const asyncVerifyPhoneConfirm = (store) => {
 export const asyncCommynity = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Community/containers/myCategories')
+            loader: () => import('../routes/Community/containers/mainCategories')
 })
     );
 }
@@ -132,7 +132,7 @@ export const asyncCommynity = (store) => {
 export const asyncCommynityID = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Categories/containers/Communities')
+            loader: () => import('../routes/Community/containers/CommunityDiscussions')
 })
     );
 }

@@ -6,19 +6,59 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import DiscussionsForm from '../components/CommunitiesDiscussions';
+import DiscussionsForm from '../components/MainCategories/components/View';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
 const CATEGORY  = gql`
-query GET_CATEGORY ($id:ID) {
+query GET_CATEGORIES($id:ID) {
+
        category(id:$id) {
-           discussions {
-              id
-              title
-              text
-            }
+         id
+         name
+         thumb {
+           original
+           small
+           large
+           medium
+           wide
+         }
+    		 canJoin
+    		 isJoined
+         articles {
+           id
+          title
+          titleShort
+          text
+          category {
+            id
+            name
+          }
+          thumbs {
+            original
+            small
+            large
+            medium
+            wide
+          }
+          views
+         }
+        discussions {
+          id
+          title
+          text
+          createdAt
+          lastReplyAt
+          category {
+            id
+          }
+          views
+        }
+    categories {
+      id
+      name
+    }
        }
 }
 `;

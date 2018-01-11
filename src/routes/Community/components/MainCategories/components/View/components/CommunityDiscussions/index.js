@@ -8,7 +8,7 @@ import { Carousel,Form,Card,List,Row,Col ,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 
 
-class CommunitiesForm extends React.Component{
+class CommunityDiscussionsForm extends React.Component{
 
     constructor(props){
         super(props);
@@ -17,19 +17,19 @@ class CommunitiesForm extends React.Component{
     }
 
     render(){
-        const {info,loading} = this.props;
+        const {loading} = this.props;
         if (loading) {
             return (
                 <p>Loading!!!</p>
             );
         }
-        const {discussions} = info;
-        console.log(info);
+        const {name,discussions} = this.props;
+        //console.log(this.props);
 
 
         return(
             <Card
-                title="COMMUNITY DISCUSSIONS"
+                title={name.toUpperCase()+" COMMUNITY DISCUSSIONS"}
             >
                 <Row>
                     <List
@@ -40,9 +40,9 @@ class CommunitiesForm extends React.Component{
                         renderItem={item => (
                             <List.Item key={item.id}>
 
-                                <Col span={1}>
-                                    <Avatar size="large"></Avatar>
-                                </Col>
+                               <Col span={1}>
+                                   <Avatar size="large"></Avatar>
+                               </Col>
                                 <Col span={10}>
                                     <h4>{item.title}</h4>
                                     <p>{item.text.substr(0, 100)}</p>
@@ -58,5 +58,5 @@ class CommunitiesForm extends React.Component{
 
 }
 
-const WrappedCommunitiesForm = Form.create()(CommunitiesForm);
-export default withApollo(WrappedCommunitiesForm);
+const WrappedCommunityDiscussionsForm = Form.create()(CommunityDiscussionsForm);
+export default withApollo(WrappedCommunityDiscussionsForm);
