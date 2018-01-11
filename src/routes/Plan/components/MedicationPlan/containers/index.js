@@ -12,6 +12,7 @@ export const QUERY = gql`
                 upid
                 isPersonal
                 medicationsByType (date: $date) {
+                    
                     takeAtTimes {
                         ...MedicationCardInfo
                         timesPerHour {
@@ -41,12 +42,17 @@ const MedicationPlanBodyWithQuery = graphql(
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                //console.log(ownProps);
+                //console.log(data);
+                //console.log(data);
                 return {
                     info: data.medicationPlan,
                     loading: data.loading,
+                    //date: 'asd',
 
-                    loadDate(date) {
-                        //console.log("Какой page в props",page);
+
+                    loadDate(date, user_id) {
+                        //console.log(date);
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -54,14 +60,16 @@ const MedicationPlanBodyWithQuery = graphql(
                                 // the feed length, but we could also use state, or the previous
                                 // variables to calculate this (see the cursor example below)
                                 date: date,
+                                user_id: user_id,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                console.log("Какой previousResult в updateQuery",previousResult);
+                                //return {medicationPlan:{id:29}};
+                                //console.log(fetchMoreResult);
+                                //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
+                                    medicationPlan: fetchMoreResult.medicationPlan,
                                 });
                             },
                         });
@@ -87,9 +95,10 @@ const MedicationPlanBodyWithQuery = graphql(
   Redux
  ------------------------------------------*/
 
-const mapStateToProps = (state) => {
-
+const mapStateToProps = (state, ownProps) => {
+    //console.log(ownProps);
     return {
+        //date: moment().format('YYYY-MM-DD'),
     };
 };
 

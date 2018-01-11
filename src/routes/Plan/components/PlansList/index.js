@@ -8,7 +8,6 @@ import {
     FormattedMessage,
 } from 'react-intl';
 
-const pageOpts = {simple:true, defaultPageSize: 12,total: 1, hideOnSinglePage:true};
 const menu = (
     <Menu>
         <Menu.Item key="1">Show Active</Menu.Item>
@@ -24,10 +23,9 @@ export class PlansList extends React.Component {
 
   render () {
     const {
-      plans, user_id, loading, loadMoreEntries
+      plans, user_id, loading
     } = this.props;
 
-    var rows = [];
     if (loading) {
         return (<Card loading title={<FormattedMessage id="plan.title" defaultMessage="TODAY'S ACTIONPLANS" description="Medications for Today" />}>
            Loading

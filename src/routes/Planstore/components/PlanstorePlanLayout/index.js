@@ -7,7 +7,7 @@ import { arrayChunk, intersperse } from '../../../../utils/main';
 
 // add placeholders
 import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
+import { RectShape} from 'react-placeholder/lib/placeholders'
 
 import { Card, Modal, Row, Col, Button, List, Form, Input, Tooltip, Icon, Cascader, Popover, Select, Checkbox, AutoComplete, Radio, DatePicker} from 'antd';
 const FormItem = Form.Item;
@@ -193,28 +193,28 @@ export class PlanstorPlanLayout extends React.Component {
         const {plan} = this.props;
         const {start_date, end_date, gender, language, elements, categories} = plan;
         const details = [];
-        if (start_date != '') {
+        if (start_date !== '') {
             details.push(['Start Date', start_date]);
         }
-        if (end_date != '') {
+        if (end_date !== '') {
             details.push(['End Date', end_date]);
         }
-        if (gender != '') {
+        if (gender !== '') {
             details.push(['Gender', gender]);
         }
-        if (gender != '') {
+        if (gender !== '') {
             details.push(['Language', language]);
         }
 
         if (categories.length > 0) {
-            var communities = categories.map(el => {
+            const communities = categories.map(el => {
                 return <Link to={'/community/'+el.id} key={el.id}>{el.name}</Link>;
             });
             details.push(['CommunitiesDiscussions', intersperse(communities, ', ')]);
         }
         //console.log(elements);
         if (elements.length > 0) {
-            var inside = elements.map(el => {
+            const inside = elements.map(el => {
                 return <div key={el[1]}><i className={el[0]+' bump-r'}></i>{el[1]}</div>;
             });
             //console.log(inside);

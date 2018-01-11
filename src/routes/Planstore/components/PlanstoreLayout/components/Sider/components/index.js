@@ -85,8 +85,8 @@ export class PlanstoreLayout extends React.Component {
             return (
 
 
-                        <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="xs"
-                               collapsedWidth="0">
+                        <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="sm"
+                               collapsedWidth="10">
                             <List
                                 grid={{gutter: 5, md: 1}}
                                 dataSource={siderPlaceholder}
@@ -104,8 +104,8 @@ export class PlanstoreLayout extends React.Component {
 
         return (
            <div>
-                <Sider width={200} style={{background: 'transparent' }} breakpoint="xs"
-                       collapsedWidth="0">
+                <Sider collapsible collapsed={false} breakpoint="sm"
+                       collapsedWidth={0}>
                     <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
                     <Button onClick={this.updateZeroFilters}>{<FormattedMessage id="planstore.planstorelayout.cleanfilter" defaultMessage="Clean filter" description="Clean filter" />}</Button>
                 </Sider>

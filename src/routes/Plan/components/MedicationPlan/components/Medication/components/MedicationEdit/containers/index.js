@@ -11,11 +11,8 @@ import MedicationCoin from "../../MedicationCoin/components";
 //import { compose } from 'react-apollo';
 
 const medication = gql`
-query GET_MEDICATION($user_id: ID!, $id: ID!) {
-   account {
-  		medicationPlan(user_id: $user_id) {
-  		id
-            medication(id: $id) {
+query GET_MEDICATION($user_id: ID!, $id: ID) {
+            medication(id: $id, userId: $user_id) {
                 id,
                 startDate,
                 endDate,
@@ -31,16 +28,16 @@ query GET_MEDICATION($user_id: ID!, $id: ID!) {
                 type,
                 drug {
                   id
+                  name
+                  dosage
                 },
                 quantity
             }
-        }
-    }
 }
 `;
 const settingUserMutate=gql`
- mutation MedicationUpdate($id: ID!, $input: MedicationInput!) {
-        medication(id:$id, input: $input) {
+ mutation MedicationUpdate($id: ID!, $userId: ID!, $input: MedicationInput!) {
+        medicationUpdate(id:$id, userId: $userId, input: $input) {
              id
         }
     }
@@ -48,17 +45,19 @@ const settingUserMutate=gql`
 
 const MedicationEditWithQuery = graphql(medication,
     {
-        options: (ownProps) => ({
+        options: (ownProps) => {
+            //console.log(ownProps);
+            return   {
             variables: {
                 user_id: ownProps.userId,
-                id: ownProps.id
+                id: ownProps.id,
             }
-        }),
+        }},
         props: ({ ownProps, data }) => {
             //console.log(data);
             if (!data.loading) {
                 return {
-                    info: data.account.medicationPlan,
+                    info: data.medication,
                     loading: data.loading
                 }
             }
@@ -71,10 +70,9 @@ const MedicationEditWithQuery = graphql(medication,
 
 const withMutation = graphql(settingUserMutate, {
     props: ({ mutate }) => ({
-        updateMedication: input => {
-      //      console.log(input);
+        updateMedication: (id, uid, input) => {
             return mutate({
-                variables: {input: {user:input}},
+                variables: {id:id, userId:uid, input: input},
             })},
     }),
 });
