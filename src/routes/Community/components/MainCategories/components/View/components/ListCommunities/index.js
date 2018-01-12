@@ -5,11 +5,9 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 import { Carousel,Form,Card,List,Row,Col ,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
-
+import { Link } from 'react-router-dom'
 
 class ListCommunityForm extends React.Component{
 
@@ -42,12 +40,13 @@ class ListCommunityForm extends React.Component{
                         dataSource={categories}
                         renderItem={item => (
                             <List.Item key={item.id}>
-                                <Card
-                                    //cover={ <img alt={item.id}  onClick={this.handleSubmit} src={item.thumb.large}/>}
-                                >
-                                    <p>{item.name}</p>
-                                </Card>
-
+                                <Link to={"/community/"+item.id}>
+                                    <Card
+                                        //cover={ <img alt={item.id}  onClick={this.handleSubmit} src={item.thumb.large}/>}
+                                    >
+                                        <p>{item.name}</p>
+                                    </Card>
+                                </Link>
                             </List.Item>
                         )}
                     />

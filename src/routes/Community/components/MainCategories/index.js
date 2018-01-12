@@ -4,6 +4,8 @@
 import React, { PropTypes } from 'react';
 import { Carousel,Form,Card,List,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+
+import { Link } from 'react-router-dom'
 import '../../style.css';
 import {
     Route,
@@ -14,18 +16,9 @@ class MyCategoriesForm extends React.Component{
     constructor(props){
         super(props);
 
-        this.handleSubmit = this.handleSubmit.bind(this)
         this.state = {displayedFamily: props};
     }
 
-    handleSubmit(key) {
-        //console.log(key);
-
-        return(
-            <Redirect to={'/community/544'} />
-        )
-
-    }
 
     render(){
         const {info,loading} = this.props;
@@ -50,7 +43,7 @@ class MyCategoriesForm extends React.Component{
                             dataSource={info}
                             renderItem={item => (
                                 <List.Item key={item.id}>
-                                        <img alt={item.name} key={item.id}  onClick={this.handleSubmit} src={item.thumb.large}/>
+                                       <Link to={"/community/"+item.id}> <img alt={item.name} key={item.id}   src={item.thumb.large}/></Link>
                                         <div>{item.name}</div>
                                 </List.Item>
                             )}
