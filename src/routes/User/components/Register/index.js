@@ -2,7 +2,7 @@
  * Created by Pavel on 27.11.2017.
  */
 import React, { PropTypes } from 'react';
-import {Redirect, Route} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import './register.css'
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
@@ -246,7 +246,7 @@ class NormalRegisterForm extends React.Component {
                     <Button disabled={this.state.checked} loading={this.state.loading} onClick={this.enterLoading}    type="primary" htmlType="submit" className="register-form-button">
                         <FormattedMessage id="user.registration.signup" defaultMessage="Sign Up" description="Sign up"/>
                     </Button>
-                    <FormattedMessage id="user.registration.or" defaultMessage="Or " description="Or"/><a href="/login"><FormattedMessage id="user.registration.loginnow" defaultMessage="login now!" description="login now"/></a>
+                    <FormattedMessage id="user.registration.or" defaultMessage="Or " description="Or"/> <Link  to={'/login'}><FormattedMessage id="user.registration.loginnow" defaultMessage="login now!" description="login now"/></Link>
                 </FormItem>
             </Form>
                 </Card>

@@ -34,7 +34,7 @@ class MyCategoriesForm extends React.Component{
 
         return(
                     <Card
-                        title="MY CATEGORIES"
+                        title="Main CATEGORIES"
                     >
                         <List
                             split={false}
@@ -43,8 +43,12 @@ class MyCategoriesForm extends React.Component{
                             dataSource={info}
                             renderItem={item => (
                                 <List.Item key={item.id}>
-                                       <Link to={"/community/"+item.id}> <img alt={item.name} key={item.id}   src={item.thumb.large}/></Link>
-                                        <div>{item.name}</div>
+                                       <Link to={"/community/"+item.id}>
+                                           <Card
+                                               cover={<img alt={item.name} height={120} src={item.thumb.large}/>}
+                                           >
+                                            {item.name}</Card>
+                                       </Link>
                                 </List.Item>
                             )}
                         />

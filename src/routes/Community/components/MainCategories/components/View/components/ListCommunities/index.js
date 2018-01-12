@@ -26,7 +26,6 @@ class ListCommunityForm extends React.Component{
         }
         const {name,categories} = this.props;
 
-        console.log(categories);
 
         return(
             <Card
@@ -42,10 +41,9 @@ class ListCommunityForm extends React.Component{
                             <List.Item key={item.id}>
                                 <Link to={"/community/"+item.id}>
                                     <Card
-                                        //cover={ <img alt={item.id}  onClick={this.handleSubmit} src={item.thumb.large}/>}
+                                        cover={<img alt={item.name} height={120} src={item.thumb.large}/>}
                                     >
-                                        <p>{item.name}</p>
-                                    </Card>
+                                        {item.name}</Card>
                                 </Link>
                             </List.Item>
                         )}

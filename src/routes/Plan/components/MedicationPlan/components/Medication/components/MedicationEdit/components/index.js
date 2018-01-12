@@ -339,6 +339,8 @@ let notPermanent = 0;
             <Modal
                 visible={true}
                 destroyOnClose
+                maskClosable = {false}
+                keyboard = {false}
                 okText="Save"
                 onCancel={this.props.onCancel}
                 title={this.props.title}

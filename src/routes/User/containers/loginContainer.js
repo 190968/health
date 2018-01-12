@@ -87,6 +87,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
+                console.log(error);
             message.error(error.message);
 
             dispatch(loginUserError({

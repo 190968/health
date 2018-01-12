@@ -51,7 +51,8 @@ const MedicationEditWithQuery = graphql(medication,
             variables: {
                 user_id: ownProps.userId,
                 id: ownProps.id,
-            }
+            },
+                fetchPolicy: 'network-only'
         }},
         props: ({ ownProps, data }) => {
             //console.log(data);

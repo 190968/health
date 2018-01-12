@@ -58,6 +58,14 @@ query GET_CATEGORIES($id:ID) {
     categories {
       id
       name
+        description
+        thumb {
+          original
+          small
+          large
+          medium
+          wide
+        }
     }
        }
 }

@@ -158,7 +158,7 @@ export class MedicationPlanBody extends React.Component {
                             key: 'time_' + time_info.id
                         });
                     }
-                    //console.log(report);
+                    console.log(report);
                     medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
                 });
 
