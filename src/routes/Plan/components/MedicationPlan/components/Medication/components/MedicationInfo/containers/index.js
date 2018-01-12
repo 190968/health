@@ -7,7 +7,7 @@ import { message } from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import {QUERY} from "../../../../../containers";
+import {MedicationPlan} from "../../../../../containers";
 
 
 const deleteMed = gql`
@@ -25,7 +25,7 @@ const withMutation = graphql(deleteMed, {
                 variables: { uid: uid, id: id },
 
                 refetchQueries: [{
-                    query: QUERY,
+                    query: MedicationPlan,
                     variables: { user_id: uid, date:date },
                 }],
 
@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         // delete medication
         ownProps.medicationDelete(med_id, uid, ownProps.date)
             .then(({data}) => {
-                console.log(data);
+                //console.log(data);
 
                 message.warning('Deleted');
                 //const token = data.login.token;

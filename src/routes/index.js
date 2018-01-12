@@ -4,10 +4,6 @@ import React from "react";
 import Loadable from '../components/Loadable';
 
 
-
-
-
-
 /** Dash **/
 export const asyncDash = (store) => {
     // if current user is admin
@@ -45,7 +41,7 @@ export const asyncLogin = (store) => {
     );
 }
 
-export const asyncRegister= (store) => {
+export const asyncRegister = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/registerContainer'),
@@ -57,7 +53,7 @@ export const asyncRegister= (store) => {
     );
 }
 
-export const asyncLogout= (store) => {
+export const asyncLogout = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/logoutContainer'),
@@ -69,7 +65,7 @@ export const asyncLogout= (store) => {
     );
 }
 
-export const asyncForgotPassword= (store) => {
+export const asyncForgotPassword = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/forgotPasswordContainer')
@@ -78,8 +74,7 @@ export const asyncForgotPassword= (store) => {
 }
 
 
-
-export const asyncSettings= (store) => {
+export const asyncSettings = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/components/Settings/components'),
@@ -103,10 +98,10 @@ export const asyncVerifyPhone = (store) => {
         Loadable({
             loader: () => import('../routes/User/containers/verifyPhoneContainer'),
             reducers: {
-        'url': 'User/modules/verifyPhone',
-            'key': 'verifyPhone'
-    }
-}, store)
+                'url': 'User/modules/verifyPhone',
+                'key': 'verifyPhone'
+            }
+        }, store)
     );
 }
 export const asyncVerifyPhoneConfirm = (store) => {
@@ -114,10 +109,10 @@ export const asyncVerifyPhoneConfirm = (store) => {
         Loadable({
             loader: () => import('../routes/User/containers/verifyPhoneConfirmContainer'),
             reducers: {
-        'url': 'User/modules/verifyPhone',
-            'key': 'verifyPhone'
-    }
-}, store)
+                'url': 'User/modules/verifyPhone',
+                'key': 'verifyPhone'
+            }
+        }, store)
     );
 }
 
@@ -125,7 +120,7 @@ export const asyncCommynity = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/Community/containers/mainCategories')
-})
+        })
     );
 }
 
@@ -133,6 +128,18 @@ export const asyncCommynityID = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/Community/containers/CommunityDiscussions')
-})
+        })
     );
+}
+
+export const asyncPlan = (store) => {
+    return (
+        Loadable({
+                loader: () => import('../routes/Plan/containers/PlanLayout'),
+                reducers: {
+                    'url': 'Plan/modules/plan',
+                    'key': 'plan'
+                }
+            }, store
+        ))
 }

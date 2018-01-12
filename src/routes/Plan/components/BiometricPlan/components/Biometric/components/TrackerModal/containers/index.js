@@ -7,16 +7,23 @@ import { connect } from 'react-redux'
 import TrackerModalForm from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {message} from "antd/lib/index";
 //import { compose } from 'react-apollo';
 
-const trackerPlan = gql`
-query GET_BIOMETRIC_TRACKERPLAN($user_id: ID!) {
-   account {
-  		biometricPlan(user_id: $user_id) {
-  		trackers {
-  		  id,
+const tracker = gql`
+query GET_TRACKER($id: ID, $user_id: ID!) {
+    biometricPlan ( userId: $user_id) {
+        id
+        columns {
+          id
+          name
+        }
+    }
+   tracker (id: $id, userId: $user_id) {
+          id,
         measurement {
           id
+          label
         },
         criticalRange {
           min
@@ -28,33 +35,50 @@ query GET_BIOMETRIC_TRACKERPLAN($user_id: ID!) {
         },
         timesToReport,
         columns
-  		}
-  		} 
   }
 }
 `;
-const settingUserMutate=gql`
- mutation settingUser( $input:AccountInput!){
-        account(input:$input) {
-          user {
-            first_name
-          }
+const updateTrackerMutate=gql`
+ mutation TrackerUpdate($id: ID!, $userId: ID!, $input: TrackerInput!) {
+        trackerUpdate(id:$id, userId: $userId, input: $input) {
+              id,
+            measurement {
+              id
+              label
+            },
+            criticalRange {
+              min
+              max
+            },
+            normalRange {
+              min
+              max
+            },
+            timesToReport,
+            columns
+            
         }
     }
 `;
 
-const withQuery = graphql(trackerPlan,
+const withQuery = graphql(tracker,
     {
-        options: (ownProps) => ({
+        options: (ownProps) => {
+        //console.log(ownProps);
+        return   {
             variables: {
-                user_id: ownProps.user_id,
-            }
-        }),
+                user_id: ownProps.userId,
+                id: ownProps.id,
+
+            },
+            fetchPolicy: 'network-only'
+        }},
         props: ({ ownProps, data }) => {
             //console.log(data);
             if (!data.loading) {
                 return {
-                    info: data.account.biometricPlan,
+                    info: data.tracker,
+                    columns: data.biometricPlan.columns,
                     loading: data.loading
                 }
             }
@@ -65,11 +89,40 @@ const withQuery = graphql(trackerPlan,
     }
 )(TrackerModalForm);
 
-const withMutation = graphql(settingUserMutate, {
+const withMutation = graphql(updateTrackerMutate, {
     props: ({ mutate }) => ({
-        updateInfo: input => {
+        updateTracker: (id, uid, input, onCancel) => {
             return mutate({
-                variables: {input: {user:input}},
+                variables: {id:id, userId:uid, input: {details:input}},
+                update: (store, { data: { trackerUpdate } }) => {
+
+                    // Read the data from our cache for this query.
+                    /*const data = store.readQuery({
+                        query: tracker,
+                        variables: {
+                            id: id,
+                            user_id: uid
+                        }
+                    });
+                    if (id) {
+                        // add new to the list
+                    }*/
+
+                    // console.log(data);
+                    // Add our comment from the mutation to the end.
+                    //data = medicationUpdate;
+                    // Write our data back to the cache.
+                    store.writeQuery({
+                        query: tracker,
+                        data: {tracker: trackerUpdate},
+                        variables: {
+                            id: id,
+                            user_id: uid
+                        }});
+                },
+            }).then((data) => {
+                onCancel(data);
+                message.success('Saved');
             })},
     }),
 });

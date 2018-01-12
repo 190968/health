@@ -43,7 +43,7 @@ const QUERY = gql`
                 textAfter
             }
 
-            biometricPlan (user_id: $user_id,  date: $date) {
+            biometricPlan (userId: $user_id,  date: $date) {
                 id
                 upid
                 isPersonal

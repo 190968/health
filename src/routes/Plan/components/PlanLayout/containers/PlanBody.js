@@ -20,7 +20,6 @@ const PLAN_BODY = gql`
             ...PlanCardInfo,
             upid,
             body {
-
                 lessons {
                     id
                     title

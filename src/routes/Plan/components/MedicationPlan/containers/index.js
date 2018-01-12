@@ -5,7 +5,7 @@ import Medication from '../components/Medication/components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
-export const QUERY = gql`
+export const MedicationPlan = gql`
     query GET_MEDICATION_PLAN ($user_id: ID!, $date: Date)  {
             medicationPlan (user_id: $user_id) {
                 id
@@ -38,7 +38,7 @@ export const QUERY = gql`
 `;
 
 const MedicationPlanBodyWithQuery = graphql(
-    QUERY,
+    MedicationPlan,
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
@@ -86,7 +86,7 @@ const MedicationPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
-            //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
+            fetchPolicy: 'cache-and-network'//'cache-only'//'cache-and-network'
         }),
     }
 )(MedicationPlanBody);

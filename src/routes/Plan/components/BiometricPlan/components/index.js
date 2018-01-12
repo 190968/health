@@ -1,14 +1,13 @@
 import React from 'react';
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
+    FormattedDate,
 } from 'react-intl';
 
-import ReactPlaceholder from 'react-placeholder';
+import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
-import { Table, List,Icon,Button, Modal, Divider, Card, Tooltip, Popconfirm } from 'antd';
+import { Modal, Popover,Table, List,Icon,Button,  Divider, Card, Tooltip, Popconfirm } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -18,19 +17,38 @@ export class MedicationPlanBody extends React.Component {
         };
         this.state = {
             visible: false,
+            addModal: false,
+            amid: 0
         };
+        this.addTracker = this.addTracker.bind(this);
     };
     static propTypes = {
     };
-    editClick = () => {
-        console.log("editClick");
-        this.setState({visible: true});
+    editClick = (info) => {
+        console.log(info);
+        this.setState({visible: true, amid:2});
     }
     closeClick = () => {
         console.log("closeClick");
         this.setState({visible: false});
     }
-s
+    addTracker = (id) => {
+        // create a new medication
+        //console.log(id);
+        this.setState({
+            addModal:true,
+            amid:id
+        });
+    }
+
+    hideAddTracker = () => {
+        // create a new medication
+        //console.log(id);
+        this.setState({
+            addModal:false,
+            amid:0
+        });
+    }
     render() {
         const {info, date, loading,user_id} = this.props;
         if (loading) {
@@ -47,7 +65,7 @@ s
             { title: '', dataIndex: 'name', key: 'name'},
            //
             { title: '', dataIndex: 'input', key: 'input', width: 150  },
-            { title: '', dataIndex: 'icon', key: 'acts', width: 50, render: () =>  <div><Icon onClick={()=> this.editClick()} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?"  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}
+            { title: '', dataIndex: 'icon', key: 'acts', width: 50, render: () =>  <div><Icon onClick={(info)=> this.editClick(info)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?"  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}
         ];
 
         const tableColumns = [
@@ -124,26 +142,34 @@ s
 
         return (
 
-                <Card title={<FormattedMessage id="plan.biometric.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}
-                      extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small"><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small"><Icon type="right" /></Button></Tooltip></Button.Group>}
-                >
+            <Card title={<FormattedMessage id="plan.trackers.medication.card.title2" defaultMessage="Trackers for {date}" values={{
+                date: <FormattedDate
+                    value={new Date(date)}
+                    year='numeric'
+                    month='long'
+                    day='2-digit'
+                />
+            }} description="Trackers for Today" />}
+                  extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
+                      <Tooltip title={<FormattedMessage id="trsvker.add" defaultMessage="Add Medication" />} placement={'bottom'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
+                  </div>}>
                     <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
                     <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
 
-                    <Modal
-                        visible={this.state.visible}
-                        title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker - " description="Edit Tracker" />}
-                        onOk={this.handleOk}
-                        onCancel={this.closeClick}
-                        footer={[
-                            <center>
-                                <Button key="submit" type="primary" onClick={this.handleClick}>
-                                    <FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.button" defaultMessage="Done" description="Done" />
-                                </Button></center>,
-                        ]}>
-                        <ModalTracker user_id={user_id} />
 
-                    </Modal>
+
+                {this.state.addModal &&
+                <ModalTracker drugId={this.state.amid}
+                                    userId={user_id}
+                                    title={<FormattedMessage id="plan.tracker.add" defaultMessage="Add Tracker" description="Add Tracker" />}
+                                    onCancel={this.hideAddTracker} />}
+
+                {this.state.addModal &&
+                <ModalTracker id={this.state.amid}
+                              userId={user_id}
+                              title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker " description="Edit Tracker" />}
+                              onCancel={this.closeClick} />}
+
             </Card>
             )
     }

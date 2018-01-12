@@ -25,12 +25,12 @@
     "defaultMessage": "Purpose"
   },
   {
-    "id": "user.settings.basic.tdsitfdle",
+    "id": "user.settings.basic.tdsitfdle1",
     "description": "Direcctions",
     "defaultMessage": "Directions"
   },
   {
-    "id": "user.settings.basic.tddsitdle",
+    "id": "user.settings.basic.tddsitdle1",
     "description": "Side Effects",
     "defaultMessage": "Side Effects"
   }

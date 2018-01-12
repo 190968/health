@@ -17,7 +17,8 @@ export class Plan extends React.Component {
             thumb {
                 small,
                 medium,
-                large
+                large,
+                wide
             }
         }
     `
