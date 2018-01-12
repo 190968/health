@@ -2,7 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Carousel,Form,Card,List,Row,Col  } from 'antd';
+import { Tooltip, Carousel,Form,Card,List,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 
 import { Link } from 'react-router-dom'
@@ -47,7 +47,7 @@ class MyCategoriesForm extends React.Component{
                                            <Card
                                                cover={<img alt={item.name} height={120} src={item.thumb.large}/>}
                                            >
-                                            {item.name}</Card>
+                                               <Tooltip title={item.name}>{item.name.substring(0, 10)}</Tooltip></Card>
                                        </Link>
                                 </List.Item>
                             )}

@@ -4,9 +4,15 @@
 import React, { PropTypes } from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-import { Carousel,Form,Card,List,Row,Col ,Avatar } from 'antd';
+import { Icon,Form,Card,List,Row,Col ,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 
+const IconText = ({ type, text }) => (
+    <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+        {text}
+  </span>
+);
 
 class CommunityDiscussionsForm extends React.Component{
 
@@ -33,22 +39,22 @@ class CommunityDiscussionsForm extends React.Component{
             >
                 <Row>
                     <List
-                        split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 1, xl: 1}}
+                        itemLayout="vertical"
                         dataSource={discussions}
                         renderItem={item => (
-                            <List.Item key={item.id}>
+                            <List.Item key={item.id}
+                                       actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
 
-                               <Col span={1}>
-                                   <Avatar size="large"></Avatar>
-                               </Col>
-                                <Col span={10}>
-                                    <h4>{item.title}</h4>
-                                    <p>{item.text.substr(0, 100)}</p>
-                                </Col>
+                            >
 
+                                <List.Item.Meta
+                                    avatar={<Avatar size="large"></Avatar>}
+                                    title={item.title}
+                                    description={item.text.substr(0, 100)}
+                                />
                             </List.Item>
+
                         )}
                     />
                 </Row>
