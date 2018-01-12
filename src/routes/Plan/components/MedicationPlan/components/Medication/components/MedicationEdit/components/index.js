@@ -401,8 +401,8 @@ let notPermanent = 0;
                                 )}
                             />
 
-                            <Col offset={7} span={5}><label>Total</label></Col>
-                            <Col span={6}><label>{total}</label></Col>
+                        {/*<Col offset={7} span={5}><label>Total</label></Col>
+                            <Col span={6}><label>{total}</label></Col>*/}
                     </FormItem> :
 
                <div>
@@ -483,8 +483,8 @@ let notPermanent = 0;
                             </FormItem>
 
                         </Col>
-                        <Col offset={14} span={3}><label>Total</label></Col>
-                        <Col span={2}><label>jk</label></Col>
+                        {/*<Col offset={14} span={3}><label>Total</label></Col>
+                        <Col span={2}><label>jk</label></Col>*/}
                     </Row>
                    </div>
                     }

@@ -73,7 +73,7 @@ const withMutation = graphql(settingUserMutate, {
     props: ({ mutate }) => ({
         updateMedication: (id, uid, input) => {
             return mutate({
-                variables: {id:id, userId:uid, input: input},
+                variables: {id:id, userId:uid, input: {details:input}},
             })},
     }),
 });

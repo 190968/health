@@ -35,7 +35,7 @@ class ListCommunityForm extends React.Component{
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 5, xl: 5}}
+                        grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 5, xl: 5}}
                         dataSource={categories}
                         renderItem={item => (
                             <List.Item key={item.id}>
