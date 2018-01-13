@@ -24,13 +24,9 @@ class ViewForm extends React.Component{
                 <p>Loading!!!</p>
             );
         }
-<<<<<<< HEAD
-        const {name,articles,discussions,categories} = info;
-        console.log(info);
-=======
+
         const {id,name,articles,discussions,categories} = info;
-       // console.log(articles);
->>>>>>> 0981710ea7fe76894f80ded55d68021908bd4fda
+
 
         Crumb.push(
             <Breadcrumb.Item><Link to={"/community/"+id}>{name}</Link></Breadcrumb.Item>
