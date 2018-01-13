@@ -6,8 +6,6 @@ import { Card, Form, Select, Input,Button } from 'antd';
 import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 const Option = Select.Option;
 const FormItem = Form.Item;

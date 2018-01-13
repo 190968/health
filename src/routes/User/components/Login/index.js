@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 import './login.css'
 

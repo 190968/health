@@ -7,7 +7,7 @@ import {
 import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
-import { Modal, Popover,Table, List,Icon,Button,  Divider, Card, Tooltip, Popconfirm } from 'antd';
+import {  Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {

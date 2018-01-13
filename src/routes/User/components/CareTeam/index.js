@@ -2,14 +2,12 @@
  * Created by Pavel on 08.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 
-import {Modal, Form, Icon, List,Avatar, Button, Card } from 'antd';
+import {Form,List,Avatar, Card } from 'antd';
 
 class CareTeam extends React.Component {
 

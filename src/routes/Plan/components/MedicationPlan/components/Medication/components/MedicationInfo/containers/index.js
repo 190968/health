@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'react-apollo';
-
 import MedicationInfo from '../components'
 import { message } from 'antd';
 import { graphql } from 'react-apollo';

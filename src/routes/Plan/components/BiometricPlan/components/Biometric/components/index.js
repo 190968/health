@@ -1,5 +1,4 @@
 import React from 'react'
-import { Table, Row, Col, Icon } from 'antd';
 import gql from 'graphql-tag';
 
 export class Biometric extends React.Component {

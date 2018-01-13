@@ -8,7 +8,7 @@ import {
 } from 'react-intl';
 
 import moment from 'moment';
-import { Spin, Icon, Modal, Form ,List,Radio,Row,TimePicker, Col,Select,Input, DatePicker , Button } from 'antd';
+import { Spin,  Modal, Form ,List,Radio,Row,TimePicker, Col,Select,Input, DatePicker} from 'antd';
 
 const { Option, OptGroup } = Select;
 const FormItem = Form.Item;

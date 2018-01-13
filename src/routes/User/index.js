@@ -1,5 +1,4 @@
 import { injectReducer } from '../../store/reducers'
-import { combineReducers } from 'redux'
 
 
 export default (store) => ({

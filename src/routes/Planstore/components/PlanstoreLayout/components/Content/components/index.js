@@ -2,13 +2,9 @@
  * Created by Pavel on 20.12.2017.
  */
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
 import {Layout,Input, List, Card,Collapse} from 'antd';
 import {
-    FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
+    FormattedMessage
 } from 'react-intl';
 
 import PlanWidget from '../../../../../../Plan/components/Plan';

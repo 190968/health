@@ -5,6 +5,26 @@
     "defaultMessage": "Login"
   },
   {
+    "id": "user.login.forgot.title",
+    "description": "Forgot password?",
+    "defaultMessage": "Forgot password?"
+  },
+  {
+    "id": "user.login.forgot.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "user.login.forgot.rules",
+    "description": "Forgot rules",
+    "defaultMessage": "Please enter the email address you registered with to help us locate your Fitango Demo account."
+  },
+  {
+    "id": "user.login.forgot.email",
+    "description": "Enter email",
+    "defaultMessage": "Enter email"
+  },
+  {
     "id": "user.login.email",
     "description": "Email",
     "defaultMessage": "Email"

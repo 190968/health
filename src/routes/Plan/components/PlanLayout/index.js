@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 import PlanBody from './containers/PlanBody';
-import {Icon,Avatar, Card,Row, Col, Modal, Form ,Spin, Select,Input, Checkbox , Button } from 'antd';
+import {Icon,Avatar, Card,Row, Col } from 'antd';
 
 import {
     FormattedMessage,

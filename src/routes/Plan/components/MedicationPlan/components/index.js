@@ -10,7 +10,7 @@ import {
     FormattedDate,
 } from 'react-intl';
 
-import {Modal, Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
+import { Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
 
 /*const Placeholder = (
     <div>

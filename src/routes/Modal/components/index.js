@@ -48,7 +48,7 @@ class ModalForm extends React.Component {
 
     render() {
 
-        const { visible, loading } = this.state;
+
         return (
             <Modal
                 visible={true}

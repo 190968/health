@@ -2,13 +2,10 @@
  * Created by Pavel on 09.12.2017.
  */
 import React, { PropTypes } from 'react';
-import { Card, Form, Select, Input,Button } from 'antd';
+import { Card, Form, Input,Button } from 'antd';
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
-const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {

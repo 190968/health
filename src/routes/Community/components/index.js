@@ -24,6 +24,14 @@ const AsyncCommunity = () => {
     );
 }
 
+// const AsyncMyCommunity = () => {
+//     return (
+//         Loadable({
+//             loader: () => import('../../../routes/Community/containers/myCommunities.js')
+// })
+//     );
+// }
+
 // Crumb.push(
 //     <Breadcrumb.Item><Link to={"/community/"+id}>{name}</Link></Breadcrumb.Item>
 // )
@@ -38,6 +46,7 @@ export const CommunityLayout = ({loading, loadMoreEntries}) => (
             </Breadcrumb>
         </Row>
         <Route exact path='/community' component={AsyncCategory()} />
+        {/*<Route exact path='/community' component={AsyncMyCommunity()} />*/}
         <Route exact path="/community/:id" component={AsyncCommunity()} />
     </div>
 )

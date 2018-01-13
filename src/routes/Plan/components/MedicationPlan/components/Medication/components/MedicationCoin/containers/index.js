@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'react-apollo';
 
 import MedicationCoin from '../components'
 import { message } from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import LoginForm from "../../../../../../../../User/components/Login";
 
 
 const reportOnMedication = gql`

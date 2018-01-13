@@ -5,9 +5,7 @@ import React from 'react';
 import {Collapse} from 'antd';
 import CheckComponent from '../CheckBox';
 import SliderComponent from '../Slider';
-import ItemComponent from '../Item';
 import {Card } from 'antd';
-const Panel = Collapse.Panel;
 
 export class PanelComponent extends React.Component {
 

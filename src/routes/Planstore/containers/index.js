@@ -1,13 +1,10 @@
 import { connect } from 'react-redux'
 import PlanstoreLayout  from '../components/PlanstoreLayout'
-import CheckBox  from '../components/PlanstoreLayout/components/Filter/components/CheckBox'
 import Plan from '../../Plan/components/Plan';
 
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {setFilters,clearFilters} from '../modules'
-import { loadUser} from '../../User/modules/user'
 
 const QUERY = gql`
      query GET_PLANSTORE_DASH ($filters: Json, $page: Int!, $limit: Int) {

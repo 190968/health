@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {Checkbox} from 'antd';
-import { connect } from 'react-redux'
 export class CheckComponent extends React.Component {
 
     constructor(props){

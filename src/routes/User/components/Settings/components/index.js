@@ -8,8 +8,6 @@ import Loadable from '../../../../../components/Loadable';
 import { Route } from 'react-router-dom'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 
 const TabPane = Tabs.TabPane;
