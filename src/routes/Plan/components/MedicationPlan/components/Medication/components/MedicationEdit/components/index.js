@@ -49,13 +49,13 @@ class EditMedicationForm extends React.Component {
 
     static propTypes = {
         userId: PropTypes.string,
-        medId: PropTypes.string,
+        drugId: PropTypes.string,
         id: PropTypes.string,
 
     }
 
     static defaultProps = {
-        medId: '',
+        drugId: '',
         id: '',
 
     }
@@ -139,14 +139,31 @@ let notPermanent = 0;
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { info, userId, updateMedication } = this.props;
+        const { info, userId, drugId, updateMedication, onCancel } = this.props;
         const{id} = info;
         this.props.form.validateFields((err, values) => {
             console.log(values);
+            const{type, startDate, endDate, purpose, directions, sideEffects, quantity, timesPerDay } = values;
+
+            const startDateYMD = startDate.format("YYYY-MM-DD");
+            const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
+            const input = {
+                drugId: drugId,
+                type: type,
+                startDate: startDateYMD,
+                endDate: endDateYMD,
+                purpose: purpose,
+                directions: directions,
+                sideEffects: sideEffects,
+                quantity: quantity,
+                timesPerDay: timesPerDay,
+
+            }
             if (!err) {
                 // prepare fields here
+                //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
 
-                return updateMedication(id, userId, values);
+                return updateMedication(id, userId, input, onCancel);
             }
         });
 
@@ -169,7 +186,7 @@ let notPermanent = 0;
             </Modal>
         }
 
-        let {type, timesPerDay, timesPerHour, startDate, endDate, purpose, sideEffects, directions} = info;//.medication;
+        let {type, timesPerDay, timesPerHour, quantity, startDate, endDate, purpose, sideEffects, directions} = info;//.medication;
 
         const dateFormat = 'YYYY-MM-DD';
         let col = 0;
@@ -278,45 +295,45 @@ let notPermanent = 0;
                                 initialValue: item.quantity
                             })(
                                 <Select onChange={this.onTotal} style={{width: 80}}>
-                                    <Option value="0.25">¼</Option>
-                                    <Option value="0.50">½</Option>
-                                    <Option value="0.75">¾</Option>
-                                    <Option value="1">1</Option>
-                                    <Option value="1.25">1¼</Option>
-                                    <Option value="1.50">1½</Option>
-                                    <Option value="1.75">1¾</Option>
-                                    <Option value="2">2</Option>
-                                    <Option value="2.25">2¼</Option>
-                                    <Option value="2.50">2½</Option>
-                                    <Option value="2.75">2¾</Option>
-                                    <Option value="3">3</Option>
-                                    <Option value="3.25">3¼</Option>
-                                    <Option value="3.50">3½</Option>
-                                    <Option value="3.75">3¾</Option>
-                                    <Option value="4">4</Option>
-                                    <Option value="4.25">4¼</Option>
-                                    <Option value="4.50">4½</Option>
-                                    <Option value="4.75">4¾</Option>
-                                    <Option value="5">5</Option>
-                                    <Option value="5.25">5¼</Option>
-                                    <Option value="5.50">5½</Option>
-                                    <Option value="5.75">5¾</Option>
-                                    <Option value="6">6</Option>
-                                    <Option value="6.25">6¼</Option>
-                                    <Option value="6.50">6½</Option>
-                                    <Option value="6.75">6¾</Option>
-                                    <Option value="7">7</Option>
-                                    <Option value="7.25">7¼</Option>
-                                    <Option value="7.50">7½</Option>
-                                    <Option value="7.75">7¾</Option>
-                                    <Option value="8">8</Option>
-                                    <Option value="8.25">8¼</Option>
-                                    <Option value="8.50">8½</Option>
-                                    <Option value="8.75">8¾</Option>
-                                    <Option value="9">9</Option>
-                                    <Option value="9.25">9¼</Option>
-                                    <Option value="9.50">9½</Option>
-                                    <Option value="9.75">9¾</Option>
+                                    <Option value={0.25}>¼</Option>
+                                    <Option value={0.50}>½</Option>
+                                    <Option value={0.75}>¾</Option>
+                                    <Option value={1}>1</Option>
+                                    <Option value={1.25}>1¼</Option>
+                                    <Option value={1.50}>1½</Option>
+                                    <Option value={1.75}>1¾</Option>
+                                    <Option value={2}>2</Option>
+                                    <Option value={2.25}>2¼</Option>
+                                    <Option value={2.50}>2½</Option>
+                                    <Option value={2.75}>2¾</Option>
+                                    <Option value={3}>3</Option>
+                                    <Option value={3.25}>3¼</Option>
+                                    <Option value={3.50}>3½</Option>
+                                    <Option value={3.75}>3¾</Option>
+                                    <Option value={4}>4</Option>
+                                    <Option value={4.25}>4¼</Option>
+                                    <Option value={4.50}>4½</Option>
+                                    <Option value={4.75}>4¾</Option>
+                                    <Option value={5}>5</Option>
+                                    <Option value={5.25}>5¼</Option>
+                                    <Option value={5.50}>5½</Option>
+                                    <Option value={5.75}>5¾</Option>
+                                    <Option value={6}>6</Option>
+                                    <Option value={6.25}>6¼</Option>
+                                    <Option value={6.50}>6½</Option>
+                                    <Option value={6.75}>6¾</Option>
+                                    <Option value={7}>7</Option>
+                                    <Option value={7.25}>7¼</Option>
+                                    <Option value={7.50}>7½</Option>
+                                    <Option value={7.75}>7¾</Option>
+                                    <Option value={8}>8</Option>
+                                    <Option value={8.25}>8¼</Option>
+                                    <Option value={8.50}>8½</Option>
+                                    <Option value={8.75}>8¾</Option>
+                                    <Option value={9}>9</Option>
+                                    <Option value={9.25}>9¼</Option>
+                                    <Option value={9.50}>9½</Option>
+                                    <Option value={9.75}>9¾</Option>
                                 </Select>
                             )}
                             </FormItem>
@@ -380,11 +397,11 @@ let notPermanent = 0;
                             initialValue: timesPerHour.length
                         })(
                             <Select onSelect={this.onSelect} style={{ width: 200 }}>
-                                    <Option value="1">1 Time</Option>
-                                    <Option value="2">2 Times</Option>
-                                    <Option value="3">3 Times</Option>
-                                    <Option value="4">4 Times</Option>
-                                    <Option value="5">5 Times</Option>
+                                    <Option value={1}>1 Time</Option>
+                                    <Option value={2}>2 Times</Option>
+                                    <Option value={3}>3 Times</Option>
+                                    <Option value={4}>4 Times</Option>
+                                    <Option value={5}>5 Times</Option>
                             </Select>
                         )}
                             <Row>
@@ -401,8 +418,8 @@ let notPermanent = 0;
                                 )}
                             />
 
-                            <Col offset={7} span={5}><label>Total</label></Col>
-                            <Col span={6}><label>{total}</label></Col>
+                        {/*<Col offset={7} span={5}><label>Total</label></Col>
+                            <Col span={6}><label>{total}</label></Col>*/}
                     </FormItem> :
 
                <div>
@@ -421,11 +438,11 @@ let notPermanent = 0;
                                         initialValue:  timesPerDay
                                     })(
                                         <Select onSelect={this.onSelect}  style={{ width: 200 }} >
-                                            <Option value="1">1 Time</Option>
-                                            <Option value="2">2 Times</Option>
-                                            <Option value="3">3 Times</Option>
-                                            <Option value="4">4 Times</Option>
-                                            <Option value="5">5 Times</Option>
+                                            <Option value={1}>1 Time</Option>
+                                            <Option value={2}>2 Times</Option>
+                                            <Option value={3}>3 Times</Option>
+                                            <Option value={4}>4 Times</Option>
+                                            <Option value={5}>5 Times</Option>
                                         </Select>
                                     )}
                             </FormItem>
@@ -435,62 +452,62 @@ let notPermanent = 0;
                             {...formItemLayout}
                         >
                                 {getFieldDecorator('quantity', {
-                                    initialValue: col
+                                    initialValue: quantity
                                 })(
                                     <Select onChange={this.onTotal} style={{ width: 80 }} >
-                                        <Option value="0.25">¼</Option>
-                                        <Option value="0.50">½</Option>
-                                        <Option value="0.75">¾</Option>
-                                        <Option value="1">1</Option>
-                                        <Option value="1.25">1¼</Option>
-                                        <Option value="1.50">1½</Option>
-                                        <Option value="1.75">1¾</Option>
-                                        <Option value="2">2</Option>
-                                        <Option value="2.25">2¼</Option>
-                                        <Option value="2.50">2½</Option>
-                                        <Option value="2.75">2¾</Option>
-                                        <Option value="3">3</Option>
-                                        <Option value="3.25">3¼</Option>
-                                        <Option value="3.50">3½</Option>
-                                        <Option value="3.75">3¾</Option>
-                                        <Option value="4">4</Option>
-                                        <Option value="4.25">4¼</Option>
-                                        <Option value="4.50">4½</Option>
-                                        <Option value="4.75">4¾</Option>
-                                        <Option value="5">5</Option>
-                                        <Option value="5.25">5¼</Option>
-                                        <Option value="5.50">5½</Option>
-                                        <Option value="5.75">5¾</Option>
-                                        <Option value="6">6</Option>
-                                        <Option value="6.25">6¼</Option>
-                                        <Option value="6.50">6½</Option>
-                                        <Option value="6.75">6¾</Option>
-                                        <Option value="7">7</Option>
-                                        <Option value="7.25">7¼</Option>
-                                        <Option value="7.50">7½</Option>
-                                        <Option value="7.75">7¾</Option>
-                                        <Option value="8">8</Option>
-                                        <Option value="8.25">8¼</Option>
-                                        <Option value="8.50">8½</Option>
-                                        <Option value="8.75">8¾</Option>
-                                        <Option value="9">9</Option>
-                                        <Option value="9.25">9¼</Option>
-                                        <Option value="9.50">9½</Option>
-                                        <Option value="9.75">9¾</Option>
+                                        <Option value={0.25}>¼</Option>
+                                        <Option value={0.50}>½</Option>
+                                        <Option value={0.75}>¾</Option>
+                                        <Option value={1}>1</Option>
+                                        <Option value={1.25}>1¼</Option>
+                                        <Option value={1.50}>1½</Option>
+                                        <Option value={1.75}>1¾</Option>
+                                        <Option value={2}>2</Option>
+                                        <Option value={2.25}>2¼</Option>
+                                        <Option value={2.50}>2½</Option>
+                                        <Option value={2.75}>2¾</Option>
+                                        <Option value={3}>3</Option>
+                                        <Option value={3.25}>3¼</Option>
+                                        <Option value={3.50}>3½</Option>
+                                        <Option value={3.75}>3¾</Option>
+                                        <Option value={4}>4</Option>
+                                        <Option value={4.25}>4¼</Option>
+                                        <Option value={4.50}>4½</Option>
+                                        <Option value={4.75}>4¾</Option>
+                                        <Option value={5}>5</Option>
+                                        <Option value={5.25}>5¼</Option>
+                                        <Option value={5.50}>5½</Option>
+                                        <Option value={5.75}>5¾</Option>
+                                        <Option value={6}>6</Option>
+                                        <Option value={6.25}>6¼</Option>
+                                        <Option value={6.50}>6½</Option>
+                                        <Option value={6.75}>6¾</Option>
+                                        <Option value={7}>7</Option>
+                                        <Option value={7.25}>7¼</Option>
+                                        <Option value={7.50}>7½</Option>
+                                        <Option value={7.75}>7¾</Option>
+                                        <Option value={8}>8</Option>
+                                        <Option value={8.25}>8¼</Option>
+                                        <Option value={8.50}>8½</Option>
+                                        <Option value={8.75}>8¾</Option>
+                                        <Option value={9}>9</Option>
+                                        <Option value={9.25}>9¼</Option>
+                                        <Option value={9.50}>9½</Option>
+                                        <Option value={9.75}>9¾</Option>
                                     </Select>
                                 )}
 
                             </FormItem>
 
                         </Col>
-                        <Col offset={14} span={3}><label>Total</label></Col>
-                        <Col span={2}><label>jk</label></Col>
+                        {/*<Col offset={14} span={3}><label>Total</label></Col>
+                        <Col span={2}><label>jk</label></Col>*/}
                     </Row>
                    </div>
                     }
 
 
-                { <Row>
+                 <Row>
                     <Col offset={3} span={12}>
                         <FormItem
                             {...formItemLayout}
@@ -500,16 +517,16 @@ let notPermanent = 0;
                                 initialValue: moment(startDate, dateFormat),
                             })(
                                 <DatePicker
-                                    disabledDate={this.disabledStartDate}
-                                    format={dateFormat}
-                                    placeholder="Start"
+                                    /*disabledDate={this.disabledStartDate}
+                                    format={dateFormat}*/
+                                    placeholder="Start date"
                                 />
                             )}
                         </FormItem>
                     </Col>
 
                     <Col span={1}>
-                        <span style={{ width: '100%'}}>
+                        <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                           -
                         </span>
                     </Col>
@@ -517,19 +534,20 @@ let notPermanent = 0;
                         <FormItem
                         >
                             {getFieldDecorator('endDate', {
-                                initialValue: moment(endDate, dateFormat),
+                                initialValue: endDate ? moment(endDate, dateFormat) : '',
                             })(
                                 <DatePicker
-                                    disabledDate={this.disabledEndDate}
+                                    placeholder="End date"
+                                    /*disabledDate={this.disabledEndDate}
                                     format={dateFormat}
-                                    placeholder="End"
+                                    placeholder="End"*/
                                 />
                             )}
                         </FormItem>
                     </Col>
 
                 </Row>
-                }
+
 
 
 
@@ -565,7 +583,7 @@ let notPermanent = 0;
                            </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label={<FormattedMessage id="user.settings.basic.tdsitfdle" defaultMessage="Directions" description="Direcctions" />}
+                            label={<FormattedMessage id="user.settings.basic.tdsitfdle1" defaultMessage="Directions" description="Direcctions" />}
                         >
                                 {getFieldDecorator('directions', {
                                     initialValue: directions,
@@ -575,9 +593,9 @@ let notPermanent = 0;
                           </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label={<FormattedMessage id="user.settings.basic.tddsitdle" defaultMessage="Side Effects" description="Side Effects" />}
+                            label={<FormattedMessage id="user.settings.basic.tddsitdle1" defaultMessage="Side Effects" description="Side Effects" />}
                         >
-                                {getFieldDecorator('sideEffect', {
+                                {getFieldDecorator('sideEffects', {
                                     initialValue: sideEffects,
                                 })(
                                 <Input />

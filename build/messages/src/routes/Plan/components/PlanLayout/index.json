@@ -1,0 +1,7 @@
+[
+  {
+    "id": "userplan.joined",
+    "description": "Medications for Today",
+    "defaultMessage": "Joined on {date}"
+  }
+]

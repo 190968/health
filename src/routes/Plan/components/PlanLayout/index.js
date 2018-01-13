@@ -4,42 +4,16 @@ import { Link } from 'react-router-dom'
 
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
-// add placeholders
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-
-import { Modal, FormGroup, Label, Input, FormText, ModalHeader, ModalBody, ModalFooter, Row, Col} from 'reactstrap';
-// adding filters
-// for modal
-import {  Form, Text, Select, Textarea, Checkbox, NestedForm, FormError} from 'react-form'
-
 import PlanBody from './containers/PlanBody';
-import { Button, Radio } from 'antd';
-const RadioGroup = Radio.Group;
-//import Button from 'antd/lib/button';
+import {Icon,Avatar, Card,Row, Col, Modal, Form ,Spin, Select,Input, Checkbox , Button } from 'antd';
 
+import {
+    FormattedMessage,
+    FormattedDate,
+} from 'react-intl';
 
+const { Meta } = Card;
 
-const PlanstorePlanPlaceholder = (
-    <Row>
-        <Col xs="12" sm="4" md="4">
-            <div className="ap-card__img ap-card__img--large"><RectShape color="#f2f2f2" style={{width: '100%', height: '100%'}}/></div>
-        </Col>
-        <Col xs="12" sm="8" md="8">
-            <div className="ap-card__body">
-                <div className="ap-card__title ap-card__title--large">
-                    <RectShape rows={1} color="#ddd" style={{height:'25px'}} />
-                </div>
-                <div className="ap-card__description" >
-                    <TextBlock rows={3} color="#f2f2f2"/>
-                </div>
-                <div className="ap-card__action">
-                    <RectShape color="#ddd" style={{width:'100px', height:38}}/>
-                </div>
-            </div>
-        </Col>
-    </Row>
-);
 
 
 
@@ -130,40 +104,44 @@ export class PlanstorPlanLayout extends React.Component {
     };
 
     render() {
-        const {plan, loading} = this.props;
-        if (1==12 || loading) {
+        const {info, plan, user, loading} = this.props;
+        if (loading) {
             // console.log(plan);
             //return (<div>Loading...</div>);
             return (
-                <div>
-                    <div className="box">
-                        <div className="box__body"><ReactPlaceholder rows={7} ready={!loading} customPlaceholder={PlanstorePlanPlaceholder}>Loading</ReactPlaceholder>
-                        </div>
-                    </div>
-                    <div className="box">
-                        <div className="box__header"><RectShape color="#ddd" style={{width:'20%', height:15}}/></div>
-                        <div className="box__body">
-                            <TextBlock rows={3} color="#f2f2f2"/>
-                        </div>
-                    </div>
-                    <div className="box">
-                        <div className="box__header"><RectShape color="#ddd" style={{width:'40%', height:15}}/></div>
-                        <div className="box__body">
-                            <TextBlock rows={3} color="#f2f2f2"/>
-                        </div>
-                    </div>
-                </div>
+                <Card loading>
+                    aaa
+                </Card>
             );
         }
         //console.log(plan);
         //console.log(loading);
-        var img = plan.thumb.large;
+        var img = plan.thumb.wide;
         var divStyle = {
             backgroundImage: 'url(' + img + ')'
         }
 
-        return (<ReactPlaceholder showLoadingAnimation type='media' rows={4} ready={!loading}>
+        return (
             <div>
+                <Card
+                    title={plan.title}
+                    cover={<img alt={plan.title} height={300} src={img} /*https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"*/ />}
+                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                >
+                    <Meta
+                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                        title={user.first_name + ' '+ user.last_name}
+                        description={<FormattedMessage id="userplan.joined" defaultMessage="Joined on {date}" values={{
+                            date: <FormattedDate
+                                value={new Date(info.joinDate)}
+                                year='numeric'
+                                month='long'
+                                day='2-digit'
+                            />
+                        }} description="Medications for Today" />}
+                    />
+                </Card>
+            <Card>
                 <div className="box">
                     <div className="box__body">
                         <Row>
@@ -173,117 +151,17 @@ export class PlanstorPlanLayout extends React.Component {
                             <Col xs="12" sm="8" md="8">
                                 <div className="ap-card__body">
                                     <div className="ap-card__title ap-card__title--large">
-                                        <h1>{plan.title}</h1>
+                                        <h1></h1>
                                     </div>
-                                    <RadioGroup value={3}>
-                                        <Radio value={1}>A</Radio>
-                                        <Radio value={2}>B</Radio>
-                                        <Radio value={3}>C</Radio>
-                                        <Radio value={4}>D</Radio>
-                                    </RadioGroup>
                                 </div>
                             </Col>
                         </Row>
                     </div>
                 </div>
 
-
                 <PlanBody id={plan.id}></PlanBody>
-
-
-
-                <Modal isOpen={this.state.modalIsOpen} toggle={this.toggle} className={this.props.className} backdrop='static' keyboard={false}>
-                    <ModalHeader toggle={this.toggle}>Set your ActionPlan: {plan.title}</ModalHeader>
-                    <ModalBody>
-
-                        <Form
-                            onSubmit={(values) => {
-                                console.log('Success!', values)
-                            }}
-                            validate={({ name }) => {
-                                return {
-                                    name: !name ? 'A name is required' : undefined
-                                }
-                            }}
-                        >
-                            {({submitForm}) => {
-                                return (
-                                    <form onSubmit={submitForm}>
-                                        <div className="box">
-                                            <div className="box__header">
-                                                <h3>Privacy</h3>
-                                            </div>
-                                            <div className="box__body">
-                                                <RadioGroup field="notificationType">
-                                                    <div>
-                                                        <label>
-                                                            <Radio value="email" />{' '}
-                                                            {/*This is the built-in radio formInput*/}
-                                                            <span>Open</span>
-                                                        </label>
-                                                    </div>
-                                                    <div>
-                                                        <label>
-                                                            <Radio value="text" />{' '}
-                                                            {/*This is the built-in radio formInput*/}
-                                                            <span>Private</span>
-                                                        </label>
-                                                    </div>
-
-                                                </RadioGroup>
-                                            </div>
-                                        </div>
-
-
-                                        <div className="box">
-                                            <div className="box__header">
-                                                <h3>Scheduling</h3>
-                                            </div>
-                                            <div className="box__body">
-                                                <FormGroup row>
-                                                    <Label for="scheduling" sm={2}>Starts on</Label>
-                                                    <Col sm={10}>
-                                                        <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
-                                                    </Col>
-                                                </FormGroup>
-                                                <FormGroup row>
-                                                    <Label for="scheduling" sm={2}>Ends</Label>
-                                                    <Col sm={10}>
-                                                        <RadioGroup field="notificationType">
-                                                            <div>
-                                                                <label>
-                                                                    <Radio value="haveNoEndDate" />{' '}
-                                                                    {/*This is the built-in radio formInput*/}
-                                                                    <span>Never</span>
-                                                                </label>
-                                                            </div>
-                                                            <div>
-                                                                <label>
-                                                                    <Radio value="haveEndDate" />{' '}
-                                                                    {/*This is the built-in radio formInput*/}
-                                                                    <span>On</span>
-                                                                </label>
-                                                            </div>
-
-                                                        </RadioGroup>
-                                                    </Col>
-                                                </FormGroup>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                )
-                            }}
-                        </Form>
-
-
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary">Continue</Button>{' '}
-                    </ModalFooter>
-                </Modal>
-            </div>
-        </ReactPlaceholder>)
+            </Card>
+            </div>)
     }
 }
 

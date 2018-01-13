@@ -11,12 +11,19 @@ import gql from 'graphql-tag';
 
 import Plan from '../../Plan/components/Plan';
 
-
 const CURRENT_PERSONAL_PLAN = gql`
-    query GET_PERSONAL_PLAN ($upid: ID!) {
-        plan (upid: $upid) {
-            ...PlanCardInfo,
-            upid
+    query GET_USER_PLAN ($upid: ID!) {
+        userPlan (upid: $upid) {
+        id
+        joinDate
+        plan {
+            ...PlanCardInfo
+            }
+           user {
+           id
+           first_name
+           last_name
+           }
 
         }
     }
@@ -41,7 +48,9 @@ const PlanstorPlanLayoutWithQuery = graphql(
                 //console.log(ownProps);
 
                 return {
-                    plan: data.plan,
+                    info: data.userPlan,
+                    plan: data.userPlan.plan,
+                    user: data.userPlan.user,
                     //modules: data.network.modules,
                     loading: data.loading,
                     /*increment() {

@@ -5,9 +5,9 @@
     "defaultMessage": "Trackers for Today"
   },
   {
-    "id": "plan.biometric.title",
+    "id": "plan.trackers.medication.card.title2",
     "description": "Trackers for Today",
-    "defaultMessage": "Trackers for Today"
+    "defaultMessage": "Trackers for {date}"
   },
   {
     "id": "plan.prev_day",
@@ -18,13 +18,17 @@
     "defaultMessage": "Next day"
   },
   {
-    "id": "plan.biometricplan.biometric.trackermodal.modal.title",
-    "description": "Edit Tracker",
-    "defaultMessage": "Edit Tracker -"
+    "id": "trsvker.add",
+    "defaultMessage": "Add Medication"
   },
   {
-    "id": "plan.biometricplan.biometric.trackermodal.modal.button",
-    "description": "Done",
-    "defaultMessage": "Done"
+    "id": "plan.tracker.add",
+    "description": "Add Tracker",
+    "defaultMessage": "Add Tracker"
+  },
+  {
+    "id": "plan.biometricplan.biometric.trackermodal.modal.title",
+    "description": "Edit Tracker",
+    "defaultMessage": "Edit Tracker"
   }
 ]

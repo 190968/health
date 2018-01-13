@@ -34,7 +34,7 @@ class MyCategoriesForm extends React.Component{
 
         return(
                     <Card
-                        title="Main CATEGORIES"
+                        title="Main Categories"
                     >
                         <List
                             split={false}

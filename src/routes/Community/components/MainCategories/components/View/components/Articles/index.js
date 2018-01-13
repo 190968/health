@@ -30,11 +30,11 @@ class ArticlesForm extends React.Component{
            Article.push(
 
                <TabPane tab={item.title} key={item.id}>
-                   <Col span={7}>
+                   <Col span={16}>
                       <h3>{item.title}</h3>
                        {item.text}
                    </Col>
-                   <Col offset={7} span={5}>
+                   <Col offset={1} span={7}>
                        <img src={item.thumbs.large} />
                    </Col>
                </TabPane>

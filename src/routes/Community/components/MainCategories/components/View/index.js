@@ -2,8 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
+import { Link } from 'react-router-dom'
 import DiscussionsForm from  './components/CommunityDiscussions';
 import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
@@ -25,11 +24,16 @@ class ViewForm extends React.Component{
                 <p>Loading!!!</p>
             );
         }
+<<<<<<< HEAD
         const {name,articles,discussions,categories} = info;
         console.log(info);
+=======
+        const {id,name,articles,discussions,categories} = info;
+       // console.log(articles);
+>>>>>>> 0981710ea7fe76894f80ded55d68021908bd4fda
 
         Crumb.push(
-            <Breadcrumb.Item href="">{name}</Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={"/community/"+id}>{name}</Link></Breadcrumb.Item>
         )
 
 
@@ -38,7 +42,7 @@ class ViewForm extends React.Component{
             <div>
                 <Row>
                     <Breadcrumb separator=">">
-                        <Breadcrumb.Item href="/community">Community</Breadcrumb.Item>
+                        <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
                         {Crumb}
                     </Breadcrumb>
                 </Row>
