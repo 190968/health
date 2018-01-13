@@ -106,14 +106,30 @@ const PlanBodyWithQuery = graphql(
                     body: body,
                     lessons: lessons,
                     activities: activities,
-                    intro: intro
-                    /*increment() {
-                         ownProps.increment(data.plans['actionplans']);
-                    },
-                    doubleAsync() {
-                         // reset list of plans
-                        ownProps.increment([]);
-                    }*/
+                    intro: intro,
+
+                    loadDate(date) {
+                        //console.log(date);
+                        return data.fetchMore({
+                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                            variables: {
+                                // We are able to figure out which offset to use because it matches
+                                // the feed length, but we could also use state, or the previous
+                                // variables to calculate this (see the cursor example below)
+                                date: date,
+                            },
+                            updateQuery: (previousResult, {fetchMoreResult}) => {
+                                //return {medicationPlan:{id:29}};
+                                //console.log(fetchMoreResult);
+                                //fetchMoreResult.date = date;
+                                if (!fetchMoreResult) { return previousResult; }
+                                return fetchMoreResult;
+                                return Object.assign({}, previousResult, {
+                                    medicationPlan: fetchMoreResult.medicationPlan,
+                                });
+                            },
+                        });
+                    }
                 }
 
             } else {

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // add placeholders
-import PlanBodyMenu from './containers/PlanBodyMenu';
+import PlanElement from '../PlanElement';
 
 
 // adding filters
@@ -77,28 +77,31 @@ export class PlanBody extends React.Component {
 
                 </SubMenu>
             </Menu></Affix></Col>
-            <Col offset={6}>
+            <Col offset={5}>
 
                 {lessons.map((section) => {
                     let anchors = [];
                     if (currentTab == 'lesson_'+section.id) {
                         const list = <Row key={section.id}>
-                            <Col xs={18}>
-                                <List
-                                    size="small"
-                                    header={<div>{section.title}</div>}
-                                    dataSource={section.elements}
-                                    renderItem={item => {
-                                        return <List.Item id={'field' + item.id} style={{height: 50}}
-                                                          key={item.id}>{item.id}</List.Item>
-                                    }}
-                                />
+                            <Col xs={19}>
+                                <Card title={section.title} bordered={false}>
+                                    <List
+                                        size="large"
+                                        itemLayout="vertical"
+                                        split={false}
+                                        dataSource={section.elements}
+                                        renderItem={item => {
+                                            return <List.Item id={'field' + item.id}
+                                                              key={item.id}><PlanElement element={item} /></List.Item>
+                                        }}
+                                    />
+                                </Card>
                             </Col>
                             <Col offset={19}>
 
                                 <Anchor offsetTop={10}>
                                     {section.elements.map((item) => (
-                                        <Anchor.Link key={item.id} href={'#field' + item.id} title={item.id}/>))}
+                                        <Anchor.Link key={item.id} href={'#field' + item.id} title={item.item_info.label}/>))}
 
                                     {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
                                 <Anchor.Link href="#components-anchor-demo-basic3" title="Basic demo 3" />*/}
@@ -114,22 +117,25 @@ export class PlanBody extends React.Component {
                     let anchors = [];
                     if (currentTab == 'section_'+section.id) {
                         const list = <Row key={section.id}>
-                            <Col xs={18}>
+                            <Col xs={19}>
+                                <Card title={section.title} bordered={false}>
                                 <List
-                                    size="small"
-                                    header={<div>{section.title}</div>}
+                                    size="large"
+                                    itemLayout="vertical"
+                                    split={false}
                                     dataSource={section.elements}
                                     renderItem={item => {
-                                        return <List.Item id={'field' + item.id} style={{height: 50}}
-                                                          key={item.id}>{item.id}</List.Item>
+                                        return <List.Item id={'field' + item.id}
+                                                          key={item.id}><PlanElement element={item} /></List.Item>
                                     }}
                                 />
+                                </Card>
                             </Col>
                             <Col offset={19}>
 
                                 <Anchor offsetTop={10}>
                                     {section.elements.map((item) => (
-                                        <Anchor.Link key={item.id} href={'#field' + item.id} title={item.id}/>))}
+                                        <Anchor.Link key={item.id} href={'#field' + item.id} title={item.item_info.label}/>))}
 
                                     {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
                                 <Anchor.Link href="#components-anchor-demo-basic3" title="Basic demo 3" />*/}

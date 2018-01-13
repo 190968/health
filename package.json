@@ -46,7 +46,7 @@
   "devDependencies": {
     "atool-l10n": "^0.3.0",
     "babel-plugin-react-intl": "^2.3.1",
-    "react-app-rewired": "^1.3.8",
+    "react-app-rewired": "^1.4.0",
     "redux-devtools": "^3.4.1",
     "redux-mock-store": "^1.3.0"
   }
