@@ -26,7 +26,7 @@ class ViewForm extends React.Component{
             );
         }
         const {name,articles,discussions,categories} = info;
-       // console.log(articles);
+        console.log(info);
 
         Crumb.push(
             <Breadcrumb.Item href="">{name}</Breadcrumb.Item>
