@@ -1,5 +1,13 @@
 [
   {
+    "id": "plan.prev_day",
+    "defaultMessage": "Previous day"
+  },
+  {
+    "id": "plan.next_day",
+    "defaultMessage": "Next day"
+  },
+  {
     "id": "userplan.joined",
     "description": "Medications for Today",
     "defaultMessage": "Joined on {date}"

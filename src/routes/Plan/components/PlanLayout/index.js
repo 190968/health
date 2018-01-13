@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom'
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 import PlanBody from './containers/PlanBody';
-import {Icon,Avatar, Card,Row, Col } from 'antd';
+
+import {Icon,Avatar, Card,Row, Col, Button, Tooltip ,Spin, Select,Input, Checkbox } from 'antd';
+
 
 import {
     FormattedMessage,
     FormattedDate,
 } from 'react-intl';
+import moment from "moment/moment";
 
 const { Meta } = Card;
 
@@ -22,11 +25,28 @@ export class PlanstorPlanLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: false
+            modalIsOpen: false,
+            date: props.date
         };
+        this.showDate = this.showDate.bind(this);
     };
     static propTypes = {
         plan: PropTypes.object,
+
+    };
+    static defaultProps = {
+        date:  moment().format('YYYY-MM-DD')
+    }
+    showDate = (type) => {
+        var dateTime = new Date(this.state.date);
+        let date = '';
+        if (type === 'prev') {
+            date = moment(dateTime).add(-1, 'days').format("YYYY-MM-DD");
+        } else {
+            date = moment(dateTime).add(1, 'days').format("YYYY-MM-DD");
+        }
+        this.setState({date:date});
+        this.props.loadDate(date, this.props.user_id);
     };
 
     openModal = () => {
@@ -126,7 +146,12 @@ export class PlanstorPlanLayout extends React.Component {
                 <Card
                     title={plan.title}
                     cover={<img alt={plan.title} height={300} src={img} /*https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"*/ />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    actions={[<Row><Col><FormattedDate
+                        value={new Date(this.state.date)}
+                        year='numeric'
+                        month='long'
+                        day='2-digit'
+                    /></Col><Col><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group></Col></Row>, <Icon type="edit" />, <Icon type="ellipsis" />]}
                 >
                     <Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
