@@ -2,21 +2,15 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Tooltip, Carousel,Form,Card,List,Row,Col  } from 'antd';
+import { Tooltip,Form,Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 
 import { Link } from 'react-router-dom'
 import '../../style.css';
-import {
-    Route,
-    Redirect,
-} from 'react-router-dom'
-class MyCategoriesForm extends React.Component{
+class MyCategories extends React.Component{
 
     constructor(props){
         super(props);
-
-        this.state = {displayedFamily: props};
     }
 
 
@@ -27,9 +21,6 @@ class MyCategoriesForm extends React.Component{
                 <p>Loading!!!</p>
             );
         }
-
-
-      //  console.log(info);
 
 
         return(
@@ -59,5 +50,5 @@ class MyCategoriesForm extends React.Component{
 
 }
 
-const WrappedMyCategoriesForm = Form.create()(MyCategoriesForm);
-export default withApollo(WrappedMyCategoriesForm);
+const WrappedMyCategories = Form.create()(MyCategories);
+export default withApollo(WrappedMyCategories);

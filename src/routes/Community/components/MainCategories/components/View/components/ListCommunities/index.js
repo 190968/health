@@ -5,16 +5,14 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Tooltip,Form,Card,List,Row,Col ,Avatar } from 'antd';
+import { Tooltip,Form,Card,List,Row} from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import { Link } from 'react-router-dom'
 
-class ListCommunityForm extends React.Component{
+class ListCommunity extends React.Component{
 
     constructor(props){
         super(props);
-        //console.log(props);
-        this.state = {displayedFamily: props};
     }
 
     render(){
@@ -55,5 +53,5 @@ class ListCommunityForm extends React.Component{
 
 }
 
-const WrappedListCommunityForm = Form.create()(ListCommunityForm);
-export default withApollo(WrappedListCommunityForm);
+const WrappedListCommunity = Form.create()(ListCommunity);
+export default withApollo(WrappedListCommunity);

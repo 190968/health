@@ -2,18 +2,14 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-import { Form,Card,List,Row,Col ,Tabs } from 'antd';
+import { Form,Card,Col ,Tabs } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 const TabPane = Tabs.TabPane;
 
-class ArticlesForm extends React.Component{
+class Articles extends React.Component{
 
     constructor(props){
         super(props);
-        //console.log(props);
-        this.state = {displayedFamily: props};
     }
 
     render(){
@@ -24,7 +20,6 @@ class ArticlesForm extends React.Component{
             );
         }
         const {articles} = this.props;
-        console.log(articles);
         let Article = [];
         articles.forEach((item)=>{
            Article.push(
@@ -52,5 +47,5 @@ class ArticlesForm extends React.Component{
 
 }
 
-const WrappedArticlesForm = Form.create()(ArticlesForm);
-export default withApollo(WrappedArticlesForm);
+const WrappedArticles = Form.create()(Articles);
+export default withApollo(WrappedArticles);

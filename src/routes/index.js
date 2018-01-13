@@ -116,18 +116,12 @@ export const asyncVerifyPhoneConfirm = (store) => {
     );
 }
 
+
+
 export const asyncCommynity = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Community/containers/mainCategories')
-        })
-    );
-}
-
-export const asyncCommynityID = (store) => {
-    return (
-        Loadable({
-            loader: () => import('../routes/Community/containers/CommunityDiscussions')
+            loader: () => import('../routes/Community/components')
         })
     );
 }

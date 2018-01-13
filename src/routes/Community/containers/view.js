@@ -6,13 +6,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import DiscussionsForm from '../components/MainCategories/components/View';
+import Discussions from '../components/MainCategories/components/View';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
 const CATEGORY  = gql`
-query GET_CATEGORIES($id:ID) {
+query GET_CATEGORY($id:ID) {
 
        category(id:$id) {
          id
@@ -105,4 +105,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(DiscussionsForm));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Discussions));

@@ -6,13 +6,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import MyCategoriesForm from '../components/MainCategories';
+import MyCategories from '../components/MainCategories';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
 const CATEGORIES  = gql`
-   query GET_CATEGORIES {
+   query GET_MAIN_CATEGORIES {
        getMainCategories {
          id
         name
@@ -54,4 +54,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MyCategoriesForm));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MyCategories));

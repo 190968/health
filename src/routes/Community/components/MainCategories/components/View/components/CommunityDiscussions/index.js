@@ -2,9 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-import { Icon,Form,Card,List,Row,Col ,Avatar } from 'antd';
+import { Icon,Form,Card,List,Row,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 
 const IconText = ({ type, text }) => (
@@ -14,12 +12,10 @@ const IconText = ({ type, text }) => (
   </span>
 );
 
-class CommunityDiscussionsForm extends React.Component{
+class CommunityDiscussions extends React.Component{
 
     constructor(props){
         super(props);
-        //console.log(props);
-        this.state = {displayedFamily: props};
     }
 
     render(){
@@ -30,7 +26,6 @@ class CommunityDiscussionsForm extends React.Component{
             );
         }
         const {name,discussions} = this.props;
-        //console.log(this.props);
 
 
         return(
@@ -64,5 +59,5 @@ class CommunityDiscussionsForm extends React.Component{
 
 }
 
-const WrappedCommunityDiscussionsForm = Form.create()(CommunityDiscussionsForm);
-export default withApollo(WrappedCommunityDiscussionsForm);
+const WrappedCommunityDiscussions = Form.create()(CommunityDiscussions);
+export default withApollo(WrappedCommunityDiscussions);

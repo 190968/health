@@ -2,14 +2,13 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router-dom'
 import DiscussionsForm from  './components/CommunityDiscussions';
 import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
-import { Button,Form,Input,Breadcrumb ,Row,Col ,Avatar } from 'antd';
+import { Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 const Search = Input.Search;
-let Crumb = [];
+
 class ViewForm extends React.Component{
 
     constructor(props){
@@ -25,23 +24,15 @@ class ViewForm extends React.Component{
             );
         }
 
-        const {id,name,articles,discussions,categories} = info;
+        const {name,articles,discussions,categories} = info;
 
 
-        Crumb.push(
-            <Breadcrumb.Item><Link to={"/community/"+id}>{name}</Link></Breadcrumb.Item>
-        )
 
 
         return(
 
             <div>
-                <Row>
-                    <Breadcrumb separator=">">
-                        <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
-                        {Crumb}
-                    </Breadcrumb>
-                </Row>
+
                 <Row>
                     {
                         categories.length != 0 ?
