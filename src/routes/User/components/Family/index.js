@@ -2,16 +2,14 @@
  * Created by Pavel on 08.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Redirect, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 
-import {Modal, Form, Icon, List,Avatar, Button, Card } from 'antd';
+import { Form,  List,Avatar, Card } from 'antd';
 
-class CareTeam extends React.Component {
+class Family extends React.Component {
 
     constructor(props) {
         super(props);
@@ -24,14 +22,14 @@ class CareTeam extends React.Component {
 
 
         if (loading) {
-            return  <Card loading title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM" description="MY CARETEAM" />}>
+            return  <Card loading title={<FormattedMessage id="user.family.family.title" defaultMessage="MY FAMILY" description="MY FAMILY" />}>
                 Loading</Card>;
         }
-        const  {careTeam} = info;
-        const  {edges,totalCount} = careTeam;
-      //  console.log(edges,"------------",totalCount);
+        const  {family} = info;
+        const  {edges,totalCount} = family;
+
         return (
-            <Card title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM" description="MY CARETEAM" />}>
+            <Card title={<FormattedMessage id="user.family.family.title" defaultMessage="MY FAMILY" description="MY FAMILY" />}>
                 <List
                     split={false}
                     loading={loading}
@@ -61,5 +59,5 @@ class CareTeam extends React.Component {
     }
 }
 
-const WrappedCareTeam = Form.create()(CareTeam);
-export default WrappedCareTeam;
+const WrappedFamily = Form.create()(Family);
+export default WrappedFamily;

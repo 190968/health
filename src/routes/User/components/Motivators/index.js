@@ -5,13 +5,11 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 
-import {Modal, Form, Icon, List,Avatar, Button, Card } from 'antd';
+import { Form,  List,Avatar, Card } from 'antd';
 
-class MotivatorsForm extends React.Component {
+class Motivators extends React.Component {
 
     constructor(props) {
         super(props);
@@ -61,5 +59,5 @@ class MotivatorsForm extends React.Component {
     }
 }
 
-const WrappedMotivatorsForm = Form.create()(MotivatorsForm);
-export default WrappedMotivatorsForm;
+const WrappedMotivators= Form.create()(Motivators);
+export default WrappedMotivators;

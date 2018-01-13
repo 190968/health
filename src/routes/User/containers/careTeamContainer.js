@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
  wiring in the actions and state necessary to render a presentational
  components - in this case, the counter:   */
 
-import CareTeamForm from '../components/CareTeam';
+import CareTeam from '../components/CareTeam';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -19,6 +19,7 @@ const CARETEAM  = gql`
    query GET_CARETEAM {
         account {
             user {
+            id
             careTeam {
                     totalCount,
                   edges{
@@ -60,4 +61,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(CareTeamForm));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(CareTeam));

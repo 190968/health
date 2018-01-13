@@ -1,7 +1,4 @@
 /**
- * Created by Pavel on 08.01.2018.
- */
-/**
  * Created by Pavel on 08.12.2017.
  */
 import React from 'react'
@@ -13,17 +10,18 @@ import { connect } from 'react-redux'
  wiring in the actions and state necessary to render a presentational
  components - in this case, the counter:   */
 
-import Motivators from '../components/Motivators';
+import Family from '../components/Family';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const motivators = gql`
-   query GET_MOTIVATORS {
+const FAMILY  = gql`
+   query GET_FAMILY {
         account {
             user {
-            motivators {
-                  totalCount,
+            id
+            family {
+                    totalCount,
                   edges{
                     id,
                     user {
@@ -38,8 +36,9 @@ const motivators = gql`
      }
 `;
 
-const withMutation = graphql(motivators, {
+const withMutation = graphql(FAMILY, {
     props: ({ ownProps, data }) => {
+        console.log(data);
         if (!data.loading) {
             return {
                 info: data.account.user,
@@ -62,4 +61,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Motivators));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Family));

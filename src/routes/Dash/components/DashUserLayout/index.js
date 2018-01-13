@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactPlaceholder from 'react-placeholder';
-import PlanWidget from '../../../Plan/components/Plan';
 import PlansList from 'routes/Plan/containers/PlansList';
 import MedicationPlan from 'routes/Plan/components/MedicationPlan/containers';
 import BiometricPlan from 'routes/Plan/components/BiometricPlan/containers';
 import Motivators from '../../../User/containers/motivatorsContainer';
 import CareTeam from '../../../User/containers/careTeamContainer';
+import Family from '../../../User/containers/familyContainer';
 
 import { Icon, Alert, Row, Col, Calendar, List,Card } from 'antd';
-import {
-    FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
-} from 'react-intl';
+
 
 
 export class DashUserLayout extends React.Component {
@@ -78,8 +73,10 @@ export class DashUserLayout extends React.Component {
                          >
                              <Calendar fullscreen={false}  />
                          </Card>
-                       {/*<CareTeam />*/}
-                   <Motivators user_id={user_id} />
+                       <Family user_id={user_id} />
+                       <CareTeam user_id={user_id} />
+                       <Motivators user_id={user_id} />
+
                </Col>
            </Row>
             // <Form onSubmit={this.handleSubmit}>
