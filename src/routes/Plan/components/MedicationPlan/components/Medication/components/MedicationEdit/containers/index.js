@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import MedicationEditForm from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {MedicationPlan} from "../../../../../containers";
 import { message } from 'antd';
 //import { compose } from 'react-apollo';
 

@@ -1,15 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 
 // add placeholders
+
 import PlanElement from '../PlanElement';
+
 
 
 // adding filters
 // for modal
 import { BackTop,List, Affix, Anchor, Card, Row, Col, Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 
 

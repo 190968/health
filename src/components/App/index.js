@@ -15,8 +15,6 @@ import gql from 'graphql-tag';
 import Core from '../../layouts'
 import {loadNetwork, setCurrentRole} from 'routes/Network/modules/network'
 import {loadUser, loadUserFAIL} from 'routes/User/modules/user'
-// import {Modal} from 'routes/Modal/components/index'
-// adding locales
 import {addLocaleData, IntlProvider} from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ru from 'react-intl/locale-data/ru';

@@ -2,11 +2,8 @@
  * Created by Pavel on 21.12.2017.
  */
 import React, { PropTypes } from 'react';
-import {
-    FormattedMessage,
-} from 'react-intl';
-import {Modal, Form ,Spin, Col,Select,Input, Checkbox , Button } from 'antd';
-const { Option, OptGroup } = Select;
+import {Modal, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
+const { Option } = Select;
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 

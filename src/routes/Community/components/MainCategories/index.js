@@ -4,7 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Tooltip,Form,Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
-
+import MyCommutinies from '../../containers/myCommunities.js'
 import { Link } from 'react-router-dom'
 import '../../style.css';
 class MyCategories extends React.Component{
@@ -24,6 +24,10 @@ class MyCategories extends React.Component{
 
 
         return(
+
+
+                    <div>
+                        <MyCommutinies />
                     <Card
                         title="Main Categories"
                     >
@@ -45,6 +49,7 @@ class MyCategories extends React.Component{
                         />
 
                         </Card>
+                        </div>
         )
     }
 

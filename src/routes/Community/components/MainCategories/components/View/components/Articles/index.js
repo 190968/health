@@ -27,7 +27,7 @@ class Articles extends React.Component{
                <TabPane tab={item.title} key={item.id}>
                    <Col span={16}>
                       <h3>{item.title}</h3>
-                       {item.text}
+                      <div dangerouslySetInnerHTML={{__html: item.text}} />
                    </Col>
                    <Col offset={1} span={7}>
                        <img src={item.thumbs.large} />

@@ -9,10 +9,8 @@ import { arrayChunk, intersperse } from '../../../../utils/main';
 import ReactPlaceholder from 'react-placeholder';
 import { RectShape} from 'react-placeholder/lib/placeholders'
 
-import { Card, Modal, Row, Col, Button, List, Form, Input, Tooltip, Icon, Cascader, Popover, Select, Checkbox, AutoComplete, Radio, DatePicker} from 'antd';
+import { Card, Modal, Row, Col, Button, List, Form ,Popover, Radio, DatePicker} from 'antd';
 const FormItem = Form.Item;
-const Option = Select.Option;
-const AutoCompleteOption = AutoComplete.Option;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const planPlaceholder = [];

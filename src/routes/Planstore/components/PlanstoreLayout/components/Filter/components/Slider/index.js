@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import {Slider} from 'antd';
-import { connect } from 'react-redux'
 
 export class CheckComponent extends React.Component {
 

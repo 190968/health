@@ -1,12 +1,10 @@
 import React from 'react'
-import ReactHover from 'react-hover'
-import {Icon ,Modal,Button,Row, Col, Popconfirm} from 'antd';
+import {Icon ,Row, Col, Popconfirm} from 'antd';
 import {
     FormattedMessage,
 } from 'react-intl';
-import { Link } from 'react-router-dom'
+
 import MedicationEditForm from '../../MedicationEdit/containers'
-import Loadable from "../../../../../../../../../components/Loadable";
 
 /*const AsyncModalEdit = () => {
     return (

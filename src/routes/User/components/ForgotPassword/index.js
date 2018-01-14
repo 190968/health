@@ -2,7 +2,6 @@
  * Created by Pavel on 08.12.2017.
  */
 import React, { PropTypes } from 'react';
-import { Redirect, Link } from 'react-router-dom'
 
 import './index.css'
 

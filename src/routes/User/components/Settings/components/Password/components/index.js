@@ -2,12 +2,10 @@
  * Created by Pavel on 08.12.2017.
  */
 import React, { PropTypes } from 'react';
-import { Input,message,Form, Button } from 'antd';
+import { Input,Form, Button } from 'antd';
 import { withApollo } from 'react-apollo'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 const FormItem = Form.Item;
 const formItemLayout = {

@@ -1,7 +1,7 @@
 import React from 'react'
 import MedicationCoin from './MedicationCoin/containers';
 import MedicationInfo from './MedicationInfo/containers';
-import { Table, Row, Col, Icon } from 'antd';
+import { Row, Col } from 'antd';
 import gql from 'graphql-tag';
 
 export class Medication extends React.Component {

@@ -4,15 +4,11 @@
 import React from 'react';
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
-import {Layout,Button, List,Collapse} from 'antd';
+import {TextRow, RectShape} from 'react-placeholder/lib/placeholders';
+import {Layout,Button, List} from 'antd';
 import Filters from '../../Filters/components'
 const {  Sider } = Layout;
-const Panel = Collapse.Panel;
 
 export class PlanstoreLayout extends React.Component {
 

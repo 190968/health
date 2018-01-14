@@ -2,7 +2,6 @@
  * Created by Pavel on 04.12.2017.
  */
 import React,{PropTypes} from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { Redirect} from 'react-router-dom'
 
 class NormalLogoutForm extends React.Component{

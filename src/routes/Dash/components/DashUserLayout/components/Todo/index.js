@@ -8,7 +8,7 @@ export class DashUserLayout extends React.Component {
 
     render () {
         const {
-            plans, loading,loadMoreEntries
+            loading
         } = this.props;
 
         if ( loading) {

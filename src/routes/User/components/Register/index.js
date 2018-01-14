@@ -6,12 +6,10 @@ import {Redirect, Link} from 'react-router-dom'
 import './register.css'
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
-import Messages from './i18n/register.en.json';
+
 import { Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;

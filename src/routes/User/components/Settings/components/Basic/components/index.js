@@ -3,19 +3,15 @@
  */
 import React, { PropTypes } from 'react';
 import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
-import { Input,Col,Row,Select,Form, Calendar,List, DatePicker, InputNumber, Radio, Button, Checkbox } from 'antd';
+
+import { Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {
     FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
 } from 'react-intl';
 import moment from 'moment';
 const InputGroup = Input.Group;
 const Option = Select.Option;
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {

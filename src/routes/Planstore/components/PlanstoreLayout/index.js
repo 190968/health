@@ -1,13 +1,11 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders';
-import {Layout,Card,Collapse} from 'antd';
+import { TextRow, RectShape} from 'react-placeholder/lib/placeholders';
+import {Layout,Card} from 'antd';
 
 import PlanstoreSider from './components/Sider/containers'
 import PlanstoreContent from './components/Content/containers'
-import PlanWidget from '../../../Plan/components/Plan';
 
-const Panel = Collapse.Panel;
+
 const { Content, Sider } = Layout;
 
 
