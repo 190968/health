@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 import PlanBody from './containers/PlanBody';
-import {Icon,Avatar, Card,Row, Col, Button, Tooltip ,Spin, Select,Input, Checkbox } from 'antd';
+import {Icon,Avatar, Card,Row, Col, Button, Tooltip ,Modal, Dropdown, Menu, Checkbox } from 'antd';
 
 import {
     FormattedMessage,
@@ -23,10 +23,12 @@ export class PlanstorPlanLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: false,
+            infoModal: false,
             date: props.date
         };
         this.showDate = this.showDate.bind(this);
+        this.showIntro = this.showIntro.bind(this);
+        this.inviteMotivators = this.inviteMotivators.bind(this);
     };
     static propTypes = {
         plan: PropTypes.object,
@@ -34,7 +36,7 @@ export class PlanstorPlanLayout extends React.Component {
     };
     static defaultProps = {
         date:  moment().format('YYYY-MM-DD')
-    }
+    };
     showDate = (type) => {
         var dateTime = new Date(this.state.date);
         let date = '';
@@ -44,21 +46,30 @@ export class PlanstorPlanLayout extends React.Component {
             date = moment(dateTime).add(1, 'days').format("YYYY-MM-DD");
         }
         this.setState({date:date});
-        this.props.loadDate(date, this.props.user_id);
+        //this.props.loadDate(date, this.props.user_id);
+    };
+    showIntro = () => {
+        Modal.info({
+            title: 'This is a notification message',
+            content: (
+                <div>
+                    <p>some messages...some messages...</p>
+                    <p>some messages...some messages...</p>
+                </div>
+            ),
+            onOk() {},
+        });
+    };
+    editPlan = () => {
+        // open edit plan here
+    };
+    deletePlan = () => {
+        // delete plan here
+    };
+    inviteMotivators = () => {
+
     };
 
-    openModal = () => {
-        this.setState({modalIsOpen: true});
-    }
-
-    hideModal = () => {
-        this.setState({modalIsOpen: false});
-    }
-    toggle = () => {
-        this.setState({
-            modalIsOpen: !this.state.modalIsOpen
-        });
-    }
 
 
     planDetails()
@@ -139,17 +150,38 @@ export class PlanstorPlanLayout extends React.Component {
             backgroundImage: 'url(' + img + ')'
         }
 
+
+        const options = (
+            <Menu>
+                <Menu.Item key="0">
+                    <a onClick={this.inviteMotivators}>Invite Motivators</a>
+                </Menu.Item>
+                <Menu.SubMenu title="Actions">
+                    <Menu.Item key="0">
+                        <a onClick={this.editPlan}>Edit</a>
+                    </Menu.Item>
+                    <Menu.Item key="1">
+                        <a onClick={this.deletePlan}>Delete</a>
+                    </Menu.Item>
+                    <Menu.Item key="1">
+                        <a onClick={this.completePlan}>Complete</a>
+                    </Menu.Item>
+                </Menu.SubMenu>
+            </Menu>
+        );
         return (
             <div>
                 <Card
                     title={plan.title}
                     cover={<img alt={plan.title} height={300} src={img} /*https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"*/ />}
-                    actions={[<Row><Col><FormattedDate
+                    actions={[<div><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}> <Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip><FormattedDate
                         value={new Date(this.state.date)}
                         year='numeric'
                         month='long'
                         day='2-digit'
-                    /></Col><Col><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group></Col></Row>, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    /><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Icon type="right"  onClick={() => this.showDate('next')} style={{marginLeft:10}} /></Tooltip></div>, <Icon type="info-circle-o"  onClick={this.showIntro} />,  <Dropdown overlay={options} trigger={['click']}>
+                        <Icon type="ellipsis" />
+                    </Dropdown>]}
                 >
                     <Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
@@ -182,7 +214,7 @@ export class PlanstorPlanLayout extends React.Component {
                     </div>
                 </div>
 
-                <PlanBody id={plan.id}></PlanBody>
+                <PlanBody id={plan.id} date={this.state.date}></PlanBody>
             </Card>
             </div>)
     }

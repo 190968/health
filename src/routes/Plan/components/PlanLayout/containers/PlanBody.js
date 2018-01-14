@@ -85,7 +85,8 @@ const PlanBodyWithQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                id: ownProps.id
+                id: ownProps.id,
+                dare: ownProps.date
             }
 
         }),

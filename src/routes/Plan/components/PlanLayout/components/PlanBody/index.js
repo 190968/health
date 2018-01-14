@@ -29,7 +29,7 @@ export class PlanBody extends React.Component {
 
 
     handleClick = (e) => {
-        console.log('click ', e);
+        //console.log('click ', e);
         this.setState({
             currentTab: e.key,
         });
@@ -68,14 +68,14 @@ export class PlanBody extends React.Component {
                 /*defaultOpenKeys={[currentTab]}*/
                 mode="inline"
             >
-                <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
+                {lessons.length > 0 && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
                     {lessons.map((lesson) => (<Menu.Item key={'lesson_'+lesson.id}>{lesson.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{lesson.title}</Menu.Item>))}
-                </SubMenu>
-                <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
+                </SubMenu>}
+                {activities.length > 0 && <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
 
                     {activities.map((section) => (<Menu.Item key={'section_'+section.id}>{section.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{section.title}</Menu.Item>))}
 
-                </SubMenu>
+                </SubMenu>}
             </Menu></Affix></Col>
             <Col offset={5}>
 
