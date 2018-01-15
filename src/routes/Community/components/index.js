@@ -8,7 +8,7 @@ import Loadable from '../../../components/Loadable';
 import { Route ,Link} from 'react-router-dom'
 import {Breadcrumb ,Row } from 'antd';
 let Crumb = [];
-const AsyncCommunity = () => {
+const AsyncCategoryView = () => {
     return (
         Loadable({
             loader: () => import('../../../routes/Community/containers/view.js'),
@@ -16,7 +16,7 @@ const AsyncCommunity = () => {
     );
 }
 
- const AsyncCategory = () => {
+ const AsyncCategoryDash = () => {
     return (
         Loadable({
             loader: () => import('../../../routes/Community/containers/mainCategories.js')
@@ -36,24 +36,27 @@ const AsyncCommunity = () => {
 //     <Breadcrumb.Item><Link to={"/community/"+id}>{name}</Link></Breadcrumb.Item>
 // )
 
+class CommunityLayout extends React.Component {
 
-export const CommunityLayout = ({loading, loadMoreEntries}) => (
-    <div>
-        <Row>
-            <Breadcrumb separator=">">
-                <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
+    constructor(props){
+        super(props);
+    }
 
-            </Breadcrumb>
-        </Row>
-        <Route exact path='/community' component={AsyncCategory()} />
-        {/*<Route exact path='/community' component={AsyncMyCommunity()} />*/}
-        <Route exact path="/community/:id" component={AsyncCommunity()} />
-    </div>
-)
-//
-CommunityLayout.propTypes = {
 
+    render() {
+        const {loading, loadMoreEntries} = this.props;
+
+        return (<div>
+            {/*<Row style={{marginBottom: 10}}>
+                <Breadcrumb separator=">">
+                    <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
+                </Breadcrumb>
+            </Row>*/}
+            <Route exact path='/community' component={AsyncCategoryDash()}/>
+            {/*<Route exact path='/community' component={AsyncMyCommunity()} />*/}
+            <Route exact path="/community/:id" component={AsyncCategoryView()}/>
+        </div>)
+    }
 }
-
 
 export default CommunityLayout

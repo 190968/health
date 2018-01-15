@@ -26,7 +26,7 @@ class MyCommynities extends React.Component{
         const {info,loading} = this.props;
         if (loading) {
             return (
-                <p>Loading!!!</p>
+                <Card loading title="My Categories">Loading!!!</Card>
             );
         }
        let CarouselItem =[];
@@ -40,16 +40,12 @@ class MyCommynities extends React.Component{
             //     CarouselItem.push('<div className="ant-carousel" key={i}>    <Row className="ant-carousel" key={i}>');
             // }
             CarouselItem.push(
-
-
-                        <Col key={i} span={4}>
-                            <Link to={"/community/"+item.category.id}>
-                                <Card
+                            <Link to={"/community/"+item.category.id} >
+                                <Card style={{ margin:5}}
                                     cover={<img alt={item.category.name} height={140} src={item.category.thumb.large}/>}
                                 >
                                     <Tooltip title={item.category.name}>{item.category.name.substring(0, 10)}</Tooltip></Card>
                             </Link>
-                        </Col>
 
             )
             // if (!(i == 6 || i == 13)) {
@@ -60,15 +56,13 @@ class MyCommynities extends React.Component{
         //End huinya
 
         return(
-
-                <Carousel>
+            <Card title="My Categories">
+                <Carousel slidesToShow={6} arrows={true} centerPadding={20} slidesToScroll={6} responsive={[{ breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll:3 }}]}>
 
                         {CarouselItem}
 
                 </Carousel>
-                // <Slider>
-                //     {CarouselItem}
-                // </Slider>
+            </Card>
         )
     }
 

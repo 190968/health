@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
 import DiscussionsForm from  './components/CommunityDiscussions';
 import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
-import { Button,Form,Input ,Row,Col  } from 'antd';
+import { Card, Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 const Search = Input.Search;
 
@@ -20,7 +20,7 @@ class ViewForm extends React.Component{
          const {info,loading} = this.props;
         if (loading) {
             return (
-                <p>Loading!!!</p>
+                <Card loading >Loading!!!</Card>
             );
         }
 

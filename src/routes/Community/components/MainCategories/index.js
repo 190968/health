@@ -2,7 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Tooltip,Form,Card,List } from 'antd';
+import { Card, Tooltip,Form,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import MyCommutinies from '../../containers/myCommunities.js'
 import { Link } from 'react-router-dom'
@@ -18,7 +18,7 @@ class MyCategories extends React.Component{
         const {info,loading} = this.props;
         if (loading) {
             return (
-                <p>Loading!!!</p>
+                <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
 

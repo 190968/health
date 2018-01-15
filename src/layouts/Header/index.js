@@ -74,7 +74,7 @@ class LHeader extends React.Component {
 
             return (
                 <Menu.Item key={item.toString()}>
-                    <NavLink exact to={item[1]}>{item[0]}</NavLink>
+                    <NavLink  to={item[1]}>{item[0]}</NavLink>
                 </Menu.Item>)
 
         });
