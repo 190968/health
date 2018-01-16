@@ -2,9 +2,8 @@
  * Created by Pavel on 06.12.2017.
  */
 import React, { PropTypes } from 'react';
-import ReactPlaceholder from 'react-placeholder';
 
-import { Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
+import { Card, Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {
     FormattedMessage,
@@ -68,12 +67,8 @@ const dateFormat = 'YYYY-MM-DD';
         // })
         if (this.props.loading) {
             return (
-                <center>
-                    <div  className='my-awesome-placeholder'>
-                        <ReactPlaceholder type='text'  rows={6} color='#E0E0E0'>
-                        </ReactPlaceholder>
-                    </div>
-                </center>
+                <Card loading bordered={false}> Loading...
+                </Card>
             );
         }
        // console.log(this.props.account.user.birthday);

@@ -5,6 +5,7 @@ import React from 'react'
 
 import PlanElement from '../PlanElement';
 import PlanLesson from '../../containers/PlanLesson';
+import PlanSection from '../../containers/PlanSection';
 
 
 
@@ -144,7 +145,7 @@ export class PlanBody extends React.Component {
         }
         const lessonsNum = lessons.length;
         const activitiesNum = activities.length;
-
+    console.log(lessons);
 /*
 <Row>
             <Col xs="12" sm="4" md="3">
@@ -173,20 +174,19 @@ export class PlanBody extends React.Component {
             </Menu></Affix></Col>
             <Col offset={5}>
 
-                {lessons.map((section, i) => {
+                {lessonsNum > 0 && lessons.map((section, i) => {
                     let anchors = [];
+                    //console.log(section);
                     if (currentKey == 'lesson_'+i) {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={19}>
-                                <Card title={section.title} bordered={false}>
-                                    <PlanLesson item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
-                                </Card>
+                                <PlanLesson item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
                             <Col offset={19}>
 
                                 <Anchor offsetTop={10}>
-                                    {section.elements.map((item) => (
+                                    {section.elements !== null && section.elements.map((item) => (
                                         <Anchor.Link key={item.id} href={'#field' + item.id} title={item.item_info.label}/>))}
 
                                     {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
@@ -199,24 +199,15 @@ export class PlanBody extends React.Component {
                     }
                 })}
 
-                {activities.map((section, i) => {
+                {activitiesNum > 0 && activities.map((section, i) => {
                     let anchors = [];
                     if (currentKey == 'section_'+i) {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={19}>
-                                <Card title={section.title} bordered={false} actions={[<Button type="primary" onClick={(e)=> this.saveSection(e, section.id)}>{isLastSection ? 'Finish' : 'Next'}</Button>]}>
-                                <List
-                                    size="large"
-                                    itemLayout="vertical"
-                                    split={false}
-                                    dataSource={section.elements}
-                                    renderItem={item => {
-                                        return <List.Item id={'field' + item.id}
-                                                          key={item.id}><PlanElement element={item} /></List.Item>
-                                    }}
-                                />
-                                </Card>
+                                <PlanSection item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
+
+
                             </Col>
                             <Col offset={19}>
 

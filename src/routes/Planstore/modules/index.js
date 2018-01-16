@@ -1,15 +1,16 @@
 import { fromJS } from 'immutable';
 
-
-const getFilters = () => dispatch =>
-    dispatch({
-        type: 'GET_FILTERS',
-        url: '/regions/current/filters',
-    });
-
 export const SET_FILTERS = 'SET_FILTERS';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
+export const SET_SEARCH = 'SET_SEARCH';
 
+
+export const setSearch = (search) => {
+    return {
+        type: SET_SEARCH,
+        search
+    }
+};
 
 export const setFilters = (filters) => {
     return {
@@ -28,6 +29,7 @@ export const clearFilters = (filters) => {
 export const actions = {
     setFilters,
     clearFilters,
+    setSearch,
 };
 
 const ACTION_HANDLERS = {
@@ -36,6 +38,9 @@ const ACTION_HANDLERS = {
         return state.updateIn(['activeFilters'], function (value) {
             return value.merge(filters);
         });
+    },
+    SET_SEARCH: (state, {search}) => {
+        return state.set('search', search);
     },
     CLEAR_FILTERS: (state) => {
         return state.set('activeFilters', fromJS({}));
@@ -46,6 +51,7 @@ const ACTION_HANDLERS = {
 const initialState = fromJS({
     filters: {},
     plans: {},
+    search: '',
     activeFilters: {},
     openFilterId: '',
     sort: 'popular',

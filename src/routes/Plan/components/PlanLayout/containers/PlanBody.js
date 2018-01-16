@@ -96,9 +96,9 @@ const PlanBodyWithQuery = graphql(
             if (!data.loading) {
                 const plan = data.plan;
                 const body = plan.body;
-                const lessons = body.lessons;
-                const activities = body.activities;
-                const intro = body.intro;
+                const lessons = body.lessons || [];
+                const activities = body.activities || [];
+                const intro = body.intro || [];
 
                 return {
                     upid: data.plan.upid,
