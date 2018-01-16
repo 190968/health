@@ -8,10 +8,10 @@ import gql from 'graphql-tag';
 
 
 const reportOnLesson = gql`
-    mutation lessonReport($id: ID!, $date: Date, $input: LessonInput!) {
-        lesson(id:$id, input: $input) {
+    mutation lessonReport($id: ID!, $upid: ID!) {
+        lessonComplete(id:$id, upid: $upid) {
              id
-             completed(date:$date)
+             completed
         }
     }
 `;
@@ -20,19 +20,10 @@ const reportOnLesson = gql`
 
 const withMutation = graphql(reportOnLesson, {
     props: ({ mutate }) => ({
-        lessonReport: (input, id, date) => {
+        lessonReport: (upid, id) => {
             return mutate({
-                variables: { input: input, date:date, id: id },
-            }).then(({data}) => {
-                //const token = data.login.token;
-                //const user = data.login.user;
-                //console.log(data);
-                //ownProps.report.id = 0;
-
-
-            }).catch((error) => {
-                message.error(error.message);
-            });
+                variables: { upid:upid, id: id },
+            })
         },
 
     }),

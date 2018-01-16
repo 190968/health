@@ -8,9 +8,12 @@ import gql from 'graphql-tag';
 
 
 const reportOnMedication = gql`
-    mutation medicationReport($id: ID!, $input: MedicationInput!) {
-        medication(id:$id, input: $input) {
+    mutation medicationReport($id: ID!, $date: Date!, $input: MedicationInput!) {
+        medicationReport(id:$id, date:$date, input: $input) {
              id
+            time
+            date
+            isTaken
         }
     }
 `;
@@ -19,9 +22,9 @@ const reportOnMedication = gql`
 
 const withMutation = graphql(reportOnMedication, {
     props: ({ mutate }) => ({
-        medicationReport: (input, id) => {
+        medicationReport: (input, id, date) => {
             return mutate({
-                variables: { input: input, id: id },
+                variables: { input: input, date:date, id: id },
             })
         },
 
@@ -64,7 +67,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             new_report.time = ownProps.time;
         }
         //console.log(new_report);
-        ownProps.medicationReport({ report: new_report}, med_id)
+        ownProps.medicationReport({ report: new_report}, med_id, ownProps.date)
             .then(({data}) => {
                 //const token = data.login.token;
                 //const user = data.login.user;

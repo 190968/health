@@ -19,7 +19,7 @@ const QUERY = gql`
             
         
          
-            medicationPlan (user_id: $user_id) {
+            medicationPlan (userId: $user_id, date: $date) {
                 id
                 upid
                 isPersonal

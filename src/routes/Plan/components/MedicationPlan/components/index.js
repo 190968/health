@@ -105,13 +105,20 @@ export class MedicationPlanBody extends React.Component {
         //console.log(this.props);
         if (loading) {
             return (
-                <Card loading={true} title={<FormattedMessage id="plan.medicationpan.medication.card.title" defaultMessage="Medications for Today" description="Medications for Today" />}>
+                <Card loading title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
+                    date: <FormattedDate
+                        value={new Date(date)}
+                        year='numeric'
+                        month='long'
+                        day='2-digit'
+                    />
+                }} description="Medications for Today" />}>
                 Loading
                 </Card>
             );
         }
         const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
-
+        console.log(info);
         let columns = [];
         let data = [];
 
@@ -130,7 +137,7 @@ export class MedicationPlanBody extends React.Component {
                 }
 
                 const at_times = medication.timesPerHour;
-                console.log(medication);
+                //console.log(medication);
                 at_times.map(function (time_info) {
 
 
@@ -158,7 +165,7 @@ export class MedicationPlanBody extends React.Component {
                             key: 'time_' + time_info.id
                         });
                     }
-                    //console.log(report);
+                    console.log(report, date);
                     medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
                 });
 
@@ -170,7 +177,7 @@ export class MedicationPlanBody extends React.Component {
             });
         }
 
-        console.log('med render');
+        //console.log('med render');
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
                     date: <FormattedDate

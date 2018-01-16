@@ -27,11 +27,11 @@ export class Medication extends React.Component {
                 isPersonal
                 startDate
                 endDate
-                reports {
+                reports (date: $date) {
                     id
                     time
                     date
-                    __typename
+                    isTaken
                 }
             }
         `

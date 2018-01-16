@@ -14,9 +14,9 @@ import Plan from '../../Plan/components/Plan';
 const CURRENT_PERSONAL_PLAN = gql`
     query GET_USER_PLAN ($upid: ID!) {
         userPlan (upid: $upid) {
-        id
-        joinDate
-        plan {
+            id
+            joinDate
+            plan {
             ...PlanCardInfo
             }
            user {

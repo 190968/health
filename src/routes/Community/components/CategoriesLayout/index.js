@@ -19,7 +19,7 @@ class MyCategories extends React.Component{
         const {info,loading} = this.props;
         if (loading) {
             return (
-                <Card loading  title="Main Categories">Loading!!!</Card>
+                <Card loading >Loading!!!</Card>
             );
         }
 
