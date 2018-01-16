@@ -31,7 +31,7 @@ const CATEGORIES  = gql`
 
 const withMutation = graphql(CATEGORIES, {
     props: ({ ownProps, data }) => {
-        //console.log(data);
+        //console.log(ownProps);
         if (!data.loading) {
             return {
                 info: data.getMainCategories,

@@ -13,6 +13,7 @@ class ListCommunity extends React.Component{
 
     constructor(props){
         super(props);
+
     }
 
     render(){
@@ -37,7 +38,7 @@ class ListCommunity extends React.Component{
                         dataSource={categories}
                         renderItem={item => (
                             <List.Item key={item.id}>
-                                <Link to={"/community/"+item.id}>
+                                <Link  to={"/community/"+item.id}>
                                     <Card
                                         cover={<img alt={item.name} height={120} src={item.thumb.large}/>}
                                     >
