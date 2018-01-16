@@ -74,10 +74,10 @@ query GET_CATEGORY($id:ID) {
 const withMutation = graphql(CATEGORY, {
 
         options: (ownProps) => {
-            console.log(ownProps);
+             //console.log(ownProps);
             return{
         variables: {
-            id: ownProps.props.match.params.id,
+            id: ownProps.match.params.id,
             handleBreadcrumbChange:ownProps.handleBreadcrumbChange
         }}
     },

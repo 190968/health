@@ -7,6 +7,7 @@ import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
 import { Card, Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import ReactDOM from 'react-dom';
 const Search = Input.Search;
 
 class ViewForm extends React.Component{
@@ -14,12 +15,18 @@ class ViewForm extends React.Component{
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
+
     }
 
-    handleChange(e) {
-       // console.log(e.target.value);
-        this.props.handleBreadcrumbChange(e.target.value);
+    handleChange() {
+        console.log("handleChange");
+        //this.props.handleBreadcrumbChange("pasha");
     }
+    componentDidMount() {
+        console.log("componentDidMount");
+        window.addEventListener('load', this.handleChange());
+    }
+
 
     render(){
          const {info,loading} = this.props;
@@ -33,11 +40,10 @@ class ViewForm extends React.Component{
 
 
 
-
         return(
 
             <div>
-
+                <div className="load" ></div>
                 <Row>
 
                     {
@@ -52,8 +58,7 @@ class ViewForm extends React.Component{
                                                     </Col>
                                                   }
                             >
-                            <input value={name}
-                                   onChange={this.handleChange} />
+
                         </Card>
 
                             :
@@ -79,7 +84,7 @@ class ViewForm extends React.Component{
 
                 }
                 {
-                    categories.length != 0 ?  <ListCommunityForm name={name} categories={categories} />: null
+                    categories.length != 0 ?  <ListCommunityForm name={name}  categories={categories} />: null
 
                 }
 
