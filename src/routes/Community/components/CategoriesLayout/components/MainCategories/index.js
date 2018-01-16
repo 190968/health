@@ -24,7 +24,6 @@ class MyCategories extends React.Component{
         return(
 
 
-            <div>
                 <Card
                     title="Main Categories"
                 >
@@ -46,7 +45,6 @@ class MyCategories extends React.Component{
                     />
 
                 </Card>
-            </div>
         )
     }
 
