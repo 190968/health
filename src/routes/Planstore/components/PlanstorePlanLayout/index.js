@@ -28,32 +28,6 @@ const planPlaceholder = [];
             </div>
     })
 
-const PlanstorePlanPlaceholder = (
-    <div>
-                <Row>
-                    <Col >
-                        <List
-                            grid={{gutter:10,  md: 3}}
-                            dataSource={planPlaceholder}
-                            renderItem={item => (
-                                <List.Item>
-                                    {item.item}
-                                </List.Item>
-                            )}
-                        />
-
-                    </Col>
-                </Row>
-                <Row>
-                    <Col >
-                        <ReactPlaceholder type='text' ready={false} rows={5} color='#E0E0E0'>
-
-                        </ReactPlaceholder>
-
-                     </Col>
-                </Row>
-    </div>
-);
 
 const formItemLayout = {
     labelCol: {
@@ -134,11 +108,11 @@ const CollectionCreateForm = Form.create()(
                                     <Radio style={radioStyle} value={true}>
                                         On {end_date === true ?
 
-                                        getFieldDecorator('end_date', {
+                                        getFieldDecorator('endDate', {
                                             rules: [{
                                                 required: true, message: 'Please Select End Date',
                                             }, {
-                                                validator: checkEndDate, message: 'Please Select End Date',
+                                                validator: checkEndDate, message: 'End date must be after Start Date',
                                             }],
                                         })(
                                             <DatePicker/>
@@ -208,7 +182,7 @@ export class PlanstorPlanLayout extends React.Component {
             const communities = categories.map(el => {
                 return <Link to={'/community/'+el.id} key={el.id}>{el.name}</Link>;
             });
-            details.push(['CommunitiesDiscussions', intersperse(communities, ', ')]);
+            details.push(['Categories', intersperse(communities, ', ')]);
         }
         //console.log(elements);
         if (elements.length > 0) {
@@ -226,21 +200,23 @@ export class PlanstorPlanLayout extends React.Component {
         for (var i=0,j=chunked_arr.length; i<j; i++) {
             //console.log(i);
             cols[i] = chunked_arr[i].map(el => {
-                return <Row key={el[0]}>
-                    <Col  >
+                return [
+                    <Col md={6}>
                         <strong>{el[0]}:</strong>
-                    </Col>
-                    <Col >
+                    </Col>,
+                    <Col md={6} >
                         {el[1]}
                     </Col>
-                </Row>;
+                ];
                 //console.log(el.key);
             });
         }
         //console.log(cols)
         return <Row>
-            <Col >
+            <Col>
+                <Row>
                 {cols[0]}
+                </Row>
             </Col>
             <Col>{cols[1]}</Col>
         </Row>
@@ -253,10 +229,12 @@ export class PlanstorPlanLayout extends React.Component {
 
     checkEndDate = (rule, value, callback) => {
         const form = this.form;
-        callback();
+        //callback();
         //  console.log(value);
         const start_date = form.getFieldValue('start_date');
-        if (!start_date && value && value < start_date) {
+        console.log(start_date);
+        console.log(value);
+        if (start_date && value && value < start_date) {
             //console.log(callback);
             callback('End date is wrong');
         } else {
@@ -268,7 +246,7 @@ export class PlanstorPlanLayout extends React.Component {
         const form = this.form;
         e.preventDefault();
         const { getPlan } = this.props;
-        form.validateFields((err, values) => {
+        form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 this.setState({
                     loading: true
@@ -289,8 +267,6 @@ export class PlanstorPlanLayout extends React.Component {
             //return (<div>Loading...</div>);
             return (
                 <div>
-
-
                     <Row style={{marginBottom:24}}>
                         <Card loading>
                            aa
@@ -325,14 +301,8 @@ export class PlanstorPlanLayout extends React.Component {
 
 
 
-
-        var planCover = (<div>
-
-        </div>)
-
-        return (<ReactPlaceholder showLoadingAnimation type='media' rows={4} ready={!loading}>
+        return (
             <div>
-
                     <Row style={{marginBottom:24}}>
                         <Card>
                             <Row>
@@ -386,8 +356,7 @@ export class PlanstorPlanLayout extends React.Component {
                 />
 
 
-            </div>
-        </ReactPlaceholder>)
+            </div>)
     }
 }
 

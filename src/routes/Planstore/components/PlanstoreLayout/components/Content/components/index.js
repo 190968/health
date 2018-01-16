@@ -17,10 +17,16 @@ export class PlanstoreLayout extends React.Component {
 
     constructor(props){
         super(props);
+
+        this.search = this.search.bind(this);
     }
 
     changePage = (page) => {
         this.props.loadMoreEntries(page)
+    }
+
+    search = (value) => {
+        this.props.updateSearchStore(value);
     }
 
     /**
@@ -32,7 +38,7 @@ export class PlanstoreLayout extends React.Component {
 
     render() {
         const planPlaceholder = [];
-        for(var i=0; i<8; i++) {
+        for(var i=0; i<6; i++) {
             planPlaceholder.push(  {
                 item:   <Card loading >aaa
                 </Card>
@@ -42,18 +48,17 @@ export class PlanstoreLayout extends React.Component {
 
 
 
-        const {loading, plans} = this.props;
+        const {loading, plans, search} = this.props;
        // console.log(filters,"plans");
         if (loading) {
             return (
-
-                <Col  md={20} lg={20} xl={20}>
+                <Col>
                         <div style={{marginBottom:24}}>
                             <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
                                 <Input.Search
                                     placeholder={searchText}
-                                    onSearch={value => console.log(value)}
-
+                                    onKeyUp={this.search}
+                                    defaultValue={search}
                                     size="large"
                                 />
                             </Card>
@@ -80,8 +85,8 @@ export class PlanstoreLayout extends React.Component {
                     <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
                         <Input.Search
                             placeholder={searchText}
-                            onSearch={value => console.log(value)}
-
+                            onSearch={this.search}
+                            defaultValue={search}
                             size="large"
                         />
                     </Card>

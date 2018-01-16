@@ -37,7 +37,7 @@ class LHeader extends React.Component {
         const location = this.props.location;
         const new_messages = this.props.messages;
         const new_notifications = this.props.notifications;
-
+        console.log(location);
         const menu_items = [
             ['Dashboard', '/'],
             ['Planstore', '/planstore', 'aps'],
@@ -59,8 +59,8 @@ class LHeader extends React.Component {
             if (item[1] ) {
                 /*<HaveModule module={item[2]}>*/
                 return (
-                    <Menu.Item key={item.toString()}>
-                        <NavLink exact to={item[1]}>{item[0]}</NavLink>
+                    <Menu.Item as={NavLink} to={item[1]} key={item.toString()}>
+                        <NavLink to={item[1]}>{item[0]}</NavLink>
                     </Menu.Item>
                 )
             }

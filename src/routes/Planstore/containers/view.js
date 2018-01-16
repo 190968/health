@@ -97,10 +97,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             //dispatch(loginUserRequest({ email }));
             //console.log(props);
             //const{first_name,last_name,birthday,gender,email, password,password_repeat,prefix,phone} = props;
-            console.log(props);
+            //console.log(props);
             const {start_date, privacy, end_date_set} = props;
             const startDate = start_date.format("YYYY-MM-DD");
-            const endDate = end_date_set ? props.end_date.format("YYYY-MM-DD") : '';
+            const endDate = end_date_set ? props.endDate.format("YYYY-MM-DD") : '';
             //var birth = birthday.substring(0,10);
             //console.log(birth);
             const input = {start_date: startDate, privacy:privacy, end_date:endDate};

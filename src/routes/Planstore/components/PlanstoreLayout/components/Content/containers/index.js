@@ -7,12 +7,13 @@ import Content  from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Plan from 'routes/Plan/components/Plan';
+import {setSearch} from "../../../../../modules";
 
 
 const QUERY = gql`
-     query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int) {
+     query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int, $search: String) {
         planstore {
-            plans (filters: $filters, page: $page, limit: $limit) {
+            plans (filters: $filters, page: $page, limit: $limit, search: $search) {
                 ...PlanCardInfo
             }
           }
@@ -31,6 +32,7 @@ const PlanstoreLayoutWithQuery = graphql(
                 filters:ownProps.activeFilters,
                 page: ownProps.page,
                 limit: PLANS_PER_PAGE,
+                search: ownProps.search,
             },
             fetchPolicy: 'cache-first'
 
@@ -85,14 +87,22 @@ const mapStateToProps = (state) => {
     var activeFilters = state.planstore.get('activeFilters').toJS();
     var plans = state.planstore.get('plans').toJS();
     var page = state.planstore.get('page');
+    var search = state.planstore.get('search');
     return {
         plans: plans,
         activeFilters: activeFilters,
         page: page,
+        search: search,
     };
 };
 
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    updateSearchStore: (value)  => {
+        dispatch(setSearch(value))
+    }
+});
+
 
 export default connect(
-    mapStateToProps
+    mapStateToProps, mapDispatchToProps
 )(PlanstoreLayoutWithQuery);

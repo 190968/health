@@ -2,39 +2,32 @@ import React from 'react'
 import { Button, Card, List } from 'antd';
 import PlanElement from '../PlanElement';
 
-export class PlanLesson extends React.Component {
+export class PlanSection extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isClicked: false,
         };
-        this.saveLesson = this.saveLesson.bind(this);
+        this.saveSection = this.saveSection.bind(this);
     };
 
     static propTypes = {
     };
 
-    saveLesson = (e, lessonId, isLastlesson) => {
-        let haveSections = false;
-        if (isLastlesson) {
-            const {haveSections} = this.props;
-            if (haveSections) {
-                this.props.showFirstSection();
-            } else {
-                // do action if no sections.
-            }
+    saveSection = (e, lessonId, isLastSection) => {
+        if (isLastSection) {
+            // finish
         } else {
-            this.props.showNextLesson();
+            this.props.showNextSection();
         }
     }
 
 
    render() {
 
-        const {item, isLastLesson, haveSections} = this.props;
-        const footer = item.elements  || isLastLesson ? [<Button type="primary" onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
-
+        const {item, isLastSection} = this.props;
+        const footer = item.elements !== null && (item.elements.length > 0 || isLastSection)  ? [<Button type="primary" onClick={(e) => this.saveSection(e, item.id, isLastSection)}>{isLastSection ?  'Finish':'Next Section'}</Button>] : [];
 
        return (<Card title={item.title} bordered={false} actions={footer}>
             {item.elements ? <List
@@ -49,7 +42,7 @@ export class PlanLesson extends React.Component {
                         <PlanElement element={item} />
                     </List.Item>
                 }}
-            /> : 'No lesson content'}
+            /> : 'No section content'}
 
         </Card>)
     }
@@ -57,4 +50,4 @@ export class PlanLesson extends React.Component {
 
 
 
-export default PlanLesson
+export default PlanSection
