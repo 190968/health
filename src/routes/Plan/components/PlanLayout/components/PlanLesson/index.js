@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Card, List } from 'antd';
 import PlanElement from '../PlanElement';
+import {message} from "antd/lib/index";
 
 export class PlanLesson extends React.Component {
 
@@ -17,16 +18,25 @@ export class PlanLesson extends React.Component {
 
     saveLesson = (e, lessonId, isLastlesson) => {
         let haveSections = false;
-        if (isLastlesson) {
-            const {haveSections} = this.props;
-            if (haveSections) {
-                this.props.showFirstSection();
+
+        console.log( this.props);
+        return true;
+        const {upid} = this.props;
+        this.props.lessonReport(upid, lessonId).then(({data}) => {
+            if (isLastlesson) {
+                const {haveSections} = this.props;
+                if (haveSections) {
+                    this.props.showFirstSection();
+                } else {
+                    // do action if no sections.
+                }
             } else {
-                // do action if no sections.
+                this.props.showNextLesson();
             }
-        } else {
-            this.props.showNextLesson();
-        }
+        }).catch((error) => {
+            message.error(error.message);
+        });
+
     }
 
 

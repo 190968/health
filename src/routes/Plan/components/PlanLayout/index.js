@@ -216,7 +216,7 @@ export class PlanstorPlanLayout extends React.Component {
                     </div>
                 </div>
 
-                <PlanBody id={plan.id} date={this.state.date} showIntro={this.showIntro}></PlanBody>
+                <PlanBody id={plan.id} userId={user.id} date={this.state.date} showIntro={this.showIntro}></PlanBody>
             </Card>
             </div>)
     }

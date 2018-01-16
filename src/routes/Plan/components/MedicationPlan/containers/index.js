@@ -7,12 +7,11 @@ import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
 export const MedicationPlan = gql`
     query GET_MEDICATION_PLAN ($user_id: ID!, $date: Date)  {
-            medicationPlan (user_id: $user_id) {
+            medicationPlan (userId: $user_id, date: $date) {
                 id
                 upid
                 isPersonal
                 medicationsByType (date: $date) {
-                    
                     takeAtTimes {
                         ...MedicationCardInfo
                         timesPerHour {
@@ -66,6 +65,7 @@ const MedicationPlanBodyWithQuery = graphql(
                                 //return {medicationPlan:{id:29}};
                                 //console.log(fetchMoreResult);
                                 //fetchMoreResult.date = date;
+                                console.log(fetchMoreResult);
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {

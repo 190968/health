@@ -1,10 +1,5 @@
 [
   {
-    "id": "plan.medicationpan.medication.card.title",
-    "description": "Medications for Today",
-    "defaultMessage": "Medications for Today"
-  },
-  {
     "id": "plan.medicationpan.medication.card.title2",
     "description": "Medications for Today",
     "defaultMessage": "Medications for {date}"

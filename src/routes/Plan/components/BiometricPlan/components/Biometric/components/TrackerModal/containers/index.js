@@ -11,7 +11,7 @@ import {message} from "antd/lib/index";
 //import { compose } from 'react-apollo';
 
 const tracker = gql`
-query GET_TRACKER($id: ID, $user_id: ID!) {
+query GET_TRACKER($id: ID, $user_id: ID!, $drugId: ID) {
     biometricPlan ( userId: $user_id) {
         id
         columns {
@@ -21,9 +21,10 @@ query GET_TRACKER($id: ID, $user_id: ID!) {
     }
    tracker (id: $id, userId: $user_id) {
           id,
-        measurement {
+        measurement (amid:$drugId) {
           id
           label
+          graph
         },
         criticalRange {
           min
@@ -39,12 +40,13 @@ query GET_TRACKER($id: ID, $user_id: ID!) {
 }
 `;
 const updateTrackerMutate=gql`
- mutation TrackerUpdate($id: ID!, $userId: ID!, $input: TrackerInput!) {
+ mutation TrackerUpdate($id: ID, $userId: ID!, $input: TrackerInput!) {
         trackerUpdate(id:$id, userId: $userId, input: $input) {
               id,
             measurement {
               id
               label
+              graph
             },
             criticalRange {
               min
@@ -56,7 +58,6 @@ const updateTrackerMutate=gql`
             },
             timesToReport,
             columns
-            
         }
     }
 `;
@@ -69,6 +70,7 @@ const withQuery = graphql(tracker,
             variables: {
                 user_id: ownProps.userId,
                 id: ownProps.id,
+                drugId: ownProps.drugId,
 
             },
             fetchPolicy: 'network-only'
@@ -94,8 +96,9 @@ const withMutation = graphql(updateTrackerMutate, {
         updateTracker: (id, uid, input, onCancel) => {
             return mutate({
                 variables: {id:id, userId:uid, input: {details:input}},
-                update: (store, { data: { trackerUpdate } }) => {
 
+                update: (store, { data: { trackerUpdate } }) => {
+                    console.log(trackerUpdate);
                     // Read the data from our cache for this query.
                     /*const data = store.readQuery({
                         query: tracker,
@@ -103,22 +106,35 @@ const withMutation = graphql(updateTrackerMutate, {
                             id: id,
                             user_id: uid
                         }
-                    });
+                    });*/
                     if (id) {
                         // add new to the list
-                    }*/
+                    }
 
                     // console.log(data);
                     // Add our comment from the mutation to the end.
                     //data = medicationUpdate;
                     // Write our data back to the cache.
-                    store.writeQuery({
-                        query: tracker,
-                        data: {tracker: trackerUpdate},
-                        variables: {
-                            id: id,
-                            user_id: uid
-                        }});
+                    if (id) {
+                        store.writeQuery({
+                            query: tracker,
+                            data: {tracker: trackerUpdate},
+                            variables: {
+                                id: id,
+                                user_id: uid
+                            }
+                        });
+                    } else {
+                        store.writeQuery({
+                            query: tracker,
+                            data: {tracker: trackerUpdate},
+                            variables: {
+                                id: trackerUpdate.id,
+                                user_id: uid
+                            }
+                        });
+                        //console.log(trackerUpdate, 'need to append');
+                    }
                 },
             }).then((data) => {
                 onCancel(data);
@@ -126,6 +142,9 @@ const withMutation = graphql(updateTrackerMutate, {
             })},
     }),
 });
+
+
+
 const mapStateToProps = (state) => {
 
     return {
@@ -145,6 +164,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     //     })
     // },
 });
+
 
 
 

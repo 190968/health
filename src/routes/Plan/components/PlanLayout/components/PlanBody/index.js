@@ -181,7 +181,7 @@ export class PlanBody extends React.Component {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={19}>
-                                <PlanLesson item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
+                                <PlanLesson upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
                             <Col offset={19}>
 
@@ -205,7 +205,7 @@ export class PlanBody extends React.Component {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={19}>
-                                <PlanSection item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
+                                <PlanSection upid={upid} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
 
 
                             </Col>

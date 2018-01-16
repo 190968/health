@@ -341,7 +341,7 @@ export class PlanstorPlanLayout extends React.Component {
                 <Row>
                 <Card title="Plan Details">
 
-                        {this.planDetails(plan)}
+                        {this.planDetails()}
                 </Card>
                 </Row>
                 <CollectionCreateForm

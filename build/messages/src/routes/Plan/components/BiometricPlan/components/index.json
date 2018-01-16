@@ -1,10 +1,5 @@
 [
   {
-    "id": "plan.trackers.card.title",
-    "description": "Trackers for Today",
-    "defaultMessage": "Trackers for Today"
-  },
-  {
     "id": "plan.trackers.medication.card.title2",
     "description": "Trackers for Today",
     "defaultMessage": "Trackers for {date}"
@@ -19,7 +14,7 @@
   },
   {
     "id": "trsvker.add",
-    "defaultMessage": "Add Medication"
+    "defaultMessage": "Add Tracker"
   },
   {
     "id": "plan.tracker.add",

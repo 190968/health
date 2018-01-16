@@ -8,28 +8,36 @@ import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
 import {  Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
+import moment from "moment/moment";
 
-export class MedicationPlanBody extends React.Component {
+export class BiometricPlanBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isBuilderMode: false,// if this is a builder mode
-        };
-        this.state = {
             visible: false,
             addModal: false,
-            amid: 0
+            amid: 0,
+            date: props.date,
         };
+        this.editClick = this.editClick.bind(this);
+        this.deleteClick = this.deleteClick.bind(this);
         this.addTracker = this.addTracker.bind(this);
     };
     static propTypes = {
     };
-    editClick = (info) => {
-        console.log(info);
-        this.setState({visible: true, amid:2});
+    static defaultProps = {
+        date:  moment().format('YYYY-MM-DD')
+    }
+    editClick = (e, info) => {
+        this.setState({visible: true, amid:info.key});
+    }
+    deleteClick = (e, item) => {
+        const {user_id, trackerDelete } = this.props;
+        const {date} = this.state;
+        return trackerDelete(item.key, user_id, date);//, !this.state.isClicked, this.toggleCoin);
     }
     closeClick = () => {
-        console.log("closeClick");
         this.setState({visible: false});
     }
     addTracker = (id) => {
@@ -41,6 +49,18 @@ export class MedicationPlanBody extends React.Component {
         });
     }
 
+    showDate = (type) => {
+        var dateTime = new Date(this.state.date);
+        let date = '';
+        if (type === 'prev') {
+            date = moment(dateTime).add(-1, 'days').format("YYYY-MM-DD");
+        } else {
+            date = moment(dateTime).add(1, 'days').format("YYYY-MM-DD");
+        }
+        this.setState({date:date});
+        this.props.loadDate(date, this.props.user_id);
+    };
+
     hideAddTracker = () => {
         // create a new medication
         //console.log(id);
@@ -50,26 +70,27 @@ export class MedicationPlanBody extends React.Component {
         });
     }
     render() {
-        const {info, date, loading,user_id} = this.props;
+        const {info, loading, user_id} = this.props;
+
         if (loading) {
-            const info = {medicationsByType: {takeDaily:1, takeAsNeeded:1}};
             return (
-                <Card loading title={<FormattedMessage id="plan.trackers.card.title" defaultMessage="Trackers for Today" description="Trackers for Today" />}>
-                trackers
+                <Card loading >
+                Loading...
                 </Card>
             );
         }
+        const {date} = this.state;
 
         const {columns, trackers} = info;
         const listColumns = [
-            { title: '', dataIndex: 'name', key: 'name'},
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  <div>{text}<Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>},
            //
             { title: '', dataIndex: 'input', key: 'input', width: 150  },
-            { title: '', dataIndex: 'icon', key: 'acts', width: 50, render: () =>  <div><Icon onClick={(info)=> this.editClick(info)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?"  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}
+            //{ title: '', dataIndex: 'icon', key: 'acts', width: 50}
         ];
 
         const tableColumns = [
-            { title: '', dataIndex: 'name', key: 'name' },
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  <div>{text}<Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div> },
         ];
         // adding columns
         columns.map(column => {
@@ -151,7 +172,7 @@ export class MedicationPlanBody extends React.Component {
                 />
             }} description="Trackers for Today" />}
                   extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
-                      <Tooltip title={<FormattedMessage id="trsvker.add" defaultMessage="Add Medication" />} placement={'bottom'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
+                      <Tooltip title={<FormattedMessage id="trsvker.add" defaultMessage="Add Tracker" />} placement={'bottom'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
                   </div>}>
                     <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
                     <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
@@ -159,12 +180,12 @@ export class MedicationPlanBody extends React.Component {
 
 
                 {this.state.addModal &&
-                <ModalTracker drugId={this.state.amid}
+                <ModalTracker amid={this.state.amid}
                                     userId={user_id}
                                     title={<FormattedMessage id="plan.tracker.add" defaultMessage="Add Tracker" description="Add Tracker" />}
                                     onCancel={this.hideAddTracker} />}
 
-                {this.state.addModal &&
+                {this.state.visible &&
                 <ModalTracker id={this.state.amid}
                               userId={user_id}
                               title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker " description="Edit Tracker" />}
@@ -177,4 +198,4 @@ export class MedicationPlanBody extends React.Component {
 
 
 
-export default MedicationPlanBody
+export default BiometricPlanBody

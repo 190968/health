@@ -5,13 +5,9 @@ import Biometric from '../components/Biometric/components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
-const QUERY = gql`
+const BiometricPlan = gql`
     query GET_BIOMETRIC_PLAN ($user_id: ID, $date: Date)  {
-        account {
-        user{
-        id
-        },
-            biometricPlan (userId: $user_id, date: $date) {
+            biometricPlan (userId: $user_id) {
                 id
                 upid
                 isPersonal
@@ -26,7 +22,6 @@ const QUERY = gql`
                 startDate
                 endDate
             }
-        }
     }
 
 
@@ -34,15 +29,35 @@ const QUERY = gql`
 `;
 
 const BiometricPlanBodyWithQuery = graphql(
-    QUERY,
+    BiometricPlan,
     {
         props: ({ ownProps, data }) => {
-
+            //console.log(data);
             if (!data.loading) {
                 return {
-                    info: data.account.biometricPlan,
-                    user_id:data.account.user.id,
-                    loading: data.loading
+                    info: data.biometricPlan,
+                    loading: data.loading,
+
+                    loadDate(date, user_id) {
+                        //console.log(date);
+                        return data.fetchMore({
+                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                            variables: {
+                                // We are able to figure out which offset to use because it matches
+                                // the feed length, but we could also use state, or the previous
+                                // variables to calculate this (see the cursor example below)
+                                date: date,
+                                user_id: user_id,
+                            },
+                            updateQuery: (previousResult, {fetchMoreResult}) => {
+                                //return {medicationPlan:{id:29}};
+                                //console.log(fetchMoreResult);
+                                //fetchMoreResult.date = date;
+                                if (!fetchMoreResult) { return previousResult; }
+                                return fetchMoreResult;
+                            },
+                        });
+                    }
                 }
             } else {
                 return {loading: data.loading}
@@ -57,6 +72,43 @@ const BiometricPlanBodyWithQuery = graphql(
         }),
     }
 )(BiometricPlanBody);
+
+
+
+const deleteTracker = gql`
+    mutation trackerDelete($id: ID!, $uid: ID!) {
+        trackerDelete(id:$id, uid: $uid)
+    }
+`;
+
+
+
+const withDeleteMutation = graphql(deleteTracker, {
+    props: ({ mutate }) => ({
+        trackerDelete: (id, uid, date) => {
+            return mutate({
+                variables: { uid: uid, id: id },
+
+                refetchQueries: [{
+                    query: BiometricPlan,
+                    variables: { user_id: uid, date:date },
+                }],
+
+                /*update: (store, { data: { medicationDelete } }) => {
+                    // Read the data from our cache for this query.
+                    const data = store.readQuery({ query: deleteMed });
+
+                    console.log(data);
+                    // Add our comment from the mutation to the end.
+                    //data.comments.push(medicationDelete);
+                    // Write our data back to the cache.
+                    //store.writeQuery({ query: CommentAppQuery, data });
+                },*/
+            })
+        },
+
+    }),
+});
 
 /* -----------------------------------------
   Redux
@@ -77,7 +129,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(
+
+export default withDeleteMutation(connect(
     mapStateToProps,
     mapDispatchToProps
-)(BiometricPlanBodyWithQuery);
+)(BiometricPlanBodyWithQuery));

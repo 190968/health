@@ -10,6 +10,47 @@ const CheckboxGroup = Checkbox.Group;
 class EditTrackerForm extends React.Component {
 
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const { info, userId, amid, updateTracker, onCancel } = this.props;
+        const{id} = info;
+        this.props.form.validateFields((err, values) => {
+            //console.log(values);
+            const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns } = values;
+
+            console.log(columns);
+            //const startDateYMD = startDate.format("YYYY-MM-DD");
+            //const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
+            const input = {
+                amid:amid,
+                graph:graph,
+                timesToReport:timesToReport,
+                criticalRange: {min:criticalRangeMin, max:criticalRangeMax},
+                normalRange: {min:normalRangeMin, max:normalRangeMax},
+                columns: columns,
+                icd10Codes: attachDiagnoses,
+               /* drugId: drugId,
+                type: type,
+                purpose: purpose,
+                directions: directions,
+                sideEffects: sideEffects,
+                quantity: quantity,
+                timesPerDay: timesPerDay,*/
+
+            }
+
+            console.log(id);
+            console.log(userId);
+            console.log(input);
+            if (!err) {
+                // prepare fields here
+                //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
+
+                return updateTracker(id, userId, input, onCancel);
+            }
+        });
+
+    }
 
     render() {
         const { loading, columns, info } = this.props;
@@ -27,6 +68,7 @@ class EditTrackerForm extends React.Component {
             </Modal>
         }
 
+        console.log(info);
 
         const formItemLayout = {
             labelCol: {
@@ -114,20 +156,23 @@ class EditTrackerForm extends React.Component {
                     {...formItemLayout}
                     label="Columns"
                 >
+                    {getFieldDecorator('columns', {
+                        initialValue: info.columns
+                    })(
                     <CheckboxGroup options={columns.map((column) => {
                         return { label: column.name, value: column.id };
                     })} /*defaultValue={['Apple']} onChange={onChange}*/ />
+                    )}
 
                 </FormItem>}
                 <FormItem
                     {...formItemLayout}
                     label="# of Reports"
                 >
-                    {getFieldDecorator('ofReports', {
-                        initialValue: info.normalRange.timesToReport
+                    {getFieldDecorator('timesToReport', {
+                        initialValue: info.timesToReport
                     })(
-                        <Col span={24}>
-                            <Select defaultValue={1} style={{ width: 120 }}>
+                            <Select style={{ width: 120 }}>
                                 <Option value={1}>1 Time</Option>
                                 <Option value={2}>2 Times</Option>
                                 <Option value={3}>3 Times</Option>
@@ -138,7 +183,6 @@ class EditTrackerForm extends React.Component {
                                 <Option value={8}>8 Times</Option>
                                 <Option value={9}>9 Times</Option>
                             </Select>
-                        </Col>
 
                     )}
 
@@ -148,15 +192,13 @@ class EditTrackerForm extends React.Component {
                     label="Graph"
                 >
                     {getFieldDecorator('graph', {
-                        initialValue: 1
+                        initialValue: info.measurement.graph
                     })(
-                        <Col span={24}>
                             <Select style={{ width: 120 }}>
                                 <Option value={1}>Area</Option>
                                 <Option value={0}>Line</Option>
                                 <Option value={2}>Bar</Option>
                             </Select>
-                        </Col>
 
                     )}
 
