@@ -22,12 +22,12 @@ const AsyncCategoryView = () => {
     );
 }
 
- const AsyncCategoryDash = () => {
+ const AsyncCategoryDash = (props) => {
     return (
      Loadable({
          loader: () => import('../../../routes/Community/containers/mainCategories.js'),
 
-     }
+     }, undefined, props
  )
     );
 }
@@ -55,7 +55,7 @@ class CommunityLayout extends React.Component {
                     <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
                 </Breadcrumb>
             </Row>
-            <Route exact path='/community' component={AsyncCategoryDash()}/>
+            <Route exact path='/community' component={AsyncCategoryDash({handleBreadcrumbChange:this.handleBreadcrumbChange})} />
             <Route exact path="/community/:id" component={AsyncCategoryView()}/>
         </div>)
     }
