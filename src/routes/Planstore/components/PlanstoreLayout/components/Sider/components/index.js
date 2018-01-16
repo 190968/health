@@ -6,7 +6,7 @@ import {
     FormattedMessage,
 } from 'react-intl';
 import {TextRow, RectShape} from 'react-placeholder/lib/placeholders';
-import {Layout,Button, List} from 'antd';
+import {Layout,Button, Col,List} from 'antd';
 import Filters from '../../Filters/components'
 const {  Sider } = Layout;
 
@@ -26,6 +26,8 @@ export class PlanstoreLayout extends React.Component {
      * @param values
      */
     updateFilters = (filter, values) => {
+
+        console.log("-------updateFilters-------");
         const activeFilters = this.props.activeFilters;
         // get all current info of the type
         const activeFilter = activeFilters[filter] || {};
@@ -42,10 +44,9 @@ export class PlanstoreLayout extends React.Component {
         this.props.updateFilterStore(filter1)
     }
 
-    updateZeroFilters = (filter, ) => {
+    updateZeroFilters = (filter,values ) => {
         const activeFilters = {};
         const activeFilter1 =  {};
-        const values =  {};
         const filter2 = {
             ...activeFilters,
             [filter]: {
@@ -54,6 +55,7 @@ export class PlanstoreLayout extends React.Component {
             }
         }
         this.props.updateZeroFilterStore(filter2);
+        this.props.updateFilterStore(filter2);
     }
 
     /**
@@ -94,18 +96,16 @@ export class PlanstoreLayout extends React.Component {
                             />
                         </Sider>
 
-               )
+                   )
         }
 
 
         return (
-           <div>
-                <Sider collapsible collapsed={false} breakpoint="sm"
-                       collapsedWidth={0}>
+              <div>
                     <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
-                    <Button onClick={this.updateZeroFilters}>{<FormattedMessage id="planstore.planstorelayout.cleanfilter" defaultMessage="Clean filter" description="Clean filter" />}</Button>
-                </Sider>
-               </div>
+                    <Button onClick={this.updateZeroFilters} >{<FormattedMessage id="planstore.planstorelayout.cleanfilter" defaultMessage="Clean filter" description="Clean filter" />}</Button>
+            </div>
+
         )
 
     }

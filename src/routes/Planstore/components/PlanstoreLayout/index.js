@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextRow, RectShape} from 'react-placeholder/lib/placeholders';
-import {Layout,Card} from 'antd';
+import {Layout,Card,Col,Row} from 'antd';
 
 import PlanstoreSider from './components/Sider/containers'
 import PlanstoreContent from './components/Content/containers'
@@ -62,10 +62,15 @@ export class PlanstoreLayout extends React.Component {
         }
 
         return (
-            <Layout style={{padding: '24px 0'}}>
-                <PlanstoreSider loading={loading}  />
-                <PlanstoreContent loading={loading} />
-            </Layout>)
+            <Row gutter={15}>
+              <Col md={4} lg={4} xl={4}>
+                  <PlanstoreSider loading={loading}  />
+              </Col>
+              <Col  md={20} lg={20} xl={20}>
+                  <PlanstoreContent loading={loading} />
+              </Col>
+            </Row>
+           )
         }
 }
 

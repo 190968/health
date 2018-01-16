@@ -38,8 +38,8 @@ const ACTION_HANDLERS = {
         });
     },
     CLEAR_FILTERS: (state) => {
-        let nextState = state.set('activeFilters', fromJS({}));
-            return nextState;
+        return state.set('activeFilters', fromJS({}));
+
     }
 };
 

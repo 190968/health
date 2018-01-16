@@ -6,7 +6,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import Discussions from '../components/MainCategories/components/View';
+import Discussions from '../components/CategoriesLayout/components/View';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -73,11 +73,14 @@ query GET_CATEGORY($id:ID) {
 
 const withMutation = graphql(CATEGORY, {
 
-        options: (ownProps) => ({
+        options: (ownProps) => {
+            console.log(ownProps);
+            return{
         variables: {
-            id: ownProps.match.params.id
-        },
-    }),
+            id: ownProps.props.match.params.id,
+            handleBreadcrumbChange:ownProps.handleBreadcrumbChange
+        }}
+    },
         props: ({ ownProps, data }) => {
 
         if (!data.loading) {

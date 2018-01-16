@@ -7,7 +7,7 @@
 //
 // export class NewEntry extends Component {
 //     render() {
-//         return <div onClick={() => this.props.submit('apollostack/apollo-client')}>Click me</div>;
+//         return <div onClick={() => this.props.submit('apollostack/apollo-clients')}>Click me</div>;
 //     }
 // }
 //

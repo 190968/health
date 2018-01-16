@@ -1,40 +1,38 @@
 /**
- * Created by Pavel on 11.01.2018.
- */
-/**
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Tooltip,Form,Card,List,Row} from 'antd';
+import { Card, Tooltip,Form,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import { Link } from 'react-router-dom'
-
-class ListCommunity extends React.Component{
+class MyCategories extends React.Component{
 
     constructor(props){
         super(props);
     }
 
+
     render(){
-        const {loading} = this.props;
+        const {info,loading} = this.props;
         if (loading) {
             return (
-                <p>Loading!!!</p>
+                <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
-        const {name,categories} = this.props;
 
 
         return(
-            <Card
-                title={name.toUpperCase()+" COMMUNITIES"}
-            >
-                <Row>
+
+
+            <div>
+                <Card
+                    title="Main Categories"
+                >
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 5, xl: 5}}
-                        dataSource={categories}
+                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 6, xl: 6}}
+                        dataSource={info}
                         renderItem={item => (
                             <List.Item key={item.id}>
                                 <Link to={"/community/"+item.id}>
@@ -46,12 +44,13 @@ class ListCommunity extends React.Component{
                             </List.Item>
                         )}
                     />
-                </Row>
-            </Card>
-        );
+
+                </Card>
+            </div>
+        )
     }
 
 }
 
-const WrappedListCommunity = Form.create()(ListCommunity);
-export default withApollo(WrappedListCommunity);
+const WrappedMyCategories = Form.create()(MyCategories);
+export default withApollo(WrappedMyCategories);

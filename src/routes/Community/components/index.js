@@ -12,48 +12,50 @@ const AsyncCategoryView = () => {
     return (
         Loadable({
             loader: () => import('../../../routes/Community/containers/view.js'),
-})
+            render(loaded, props)
+    {
+        console.log(props);
+        let View = loaded.default;
+        return <View props={props}  handleBreadcrumbChange = {this.handleBreadcrumbChange} />;
+    }
+        })
     );
 }
 
  const AsyncCategoryDash = () => {
     return (
-        Loadable({
-            loader: () => import('../../../routes/Community/containers/mainCategories.js')
-})
+     Loadable({
+         loader: () => import('../../../routes/Community/containers/mainCategories.js'),
+
+     }
+ )
     );
 }
 
-// const AsyncMyCommunity = () => {
-//     return (
-//         Loadable({
-//             loader: () => import('../../../routes/Community/containers/myCommunities.js')
-// })
-//     );
-// }
-
-// Crumb.push(
-//     <Breadcrumb.Item><Link to={"/community/"+id}>{name}</Link></Breadcrumb.Item>
-// )
 
 class CommunityLayout extends React.Component {
 
     constructor(props){
         super(props);
+        this.handleBreadcrumbChange = this.handleBreadcrumbChange.bind(this);
+        this.state = {breadcrumbitem: ''};
     }
 
+    handleBreadcrumbChange(breadcrumbitem) {
+        console.log(breadcrumbitem,"-------breadcrumbitem-------");
+        this.setState({ breadcrumbitem});
+    }
 
     render() {
         const {loading, loadMoreEntries} = this.props;
 
         return (<div>
-            {/*<Row style={{marginBottom: 10}}>
+            <Row style={{marginBottom: 10}}>
                 <Breadcrumb separator=">">
                     <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
                 </Breadcrumb>
-            </Row>*/}
+            </Row>
             <Route exact path='/community' component={AsyncCategoryDash()}/>
-            {/*<Route exact path='/community' component={AsyncMyCommunity()} />*/}
             <Route exact path="/community/:id" component={AsyncCategoryView()}/>
         </div>)
     }

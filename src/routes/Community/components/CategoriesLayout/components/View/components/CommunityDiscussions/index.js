@@ -22,7 +22,7 @@ class CommunityDiscussions extends React.Component{
         const {loading} = this.props;
         if (loading) {
             return (
-                <p>Loading!!!</p>
+                <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
         const {name,discussions} = this.props;

@@ -2,7 +2,7 @@
  * Created by Pavel on 20.12.2017.
  */
 import React from 'react';
-import {Layout,Input, List, Card,Collapse} from 'antd';
+import {Layout,Input, Col,List, Card,Collapse} from 'antd';
 import {
     FormattedMessage
 } from 'react-intl';
@@ -47,7 +47,7 @@ export class PlanstoreLayout extends React.Component {
         if (loading) {
             return (
 
-                    <Content style={{padding: '0 24px', minHeight: 280}}>
+                <Col  md={20} lg={20} xl={20}>
                         <div style={{marginBottom:24}}>
                             <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
                                 <Input.Search
@@ -68,15 +68,15 @@ export class PlanstoreLayout extends React.Component {
                                 </List.Item>
                             )}
                         />
-                    </Content>
+                    </Col>
                )
         }
         const pageOpts = {onChange: this.changePage, total: 500, showSizeChanger:true};
         const searchText = 'Search for ActionPlan';//<FormattedMessage id="planstore.search" defaultMessage="Search for ActionPlan" description="Action plan search" />;
         return (
 
-                <Content style={{padding: '0 24px', minHeight: 280}}>
-                    <div style={{marginBottom:24}}>
+         <div>
+                    <div style={{marginBottom:12}}>
                     <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
                         <Input.Search
                             placeholder={searchText}
@@ -100,7 +100,7 @@ export class PlanstoreLayout extends React.Component {
                             </List.Item>
                         )}
                     />
-                </Content>
+                </div>
         )
     }
 }

@@ -1,19 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom';
-import {HaveModule} from '../../../src/components/Network/index.js'
 // add placeholders
 import ReactPlaceholder from 'react-placeholder';
-import {TextBlock, MediaBlock, TextRow, RectShape, RoundShape} from 'react-placeholder/lib/placeholders'
 
-import { Tag, Row, Col, Menu, Icon, Avatar, Badge } from 'antd';
+import { Tag, Row, Col, Menu,Carousel, Popover,Icon, Avatar, Badge } from 'antd';
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-const MenuDivider = Menu.Divider;
 
-const HeaderPlaceholder = (
-     <div></div>
-);
 
 
 class LHeader extends React.Component {
@@ -88,6 +81,11 @@ class LHeader extends React.Component {
                 </div>
             )
         }
+        const content = (
+            <div>
+
+            </div>
+        );
         return (
             <ReactPlaceholder ready={!loading} rows={3} >
 
@@ -117,7 +115,10 @@ class LHeader extends React.Component {
 
 
                             <Menu.Item key='inbox'>
-                                <NavLink exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></NavLink>
+
+                                <Popover placement="bottomRight"  content={content} trigger="click">
+                                    <NavLink exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></NavLink>
+                                </Popover>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
                                 <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></NavLink>
