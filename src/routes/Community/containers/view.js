@@ -6,7 +6,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import Discussions from '../components/CategoriesLayout/components/View';
+import View from '../components/CategoriesLayout/components/View';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -70,11 +70,15 @@ query GET_CATEGORY($id:ID) {
        }
 }
 `;
+const categoryJoinMutate=gql`
+mutation CATEGORYJOIN ($id:ID!,$uid:ID){
+  categoryJoin(id:$id,uid:$uid)
+  }
 
-const withMutation = graphql(CATEGORY, {
+`;
+const withQuery = graphql(CATEGORY, {
 
         options: (ownProps) => {
-             //console.log(ownProps);
             return{
         variables: {
             id: ownProps.match.params.id,
@@ -95,6 +99,15 @@ const withMutation = graphql(CATEGORY, {
         }
     },
 
+})(View);
+
+const withMutation = graphql(categoryJoinMutate, {
+    props: ({ mutate }) => ({
+        updateInfo: input => {
+            return mutate({
+                variables: {id:input,uid:24038},
+            })},
+    }),
 });
 
 const mapStateToProps = (state) => {
@@ -105,7 +118,16 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-
+    onSubmit: (values) => {
+        console.log(values);
+        ownProps.updateInfo(values).then(({data}) => {
+            console.log("----categoryJoinMutate----");
+            console.log(data);
+        })
+    },
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Discussions));
+export default withMutation(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withQuery));

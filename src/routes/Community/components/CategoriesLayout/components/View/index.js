@@ -15,13 +15,18 @@ class ViewForm extends React.Component{
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
-
+      console.log(this.props);
     }
 
     handleChange() {
         console.log("handleChange");
         //this.props.handleBreadcrumbChange("pasha");
     }
+    clickSubmit= (values) => {
+        const { onSubmit,info } = this.props;
+        return onSubmit(info.id);
+    }
+
     componentDidMount() {
         console.log("componentDidMount");
         window.addEventListener('load', this.handleChange());
@@ -36,7 +41,7 @@ class ViewForm extends React.Component{
             );
         }
 
-        const {name,articles,discussions,categories} = info;
+        const {name,isJoined,articles,discussions,categories} = info;
 
 
 
@@ -58,12 +63,15 @@ class ViewForm extends React.Component{
                                                     </Col>
                                                   }
                             >
-
+                            {
+                                articles.length != 0 && <Articles articles={articles} />
+                            }
                         </Card>
 
                             :
                             <Card title={name}   extra={ <div>
-                                                                < Col span={10}> <Button type="primary">Join Community</Button></Col>
+                                                                < Col span={10}>
+                                                                    {isJoined ? <Button type="danger">Unjoin Community</Button>:<Button onClick={this.clickSubmit}  type="primary">Join Community</Button>}</Col>
                                                                 <Col offset={1}  span={13}>
                                                                 <Search
                                                                 placeholder="Search for a Communities"
@@ -73,16 +81,18 @@ class ViewForm extends React.Component{
                                                          </div>
                             }
                                 >
+                                {
+                                    articles.length != 0 && <Articles articles={articles} />
+                                }
                             </Card>
 
                     }
 
                     <br/>
                     </Row>
-                {
-                    articles.length != 0 ? <Articles articles={articles} />: null
 
-                }
+
+
                 {
                     categories.length != 0 ?  <ListCommunityForm name={name}  categories={categories} />: null
 
