@@ -28,6 +28,7 @@ export class PlanstorPlanLayout extends React.Component {
         };
         this.showDate = this.showDate.bind(this);
         this.showIntro = this.showIntro.bind(this);
+        this.hideIntro = this.hideIntro.bind(this);
         this.inviteMotivators = this.inviteMotivators.bind(this);
     };
     static propTypes = {
@@ -48,14 +49,15 @@ export class PlanstorPlanLayout extends React.Component {
         this.setState({date:date});
         //this.props.loadDate(date, this.props.user_id);
     };
-    showIntro = () => {
+    hideIntro = () => {
+
+    };
+    showIntro = (content) => {
+
         Modal.info({
             title: 'This is a notification message',
             content: (
-                <div>
-                    <p>some messages...some messages...</p>
-                    <p>some messages...some messages...</p>
-                </div>
+                content
             ),
             onOk() {},
         });
@@ -214,7 +216,7 @@ export class PlanstorPlanLayout extends React.Component {
                     </div>
                 </div>
 
-                <PlanBody id={plan.id} date={this.state.date}></PlanBody>
+                <PlanBody id={plan.id} date={this.state.date} showIntro={this.showIntro}></PlanBody>
             </Card>
             </div>)
     }

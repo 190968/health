@@ -5,11 +5,14 @@ import { injectReducer } from '../store/reducers'
 
 import LoadingPage from './LoadingPage';
 
-const Loadable = (opts, store, reducer) => L({
+const Loadable = (opts, store, initProps) => L({
     loading:  LoadingPage,
     render(loaded, props) {
         //console.log(store.getState('user'));
+        //console.log(loaded);
         //console.log(props);
+        //console.log(initProps);
+        const newProps = {...props, ...initProps}
         //console.log(this.props);
         let Component = loaded.default;
 
@@ -35,7 +38,7 @@ const Loadable = (opts, store, reducer) => L({
         }
 
 
-        return <Component {...props}/>;
+        return <Component {...newProps}/>;
     },
     delay: 300,
         ...opts,
