@@ -5,7 +5,7 @@ import Biometric from '../components/Biometric/components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
-const BiometricPlan = gql`
+export const BiometricPlanQuery = gql`
     query GET_BIOMETRIC_PLAN ($user_id: ID, $date: Date)  {
             biometricPlan (userId: $user_id) {
                 id
@@ -29,7 +29,7 @@ const BiometricPlan = gql`
 `;
 
 const BiometricPlanBodyWithQuery = graphql(
-    BiometricPlan,
+    BiometricPlanQuery,
     {
         props: ({ ownProps, data }) => {
             //console.log(data);
@@ -56,6 +56,7 @@ const BiometricPlanBodyWithQuery = graphql(
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                             },
+                            //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
                         });
                     }
                 }
@@ -68,7 +69,7 @@ const BiometricPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
-            //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
+
         }),
     }
 )(BiometricPlanBody);
@@ -90,7 +91,7 @@ const withDeleteMutation = graphql(deleteTracker, {
                 variables: { uid: uid, id: id },
 
                 refetchQueries: [{
-                    query: BiometricPlan,
+                    query: BiometricPlanQuery,
                     variables: { user_id: uid, date:date },
                 }],
 

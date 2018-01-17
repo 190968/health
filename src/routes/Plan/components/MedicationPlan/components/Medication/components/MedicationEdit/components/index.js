@@ -139,7 +139,7 @@ let notPermanent = 0;
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { info, userId, drugId, updateMedication, onCancel } = this.props;
+        const { info, date, userId, drugId, updateMedication, onCancel } = this.props;
         const{id} = info;
         this.props.form.validateFields((err, values) => {
             console.log(values);
@@ -163,7 +163,7 @@ let notPermanent = 0;
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
 
-                return updateMedication(id, userId, input, onCancel);
+                return updateMedication(id, userId, input, date, onCancel);
             }
         });
 

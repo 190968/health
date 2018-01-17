@@ -9,6 +9,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { message } from 'antd';
 import {MedicationPlan} from "../../../../../containers";
+
 //import { compose } from 'react-apollo';
 
 const medication = gql`
@@ -116,7 +117,7 @@ const MedicationEditWithQuery = graphql(medication,
 
 const withMutation = graphql(editMutation, {
     props: ({ mutate }) => ({
-        updateMedication: (id, uid, input, onCancel) => {
+        updateMedication: (id, uid, input, date, onCancel) => {
             return mutate({
                 variables: {id:id, userId:uid, input: {details:input}},
                 /*refetchQueries: [{
@@ -162,15 +163,13 @@ const withMutation = graphql(editMutation, {
 
 export const MedicationAddForm = graphql(addMutation, {
     props: ({ mutate }) => ({
-        updateMedication: (id, uid, input, onCancel) => {
+        updateMedication: (id, uid, input, date, onCancel) => {
             return mutate({
                 variables: {userId:uid, input: {details:input}},
-                /*refetchQueries: [{
-                    query: addMutation,
-                    variables: {
-                        //id: id,
-                        user_id: uid },
-                }],*/
+                refetchQueries: [{
+                    query: MedicationPlan,
+                    variables: { user_id: uid, date:date },
+                }],
             }).then((data) => {
                 onCancel(data);
                 message.success('Saved');

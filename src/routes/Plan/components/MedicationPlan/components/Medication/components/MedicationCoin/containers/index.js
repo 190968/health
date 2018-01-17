@@ -18,13 +18,35 @@ const reportOnMedication = gql`
     }
 `;
 
+const getMedication = gql`
+    query getMedication($id: ID!, $date: Date!, $userId: ID!) {
+        medication(id:$id, userId: $userId) {
+            id
+            reports(date:$date) {
+                id
+                time
+                date
+                isTaken
+            }
+        }
+    }
+`;
+
 
 
 const withMutation = graphql(reportOnMedication, {
     props: ({ mutate }) => ({
-        medicationReport: (input, id, date) => {
+        medicationReport: (input, userId, id, date) => {
             return mutate({
                 variables: { input: input, date:date, id: id },
+                refetchQueries: [{
+                    query: getMedication,
+                    variables: {
+                        id: id,
+                        userId: userId,
+                        date:date
+                    },
+                }],
             })
         },
 
@@ -48,7 +70,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 //const user = data.login.user;
                 //console.log(data);
                 //ownProps.report.id = 0;
-
+                message.info('Deleted');
                 //toggleCoin();
 
             }).catch((error) => {
@@ -67,14 +89,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             new_report.time = ownProps.time;
         }
         //console.log(new_report);
-        ownProps.medicationReport({ report: new_report}, med_id, ownProps.date)
+        ownProps.medicationReport({ report: new_report}, ownProps.userId, med_id, ownProps.date)
             .then(({data}) => {
                 //const token = data.login.token;
                 //const user = data.login.user;
                 //console.log(data);
                 //ownProps.report.id = 0;
 
-                toggleCoin();
+                //toggleCoin();
 
             }).catch((error) => {
             message.error(error.message);

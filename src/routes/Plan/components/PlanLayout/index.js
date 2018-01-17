@@ -20,7 +20,7 @@ const { Meta } = Card;
 
 
 
-export class PlanstorPlanLayout extends React.Component {
+export class PlanLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,17 +53,11 @@ export class PlanstorPlanLayout extends React.Component {
         //this.props.loadDate(date, this.props.user_id);
     };
     hideIntro = () => {
-
+        this.setState({infoModal:false});
     };
     showIntro = (content) => {
-
-        Modal.info({
-            title: 'This is a notification message',
-            content: (
-                content
-            ),
-            onOk() {},
-        });
+        this.setState({infoModal:true});
+        /**/
     };
     editPlan = () => {
         // open edit plan here
@@ -78,68 +72,6 @@ export class PlanstorPlanLayout extends React.Component {
     };
     inviteMotivators = () => {
 
-    };
-
-
-
-    planDetails()
-    {
-        const {plan} = this.props;
-        const {start_date, end_date, gender, language, elements, categories} = plan;
-        const details = [];
-        if (start_date != '') {
-            details.push(['Start Date', start_date]);
-        }
-        if (end_date != '') {
-            details.push(['End Date', end_date]);
-        }
-        if (gender != '') {
-            details.push(['Gender', gender]);
-        }
-        if (gender != '') {
-            details.push(['Language', language]);
-        }
-
-        if (categories.length > 0) {
-            var communities = categories.map(el => {
-                return <Link to={'/community/'+el.id} key={el.id}>{el.name}</Link>;
-            });
-            details.push(['CommunitiesDiscussions', intersperse(communities, ', ')]);
-        }
-        //console.log(elements);
-        if (elements.length > 0) {
-            var inside = elements.map(el => {
-                return <div key={el[1]}><i className={el[0]+' bump-r'}></i>{el[1]}</div>;
-            });
-            //console.log(inside);
-            details.push(['Inside',inside]);
-        }
-        //console.log(details);
-        const chunks = Math.ceil(details.length/2);
-        //console.log(chunks);
-        const chunked_arr = arrayChunk(details, chunks);
-        const cols = [];
-        for (var i=0,j=chunked_arr.length; i<j; i++) {
-            //console.log(i);
-            cols[i] = chunked_arr[i].map(el => {
-                return <Row key={el[0]}>
-                    <Col sm="3">
-                        <strong>{el[0]}:</strong>
-                    </Col>
-                    <Col sm="9">
-                        {el[1]}
-                    </Col>
-                </Row>;
-                //console.log(el.key);
-            });
-        }
-        //console.log(cols)
-        return <Row>
-            <Col xs="12" sm="6">
-                {cols[0]}
-            </Col>
-            <Col>{cols[1]}</Col>
-        </Row>
     };
 
     render() {
@@ -163,17 +95,17 @@ export class PlanstorPlanLayout extends React.Component {
 
         const options = (
             <Menu>
-                <Menu.Item key="0">
+                <Menu.Item key="motivators">
                     <a onClick={this.inviteMotivators}>Invite Motivators</a>
                 </Menu.Item>
                 <Menu.SubMenu title="Actions">
-                    <Menu.Item key="0">
+                    <Menu.Item key="edit">
                         <a onClick={this.editPlan}>Edit</a>
                     </Menu.Item>
-                    <Menu.Item key="1">
+                    <Menu.Item key="delete">
                         <a onClick={this.deletePlan}>Delete</a>
                     </Menu.Item>
-                    <Menu.Item key="1">
+                    <Menu.Item key="complete">
                         <a onClick={this.completePlan}>Complete</a>
                     </Menu.Item>
                 </Menu.SubMenu>
@@ -210,10 +142,10 @@ export class PlanstorPlanLayout extends React.Component {
                 <div className="box">
                     <div className="box__body">
                         <Row>
-                            <Col xs="12" sm="4" md="4">
+                            <Col xs={12} sm={4} md={4}>
                                 <div className="ap-card__img ap-card__img--large" style={divStyle}></div>
                             </Col>
-                            <Col xs="12" sm="8" md="8">
+                            <Col xs={12} sm={8} md={8}>
                                 <div className="ap-card__body">
                                     <div className="ap-card__title ap-card__title--large">
                                         <h1></h1>
@@ -224,7 +156,7 @@ export class PlanstorPlanLayout extends React.Component {
                     </div>
                 </div>
 
-                <PlanBody id={plan.id} userId={user.id} date={this.state.date} showIntro={this.showIntro}></PlanBody>
+                <PlanBody upid={info.id} id={plan.id} userId={user.id} date={this.state.date} showIntro={this.state.infoModal} hideIntro={this.hideIntro}></PlanBody>
             </Card>
             </div>)
     }
@@ -232,4 +164,4 @@ export class PlanstorPlanLayout extends React.Component {
 
 
 
-export default PlanstorPlanLayout
+export default PlanLayout

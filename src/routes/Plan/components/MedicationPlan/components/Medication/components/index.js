@@ -62,7 +62,7 @@ export class Medication extends React.Component {
 
             // note: we add a key prop here to allow react to uniquely identify each
             // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-            rows.push(<Col xs={3} key={i}><MedicationCoin med_id={id} quantity={quantity} report={report} date={date} /></Col>);
+            rows.push(<Col xs={3} key={i}><MedicationCoin med_id={id} userId={user_id} quantity={quantity} report={report} date={date} /></Col>);
         }
         return (
             <Row type="flex" justify="start">

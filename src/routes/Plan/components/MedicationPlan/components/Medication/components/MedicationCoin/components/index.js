@@ -53,8 +53,8 @@ export class MedicationCoin extends React.Component {
         e.preventDefault();
 
 
-        const { onClick, med_id, report } = this.props;
-        return onClick(med_id, report, !report.isTaken, this.toggleCoin);
+        const { onClick,  med_id, report } = this.props;
+        return onClick(med_id,  report, !report.isTaken, this.toggleCoin);
 
     }
 
@@ -89,7 +89,7 @@ export class MedicationCoin extends React.Component {
                 <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
             </Button>)
         }
-        return (<Button size="large" shape="circle" onClick={this.handleClick} >
+        return (<Button shape="circle" onClick={this.handleClick} >
             <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
         </Button>)
     }

@@ -11,7 +11,7 @@ import PlanSection from '../../containers/PlanSection';
 
 // adding filters
 // for modal
-import { Button, BackTop,List, Affix, Anchor, Card, Row, Col, Menu, Icon } from 'antd';
+import { Modal, Button, BackTop, List, Affix, Anchor, Card, Row, Col, Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 
 
@@ -134,7 +134,7 @@ export class PlanBody extends React.Component {
 
 
     render() {
-        const {upid, activities, lessons, body, loading} = this.props;
+        const {showIntro, date, hideIntro, upid, activities, lessons, body, loading} = this.props;
         let {currentTab, currentKey} = this.state;
         if (1==12 || loading) {
             // console.log(plan);
@@ -145,7 +145,32 @@ export class PlanBody extends React.Component {
         }
         const lessonsNum = lessons.length;
         const activitiesNum = activities.length;
-    console.log(lessons);
+
+
+        if (showIntro && body.intro.length > 0)  {
+
+            const introHtml =  <List
+                size="large"
+                itemLayout="vertical"
+                split={false}
+                dataSource={body.intro}
+                renderItem={item => {
+                    return <List.Item
+                        id={'field' + item.id}
+                        key={item.id}>
+                        <PlanElement element={item} />
+                    </List.Item>
+                }}
+            />;
+            Modal.info({
+                title: 'Info',
+                content: (
+                    introHtml
+                ),
+                onOk() {hideIntro()},
+            });
+        }
+        /**/
 /*
 <Row>
             <Col xs="12" sm="4" md="3">
@@ -205,7 +230,7 @@ export class PlanBody extends React.Component {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={19}>
-                                <PlanSection upid={upid} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
+                                <PlanSection upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
 
 
                             </Col>

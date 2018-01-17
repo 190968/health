@@ -12,7 +12,7 @@ class EditTrackerForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { info, userId, amid, updateTracker, onCancel } = this.props;
+        const { info, date, userId, amid, updateTracker, onCancel } = this.props;
         const{id} = info;
         this.props.form.validateFields((err, values) => {
             //console.log(values);
@@ -46,7 +46,7 @@ class EditTrackerForm extends React.Component {
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
 
-                return updateTracker(id, userId, input, onCancel);
+                return updateTracker(id, userId, input, date, onCancel);
             }
         });
 
@@ -68,7 +68,10 @@ class EditTrackerForm extends React.Component {
             </Modal>
         }
 
-        console.log(info);
+
+        let timesToReport = info.timesToReport;
+        timesToReport = timesToReport > 0 ? timesToReport : 1;
+        //console.log(info);
 
         const formItemLayout = {
             labelCol: {
@@ -170,7 +173,7 @@ class EditTrackerForm extends React.Component {
                     label="# of Reports"
                 >
                     {getFieldDecorator('timesToReport', {
-                        initialValue: info.timesToReport
+                        initialValue: timesToReport
                     })(
                             <Select style={{ width: 120 }}>
                                 <Option value={1}>1 Time</Option>

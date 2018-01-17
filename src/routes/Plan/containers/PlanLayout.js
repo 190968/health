@@ -9,6 +9,7 @@ import { compose } from 'react-apollo'
 import PlanLayout from '../../Plan/components/PlanLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { message } from 'antd';
 
 import Plan from '../../Plan/components/Plan';
 
@@ -82,6 +83,9 @@ const withMutationDelete = graphql(deletePlan,
             deletePlan: upid => {
                 return mutate({
                     variables: { upid: upid},
+                }).then((data) => {
+                    // redirect to the dash or to the patient profile.
+                    message.info('Deleted');
                 })
             },
         }),

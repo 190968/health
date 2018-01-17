@@ -6,7 +6,7 @@ import {
 
 import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
-import ModalTracker from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
+import {TrackerAddForm, TrackerEditForm} from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
 import {  Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
 import moment from "moment/moment";
 
@@ -71,10 +71,9 @@ export class BiometricPlanBody extends React.Component {
     }
     render() {
         const {info, loading, user_id} = this.props;
-
         if (loading) {
             return (
-                <Card loading >
+                <Card loading>
                 Loading...
                 </Card>
             );
@@ -106,6 +105,7 @@ export class BiometricPlanBody extends React.Component {
             const timesToReport = tracker.timesToReport;
             const measurement = tracker.measurement;
             const reports = measurement.reports;
+            //console.log(measurement);
             // if we have columns - put it into columns table
             if (tracker_columns.length > 0) {
                 let tracker_column_info = { key: tracker.id, name: measurement.label, input: <TrackerField info={tracker} date={date} list_id={info.id} />};
@@ -124,6 +124,7 @@ export class BiometricPlanBody extends React.Component {
                                 report = report_arr[0];
                             }
                         }
+                        //console.log(report);
                         inputFields.push(<TrackerField info={tracker} date={date} column={column_id} report={report} reportKey={i} list_id={info.id} />);
                     }
 
@@ -139,12 +140,14 @@ export class BiometricPlanBody extends React.Component {
                 let inputFields = [];
                 for (var i=0;i<timesToReport;i++) {
                     let report = null;
+                    //console.log(reports);
                     if (reports) {
                         const report_arr = reports.filter((e) => e.reportKey === i);
                         if (report_arr.length > 0) {
                             report = report_arr[0];
                         }
                     }
+                   // console.log(report);
                     inputFields.push(<TrackerField info={tracker} date={date} report={report} reportKey={i} list_id={info.id} />);
                 }
                 //
@@ -180,14 +183,16 @@ export class BiometricPlanBody extends React.Component {
 
 
                 {this.state.addModal &&
-                <ModalTracker amid={this.state.amid}
+                <TrackerAddForm amid={this.state.amid}
                                     userId={user_id}
+                                    date={date}
                                     title={<FormattedMessage id="plan.tracker.add" defaultMessage="Add Tracker" description="Add Tracker" />}
                                     onCancel={this.hideAddTracker} />}
 
                 {this.state.visible &&
-                <ModalTracker id={this.state.amid}
+                <TrackerEditForm id={this.state.amid}
                               userId={user_id}
+                              date={date}
                               title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker " description="Edit Tracker" />}
                               onCancel={this.closeClick} />}
 

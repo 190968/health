@@ -8,6 +8,7 @@ import TrackerModalForm from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from "antd/lib/index";
+import {BiometricPlanQuery} from "../../../../../containers";
 //import { compose } from 'react-apollo';
 
 const tracker = gql`
@@ -61,6 +62,30 @@ const updateTrackerMutate=gql`
         }
     }
 `;
+const addMutation=gql`
+ mutation TrackerAdd($userId: ID!, $input: TrackerInput!) {
+        trackerAdd(userId: $userId, input: $input) {
+              id,
+                measurement {
+                  id
+                  label
+                  graph
+                },
+                criticalRange {
+                  min
+                  max
+                },
+                normalRange {
+                  min
+                  max
+                },
+                timesToReport,
+                columns
+        }
+    }
+`;
+
+
 
 const withQuery = graphql(tracker,
     {
@@ -115,12 +140,12 @@ const withMutation = graphql(updateTrackerMutate, {
                     // Add our comment from the mutation to the end.
                     //data = medicationUpdate;
                     // Write our data back to the cache.
-                    if (id) {
+                    if (trackerUpdate.id) {
                         store.writeQuery({
                             query: tracker,
                             data: {tracker: trackerUpdate},
                             variables: {
-                                id: id,
+                                id: trackerUpdate.id,
                                 user_id: uid
                             }
                         });
@@ -129,7 +154,7 @@ const withMutation = graphql(updateTrackerMutate, {
                             query: tracker,
                             data: {tracker: trackerUpdate},
                             variables: {
-                                id: trackerUpdate.id,
+                                id: id,
                                 user_id: uid
                             }
                         });
@@ -142,6 +167,22 @@ const withMutation = graphql(updateTrackerMutate, {
             })},
     }),
 });
+
+export const TrackerAddForm = graphql(addMutation, {
+    props: ({ mutate }) => ({
+        updateTracker: (id, uid, input, date, onCancel) => {
+            return mutate({
+                variables: {userId:uid, input: {details:input}},
+                refetchQueries: [{
+                    query: BiometricPlanQuery,
+                    variables: { user_id: uid, date:date },
+                }],
+            }).then((data) => {
+                onCancel(data);
+                message.success('Saved');
+            })},
+    }),
+})(withQuery);
 
 
 
@@ -166,9 +207,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-
-
-export default withMutation(connect(
+export const TrackerEditForm = withMutation(connect(
     mapStateToProps,
     mapDispatchToProps
 )(withQuery));
+
+export default TrackerEditForm;

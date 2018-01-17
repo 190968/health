@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 
 
 const PLAN_BODY = gql`
-    query GET_PLAN_BODY ($id: ID!, $uid: ID!, $date: Date!) {
+    query GET_PLAN_BODY ($id: ID!, $upid: ID!, $date: Date!) {
         plan (id: $id) {
             ...PlanCardInfo,
             upid,
@@ -42,7 +42,7 @@ const PLAN_BODY = gql`
                 activities {
                     id
                     title
-                    completed(date:$date, userId:$uid)
+                    completed(date:$date, upid:$upid)
                     elements {
                         id
                         item_id
@@ -86,7 +86,7 @@ const PlanBodyWithQuery = graphql(
         options: (ownProps) => ({
             variables: {
                 id: ownProps.id,
-                uid: ownProps.userId,
+                upid: ownProps.upid,
                 date: ownProps.date
             }
 
@@ -102,7 +102,7 @@ const PlanBodyWithQuery = graphql(
                 const intro = body.intro || [];
 
                 return {
-                    upid: data.plan.upid,
+                    //upid: data.plan.upid,
                     //modules: data.network.modules,
                     loading: data.loading,
                     body: body,

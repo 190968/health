@@ -84,6 +84,7 @@ const NETWORK_INFO = gql`
 
 const queryOptions =  {
     query: NETWORK_INFO,
+    fetchPolicy: 'cache-first'
 }
 
 

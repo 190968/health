@@ -47,8 +47,6 @@ const MedicationPlanBodyWithQuery = graphql(
                 return {
                     info: data.medicationPlan,
                     loading: data.loading,
-                    //date: 'asd',
-
 
                     loadDate(date, user_id) {
                         //console.log(date);
@@ -65,13 +63,14 @@ const MedicationPlanBodyWithQuery = graphql(
                                 //return {medicationPlan:{id:29}};
                                 //console.log(fetchMoreResult);
                                 //fetchMoreResult.date = date;
-                                console.log(fetchMoreResult);
+                                //console.log(fetchMoreResult);
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {
                                     medicationPlan: fetchMoreResult.medicationPlan,
                                 });
                             },
+                            fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
                         });
                     }
                 }
@@ -86,7 +85,7 @@ const MedicationPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
-            fetchPolicy: 'cache-and-network'//'cache-only'//'cache-and-network'
+            //fetchPolicy: 'cache-and-network'//'cache-only'//'cache-and-network'
         }),
     }
 )(MedicationPlanBody);

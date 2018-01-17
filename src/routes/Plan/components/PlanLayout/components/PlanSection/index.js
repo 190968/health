@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Card, List } from 'antd';
 import PlanElement from '../PlanElement';
+import {message} from "antd/lib/index";
 
 export class PlanSection extends React.Component {
 
@@ -15,12 +16,17 @@ export class PlanSection extends React.Component {
     static propTypes = {
     };
 
-    saveSection = (e, lessonId, isLastSection) => {
-        if (isLastSection) {
-            // finish
-        } else {
-            this.props.showNextSection();
-        }
+    saveSection = (e, sectionId, isLastSection) => {
+        const {upid, date} = this.props;
+        this.props.sectionReport(upid, sectionId, date).then(({data}) => {
+            if (isLastSection) {
+                message.error('Congrats!');
+            } else {
+                this.props.showNextSection();
+            }
+        }).catch((error) => {
+            message.error(error.message);
+        });
     }
 
 

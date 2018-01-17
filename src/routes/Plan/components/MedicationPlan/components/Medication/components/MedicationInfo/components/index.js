@@ -51,7 +51,7 @@ export class MedicationInfo extends React.PureComponent {
        this.setState({visible: true});
     }
     render() {
-        const {loading,user_id} = this.props;
+        const {loading,user_id, date} = this.props;
         if(loading){
             return(<div>Loading</div>)
         }
@@ -67,6 +67,7 @@ export class MedicationInfo extends React.PureComponent {
     {this.state.visible &&
     <MedicationEditForm id={id}
                         userId={user_id}
+                        date={date}
                         title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal" defaultMessage="Edit" description="Edit" />}
                         onCancel={this.handleCancel} />}
 

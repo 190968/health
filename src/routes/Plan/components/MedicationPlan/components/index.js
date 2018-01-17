@@ -167,7 +167,7 @@ export class MedicationPlanBody extends React.Component {
                         });
                     }
                     //console.log(report, date);
-                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
+                    medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} userId={user_id} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
                 });
 
 
@@ -223,6 +223,7 @@ export class MedicationPlanBody extends React.Component {
                     {this.state.addModal &&
                         <MedicationAddForm drugId={this.state.medId}
                                             userId={user_id}
+                                            date={date}
                                             title={<FormattedMessage id="plan.medication.add" defaultMessage="Add" description="Add Medication" />}
                                             onCancel={this.hideAddMedication} />}
             </Card>
