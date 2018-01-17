@@ -5,24 +5,30 @@ import React, { PropTypes } from 'react';
 import DiscussionsForm from  './components/CommunityDiscussions';
 import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
-import { Card, Button,Form,Input ,Row,Col  } from 'antd';
+ import Search from  '../../../../containers/Search.js';
+// import Search from  './components/Search';
+import Autosuggest from 'react-autosuggest';
+import { Card,Dropdown,Menu, List,Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
-import ReactDOM from 'react-dom';
-const Search = Input.Search;
+import '../../../../style.css';
+
+
+
+
 
 class ViewForm extends React.Component{
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-      console.log(this.props);
+
     }
 
     handleChange() {
         console.log("handleChange");
         //this.props.handleBreadcrumbChange("pasha");
     }
-    clickSubmit= (values) => {
+    clickSubmit= () => {
         const { onSubmit,info } = this.props;
         return onSubmit(info.id);
     }
@@ -35,13 +41,19 @@ class ViewForm extends React.Component{
 
     render(){
          const {info,loading} = this.props;
+
+
+
+
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
             );
         }
-
         const {name,isJoined,articles,discussions,categories} = info;
+
+
+
 
 
 
@@ -53,13 +65,11 @@ class ViewForm extends React.Component{
 
                     {
 
+
                         categories.length != 0 ?
                         <Card title={name} extra={
                                                     <Col span={24}>
-                                                        <Search
-                                                            placeholder="Search for a Communities"
-                                                            style={ {height: "100%", width: "100%"} }
-                                                        />
+                                                       <Search />
                                                     </Col>
                                                   }
                             >
@@ -73,10 +83,7 @@ class ViewForm extends React.Component{
                                                                 < Col span={10}>
                                                                     {isJoined ? <Button type="danger">Unjoin Community</Button>:<Button onClick={this.clickSubmit}  type="primary">Join Community</Button>}</Col>
                                                                 <Col offset={1}  span={13}>
-                                                                <Search
-                                                                placeholder="Search for a Communities"
-                                                                style={ {height:"100%" ,width: "100%"} }
-                                                                />
+                                                                    <Search />
                                                                 </Col>
                                                          </div>
                             }
