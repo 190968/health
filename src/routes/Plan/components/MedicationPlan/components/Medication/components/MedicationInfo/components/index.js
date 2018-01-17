@@ -67,7 +67,7 @@ export class MedicationInfo extends React.PureComponent {
     {this.state.visible &&
     <MedicationEditForm id={id}
                         userId={user_id}
-                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal.title" defaultMessage="Edit Medication" description="Edit Medication" />}
+                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal" defaultMessage="Edit" description="Edit" />}
                         onCancel={this.handleCancel} />}
 
 

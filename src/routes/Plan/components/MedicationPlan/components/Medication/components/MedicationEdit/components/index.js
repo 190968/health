@@ -186,10 +186,11 @@ let notPermanent = 0;
             </Modal>
         }
 
-        let {type, timesPerDay, timesPerHour, quantity, startDate, endDate, purpose, sideEffects, directions} = info;//.medication;
+        let {type, drug, timesPerDay, timesPerHour, quantity, startDate, endDate, purpose, sideEffects, directions} = info;//.medication;
 
         const dateFormat = 'YYYY-MM-DD';
         let col = 0;
+        console.log(info);
 
       if(timesPerDay==0){
           timesPerDay = 1;
@@ -350,6 +351,9 @@ let notPermanent = 0;
         //     console.log(item.item._owner.memoizedProps.info);
         // })
 
+        const  {title} = this.props;
+        let fullTitle = title+' '+drug.name;
+
 
 
         return (
@@ -360,7 +364,7 @@ let notPermanent = 0;
                 keyboard = {false}
                 okText="Save"
                 onCancel={this.props.onCancel}
-                title={this.props.title}
+                title={fullTitle}
                 onOk={this.handleSubmit}
             >
 
@@ -507,14 +511,17 @@ let notPermanent = 0;
                     }
 
 
-                 <Row>
-                    <Col offset={3} span={12}>
+
+
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period"/>}
+                >
+                    <Col span={11}>
                         <FormItem
-                            {...formItemLayout}
-                            label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period"/>}
                         >
                             {getFieldDecorator('startDate', {
-                                initialValue: moment(startDate, dateFormat),
+                                initialValue: startDate ? moment(startDate) : '',
                             })(
                                 <DatePicker
                                     /*disabledDate={this.disabledStartDate}
@@ -524,13 +531,12 @@ let notPermanent = 0;
                             )}
                         </FormItem>
                     </Col>
-
-                    <Col span={1}>
-                        <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
-                          -
-                        </span>
+                    <Col span={2}>
+                    <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                      -
+                    </span>
                     </Col>
-                    <Col span={8}>
+                    <Col span={11}>
                         <FormItem
                         >
                             {getFieldDecorator('endDate', {
@@ -545,8 +551,7 @@ let notPermanent = 0;
                             )}
                         </FormItem>
                     </Col>
-
-                </Row>
+                </FormItem>
 
 
 

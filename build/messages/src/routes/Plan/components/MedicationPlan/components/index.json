@@ -31,6 +31,6 @@
   {
     "id": "plan.medication.add",
     "description": "Add Medication",
-    "defaultMessage": "Add Medication"
+    "defaultMessage": "Add"
   }
 ]

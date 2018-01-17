@@ -3,11 +3,12 @@ import Medication from './Medication/components';
 import MedicationCoin from './Medication/components/MedicationCoin/containers';
 import MedicationSelect from './Medication/components/MedicationSelect/containers';
 import MedicationInfo from './Medication/components/MedicationInfo/containers';
-import MedicationEditForm from './Medication/components/MedicationEdit/containers';
+import {MedicationAddForm as MedicationAddForm} from './Medication/components/MedicationEdit/containers';
 import moment from 'moment';
 import {
     FormattedMessage,
     FormattedDate,
+    FormattedTime,
 } from 'react-intl';
 
 import { Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
@@ -118,7 +119,7 @@ export class MedicationPlanBody extends React.Component {
             );
         }
         const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
-        console.log(info);
+        //console.log(info);
         let columns = [];
         let data = [];
 
@@ -158,14 +159,14 @@ export class MedicationPlanBody extends React.Component {
                     //console.log(time_info);
                     const {time, quantity} = time_info;
                     if (!columns.some(item => time === item.title)) {
-                        //console.log(<FormattedTime value={new Date(date+' '+time)} />);
                         columns.push({
-                            title: time,
+                            title: <FormattedTime value={new Date(date+' '+time)} />,
                             dataIndex: 'time_' + time_info.time,
-                            key: 'time_' + time_info.id
+                            key: 'time_' + time_info.id,
+                            //render: (info) => {console.log(info)}
                         });
                     }
-                    console.log(report, date);
+                    //console.log(report, date);
                     medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
                 });
 
@@ -188,7 +189,7 @@ export class MedicationPlanBody extends React.Component {
                     />
                 }} description="Medications for Today" />}
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
-                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'bottom'}><Popover content={<MedicationSelect userId={user_id} onSelect={this.addMedication} />} title="Add Medication" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
+                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<MedicationSelect userId={user_id} onSelect={this.addMedication} />} title="Add Medication" trigger="click" placement={'bottom'}><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
                       </div>}>
                     {takeAtTimes.length > 0 &&
                         (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
@@ -220,9 +221,9 @@ export class MedicationPlanBody extends React.Component {
                     }
 
                     {this.state.addModal &&
-                        <MedicationEditForm drugId={this.state.medId}
+                        <MedicationAddForm drugId={this.state.medId}
                                             userId={user_id}
-                                            title={<FormattedMessage id="plan.medication.add" defaultMessage="Add Medication" description="Add Medication" />}
+                                            title={<FormattedMessage id="plan.medication.add" defaultMessage="Add" description="Add Medication" />}
                                             onCancel={this.hideAddMedication} />}
             </Card>
             )

@@ -13,6 +13,7 @@ import {
 } from 'react-intl';
 import moment from "moment/moment";
 
+
 const { Meta } = Card;
 
 
@@ -30,6 +31,8 @@ export class PlanstorPlanLayout extends React.Component {
         this.showIntro = this.showIntro.bind(this);
         this.hideIntro = this.hideIntro.bind(this);
         this.inviteMotivators = this.inviteMotivators.bind(this);
+        this.deletePlan = this.deletePlan.bind(this);
+        this.completePlan = this.completePlan.bind(this);
     };
     static propTypes = {
         plan: PropTypes.object,
@@ -67,6 +70,11 @@ export class PlanstorPlanLayout extends React.Component {
     };
     deletePlan = () => {
         // delete plan here
+        this.props.deletePlan(this.props.info.id);
+    };
+    completePlan = () => {
+        // delete plan here
+        //this.props.completePlan();
     };
     inviteMotivators = () => {
 
