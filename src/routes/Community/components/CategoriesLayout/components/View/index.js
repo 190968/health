@@ -7,7 +7,6 @@ import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
  import Search from  '../../../../containers/Search.js';
 // import Search from  './components/Search';
-import Autosuggest from 'react-autosuggest';
 import { Card,Dropdown,Menu, List,Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import '../../../../style.css';
