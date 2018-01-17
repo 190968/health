@@ -20,6 +20,7 @@ class ViewForm extends React.Component{
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.clickJoin = this.clickJoin.bind(this);
 
     }
 
@@ -27,8 +28,8 @@ class ViewForm extends React.Component{
         console.log("handleChange");
         //this.props.handleBreadcrumbChange("pasha");
     }
-    clickSubmit= () => {
-        const { onSubmit,info } = this.props;
+    clickJoin = () => {
+        const { onSubmit, info} = this.props;
         return onSubmit(info.id);
     }
 
@@ -49,7 +50,7 @@ class ViewForm extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
-        const {name,isJoined,articles,discussions,categories} = info;
+        const {name,canJoin, isJoined,articles,discussions,categories} = info;
 
         let categoriesKV = [];
         categories.forEach((item)=>{
@@ -61,43 +62,20 @@ class ViewForm extends React.Component{
         return(
 
             <div>
-                <div className="load" ></div>
-                <Row>
-
-                    {
-
-
-                        categories.length != 0 ?
-                        <Card title={name} extra={
-                                                    <Col span={24}>
-                                                       <Search categories={categoriesKV} />
-                                                    </Col>
-                                                  }
-                            >
-                            {
-                                articles.length != 0 && <Articles articles={articles} />
-                            }
-                        </Card>
-
-                            :
-                            <Card title={name}  extra={ <Row>
-                                                                <Col span={10}>
-                                                                    {isJoined ? <Button type="danger">Leave</Button>:<Button onClick={this.clickSubmit}  type="primary">Join</Button>}</Col>
-                                                                <Col offset={1}  span={13}>
-                                                                    <Search categories={categoriesKV} />
-                                                                </Col>
-                                                         </Row>
-                            }
-                                >
-                                {
-                                    articles.length != 0 && <Articles articles={articles} />
-                                }
-                            </Card>
-
-                    }
-
-                    <br/>
+                    <Card title={name}  extra={ <Row>
+                        <Col span={10}>
+                            {canJoin ? isJoined ? <Button type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
+                        <Col offset={1}  span={13}>
+                            <Search categories={categoriesKV} />
+                        </Col>
                     </Row>
+                    }
+                    >
+                        {
+                            articles.length != 0 && <Articles articles={articles} />
+                        }
+                    </Card>
+
 
 
 

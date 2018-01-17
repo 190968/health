@@ -71,8 +71,8 @@ query GET_CATEGORY($id:ID) {
 }
 `;
 const categoryJoinMutate=gql`
-mutation CATEGORYJOIN ($id:ID!,$uid:ID){
-  categoryJoin(id:$id,uid:$uid)
+mutation CATEGORY_JOIN ($id:ID!,$uid:ID){
+    categoryJoin(id:$id,uid:$uid)
   }
 
 `;
@@ -103,9 +103,9 @@ const withQuery = graphql(CATEGORY, {
 
 const withMutation = graphql(categoryJoinMutate, {
     props: ({ mutate }) => ({
-        updateInfo: input => {
+        updateInfo: id => {
             return mutate({
-                variables: {id:input,uid:24038},
+                variables: {id:id},
             })},
     }),
 });
@@ -118,9 +118,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (values) => {
-        console.log(values);
-        ownProps.updateInfo(values).then(({data}) => {
+    onSubmit: (id) => {
+        ownProps.updateInfo(id).then(({data}) => {
             console.log("----categoryJoinMutate----");
             console.log(data);
         })
