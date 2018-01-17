@@ -60,7 +60,7 @@ const PlanstoreLayoutWithQuery = graphql(
                                 page: page,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                //console.log("Какой previousResult в updateQuery",previousResult);
+                                console.log("Какой previousResult в updateQuery",previousResult);
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {
