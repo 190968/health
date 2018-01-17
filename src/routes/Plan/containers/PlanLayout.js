@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { compose } from 'react-apollo'
 
 /*  This is a containers components. Notice it does not contain any JSX,
     nor does it import React. This components is **only** responsible for
@@ -68,6 +69,49 @@ const PlanstorPlanLayoutWithQuery = graphql(
         },
     }
 )(PlanLayout);
+
+const deletePlan = gql`
+    mutation userPlanDelete($upid:ID!) {
+       userPlanDelete(upid:$upid)
+    }
+
+`;
+const withMutationDelete = graphql(deletePlan,
+    {
+        props: ({ ownProps, mutate }) => ({
+            deletePlan: upid => {
+                return mutate({
+                    variables: { upid: upid},
+                })
+            },
+        }),
+    }
+);
+
+
+const completePlan = gql`
+    mutation userPlanComplete($upid:ID!) {
+       userPlanComplete(upid:$upid)
+    }
+
+`;
+const withMutationComplete = graphql(completePlan,
+    {
+        props: ({ ownProps, mutate }) => ({
+            completePlan: input => {
+                console.log(ownProps);
+                return mutate({
+                    variables: { upid: ownProps.info.id},
+                })
+            },
+        }),
+    }
+);
+
+const PlanLayoutWithMutations = compose(
+    withMutationDelete,
+    withMutationComplete,
+);
 /* -----------------------------------------
   Redux
  ------------------------------------------*/
@@ -90,7 +134,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(
+export default PlanLayoutWithMutations(connect(
     mapStateToProps,
     mapDispatchToProps
-)(PlanstorPlanLayoutWithQuery);
+)(PlanstorPlanLayoutWithQuery));

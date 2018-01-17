@@ -8,6 +8,7 @@ import MedicationEditForm from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { message } from 'antd';
+import {MedicationPlan} from "../../../../../containers";
 //import { compose } from 'react-apollo';
 
 const medication = gql`
@@ -35,9 +36,34 @@ query GET_MEDICATION($user_id: ID!, $id: ID) {
             }
 }
 `;
-const settingUserMutate=gql`
+const editMutation=gql`
  mutation MedicationUpdate($id: ID!, $userId: ID!, $input: MedicationInput!) {
         medicationUpdate(id:$id, userId: $userId, input: $input) {
+             id,
+                startDate,
+                endDate,
+                sideEffects,
+                purpose,
+                directions,
+                timesPerDay,
+                timesPerHour {
+                  id,
+                  time,
+                  quantity
+                },
+                type,
+                drug {
+                  id
+                  name
+                  dosage
+                },
+                quantity
+        }
+    }
+`;
+const addMutation=gql`
+ mutation MedicationAdd($userId: ID!, $input: MedicationInput!) {
+        medicationAdd(userId: $userId, input: $input) {
              id,
                 startDate,
                 endDate,
@@ -88,11 +114,18 @@ const MedicationEditWithQuery = graphql(medication,
     }
 )(MedicationEditForm);
 
-const withMutation = graphql(settingUserMutate, {
+const withMutation = graphql(editMutation, {
     props: ({ mutate }) => ({
         updateMedication: (id, uid, input, onCancel) => {
             return mutate({
                 variables: {id:id, userId:uid, input: {details:input}},
+                /*refetchQueries: [{
+                    query: editMutation,
+                    variables: {
+                        id: id,
+                        user_id: uid
+                    },
+                }],*/
                 update: (store, { data: { medicationUpdate } }) => {
 
                     // Read the data from our cache for this query.
@@ -125,6 +158,25 @@ const withMutation = graphql(settingUserMutate, {
             })},
     }),
 });
+
+
+export const MedicationAddForm = graphql(addMutation, {
+    props: ({ mutate }) => ({
+        updateMedication: (id, uid, input, onCancel) => {
+            return mutate({
+                variables: {userId:uid, input: {details:input}},
+                /*refetchQueries: [{
+                    query: addMutation,
+                    variables: {
+                        //id: id,
+                        user_id: uid },
+                }],*/
+            }).then((data) => {
+                onCancel(data);
+                message.success('Saved');
+            })},
+    }),
+})(MedicationEditWithQuery);
 
 const mapStateToProps = (state) => {
 

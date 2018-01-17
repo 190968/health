@@ -1,7 +1,7 @@
 [
   {
-    "id": "plan.medicationplan.medication.medicationedit.modal.title",
-    "description": "Edit Medication",
-    "defaultMessage": "Edit Medication"
+    "id": "plan.medicationplan.medication.medicationedit.modal",
+    "description": "Edit",
+    "defaultMessage": "Edit"
   }
 ]

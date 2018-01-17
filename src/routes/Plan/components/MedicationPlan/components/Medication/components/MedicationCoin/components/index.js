@@ -60,18 +60,37 @@ export class MedicationCoin extends React.Component {
 
     render() {
 
-        const {report, quantity} = this.props;
+        const {report} = this.props;
+        let {quantity} = this.props;
         const {isTaken} = report;
+
+        // format quantity
+        const qs = quantity % 1;//.split('.');
+        let q = Math.floor(quantity);
+        q = q > 0 ? q : '';
+        //console.log(qs);
+        //const qs = qInfo[1];
+        switch (qs) {
+            case 0.25:
+                quantity = q+'&frac14';
+                break;
+            case 0.50:
+                quantity = q+'&frac12';
+                break;
+            case 0.75:
+                quantity = q+'&frac34';
+                break;
+        }
         //const hasReport = this.state.isClicked;
         //console.log(this.props);
         //console.log(hasReport);
         if (isTaken) {
-            return (<Button type="primary" shape="circle" onClick={this.handleClick}>
-                {quantity}
+            return (<Button type="primary" shape="circle" onClick={this.handleClick} >
+                <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
             </Button>)
         }
-        return (<Button  shape="circle" onClick={this.handleClick}>
-            {quantity}
+        return (<Button size="large" shape="circle" onClick={this.handleClick} >
+            <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
         </Button>)
     }
 }
