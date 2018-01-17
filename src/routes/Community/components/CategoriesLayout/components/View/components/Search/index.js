@@ -26,19 +26,12 @@ class Search extends React.Component{
 
 
     render(){
-        const {category,loading} = this.props;
-        console.log(category,"do");
-        if (loading) {
-            return (
-                <Card loading >Loading!!!</Card>
-            );
-        }
-        console.log(category,"next");
+        const {items,loading} = this.props;
 
         return(
             <div>
                 <AutoComplete
-                    dataSource={category}
+                    dataSource={items}
                     placeholder="Search Community"
                     filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                     onChange = {this.onChange}

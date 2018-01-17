@@ -10,64 +10,11 @@ import gql from 'graphql-tag';
 
 
 const CATEGORYSEARCH  = gql`
-   query GET_CATEGORYSEARCH($search:String,$categoryId:ID) {
-categorySearch(search:$search,categoryId:$categoryId)
-  {
-         id
-         name
-         thumb {
-           original
-           small
-           large
-           medium
-           wide
-         }
-    		 canJoin
-    		 isJoined
-         articles {
-           id
-          title
-          titleShort
-          text
-          category {
-            id
-            name
-          }
-          thumbs {
-            original
-            small
-            large
-            medium
-            wide
-          }
-          views
-         }
-        discussions {
-          id
-          title
-          text
-          createdAt
-          lastReplyAt
-          category {
-            id
-          }
-          views
+   query CATEGORY_SEARCH($search:String) {
+        categorySearch(search:$search) {
+             id
+             name
         }
-    categories {
-      id
-      name
-        description
-        thumb {
-          original
-          small
-          large
-          medium
-          wide
-        }
-    }
-       }
- 
-  
 }
 
 `;
@@ -75,39 +22,34 @@ categorySearch(search:$search,categoryId:$categoryId)
 const withQuery = graphql(CATEGORYSEARCH, {
 
     options: (ownProps) => {
-        console.log(ownProps);
-              return{
+        return{
             variables: {
-                search:"Sex"
-            }}
+                search:ownProps.search
+            }
+        }
     },
     props: ({ ownProps, data }) => {
              console.log("CATEGORYSEARCH")
         if (!data.loading) {
 
+                // console.log(data);
             let keyValue = [];
             data.categorySearch.forEach((item)=>{
-                keyValue.push(item.name);
+                keyValue.push({value:item.id, text:item.name});
             })
-
+            //console.log(keyValue);
             return {
-                category: keyValue,
+                items: keyValue,
                 loading: data.loading,
                 loadMoreEntries(inputValue) {
-                    console.log("Какой inputValue в props",inputValue);
                     return data.fetchMore({
 
                         variables: {
                             search: inputValue,
                         },
                         updateQuery: (previousResult, {fetchMoreResult}) => {
-                            console.log("Какой previousResult в updateQuery",previousResult);
                             if (!fetchMoreResult) { return previousResult; }
                             return fetchMoreResult;
-                            return Object.assign({}, previousResult, {
-
-                                category: previousResult
-                            });
                         },
                     });
                 }
@@ -121,11 +63,8 @@ const withQuery = graphql(CATEGORYSEARCH, {
 });
 
 const mapStateToProps = (state) => {
- console.log(state)
-  //  var search = .planstore.get('search');
-
     return {
-        search: "Sex",
+        search: '',
     };
 };
 

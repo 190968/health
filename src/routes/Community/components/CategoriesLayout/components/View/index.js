@@ -51,8 +51,10 @@ class ViewForm extends React.Component{
         }
         const {name,isJoined,articles,discussions,categories} = info;
 
-
-
+        let categoriesKV = [];
+        categories.forEach((item)=>{
+            categoriesKV.push({value:item.id, text:item.name});
+        });
 
 
 
@@ -68,7 +70,7 @@ class ViewForm extends React.Component{
                         categories.length != 0 ?
                         <Card title={name} extra={
                                                     <Col span={24}>
-                                                       <Search />
+                                                       <Search categories={categoriesKV} />
                                                     </Col>
                                                   }
                             >
@@ -78,13 +80,13 @@ class ViewForm extends React.Component{
                         </Card>
 
                             :
-                            <Card title={name}   extra={ <div>
-                                                                < Col span={10}>
-                                                                    {isJoined ? <Button type="danger">Unjoin Community</Button>:<Button onClick={this.clickSubmit}  type="primary">Join Community</Button>}</Col>
+                            <Card title={name}  extra={ <Row>
+                                                                <Col span={10}>
+                                                                    {isJoined ? <Button type="danger">Leave</Button>:<Button onClick={this.clickSubmit}  type="primary">Join</Button>}</Col>
                                                                 <Col offset={1}  span={13}>
-                                                                    <Search />
+                                                                    <Search categories={categoriesKV} />
                                                                 </Col>
-                                                         </div>
+                                                         </Row>
                             }
                                 >
                                 {
