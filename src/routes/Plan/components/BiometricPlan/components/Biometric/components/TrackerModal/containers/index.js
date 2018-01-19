@@ -123,7 +123,7 @@ const withMutation = graphql(updateTrackerMutate, {
                 variables: {id:id, userId:uid, input: {details:input}},
 
                 update: (store, { data: { trackerUpdate } }) => {
-                    console.log(trackerUpdate);
+                    //console.log(trackerUpdate);
                     // Read the data from our cache for this query.
                     /*const data = store.readQuery({
                         query: tracker,

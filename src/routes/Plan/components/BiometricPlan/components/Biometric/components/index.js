@@ -16,7 +16,7 @@ export class Biometric extends React.Component {
                         name
                     }
                     inputMask
-                    reports (date: $date) {
+                    reports (date: $date){
                         id
                         date
                         reportKey

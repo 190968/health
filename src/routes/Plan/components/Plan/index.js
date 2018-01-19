@@ -21,6 +21,84 @@ export class Plan extends React.Component {
                 wide
             }
         }
+    `,
+      element: gql`
+        fragment PlanElement on PlanBodyElement {
+            id
+            itemId
+            itemType
+            reports (date: $date){
+                id
+                value,
+                date
+            }
+            itemInfo {
+               
+                ... on PlanElementChecklist {
+                  id
+                  label
+                  options {
+                    value
+                    label
+                  }
+                }
+                ... on PlanElementRadio {
+                  id
+                  label
+                  isVertical
+                  options {
+                    value
+                    label
+                  }
+                }
+                ... on PlanElementTextInput {
+                  id
+                  label
+                  isLong
+                  isDate
+                  isTime
+                }
+                
+                ... on PlanElementText {
+                  id
+                  text
+                }
+                ... on PlanElementLink {
+                  id
+                  label
+                  url
+                  description
+                }
+                
+                 ... on Tracker {
+                    id
+                    label
+                    textBefore
+                    description
+                    units {
+                        id
+                        name
+                    }
+                    inputMask
+                    targets (date: $date){
+                        id
+                        title
+                        value
+                    }
+                    reports (date: $date){
+                        id
+                        time,
+                        date
+                        reportKey
+                        columnId
+                        isCritical
+                        value
+                        comments
+                    }
+                }
+            }
+             
+        }
     `
   }
 

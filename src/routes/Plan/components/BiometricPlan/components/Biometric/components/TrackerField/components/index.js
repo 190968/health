@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import VMasker from 'vanilla-masker';
-import { InputNumber } from 'antd';
-import InputMask from 'react-input-mask';
+import Tracker from '../../../../../../Tracker';
+//import Tracker from '../../../../../../../containers/Tracker';
 
 export class TrackerField extends React.Component {
 
@@ -11,7 +10,7 @@ export class TrackerField extends React.Component {
         const {report} = this.props;
         this.state = {
             isReported: false,
-            value: report && report.value || ''
+            value: report && report.value || null
         };
         this.handleChange = this.handleChange.bind(this);
         this.triggerChange = this.triggerChange.bind(this);
@@ -39,9 +38,9 @@ export class TrackerField extends React.Component {
     componentWillReceiveProps = (nextProps) => {
         //console.log(nextProps);
         const {report} = nextProps;
-        this.state = {
-            value: report && report.value || ''
-        };
+        this.setState({
+            value: report && report.value || null
+        });
 
         if (!nextProps.loading) {
             /*this.setState({
@@ -73,6 +72,7 @@ export class TrackerField extends React.Component {
     triggerChange(value) {
         //e.preventDefault();
         //console.log(value);
+        //console.log(this.props);
         const { onChange, info, report, date, list_id, reportKey, column } = this.props;
         const {id} = info.measurement;
         let report_input = {id:(report && report.id ? report.id : 0), value:value, date:date, reportKey:reportKey, column:column};
@@ -90,7 +90,8 @@ export class TrackerField extends React.Component {
         const unit_id = units.id;
         const unit_name = units.name;
         const report_value = this.state.value;
-        console.log(report_value);
+        //console.log(report_value);
+        //console.log(report_value);
         //const pattern = '/(\\d{3})(?=\\d)/g';
         //let inputMask = '999/999';
         //console.log(inputMask);
@@ -102,27 +103,8 @@ export class TrackerField extends React.Component {
         //const hasReport = this.state.isClicked;
         //console.log(inputMaskRegex);
         //return (<InputMask value={report_value}  mask={inputMask} maskChar=" " onChange={this.handleChange} />)
-        return (<InputNumber
-            value={report_value}
-            //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
-            formatter={value => {
-                //console.log();
-                //console.log(value);
-                if (inputMask != '') {
-                    //console.log(inputMask);
-                    //console.log(value);
-                    return VMasker.toPattern(value, inputMask)
-                } else {
-
-                    return VMasker.toNumber(value);
-                }
-
-            }}
-            //parser={value => VMasker.toPattern(value, inputMask)}
-            //parser={value => value.replace(/\$\s?|(,*)/g, '')}
-            placeholder={unit_name}
-            onChange={this.handleChange}
-        />)
+        //console.log(this.handleChange);
+        return (<Tracker item={info.measurement} value={report_value} onChange={() => this.handleChange} />)
     }
 }
 

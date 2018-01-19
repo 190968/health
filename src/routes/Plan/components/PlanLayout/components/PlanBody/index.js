@@ -1,9 +1,6 @@
 import React from 'react'
-
-
-// add placeholders
-
-import PlanElement from '../PlanElement';
+    ;
+import PlanElement from '../../containers/PlanElement'
 import PlanLesson from '../../containers/PlanLesson';
 import PlanSection from '../../containers/PlanSection';
 
@@ -91,35 +88,42 @@ export class PlanBody extends React.Component {
             //console.log(nextProps);
             // check what should we open
             const{activities, lessons} = nextProps;
+            let foundMatch = false;
             if (lessons.length > 0) {
-                currentTab = 'lessons';
-                currentKey = 'lesson_0';
+                //if (activities.length === 0) {
+                    currentTab = 'lessons';
+                    currentKey = 'lesson_0';
+                //}
                 // check on incompleted lessons
                 //console.log(lessons);
                 lessons.map((lesson, i) => {
-                    if (lesson.completed) {
+                    if (currentKey == 'lesson_0' && !lesson.completed) {
                         currentTab = 'lessons';
                         currentKey = 'lesson_'+i;
                         currentKeyI = i;
+                        foundMatch = true;
                         return false;
                     }
                 })
             }
-
-            if (currentTab === '' && activities.length > 0) {
+            if (!foundMatch && activities.length > 0) {
                 currentTab = 'activities';
                 currentKey = 'section_0';
                 // check on incompleted sections
                 activities.map((section, i) => {
-                    if (section.completed) {
+                    if (currentKey == 'section_0' && !section.completed) {
+                        console.log(section);
                         currentTab = 'activities';
                         currentKey = 'section_'+i;
                         currentKeyI = i;
-                        return false;
+                        return true;
                     }
                 })
             }
-
+            console.log(activities);
+            console.log(currentTab);
+            console.log(currentKey);
+            console.log(currentKeyI);
             if (currentTab !== '') {
                 this.setState({
                     currentTab: currentTab,
@@ -205,19 +209,10 @@ export class PlanBody extends React.Component {
                     if (currentKey == 'lesson_'+i) {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
-                            <Col xs={19}>
+                            <Col xs={24}>
                                 <PlanLesson upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
-                            <Col offset={19}>
 
-                                <Anchor offsetTop={10}>
-                                    {section.elements !== null && section.elements.map((item) => (
-                                        <Anchor.Link key={item.id} href={'#field' + item.id} title={item.item_info.label}/>))}
-
-                                    {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
-                                <Anchor.Link href="#components-anchor-demo-basic3" title="Basic demo 3" />*/}
-                                </Anchor>
-                            </Col>
                         </Row>;
 
                         return list;
@@ -229,21 +224,10 @@ export class PlanBody extends React.Component {
                     if (currentKey == 'section_'+i) {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
-                            <Col xs={19}>
+                            <Col xs={24}>
                                 <PlanSection upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
-
-
                             </Col>
-                            <Col offset={19}>
 
-                                <Anchor offsetTop={10}>
-                                    {section.elements.map((item) => (
-                                        <Anchor.Link key={item.id} href={'#field' + item.id} title={item.item_info.label}/>))}
-
-                                    {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
-                                <Anchor.Link href="#components-anchor-demo-basic3" title="Basic demo 3" />*/}
-                                </Anchor>
-                            </Col>
                         </Row>;
 
                     return list;

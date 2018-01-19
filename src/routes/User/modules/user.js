@@ -2,6 +2,7 @@ export const SET_USER_TOKEN = 'SET_USER_TOKEN';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const SET_USER_INFO_FAIL = 'SET_USER_INFO_FAIL';
+export const SET_USER_LOADING = 'SET_USER_LOADING';
 
 // ------------------------------------
 // Actions
@@ -14,6 +15,12 @@ export const setUserToken = (token) => {
     }
 };
 
+
+export const loadUserPrepare = () => {
+    return {
+        type: SET_USER_LOADING,
+    }
+};
 export const loadUser = (user) => {
     localStorage.setItem('token', user.token);
     return {
@@ -40,7 +47,8 @@ export const actions = {
     setUserToken,
     loadUser,
     loadUserFAIL,
-    logoutUser
+    logoutUser,
+    loadUserPrepare
 }
 
 // ------------------------------------
@@ -52,6 +60,11 @@ const ACTION_HANDLERS = {
             ...initialState,
             loading: true,
             token: action.token,
+        };},
+    [SET_USER_LOADING]    : (state, action) => {
+        return {
+            ...initialState,
+            loading: true,
         };},
     [SET_USER_INFO]    : (state, action) => {
         return {

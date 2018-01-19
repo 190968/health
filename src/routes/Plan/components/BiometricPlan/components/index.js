@@ -21,6 +21,7 @@ export class BiometricPlanBody extends React.Component {
             date: props.date,
         };
         this.editClick = this.editClick.bind(this);
+        this.closeClick = this.closeClick.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
         this.addTracker = this.addTracker.bind(this);
     };
@@ -38,7 +39,7 @@ export class BiometricPlanBody extends React.Component {
         return trackerDelete(item.key, user_id, date);//, !this.state.isClicked, this.toggleCoin);
     }
     closeClick = () => {
-        this.setState({visible: false});
+        this.setState({visible: false, amid:0});
     }
     addTracker = (id) => {
         // create a new medication

@@ -9,16 +9,22 @@ import {Modal, Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
-    state = {
-        email: {
-            value: 'demo2patient@fitango.com',
-        },
-        password: {
-            value: 'Fitango2',
-        },
-        loading: false,
-        visible: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: {
+                value: 'demo2patient@fitango.com',
+            },
+            password: {
+                value: 'Fitango2',
+            },
+            //loading: false,
+            visible: false,
+        };
+        this.showModal = this.showModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     };
+
 
     showModal = () => {
         this.setState({
@@ -28,6 +34,7 @@ class NormalLoginForm extends React.Component {
     handleCancel = () => {
         this.setState({ visible: false });
     }
+
     handleSubmit = (e) => {
         e.preventDefault();
         const { onSubmit } = this.props;
@@ -52,12 +59,10 @@ class NormalLoginForm extends React.Component {
         });
     }
 
-    enterLoading = () => {
-        this.setState({ loading: true });
-    }
 
     render() {
         const token = this.props.token;
+
 
         if (token !== '') {
             return  <Redirect to={{
@@ -65,7 +70,8 @@ class NormalLoginForm extends React.Component {
             }} />;
         }
         const { getFieldDecorator } = this.props.form;
-        const { visible, loading } = this.state;
+        const { visible } = this.state;
+        const loading = this.props.loading;
         return (<div style={{padding:'8% 35% 20px'}}>
             <Card
                 title={<FormattedMessage id="user.login.card.title" defaultMessage="Login" description="Login" />}
@@ -115,7 +121,7 @@ class NormalLoginForm extends React.Component {
                 </FormItem>
                 <FormItem>
 
-                    <Button type="primary" htmlType="submit"  loading={this.state.loading} onClick={this.enterLoading} className="login-form-button">
+                    <Button type="primary" htmlType="submit"  loading={loading}  className="login-form-button">
                         Log in
                     </Button>
                     <a className="login-form-forgot" onClick={this.showModal} ><FormattedMessage id="user.login.forgot" defaultMessage="Forgot password" description="Forgot password" /></a>

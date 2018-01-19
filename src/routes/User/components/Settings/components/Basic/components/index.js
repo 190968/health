@@ -6,7 +6,9 @@ import React, { PropTypes } from 'react';
 import { Card, Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
 import moment from 'moment';
 const InputGroup = Input.Group;
@@ -35,6 +37,14 @@ const tailFormItemLayout = {
     },
 };
 const dateFormat = 'YYYY-MM-DD';
+
+const messages = defineMessages({
+    first_name: {
+        id: 'user.first_name',
+        defaultMessage: 'First name',
+        description: 'First name',
+    },
+});
 
 
  class SettingForm extends React.Component{
@@ -76,6 +86,9 @@ const dateFormat = 'YYYY-MM-DD';
         const phone = user.phone[1];
         const code = user.phone[0];
 
+
+
+        const { intl } = this.props;
         const { getFieldDecorator } = this.props.form;
         const prefixSelector = getFieldDecorator('prefix', {
             initialValue: code
@@ -115,9 +128,9 @@ const dateFormat = 'YYYY-MM-DD';
                     <Col span={8}>
                         {getFieldDecorator('first_name', {
                             initialValue: user.first_name ,
-                            rules: [{ required: true, message: <FormattedMessage id="user.settings.basic.firstname.rule" defaultMessage="Please input your firstname" description="Please input your first name" />, whitespace: true }],
+                            rules: [{ required: true, message: 'Please input your firstname', whitespace: true }],
                         })(
-                        <Input  placeholder={<FormattedMessage id="user.settings.basic.firstname" defaultMessage="First name" description="First name" />} />
+                        <Input placeholder={intl.formatMessage(messages.first_name)} />
                         )}
                     </Col>
                     <Col span={8}>
@@ -221,4 +234,4 @@ const dateFormat = 'YYYY-MM-DD';
 }
 
 const WrappedSettingForm = Form.create()(SettingForm);
-export default withApollo(WrappedSettingForm);
+export default withApollo(injectIntl(WrappedSettingForm));

@@ -18,7 +18,7 @@ class EditTrackerForm extends React.Component {
             //console.log(values);
             const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns } = values;
 
-            console.log(columns);
+            //console.log(columns);
             //const startDateYMD = startDate.format("YYYY-MM-DD");
             //const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
             const input = {
@@ -39,13 +39,12 @@ class EditTrackerForm extends React.Component {
 
             }
 
-            console.log(id);
-            console.log(userId);
-            console.log(input);
+            //console.log(id);
+            //console.log(userId);
             if (!err) {
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
-
+                //console.log(onCancel);
                 return updateTracker(id, userId, input, date, onCancel);
             }
         });

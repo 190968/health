@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose } from 'react-apollo';
 import { message } from 'antd';
 import { loginUserSuccess, loginUserError} from '../modules/login'
-import { loadUser, setUserToken} from '../modules/user'
+import {loadUser, loadUserFAIL, loadUserPrepare} from '../modules/user'
 
 import LoginForm from '../components/Login'
 import { graphql } from 'react-apollo';
@@ -70,13 +70,15 @@ const withMutation = graphql(loginUser, {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.user.token
+        token: state.user.token,
+        loading: state.user.loading
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
         const{email, password} = props;
+        dispatch(loadUserPrepare());
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 const token = data.login.token;
@@ -87,12 +89,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
-                console.log(error);
-            message.error(error.message);
+                //console.log(error);
+                dispatch(loadUserFAIL({ error,
+                }));
+                dispatch(loginUserError({
+                    error,
+                }));
+                //message.error(error.message);
 
-            dispatch(loginUserError({
-                error,
-            }));
+
         });
     },
     onClick: ({forgot_email}) => {
@@ -105,10 +110,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 message.success('Reset password link has been sent');
 
             }).catch((error) => {
-            //console.log(error);
-            dispatch(loginUserError({
-                error,
-            }));
+                console.log(1);
+
         });
 
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, Card, List } from 'antd';
-import PlanElement from '../PlanElement';
+import {Anchor, Row, Col, Button, Card, List } from 'antd';
+import PlanElement from '../../containers/PlanElement'
 import {message} from "antd/lib/index";
 
 export class PlanLesson extends React.Component {
@@ -42,24 +42,36 @@ export class PlanLesson extends React.Component {
 
    render() {
 
-        const {item, isLastLesson, haveSections} = this.props;
+        const {upid, item, isLastLesson, haveSections} = this.props;
         const footer = item.elements  || isLastLesson ? [<Button type="primary" onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
 
 
        return (<Card title={item.title} bordered={false} actions={footer}>
-            {item.elements ? <List
-                size="large"
-                itemLayout="vertical"
-                split={false}
-                dataSource={item.elements}
-                renderItem={item => {
-                    return <List.Item
-                        id={'field' + item.id}
-                        key={item.id}>
-                        <PlanElement element={item} />
-                    </List.Item>
-                }}
-            /> : 'No lesson content'}
+            {item.elements ? <Row>
+                <Col xs={19}><List
+                    size="large"
+                    itemLayout="vertical"
+                    split={false}
+                    dataSource={item.elements}
+                    renderItem={item => {
+                        return <List.Item
+                            id={'field' + item.id}
+                            key={item.id}>
+                            <PlanElement upid={upid} element={item} />
+                        </List.Item>
+                    }}
+                /></Col>
+                <Col xs={4} offset={1}>
+
+                    <Anchor offsetTop={10}>
+                        {item.elements !== null && item.elements.map((item) => (
+                            item.itemInfo.label && <Anchor.Link key={item.id} href={'#field' + item.id} title={item.itemInfo.label}/>))}
+
+                        {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
+                                <Anchor.Link href="#components-anchor-demo-basic3" title="Basic demo 3" />*/}
+                    </Anchor>
+                </Col>
+            </Row> : 'No lesson content'}
 
         </Card>)
     }

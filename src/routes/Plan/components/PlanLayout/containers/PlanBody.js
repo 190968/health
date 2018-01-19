@@ -25,17 +25,7 @@ const PLAN_BODY = gql`
                     title
                     completed
                     elements {
-                        id
-                        item_id
-                        item_type
-                        item_info
-                        schedule {
-                            start_date
-                            end_date
-                            relative_start_date
-                            relative_end_date
-                            repeated_days
-                        }
+                        ...PlanElement,
                     }
                 }
 
@@ -44,38 +34,19 @@ const PLAN_BODY = gql`
                     title
                     completed(date:$date, upid:$upid)
                     elements {
-                        id
-                        item_id
-                        item_type
-                        item_info
-                        schedule {
-                            start_date
-                            end_date
-                            relative_start_date
-                            relative_end_date
-                            repeated_days
-                        }
+                        ...PlanElement,
                     }
                 }
                 
                 intro {
-                    id
-                    item_id
-                    item_type
-                    item_info
-                    schedule {
-                        start_date
-                        end_date
-                        relative_start_date
-                        relative_end_date
-                        repeated_days
-                    }
+                     ...PlanElement,
                 }
             }
 
         }
     }
     ${Plan.fragments.plan}
+    ${Plan.fragments.element}
 `;
 
 

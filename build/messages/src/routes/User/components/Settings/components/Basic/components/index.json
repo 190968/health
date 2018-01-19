@@ -1,5 +1,10 @@
 [
   {
+    "id": "user.first_name",
+    "description": "First name",
+    "defaultMessage": "First name"
+  },
+  {
     "id": "user.settings.basic.title",
     "description": "Title",
     "defaultMessage": "Title"
@@ -8,16 +13,6 @@
     "id": "user.registration.settings.name",
     "description": "Name",
     "defaultMessage": "Name"
-  },
-  {
-    "id": "user.settings.basic.firstname.rule",
-    "description": "Please input your first name",
-    "defaultMessage": "Please input your firstname"
-  },
-  {
-    "id": "user.settings.basic.firstname",
-    "description": "First name",
-    "defaultMessage": "First name"
   },
   {
     "id": "user.settings.basic.middlename",

@@ -2,13 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Measurement from '../Measurement';
 
-import { Icon, Upload, Alert, Button, Card, Slider, Checkbox, Radio, Input, DatePicker, TimePicker, Select } from 'antd';
-const CheckboxGroup = Checkbox.Group;
-const RadioGroup = Radio.Group;
-const { TextArea } = Input;
-const Option = Select.Option;
+import { Icon, Upload, Alert, Button, Card } from 'antd';
+import PlanChecklist from "../../../Plan/components/Checklist";
+import PlanRadio from "../../../Plan/components/Radio";
+import PlanInputText from "../../../Plan/components/PlanInputText";
+import PlanScale from "../../../Plan/components/PlanScale";
+import PlanDropdown from "../../../Plan/components/PlanDropdown";
+
+
+
 
 export class PlanElement extends React.Component {
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -20,121 +26,54 @@ export class PlanElement extends React.Component {
 
     };
 
-    onChange(value) {
-        console.log(value);
+    onChange(value, type) {
+        //console.log(value);
+        //console.log(this.props);
+        const {upid, element, date} = this.props;
+        this.props.makeReport(upid, element.id, date, value);
     }
 
     render() {
-       console.log(this.props);
-       const {element} = this.props;
-       const {item_type, item_info} = element;
-       const item = item_info;
 
-       let field = item_type;
+       const {element} = this.props;
+       const {itemType, itemInfo, reports} = element;
+       const item = itemInfo;
+
+       let field = itemType;
        //field = item_type;
        let fieldTitle = '';
-       switch(item_type) {
+       switch(itemType) {
            case 'measurement_input':
-               field = <Measurement item={item} />
+               field = <Measurement item={item} onChange={this.onChange} />
                break;
            case 'choice_input':
            case 'checklist':
+
+               let reportValues = reports && reports.map((report) => (report.value));
+               reportValues = reportValues && reportValues[0];
+               field = <PlanChecklist item={item} reports={reportValues} onChange={this.onChange} />
                //const vertically = item.is_vertically;
                fieldTitle = item.label;
-               var options = item.opts_arr;
-               let plainOptions = [];
-               options.map((option) => {
-                   const coid = option.coid;
-                   const name = option.name;
-                   const description = option.description;
-                   plainOptions.push({ label: name, value: coid });
-               });
-
-               field = <CheckboxGroup options={plainOptions} defaultValue={['Apple']} onChange={this.onChange} />
                break;
            case 'radio_input':
+               field = <PlanRadio item={item} reports={reports} onChange={this.onChange} />
                fieldTitle = item.label;
-               var options = item.opts_arr;
-               let radioStyle = {};
-               if (item.is_vertically === '1') {
-                   radioStyle = {
-                       display: 'block',
-                       height: '30px',
-                       lineHeight: '30px',
-                   };
-               }
 
-
-               field = <RadioGroup onChange={this.onChange} /*value={this.state.value}*/>
-                   {options.map((option, i) => {
-                       const coid = option.coid;
-                       const name = option.name;
-                       //const description = option.description;
-                       return <Radio key={i} style={radioStyle} value={coid}>{name}</Radio>;
-                   })}
-               </RadioGroup>
                break;
            case 'text_input':
                fieldTitle = item.label;
-               const isLinetext = item.is_linetext;
-               const isDate = item.is_date;
-               const isTime = item.is_time;
-               if (isDate) {
-                    field = <DatePicker />;
-               } else if (isTime) {
-                   field = <TimePicker />;
-               } else if (isLinetext) {
-                    field = <Input placeholder="Basic usage" />;
-               } else {
+               field = <PlanInputText item={item} reports={reports} onChange={this.onChange} />
 
-                   field = <TextArea placeholder="Autosize height based on content lines" autosize={{ minRows: 2, maxRows: 6 }} />
-
-               }
                break;
            case 'dropdown_input':
                fieldTitle = item.label;
-               var options = item.opts_arr;
-               field = <Select
-                   showSearch
-                   style={{ width: 200 }}
-                   optionFilterProp="name"
-                   /*onChange={handleChange}
-                   onFocus={handleFocus}
-                   onBlur={handleBlur}*/
-                   filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-               >
-                   {options.map((option, i) => {
-                       const coid = option.coid;
-                       const name = option.name;
-                       //const description = option.description;
-                       return <Option key={i} value={coid}>{name}</Option>;
-                   })}
-               </Select>
+               field = <PlanDropdown item={item}  reports={reports} onChange={this.onChange} />
+
                break;
            case 'scale_input':
                fieldTitle = item.label;
-               var options = item.opts_arr;
-               let marks = {};
+               field = <PlanScale item={item}  reports={reports} onChange={this.onChange} />
 
-
-           {options.map((option, i) => {
-               const coid = option.coid;
-               const name = option.name;
-
-               marks[i] = name;
-               /*
-               {
-                       style: {
-                           color: '#f50',
-                       },
-                       label: <strong>100°C</strong>,
-                   },
-                */
-               //const description = option.description;
-               //return <Option value={coid}>{name}</Option>;
-           })}
-//console.log(marks);
-               field = <div style={{padding:'0 20px'}}><Slider marks={marks} max={options.length-1} /></div>;//<Slider marks={marks}    />
                break;
            case 'file_input':
                fieldTitle = item.label;
@@ -160,7 +99,7 @@ export class PlanElement extends React.Component {
                field = <Alert message="Tipbox" description={<div dangerouslySetInnerHTML={{__html: item.instruction}}></div>} type="info" showIcon />;
                break;
            case 'link':
-               field = <Card hoverable><a href={item.link_path}><Card.Meta
+               field = <Card hoverable><a href={item.url}><Card.Meta
                    title={item.label}
                    description={item.description}
                /></a></Card>

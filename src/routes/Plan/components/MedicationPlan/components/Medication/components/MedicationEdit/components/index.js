@@ -521,7 +521,7 @@ let notPermanent = 0;
                         <FormItem
                         >
                             {getFieldDecorator('startDate', {
-                                initialValue: startDate ? moment(startDate) : '',
+                                initialValue: startDate ? moment(startDate) : moment(),
                             })(
                                 <DatePicker
                                     /*disabledDate={this.disabledStartDate}
@@ -540,7 +540,7 @@ let notPermanent = 0;
                         <FormItem
                         >
                             {getFieldDecorator('endDate', {
-                                initialValue: endDate ? moment(endDate, dateFormat) : '',
+                                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
                             })(
                                 <DatePicker
                                     placeholder="End date"

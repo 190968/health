@@ -95,8 +95,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 //const user = data.login.user;
                 //console.log(data);
                 //ownProps.report.id = 0;
-
-                //toggleCoin();
+                if (data.medicationReport.isTaken) {
+                    message.success('Taken');
+                } else {
+                    message.info('UnTaken');
+                }
 
             }).catch((error) => {
             message.error(error.message);
