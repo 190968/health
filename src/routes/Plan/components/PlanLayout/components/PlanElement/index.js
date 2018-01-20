@@ -37,16 +37,16 @@ export class PlanElement extends React.Component {
 
     render() {
 
-        console.log(this.props);
+        //console.log(this.props);
         let {element, client, date} = this.props;
 
-        element = client.readFragment({
+        /*element = client.readFragment({
             id: `PlanBodyElement:${element.id}`,
             fragment: Plan.fragments.element,
             variables: {
                 date: date
             }
-        });
+        });*/
         //console.log(element);
 
 
@@ -56,37 +56,53 @@ export class PlanElement extends React.Component {
        let field = itemType;
        //field = item_type;
        let fieldTitle = '';
+       let reportValues = [];
        switch(itemType) {
            case 'measurement_input':
                field = <Measurement item={item} onChange={this.onChange} />
                break;
            case 'choice_input':
            case 'checklist':
-
-               let reportValues = reports && reports.map((report) => (report.value));
+               console.log(reports);
+               reportValues = reports && reports.map((report) => (report.value));
                reportValues = reportValues && reportValues[0];
                field = <PlanChecklist item={item} reports={reportValues} onChange={this.onChange} />
                //const vertically = item.is_vertically;
                fieldTitle = item.label;
                break;
            case 'radio_input':
-               field = <PlanRadio item={item} reports={reports} onChange={this.onChange} />
+               reportValues = reports && reports.map((report) => (report.value));
+               reportValues = reportValues && reportValues[0];
+               reportValues = reportValues && reportValues[0];
+               field = <PlanRadio item={item} reports={reportValues} onChange={this.onChange} />
                fieldTitle = item.label;
 
                break;
            case 'text_input':
+
+               reportValues = reports && reports.map((report) => (report.value));
+               reportValues = reportValues && reportValues[0];
+
                fieldTitle = item.label;
-               field = <PlanInputText item={item} reports={reports} onChange={this.onChange} />
+               field = <PlanInputText item={item} reports={reportValues} onChange={this.onChange} />
 
                break;
            case 'dropdown_input':
+               reportValues = reports && reports.map((report) => (report.value));
+               reportValues = reportValues && reportValues[0];
+               reportValues = reportValues && reportValues[0];
                fieldTitle = item.label;
-               field = <PlanDropdown item={item}  reports={reports} onChange={this.onChange} />
+               field = <PlanDropdown item={item}  reports={reportValues} onChange={this.onChange} />
 
                break;
            case 'scale_input':
+               reportValues = reports && reports.map((report) => (report.value));
+               reportValues = reportValues && reportValues[0];
+               reportValues = reportValues && reportValues[0];
+
                fieldTitle = item.label;
-               field = <PlanScale item={item}  reports={reports} onChange={this.onChange} />
+               //console.log(item);
+               field = <PlanScale item={item} reports={reportValues} onChange={this.onChange} />
 
                break;
            case 'file_input':

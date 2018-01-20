@@ -21,14 +21,15 @@ export default class PlanDropdown extends React.PureComponent {
     }
 
     render() {
-        const {reportValue, item} = this.props;
-        console.log(item);
+        const {reports, item} = this.props;
+        //console.log(reports);
         const options = item.options;
         return <Select
             showSearch
             style={{ width: 200 }}
             placeholder={'Select '+item.label}
             optionFilterProp="name"
+            defaultValue={reports}
             onChange={this.onChange}
             /*
             onFocus={handleFocus}

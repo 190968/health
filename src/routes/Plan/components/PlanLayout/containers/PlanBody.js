@@ -61,7 +61,7 @@ const PlanBodyWithQuery = graphql(
 
         }),
         props: ({ ownProps, data }) => {
-            console.log(data);
+            //console.log(data);
             //console.log(CURRENT_PLANSTORE_PLAN);
             if (!data.loading) {
                 const plan = data.plan;
@@ -80,7 +80,7 @@ const PlanBodyWithQuery = graphql(
                     intro: intro,
 
                     loadDate(date) {
-                        console.log(date);
+                        //console.log(date);
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {

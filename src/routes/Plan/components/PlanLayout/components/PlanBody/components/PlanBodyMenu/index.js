@@ -11,14 +11,22 @@ export class PlanBodyMenu extends React.Component {
             currentTab: props.currentTab,
             currentKey: props.currentKey
         };
+
+        this.onClick = this.onClick.bind(this);
     };
+
     static propTypes = {
     };
 
+    onClick(e) {
+        const{onClick} = this.props;
+        this.setState({currentKey:e.key});
+        onClick(e.key);
+    }
 
     componentWillMount() {
 
-
+//return true;
 
        // console.log(this.props);
 
@@ -29,7 +37,7 @@ export class PlanBodyMenu extends React.Component {
             let currentKeyI = 0;
             //console.log(nextProps);
             // check what should we open
-            const{activities, lessons} = this.props;
+            const{onClick, activities, lessons} = this.props;
             let foundMatch = false;
             if (lessons.length > 0) {
                 //if (activities.length === 0) {
@@ -72,21 +80,29 @@ export class PlanBodyMenu extends React.Component {
                     currentKey: currentKey,
                     currentKeyI: currentKeyI
                 });
+                onClick(currentKey);
             }
 
        //}*/
     };
 
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        //console.log(this.props);
+        //if (nextProps.currentKey !== this.state.currentKey) {
+           // this.props.onClick(nextProps.currentKey);
+        //}
 
 
+    }
 
     render() {
        //console.log(this.props);
-        const {onClick, lessons, activities} = this.props;
+        const {lessons, activities} = this.props;
         let {currentTab, currentKey} = this.state;
-            //console.log(tab);
+        console.log(currentTab, 'curtab');
         return (<Menu
-            onClick={onClick}
+            onClick={this.onClick}
             selectedKeys={[currentKey]}
             defaultOpenKeys={[currentTab]}
             mode="inline"

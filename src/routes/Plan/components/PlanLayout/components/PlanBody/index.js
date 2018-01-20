@@ -26,6 +26,7 @@ export class PlanBody extends React.Component {
             currentTab: '',
             currentKey: '',
             currentKeyI: 0,
+            inited: false,
 
         };
         this.handleClick = this.handleClick.bind(this);
@@ -39,10 +40,10 @@ export class PlanBody extends React.Component {
     };
 
 
-    handleClick = (e) => {
+    handleClick = (key) => {
         //console.log('click ', e);
         this.setState({
-            currentKey: e.key,
+            currentKey: key,
             currentKeyI: 0,
         });
 
@@ -82,6 +83,17 @@ export class PlanBody extends React.Component {
             currentKeyI: currentKeyI,
         });
     };
+
+    /*componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        console.log( this.props);
+        console.log(this.state.inited);
+        if (!nextProps.loading && this.state.inited  ) {
+            console.log('FIRST section show')
+
+            this.showFirstSection();
+        }
+    }*/
 
 
 
@@ -150,12 +162,16 @@ export class PlanBody extends React.Component {
             </Col>
         </Row>
  */
-        console.log(activities, 'AAAAAactivitires')
+        console.log(activities, 'AAAAAactivitires');
+        console.log(currentTab);
+        console.log(currentKey);
         return (<Row>
             <BackTop />
-            <Col xs={5} ><Affix offsetTop={10}>
-                <PlanBodyMenu lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
-                </Affix></Col>
+            <Col xs={5} >
+                <Affix offsetTop={10} >
+                    <PlanBodyMenu lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
+                </Affix>
+            </Col>
             <Col offset={5}>
 
                 {lessonsNum > 0 && lessons.map((section, i) => {
@@ -188,15 +204,7 @@ export class PlanBody extends React.Component {
                     return list;
                     }
                 })}
-
-
-
-
-
-
-
             </Col>
-
         </Row>)
     }
 }

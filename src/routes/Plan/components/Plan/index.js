@@ -112,6 +112,11 @@ export class Plan extends React.Component {
                     height
                     color
                 }
+                
+                 ... on Assessment {
+                    id
+                    label
+                }
             }
              
         }

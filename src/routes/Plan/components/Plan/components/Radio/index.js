@@ -22,12 +22,13 @@ export default class PlanRadio extends React.PureComponent {
         reportValue: PropTypes.number
     };
 
-    onChange(value) {
+    onChange(e) {
+        const { value } = e.target;
         this.props.onChange(value, 'radio');
     }
 
     render() {
-        const {reportValue, item} = this.props;
+        const {reports, item} = this.props;
 
         const options = item.options;
 
@@ -36,8 +37,9 @@ export default class PlanRadio extends React.PureComponent {
             radioStyle = vertStyle;
         }
 
+        //console.log(reports);
 
-        return <RadioGroup onChange={this.onChange} /*value={this.state.value}*/>
+        return <RadioGroup onChange={this.onChange} defaultValue={reports} >
             {options.map((option, i) => {
                 const coid = option.value;
                 const name = option.label;

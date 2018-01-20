@@ -24,7 +24,7 @@ export default class Measurement extends React.PureComponent {
     render() {
        //console.log(this.props);
        const {item} = this.props;
-       console.log(item);
+       //console.log(item);
        const {label, textBefore, description, units, reports, targets} = item;
        const unitsName = units.name;
 
