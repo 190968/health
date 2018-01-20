@@ -16,12 +16,14 @@ import '../../../../style.css';
 
 
 class ViewForm extends React.Component{
-
+    state = {
+        key:'Overview',
+        noTitleKey: 'Overview',
+    }
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.clickJoin = this.clickJoin.bind(this);
-
     }
 
     handleChange() {
@@ -32,12 +34,18 @@ class ViewForm extends React.Component{
         const { onSubmit, info} = this.props;
         return onSubmit(info.id);
     }
+    clickUNJoin = () => {
+
+    }
 
     componentDidMount() {
         console.log("componentDidMount");
         window.addEventListener('load', this.handleChange());
     }
-
+    onTabChange = (key, type) => {
+        console.log(key, type);
+        this.setState({ [type]: key });
+    }
 
     render(){
          const {info,loading} = this.props;
@@ -57,22 +65,50 @@ class ViewForm extends React.Component{
             categoriesKV.push({value:item.id, text:item.name});
         });
 
+        console.log(canJoin, isJoined);
+
+        const tabListNoTitle = [];
+        let contentListNoTitle={};
+        articles.forEach((item)=>{
+            contentListNoTitle[item.title] = <div>
+                <Col span={16}>
+                    <h3>{item.title}</h3>
+                    <div dangerouslySetInnerHTML={{__html: item.text}} />
+                </Col>
+                <Col offset={1} span={7}>
+                    <img src={item.thumbs.large} />
+                </Col>
+                </div>
+        })
+        for(let i=0;i<articles.length;i++)
+        {
 
 
+            tabListNoTitle.push(
+            {
+                key: articles[i].title,
+                tab: articles[i].title,
+            }
+            )
+        }
+        console.log(tabListNoTitle);
+        console.log(contentListNoTitle);
         return(
 
             <div>
                     <Card title={name}  extra={ <Row>
                         <Col span={10}>
-                            {canJoin ? isJoined ? <Button type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
+                            {canJoin ? isJoined ? <Button onClick={this.clickJoin} type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
                         <Col offset={1}  span={13}>
                             <Search categories={categoriesKV} />
                         </Col>
                     </Row>
                     }
+                          tabList={tabListNoTitle}
+                          onTabChange={(key) => { this.onTabChange(key, 'noTitleKey'); }}
                     >
                         {
-                            articles.length != 0 && <Articles articles={articles} />
+                            articles.length != 0 && contentListNoTitle[this.state.noTitleKey]
                         }
                     </Card>
 
