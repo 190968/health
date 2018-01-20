@@ -33,6 +33,7 @@ const radioStyle = {
 };
 let  finishTake = [];
 var total= 0;
+let preState;
 class EditMedicationForm extends React.Component {
 
     constructor(props) {
@@ -143,8 +144,20 @@ let notPermanent = 0;
         const{id} = info;
         this.props.form.validateFields((err, values) => {
             console.log(values);
-            const{type, startDate, endDate, purpose, directions, sideEffects, quantity, timesPerDay } = values;
+            const{type, startDate, endDate, purpose,timesPerHour,quantityTake1,quantityTake2,quantityTake3,quantityTake4,quantityTake5, takeAt1,takeAt2,takeAt3,takeAt4,takeAt5,directions, sideEffects, quantity, timesPerDay } = values;
+            console.log(quantity);
+            let timesAtHours = [];
+            let Quantity = [];
+            let takeAt = [];
+            Quantity.push(quantityTake1,quantityTake2,quantityTake3,quantityTake4,quantityTake5);
+            takeAt.push(takeAt1,takeAt2,takeAt3,takeAt4,takeAt5);
+            console.log(Quantity," ------------ Quantity");
+            console.log(takeAt," ------------- takeAt");
+            for(let i=0;i<timesPerHour;i++){
+                 timesAtHours.push({"id":i,"time":takeAt[i].format("hh:mm:ss"),"quantity":Quantity[i]});
+            }
 
+            console.log(timesAtHours);
             const startDateYMD = startDate.format("YYYY-MM-DD");
             const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
             const input = {
@@ -157,7 +170,7 @@ let notPermanent = 0;
                 sideEffects: sideEffects,
                 quantity: quantity,
                 timesPerDay: timesPerDay,
-
+               // timesAtHours:timesAtHours,
             }
             if (!err) {
                 // prepare fields here
@@ -195,80 +208,86 @@ let notPermanent = 0;
       if(timesPerDay==0){
           timesPerDay = 1;
       }
-
+       preState = this.state.select_value;
+        console.log(preState);
+        console.log(this.state.select_value);
         const Take = [];
         const dopTake = [];
-        for(let i=0;i<this.state.select_value-timesPerHour.length;i++){
+    if(this.state.select_value){
+        for(let i=1;i<=this.state.select_value;i++){
 
             dopTake.push({
-                    item: <div >
-                        <Col span={10}>
-                            <FormItem
-                                {...formItemLayout}
-                            >
-                                {getFieldDecorator('takeAt'+col+i, {
-                                    //initialValue: moment(timesPerHour[finishTake.length-1].time, format).add(1,'hours')
-                                    initialValue: moment('00:00:00', format)
-                                })(
-                                    <TimePicker format={format} minuteStep={30} use12Hours={true} />
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col offset={1} span={6}>
-                            <FormItem
-                                {...formItemLayout}
-                            >
+                item: <div >
+                    <Col span={10}>
+                        <FormItem
+                            {...formItemLayout}
+                        >
+                            {getFieldDecorator('takeAt'+i, {
+                                //initialValue: moment(timesPerHour[finishTake.length-1].time, format).add(1,'hours')
+                                initialValue: moment('00:00:00', format)
+                            })(
+                                <TimePicker format={format} minuteStep={30} use12Hours={true} />
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col offset={1} span={6}>
+                        <FormItem
+                            {...formItemLayout}
+                        >
 
-                                {getFieldDecorator('quantityTake'+col, {
-                                    initialValue: 1
-                                })(
-                                    <Select onChange={this.onTotal} style={{width: 80}}>
-                                        <Option value="0.25">¼</Option>
-                                        <Option value="0.50">½</Option>
-                                        <Option value="0.75">¾</Option>
-                                        <Option value="1">1</Option>
-                                        <Option value="1.25">1¼</Option>
-                                        <Option value="1.50">1½</Option>
-                                        <Option value="1.75">1¾</Option>
-                                        <Option value="2">2</Option>
-                                        <Option value="2.25">2¼</Option>
-                                        <Option value="2.50">2½</Option>
-                                        <Option value="2.75">2¾</Option>
-                                        <Option value="3">3</Option>
-                                        <Option value="3.25">3¼</Option>
-                                        <Option value="3.50">3½</Option>
-                                        <Option value="3.75">3¾</Option>
-                                        <Option value="4">4</Option>
-                                        <Option value="4.25">4¼</Option>
-                                        <Option value="4.50">4½</Option>
-                                        <Option value="4.75">4¾</Option>
-                                        <Option value="5">5</Option>
-                                        <Option value="5.25">5¼</Option>
-                                        <Option value="5.50">5½</Option>
-                                        <Option value="5.75">5¾</Option>
-                                        <Option value="6">6</Option>
-                                        <Option value="6.25">6¼</Option>
-                                        <Option value="6.50">6½</Option>
-                                        <Option value="6.75">6¾</Option>
-                                        <Option value="7">7</Option>
-                                        <Option value="7.25">7¼</Option>
-                                        <Option value="7.50">7½</Option>
-                                        <Option value="7.75">7¾</Option>
-                                        <Option value="8">8</Option>
-                                        <Option value="8.25">8¼</Option>
-                                        <Option value="8.50">8½</Option>
-                                        <Option value="8.75">8¾</Option>
-                                        <Option value="9">9</Option>
-                                        <Option value="9.25">9¼</Option>
-                                        <Option value="9.50">9½</Option>
-                                        <Option value="9.75">9¾</Option>
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
-                    </div>
-                })
+                            {getFieldDecorator('quantityTake'+i, {
+                                initialValue: 1
+                            })(
+                                <Select  onChange={this.onTotal} style={{width: 80}}>
+                                    <Option value="0.25">¼</Option>
+                                    <Option value="0.50">½</Option>
+                                    <Option value="0.75">¾</Option>
+                                    <Option value="1">1</Option>
+                                    <Option value="1.25">1¼</Option>
+                                    <Option value="1.50">1½</Option>
+                                    <Option value="1.75">1¾</Option>
+                                    <Option value="2">2</Option>
+                                    <Option value="2.25">2¼</Option>
+                                    <Option value="2.50">2½</Option>
+                                    <Option value="2.75">2¾</Option>
+                                    <Option value="3">3</Option>
+                                    <Option value="3.25">3¼</Option>
+                                    <Option value="3.50">3½</Option>
+                                    <Option value="3.75">3¾</Option>
+                                    <Option value="4">4</Option>
+                                    <Option value="4.25">4¼</Option>
+                                    <Option value="4.50">4½</Option>
+                                    <Option value="4.75">4¾</Option>
+                                    <Option value="5">5</Option>
+                                    <Option value="5.25">5¼</Option>
+                                    <Option value="5.50">5½</Option>
+                                    <Option value="5.75">5¾</Option>
+                                    <Option value="6">6</Option>
+                                    <Option value="6.25">6¼</Option>
+                                    <Option value="6.50">6½</Option>
+                                    <Option value="6.75">6¾</Option>
+                                    <Option value="7">7</Option>
+                                    <Option value="7.25">7¼</Option>
+                                    <Option value="7.50">7½</Option>
+                                    <Option value="7.75">7¾</Option>
+                                    <Option value="8">8</Option>
+                                    <Option value="8.25">8¼</Option>
+                                    <Option value="8.50">8½</Option>
+                                    <Option value="8.75">8¾</Option>
+                                    <Option value="9">9</Option>
+                                    <Option value="9.25">9¼</Option>
+                                    <Option value="9.50">9½</Option>
+                                    <Option value="9.75">9¾</Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                    </Col>
+                </div>
+            })
         }
+    }
+
+
 
         if(timesPerHour != null) {
             timesPerHour.forEach((item)=> {
@@ -345,16 +364,13 @@ let notPermanent = 0;
             })
 
         }
-      finishTake = Take.concat(dopTake);
-        // finishTake.forEach((item)=> {
-        //     //quantity += item._owner.memoizedProps.info.medication.timesPerHour[0].quantity;
-        //     console.log(item.item._owner.memoizedProps.info);
-        // })
+        this.state.select_value? finishTake = dopTake: finishTake = Take;
+
 
         const  {title} = this.props;
         let fullTitle = title+' '+drug.name;
 
-
+     console.log(title);
 
         return (
             <Modal
@@ -377,7 +393,6 @@ let notPermanent = 0;
                  {getFieldDecorator('type', {
                     initialValue: type
                  })(
-
                  <RadioGroup onChange={this.onTotal} >
                      <Radio style={radioStyle} value="at_times">At specific times</Radio>
                      <Radio style={radioStyle} value="along_day">Along the day</Radio>

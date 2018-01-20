@@ -118,6 +118,7 @@ const MedicationEditWithQuery = graphql(medication,
 const withMutation = graphql(editMutation, {
     props: ({ mutate }) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
+            console.log(input);
             return mutate({
                 variables: {id:id, userId:uid, input: {details:input}},
                 /*refetchQueries: [{
