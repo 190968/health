@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Measurement from '../Measurement';
-
-import { Icon, Upload, Alert, Button, Card } from 'antd';
+import { withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
+import { Divider, Icon, Upload, Alert, Button, Card } from 'antd';
 import PlanChecklist from "../../../Plan/components/Checklist";
 import PlanRadio from "../../../Plan/components/Radio";
 import PlanInputText from "../../../Plan/components/PlanInputText";
 import PlanScale from "../../../Plan/components/PlanScale";
 import PlanDropdown from "../../../Plan/components/PlanDropdown";
+import PlanMedia from "../../../Plan/components/PlanMedia";
+import Plan from "../../../Plan";
 
 
 
 
 export class PlanElement extends React.Component {
-
 
     constructor(props) {
         super(props);
@@ -35,7 +37,19 @@ export class PlanElement extends React.Component {
 
     render() {
 
-       const {element} = this.props;
+        console.log(this.props);
+        let {element, client, date} = this.props;
+
+        element = client.readFragment({
+            id: `PlanBodyElement:${element.id}`,
+            fragment: Plan.fragments.element,
+            variables: {
+                date: date
+            }
+        });
+        //console.log(element);
+
+
        const {itemType, itemInfo, reports} = element;
        const item = itemInfo;
 
@@ -85,18 +99,24 @@ export class PlanElement extends React.Component {
                break;
            case 'exam_input':
                fieldTitle = item.label;
+               //console.log(item);
                field = <Button>{fieldTitle}</Button>;
                break;
            case 'instruction':
                fieldTitle = '';
-               field = <div dangerouslySetInnerHTML={{__html: item.instruction}}></div>;
+               field = <div dangerouslySetInnerHTML={{__html: item.text}}></div>;
                break;
            case 'line':
-               return ('');
+               const {height, color} = item;
+               let opts = {height:height};
+               if (color) {
+                   opts.backgroundColor = '#'+color;
+               }
+               return <Divider style={opts}  />;
                break;
            case 'instruction_tipbox':
                fieldTitle = '';
-               field = <Alert message="Tipbox" description={<div dangerouslySetInnerHTML={{__html: item.instruction}}></div>} type="info" showIcon />;
+               field = <Alert message="Tipbox" description={<div dangerouslySetInnerHTML={{__html: item.text}}></div>} type="info" showIcon />;
                break;
            case 'link':
                field = <Card hoverable><a href={item.url}><Card.Meta
@@ -104,6 +124,10 @@ export class PlanElement extends React.Component {
                    description={item.description}
                /></a></Card>
                //link_path":"https://ya.ru","label":"Yandex","description":"search engine"
+               break;
+           case 'media':
+               //fieldTitle = item.label;
+               field = <PlanMedia item={item} />
                break;
        }
         return (<div>{fieldTitle && <h4>{fieldTitle}</h4>}
@@ -113,4 +137,4 @@ export class PlanElement extends React.Component {
 
 
 
-export default PlanElement
+export default withApollo(PlanElement)

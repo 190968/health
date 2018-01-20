@@ -16,7 +16,6 @@ export const makeRootReducer = (asyncReducers) => {
         planstore: planstoreReducer,
         ...asyncReducers
     })
-    console.log("---Reducer---");
     return reducers
 }
 

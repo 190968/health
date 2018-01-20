@@ -1,15 +1,18 @@
 import React from 'react'
-    ;
+import { withApollo } from 'react-apollo';
 import PlanElement from '../../containers/PlanElement'
 import PlanLesson from '../../containers/PlanLesson';
 import PlanSection from '../../containers/PlanSection';
+import PlanBodyMenu from './components/PlanBodyMenu';
+import {PLAN_BODY_QUERY} from '../../containers/PlanBody';
 
 
 
 // adding filters
 // for modal
 import { Modal, Button, BackTop, List, Affix, Anchor, Card, Row, Col, Menu, Icon } from 'antd';
-const SubMenu = Menu.SubMenu;
+import Plan from "../../../Plan";
+
 
 
 
@@ -80,65 +83,16 @@ export class PlanBody extends React.Component {
         });
     };
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.loading === false) {
-            let currentTab = '';
-            let currentKey = '';
-            let currentKeyI = 0;
-            //console.log(nextProps);
-            // check what should we open
-            const{activities, lessons} = nextProps;
-            let foundMatch = false;
-            if (lessons.length > 0) {
-                //if (activities.length === 0) {
-                    currentTab = 'lessons';
-                    currentKey = 'lesson_0';
-                //}
-                // check on incompleted lessons
-                //console.log(lessons);
-                lessons.map((lesson, i) => {
-                    if (currentKey == 'lesson_0' && !lesson.completed) {
-                        currentTab = 'lessons';
-                        currentKey = 'lesson_'+i;
-                        currentKeyI = i;
-                        foundMatch = true;
-                        return false;
-                    }
-                })
-            }
-            if (!foundMatch && activities.length > 0) {
-                currentTab = 'activities';
-                currentKey = 'section_0';
-                // check on incompleted sections
-                activities.map((section, i) => {
-                    if (currentKey == 'section_0' && !section.completed) {
-                        console.log(section);
-                        currentTab = 'activities';
-                        currentKey = 'section_'+i;
-                        currentKeyI = i;
-                        return true;
-                    }
-                })
-            }
-            console.log(activities);
-            console.log(currentTab);
-            console.log(currentKey);
-            console.log(currentKeyI);
-            if (currentTab !== '') {
-                this.setState({
-                    currentTab: currentTab,
-                    currentKey: currentKey,
-                    currentKeyI: currentKeyI
-                });
-            }
 
-        }
-    };
+
 
 
 
     render() {
-        const {showIntro, date, hideIntro, upid, activities, lessons, body, loading} = this.props;
+        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading} = this.props;
+
+
+
         let {currentTab, currentKey} = this.state;
         if (1==12 || loading) {
             // console.log(plan);
@@ -147,17 +101,28 @@ export class PlanBody extends React.Component {
                 <Card loading>Loading....</Card>
             );
         }
+        /*const {plan} = client.readQuery({
+            query: PLAN_BODY_QUERY,
+            variables: {
+                id: id,
+                upid: upid,
+                date: date
+            }
+        });
+        console.log(plan);
+        const {activities, lessons, intro} = plan;
+        console.log(lessons);*/
         const lessonsNum = lessons.length;
         const activitiesNum = activities.length;
 
 
-        if (showIntro && body.intro.length > 0)  {
+        if (showIntro && intro.length > 0)  {
 
             const introHtml =  <List
                 size="large"
                 itemLayout="vertical"
                 split={false}
-                dataSource={body.intro}
+                dataSource={intro}
                 renderItem={item => {
                     return <List.Item
                         id={'field' + item.id}
@@ -185,22 +150,12 @@ export class PlanBody extends React.Component {
             </Col>
         </Row>
  */
-
+        console.log(activities, 'AAAAAactivitires')
         return (<Row>
             <BackTop />
-            <Col xs={5} ><Affix offsetTop={10}><Menu
-                onClick={this.handleClick}
-                selectedKeys={[currentKey]}
-                defaultOpenKeys={[currentTab]}
-                mode="inline"
-            >
-                {lessons.length > 0 && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
-                    {lessons.map((lesson, i) => (<Menu.Item key={'lesson_'+i} i={i}>{lesson.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{lesson.title}</Menu.Item>))}
-                </SubMenu>}
-                {activities.length > 0 && <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
-                    {activities.map((section, i) => (<Menu.Item key={'section_'+i}>{section.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{section.title}</Menu.Item>))}
-                </SubMenu>}
-            </Menu></Affix></Col>
+            <Col xs={5} ><Affix offsetTop={10}>
+                <PlanBodyMenu lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
+                </Affix></Col>
             <Col offset={5}>
 
                 {lessonsNum > 0 && lessons.map((section, i) => {

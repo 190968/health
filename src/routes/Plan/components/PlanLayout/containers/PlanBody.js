@@ -14,33 +14,31 @@ import gql from 'graphql-tag';
 
 
 
-const PLAN_BODY = gql`
+export const PLAN_BODY_QUERY = gql`
     query GET_PLAN_BODY ($id: ID!, $upid: ID!, $date: Date!) {
         plan (id: $id) {
             ...PlanCardInfo,
             upid,
-            body {
-                lessons {
-                    id
-                    title
-                    completed
-                    elements {
-                        ...PlanElement,
-                    }
+            lessons {
+                id
+                title
+                completed
+                elements {
+                    ...PlanElement,
                 }
+            }
 
-                activities {
-                    id
-                    title
-                    completed(date:$date, upid:$upid)
-                    elements {
-                        ...PlanElement,
-                    }
+            activities(date:$date) {
+                id
+                title
+                completed(date:$date, upid:$upid)
+                elements {
+                    ...PlanElement,
                 }
-                
-                intro {
-                     ...PlanElement,
-                }
+            }
+            
+            intro {
+                 ...PlanElement,
             }
 
         }
@@ -52,7 +50,7 @@ const PLAN_BODY = gql`
 
 // 1- add queries:
 const PlanBodyWithQuery = graphql(
-    PLAN_BODY,
+    PLAN_BODY_QUERY,
     {
         options: (ownProps) => ({
             variables: {
@@ -63,26 +61,26 @@ const PlanBodyWithQuery = graphql(
 
         }),
         props: ({ ownProps, data }) => {
-            //console.log(data);
+            console.log(data);
             //console.log(CURRENT_PLANSTORE_PLAN);
             if (!data.loading) {
                 const plan = data.plan;
-                const body = plan.body;
-                const lessons = body.lessons || [];
-                const activities = body.activities || [];
-                const intro = body.intro || [];
-
+                //const body = plan.body;
+                const lessons = plan.lessons || [];
+                const activities = plan.activities || [];
+                const intro = plan.intro || [];
+                //console.log(activities);
                 return {
                     //upid: data.plan.upid,
                     //modules: data.network.modules,
                     loading: data.loading,
-                    body: body,
+                    //id: plan.id,
                     lessons: lessons,
                     activities: activities,
                     intro: intro,
 
                     loadDate(date) {
-                        //console.log(date);
+                        console.log(date);
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {

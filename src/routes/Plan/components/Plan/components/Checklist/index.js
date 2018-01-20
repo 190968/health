@@ -32,10 +32,11 @@ export default class PlanChecklist extends React.PureComponent {
 
         const {reports, item} = this.props;
         //const {label} = item;
+        //console.log(item);
         let radioStyle = {};
-        //if (item.is_vertically === '1') {
+        if (item.isVertical) {
             radioStyle = vertStyle;
-        //}
+        }
         var options = item.options;
         let plainOptions = [];
         options.map((option) => {
