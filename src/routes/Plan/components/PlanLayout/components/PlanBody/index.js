@@ -40,11 +40,10 @@ export class PlanBody extends React.Component {
     };
 
 
-    handleClick = (key) => {
-        //console.log('click ', e);
+    handleClick = (key, currentKeyI) => {
         this.setState({
             currentKey: key,
-            currentKeyI: 0,
+            currentKeyI: currentKeyI,
         });
 
     }

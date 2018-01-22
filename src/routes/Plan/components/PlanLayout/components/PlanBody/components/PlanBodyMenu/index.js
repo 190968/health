@@ -19,9 +19,11 @@ export class PlanBodyMenu extends React.Component {
     };
 
     onClick(e) {
+
         const{onClick} = this.props;
+
         this.setState({currentKey:e.key});
-        onClick(e.key);
+        onClick(e.key, e.item.props.index);
     }
 
     componentWillMount() {
@@ -61,12 +63,13 @@ export class PlanBodyMenu extends React.Component {
                 currentKey = 'section_0';
                 // check on incompleted sections
                 activities.map((section, i) => {
-                    if (currentKey == 'section_0' && !section.completed) {
+                    if (!foundMatch && currentKey == 'section_0' && !section.completed) {
                         console.log(section);
                         currentTab = 'activities';
                         currentKey = 'section_'+i;
                         currentKeyI = i;
-                        return true;
+                        foundMatch = true;
+                        return false;
                     }
                 })
             }
@@ -74,24 +77,28 @@ export class PlanBodyMenu extends React.Component {
             console.log(currentTab);
             console.log(currentKey);
             console.log(currentKeyI);*/
+            //console.log(currentTab);
+            //console.log(currentKey);
             if (currentTab !== '') {
                 this.setState({
                     currentTab: currentTab,
                     currentKey: currentKey,
                     currentKeyI: currentKeyI
                 });
-                onClick(currentKey);
+                onClick(currentKey, currentKeyI);
             }
 
        //}*/
     };
 
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
-        //if (nextProps.currentKey !== this.state.currentKey) {
-           // this.props.onClick(nextProps.currentKey);
-        //}
+        console.log(nextProps);
+        console.log(this.props);
+        if (nextProps.currentKey !== this.state.currentKey) {
+            this.setState({
+                currentKey:nextProps.currentKey
+            });
+        }
 
 
     }
@@ -101,6 +108,7 @@ export class PlanBodyMenu extends React.Component {
         const {lessons, activities} = this.props;
         let {currentTab, currentKey} = this.state;
         console.log(currentTab, 'curtab');
+        console.log(currentKey, 'curkey');
         return (<Menu
             onClick={this.onClick}
             selectedKeys={[currentKey]}

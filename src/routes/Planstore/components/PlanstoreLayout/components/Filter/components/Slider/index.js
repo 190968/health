@@ -19,6 +19,13 @@ export class CheckComponent extends React.Component {
     }
 
     render() {
+
+
+        const{loading, code, activeFilters} = this.props;
+            const activeFilter = activeFilters[code] || {};
+            const min = activeFilter.min || 0;
+            const max = activeFilter.max || 99;
+
         const marks = {
             0: '0',
             99: {
@@ -26,17 +33,10 @@ export class CheckComponent extends React.Component {
             },
         };
 
-        const{loading, code, activeFilters} = this.props;
-        if(!loading){
-            const activeFilter = activeFilters[code] || {};
-            const min = activeFilter.min || 0;
-            const max = activeFilter.max || 0;
-
             return (<div>
                 <Slider range marks={marks} defaultValue={[min,max]}  onAfterChange = {this.handleChange}/>
                 </div>
             )
-        }
 
 
     }

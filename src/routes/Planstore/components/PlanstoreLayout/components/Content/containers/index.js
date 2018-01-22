@@ -11,10 +11,13 @@ import {setSearch} from "../../../../../modules";
 
 
 const QUERY = gql`
-     query GET_PLANSTORE_PLANS ($filters: Json, $page: Int!, $limit: Int, $search: String) {
+     query GET_PLANSTORE_PLANS ($filters: PlanstorePlanFilterInput, $page: Int!, $limit: Int, $search: String) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit, search: $search) {
-                ...PlanCardInfo
+                totalCount
+                edges {
+                    ...PlanCardInfo
+                }
             }
           }
     }${Plan.fragments.plan}
@@ -44,8 +47,9 @@ const PlanstoreLayoutWithQuery = graphql(
                 //  console.log(data.planstore.filters);
                 return {
 
-                    plans: data.planstore.plans,
-                    filters: data.planstore.filters,
+                    plans: data.planstore.plans.edges,
+                    total: data.planstore.plans.totalCount,
+                    //filters: data.planstore.filters,
                     loading: data.loading,
 
 

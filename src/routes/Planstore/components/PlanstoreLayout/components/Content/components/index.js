@@ -76,7 +76,7 @@ export class PlanstoreLayout extends React.Component {
                     </Col>
                )
         }
-        const pageOpts = {onChange: this.changePage, total: 500, showSizeChanger:true};
+        const pageOpts = {onChange: this.changePage, total: this.total, hideOnSinglePage:true/*, showSizeChanger:true*/};
         const searchText = 'Search for ActionPlan';//<FormattedMessage id="planstore.search" defaultMessage="Search for ActionPlan" description="Action plan search" />;
         return (
 
@@ -92,7 +92,7 @@ export class PlanstoreLayout extends React.Component {
                     </Card>
                     </div>
 
-                    <List
+             {plans.length > 0 ? <List
                         split={false}
 
                         loading={loading}
@@ -104,7 +104,7 @@ export class PlanstoreLayout extends React.Component {
                                 <PlanWidget info={product} key={product.id}/>
                             </List.Item>
                         )}
-                    />
+                    /> : 'No ActionPlans Found'}
                 </div>
         )
     }

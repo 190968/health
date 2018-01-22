@@ -9,29 +9,19 @@ export class FormsComponent extends React.Component {
 
     render() {
 
-        const {loading, filters, onSuccess, activeFilters} = this.props;
-        if (loading) {
-            console.log(filters,"filters2");
-            return  '<div>Loading</div>';
-        }
+        const {filters, onSuccess, activeFilters} = this.props;
 
-            var rows = [];
-            var i =0;
+        return (
+            <div>
+                {filters.map((filter) => {
+                    return <PanelComponent key={filter.code} onSuccess={onSuccess} activeFilters={activeFilters}
+                                           filter={filter}/>;
+                })}
+            </div>
+        )
 
-        filters.forEach(function(filter) {
-                            i++;
-                            rows.push(<PanelComponent key={filter.code} onSuccess={onSuccess} activeFilters={activeFilters} filter={filter}/>);
-                        });
-
-               return (
-                    <div >
-                            {rows}
-                    </div>
-                )
-// }
-
-
-        }
+    }
 
 }
+
 export default FormsComponent

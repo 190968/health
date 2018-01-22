@@ -7,21 +7,28 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const QUERY = gql`
-     query GET_PLANSTORE_DASH ($filters: Json, $page: Int!, $limit: Int) {
+     query GET_PLANSTORE_DASH ($filters: PlanstorePlanFilterInput, $page: Int!, $limit: Int) {
         planstore {
             plans (filters: $filters, page: $page, limit: $limit) {
-                ...PlanCardInfo
+                totalCount
+                edges {
+                    ...PlanCardInfo
+                }
             }
             filters {
                 code
                 name
                 fields {
                     type
-                    text
+                    label
                     value
                     range {
                         min
                         max
+                    }
+                    items {
+                        label
+                        value
                     }
                 }
             }

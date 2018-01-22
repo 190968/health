@@ -2,44 +2,40 @@
  * Created by Pavel on 14.12.2017.
  */
 import React from 'react';
-import {Collapse} from 'antd';
+import CheckBoxGroup from '../CheckBoxGroup';
 import CheckComponent from '../CheckBox';
 import SliderComponent from '../Slider';
-import {Card } from 'antd';
+import {Card} from 'antd';
 
 export class PanelComponent extends React.Component {
 
     constructor(props){
         super(props);
+        this.onSuccess = this.onSuccess.bind(this);
     }
 
-    mapStateToProps = (state) => {
-
-
-};
+    onSuccess(code, value) {
+        console.log(code);
+        console.log(value);
+        this.props.onSuccess(code, value);
+    }
 
     render() {
-        const{loading, filter, activeFilters, key, onSuccess} = this.props;
-        if(loading) {
-            return '<div>Loading</div>';
-        }
-            var row = [];
-        filter.fields.map(function (field) {
-                    if (field.type == "checkbox") {
-                        row.push(<CheckComponent key={field.value} activeFilters={activeFilters} code={filter.code} fields={field} onSuccess={onSuccess} />);
+        const{filter, activeFilters} = this.props;
+
+        return (
+            <Card title={filter.name}>
+                {filter.fields.map((field) => {
+                    if (field.type == "checkboxGroup") {
+                        return <CheckBoxGroup key={field.value} activeFilters={activeFilters} code={filter.code} item={field} onSuccess={this.onSuccess} />
+                    } else if (field.type == "checkbox") {
+                        return <CheckComponent key={field.value} activeFilters={activeFilters} code={filter.code} fields={field} onSuccess={this.onSuccess} />
+                    } else if (field.type == "range") {
+                        return <SliderComponent key={field.value} activeFilters={activeFilters} onSuccess={this.onSuccess} code={filter.code} fields={field}/>
                     }
-                    if (field.type == "range") {
-                        row.push(<SliderComponent key={field.value} activeFilters={activeFilters} onSuccess={onSuccess} code={filter.code} fields={field}/>);
-                    }
-                });
-            return (
-                //<div>
-               //<Panel header="This is panel header 1"  >
-                <div style={{marginBottom:10}}><Card title={filter.name}>
-                    {row}
-                </Card>
-                </div>
-                 )
+                })}
+            </Card>
+             )
     }
 }
 
