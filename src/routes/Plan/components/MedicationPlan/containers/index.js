@@ -85,6 +85,7 @@ const MedicationPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
+            notifyOnNetworkStatusChange: true// adding loading placeholder
             //fetchPolicy: 'cache-and-network'//'cache-only'//'cache-and-network'
         }),
     }

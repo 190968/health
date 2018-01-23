@@ -40,7 +40,7 @@ export class PlansList extends React.Component {
                   </Button>
               </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add Actionplan" />}><Link to={'/planstore'}><Button size="small"><Icon type="plus" /></Button></Link></Tooltip></div>}
         >
-            <List
+            {plans.length > 0 ? <List
                 split={false}
                 grid={{gutter: 15, xs: 1, sm: 2, md: 2, lg: 3, xl: 4}}
                 pagination={false}
@@ -50,7 +50,7 @@ export class PlansList extends React.Component {
                         <PlanWidget info={product} key={product.id} user_id={user_id}/>
                     </List.Item>
                 )}
-            />
+            /> : <div className="ant-list-empty-text">No ActionPlans</div>}
         </Card>);
   }
 }

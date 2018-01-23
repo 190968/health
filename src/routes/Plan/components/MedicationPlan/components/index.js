@@ -56,7 +56,7 @@ export class MedicationPlanBody extends React.Component {
             isBuilderMode: false,// if this is a builder mode
             date: props.date,
             addModal:false,
-            medId:0
+            medId:''
         };
 
         this.addMedication = this.addMedication.bind(this);
@@ -156,10 +156,11 @@ export class MedicationPlanBody extends React.Component {
                     if (reports && !reports.some(item => time_info.time === item.time)) {
                         report = reports[0] || {};
                     }*/
-                    //console.log(time_info);
+                    //console.log(columns);
                     const {time, quantity} = time_info;
-                    if (!columns.some(item => time === item.title)) {
+                    if (!columns.some(item => time === item.time)) {
                         columns.push({
+                            time: time,
                             title: <FormattedTime value={new Date(date+' '+time)} />,
                             dataIndex: 'time_' + time_info.time,
                             key: 'time_' + time_info.id,
@@ -191,6 +192,8 @@ export class MedicationPlanBody extends React.Component {
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                           <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<MedicationSelect userId={user_id} onSelect={this.addMedication} />} title="Add Medication" trigger="click" placement={'bottom'}><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
                       </div>}>
+
+                    {takeAtTimes.length === 0 && takeDaily.length === 0 && takeAsNeeded.length === 0 && <div class="ant-list-empty-text">No Medications</div>}
                     {takeAtTimes.length > 0 &&
                         (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
                                 <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />

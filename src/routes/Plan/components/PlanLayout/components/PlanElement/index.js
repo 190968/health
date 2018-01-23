@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Measurement from '../Measurement';
+import Measurement from '../../containers/PlanMeasurement';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Divider, Icon, Upload, Alert, Button, Card } from 'antd';
@@ -59,11 +59,10 @@ export class PlanElement extends React.Component {
        let reportValues = [];
        switch(itemType) {
            case 'measurement_input':
-               field = <Measurement item={item} onChange={this.onChange} />
+               field = <Measurement item={item} date={date} onChange={this.onChange} />
                break;
            case 'choice_input':
            case 'checklist':
-               console.log(reports);
                reportValues = reports && reports.map((report) => (report.value));
                reportValues = reportValues && reportValues[0];
                field = <PlanChecklist item={item} reports={reportValues} onChange={this.onChange} />

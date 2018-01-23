@@ -38,10 +38,10 @@ export class BiometricPlanBody extends React.Component {
         const {date} = this.state;
         return trackerDelete(item.key, user_id, date);//, !this.state.isClicked, this.toggleCoin);
     }
-    closeClick = () => {
+    closeClick () {
         this.setState({visible: false, amid:0});
     }
-    addTracker = (id) => {
+    addTracker (id) {
         // create a new medication
         //console.log(id);
         this.setState({
@@ -62,7 +62,7 @@ export class BiometricPlanBody extends React.Component {
         this.props.loadDate(date, this.props.user_id);
     };
 
-    hideAddTracker = () => {
+    hideAddTracker ()  {
         // create a new medication
         //console.log(id);
         this.setState({
@@ -178,8 +178,9 @@ export class BiometricPlanBody extends React.Component {
                   extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                       <Tooltip title={<FormattedMessage id="trsvker.add" defaultMessage="Add Tracker" />} placement={'bottom'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
                   </div>}>
-                    <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />
-                    <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />
+                {dataList.length === 0 && data.length === 0 && <div className="ant-list-empty-text">No trackers</div>}
+                {dataList.length > 0 && <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />}
+                {data.length > 0 && <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />}
 
 
 
@@ -187,14 +188,14 @@ export class BiometricPlanBody extends React.Component {
                 <TrackerAddForm amid={this.state.amid}
                                     userId={user_id}
                                     date={date}
-                                    title={<FormattedMessage id="plan.tracker.add" defaultMessage="Add Tracker" description="Add Tracker" />}
-                                    onCancel={this.hideAddTracker} />}
+                                    title={<FormattedMessage id="plan.tracker.add" defaultMessage="Add" description="Add" />}
+                                onCancel={this.hideAddTracker} />}
 
                 {this.state.visible &&
                 <TrackerEditForm id={this.state.amid}
                               userId={user_id}
                               date={date}
-                              title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit Tracker " description="Edit Tracker" />}
+                              title={<FormattedMessage id="plan.biometricplan.biometric.trackermodal.modal.title" defaultMessage="Edit " description="Edit" />}
                               onCancel={this.closeClick} />}
 
             </Card>

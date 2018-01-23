@@ -13,7 +13,7 @@ import {MedicationPlan} from "../../../../../containers";
 //import { compose } from 'react-apollo';
 
 const medication = gql`
-query GET_MEDICATION($user_id: ID!, $id: ID) {
+query GET_MEDICATION($user_id: ID!, $id: ID, $drugId: ID) {
             medication(id: $id, userId: $user_id) {
                 id,
                 startDate,
@@ -28,7 +28,7 @@ query GET_MEDICATION($user_id: ID!, $id: ID) {
                   quantity
                 },
                 type,
-                drug {
+                drug (id:$drugId) {
                   id
                   name
                   dosage
@@ -96,6 +96,7 @@ const MedicationEditWithQuery = graphql(medication,
             variables: {
                 user_id: ownProps.userId,
                 id: ownProps.id,
+                drugId: ownProps.drugId,
 
             },
                 fetchPolicy: 'network-only'

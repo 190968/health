@@ -46,6 +46,7 @@ class EditMedicationForm extends React.Component {
             //select_value:null,
             total:null
         };
+        this.checkEndDate = this.checkEndDate.bind(this);
     };
 
     static propTypes = {
@@ -79,6 +80,20 @@ class EditMedicationForm extends React.Component {
         });
     }*/
 
+    checkEndDate = (rule, value, callback) => {
+        const form = this.props.form;
+        //callback();
+        //  console.log(value);
+        const start_date = form.getFieldValue('startDate');
+        //console.log(start_date);
+        //console.log(value);
+        if (start_date && value && value < start_date) {
+            //console.log(callback);
+            callback('End date is wrong');
+        } else {
+            callback();
+        }
+    }
     handleCancel = () => {
         console.log("handleCancel");
     }
@@ -143,9 +158,8 @@ let notPermanent = 0;
         const { info, date, userId, drugId, updateMedication, onCancel } = this.props;
         const{id} = info;
         this.props.form.validateFields((err, values) => {
-            console.log(values);
+            if (!err) {
             const{type, startDate, endDate, purpose,timesPerHour,quantityTake1,quantityTake2,quantityTake3,quantityTake4,quantityTake5, takeAt1,takeAt2,takeAt3,takeAt4,takeAt5,directions, sideEffects, quantity, timesPerDay } = values;
-            console.log(quantity);
             let timesAtHours = [];
             let Quantity = [];
             let takeAt = [];
@@ -172,7 +186,7 @@ let notPermanent = 0;
                 timesPerDay: timesPerDay,
                 timesAtHours: timesAtHours,
             }
-            if (!err) {
+
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
 
@@ -209,8 +223,8 @@ let notPermanent = 0;
           timesPerDay = 1;
       }
        preState = this.state.select_value;
-        console.log(preState);
-        console.log(this.state.select_value);
+        //console.log(preState);
+        //console.log(this.state.select_value);
         const Take = [];
         const dopTake = [];
     if(this.state.select_value){
@@ -224,7 +238,10 @@ let notPermanent = 0;
                         >
                             {getFieldDecorator('takeAt'+i, {
                                 //initialValue: moment(timesPerHour[finishTake.length-1].time, format).add(1,'hours')
-                                initialValue: moment('00:00:00', format)
+                                initialValue: moment('00:00:00', format),
+                                rules: [{
+                                    required: true, message: 'Please Select',
+                                }],
                             })(
                                 <TimePicker format={format} minuteStep={30} use12Hours={true} />
                             )}
@@ -236,48 +253,51 @@ let notPermanent = 0;
                         >
 
                             {getFieldDecorator('quantityTake'+i, {
-                                initialValue: 1
+                                initialValue: 1,
+                                rules: [{
+                                    required: true, message: 'Please Select',
+                                }],
                             })(
                                 <Select  onChange={this.onTotal} style={{width: 80}}>
-                                    <Option value="0.25">¼</Option>
-                                    <Option value="0.50">½</Option>
-                                    <Option value="0.75">¾</Option>
-                                    <Option value="1">1</Option>
-                                    <Option value="1.25">1¼</Option>
-                                    <Option value="1.50">1½</Option>
-                                    <Option value="1.75">1¾</Option>
-                                    <Option value="2">2</Option>
-                                    <Option value="2.25">2¼</Option>
-                                    <Option value="2.50">2½</Option>
-                                    <Option value="2.75">2¾</Option>
-                                    <Option value="3">3</Option>
-                                    <Option value="3.25">3¼</Option>
-                                    <Option value="3.50">3½</Option>
-                                    <Option value="3.75">3¾</Option>
-                                    <Option value="4">4</Option>
-                                    <Option value="4.25">4¼</Option>
-                                    <Option value="4.50">4½</Option>
-                                    <Option value="4.75">4¾</Option>
-                                    <Option value="5">5</Option>
-                                    <Option value="5.25">5¼</Option>
-                                    <Option value="5.50">5½</Option>
-                                    <Option value="5.75">5¾</Option>
-                                    <Option value="6">6</Option>
-                                    <Option value="6.25">6¼</Option>
-                                    <Option value="6.50">6½</Option>
-                                    <Option value="6.75">6¾</Option>
-                                    <Option value="7">7</Option>
-                                    <Option value="7.25">7¼</Option>
-                                    <Option value="7.50">7½</Option>
-                                    <Option value="7.75">7¾</Option>
-                                    <Option value="8">8</Option>
-                                    <Option value="8.25">8¼</Option>
-                                    <Option value="8.50">8½</Option>
-                                    <Option value="8.75">8¾</Option>
-                                    <Option value="9">9</Option>
-                                    <Option value="9.25">9¼</Option>
-                                    <Option value="9.50">9½</Option>
-                                    <Option value="9.75">9¾</Option>
+                                    <Option value={0.25}>¼</Option>
+                                    <Option value={0.50}>½</Option>
+                                    <Option value={0.75}>¾</Option>
+                                    <Option value={1}>1</Option>
+                                    <Option value={1.25}>1¼</Option>
+                                    <Option value={1.50}>1½</Option>
+                                    <Option value={1.75}>1¾</Option>
+                                    <Option value={2}>2</Option>
+                                    <Option value={2.25}>2¼</Option>
+                                    <Option value={2.50}>2½</Option>
+                                    <Option value={2.75}>2¾</Option>
+                                    <Option value={3}>3</Option>
+                                    <Option value={3.25}>3¼</Option>
+                                    <Option value={3.50}>3½</Option>
+                                    <Option value={3.75}>3¾</Option>
+                                    <Option value={4}>4</Option>
+                                    <Option value={4.25}>4¼</Option>
+                                    <Option value={4.50}>4½</Option>
+                                    <Option value={4.75}>4¾</Option>
+                                    <Option value={5}>5</Option>
+                                    <Option value={5.25}>5¼</Option>
+                                    <Option value={5.50}>5½</Option>
+                                    <Option value={5.75}>5¾</Option>
+                                    <Option value={6}>6</Option>
+                                    <Option value={6.25}>6¼</Option>
+                                    <Option value={6.50}>6½</Option>
+                                    <Option value={6.75}>6¾</Option>
+                                    <Option value={7}>7</Option>
+                                    <Option value={7.25}>7¼</Option>
+                                    <Option value={7.50}>7½</Option>
+                                    <Option value={7.75}>7¾</Option>
+                                    <Option value={8}>8</Option>
+                                    <Option value={8.25}>8¼</Option>
+                                    <Option value={8.50}>8½</Option>
+                                    <Option value={8.75}>8¾</Option>
+                                    <Option value={9}>9</Option>
+                                    <Option value={9.25}>9¼</Option>
+                                    <Option value={9.50}>9½</Option>
+                                    <Option value={9.75}>9¾</Option>
                                 </Select>
                             )}
                         </FormItem>
@@ -300,7 +320,10 @@ let notPermanent = 0;
                         >
 
                             {getFieldDecorator('takeAt'+col, {
-                                initialValue: moment(item.time, format)
+                                initialValue: moment(item.time, format),
+                                rules: [{
+                                    required: true, message: 'Please Select',
+                                }],
                             })(
                                 <TimePicker format={format} minuteStep={30} use12Hours={true} />
                             )}
@@ -312,7 +335,10 @@ let notPermanent = 0;
                         >
 
                             {getFieldDecorator('quantityTake'+col, {
-                                initialValue: item.quantity
+                                initialValue: item.quantity,
+                                rules: [{
+                                    required: true, message: 'Please Select',
+                                }],
                             })(
                                 <Select onChange={this.onTotal} style={{width: 80}}>
                                     <Option value={0.25}>¼</Option>
@@ -370,7 +396,7 @@ let notPermanent = 0;
         const  {title} = this.props;
         let fullTitle = title+' '+drug.name;
 
-     console.log(title);
+     //console.log(title);
 
         return (
             <Modal
@@ -391,7 +417,10 @@ let notPermanent = 0;
                  label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Take" description="Take" />}
                  >
                  {getFieldDecorator('type', {
-                    initialValue: type
+                    initialValue: type,
+                     rules: [{
+                         required: true, message: 'Please Select',
+                     }],
                  })(
                  <RadioGroup onChange={this.onTotal} >
                      <Radio style={radioStyle} value="at_times">At specific times</Radio>
@@ -413,17 +442,21 @@ let notPermanent = 0;
                     >
 
                         {getFieldDecorator('timesPerHour', {
-                            initialValue: timesPerHour.length
+                            initialValue: timesPerHour.length > 0 ? timesPerHour.length : null,
+                            rules: [{
+                                required: true, message: 'Please Select',
+                            }],
                         })(
-                            <Select onSelect={this.onSelect} style={{ width: 200 }}>
-                                    <Option value={1}>1 Time</Option>
-                                    <Option value={2}>2 Times</Option>
-                                    <Option value={3}>3 Times</Option>
-                                    <Option value={4}>4 Times</Option>
-                                    <Option value={5}>5 Times</Option>
+                            <Select onSelect={this.onSelect} placeholder="Select times" style={{ width: 200 }}>
+                                <Option value={1}>1 Time</Option>
+                                <Option value={2}>2 Times</Option>
+                                <Option value={3}>3 Times</Option>
+                                <Option value={4}>4 Times</Option>
+                                <Option value={5}>5 Times</Option>
                             </Select>
                         )}
-                            <Row>
+                        {finishTake.length > 0 &&
+                            <div><Row>
                                 <Col span={10}><label>Take at</label></Col>
                                 <Col offset={1} span={6}><label>Quantity</label></Col>
                             </Row>
@@ -435,7 +468,7 @@ let notPermanent = 0;
                                         {item.item}
                                     </List.Item>
                                 )}
-                            />
+                            /></div>}
 
                         {/*<Col offset={7} span={5}><label>Total</label></Col>
                             <Col span={6}><label>{total}</label></Col>*/}
@@ -537,6 +570,9 @@ let notPermanent = 0;
                         >
                             {getFieldDecorator('startDate', {
                                 initialValue: startDate ? moment(startDate) : moment(),
+                                rules: [{
+                                    required: true, message: 'Please Select',
+                                }],
                             })(
                                 <DatePicker
                                     /*disabledDate={this.disabledStartDate}
@@ -556,6 +592,9 @@ let notPermanent = 0;
                         >
                             {getFieldDecorator('endDate', {
                                 initialValue: endDate ? moment(endDate, dateFormat) : undefined,
+                                rules: [{
+                                    validator: this.checkEndDate, message: 'End date must be after Start Date',
+                                }],
                             })(
                                 <DatePicker
                                     placeholder="End date"

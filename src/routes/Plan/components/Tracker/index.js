@@ -22,7 +22,9 @@ export default class Tracker extends React.Component {
     };
 
     onChange(value) {
-        this.props.onChange(value);
+        if (typeof this.props.onChange === 'function') {
+            this.props.onChange(value);
+        }
     }
 
     render() {

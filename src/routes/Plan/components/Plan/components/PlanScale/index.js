@@ -8,35 +8,44 @@ export default class PlanScale extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            //values: {}
+            value:this.props.reports
         };
         this.onChange = this.onChange.bind(this);
     };
     static propTypes = {
         reportValue: PropTypes.number
     };
-
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        //console.log(this.props);
+        if (nextProps.reports !== this.props.reports) {
+            this.setState({value:nextProps.reports});
+        }
+    }
 
     onChange(value) {
         const {item} = this.props;
         var options = item.options;
         const option = options[value];
-        this.props.onChange(option.value, 'input');
+        console.log(option.value);
+        this.setState({value:option.value});
+        this.props.onChange(option.value, 'scale');
     }
 
     render() {
-        const {reports, item} = this.props;
-
+        const { item} = this.props;
+        const {value} = this.state;
         var options = item.options;
         let marks = {};
         let selectedMark = null;
 
-        //console.log(reports);
+        console.log(value);
+        console.log(options);
         {options.map((option, i) => {
             const coid = option.value;
             const name = option.label;
 
-            if (reports == coid) {
+            if (value === coid) {
                 selectedMark = i;
             }
 
@@ -52,8 +61,8 @@ export default class PlanScale extends React.PureComponent {
             //const description = option.description;
             //return <Option value={coid}>{name}</Option>;
         })}
-        //console.log(marks);
-        return <div style={{padding:'0 20px'}}><Slider onAfterChange={this.onChange} marks={marks} max={options.length-1} defaultValue={selectedMark} /></div>;//<Slider marks={marks}    />
+        console.log(selectedMark);
+        return <div style={{padding:'0 20px'}}><Slider onChange={this.onChange} marks={marks} max={options.length-1} value={selectedMark} /></div>;//<Slider marks={marks}    />
 
     }
 }

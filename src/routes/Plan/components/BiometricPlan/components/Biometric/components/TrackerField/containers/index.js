@@ -7,9 +7,9 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const reportOnTracker = gql`
-    mutation trackerReport($id: ID!, $input: TrackerInput!) {
-        tracker(id:$id, input: $input) {
+export const reportOnTracker = gql`
+    mutation trackerReport($id: ID!, $input: TrackerReportInput!) {
+        trackerReport(id:$id, input: $input) {
              id
         }
     }
@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         }*/
         //console.log(new_report);
         //const input = {value:value,date:date};
-        ownProps.trackerReport({report:report, list_id:list_id}, amid)
+        ownProps.trackerReport(report, amid)
             .then(({data}) => {
 
                 message.success('Reported');

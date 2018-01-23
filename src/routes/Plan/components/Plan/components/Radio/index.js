@@ -14,21 +14,32 @@ export default class PlanRadio extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            //   tab:''
+            value:this.props.reports
         };
         this.onChange = this.onChange.bind(this);
     };
     static propTypes = {
         reportValue: PropTypes.number
     };
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        //console.log(this.props);
+        if (nextProps.reports !== this.props.reports) {
+            this.setState({value:nextProps.reports});
+        }
+    }
 
     onChange(e) {
+        e.preventDefault();
         const { value } = e.target;
-        this.props.onChange(value, 'radio');
+        // checklist values
+        this.setState({value:value});
+        this.props.onChange(value, 'checklist');
     }
 
     render() {
-        const {reports, item} = this.props;
+        const {item} = this.props;
+        const {value} = this.state;
 
         const options = item.options;
 
@@ -39,7 +50,7 @@ export default class PlanRadio extends React.PureComponent {
 
         //console.log(reports);
 
-        return <RadioGroup onChange={this.onChange} defaultValue={reports} >
+        return <RadioGroup onChange={this.onChange} value={value} >
             {options.map((option, i) => {
                 const coid = option.value;
                 const name = option.label;

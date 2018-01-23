@@ -2,50 +2,71 @@
  * Created by Pavel on 21.12.2017.
  */
 import React, { PropTypes } from 'react';
-import {Modal, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
+import {Modal, DatePicker, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
+import moment from "moment/moment";
+import Tracker from '../../../../../../Tracker';
+import {
+    FormattedMessage,
+} from 'react-intl';
 const { Option } = Select;
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
-class EditTrackerForm extends React.Component {
 
+class EditTrackerForm extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.checkEndDate = this.checkEndDate.bind(this);
+        this.checkEndDate = this.checkEndDate.bind(this);
+    };
+
+    checkEndDate = (rule, value, callback) => {
+        const form = this.props.form;
+        //callback();
+        //  console.log(value);
+        const start_date = form.getFieldValue('startDate');
+        //console.log(start_date);
+        //console.log(value);
+        if (start_date && value && value < start_date) {
+            //console.log(callback);
+            callback('End date is wrong');
+        } else {
+            callback();
+        }
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { info, date, userId, amid, updateTracker, onCancel } = this.props;
-        const{id} = info;
+        const { amid, updateTracker } = this.props;
+        //console.log(this.props);
         this.props.form.validateFields((err, values) => {
             //console.log(values);
-            const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns } = values;
+            if (!err) {
+                const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns, startDate, endDate } = values;
 
-            //console.log(columns);
-            //const startDateYMD = startDate.format("YYYY-MM-DD");
-            //const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
-            const input = {
-                amid:amid,
-                graph:graph,
-                timesToReport:timesToReport,
-                criticalRange: {min:criticalRangeMin, max:criticalRangeMax},
-                normalRange: {min:normalRangeMin, max:normalRangeMax},
-                columns: columns,
-                icd10Codes: attachDiagnoses,
-               /* drugId: drugId,
-                type: type,
-                purpose: purpose,
-                directions: directions,
-                sideEffects: sideEffects,
-                quantity: quantity,
-                timesPerDay: timesPerDay,*/
-
-            }
+                //console.log(columns);
+                const startDateYMD = startDate.format("YYYY-MM-DD");
+                const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
+                const input = {
+                    amid:amid,
+                    graph:graph,
+                    timesToReport:timesToReport,
+                    criticalRange: {min:criticalRangeMin, max:criticalRangeMax},
+                    normalRange: {min:normalRangeMin, max:normalRangeMax},
+                    columns: columns,
+                    icd10Codes: attachDiagnoses,
+                    startDate: startDateYMD,
+                    endDate: endDateYMD,
+                }
 
             //console.log(id);
             //console.log(userId);
-            if (!err) {
+
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
                 //console.log(onCancel);
-                return updateTracker(id, userId, input, date, onCancel);
+                return updateTracker(input);
             }
         });
 
@@ -70,7 +91,10 @@ class EditTrackerForm extends React.Component {
 
         let timesToReport = info.timesToReport;
         timesToReport = timesToReport > 0 ? timesToReport : 1;
-        //console.log(info);
+
+        const startDate = info.startDate
+            const endDate = info.endDate;
+        const dateFormat = 'YYYY-MM-DD';
 
         const formItemLayout = {
             labelCol: {
@@ -91,7 +115,7 @@ class EditTrackerForm extends React.Component {
                 keyboard = {false}
                 okText="Save"
                 onCancel={this.props.onCancel}
-                title={this.props.title}
+                title={this.props.title+' '+info.measurement.label}
                 onOk={this.handleSubmit}
             >
             <Form>
@@ -102,8 +126,8 @@ class EditTrackerForm extends React.Component {
                     {getFieldDecorator('criticalRangeMin', {
                         initialValue: info.criticalRange.min
                     })(
-                            <Col offset={2} span={10}>
-                                <Col span={8}> below </Col><Col span={14}><Input /></Col>
+                            <Col offset={1} span={10}>
+                                <Col span={8}> below </Col><Col span={14}><Tracker item={info.measurement} /></Col>
                             </Col>
 
                     )}
@@ -111,7 +135,7 @@ class EditTrackerForm extends React.Component {
                         initialValue: info.criticalRange.max
                     })(
                         <Col offset={1} span={10}>
-                            <Col  span={8}> above </Col><Col span={14}><Input /></Col>
+                            <Col  span={8}> above </Col><Col span={14}><Tracker item={info.measurement} /></Col>
                         </Col>
 
                     )}
@@ -123,8 +147,8 @@ class EditTrackerForm extends React.Component {
                     {getFieldDecorator('normalRangeMin', {
                         initialValue: info.normalRange.min
                     })(
-                        <Col offset={2} span={10}>
-                            <Col span={8}> below </Col><Col span={14}><Input /></Col>
+                        <Col offset={1} span={10}>
+                            <Col span={8}> below </Col><Col span={14}><Tracker item={info.measurement} /></Col>
                         </Col>
 
                     )}
@@ -132,19 +156,19 @@ class EditTrackerForm extends React.Component {
                         initialValue: info.normalRange.max
                     })(
                         <Col offset={1} span={10}>
-                            <Col  span={8}> above </Col><Col span={14}><Input /></Col>
+                            <Col  span={8}> above </Col><Col span={14}><Tracker item={info.measurement} /></Col>
                         </Col>
 
                     )}
                 </FormItem>
-                <FormItem
+                {/*<FormItem
                     {...formItemLayout}
                     label="Attach Diagnoses"
                 >
                     {getFieldDecorator('attachDiagnoses', {
 
                     })(
-                        <Col offset={2} span={10}>
+                        <Col offset={1} span={10}>
                             <Select defaultValue="lucy" style={{ width: 300 }}>
                                 <Option value="lucy">Select ICD-10 code</Option>
                             </Select>
@@ -152,7 +176,7 @@ class EditTrackerForm extends React.Component {
 
                     )}
 
-                </FormItem>
+                </FormItem>*/}
 
                 {columns.length > 0 && <FormItem
                     {...formItemLayout}
@@ -172,7 +196,10 @@ class EditTrackerForm extends React.Component {
                     label="# of Reports"
                 >
                     {getFieldDecorator('timesToReport', {
-                        initialValue: timesToReport
+                        initialValue: timesToReport,
+                        rules: [{
+                            required: true, message: 'Please Select',
+                        }],
                     })(
                             <Select style={{ width: 120 }}>
                                 <Option value={1}>1 Time</Option>
@@ -188,6 +215,51 @@ class EditTrackerForm extends React.Component {
 
                     )}
 
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="biometric.period" defaultMessage="Period" description="Period"/>}
+                >
+                    <Col span={11}>
+                        <FormItem
+                        >
+                            {getFieldDecorator('startDate', {
+                                initialValue: startDate ? moment(startDate) : moment(),
+                                rules: [{
+                                    required: true, message: 'Please Select Start Date',
+                                }],
+                            })(
+                                <DatePicker
+                                    /*disabledDate={this.disabledStartDate}
+                                    format={dateFormat}*/
+                                    placeholder="Start date"
+                                />
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col span={2}>
+                    <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                      -
+                    </span>
+                    </Col>
+                    <Col span={11}>
+                        <FormItem
+                        >
+                            {getFieldDecorator('endDate', {
+                                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
+                                rules: [{
+                                    validator: this.checkEndDate, message: 'End date must be after Start Date',
+                                }],
+                            })(
+                                <DatePicker
+                                    placeholder="End date"
+                                    /*disabledDate={this.disabledEndDate}
+                                    format={dateFormat}
+                                    placeholder="End"*/
+                                />
+                            )}
+                        </FormItem>
+                    </Col>
                 </FormItem>
                 <FormItem
                     {...formItemLayout}

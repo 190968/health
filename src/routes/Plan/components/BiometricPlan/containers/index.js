@@ -15,7 +15,7 @@ export const BiometricPlanQuery = gql`
                     id
                     name
                 }
-                trackers {
+                trackers (date: $date) {
                     ...BiometricCardInfo
                     columns
                 }
@@ -56,6 +56,7 @@ const BiometricPlanBodyWithQuery = graphql(
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                             },
+                            fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
                             //fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
                         });
                     }
@@ -69,7 +70,7 @@ const BiometricPlanBodyWithQuery = graphql(
                 user_id:ownProps.user_id,
                 date:ownProps.date,
             },
-
+            notifyOnNetworkStatusChange: true// adding loading placeholder
         }),
     }
 )(BiometricPlanBody);

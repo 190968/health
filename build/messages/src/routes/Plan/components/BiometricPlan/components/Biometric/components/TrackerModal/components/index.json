@@ -1,12 +1,7 @@
 [
   {
-    "id": "plan.biometricplan.biometric.trackermodal.modal.title",
-    "description": "Edit Tracker",
-    "defaultMessage": "Edit Tracker -"
-  },
-  {
-    "id": "plan.biometricplan.biometric.trackermodal.modal.button",
-    "description": "Done",
-    "defaultMessage": "Done"
+    "id": "biometric.period",
+    "description": "Period",
+    "defaultMessage": "Period"
   }
 ]

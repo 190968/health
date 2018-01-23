@@ -8,7 +8,7 @@ export default class PlanDropdown extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            //   tab:''
+            value:this.props.reports
         };
         this.onChange = this.onChange.bind(this);
     };
@@ -16,12 +16,22 @@ export default class PlanDropdown extends React.PureComponent {
         reportValue: PropTypes.number
     };
 
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        //console.log(this.props);
+        if (nextProps.reports !== this.props.reports) {
+            this.setState({value:nextProps.reports});
+        }
+    }
+
     onChange(value) {
+        this.setState({value:value});
         this.props.onChange(value, 'dropdown');
     }
 
     render() {
-        const {reports, item} = this.props;
+        const {item} = this.props;
+        const {value} = this.state;
         //console.log(reports);
         const options = item.options;
         return <Select
@@ -29,7 +39,7 @@ export default class PlanDropdown extends React.PureComponent {
             style={{ width: 200 }}
             placeholder={'Select '+item.label}
             optionFilterProp="name"
-            defaultValue={reports}
+            value={value}
             onChange={this.onChange}
             /*
             onFocus={handleFocus}

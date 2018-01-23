@@ -18,12 +18,12 @@
   },
   {
     "id": "plan.tracker.add",
-    "description": "Add Tracker",
-    "defaultMessage": "Add Tracker"
+    "description": "Add",
+    "defaultMessage": "Add"
   },
   {
     "id": "plan.biometricplan.biometric.trackermodal.modal.title",
-    "description": "Edit Tracker",
-    "defaultMessage": "Edit Tracker"
+    "description": "Edit",
+    "defaultMessage": "Edit"
   }
 ]

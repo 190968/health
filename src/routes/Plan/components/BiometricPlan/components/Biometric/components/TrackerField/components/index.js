@@ -59,7 +59,6 @@ export class TrackerField extends React.Component {
     }
 
     handleChange = (value) => {
-
         clearTimeout(this.timer);
 
         this.setState({ value });
@@ -104,7 +103,7 @@ export class TrackerField extends React.Component {
         //console.log(inputMaskRegex);
         //return (<InputMask value={report_value}  mask={inputMask} maskChar=" " onChange={this.handleChange} />)
         //console.log(this.handleChange);
-        return (<Tracker item={info.measurement} value={report_value} onChange={() => (this.handleChange)} />)
+        return (<Tracker item={info.measurement} value={report_value} onChange={this.handleChange} />)
     }
 }
 

@@ -87,6 +87,8 @@ const PlanBodyWithQuery = graphql(
                                 // We are able to figure out which offset to use because it matches
                                 // the feed length, but we could also use state, or the previous
                                 // variables to calculate this (see the cursor example below)
+                                //id: ownProps.id,
+                                //upid: ownProps.upid,
                                 date: date,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
