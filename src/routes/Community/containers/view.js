@@ -89,7 +89,7 @@ const withQuery = graphql(CATEGORY, {
         return {
             variables: {
                 id: ownProps.match.params.id,
-               // handleBreadcrumbChange: ownProps.handleBreadcrumbChange
+                // handleBreadcrumbChange: ownProps.handleBreadcrumbChange
             }
         }
     },
@@ -113,8 +113,9 @@ const withMutation = graphql(categoryJoinMutate, {
         categoryJoin: id => {
             return mutate({
                 variables: {id: id},
-                update: (store, { data: { categoryJoin } }) => {
+                update: (store, {data: {categoryJoin}}) => {
 
+                    // get info from the store
                     const data = store.readQuery({
                         query: CATEGORY,
                         variables: {
@@ -131,9 +132,10 @@ const withMutation = graphql(categoryJoinMutate, {
                                 isJoined: true
                             }
                         },
-                            variables: {
-                                id: id,
-                            }});
+                        variables: {
+                            id: id,
+                        }
+                    });
                 },
             })
         },
@@ -145,9 +147,9 @@ export const withMutationUnjoin = graphql(categoryUnjoinMutate, {
         categoryUnjoin: id => {
             return mutate({
                 variables: {id: id},
-                update: (store, { data: { categoryUnjoin } }) => {
+                update: (store, {data: {categoryUnjoin}}) => {
 
-
+                    // get info from the store
                     const data = store.readQuery({
                         query: CATEGORY,
                         variables: {
@@ -166,7 +168,8 @@ export const withMutationUnjoin = graphql(categoryUnjoinMutate, {
                         },
                         variables: {
                             id: id,
-                        }});
+                        }
+                    });
                 },
             })
         },
