@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom';
 // add placeholders
 import ReactPlaceholder from 'react-placeholder';
-
-import { Tag, Row, Col, Menu,Carousel, Popover,Icon, Avatar, Badge } from 'antd';
+import Notification from './containers/Notifications'
+import { Tag, Row, Col, Menu,Tabs , Popover,Icon, Avatar, Badge } from 'antd';
 const SubMenu = Menu.SubMenu;
-
+const TabPane = Tabs.TabPane;
 
 
 class LHeader extends React.Component {
@@ -83,7 +83,10 @@ class LHeader extends React.Component {
         }
         const content = (
             <div>
-
+                <Tabs defaultActiveKey="1" >
+                    <TabPane tab="Notifications" key="1"><Notification /></TabPane>
+                    <TabPane tab="News" key="2">Content of Tab Pane 2</TabPane>
+                </Tabs>
             </div>
         );
         return (
@@ -116,12 +119,14 @@ class LHeader extends React.Component {
 
                             <Menu.Item key='inbox'>
 
-                                <Popover placement="bottomRight"  content={content} trigger="click">
+
                                     <NavLink exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></NavLink>
-                                </Popover>
+
                             </Menu.Item>
                             <Menu.Item key='notifications'>
-                                <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></NavLink>
+                                <Popover placement="bottomRight"  content={content} trigger="click">
+                                   <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></NavLink>
+                                </Popover>
                             </Menu.Item>
 
 
