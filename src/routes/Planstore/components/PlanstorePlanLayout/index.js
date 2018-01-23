@@ -6,27 +6,11 @@ import { withApollo } from 'react-apollo'
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 // add placeholders
-import ReactPlaceholder from 'react-placeholder';
-import { RectShape} from 'react-placeholder/lib/placeholders'
-
-import { Card, Modal, Row, Col, Button, List, Form ,Popover, Radio, DatePicker} from 'antd';
+import { Card, Modal, Row, Col, Button, message, Form ,Popover, Radio, DatePicker} from 'antd';
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-const planPlaceholder = [];
-    planPlaceholder.push(  {
-        item:      <div style={{width: 400, height: 250 }} className='my-awesome-placeholder'>
-            <RectShape color='#E0E0E0'  style={{width: 400, height: 250}}/>
-        </div>
-    })
-    planPlaceholder.push(  {
-        item:     <div>
-        <ReactPlaceholder type='text' ready={false} rows={5} color='#E0E0E0'>
-               </ReactPlaceholder>
-            <ReactPlaceholder type='rect' ready={false} color='#888888' style={{ width: 100, height: 50 }}>
-            </ReactPlaceholder>
-            </div>
-    })
+
 
 
 const formItemLayout = {
@@ -110,8 +94,6 @@ const CollectionCreateForm = Form.create()(
 
                                         getFieldDecorator('endDate', {
                                             rules: [{
-                                                required: true, message: 'Please Select End Date',
-                                            }, {
                                                 validator: checkEndDate, message: 'End date must be after Start Date',
                                             }],
                                         })(
@@ -123,6 +105,8 @@ const CollectionCreateForm = Form.create()(
                                 </RadioGroup>
                             )}
                         </FormItem>
+
+
                     </Card>
                 </Form>
 
@@ -141,6 +125,7 @@ export class PlanstorPlanLayout extends React.Component {
             modalIsOpen: false,
             end_date:0
         };
+        this.checkEndDate = this.checkEndDate.bind(this);
     };
     static propTypes = {
         plan: PropTypes.object,
@@ -247,12 +232,15 @@ export class PlanstorPlanLayout extends React.Component {
         e.preventDefault();
         const { getPlan } = this.props;
         form.validateFieldsAndScroll((err, values) => {
+            //console.log(err);
             if (!err) {
                 this.setState({
                     loading: true
                 });
                 //console.log(values);
                 return getPlan(values, this.props.client);
+            } else if (err.endDate) {
+                message.warning(err.endDate);
             }
         });
     }
@@ -261,7 +249,7 @@ export class PlanstorPlanLayout extends React.Component {
     }
 
     render() {
-        const {plan, loading} = this.props;
+        const {plan, loading, alreadyDownloaded, alreadyDownloadedId} = this.props;
         if (1==12 || loading) {
             // console.log(plan);
             //return (<div>Loading...</div>);
@@ -322,7 +310,8 @@ export class PlanstorPlanLayout extends React.Component {
                                         </ul>
                                     </div>
                                     <div className="ap-card__action">
-                                        <Button type="primary"  icon="download" size="large" onClick={this.openModal} >Get It</Button>
+                                        {alreadyDownloaded !== '' ? <Link to={'/plan/'+alreadyDownloadedId} ><Button icon="check" size="large" onClick={this.openModal} >Already Got It</Button></Link> :
+                                        <Button type="primary"  icon="download" size="large" onClick={this.openModal} >Get It</Button>}
                                     </div>
                                 </div>
                             </Col>
@@ -361,85 +350,4 @@ export class PlanstorPlanLayout extends React.Component {
 }
 
 
-
-
 export default withApollo(PlanstorPlanLayout)
-
-
-/*
- <Form
-                            onSubmit={(values) => {
-                                console.log('Success!', values)
-                            }}
-                            validate={({ name }) => {
-                                return {
-                                    name: !name ? 'A name is required' : undefined
-                                }
-                            }}
-                        >
-                            {({submitForm}) => {
-                                return (
-                                    <form onSubmit={submitForm}>
-                                        <div className="box">
-                                            <div className="box__header">
-                                                <h3>Privacy</h3>
-                                            </div>
-                                            <div className="box__body">
-                                                <RadioGroup field="notificationType">
-                                                    <div>
-                                                        <label>
-                                                            <Radio value="email" />{' '}
-<span>Open</span>
-</label>
-</div>
-<div>
-    <label>
-        <Radio value="text" />{' '}
-        <span>Private</span>
-    </label>
-    </div>
-
-</RadioGroup>
-</div>
-</div>
-
-
-<div className="box">
-    <div className="box__header">
-        <h3>Scheduling</h3>
-    </div>
-    <div className="box__body">
-        <FormGroup row>
-            <Label for="scheduling" sm={2}>Starts on</Label>
-            <Col sm={10}>
-            <Input type="date" name="date" id="exampleDate" placeholder="date placeholder" />
-            </Col>
-        </FormGroup>
-        <FormGroup row>
-            <Label for="scheduling" sm={2}>Ends</Label>
-            <Col sm={10}>
-            <RadioGroup field="notificationType">
-            <div>
-            <label>
-            <Radio value="haveNoEndDate" />{' '}
-            <span>Never</span>
-            </label>
-    </div>
-    <div>
-        <label>
-            <Radio value="haveEndDate" />{' '}
-            <span>On</span>
-        </label>
-        </div>
-
-    </RadioGroup>
-</Col>
-</FormGroup>
-</div>
-</div>
-
-</form>
-)
-}}
-</Form>
- */

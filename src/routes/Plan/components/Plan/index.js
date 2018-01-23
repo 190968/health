@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 //import PropType from 'prop-types'
+import PlanElement from '../../components/PlanLayout/components/PlanElement';
 
 import './styles.scss'
 export class Plan extends React.Component {
@@ -27,16 +28,17 @@ export class Plan extends React.Component {
             id
             itemId
             itemType
-            reports (date: $date){
+            reports (date: $date) {
                 id
                 value,
                 date
-            }
+           }
             itemInfo {
                
                 ... on PlanElementChecklist {
                   id
                   label
+                  isVertical
                   options {
                     value
                     label
@@ -95,6 +97,25 @@ export class Plan extends React.Component {
                         value
                         comments
                     }
+                }
+                ... on PlanElementMedia {
+                    id
+                    label
+                    description
+                    type
+                    source
+                    url
+                    embedHtml
+                }
+                ... on PlanElementLine {
+                    id
+                    height
+                    color
+                }
+                
+                 ... on Assessment {
+                    id
+                    label
                 }
             }
              

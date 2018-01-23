@@ -5,14 +5,12 @@ import React from 'react';
 import {
     FormattedMessage,
 } from 'react-intl';
-import {TextRow, RectShape} from 'react-placeholder/lib/placeholders';
-import {Layout,Button, Col,List} from 'antd';
+import {Card, Button} from 'antd';
 import Filters from '../../Filters/components'
-const {  Sider } = Layout;
 
 export class PlanstoreLayout extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
@@ -27,7 +25,7 @@ export class PlanstoreLayout extends React.Component {
      */
     updateFilters = (filter, values) => {
 
-        console.log("-------updateFilters-------");
+        //console.log("-------updateFilters-------");
         const activeFilters = this.props.activeFilters;
         // get all current info of the type
         const activeFilter = activeFilters[filter] || {};
@@ -35,24 +33,19 @@ export class PlanstoreLayout extends React.Component {
         // update filter by type(category or smth)
         const filter1 = {
             ...activeFilters,
-            [filter]: {
-                ...activeFilter,
-                ...values
-            }
+            [filter]: values
         }
+        //console.log(activeFilter);
+        //console.log(filter1);
         // update the store
         this.props.updateFilterStore(filter1)
     }
 
-    updateZeroFilters = (filter,values ) => {
+    updateZeroFilters = (filter, values) => {
         const activeFilters = {};
-        const activeFilter1 =  {};
         const filter2 = {
             ...activeFilters,
-            [filter]: {
-                ...activeFilter1,
-                ...values
-            }
+            [filter]: values
         }
         this.props.updateZeroFilterStore(filter2);
         this.props.updateFilterStore(filter2);
@@ -67,43 +60,28 @@ export class PlanstoreLayout extends React.Component {
     render() {
         const {loading, filters, activeFilters} = this.props;
         const pageOpts = {onChange: this.changePage, total: 50};
-        const siderPlaceholder = [];
-        for(var i=0; i<4; i++) {
-            siderPlaceholder.push(  {
-                item:   <div  className='my-awesome-placeholder'>
-                    <RectShape color='#888888'  style={{width: 199, height: 20}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                    <TextRow color='#E0E0E0' style={{width: 170, height: 15}}/>
-                </div>
-            })
-        }
+
         if (loading) {
             return (
+                <div>
 
-
-                        <Sider width={200} style={{background: '#fff', borderRight: '1px solid'}} breakpoint="sm"
-                               collapsedWidth="10">
-                            <List
-                                grid={{gutter: 5, md: 1}}
-                                dataSource={siderPlaceholder}
-                                renderItem={item => (
-                                    <List.Item>
-                                        {item.item}
-                                    </List.Item>
-                                )}
-                            />
-                        </Sider>
-
-                   )
+                    <Card loading>
+                        Loading
+                    </Card>
+                    <Card loading>
+                        Loading
+                    </Card>
+                </div>
+            )
         }
 
 
         return (
-              <div>
-                    <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters} />
-                    <Button onClick={this.updateZeroFilters} >{<FormattedMessage id="planstore.planstorelayout.cleanfilter" defaultMessage="Clean filter" description="Clean filter" />}</Button>
+            <div>
+                <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters}/>
+                <Button onClick={this.updateZeroFilters} style={{marginTop:24}}>{<FormattedMessage id="planstore.planstorelayout.cleanfilter"
+                                                                            defaultMessage="Reset filters"
+                                                                            description="Reset filters"/>}</Button>
             </div>
 
         )

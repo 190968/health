@@ -170,7 +170,7 @@ let notPermanent = 0;
                 sideEffects: sideEffects,
                 quantity: quantity,
                 timesPerDay: timesPerDay,
-               // timesAtHours:timesAtHours,
+                timesAtHours: timesAtHours,
             }
             if (!err) {
                 // prepare fields here

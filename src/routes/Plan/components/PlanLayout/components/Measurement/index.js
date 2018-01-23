@@ -5,7 +5,7 @@ import Tracker from '../../../Tracker';
 import { Card, Row, Col, Progress, Popover, Icon, Tooltip, Input, TimePicker, Dropdown, Menu } from 'antd';
 const { TextArea } = Input;
 
-export default class Measurement extends React.Component {
+export default class Measurement extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,7 +24,7 @@ export default class Measurement extends React.Component {
     render() {
        //console.log(this.props);
        const {item} = this.props;
-       console.log(item);
+       //console.log(item);
        const {label, textBefore, description, units, reports, targets} = item;
        const unitsName = units.name;
 
@@ -78,7 +78,7 @@ export default class Measurement extends React.Component {
                 <Card.Meta
                     description={description} style={{marginTop:10}} /></Col>
                 <Col md={12}>
-                    {targets.map((target) => (<div>
+                    {targets.map((target) => (<div key={target.id}>
                         <div>{target.title}</div>
                         <Progress percent={target.value} />
                     </div>))}

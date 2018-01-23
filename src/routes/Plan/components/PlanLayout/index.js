@@ -91,8 +91,7 @@ export class PlanLayout extends React.Component {
         var divStyle = {
             backgroundImage: 'url(' + img + ')'
         }
-
-
+        console.log('Loading plan layout');
         const options = (
             <Menu>
                 <Menu.Item key="motivators">

@@ -16,11 +16,15 @@ const QUERY = gql`
                 name
                 fields {
                     type
-                    text
+                    label
                     value
                     range {
                         min
                         max
+                    }
+                    items {
+                        label
+                        value
                     }
                 }
             }

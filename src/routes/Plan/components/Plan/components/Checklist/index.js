@@ -11,31 +11,42 @@ const vertStyle = {
     lineHeight: '30px',
     marginLeft: 0,
 };
-export default class PlanChecklist extends React.PureComponent {
+export default class PlanChecklist extends React.Component {
     constructor(props) {
         super(props);
-        /*this.state = {
-            //   tab:''
-        };*/
+        this.state = {
+            value:this.props.reports
+        };
         this.onChange = this.onChange.bind(this);
     };
     static propTypes = {
-        reportValue: PropTypes.array
+        //reportValue: PropTypes.array
     };
+
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        //console.log(this.props);
+        if (nextProps.reports !== this.props.reports) {
+            this.setState({value:nextProps.reports});
+        }
+    }
 
     onChange(value) {
         // checklist values
+        this.setState({value:value});
         this.props.onChange(value, 'checklist');
     }
 
     render() {
 
-        const {reports, item} = this.props;
+        const {item} = this.props;
+        const {value} = this.state;
         //const {label} = item;
+        //console.log(item);
         let radioStyle = {};
-        //if (item.is_vertically === '1') {
+        if (item.isVertical) {
             radioStyle = vertStyle;
-        //}
+        }
         var options = item.options;
         let plainOptions = [];
         options.map((option) => {
@@ -45,9 +56,9 @@ export default class PlanChecklist extends React.PureComponent {
             plainOptions.push(<Checkbox key={coid} value={coid} style={radioStyle} >{name}</Checkbox>);
         });
 
-        //console.log(reports);
+        console.log(value);
 
 
-        return <CheckboxGroup  defaultValue={reports} onChange={this.onChange} >{plainOptions}</CheckboxGroup>
+        return <CheckboxGroup value={value} onChange={this.onChange} >{plainOptions}</CheckboxGroup>
     }
 }

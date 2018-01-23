@@ -31,6 +31,7 @@ const CURRENT_PLANSTORE_PLAN = gql`
             gender,
             elements,
             language,
+            alreadyDownloadedId
             categories {
                 id,
                 name
@@ -60,6 +61,8 @@ const PlanstorPlanLayoutWithQuery = graphql(
 
                 return {
                     plan: data.plan,
+                    alreadyDownloaded: data.plan.alreadyDownloadedId !== '',
+                    alreadyDownloadedId: data.plan.alreadyDownloadedId,
                     //modules: data.network.modules,
                     loading: data.loading,
                     /*increment() {

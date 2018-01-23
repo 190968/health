@@ -1,7 +1,7 @@
 [
   {
     "id": "planstore.planstorelayout.cleanfilter",
-    "description": "Clean filter",
-    "defaultMessage": "Clean filter"
+    "description": "Reset filters",
+    "defaultMessage": "Reset filters"
   }
 ]

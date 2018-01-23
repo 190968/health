@@ -21,14 +21,15 @@ export default class PlanDropdown extends React.PureComponent {
     }
 
     render() {
-        const {reportValue, item} = this.props;
-
-        var options = item.options;
+        const {reports, item} = this.props;
+        //console.log(reports);
+        const options = item.options;
         return <Select
             showSearch
             style={{ width: 200 }}
             placeholder={'Select '+item.label}
             optionFilterProp="name"
+            defaultValue={reports}
             onChange={this.onChange}
             /*
             onFocus={handleFocus}
@@ -36,8 +37,8 @@ export default class PlanDropdown extends React.PureComponent {
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
         >
             {options.map((option, i) => {
-                const coid = option.coid;
-                const name = option.name;
+                const coid = option.value;
+                const name = option.label;
                 //const description = option.description;
                 return <Option key={i} value={coid}>{name}</Option>;
             })}

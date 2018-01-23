@@ -27,7 +27,7 @@ export default class Tracker extends React.Component {
 
     render() {
         const {item, value} = this.props;
-        console.log(this.props);
+        //console.log(this.props);
         const {units, inputMask} = item;
         const unitsName = units.name;
 
