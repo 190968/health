@@ -1,17 +1,17 @@
-
 /**
  * Created by Pavel on 10.01.2018.
  */
 import React from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'react-apollo';
+import {connect} from 'react-redux'
+import {compose} from 'react-apollo';
+import {message} from 'antd';
 
 import View from '../components/CategoriesLayout/components/View';
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const CATEGORY  = gql`
+const CATEGORY = gql`
 query GET_CATEGORY($id:ID) {
 
        category(id:$id) {
@@ -24,8 +24,8 @@ query GET_CATEGORY($id:ID) {
            medium
            wide
          }
-    		 canJoin
-    		 isJoined
+         canJoin
+         isJoined
          articles {
            id
           title
@@ -70,14 +70,14 @@ query GET_CATEGORY($id:ID) {
        }
 }
 `;
-const categoryJoinMutate=gql`
+const categoryJoinMutate = gql`
 mutation CATEGORY_JOIN ($id:ID!,$uid:ID){
     categoryJoin(id:$id,uid:$uid)
   }
 
 `;
 
-const categoryUnjoinMutate=gql`
+const categoryUnjoinMutate = gql`
 mutation CATEGORY_UNJOIN ($id:ID!,$uid:ID){
     categoryUnjoin(id:$id,uid:$uid)
   }
@@ -85,20 +85,19 @@ mutation CATEGORY_UNJOIN ($id:ID!,$uid:ID){
 `;
 const withQuery = graphql(CATEGORY, {
 
-        options: (ownProps) => {
-            console.log("---------------------------QUERY----------------")
-            return{
-        variables: {
-            id: ownProps.match.params.id,
-            handleBreadcrumbChange:ownProps.handleBreadcrumbChange
-        }}
+    options: (ownProps) => {
+        return {
+            variables: {
+                id: ownProps.match.params.id,
+               // handleBreadcrumbChange: ownProps.handleBreadcrumbChange
+            }
+        }
     },
-        props: ({ ownProps, data }) => {
+    props: ({ownProps, data}) => {
 
         if (!data.loading) {
             return {
-                info: data.category
-                ,
+                info: data.category,
                 loading: data.loading
             }
         }
@@ -110,45 +109,86 @@ const withQuery = graphql(CATEGORY, {
 });
 
 const withMutation = graphql(categoryJoinMutate, {
-    props: ({ mutate }) => ({
+    props: ({mutate}) => ({
         categoryJoin: id => {
-            console.log("categoryJoinMutate--------------------> ",id);
             return mutate({
-                variables: {id:id},
-            })},
+                variables: {id: id},
+                update: (store, { data: { categoryJoin } }) => {
+
+                    const data = store.readQuery({
+                        query: CATEGORY,
+                        variables: {
+                            id: id,
+                        }
+                    });
+                    //console.log(data);
+                    // Write our data back to the cache.
+                    store.writeQuery({
+                        query: CATEGORY,
+                        data: {
+                            category: {
+                                ...data.category,
+                                isJoined: true
+                            }
+                        },
+                            variables: {
+                                id: id,
+                            }});
+                },
+            })
+        },
     }),
 });
 
 export const withMutationUnjoin = graphql(categoryUnjoinMutate, {
-    props: ({ mutate }) => ({
+    props: ({mutate}) => ({
         categoryUnjoin: id => {
-            console.log("categoryUnjoinMutate--------------------> ",id);
             return mutate({
-                variables: {id:id},
-            })},
+                variables: {id: id},
+                update: (store, { data: { categoryUnjoin } }) => {
+
+
+                    const data = store.readQuery({
+                        query: CATEGORY,
+                        variables: {
+                            id: id,
+                        }
+                    });
+                    //console.log(data);
+                    // Write our data back to the cache.
+                    store.writeQuery({
+                        query: CATEGORY,
+                        data: {
+                            category: {
+                                ...data.category,
+                                isJoined: false
+                            }
+                        },
+                        variables: {
+                            id: id,
+                        }});
+                },
+            })
+        },
     }),
 });
 
 const mapStateToProps = (state) => {
 
-    return {
-
-    };
+    return {};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (id) => {
         ownProps.categoryJoin(id).then(({data}) => {
-            console.log("----categoryJoinMutate----");
-            console.log(data);
+            message.success('Joined Community');
         })
     },
     onClick: (id) => {
         ownProps.categoryUnjoin(id).then(({data}) => {
-            console.log("----categoryUNJoinMutate----");
-            console.log(data);
+            message.warning('Left Community');
         })
     },
 });
 
-export default compose(withQuery,withMutation,withMutationUnjoin,connect(mapStateToProps, mapDispatchToProps))((View));
+export default compose(withQuery, withMutation, withMutationUnjoin, connect(mapStateToProps, mapDispatchToProps))((View));

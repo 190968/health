@@ -40,7 +40,7 @@ class MyCommynities extends React.Component{
             //     CarouselItem.push('<div className="ant-carousel" key={i}>    <Row className="ant-carousel" key={i}>');
             // }
             CarouselItem.push(
-                            <Link to={"/community/"+item.category.id} >
+                            <Link key={item.category.id} to={"/community/"+item.category.id} >
                                 <Card style={{ margin:5}}
                                     cover={<img alt={item.category.name} height={140} src={item.category.thumb.large}/>}
                                 >
