@@ -27,33 +27,44 @@ class Family extends React.Component {
         }
         const  {family} = info;
         const  {edges,totalCount} = family;
+        let Item = [];
+        family ?
+        Item.push( <Card title={<FormattedMessage id="user.family.family.title" defaultMessage="MY FAMILY"
+                                                  description="MY FAMILY"/>}>
+            <List
+                split={false}
+                loading={loading}
+                grid={{gutter: 10, xs: 3, md: 1, lg: 2/*, xl: 4*/}}
+                dataSource={edges}
+                renderItem={person => (
+
+                    <List.Item key={person.id}>
+                        {
+                            person.user.first_name ?
+                                <Link to={'/u/' + person.id} style={{color: 'inherit'}}>
+                                    <Avatar /*size="large"*/ style={{
+                                        verticalAlign: 'middle',
+                                        backgroundColor: person.user.color
+                                    }}>{person.user.first_name[0]}</Avatar>
+                                    <span
+                                        style={{textAlign: 'center', 'marginLeft': 10}}>{person.user.first_name}</span>
+                                </Link> :
+                                <div>
+                                    <span><Avatar style={{verticalAlign: 'middle'}}>N</Avatar> </span>
+                                    <label>No name</label>
+                                </div>
+                        }
+
+                    </List.Item>
+                )}
+            />
+        </Card>) : Item.push(  <Card title={<FormattedMessage id="user.family.family.title1" defaultMessage="MY FAMILY"
+                                                              description="MY FAMILY"/>}><center> <p>No Family</p></center></Card>)
 
         return (
-            <Card title={<FormattedMessage id="user.family.family.title" defaultMessage="MY FAMILY" description="MY FAMILY" />}>
-                <List
-                    split={false}
-                    loading={loading}
-                    grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
-                    dataSource={edges}
-                    renderItem={person => (
 
-                        <List.Item key={person.id}>
-                            {
-                                person.user.first_name ?
-                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
-                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.first_name[0]}</Avatar>
-                                        <span style={{textAlign:'center','marginLeft':10}}>{person.user.first_name}</span>
-                                    </Link> :
-                                    <div>
-                                        <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
-                                        <label>No name</label>
-                                    </div>
-                            }
+            Item
 
-                        </List.Item>
-                    )}
-                />
-            </Card>
 
         );
     }

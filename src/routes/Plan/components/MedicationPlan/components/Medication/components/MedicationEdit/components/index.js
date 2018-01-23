@@ -370,7 +370,7 @@ let notPermanent = 0;
         const  {title} = this.props;
         let fullTitle = title+' '+drug.name;
 
-     console.log(title);
+     console.log(this.props);
 
         return (
             <Modal

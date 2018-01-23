@@ -27,20 +27,20 @@ class Motivators extends React.Component {
         }
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
+        let Item = [];
+        motivators ?
+            Item.push(  <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS" description="MY MOTIVATORS" />}>
+                <List
+                    split={false}
+                    loading={loading}
+                    grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
+                    dataSource={edges}
+                    renderItem={person => (
 
-        return (
-                <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS" description="MY MOTIVATORS" />}>
-                    <List
-                        split={false}
-                        loading={loading}
-                        grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
-                        dataSource={edges}
-                        renderItem={person => (
-
-                            <List.Item key={person.id}>
-                                {
-                                    person.user.first_name ?
-                                        <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                        <List.Item key={person.id}>
+                            {
+                                person.user.first_name ?
+                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
                                         <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.first_name[0]}</Avatar>
                                         <span style={{textAlign:'center','marginLeft':10}}>{person.user.first_name}</span>
                                     </Link> :
@@ -48,14 +48,18 @@ class Motivators extends React.Component {
                                         <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
                                         <label>No name</label>
                                     </div>
-                                }
+                            }
 
-                            </List.Item>
-                        )}
-                    />
-                </Card>
+                        </List.Item>
+                    )}
+                />
+            </Card>) : Item.push(  <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS"
+                                                                  description="MY MOTIVATORS"/>}><center> <p>No Motivators</p></center></Card>)
+        return (
+            Item
 
         );
+       ;
     }
 }
 

@@ -35,7 +35,8 @@ class ViewForm extends React.Component{
         return onSubmit(info.id);
     }
     clickUNJoin = () => {
-
+        const { onClick,info} = this.props;
+        return onClick(info.id);
     }
 
     componentDidMount() {
@@ -59,13 +60,13 @@ class ViewForm extends React.Component{
             );
         }
         const {name,canJoin, isJoined,articles,discussions,categories} = info;
-
+console.log(this.props,"=========================================")
         let categoriesKV = [];
         categories.forEach((item)=>{
             categoriesKV.push({value:item.id, text:item.name});
         });
 
-        console.log(canJoin, isJoined);
+        console.log(this.props);
 
         const tabListNoTitle = [];
         let contentListNoTitle={};
@@ -98,7 +99,7 @@ class ViewForm extends React.Component{
             <div>
                     <Card title={name}  extra={ <Row>
                         <Col span={10}>
-                            {canJoin ? isJoined ? <Button onClick={this.clickJoin} type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
+                            {canJoin ? isJoined ? <Button onClick={this.clickUNJoin} type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
                         <Col offset={1}  span={13}>
                             <Search categories={categoriesKV} />
                         </Col>

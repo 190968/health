@@ -4,7 +4,7 @@
  */
 import React from 'react'
 import { connect } from 'react-redux'
-
+import { compose } from 'react-apollo';
 
 import View from '../components/CategoriesLayout/components/View';
 import { graphql } from 'react-apollo';
@@ -76,9 +76,17 @@ mutation CATEGORY_JOIN ($id:ID!,$uid:ID){
   }
 
 `;
+
+const categoryUnjoinMutate=gql`
+mutation CATEGORY_UNJOIN ($id:ID!,$uid:ID){
+    categoryUnjoin(id:$id,uid:$uid)
+  }
+
+`;
 const withQuery = graphql(CATEGORY, {
 
         options: (ownProps) => {
+            console.log("---------------------------QUERY----------------")
             return{
         variables: {
             id: ownProps.match.params.id,
@@ -99,11 +107,22 @@ const withQuery = graphql(CATEGORY, {
         }
     },
 
-})(View);
+});
 
 const withMutation = graphql(categoryJoinMutate, {
     props: ({ mutate }) => ({
-        updateInfo: id => {
+        categoryJoin: id => {
+            console.log("categoryJoinMutate--------------------> ",id);
+            return mutate({
+                variables: {id:id},
+            })},
+    }),
+});
+
+export const withMutationUnjoin = graphql(categoryUnjoinMutate, {
+    props: ({ mutate }) => ({
+        categoryUnjoin: id => {
+            console.log("categoryUnjoinMutate--------------------> ",id);
             return mutate({
                 variables: {id:id},
             })},
@@ -119,14 +138,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (id) => {
-        ownProps.updateInfo(id).then(({data}) => {
+        ownProps.categoryJoin(id).then(({data}) => {
             console.log("----categoryJoinMutate----");
+            console.log(data);
+        })
+    },
+    onClick: (id) => {
+        ownProps.categoryUnjoin(id).then(({data}) => {
+            console.log("----categoryUNJoinMutate----");
             console.log(data);
         })
     },
 });
 
-export default withMutation(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withQuery));
+export default compose(withQuery,withMutation,withMutationUnjoin,connect(mapStateToProps, mapDispatchToProps))((View));

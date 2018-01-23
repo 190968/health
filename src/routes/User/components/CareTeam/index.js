@@ -27,9 +27,9 @@ class CareTeam extends React.Component {
         }
         const  {careTeam} = info;
         const  {edges,totalCount} = careTeam;
-      //  console.log(edges,"------------",totalCount);
-        return (
-            <Card title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM" description="MY CARETEAM" />}>
+        let Item = [];
+        careTeam ?
+            Item.push( <Card title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM" description="MY CARETEAM" />}>
                 <List
                     split={false}
                     loading={loading}
@@ -53,7 +53,10 @@ class CareTeam extends React.Component {
                         </List.Item>
                     )}
                 />
-            </Card>
+            </Card>) : Item.push(  <Card title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM"
+                                                                  description="MY CARETEAM"/>}><center> <p>No Careteam</p></center></Card>)
+        return (
+           Item
 
         );
     }

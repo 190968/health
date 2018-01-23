@@ -118,6 +118,7 @@ const MedicationEditWithQuery = graphql(medication,
 const withMutation = graphql(editMutation, {
     props: ({ mutate }) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
+            console.log("editMutation--------------------> ",id);
             console.log(input);
             return mutate({
                 variables: {id:id, userId:uid, input: {details:input}},
@@ -165,6 +166,7 @@ const withMutation = graphql(editMutation, {
 export const MedicationAddForm = graphql(addMutation, {
     props: ({ mutate }) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
+            console.log("addMUtation--------------------> ",id);
             return mutate({
                 variables: {userId:uid, input: {details:input}},
                 refetchQueries: [{
