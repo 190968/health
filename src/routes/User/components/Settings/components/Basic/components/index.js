@@ -11,6 +11,7 @@ import {
     FormattedMessage
 } from 'react-intl';
 import moment from 'moment';
+import messages from '../../basic.json';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -38,13 +39,13 @@ const tailFormItemLayout = {
 };
 const dateFormat = 'YYYY-MM-DD';
 
-const messages = defineMessages({
-    first_name: {
-        id: 'user.first_name',
-        defaultMessage: 'First name',
-        description: 'First name',
-    },
-});
+// const messages = defineMessages({
+//     first_name: {
+//         id: 'user.first_name',
+//         defaultMessage: 'First name',
+//         description: 'First name',
+//     },
+// });
 
 
  class SettingForm extends React.Component{
@@ -105,7 +106,7 @@ const messages = defineMessages({
         <Form onSubmit={this.handleSubmit}>
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Title" description="Title" />}
+                label={intl.formatMessage(messages.title)}
             >
                 {getFieldDecorator('title', {
                     initialValue: user.title
@@ -121,14 +122,14 @@ const messages = defineMessages({
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.registration.settings.name" defaultMessage="Name" description="Name" />}
+                label={intl.formatMessage(messages.name)}
                 
             >
                 <InputGroup >
                     <Col span={8}>
                         {getFieldDecorator('first_name', {
                             initialValue: user.first_name ,
-                            rules: [{ required: true, message: 'Please input your firstname', whitespace: true }],
+                            rules: [{ required: true, message: intl.formatMessage(messages.first_name), whitespace: true }],
                         })(
                         <Input placeholder={intl.formatMessage(messages.first_name)} />
                         )}
@@ -137,30 +138,30 @@ const messages = defineMessages({
                         {getFieldDecorator('middle_name', {
                             initialValue:user.middle_name
                         })(
-                        <Input  placeholder={<FormattedMessage id="user.settings.basic.middlename" defaultMessage="Middle name" description="Middle name" />} />
+                        <Input  placeholder={intl.formatMessage(messages.middle_name)} />
                         )}
                     </Col>
                     <Col span={8}>
                         {getFieldDecorator('last_name', {
                             initialValue: user.last_name,
-                            rules: [{ required: true, message: <FormattedMessage id="user.settings.basic.lastname.rule" defaultMessage="Last name" description="Last name" />}],
+                            rules: [{ required: true, message:intl.formatMessage(messages.last_name_rule)}],
                         })(
-                        <Input placeholder={<FormattedMessage id="user.settings.basic.lastname" defaultMessage="Last name" description="Last name" />} />
+                        <Input placeholder={intl.formatMessage(messages.last_name)} />
                         )}
                     </Col>
                 </InputGroup>
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.birthday" defaultMessage="Birthday" description="birthday" />}
+                label={intl.formatMessage(messages.birthday)}
                 
             >
                 {getFieldDecorator('birthday', {
                     initialValue: moment(user.birthday, dateFormat),
                     rules: [{
-                        type: 'object', message: <FormattedMessage id="user.settings.basic.birthday.novalid" defaultMessage="The input not valid date!" description="The input not valid date!" />,
+                        type: 'object', message:intl.formatMessage(messages.novalid),
                     }, {
-                        required: true, message: <FormattedMessage id="user.settings.basic.birthday.rule" defaultMessage="Please input your birthday" description="Please input your birthday" />,
+                        required: true, message:intl.formatMessage(messages.rule),
                     }],
                 })(
                     <DatePicker  format={dateFormat}/>
@@ -169,61 +170,61 @@ const messages = defineMessages({
 
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.gender" defaultMessage="Gender" description="Gender" />}
+                label={intl.formatMessage(messages.gender)}
                 
             >
                 {getFieldDecorator('gender', {
                 initialValue: user.gender,
-                rules: [{ required: true, message: <FormattedMessage id="user.settings.basic.gender.rule" defaultMessage="Please inout your gender" description="Please input your gender" />, whitespace: true }],
+                rules: [{ required: true, message:intl.formatMessage(messages.gender_rule), whitespace: true }],
             })(
                 <Select style={{ width: 120 }} >
-                    <Option value="female"><FormattedMessage id="user.settings.basic.female" defaultMessage="Female" description="Female" /></Option>
-                    <Option value="male"><FormattedMessage id="user.settings.basic.male" defaultMessage="Male" description="Male" /></Option>
+                    <Option value="female">{intl.formatMessage(messages.female)}</Option>
+                    <Option value="male">{intl.formatMessage(messages.male)}</Option>
                 </Select>
             )}
             </FormItem>
 
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.phonenumber" defaultMessage="Phone number" description="Phone number" />}
+                label={intl.formatMessage(messages.phone_number)}
                 
             >
                 {getFieldDecorator('phone', {
                     initialValue: phone,
-                    rules: [{ required: true, message: <FormattedMessage id="user.settings.basic.phonenumber.rule" defaultMessage="Please input your phone number" description="please input" /> }],
+                    rules: [{ required: true, message:intl.formatMessage(messages.phone_number_rule) }],
                 })(
                     <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                 )}
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.language" defaultMessage="Language" description="Language" />}
+                label={intl.formatMessage(messages.language)}
                 
             > {getFieldDecorator('language', {
                 initialValue: user.language,
-                rules: [{ required: true, message: <FormattedMessage id="user.settings.basic.language.rule" defaultMessage="Please Select your language!" description="select language" /> }],
+                rules: [{ required: true, message:intl.formatMessage(messages.language_rule) }],
             })(
                 <Select style={{ width: 120 }} >
-                    <Option value={1}><FormattedMessage id="user.settings.basic.language.english" defaultMessage="English" description="English" /></Option>
-                    <Option value={2}><FormattedMessage id="user.settings.basic.language.russian" defaultMessage="Russian" description="Russian" /></Option>
+                    <Option value={1}>{intl.formatMessage(messages.language_english)}</Option>
+                    <Option value={2}>{intl.formatMessage(messages.language_russian)}</Option>
                 </Select>
             )}
             </FormItem>
 
             <FormItem
                 {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.email" defaultMessage="Email" description="Email" />}
+                label={intl.formatMessage(messages.email)}
                 
             >{getFieldDecorator('email', {
                 initialValue: user.email,
-                rules: [{ required: true, type: 'email', message: <FormattedMessage id="user.settings.basic.email.rule" defaultMessage="The input is not valid emal!" description="Valid email" />,}],
+                rules: [{ required: true, type: 'email', message:intl.formatMessage(messages.email_rule),}],
             })(
-                <Input  placeholder={<FormattedMessage id="user.settings.basic.email.placeholder" defaultMessage="Email" description="Email" />} />
+                <Input  placeholder={intl.formatMessage(messages.email)} />
             )}
             </FormItem>
             <FormItem {...tailFormItemLayout}>
                 <Button loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
-                    <FormattedMessage id="user.settings.basic.submit" defaultMessage="Submit" description="Submit" />
+                    {intl.formatMessage(messages.submit)}
                 </Button>
             </FormItem>
         </Form>
