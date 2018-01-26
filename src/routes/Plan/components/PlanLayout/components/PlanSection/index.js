@@ -2,6 +2,11 @@ import React from 'react'
 import { Row, Col, Anchor, Button, Card, List } from 'antd';
 import PlanElement from '../../containers/PlanElement'
 import {message} from "antd/lib/index";
+import { withRouter } from 'react-router-dom'
+import moment from "moment";
+import {
+    FormattedDate
+} from 'react-intl';
 
 export class PlanSection extends React.Component {
 
@@ -9,24 +14,39 @@ export class PlanSection extends React.Component {
         super(props);
         this.state = {
             isClicked: false,
+            loading: false,
         };
         this.saveSection = this.saveSection.bind(this);
+        this.clearLoading = this.clearLoading.bind(this);
     };
 
     static propTypes = {
     };
 
     saveSection = (e, sectionId, isLastSection) => {
-        //console.log('SAVING');
-        const {upid, date} = this.props;
+        //console.log(this.props);
+        const {upid, date, item, history} = this.props;
+        this.setState({
+            loading:true,
+        });
         this.props.sectionReport(upid, sectionId, date).then(({data}) => {
             if (isLastSection) {
-                message.error('Congrats!');
+                message.success('Congrats!');
+                history.push('/');// redirect to the dashboard
             } else {
+                message.success(item.title+' is now completed for '+date/*<FormattedDate value={moment(date)}/>*/);
                 this.props.showNextSection();
             }
+
+            this.clearLoading();
         }).catch((error) => {
             message.error(error.message);
+            this.clearLoading();
+        });
+    }
+    clearLoading() {
+        this.setState({
+            loading:false,
         });
     }
 
@@ -34,11 +54,11 @@ export class PlanSection extends React.Component {
    render() {
 
         const {upid, date, item, isLastSection} = this.props;
-        const footer = item.elements !== null && (item.elements.length > 0 || isLastSection)  ? [<Button type="primary" onClick={(e) => this.saveSection(e, item.id, isLastSection)}>{isLastSection ?  'Finish':'Next Section'}</Button>] : [];
-    console.log('Section Render');
-       return (<Card title={item.title} bordered={false} actions={footer}>
+        const footer = item.elements !== null && (item.elements.length > 0 || isLastSection)  ? [<Button type="primary" loading={this.state.loading} onClick={(e) => this.saveSection(e, item.id, isLastSection)}>{isLastSection ?  'Finish':'Next Section'}</Button>] : [];
+        //console.log('Section Render');
+        return (<Card title={item.title} bordered={false} actions={footer}>
 
-            {item.elements ? <Row>
+            {item.elements.length > 0 ? <Row>
                 <Col xs={19}><List
                 size="large"
                 itemLayout="vertical"
@@ -58,9 +78,6 @@ export class PlanSection extends React.Component {
                         {item.elements !== null && item.elements.map((item) => (
 
                             item.itemInfo.label && <Anchor.Link key={item.id} href={'#field' + item.id} title={item.itemInfo.label}/>))}
-
-                        {/*<Anchor.Link href="#components-anchor-demo-basic2" title="Basic demo 2" />
-                                <Anchor.Link href="#components-anchor-demo-basic3" title="Basic demo 3" />*/}
                     </Anchor>
                 </Col>
             </Row>: 'No section content'}
@@ -71,4 +88,4 @@ export class PlanSection extends React.Component {
 
 
 
-export default PlanSection
+export default withRouter(PlanSection);

@@ -6,7 +6,7 @@ import Tracker from '../../../Tracker';
 import { Card, Row, Col, Progress, Popover, Icon, Tooltip, Input, TimePicker, Dropdown, Menu } from 'antd';
 const { TextArea } = Input;
 
-export default class PlanMeasurement extends React.PureComponent {
+export default class PlanMeasurement extends React.Component {
     constructor(props) {
         super(props);
         const {item} = this.props;
@@ -24,7 +24,7 @@ export default class PlanMeasurement extends React.PureComponent {
         this.state = {
             value:value,
             time:time,
-            comment:comments
+            comments:comments
         };
         //this.onChange = this.onChange.bind(this);
         this.changeTime = this.changeTime.bind(this);
@@ -54,10 +54,23 @@ export default class PlanMeasurement extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
-        if (nextProps.reports !== this.props.reports) {
-            this.setState({value:nextProps.reports});
+        if (nextProps.item.reports !== this.props.item.reports) {
+            const reports = nextProps.item.reports;
+            let value = null;
+            let time = null;
+            let comments = '';
+            if (reports && reports.length > 0) {
+                const report = reports[0];
+                time = report.time;
+                comments = report.comments;
+                value = report.value;
+            }
+
+            this.setState( {
+                value:value,
+                time:time,
+                comments:comments
+            });
         }
     }
 
@@ -83,21 +96,18 @@ export default class PlanMeasurement extends React.PureComponent {
     }
 
     onReport() {
-        if (this.state.value) {
+        if (this.state.value != '') {
             this.props.onChange(this.state.value, this.state.time, this.state.comments);
         } else {
-            alert('Enter');
+            //alert('Enter');
         }
     }
 
     render() {
-       //console.log(this.props);
        const {item, date} = this.props;
        const {label, textBefore, description, units, reports, targets} = item;
        const unitsName = units.name;
-        //console.log(this.props);
-        //console.log(typeof reports);
-       // let comments = '';
+
         let isCritical  = false;
 
         if (reports && reports.length > 0) {
@@ -107,32 +117,6 @@ export default class PlanMeasurement extends React.PureComponent {
         }
 
         const{time, comments, value} = this.state;
-
-        //console.log(time);
-        //console.log(value);
-
-        /*const columns = [{
-            title: 'Report Tracker',
-            dataIndex: 'tracker',
-            key: 'tracker',
-        }, {
-            title: 'Reported at',
-            dataIndex: 'time',
-            key: 'time',
-        }
-        ];
-
-        const data = [{
-            key: '1',
-            tracker: ,
-            time: <TimePicker use12Hours format="h:mm a" />
-        }];*/
-/*
-<Row>
-            <Col xs={12}><Tracker /></Col>
-            <Col xs={12}><TimePicker use12Hours format="h:mm a" /></Col>
-        </Row>
- */
         const menu = (
             <Menu>
                 <Menu.Item key="0">
@@ -142,7 +126,7 @@ export default class PlanMeasurement extends React.PureComponent {
         );
         return (<Card hoverable title={label}
                       extra={<Dropdown overlay={menu} trigger={['click']}><Tooltip title="Tracker Settings"><Icon type="ellipsis" /></Tooltip></Dropdown>}
-                      actions={[<Popover content={<TimePicker use12Hours value={time && moment(date+' '+time)} onChange={this.changeTime} format="h:mm a" />} title="Reported at"><Icon type="clock-circle-o" /></Popover>, <Popover content={<TextArea placeholder="" value={comments} onChange={this.handleComments}  />} title="Comments"><Icon type="message" /></Popover>,  <Icon type="area-chart" style={{marginLeft:10}} />]}
+                      actions={[<Popover content={<TimePicker use12Hours value={time && moment(date+' '+time)} onChange={this.changeTime} format="h:mm a" />} title="Reported at"><Icon type="clock-circle-o" /></Popover>, <Popover content={<TextArea placeholder="Enter comments" value={comments} onChange={this.handleComments}  />} title="Comments"><Icon type="message" /></Popover>,  <Icon type="area-chart" style={{marginLeft:10}} />]}
         >
 
             <Row><Col md={12}>

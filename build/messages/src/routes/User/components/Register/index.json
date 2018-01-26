@@ -102,7 +102,7 @@
   {
     "id": "user.registration.read",
     "description": "I have read our",
-    "defaultMessage": "I have read our"
+    "defaultMessage": "I have read the"
   },
   {
     "id": "user.registration.agreement",

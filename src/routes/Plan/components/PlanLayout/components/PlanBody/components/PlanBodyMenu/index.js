@@ -8,7 +8,7 @@ export class PlanBodyMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentTab: props.currentTab,
+            currentTab: [props.currentTab],
             currentKey: props.currentKey
         };
 
@@ -23,6 +23,7 @@ export class PlanBodyMenu extends React.Component {
         const{onClick} = this.props;
 
         this.setState({currentKey:e.key});
+
         onClick(e.key, e.item.props.index);
     }
 
@@ -64,7 +65,7 @@ export class PlanBodyMenu extends React.Component {
                 // check on incompleted sections
                 activities.map((section, i) => {
                     if (!foundMatch && currentKey == 'section_0' && !section.completed) {
-                        console.log(section);
+                        //console.log(section);
                         currentTab = 'activities';
                         currentKey = 'section_'+i;
                         currentKeyI = i;
@@ -81,22 +82,28 @@ export class PlanBodyMenu extends React.Component {
             //console.log(currentKey);
             if (currentTab !== '') {
                 this.setState({
-                    currentTab: currentTab,
+                    currentTab: [currentTab],
                     currentKey: currentKey,
                     currentKeyI: currentKeyI
                 });
-                onClick(currentKey, currentKeyI);
+                onClick(currentKey, currentKeyI, currentTab);
             }
 
        //}*/
     };
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        console.log(this.props);
+        //console.log(nextProps);
+        //console.log(this.props);
         if (nextProps.currentKey !== this.state.currentKey) {
             this.setState({
                 currentKey:nextProps.currentKey
+            });
+        }
+
+        if (nextProps.currentTab !== this.state.currentTab) {
+            this.setState({
+                currentTab:[nextProps.currentTab]
             });
         }
 
@@ -112,7 +119,7 @@ export class PlanBodyMenu extends React.Component {
         return (<Menu
             onClick={this.onClick}
             selectedKeys={[currentKey]}
-            defaultOpenKeys={[currentTab]}
+            defaultOpenKeys={currentTab}
             mode="inline"
         >
             {lessons.length > 0 && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>

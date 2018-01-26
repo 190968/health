@@ -22,13 +22,14 @@ const motivators = gql`
    query GET_MOTIVATORS {
         account {
             user {
+            id
             motivators {
                   totalCount,
                   edges{
                     id,
                     user {
                       id,
-                      first_name,
+                      firstName,
                       email
                     }
                   }

@@ -34,10 +34,9 @@ class LHeader extends React.Component {
     render() {
         const loading = this.props.loading;
         const token = this.props.token;
-        const location = this.props.location;
+        //const location = this.props.location;
         const new_messages = this.props.messages;
         const new_notifications = this.props.notifications;
-        console.log(location);
         const menu_items = [
             ['Dashboard', '/'],
             ['Planstore', '/planstore', 'aps'],
@@ -130,7 +129,7 @@ class LHeader extends React.Component {
                             </Menu.Item>
 
 
-                            <SubMenu key="sub1" title={<span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{this.props.user.first_name}</Avatar> <span>{this.props.user.first_name}!</span></span>}>
+                            <SubMenu key="sub1" title={<span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{this.props.user.firstName}</Avatar> <span>{this.props.user.firstName}!</span></span>}>
 
                                 {user_menu_items.map((item) => {
                                     if (item.length == 1) {
@@ -162,8 +161,8 @@ const mapStateToProps = (state) => {
         // view store:
         //currentView:  state.views.currentView,
         // userAuth:
-        messages:    state.user.info.new_messages,
-        notifications:    state.user.info.new_notifications,
+        messages:    state.user.info.newMessages,
+        notifications:    state.user.info.newNotifications,
         network:    state.network,
         //loading: state.user.loading,
         user: state.user.info,

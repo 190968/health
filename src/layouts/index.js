@@ -50,7 +50,7 @@ export const Core = ({loading, user, store, location}) =>  {
 
 
             <Header>
-                <LayoutHeader loading={loading} location={location} />
+                <LayoutHeader loading={loading} location={location}  />
             </Header>
             <Content style={{ padding: '20px 50px', flex: '1' }}>
                 <PrivateRoute exact path="/" component={asyncDash(store)} />

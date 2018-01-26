@@ -11,6 +11,9 @@ import { connect } from 'react-redux'
 import VerifyPhoneConfirmForm from '../components/VerifyPhoneConfirm'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {withRouter} from "react-router-dom";
+import LoginForm from "../components/Login";
+import {updatePhoneConfirm} from "../modules/user";
 
 
 const verifyPhoneConfirm = gql`
@@ -20,33 +23,86 @@ mutation verifyPhoneConfirm($code:String!) {
 `;
 
 const withMutation = graphql(verifyPhoneConfirm, {
-    props: ({ mutate }) => ({
-        verifyPhoneConfirm: input => {
+    props: ({ ownProps, mutate }) => ({
+        verifyPhoneConfirm: (input, userId) => {
             return mutate({
                 variables: {code:input.code },
+                update: (store, { data: { verifyPhoneConfirm } }) => {
+                    //console.log(ownProps);
+                    //console.log('User:'+ownProps.userId);
+                    let element = store.readFragment({
+                        id: 'User:'+userId, // `id` is any id that could be returned by `dataIdFromObject`.
+                        fragment: LoginForm.fragments.user,
+                        fragmentName: 'UserInfo'
+                    });
+                    console.log(element);
+
+                    //element.phoneConfirmed = verifyPhoneConfirm;
+                    //console.log(element);
+                    store.writeFragment({
+                        id: 'User:'+userId,
+                        fragment: LoginForm.fragments.user,
+                        fragmentName: 'UserInfo',
+                        data: {
+                            phoneConfirmed: verifyPhoneConfirm,
+                            __typename:'User'
+                        },
+                    });/*
+
+
+
+                    // get info from the store
+                    const data = store.readFragment({
+                        query: UserQuery,
+                        variables: {
+                            id: id,
+                        }
+                    });
+                    //console.log(data);
+                    // Write our data back to the cache.
+                    store.writeQuery({
+                        query: UserQuery,
+                        data: {
+                            category: {
+                                ...data.category,
+                                isJoined: false
+                            }
+                        },
+                        variables: {
+                            id: id,
+                        }
+                    });*/
+                },
             })},
     }),
 });
 
 const mapStateToProps = (state) => {
+    console.log(state);
+    console.log(state.user.info.id);
     return {
-
+        userId: state.user.info.id
     };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props) => {
+    onSubmit: (props, userId) => {
         const{code} = props;
-        ownProps.verifyPhoneConfirm({code:code })
+        //console.log(ownProps);
+        ownProps.verifyPhoneConfirm({code:code }, userId)
             .then(({data}) => {
-                console.log("----verifyPhoneConfirm----");
-                console.log(data);
-                ownProps.history.push('/');
+
+                // update user info
+                dispatch(updatePhoneConfirm(data.verifyPhoneConfirm));
+                //console.log("----verifyPhoneConfirm----");
+                //console.log(data);
+                //ownProps.history.push('/');
+
             }).catch((error) => {
-            console.log(error);
+            //console.log(error);
         });
     },
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(VerifyPhoneConfirmForm));
+export default withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(VerifyPhoneConfirmForm)));
 

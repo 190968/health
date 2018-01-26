@@ -29,7 +29,7 @@ const getPhone = gql`
     {
       user {
           id
-            phone
+          phone
       }
     }
 }
@@ -64,6 +64,7 @@ const withQuery = graphql(getPhone,
 
 const mapStateToProps = (state) => {
     return {
+        phone: state.user.info.phone
     };
 };
 

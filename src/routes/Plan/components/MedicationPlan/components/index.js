@@ -11,7 +11,7 @@ import {
     FormattedTime,
 } from 'react-intl';
 
-import { Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
+import { Menu, Dropdown, Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
 
 /*const Placeholder = (
     <div>
@@ -179,6 +179,18 @@ export class MedicationPlanBody extends React.Component {
             });
         }
 
+
+        const menu = (
+            <Menu>
+                <Menu.Item disabled key="reminders">Reminders</Menu.Item>
+                <Menu.Item disabled key="refill">Add Refill</Menu.Item>
+                <Menu.Item disabled key="motivators">Motivators</Menu.Item>
+                <Menu.Item disabled key="commitment">Make a Commitment</Menu.Item>
+                <Menu.Item disabled key="promise">Make a Promise</Menu.Item>
+                <Menu.Item disabled key="print">Print</Menu.Item>
+            </Menu>
+        );
+
         //console.log('med render');
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
@@ -190,7 +202,14 @@ export class MedicationPlanBody extends React.Component {
                     />
                 }} description="Medications for Today" />}
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
-                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<MedicationSelect userId={user_id} onSelect={this.addMedication} />} title="Add Medication" trigger="click" placement={'bottom'}><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
+                          <Button.Group style={{marginLeft:10}}>
+                              <Tooltip title="Summary"><Button size="small" ><Icon type="area-chart"  /></Button></Tooltip>
+                              <Tooltip title="Chat"><Button size="small" ><Icon type="message"  /></Button></Tooltip>
+                              <Tooltip title="Settings"><Dropdown overlay={menu}  >
+                                  <Button size="small" ><Icon type="setting" /></Button>
+                                  </Dropdown></Tooltip>
+                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<MedicationSelect userId={user_id} onSelect={this.addMedication} />} title="Add Medication" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
+                          </Button.Group>
                       </div>}>
 
                     {takeAtTimes.length === 0 && takeDaily.length === 0 && takeAsNeeded.length === 0 && <div class="ant-list-empty-text">No Medications</div>}

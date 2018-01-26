@@ -9,7 +9,7 @@
   },
   {
     "id": "userplan.joined",
-    "description": "Medications for Today",
-    "defaultMessage": "Joined on {date}"
+    "description": "date for Today",
+    "defaultMessage": "From {date}"
   }
 ]

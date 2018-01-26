@@ -4,11 +4,37 @@ import {
     FormattedMessage,
 } from 'react-intl';
 import './login.css'
-
+import gql from 'graphql-tag';
 import {Modal, Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component {
+export class LoginForm extends React.Component {
+
+    // fragment for the plan info
+    static fragments = {
+        user: gql`
+        fragment CurrenUserInfo on Account {
+            user {
+                ...UserInfo
+            }
+            token
+        }
+        fragment UserInfo on User {
+                id,
+                firstName,
+                lastName,
+                dateFormat
+                token,
+                phoneConfirmed,
+                newNotifications,
+                newMessages,
+                phone
+        }
+        
+    `,
+
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -136,5 +162,5 @@ class NormalLoginForm extends React.Component {
     }
 }
 
- const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-export default WrappedNormalLoginForm;
+ const WrappedLoginForm = Form.create()(LoginForm);
+export default WrappedLoginForm;

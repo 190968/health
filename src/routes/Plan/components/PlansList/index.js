@@ -10,9 +10,9 @@ import {
 
 const menu = (
     <Menu>
-        <Menu.Item key="1">Show Active</Menu.Item>
-        <Menu.Item key="2">Show Completed</Menu.Item>
-        <Menu.Item key="3">Show Elapsed</Menu.Item>
+        <Menu.Item disabled key="1">Show Active</Menu.Item>
+        <Menu.Item disabled key="2">Show Completed</Menu.Item>
+        <Menu.Item disabled key="3">Show Elapsed</Menu.Item>
     </Menu>
 );
 export class PlansList extends React.Component {
@@ -27,13 +27,13 @@ export class PlansList extends React.Component {
     } = this.props;
 
     if (loading) {
-        return (<Card loading title={<FormattedMessage id="plan.title" defaultMessage="TODAY'S ACTIONPLANS" description="Medications for Today" />}>
+        return (<Card loading title={<FormattedMessage id="plan.title" defaultMessage="Today's Actionplans" description="Medications for Today" />}>
            Loading
         </Card>)
     }
 
     return (
-        <Card title={<FormattedMessage id="plan.title" defaultMessage="TODAY'S ACTIONPLANS" description="Medications for Today" />}
+        <Card title={<FormattedMessage id="plan.title1" defaultMessage="Today's Actionplans" description="Medications for Today" />}
               extra={<div><Tooltip title={<FormattedMessage id="plan.settings" defaultMessage="Settings" />}><Dropdown overlay={menu} >
                   <Button size="small" style={{ marginRight: 8 }}>
                       <Icon type="setting" />

@@ -26,7 +26,7 @@ const FAMILY  = gql`
                     id,
                     user {
                       id,
-                      first_name,
+                      firstName,
                       email
                     }
                   }

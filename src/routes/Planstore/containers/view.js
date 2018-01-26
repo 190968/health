@@ -57,7 +57,6 @@ const PlanstorPlanLayoutWithQuery = graphql(
             //console.log(ownProps);
             //console.log(CURRENT_PLANSTORE_PLAN);
             if (!data.loading) {
-                //console.log(ownProps);
 
                 return {
                     plan: data.plan,
@@ -107,15 +106,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             //var birth = birthday.substring(0,10);
             //console.log(birth);
             const input = {start_date: startDate, privacy:privacy, end_date:endDate};
-            client.mutate({
+            return client.mutate({
                 mutation: getPlanMutation,
                 variables: { id: ownProps.match.params.id, input: input}
-            }).then(({data}) => {
-
-                const upid = data.getPlan.id;
-                ownProps.history.push('/plan/'+upid)
-                console.log("----settings----");
-                console.log(data);
             })
         },
     }

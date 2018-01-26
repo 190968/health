@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Tooltip } from 'antd';
+import { Tag,Card, Tooltip } from 'antd';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
@@ -7,7 +7,7 @@ import Truncate from 'react-truncate';
 import PlanElement from '../../components/PlanLayout/components/PlanElement';
 
 import './styles.scss'
-export class Plan extends React.Component {
+export class Plan extends React.PureComponent {
   // fragment for the plan info
   static fragments = {
     plan: gql`
@@ -134,6 +134,7 @@ export class Plan extends React.Component {
     var img = this.props.info.thumb.small;
     var id = this.props.info.id;
     var upid = this.props.info.upid || 0;
+    var ribbon = this.props.info.ribbon || '';
 
     let link = '/planstore/plan/'+id;
     const is_user = upid > 0;
@@ -152,13 +153,15 @@ export class Plan extends React.Component {
           to={link}
         >
             <Card
-                cover={<img alt={name} height={height} src={img} />}
+                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} height={height} src={img} /></div>}
                 hoverable={true}
             >
+
                 <Card.Meta
                     title={<Tooltip title={name}>{name.substring(0, limit)}</Tooltip>}
                     description={<Truncate lines={1}>{description}</Truncate>}
                 />
+
 
             </Card>
         </Link>

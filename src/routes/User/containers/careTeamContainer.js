@@ -26,7 +26,7 @@ const CARETEAM  = gql`
                     id,
                     user {
                       id,
-                      first_name,
+                      firstName,
                       email
                     }
                   }

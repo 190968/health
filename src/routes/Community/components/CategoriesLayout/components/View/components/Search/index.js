@@ -9,19 +9,32 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import '../../../../../../style.css';
+import {
+    withRouter
+} from 'react-router-dom'
 
-class Search extends React.Component{
+class Search extends React.PureComponent{
 
     constructor(props) {
         super(props);
+        this.onChange = this.onChange.bind(this);
+        this.onSelect = this.onSelect.bind(this);
 
     }
 
 
     onChange = (value) => {
-        this.props.loadMoreEntries(value)
 
+        //console.log(value);
+        if (!this.props.loading)
+        this.props.loadMoreEntries(value)
     };
+
+    onSelect(value) {
+        // redirect to the proper category
+        //console.log(this.props);
+        this.props.history.push('/community/'+value)
+    }
 
 
 
@@ -32,9 +45,11 @@ class Search extends React.Component{
             <div>
                 <AutoComplete
                     dataSource={items}
+                    allowClear={true}
                     placeholder="Search Community"
                     filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-                    onChange = {this.onChange}
+                    onSearch = {this.onChange}
+                    onSelect = {this.onSelect}
                 />
             </div>
         );
@@ -43,4 +58,4 @@ class Search extends React.Component{
 }
 
 const WrappedSearch = Form.create()(Search);
-export default withApollo(WrappedSearch);
+export default withApollo(withRouter(WrappedSearch));

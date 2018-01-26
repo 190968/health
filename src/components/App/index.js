@@ -31,6 +31,7 @@ import { LocaleProvider } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import ruRu from 'antd/lib/locale-provider/ru_RU';
 import esEs from 'antd/lib/locale-provider/es_ES';
+import LoginForm from "../../routes/User/components/Login";
 
 var history = createBrowserHistory();
 // Adding Locale data
@@ -46,40 +47,30 @@ const NETWORK_INFO = gql`
         network {
             id,
             name,
+            description,
             logo,
             modules {
                 id,
                 name,
                 placeholder
             }
+            allowSignUp
+            colors {
+                primary
+                brand
+                headerBg
+                headerText
+                footerBg
+                footerText
+            }
         },
         account {
-            checkToken
-            user {
-                id,
-                first_name,
-                last_name,
-                token,
-                phoneConfirmed,
-                new_notifications,
-                new_messages,
-                motivators {
-                    totalCount,
-                    edges{
-                        id,
-                        user {
-                          id,
-                          first_name,
-                          email
-                        },
-                        email
-                    }
-                }
-            }
+            ...CurrenUserInfo
             current_role
-
+            checkToken
         }
     }
+     ${LoginForm.fragments.user}
 `;
 
 const queryOptions =  {

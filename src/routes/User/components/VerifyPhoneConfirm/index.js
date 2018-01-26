@@ -34,7 +34,7 @@ class VerifyPhoneConfirmForm extends React.Component {
 
     constructor() {
         super();
-        this.state = { loading:false};
+        this.state = {loading:false};
     }
 
     handleSubmit = (e) => {
@@ -44,44 +44,42 @@ class VerifyPhoneConfirmForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.setState({
-                    loading: false
+                    loading: true
                 });
-                return onSubmit(values);
+                return onSubmit(values, this.props.userId);
             }
         });
     }
 
-    enterLoading = () => {
-        this.setState({ loading: true });
-    }
     render() {
 
         const { getFieldDecorator } = this.props.form;
-
         return (
-            <div className="register-form" style={{padding:'0 20%'}}>
+            <div className="register-form" style={{padding:'8% 35% 20px'}}>
+                <Form onSubmit={this.handleSubmit} >
                 <Card
                     title={<FormattedMessage id="user.settings.verifyconfirm" defaultMessage="Verify Phone Confirm" description="Confirm" />}
+                    actions={[ <Button  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
+                        <FormattedMessage id="user.settings.verifyconfirm.send" defaultMessage="Send" description="Send"/>
+                    </Button>]}
                 >
-                    <Form onSubmit={this.handleSubmit} >
+
                         <FormItem
                             {...formItemLayout}
                             label={<FormattedMessage id="user.settings.verifyconfirm.code" defaultMessage="Code" description="Code" />}
                             hasFeedback
                         >
                             {getFieldDecorator('code', {
-                                rules: [{ required: true, message: <FormattedMessage id="user.settings.verifyconfirm.rule" defaultMessage="Please input your code" description="code" /> }],
+                                rules: [{ required: true, message: <FormattedMessage id="user.settings.verifyconfirm.rule" defaultMessage="Please input your code" description="code" /> },
+                                    {len:4, message:'must be 4 digits'}
+                                ],
                             })(
-                                <Input  style={{ width: '100%' }} />
+                                <Input size="large" />
                             )}
                         </FormItem>
-                        <FormItem {...tailFormItemLayout}>
-                            <Button  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
-                                <FormattedMessage id="user.settings.verifyconfirm.send" defaultMessage="Send" description="Send"/>
-                            </Button>
-                        </FormItem>
-                    </Form>
+
                 </Card>
+                </Form>
             </div>
         );
     }

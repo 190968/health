@@ -39,6 +39,8 @@ const ACTION_HANDLERS = {
             name:network.name,
             logo:network.logo,
             modules:network.modules,
+            allowSignUp:network.allowSignUp,
+            colors:network.colors,
             loading:false,
         };
     },
@@ -66,6 +68,8 @@ const initialState = {
     modules: null,
     errorMessage: null,
     alertMessage: null,
+    allowSignUp: false,
+    colors: [],
 };
 export default function networkReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]

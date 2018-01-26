@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
+import moment from 'moment';
 
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
@@ -25,7 +26,7 @@ const formItemLayout = {
 };
 const CollectionCreateForm = Form.create()(
     (props) => {
-        const { visible, onCancel, onSubmit, onChangeEnd, checkEndDate, form, plan, end_date } = props;
+        const { visible, confirmLoading, onCancel, onSubmit, onChangeEnd, checkEndDate, form, plan, end_date } = props;
         const { getFieldDecorator } = form;
 
         const radioStyle = {
@@ -39,6 +40,7 @@ const CollectionCreateForm = Form.create()(
             <Modal
                 title={'Set your ActionPlan:' + plan.title}
                 visible={visible}
+                confirmLoading={confirmLoading}
                 onCancel={onCancel} onOk={onSubmit}>
                 <Form >
                     <Card title="Privacy" type="inner">
@@ -70,11 +72,12 @@ const CollectionCreateForm = Form.create()(
                             label="Start Date"
                         >
                             {getFieldDecorator('start_date', {
+                                initialValue: moment(),
                                 rules: [{
                                     required: true, message: 'Please Select Start Date',
                                 }],
                             })(
-                                <DatePicker/>
+                                <DatePicker allowClear={false}/>
                             )}
                         </FormItem>
 
@@ -122,7 +125,8 @@ export class PlanstorPlanLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalIsOpen: false,
+            loading: false,
+            confirmLoading: false,
             end_date:0
         };
         this.checkEndDate = this.checkEndDate.bind(this);
@@ -185,14 +189,14 @@ export class PlanstorPlanLayout extends React.Component {
         for (var i=0,j=chunked_arr.length; i<j; i++) {
             //console.log(i);
             cols[i] = chunked_arr[i].map(el => {
-                return [
+                return <React.Fragment key={el[0]}>
                     <Col md={6}>
                         <strong>{el[0]}:</strong>
-                    </Col>,
+                    </Col>
                     <Col md={6} >
                         {el[1]}
                     </Col>
-                ];
+                </React.Fragment>;
                 //console.log(el.key);
             });
         }
@@ -217,8 +221,6 @@ export class PlanstorPlanLayout extends React.Component {
         //callback();
         //  console.log(value);
         const start_date = form.getFieldValue('start_date');
-        console.log(start_date);
-        console.log(value);
         if (start_date && value && value < start_date) {
             //console.log(callback);
             callback('End date is wrong');
@@ -238,7 +240,14 @@ export class PlanstorPlanLayout extends React.Component {
                     loading: true
                 });
                 //console.log(values);
-                return getPlan(values, this.props.client);
+                return getPlan(values, this.props.client).then(({data}) => {
+
+                    const upid = data.getPlan.id;
+                    this.setState({
+                        loading: false
+                    });
+                    this.props.history.push('/plan/'+upid)
+                });
             } else if (err.endDate) {
                 message.warning(err.endDate);
             }
@@ -310,7 +319,7 @@ export class PlanstorPlanLayout extends React.Component {
                                         </ul>
                                     </div>
                                     <div className="ap-card__action">
-                                        {alreadyDownloaded !== '' ? <Link to={'/plan/'+alreadyDownloadedId} ><Button icon="check" size="large" onClick={this.openModal} >Already Got It</Button></Link> :
+                                        {alreadyDownloaded ? <Link to={'/plan/'+alreadyDownloadedId} ><Button icon="check" size="large" onClick={this.openModal} >Already Got It</Button></Link> :
                                         <Button type="primary"  icon="download" size="large" onClick={this.openModal} >Get It</Button>}
                                     </div>
                                 </div>
@@ -336,6 +345,7 @@ export class PlanstorPlanLayout extends React.Component {
                 <CollectionCreateForm
                     ref={this.saveFormRef}
                     visible={this.state.modalIsOpen}
+                    confirmLoading={this.state.loading}
                     onCancel={this.toggle}
                     onSubmit={this.handleSubmit}
                     onChangeEnd={this.onChangeEnd}

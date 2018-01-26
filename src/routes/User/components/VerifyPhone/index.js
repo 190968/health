@@ -36,7 +36,8 @@ class VerifyPhoneForm extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {showCode:false};
+        this.state = {loading:false,showCode:false};
+
     }
 
 
@@ -44,8 +45,10 @@ class VerifyPhoneForm extends React.Component {
 
         e.preventDefault();
         const { onSubmit } = this.props;
+
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                this.setState({loading:true})
                 return onSubmit(values,this.showCode);
              }
         });
@@ -83,11 +86,15 @@ class VerifyPhoneForm extends React.Component {
 
 
         return (
-            <div className="register-form" style={{padding:'0 20%'}}>
+            <div className="register-form"  style={{padding:'8% 35% 20px'}}>
+                <Form onSubmit={this.handleSubmit} >
                 <Card
                     title="Verify Phone"
+                    actions={[ <Button  loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
+                        <FormattedMessage id="user.settings.verifyphone.send" defaultMessage="Send" description="Send" />
+                    </Button>]}
                 >
-                    <Form onSubmit={this.handleSubmit} >
+
                         <FormItem
                             {...formItemLayout}
                             label={<FormattedMessage id="user.settings.verifyphone.phone" defaultMessage="Phone" description="Phone" />}
@@ -100,13 +107,8 @@ class VerifyPhoneForm extends React.Component {
                                 <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                             )}
                         </FormItem>
-                        <FormItem {...tailFormItemLayout}>
-                            <Button  loading={this.state.loading}     type="primary" htmlType="submit" className="register-form-button">
-                                <FormattedMessage id="user.settings.verifyphone.send" defaultMessage="Send" description="Send" />
-                            </Button>
-                        </FormItem>
-                    </Form>
                 </Card>
+                </Form>
             </div>
         );
     }

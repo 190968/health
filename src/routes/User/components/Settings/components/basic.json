@@ -34,15 +34,35 @@
     "defaultMessage": "Birthday",
     "description": "Birthday"
   },
+  "address": {
+    "id": "user.address",
+    "defaultMessage": "Address",
+    "description": "Address"
+  },
   "novalid": {
     "id": "user.birthday.novalid",
     "defaultMessage": "The input not valid date!",
     "description": "The input not valid date!"
   },
+  "dateformat": {
+    "id": "user.dateformat",
+    "defaultMessage": "Date format",
+    "description": "Date format"
+  },
   "rule": {
     "id": "user.birthday.rule",
     "defaultMessage": "Please input your birthday",
     "description": "Please input your birthday"
+  },
+  "timezone": {
+    "id": "user.timezone",
+    "defaultMessage": "Timezone",
+    "description": "Timezone"
+  },
+  "timezone_rule": {
+    "id": "user.timezone_rule",
+    "defaultMessage": "Select Timezone",
+    "description": "Timezone"
   },
   "gender": {
     "id": "user.gender",

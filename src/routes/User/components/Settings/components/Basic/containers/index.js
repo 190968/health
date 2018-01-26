@@ -1,12 +1,12 @@
 /**
  * Created by Pavel on 06.12.2017.
  */
-import { connect } from 'react-redux'
-import { } from '../modules/setting'
+import {connect} from 'react-redux'
+import {} from '../modules/setting'
 
 
 import SettingForm from '../components'
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 //import { compose } from 'react-apollo';
 
@@ -16,38 +16,92 @@ const settingUser = gql`
     {
       user {
           possibleTitles
-        id,
+          id,
           title,
-        first_name,
-         phoneConfirmed,
-        middle_name,
-        last_name,
-        birthday,
-        gender,
-        phone,
-        language,
-        email      
+          firstName,
+          middleName,
+          lastName,
+          birthday,
+          gender,
+          phone,
+          language,
+          timezone
+          address {
+            line1
+            line2
+            country
+            state 
+            city
+            zipcode
+          }
+          phoneConfirmed,
+          dateFormat
+          email      
       }
     }
+    
+    staticContent {
+        languages {
+             value
+             label
+        }
+        countries {
+            id
+            name
+            phoneCode
+        }
+        states {
+            id
+            name
+        }
+        timezones {
+            id
+            name
+            offset
+        }
+    }
+    
 }
 `;
-const settingUserMutate=gql`
- mutation settingUser( $input:AccountInput!){
-        account(input:$input) {
-          user {
-            first_name
+const settingUserMutate = gql`
+ mutation settingUser($input:UserInput!){
+        updateUser(input:$input) {
+          id,
+          title,
+          firstName,
+          middleName,
+          lastName,
+          birthday,
+          gender,
+          phone,
+          language,
+          timezone
+          address {
+            line1
+            line2
+            country
+            state 
+            city
+            zipcode
           }
+          phoneConfirmed,
+          dateFormat
+          email
         }
     }
 `;
 
 const withQuery = graphql(settingUser,
     {
-        props: ({ ownProps, data }) => {
+        props: ({ownProps, data}) => {
             if (!data.loading) {
                 return {
                     account: data.account,
-                    loading: data.loading
+                    loading: data.loading,
+                    countries: data.staticContent.countries,
+                    states: data.staticContent.states,
+                    languages: data.staticContent.languages,
+                    timezones: data.staticContent.timezones
                 }
 
             } else {
@@ -58,31 +112,43 @@ const withQuery = graphql(settingUser,
 )(SettingForm);
 
 const withMutation = graphql(settingUserMutate, {
-    props: ({ mutate }) => ({
+    props: ({mutate}) => ({
         updateInfo: input => {
             return mutate({
-                variables: {input: {user:input}},
-            })},
+                variables: {input},
+            })
+        },
     }),
 });
 
 
-
-
 const mapStateToProps = (state) => {
 
-    return {
-
-    };
+    return {};
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (values) => {
-        values.birthday = values.birthday.format("YYYY-MM-DD")
-        values.phone = [values.prefix, values.phone];
-        delete values.prefix;
         console.log(values);
-        ownProps.updateInfo(values).then(({data}) => {
+
+        const {title,firstName, lastName, middleName, birthday, prefix, phone, gender, email, timezone, address, language, dateFormat} = values;
+
+        const input = {
+            title,
+            firstName,
+            lastName,
+            middleName,
+            birthday:birthday.format("YYYY-MM-DD"),
+            phone: [prefix, phone],
+            gender,
+            email,
+            timezone,
+            address,
+            language,
+            dateFormat
+
+        };
+        ownProps.updateInfo(input).then(({data}) => {
             console.log("----settings----");
             console.log(data);
         })
@@ -101,7 +167,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 //export  withMutation(connect(mapStateToProps, mapDispatchToProps)(SettingForm));
 //export default compose(
-  //  connect(mapStateToProps, mapDispatchToProps),withMutation,withQuery)((SettingForm));
+//  connect(mapStateToProps, mapDispatchToProps),withMutation,withQuery)((SettingForm));
 
 export default withMutation(connect(
     mapStateToProps,

@@ -62,6 +62,7 @@ class EditTrackerForm extends React.Component {
 
             //console.log(id);
             //console.log(userId);
+                console.log(input);
 
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.

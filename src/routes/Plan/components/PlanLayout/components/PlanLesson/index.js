@@ -9,8 +9,10 @@ export class PlanLesson extends React.Component {
         super(props);
         this.state = {
             isClicked: false,
+            loading: false,
         };
         this.saveLesson = this.saveLesson.bind(this);
+        this.clearLoading = this.clearLoading.bind(this);
     };
 
     static propTypes = {
@@ -22,15 +24,23 @@ export class PlanLesson extends React.Component {
         //console.log( this.props);
         //return true;
         const {upid} = this.props;
+        this.setState({
+            loading:true,
+        });
         this.props.lessonReport(upid, lessonId).then(({data}) => {
             if (isLastlesson) {
                 const {haveSections} = this.props;
                 if (haveSections) {
+                    message.success('Last lesson has been completed');
                     this.props.showFirstSection();
                 } else {
                     // do action if no sections.
+                    message.success('All Lessons has been completed');
                 }
+                this.clearLoading();
             } else {
+                this.clearLoading();
+                message.success('Lessons has been completed');
                 this.props.showNextLesson();
             }
         }).catch((error) => {
@@ -38,12 +48,17 @@ export class PlanLesson extends React.Component {
         });
 
     }
+    clearLoading() {
+        this.setState({
+            loading:false,
+        });
+    }
 
 
    render() {
 
         const {upid, item, isLastLesson, haveSections} = this.props;
-        const footer = item.elements  || isLastLesson ? [<Button type="primary" onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
+        const footer = item.elements  || isLastLesson ? [<Button type="primary" loading={this.state.loading}  onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
 
 
        return (<Card title={item.title} bordered={false} actions={footer}>

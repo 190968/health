@@ -38,7 +38,7 @@ export class PlanElement extends React.Component {
     render() {
 
         //console.log(this.props);
-        let {element, client, date} = this.props;
+        let {element, date} = this.props;
 
         /*element = client.readFragment({
             id: `PlanBodyElement:${element.id}`,

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 import PlanBody from './containers/PlanBody';
-import {Icon,Avatar, Card,Row, Col, Button, Tooltip ,Modal, Dropdown, Menu, Checkbox } from 'antd';
+import {Icon,Avatar, Card,Row, Col, Button, Tooltip ,Popover, Dropdown, Menu, Checkbox } from 'antd';
 
 import {
     FormattedMessage,
@@ -95,7 +95,7 @@ export class PlanLayout extends React.Component {
         const options = (
             <Menu>
                 <Menu.Item key="motivators">
-                    <a onClick={this.inviteMotivators}>Invite Motivators</a>
+                    <a onClick={this.inviteMotivators}>Motivators</a>
                 </Menu.Item>
                 <Menu.SubMenu title="Actions">
                     <Menu.Item key="edit">
@@ -108,6 +108,15 @@ export class PlanLayout extends React.Component {
                         <a onClick={this.completePlan}>Complete</a>
                     </Menu.Item>
                 </Menu.SubMenu>
+                <Menu.Item key="reminders">
+                    <a >Reminders</a>
+                </Menu.Item>
+                <Menu.Item key="print">
+                    <a >Print</a>
+                </Menu.Item>
+                <Menu.Item key="export">
+                    <a >Export</a>
+                </Menu.Item>
             </Menu>
         );
         return (
@@ -122,19 +131,20 @@ export class PlanLayout extends React.Component {
                         day='2-digit'
                     /><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Icon type="right"  onClick={() => this.showDate('next')} style={{marginLeft:10}} /></Tooltip></div>, <Icon type="info-circle-o"  onClick={this.showIntro} />,  <Dropdown overlay={options} trigger={['click']}>
                         <Icon type="ellipsis" />
-                    </Dropdown>]}
+                    </Dropdown>,
+                        <Popover content={<div>Messages here</div>} title="Comments" trigger="click"><Icon type="message" /></Popover>]}
                 >
                     <Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                         title={user.first_name + ' '+ user.last_name}
-                        description={<FormattedMessage id="userplan.joined" defaultMessage="Joined on {date}" values={{
+                        description={<FormattedMessage id="userplan.joined" defaultMessage="From {date}" values={{
                             date: <FormattedDate
                                 value={new Date(info.joinDate)}
                                 year='numeric'
                                 month='long'
                                 day='2-digit'
                             />
-                        }} description="Medications for Today" />}
+                        }} description="date for Today" />}
                     />
                 </Card>
             <Card>

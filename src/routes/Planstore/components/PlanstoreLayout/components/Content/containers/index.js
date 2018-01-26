@@ -17,6 +17,7 @@ const QUERY = gql`
                 totalCount
                 edges {
                     ...PlanCardInfo
+                    ribbon
                 }
             }
           }

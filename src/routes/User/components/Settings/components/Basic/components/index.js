@@ -2,6 +2,7 @@
  * Created by Pavel on 06.12.2017.
  */
 import React, { PropTypes } from 'react';
+import AddressForm from '../../../../../../../components/AddressForm'
 
 import { Card, Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
 import { withApollo, gql } from 'react-apollo'
@@ -37,7 +38,7 @@ const tailFormItemLayout = {
         },
     },
 };
-const dateFormat = 'YYYY-MM-DD';
+const dateFormat = 'YYYY/MM/DD';
 
 // const messages = defineMessages({
 //     first_name: {
@@ -83,7 +84,8 @@ const dateFormat = 'YYYY-MM-DD';
             );
         }
        // console.log(this.props.account.user.birthday);
-        const {user} = this.props.account;
+        const {countries, states, account, languages, timezones,} = this.props;
+        const {user} = account;
         const phone = user.phone[1];
         const code = user.phone[0];
 
@@ -94,9 +96,8 @@ const dateFormat = 'YYYY-MM-DD';
         const prefixSelector = getFieldDecorator('prefix', {
             initialValue: code
         })(
-            <Select>
-                <Option value="+1">+1</Option>
-                <Option value="+375">+375</Option>
+            <Select style={{width:'20%'}}>
+                {countries.map(country => <Option key={country.id} value={country.id}>{country.phoneCode} ({country.name})</Option>)}
             </Select>
         );
 
@@ -123,27 +124,27 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.name)}
-                
+                required
             >
                 <InputGroup >
                     <Col span={8}>
-                        {getFieldDecorator('first_name', {
-                            initialValue: user.first_name ,
+                        {getFieldDecorator('firstName', {
+                            initialValue: user.firstName ,
                             rules: [{ required: true, message: intl.formatMessage(messages.first_name), whitespace: true }],
                         })(
                         <Input placeholder={intl.formatMessage(messages.first_name)} />
                         )}
                     </Col>
                     <Col span={8}>
-                        {getFieldDecorator('middle_name', {
-                            initialValue:user.middle_name
+                        {getFieldDecorator('middleName', {
+                            initialValue:user.middleName
                         })(
                         <Input  placeholder={intl.formatMessage(messages.middle_name)} />
                         )}
                     </Col>
                     <Col span={8}>
-                        {getFieldDecorator('last_name', {
-                            initialValue: user.last_name,
+                        {getFieldDecorator('lastName', {
+                            initialValue: user.lastName,
                             rules: [{ required: true, message:intl.formatMessage(messages.last_name_rule)}],
                         })(
                         <Input placeholder={intl.formatMessage(messages.last_name)} />
@@ -154,24 +155,24 @@ const dateFormat = 'YYYY-MM-DD';
             <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.birthday)}
-                
+
             >
                 {getFieldDecorator('birthday', {
-                    initialValue: moment(user.birthday, dateFormat),
+                    initialValue: moment(user.birthday),
                     rules: [{
                         type: 'object', message:intl.formatMessage(messages.novalid),
                     }, {
                         required: true, message:intl.formatMessage(messages.rule),
                     }],
                 })(
-                    <DatePicker  format={dateFormat}/>
+                    <DatePicker format={dateFormat} allowClear={false} />
                 )}
             </FormItem>
 
             <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.gender)}
-                
+
             >
                 {getFieldDecorator('gender', {
                 initialValue: user.gender,
@@ -184,37 +185,11 @@ const dateFormat = 'YYYY-MM-DD';
             )}
             </FormItem>
 
-            <FormItem
-                {...formItemLayout}
-                label={intl.formatMessage(messages.phone_number)}
-                
-            >
-                {getFieldDecorator('phone', {
-                    initialValue: phone,
-                    rules: [{ required: true, message:intl.formatMessage(messages.phone_number_rule) }],
-                })(
-                    <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-                )}
-            </FormItem>
-            <FormItem
-                {...formItemLayout}
-                label={intl.formatMessage(messages.language)}
-                
-            > {getFieldDecorator('language', {
-                initialValue: user.language,
-                rules: [{ required: true, message:intl.formatMessage(messages.language_rule) }],
-            })(
-                <Select style={{ width: 120 }} >
-                    <Option value={1}>{intl.formatMessage(messages.language_english)}</Option>
-                    <Option value={2}>{intl.formatMessage(messages.language_russian)}</Option>
-                </Select>
-            )}
-            </FormItem>
 
             <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.email)}
-                
+
             >{getFieldDecorator('email', {
                 initialValue: user.email,
                 rules: [{ required: true, type: 'email', message:intl.formatMessage(messages.email_rule),}],
@@ -222,6 +197,72 @@ const dateFormat = 'YYYY-MM-DD';
                 <Input  placeholder={intl.formatMessage(messages.email)} />
             )}
             </FormItem>
+
+            <FormItem
+                {...formItemLayout}
+                label={intl.formatMessage(messages.phone_number)}
+                required
+            >
+                <InputGroup compact>
+                    {prefixSelector}
+                {getFieldDecorator('phone', {
+                    initialValue: phone,
+                    rules: [{ required: true, message:intl.formatMessage(messages.phone_number_rule) }],
+                })(
+                    <Input style={{ width: '80%' }} />
+                )}
+                </InputGroup>
+            </FormItem>
+
+            <FormItem
+                {...formItemLayout}
+                label={intl.formatMessage(messages.address)}
+            >
+                <AddressForm getFieldDecorator={getFieldDecorator} countries={countries} states={states} address={user.address} />
+            </FormItem>
+
+            <FormItem
+                {...formItemLayout}
+                label={intl.formatMessage(messages.language)}
+
+            > {getFieldDecorator('language', {
+                initialValue: user.language,
+
+            })(
+                <Select placeholder={intl.formatMessage(messages.language_rule)}  >
+                    {languages.map(language => <Option key={language.value} value={language.value}>{language.label}</Option>)}
+                </Select>
+            )}
+            </FormItem>
+
+            <FormItem
+                {...formItemLayout}
+                label={intl.formatMessage(messages.timezone)}
+
+            > {getFieldDecorator('timezone', {
+                initialValue: user.timezone,
+            })(
+                <Select placeholder={intl.formatMessage(messages.timezone_rule)}>
+                    {timezones.map(timezone => <Option key={timezone.id} value={timezone.id}>{timezone.name}</Option>)}
+                </Select>
+            )}
+            </FormItem>
+
+
+            <FormItem
+                {...formItemLayout}
+                label={intl.formatMessage(messages.dateformat)}
+
+            > {getFieldDecorator('dateFormat', {
+                initialValue: user.dateFormat
+            })(
+                <Select style={{ width: 120 }} >
+                    <Option value={1}>MM/DD/YY</Option>
+                    <Option value={2}>DD/MM/YY</Option>
+                </Select>
+            )}
+            </FormItem>
+
             <FormItem {...tailFormItemLayout}>
                 <Button loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                     {intl.formatMessage(messages.submit)}

@@ -7,7 +7,7 @@ import {
 import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import {TrackerAddForm, TrackerEditForm} from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
-import {  Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
+import {  Menu, Dropdown, Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
 import moment from "moment/moment";
 
 export class BiometricPlanBody extends React.Component {
@@ -163,7 +163,16 @@ export class BiometricPlanBody extends React.Component {
 
         });
 
-
+        const menu = (
+            <Menu>
+                <Menu.Item disabled key="reminders">Reminders</Menu.Item>
+                <Menu.Item disabled key="view">Change view</Menu.Item>
+                <Menu.Item disabled key="motivators">Motivators</Menu.Item>
+                <Menu.Item disabled key="commitment">Make a Commitment</Menu.Item>
+                <Menu.Item disabled key="promise">Make a Promise</Menu.Item>
+                <Menu.Item disabled key="print">Print</Menu.Item>
+            </Menu>
+        );
 
         return (
 
@@ -175,9 +184,19 @@ export class BiometricPlanBody extends React.Component {
                     day='2-digit'
                 />
             }} description="Trackers for Today" />}
+
                   extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
-                      <Tooltip title={<FormattedMessage id="trsvker.add" defaultMessage="Add Tracker" />} placement={'bottom'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click"><Button size="small" style={{marginLeft:10}} /*onClick={()=>this.addMedication()}*/><Icon type="plus" /></Button></Popover></Tooltip>
+                      <Button.Group style={{marginLeft:10}}>
+                          <Tooltip title="Summary"><Button size="small" ><Icon type="area-chart"  /></Button></Tooltip>
+                          <Tooltip title="Chat"><Button size="small" ><Icon type="message"  /></Button></Tooltip>
+                          <Tooltip title="Settings"><Dropdown overlay={menu}  >
+                              <Button size="small" ><Icon type="setting" /></Button>
+                          </Dropdown></Tooltip>
+                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
+                      </Button.Group>
                   </div>}>
+
+
                 {dataList.length === 0 && data.length === 0 && <div className="ant-list-empty-text">No trackers</div>}
                 {dataList.length > 0 && <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />}
                 {data.length > 0 && <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />}

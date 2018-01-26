@@ -13,30 +13,10 @@ import gql from 'graphql-tag';
 const loginUser = gql`
     mutation loginUser($input: LoginInput!) {
         login(input: $input) {
-            user {
-                id,
-                first_name,
-                last_name,
-                token,
-                phoneConfirmed,
-                new_notifications,
-                new_messages,
-                motivators {
-                    totalCount,
-                    edges{
-                        id,
-                        user {
-                          id,
-                          first_name,
-                          email
-                        },
-                        email
-                    }
-                }
-            }
-            token
+           ...CurrenUserInfo
         }
     }
+    ${LoginForm.fragments.user}
 `;
 const forgotPassword = gql`
     mutation forgotPassword($email:Email!) {
@@ -70,6 +50,7 @@ const withMutation = graphql(loginUser, {
 
 const mapStateToProps = (state) => {
     return {
+        allowSignUp: state.network.allowSignUp,
         token: state.user.token,
         loading: state.user.loading
     };

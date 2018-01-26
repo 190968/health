@@ -38,10 +38,10 @@ class Notifications extends React.Component {
 
                         <List.Item key={message.id}>
                             {
-                                message.sender.first_name ?
+                                message.sender.firstName ?
                                     <Row>
                                         <Col span={5}>
-                                             <Avatar style={{ verticalAlign: 'middle', backgroundColor: message.sender.color }}>{message.sender.first_name[0]}</Avatar>
+                                             <Avatar style={{ verticalAlign: 'middle', backgroundColor: message.sender.color }}>{message.sender.firstName[0]}</Avatar>
                                          </Col>
                                         <Col span={19}>
                                             <p style={{textAlign:'center','marginLeft':10}}>{message.text.slice(0,15)}</p>

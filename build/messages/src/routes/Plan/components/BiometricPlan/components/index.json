@@ -13,8 +13,8 @@
     "defaultMessage": "Next day"
   },
   {
-    "id": "trsvker.add",
-    "defaultMessage": "Add Tracker"
+    "id": "medication.add",
+    "defaultMessage": "Add Medication"
   },
   {
     "id": "plan.tracker.add",

@@ -40,8 +40,9 @@ export class PlanBody extends React.Component {
     };
 
 
-    handleClick = (key, currentKeyI) => {
+    handleClick = (key, currentKeyI, tab) => {
         this.setState({
+            currentTab: tab || this.state.tab,
             currentKey: key,
             currentKeyI: currentKeyI,
         });
@@ -60,6 +61,7 @@ export class PlanBody extends React.Component {
         let {currentKeyI} = this.state;
         currentKeyI++;
         this.setState({
+            currentTab: 'lessons',
             currentKey: 'lesson_'+currentKeyI,
             currentKeyI: currentKeyI,
         });
@@ -78,6 +80,7 @@ export class PlanBody extends React.Component {
         let {currentKeyI} = this.state;
         currentKeyI++;
         this.setState({
+            currentTab: 'activities',
             currentKey: 'section_'+currentKeyI,
             currentKeyI: currentKeyI,
         });
@@ -105,9 +108,7 @@ export class PlanBody extends React.Component {
 
 
         let {currentTab, currentKey} = this.state;
-        if (1==12 || loading) {
-            // console.log(plan);
-            //return (<div>Loading...</div>);
+        if (loading) {
             return (
                 <Card loading>Loading....</Card>
             );
@@ -150,20 +151,10 @@ export class PlanBody extends React.Component {
                 onOk() {hideIntro()},
             });
         }
-        /**/
-/*
-<Row>
-            <Col xs="12" sm="4" md="3">
-                <PlanBodyMenu body={body} />
-            </Col>
-            <Col xs="12" sm="8" md="9">
-                {upid} body elements here.
-            </Col>
-        </Row>
- */
-        console.log(activities, 'AAAAAactivitires');
-        console.log(currentTab);
-        console.log(currentKey);
+
+        console.log('Loading Body');
+        console.log(currentTab, 'tab');
+        console.log(currentKey, 'key');
         return (<Row>
             <BackTop />
             <Col xs={5} >
@@ -197,10 +188,9 @@ export class PlanBody extends React.Component {
                             <Col xs={24}>
                                 <PlanSection upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
                             </Col>
-
                         </Row>;
 
-                    return list;
+                        return list;
                     }
                 })}
             </Col>

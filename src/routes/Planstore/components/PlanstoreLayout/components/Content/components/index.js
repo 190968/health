@@ -104,7 +104,7 @@ export class PlanstoreLayout extends React.Component {
                                 <PlanWidget info={product} key={product.id}/>
                             </List.Item>
                         )}
-                    /> : 'No ActionPlans Found'}
+             /> : <Card style={{textAlign:'center'}}>No ActionPlans Found</Card>}
                 </div>
         )
     }

@@ -14,7 +14,9 @@ import {
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
+const InputGroup = Input.Group;
 const FormItem = Form.Item;
+
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -46,6 +48,7 @@ class NormalRegisterForm extends React.Component {
     constructor() {
         super();
         this.state = {checked:true, loading:false};
+        this.stopLoading = this.stopLoading.bind(this);
     }
 
     componentWillMount() {
@@ -67,7 +70,7 @@ class NormalRegisterForm extends React.Component {
                 this.setState({
                     loading: true
                 });
-                return onSubmit(values);
+                return onSubmit(values,  this.stopLoading);
             }
         });
     }
@@ -88,8 +91,9 @@ class NormalRegisterForm extends React.Component {
         }
         callback();
     }
-    enterLoading = () => {
-        this.setState({ loading: true });
+    stopLoading(){
+        console.log('stop loading');
+        this.setState({ loading: false });
     }
     render() {
 
@@ -103,9 +107,9 @@ class NormalRegisterForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
 
         const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '1',
+            initialValue: '+1',
         })(
-            <Select>
+            <Select style={{width:'20%'}}>
                 <Option value="+1">+1</Option>
                 <Option value="+375">+375</Option>
             </Select>
@@ -221,13 +225,18 @@ class NormalRegisterForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label={<FormattedMessage id="user.registration.phone" defaultMessage="Phone number" description="Phone number"/>}
-                    hasFeedback
                 >
+
+                    <InputGroup compact>
+                        {prefixSelector}
                     {getFieldDecorator('phone', {
                         rules: [{ required: true, message: <FormattedMessage id="user.registration.phone.rules" defaultMessage="Please input your phone number" description="Please input your phone number"/> }],
                     })(
-                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+
+
+                        <Input  style={{ width: '80%' }} />
                     )}
+                    </InputGroup>
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
@@ -235,13 +244,13 @@ class NormalRegisterForm extends React.Component {
                         valuePropName: 'checked',
 
                     })(
-                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} ><FormattedMessage id="user.registration.read" defaultMessage="I have read our" description="I have read our"/> <a href=""><FormattedMessage id="user.registration.agreement" defaultMessage="Agreement" description="Agreement"/></a></Checkbox>
+                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} ><FormattedMessage id="user.registration.read" defaultMessage="I have read the" description="I have read our"/> <a href=""><FormattedMessage id="user.registration.agreement" defaultMessage="Agreement" description="Agreement"/></a></Checkbox>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
 
 
-                    <Button disabled={this.state.checked} loading={this.state.loading} onClick={this.enterLoading}    type="primary" htmlType="submit" className="register-form-button">
+                    <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                         <FormattedMessage id="user.registration.signup" defaultMessage="Sign Up" description="Sign up"/>
                     </Button>
                     <FormattedMessage id="user.registration.or" defaultMessage="Or " description="Or"/> <Link  to={'/login'}><FormattedMessage id="user.registration.loginnow" defaultMessage="login now!" description="login now"/></Link>

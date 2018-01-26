@@ -2,7 +2,12 @@
   {
     "id": "plan.title",
     "description": "Medications for Today",
-    "defaultMessage": "TODAY'S ACTIONPLANS"
+    "defaultMessage": "Today's Actionplans"
+  },
+  {
+    "id": "plan.title1",
+    "description": "Medications for Today",
+    "defaultMessage": "Today's Actionplans"
   },
   {
     "id": "plan.settings",
