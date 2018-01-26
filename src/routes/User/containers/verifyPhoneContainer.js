@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default withMutation(connect(
     mapStateToProps,
     mapDispatchToProps
-)(withQuery));
+)(VerifyPhoneForm));
 
 
 //export default withMutation(connect(mapStateToProps, mapDispatchToProps)(VerifyPhoneForm));

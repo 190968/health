@@ -30,14 +30,9 @@ const withMutation = graphql(registerUser, {
         registerUser: input => {
             return mutate({
                 variables: {input:{firstName:input.firstName,lastName:input.lastName,birthday:input.birthday.format("YYYY-MM-DD"),gender:input.gender, email: input.email, password: input.password,password_repeat: input.password_repeat,phone: input.phone,prefix:input.prefix }},
-                update: (store, { data: { register} }) => {
+                /*update: (store, { data: { register} }) => {
                     const {user} = register;
-                    /*let element = store.readFragment({
-                        id: 'User:0', // `id` is any id that could be returned by `dataIdFromObject`.
-                        fragment: LoginForm.fragments.user,
-                        fragmentName: 'UserInfo'
-                    });
-                    console.log(element);*/
+
 
                     //element.phoneConfirmed = verifyPhoneConfirm;
                     //console.log(element);
@@ -50,7 +45,7 @@ const withMutation = graphql(registerUser, {
                             __typename:'User'
                         },
                     });
-                },
+                },*/
             })},
     }),
 });
