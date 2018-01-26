@@ -23,8 +23,8 @@ const CURRENT_PERSONAL_PLAN = gql`
             }
            user {
            id
-           first_name
-           last_name
+           firstName
+           lastName
            }
 
         }

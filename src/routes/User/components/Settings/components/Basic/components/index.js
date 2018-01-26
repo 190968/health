@@ -56,6 +56,7 @@ const tailFormItemLayout = {
         super(props);
         //console.log(props);
         this.state = {displayedFamily: props};
+        this.stopLoading = this.stopLoading.bind(this);
     }
 
     handleSubmit = (e) => {
@@ -63,12 +64,13 @@ const tailFormItemLayout = {
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                return onSubmit(values);
+                this.setState({loading:true});
+                return onSubmit(values, this.stopLoading);
             }
         });
     }
-     enterLoading = () => {
-         this.setState({ loading: true });
+     stopLoading() {
+         this.setState({ loading: false });
      }
 
 

@@ -136,7 +136,7 @@ export class PlanLayout extends React.Component {
                 >
                     <Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={user.first_name + ' '+ user.last_name}
+                        title={user.firstName + ' '+ user.lastName}
                         description={<FormattedMessage id="userplan.joined" defaultMessage="From {date}" values={{
                             date: <FormattedDate
                                 value={new Date(info.joinDate)}
