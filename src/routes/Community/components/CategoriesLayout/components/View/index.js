@@ -5,6 +5,7 @@ import React, { PropTypes } from 'react';
 import DiscussionsForm from  './components/CommunityDiscussions';
 import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
+import Plan from  './components/Plan';
  import Search from  '../../../../containers/Search.js';
 // import Search from  './components/Search';
 import { Card,Dropdown,Menu, List,Button,Form,Input ,Row,Col  } from 'antd';
@@ -59,8 +60,8 @@ class ViewForm extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
-        const {name,canJoin, isJoined,articles,discussions,categories} = info;
-console.log(this.props,"=========================================")
+        const {name,canJoin, isJoined,articles,discussions,categories,plans} = info;
+console.log(plans,"=========================================")
         let categoriesKV = [];
         categories.forEach((item)=>{
             categoriesKV.push({value:item.id, text:item.name});
@@ -122,6 +123,7 @@ console.log(this.props,"=========================================")
                 }
 
                 <DiscussionsForm name={name} discussions={discussions}  />
+                <Plan />
             </div>
         );
     }

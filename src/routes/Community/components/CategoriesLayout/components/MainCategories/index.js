@@ -2,9 +2,10 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Card, Tooltip,Form,List } from 'antd';
+import { Card, Tooltip,Row,Col,Form,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import { Link } from 'react-router-dom'
+import Search from  '../../../../containers/Search.js';
 class MyCategories extends React.Component{
 
     constructor(props){
@@ -14,18 +15,28 @@ class MyCategories extends React.Component{
 
     render(){
         const {info,loading} = this.props;
+
         if (loading) {
             return (
                 <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
-
+        let categoriesKV = [];
+        info.forEach((item)=>{
+            categoriesKV.push({value:item.id, text:item.name});
+        });
 
         return(
 
 
                 <Card
                     title="Main Categories"
+                    extra={ <Row>
+                        <Col offset={11}  span={13}>
+                            <Search categories={categoriesKV} />
+                        </Col>
+                    </Row>
+                    }
                 >
                     <List
                         split={false}

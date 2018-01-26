@@ -55,6 +55,17 @@ query GET_CATEGORY($id:ID) {
           }
           views
         }
+        plans{
+                id
+                title
+                thumb {
+                  original
+                  small
+                  large
+                  medium
+                  wide
+                }
+        }    
     categories {
       id
       name
