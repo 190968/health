@@ -5,21 +5,22 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-const PrivateRoute = ({state, token, component: Component, ...rest }) => (
-
-    <Route {...rest} render={props => (
-       token !=='' ? (
+const PrivateRoute = ({state, token, component: Component, ...rest }) => {
+    console.log(rest);
+    return <Route {...rest} render={props => (
+        token !== '' ? (
             <Component {...props}/>
         ) : (
             <Redirect to={{
-            pathname: '/login',
-            state: { from: props.location }
-        }} />
+                pathname: '/login',
+                state: {from: props.location}
+            }}/>
         )
     )}/>
-)
+}
 
 const mapStateToProps = (state, ownProps) => {
+    console.log(state.user.token);
     return {
         token: state.user.token
     };

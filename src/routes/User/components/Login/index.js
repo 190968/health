@@ -28,7 +28,10 @@ export class LoginForm extends React.Component {
                 phoneConfirmed,
                 newNotifications,
                 newMessages,
-                phone
+                phone {
+                    code
+                    number
+                }
         }
         
     `,

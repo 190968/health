@@ -23,7 +23,9 @@ export const asyncDash = (store) => {
     }*/
     return (
         Loadable({
-            loader: () => import('../routes/Dash/containers/DashLayout')
+            loader: () => import('../routes/Dash/containers/DashLayout'),
+            modules: ['../routes/Dash/containers/DashLayout'],
+            webpack: () => [require.resolveWeak('../routes/Dash/containers/DashLayout')],
         })
     );
 }
@@ -32,7 +34,9 @@ export const asyncDash = (store) => {
 export const asyncLogin = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/loginContainer'),
+            loader: () => import(/* webpackChunkName: "loginChunk" */'../routes/User/containers/loginContainer'),
+            modules: ['../routes/User/containers/loginContainer'],
+            webpack: () => [require.resolveWeak('../routes/User/containers/loginContainer')],
             reducers: {
                 'url': 'User/modules/login',
                 'key': 'user_login'
@@ -45,6 +49,8 @@ export const asyncRegister = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/registerContainer'),
+            modules: ['../routes/User/containers/registerContainer'],
+            webpack: () => [require.resolveWeak('../routes/User/containers/registerContainer')],
             reducers: {
                 'url': 'User/modules/register',
                 'key': 'user_register'
@@ -57,6 +63,8 @@ export const asyncLogout = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/logoutContainer'),
+            modules: ['../routes/User/containers/logoutContainer'],
+            webpack: () => [require.resolveWeak('../routes/User/containers/logoutContainer')],
             reducers: {
                 'url': 'User/modules/logout',
                 'key': 'user_logout'
@@ -68,7 +76,9 @@ export const asyncLogout = (store) => {
 export const asyncForgotPassword = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/forgotPasswordContainer')
+            loader: () => import('../routes/User/containers/forgotPasswordContainer'),
+            modules: ['../routes/User/containers/forgotPasswordContainer'],
+            webpack: () => [require.resolveWeak('../routes/User/containers/forgotPasswordContainer')],
         })
     );
 }
@@ -78,6 +88,8 @@ export const asyncSettings = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/components/Settings/components'),
+            modules: ['../routes/User/components/Settings/components'],
+            webpack: () => [require.resolveWeak('../routes/User/components/Settings/components')],
         })
     );
 }
@@ -86,6 +98,8 @@ export const asyncPlanstore = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/Planstore/components'),
+            modules: ['../routes/Planstore/components'],
+            webpack: () => [require.resolveWeak('../routes/Planstore/components')],
             reducers: {
                 'url': 'Planstore/modules',
                 'key': 'planstore'
@@ -97,6 +111,8 @@ export const asyncVerifyPhone = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/verifyPhoneContainer'),
+            modules: ['../routes/User/containers/verifyPhoneContainer'],
+            webpack: () => [require.resolveWeak('../routes/User/containers/verifyPhoneContainer')],
             reducers: {
                 'url': 'User/modules/verifyPhone',
                 'key': 'verifyPhone'
@@ -108,6 +124,8 @@ export const asyncVerifyPhoneConfirm = (store) => {
     return (
         Loadable({
             loader: () => import('../routes/User/containers/verifyPhoneConfirmContainer'),
+            modules: ['../routes/User/containers/verifyPhoneConfirmContainer'],
+            webpack: () => [require.resolveWeak('../routes/User/containers/verifyPhoneConfirmContainer')],
             reducers: {
                 'url': 'User/modules/verifyPhone',
                 'key': 'verifyPhone'
@@ -121,7 +139,9 @@ export const asyncVerifyPhoneConfirm = (store) => {
 export const asyncCommynity = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Community/components')
+            loader: () => import('../routes/Community/components'),
+            modules: ['../routes/Community/components'],
+            webpack: () => [require.resolveWeak('../routes/Community/components')],
         })
     );
 }
@@ -130,6 +150,8 @@ export const asyncPlan = (store) => {
     return (
         Loadable({
                 loader: () => import('../routes/Plan/containers/PlanLayout'),
+            modules: ['../routes/Plan/containers/PlanLayout'],
+            webpack: () => [require.resolveWeak('../routes/Plan/containers/PlanLayout')],
                 reducers: {
                     'url': 'Plan/modules/plan',
                     'key': 'plan'

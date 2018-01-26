@@ -8,10 +8,5 @@
     "id": "user.settings.verifyphone.phone",
     "description": "Phone",
     "defaultMessage": "Phone"
-  },
-  {
-    "id": "user.settings.verifyphone.rule",
-    "description": "number",
-    "defaultMessage": "Please input your phone number"
   }
 ]

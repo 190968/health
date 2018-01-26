@@ -29,7 +29,28 @@ const withMutation = graphql(registerUser, {
     props: ({ mutate }) => ({
         registerUser: input => {
             return mutate({
-                variables: {input:{first_name:input.first_name,last_name:input.last_name,birthday:input.birthday.format("YYYY-MM-DD"),gender:input.gender, email: input.email, password: input.password,password_repeat: input.password_repeat,phone: input.phone,prefix:input.prefix }},
+                variables: {input:{firstName:input.firstName,lastName:input.lastName,birthday:input.birthday.format("YYYY-MM-DD"),gender:input.gender, email: input.email, password: input.password,password_repeat: input.password_repeat,phone: input.phone,prefix:input.prefix }},
+                update: (store, { data: { register} }) => {
+                    const {user} = register;
+                    /*let element = store.readFragment({
+                        id: 'User:0', // `id` is any id that could be returned by `dataIdFromObject`.
+                        fragment: LoginForm.fragments.user,
+                        fragmentName: 'UserInfo'
+                    });
+                    console.log(element);*/
+
+                    //element.phoneConfirmed = verifyPhoneConfirm;
+                    //console.log(element);
+                    store.writeFragment({
+                        id: 'User:'+register.user.id,
+                        fragment: LoginForm.fragments.user,
+                        fragmentName: 'UserInfo',
+                        data: {
+                            user,
+                            __typename:'User'
+                        },
+                    });
+                },
             })},
     }),
 });
@@ -50,11 +71,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props, stopLoading) => {
         //dispatch(loginUserRequest({ email }));
         //console.log(props);
-        const{first_name,last_name,birthday,gender,email, password,password_repeat,prefix,phone} = props;
+        const{first_name,last_name,birthday,gender,email, password,password_repeat,phone} = props;
         //console.log(birthday);
         //var birth = birthday.substring(0,10);
         //console.log(birth);
-        ownProps.registerUser({first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,password_repeat:password_repeat,phone:[prefix,phone] })
+        ownProps.registerUser({firstName:first_name,lastName:last_name,birthday:birthday,gender:gender, email:email, password:password,password_repeat:password_repeat,phone })
             .then(({data}) => {
                 const token = data.register.token;
                 let user = data.register.user;

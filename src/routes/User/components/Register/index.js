@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import './register.css'
+import PhoneForm from '../../../../components/PhoneForm';
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
 
@@ -105,15 +106,6 @@ class NormalRegisterForm extends React.Component {
             }} />;
         }
         const { getFieldDecorator } = this.props.form;
-
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: '+1',
-        })(
-            <Select style={{width:'20%'}}>
-                <Option value="+1">+1</Option>
-                <Option value="+375">+375</Option>
-            </Select>
-        );
 
         return (
             <div className="register-form" style={{padding:'0 20%'}}>
@@ -225,18 +217,11 @@ class NormalRegisterForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label={<FormattedMessage id="user.registration.phone" defaultMessage="Phone number" description="Phone number"/>}
+                    required
                 >
 
-                    <InputGroup compact>
-                        {prefixSelector}
-                    {getFieldDecorator('phone', {
-                        rules: [{ required: true, message: <FormattedMessage id="user.registration.phone.rules" defaultMessage="Please input your phone number" description="Please input your phone number"/> }],
-                    })(
+                    <PhoneForm getFieldDecorator={getFieldDecorator} required />
 
-
-                        <Input  style={{ width: '80%' }} />
-                    )}
-                    </InputGroup>
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>

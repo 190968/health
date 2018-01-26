@@ -7,6 +7,7 @@ import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {
     FormattedMessage,
 } from 'react-intl';
+import PhoneForm from '../../../../components/PhoneForm';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -71,22 +72,14 @@ class VerifyPhoneForm extends React.Component {
         }
         //console.log();
         //const {account} = this.props.phone;//.user.phone;
-        const phone = this.props.phone[1];
-        const code = this.props.phone[0];
+
         const { getFieldDecorator } = this.props.form;
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: code,
-        })(
-            <Select>
-                <Option value="+1">+1</Option>
-                <Option value="+375">+375</Option>
-            </Select>
-        );
+
 
 
 
         return (
-            <div className="register-form"  style={{padding:'8% 35% 20px'}}>
+            <div className="register-form"  style={{padding:'8% 30% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
                     title="Verify Phone"
@@ -100,12 +93,9 @@ class VerifyPhoneForm extends React.Component {
                             label={<FormattedMessage id="user.settings.verifyphone.phone" defaultMessage="Phone" description="Phone" />}
                             hasFeedback
                         >
-                            {getFieldDecorator('phone', {
-                                initialValue: phone,
-                                rules: [{ required: true, message: <FormattedMessage id="user.settings.verifyphone.rule" defaultMessage="Please input your phone number" description="number" /> }],
-                            })(
-                                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-                            )}
+
+                            <PhoneForm getFieldDecorator={getFieldDecorator} required phone={this.props.phone} />
+
                         </FormItem>
                 </Card>
                 </Form>

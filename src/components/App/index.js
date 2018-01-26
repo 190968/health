@@ -3,7 +3,7 @@ import React  from 'react';
 import PropTypes from 'prop-types'
 import IdleTimer from 'react-idle-timer';
 // adding router
-import { Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 import apolloClient from '../../clients/apolloClient';
 import { ApolloProvider } from 'react-apollo';
@@ -110,13 +110,13 @@ class App extends React.Component {
     }
 
     render() {
-
+        const basename = '/';"/static/myapp";
         return (
 
             <ApolloProvider client={apolloClient}>
                 <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
-                    <Router history={history}>
+                    <BrowserRouter history={history} basename={basename} >
                         <LocaleProvider locale={enUS}>
                             {/*<Modal>*/}
                             {/*<IdleTimer*/}
@@ -130,7 +130,7 @@ class App extends React.Component {
                             {/*</IdleTimer>*/}
                             {/*</Modal>*/}
                         </LocaleProvider>
-                    </Router>
+                    </BrowserRouter>
                 </Provider>
                 </IntlProvider>
             </ApolloProvider>

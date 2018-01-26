@@ -1,0 +1,7 @@
+[
+  {
+    "id": "user.registration.phone.rules",
+    "description": "Please input your phone number",
+    "defaultMessage": "Please input your phone number"
+  }
+]

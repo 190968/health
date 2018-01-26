@@ -23,7 +23,9 @@ const settingUser = gql`
           lastName,
           birthday,
           gender,
-          phone,
+          phone {
+          code
+          number},
           language,
           timezone
           address {
@@ -73,7 +75,7 @@ const settingUserMutate = gql`
           lastName,
           birthday,
           gender,
-          phone,
+          phone {code, number},
           language,
           timezone
           address {
@@ -124,7 +126,9 @@ const withMutation = graphql(settingUserMutate, {
 
 const mapStateToProps = (state) => {
 
-    return {};
+    return {
+        dateFormat:state.user.info.dateFormat
+    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -139,7 +143,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             lastName,
             middleName,
             birthday:birthday.format("YYYY-MM-DD"),
-            phone: [prefix, phone],
+            phone,
             gender,
             email,
             timezone,

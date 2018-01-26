@@ -95,11 +95,6 @@
     "defaultMessage": "Phone number"
   },
   {
-    "id": "user.registration.phone.rules",
-    "description": "Please input your phone number",
-    "defaultMessage": "Please input your phone number"
-  },
-  {
     "id": "user.registration.read",
     "description": "I have read our",
     "defaultMessage": "I have read the"

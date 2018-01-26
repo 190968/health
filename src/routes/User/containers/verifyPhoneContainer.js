@@ -19,7 +19,7 @@ import gql from 'graphql-tag';
 
 
 const verifyPhone = gql`
-   mutation verifyPhone($phone:Phone!) {
+   mutation verifyPhone($phone:PhoneInput!) {
        verifyPhone(phone:$phone)
     }
 `;
@@ -37,9 +37,9 @@ const getPhone = gql`
 
 const withMutation = graphql(verifyPhone, {
     props: ({ mutate }) => ({
-        verifyPhone: ({prefix, phone}) => {
+        verifyPhone: ({phone}) => {
             return mutate({
-                variables: {phone:[prefix,phone]},
+                variables: {phone},
             })},
     }),
 });
@@ -69,9 +69,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props,showCode) => {
-        const{phone,prefix} = props;
-        ownProps.verifyPhone({prefix,phone})
+    onSubmit: ({phone},showCode) => {
+        ownProps.verifyPhone({phone})
             .then(({data}) => {
 
                 if(data.verifyPhone){

@@ -2,7 +2,8 @@
  * Created by Pavel on 06.12.2017.
  */
 import React, { PropTypes } from 'react';
-import AddressForm from '../../../../../../../components/AddressForm'
+import AddressForm from '../../../../../../../components/AddressForm';
+import PhoneForm from '../../../../../../../components/PhoneForm';
 
 import { Card, Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
 import { withApollo, gql } from 'react-apollo'
@@ -38,7 +39,7 @@ const tailFormItemLayout = {
         },
     },
 };
-const dateFormat = 'YYYY/MM/DD';
+//const dateFormat = 'YYYY/MM/DD';
 
 // const messages = defineMessages({
 //     first_name: {
@@ -84,22 +85,15 @@ const dateFormat = 'YYYY/MM/DD';
             );
         }
        // console.log(this.props.account.user.birthday);
-        const {countries, states, account, languages, timezones,} = this.props;
+        const {dateFormat, countries, states, account, languages, timezones,} = this.props;
         const {user} = account;
-        const phone = user.phone[1];
-        const code = user.phone[0];
+        const phone = user.phone;
 
 
 
         const { intl } = this.props;
         const { getFieldDecorator } = this.props.form;
-        const prefixSelector = getFieldDecorator('prefix', {
-            initialValue: code
-        })(
-            <Select style={{width:'20%'}}>
-                {countries.map(country => <Option key={country.id} value={country.id}>{country.phoneCode} ({country.name})</Option>)}
-            </Select>
-        );
+
 
 
         return(
@@ -203,15 +197,7 @@ const dateFormat = 'YYYY/MM/DD';
                 label={intl.formatMessage(messages.phone_number)}
                 required
             >
-                <InputGroup compact>
-                    {prefixSelector}
-                {getFieldDecorator('phone', {
-                    initialValue: phone,
-                    rules: [{ required: true, message:intl.formatMessage(messages.phone_number_rule) }],
-                })(
-                    <Input style={{ width: '80%' }} />
-                )}
-                </InputGroup>
+                <PhoneForm getFieldDecorator={getFieldDecorator} required phone={phone} />
             </FormItem>
 
             <FormItem

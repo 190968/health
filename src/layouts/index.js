@@ -1,5 +1,5 @@
 
-import { Route, IndexLink, Link } from 'react-router-dom'
+import { Switch, Route, IndexLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -39,8 +39,6 @@ export const Core = ({loading, user, store, location}) =>  {
     }
 
 
-
-
     return (
 
         <div style={{height:'100%', display: 'flex',
@@ -62,7 +60,6 @@ export const Core = ({loading, user, store, location}) =>  {
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
                 <PrivateRoute path="/community" component={asyncCommynity(store)} />
                 <PrivateRoute  path="/plan/:upid" component={asyncPlan(store)} />
-
             </Content>
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved
