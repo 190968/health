@@ -1,0 +1,22 @@
+[
+  {
+    "id": "user.settings.verifyconfirm",
+    "description": "Confirm",
+    "defaultMessage": "Verify Phone Confirm"
+  },
+  {
+    "id": "user.settings.verifyconfirm.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "user.settings.verifyconfirm.code",
+    "description": "Code",
+    "defaultMessage": "Code"
+  },
+  {
+    "id": "user.settings.verifyconfirm.rule",
+    "description": "code",
+    "defaultMessage": "Please input your code"
+  }
+]

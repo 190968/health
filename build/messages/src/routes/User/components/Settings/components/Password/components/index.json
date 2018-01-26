@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user.settings.password.confirm.rule",
+    "description": "Confirm New password",
+    "defaultMessage": "Please confirm your New password"
+  },
+  {
+    "id": "user.settings.password.confirm",
+    "description": "Confirm New password",
+    "defaultMessage": "Confirm New Password"
+  },
+  {
+    "id": "user.settings.password.change",
+    "description": "Change password",
+    "defaultMessage": "Change password"
+  }
+]

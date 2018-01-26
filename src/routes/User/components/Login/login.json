@@ -1,0 +1,67 @@
+{
+  "title": {
+    "id": "user.login.title",
+    "defaultMessage": "Login",
+    "description": "Login"
+  },
+  "forgot_question": {
+    "id": "user.login.forgot_question",
+    "defaultMessage": "Forgot password?",
+    "description": "Forgot password?"
+  },
+  "send": {
+    "id": "user.login.send",
+    "defaultMessage": "Send",
+    "description": "Send"
+  },
+  "rule": {
+    "id": "user.login.rule",
+    "defaultMessage": "Please enter the email address you registered with to help us locate your Fitango Demo account.",
+    "description": "Please enter the email address you registered with to help us locate your Fitango Demo account."
+  },
+  "forgot_rule": {
+    "id": "user.login.forgot_rule",
+    "defaultMessage": "The input is not valid E-mail!",
+    "description": "The input is not valid E-mail!"
+  },
+  "enter_email": {
+    "id": "user.login.enter_email",
+    "defaultMessage": "Enter email",
+    "description": "Enter email"
+  },
+  "input_email": {
+    "id": "user.login.input_email",
+    "defaultMessage": "Please input valid Email!",
+    "description": "Please input valid Email!"
+  },
+  "email": {
+    "id": "user.login.email",
+    "defaultMessage": "Email",
+    "description": "Email"
+  },
+  "password_rule": {
+    "id": "user.login.password.rule",
+    "defaultMessage": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "description": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."
+  },
+  "password": {
+    "id": "user.login.passwrod",
+    "defaultMessage": "Password",
+    "description": "Password"
+  },
+  "forgot": {
+    "id": "user.login.forgot",
+    "defaultMessage": "Forgot password",
+    "description": "Forgot password"
+  },
+  "or": {
+    "id": "user.login.or",
+    "defaultMessage": "Or",
+    "description": "Or"
+  },
+  "sign_up": {
+    "id": "user.login.signup",
+    "defaultMessage": "Sign up",
+    "description": "Sign up"
+  }
+}

@@ -13,7 +13,7 @@ import {
     FormattedMessage
 } from 'react-intl';
 import moment from 'moment';
-import messages from '../../basic.json';
+import messages from './basic.json';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;

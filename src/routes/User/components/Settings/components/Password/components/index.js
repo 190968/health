@@ -5,8 +5,11 @@ import React, { PropTypes } from 'react';
 import { Input,Form, Button } from 'antd';
 import { withApollo } from 'react-apollo'
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
+import messages from './password.json';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -63,7 +66,7 @@ class PasswordForm extends React.Component{
                 </div>
             );
         }
-
+        const { intl } = this.props;
         const { getFieldDecorator } = this.props.form;
 
         return(
@@ -71,41 +74,41 @@ class PasswordForm extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.settings.password.currentpassword.label" defaultMessage="Current password" description="Current password" />}
+                    label={intl.formatMessage(messages.current_label)}
                 >
                             {getFieldDecorator('current_password', {
-                                rules: [{ required: true, message: <FormattedMessage id="user.settings.password.currentpassword.rule" defaultMessage="Current password" description="Current password" />, whitespace: true }],
+                                rules: [{ required: true, message:intl.formatMessage(messages.current_label), whitespace: true }],
                             })(
-                                <Input  placeholder={<FormattedMessage id="user.settings.password.currentpassword" defaultMessage="Current password" description="Current password" />}/>
+                                <Input  placeholder={intl.formatMessage(messages.current_label)}/>
                             )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.settings.password.newpassword.label" defaultMessage="New Password" description="New Password" />}
-                    help={<FormattedMessage id="user.settings.password.newpassword.help" defaultMessage="Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number" description="Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number" />}
+                    label={intl.formatMessage(messages.newpass_label)}
+                    help={intl.formatMessage(messages.newpass_help)}
                 >
 
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message: <FormattedMessage id="user.settings.password.newpassword.rule" defaultMessage="Please input your new password" description="new password" />, whitespace: true }],
+                        rules: [{ required: true, message:intl.formatMessage(messages.newpass_rule) , whitespace: true }],
                     })(
-                        <Input  placeholder={<FormattedMessage id="user.settings.password.new" defaultMessage="New password" description="New password" />} />
+                        <Input  placeholder={intl.formatMessage(messages.newpass_label)} />
 
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.settings.password.confirm.label" defaultMessage="Confirm New Password" description="Confirm New password" />}
+                    label={intl.formatMessage(messages.confirm_newpass_label)}
                 >
                     {getFieldDecorator('password_repeat', {
-                        rules: [{ required: true, message: <FormattedMessage id="user.settings.password.confirm.rule" defaultMessage="Please confirm your New password" description="Confirm New password" />, whitespace: true }],
+                        rules: [{ required: true, message:intl.formatMessage(messages.confirm_newpass_rule), whitespace: true }],
                     })(
-                        <Input  placeholder={<FormattedMessage id="user.settings.password.confirm" defaultMessage="Confirm New Password" description="Confirm New password" />} />
+                        <Input  placeholder={intl.formatMessage(messages.confirm_newpass_label)} />
                     )}
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
                     <Button loading={this.state.loading} type="primary" htmlType="submit">
-                        <FormattedMessage id="user.settings.password.change" defaultMessage="Change password" description="Change password" />
+                        {intl.formatMessage(messages.change_password)}
                     </Button>
                 </FormItem>
             </Form>
@@ -116,4 +119,4 @@ class PasswordForm extends React.Component{
 }
 
 const WrappedPasswordForm = Form.create()(PasswordForm);
-export default withApollo(WrappedPasswordForm);
+export default withApollo(injectIntl(WrappedPasswordForm));

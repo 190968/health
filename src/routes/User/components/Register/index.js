@@ -9,9 +9,13 @@ import PhoneForm from '../../../../components/PhoneForm';
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
 
 import { Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
+import { withApollo, gql } from 'react-apollo'
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
+import messages from './register.json';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -106,32 +110,32 @@ class NormalRegisterForm extends React.Component {
             }} />;
         }
         const { getFieldDecorator } = this.props.form;
-
+        const { intl } = this.props;
         return (
             <div className="register-form" style={{padding:'0 20%'}}>
                 <Card
-                    title={<FormattedMessage id="user.registration.title" defaultMessage="Sign up" description="Sign up" />}
+                    title={intl.formatMessage(messages.sign_up)}
                 >
             <Form onSubmit={this.handleSubmit} >
 
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.firstname" defaultMessage="First name" description="First name"/>}
+                    label={intl.formatMessage(messages.first_name)}
                     hasFeedback
                 >
                     {getFieldDecorator('first_name', {
-                        rules: [{ required: true, message:<FormattedMessage id="user.registration.firstname.rules" defaultMessage="Please input your First Name!" description="Please input your First Name!" /> , whitespace: true }],
+                        rules: [{ required: true, message:intl.formatMessage(messages.first_name_rule) , whitespace: true }],
                     })(
                         <Input />
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.lastname" defaultMessage="Last name" description="Last name"/>}
+                    label={intl.formatMessage(messages.last_name)}
                     hasFeedback
                 >
                     {getFieldDecorator('last_name', {
-                        rules: [{ required: true, message: <FormattedMessage id="user.registration.lastname.rules" defaultMessage="Please input your Last name" description="Please input your Last Name"/>, whitespace: true }],
+                        rules: [{ required: true, message:intl.formatMessage(messages.last_name_rule), whitespace: true }],
                     })(
                         <Input />
                     )}
@@ -139,29 +143,29 @@ class NormalRegisterForm extends React.Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.gender" defaultMessage="Gender" description="Gender"/>}
+                    label={intl.formatMessage(messages.gender)}
                     hasFeedback
                 >
                     {getFieldDecorator('gender',{
-                        rules: [{ required: true, message: <FormattedMessage id="user.registration.gender.rules" defaultMessage="Please Select your gender" description="Please Select your gender"/>, whitespace: true }],
+                        rules: [{ required: true, message:intl.formatMessage(messages.gender_rule), whitespace: true }],
                     })(
                         <RadioGroup>
-                            <RadioButton value="male">Male</RadioButton>
-                            <RadioButton value="female">Female</RadioButton>
+                            <RadioButton value="male">{intl.formatMessage(messages.male)}</RadioButton>
+                            <RadioButton value="female">{intl.formatMessage(messages.female)}</RadioButton>
                         </RadioGroup>
                     )}
                 </FormItem>
 
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.birthday" defaultMessage="Birthday" description="Birthday"/>}
+                    label={intl.formatMessage(messages.birthday)}
                     hasFeedback
                 >
                     {getFieldDecorator('birthday', {
                         rules: [{
-                            type: 'object', message: <FormattedMessage id="user.registration.birthday.novalid" defaultMessage="Your input no valid date" description="Your input no valid date"/>,
+                            type: 'object', message:intl.formatMessage(messages.birthday_rule_type),
                         }, {
-                            required: true, message: <FormattedMessage id="user.registration.birthday.rules" defaultMessage="Please input your birthday" description="Please input your birthday"/>,
+                            required: true, message:intl.formatMessage(messages.birthday_rule_required) ,
                         }],
                     })(
                         <DatePicker />
@@ -170,14 +174,14 @@ class NormalRegisterForm extends React.Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.email" defaultMessage="Email" description="Email"/>}
+                    label={intl.formatMessage(messages.email)}
                     hasFeedback
                 >
                     {getFieldDecorator('email', {
                         rules: [{
-                            type: 'email', message: <FormattedMessage id="user.registration.email.novalid" defaultMessage="Your input no valid email" description="Your input no valid email"/>,
+                            type: 'email', message: intl.formatMessage(messages.email_rule_type),
                         }, {
-                            required: true,  message: <FormattedMessage id="user.registration.email.rules" defaultMessage="Please input your email" description="Please input your email"/>,
+                            required: true,  message: intl.formatMessage(messages.email_rule_required),
                         }],
                     })(
                         <Input />
@@ -185,12 +189,12 @@ class NormalRegisterForm extends React.Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.password" defaultMessage="Password" description="Password"/>}
+                    label={intl.formatMessage(messages.password)}
                     hasFeedback
                 >
                     {getFieldDecorator('password', {
                         rules: [{
-                            required: true,  pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message:<FormattedMessage id="user.registration.registration.rules" defaultMessage="Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit." description="Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."/>,
+                            required: true,  pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message:intl.formatMessage(messages.password_rule),
                         }, {
                             validator: this.checkConfirm,
                         }],
@@ -200,12 +204,12 @@ class NormalRegisterForm extends React.Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.confirmPassword" defaultMessage="Confirm Password" description="Confirm Password"/>}
+                    label={intl.formatMessage(messages.confirmPassword)}
                     hasFeedback
                 >
                     {getFieldDecorator('password_repeat', {
                         rules: [{
-                            required: true, message: <FormattedMessage id="user.registration.confirmPassword.rules" defaultMessage="Please confirm your password" description="Please confirm your password"/>,
+                            required: true, message: intl.formatMessage(messages.confirmPassword_rule),
                         }, {
                             validator: this.checkPassword,
                         }],
@@ -216,7 +220,7 @@ class NormalRegisterForm extends React.Component {
 
                 <FormItem
                     {...formItemLayout}
-                    label={<FormattedMessage id="user.registration.phone" defaultMessage="Phone number" description="Phone number"/>}
+                    label={intl.formatMessage(messages.phone_number)}
                     required
                 >
 
@@ -229,16 +233,16 @@ class NormalRegisterForm extends React.Component {
                         valuePropName: 'checked',
 
                     })(
-                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} ><FormattedMessage id="user.registration.read" defaultMessage="I have read the" description="I have read our"/> <a href=""><FormattedMessage id="user.registration.agreement" defaultMessage="Agreement" description="Agreement"/></a></Checkbox>
+                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} >{intl.formatMessage(messages.read)} <a href="">{intl.formatMessage(messages.agreement)}</a></Checkbox>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
 
 
                     <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
-                        <FormattedMessage id="user.registration.signup" defaultMessage="Sign Up" description="Sign up"/>
+                        {intl.formatMessage(messages.phone_number)}
                     </Button>
-                    <FormattedMessage id="user.registration.or" defaultMessage="Or " description="Or"/> <Link  to={'/login'}><FormattedMessage id="user.registration.loginnow" defaultMessage="login now!" description="login now"/></Link>
+                    {intl.formatMessage(messages.or)} <Link  to={'/login'}>{intl.formatMessage(messages.login_now)}</Link>
                 </FormItem>
             </Form>
                 </Card>
@@ -248,4 +252,4 @@ class NormalRegisterForm extends React.Component {
 }
 
 const WrappedNormalRegisterForm = Form.create()(NormalRegisterForm);
-export default WrappedNormalRegisterForm;
+export default withApollo(injectIntl(WrappedNormalRegisterForm));

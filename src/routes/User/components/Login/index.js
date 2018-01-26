@@ -103,27 +103,31 @@ export class LoginForm extends React.Component {
         const loading = this.props.loading;
         return (<div style={{padding:'8% 35% 20px'}}>
             <Card
-                title={<FormattedMessage id="user.login.card.title" defaultMessage="Login" description="Login" />}
+                title={<FormattedMessage id="user.login.card.title" defaultMessage="Login" description="Login" />}//{intl.formatMessage(messages.title)}
             >
                 <Modal
                     visible={visible}
-                    title={<FormattedMessage id="user.login.forgot.title" defaultMessage="Forgot password?" description="Forgot password?" />}
+                    title={<FormattedMessage id="user.login.forgot.title" defaultMessage="Forgot password?" description="Forgot password?" />}//{intl.formatMessage(messages.title)}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     footer={[
                         <Button key="submit" type="primary" onClick={this.handleClick}>
                             <FormattedMessage id="user.login.forgot.send" defaultMessage="Send" description="Send" />
+                            {/*{intl.formatMessage(messages.title)}*/}
                         </Button>,
                     ]}
                 >
-                    <p><FormattedMessage id="user.login.forgot.rules" defaultMessage="Please enter the email address you registered with to help us locate your Fitango Demo account." description="Forgot rules" /></p>
+                    <p>
+                        <FormattedMessage id="user.login.forgot.rules" defaultMessage="Please enter the email address you registered with to help us locate your Fitango Demo account." description="Forgot rules" />
+                        {/*{intl.formatMessage(messages.title)}*/}
+                    </p>
 
 
                     {getFieldDecorator('forgot_email', {
                         initialValue: this.state.email.value,
                         rules: [{ required: false, type: 'email', message: 'The input is not valid E-mail!'}],
                     })(
-                        <Input  placeholder={<FormattedMessage id="user.login.forgot.email" defaultMessage="Enter email" description="Enter email" />} />
+                        <Input  placeholder={<FormattedMessage id="user.login.forgot.email" defaultMessage="Enter email" description="Enter email" />} />//{intl.formatMessage(messages.title)}
 
                     )}
 
@@ -134,7 +138,7 @@ export class LoginForm extends React.Component {
                         initialValue: this.state.email.value,
                         rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />
+                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />//{intl.formatMessage(messages.title)}
                     )}
 
                 </FormItem>
@@ -145,7 +149,7 @@ export class LoginForm extends React.Component {
                         /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
                         rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />//{intl.formatMessage(messages.title)}
                     )}
                 </FormItem>
                 <FormItem>

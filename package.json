@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://2clinic.fitangolocal.com/static/myapp",
+  "homepage": "http://2clinic.fitangolocal.com/static/myapp",
   "dependencies": {
     "antd": "^3.1.4",
     "apollo-client-preset": "^1.0.6",

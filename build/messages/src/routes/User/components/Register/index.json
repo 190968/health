@@ -1,0 +1,7 @@
+[
+  {
+    "id": "user.registration.inconsistent",
+    "description": "inconsistent",
+    "defaultMessage": "Two passwords that you enter is inconsistent!"
+  }
+]
