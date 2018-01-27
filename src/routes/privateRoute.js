@@ -6,7 +6,6 @@ import {
 import { connect } from 'react-redux'
 
 const PrivateRoute = ({state, token, component: Component, ...rest }) => {
-    console.log(rest);
     return <Route {...rest} render={props => (
         token !== '' ? (
             <Component {...props}/>
@@ -20,7 +19,6 @@ const PrivateRoute = ({state, token, component: Component, ...rest }) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(state.user.token);
     return {
         token: state.user.token
     };

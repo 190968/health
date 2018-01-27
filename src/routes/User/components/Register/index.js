@@ -71,6 +71,7 @@ class NormalRegisterForm extends React.Component {
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
+            console.log(err);
             if (!err) {
                 this.setState({
                     loading: true
@@ -103,12 +104,16 @@ class NormalRegisterForm extends React.Component {
     render() {
 
         const token = this.props.token;
+        const form = this.props.form;
 
         if (token != '') {
             return  <Redirect to={{
                 pathname: '/'
             }} />;
         }
+
+
+        const phoneNumberError = form.getFieldError('phone[number]');
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
         return (
@@ -217,14 +222,19 @@ class NormalRegisterForm extends React.Component {
                         <Input type="password" onBlur={this.handleConfirmBlur} />
                     )}
                 </FormItem>
+                {
 
+                }
                 <FormItem
                     {...formItemLayout}
                     label={intl.formatMessage(messages.phone_number)}
                     required
+                    validateStatus={phoneNumberError ? 'error' : ''}
+                    help={phoneNumberError || ''}
+
                 >
 
-                    <PhoneForm getFieldDecorator={getFieldDecorator} required />
+                    <PhoneForm getFieldDecorator={getFieldDecorator} required form={form} />
 
                 </FormItem>
 
@@ -240,7 +250,7 @@ class NormalRegisterForm extends React.Component {
 
 
                     <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
-                        {intl.formatMessage(messages.phone_number)}
+                        {intl.formatMessage(messages.sign_up)}
                     </Button>
                     {intl.formatMessage(messages.or)} <Link  to={'/login'}>{intl.formatMessage(messages.login_now)}</Link>
                 </FormItem>

@@ -110,7 +110,7 @@ class App extends React.Component {
     }
 
     render() {
-        const basename = '/';"/static/myapp";
+        const basename =  "/static/myapp";
         return (
 
             <ApolloProvider client={apolloClient}>

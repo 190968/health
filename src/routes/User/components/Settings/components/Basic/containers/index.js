@@ -2,13 +2,12 @@
  * Created by Pavel on 06.12.2017.
  */
 import {connect} from 'react-redux'
-import {} from '../modules/setting'
 
 
 import SettingForm from '../components'
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-import {loadUser} from "../../../../../modules/user";
+import {loadFullUser} from "../../../../../modules/user";
 //import { compose } from 'react-apollo';
 
 const settingUser = gql`
@@ -154,10 +153,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
         };
         return ownProps.updateInfo(input).then(({data}) => {
-            console.log("----settings----");
-            console.log(data);
+            //console.log("----settings----");
+            //console.log(data);
             stopLoading();
-            //dispatch(loadUser(data.updateUser));
+            dispatch(loadFullUser(data.updateUser));
         })
 
         /*
