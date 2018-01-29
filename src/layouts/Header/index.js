@@ -84,12 +84,10 @@ class LHeader extends React.Component {
             )
         }
         const content = (
-            <div>
-                <Tabs defaultActiveKey="1" >
+                <Tabs defaultActiveKey="1" style={{width: 336}} >
                     <TabPane tab="Notifications" key="1"><Notification /></TabPane>
                     <TabPane tab="News" key="2">News Content</TabPane>
                 </Tabs>
-            </div>
         );
         return (
             <ReactPlaceholder ready={!loading} rows={3} >
@@ -123,7 +121,7 @@ class LHeader extends React.Component {
                                 <Link to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></Link>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
-                                <Popover placement="bottomRight"  content={content} trigger="click">
+                                <Popover placement="bottomRight"  content={content} trigger="click" style={{width: 336}}>
                                    <Link to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></Link>
                                 </Popover>
                             </Menu.Item>

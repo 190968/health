@@ -5,6 +5,7 @@ module.exports = function override(config, env) {
     config = injectBabelPlugin(['react-intl', {"messagesDir": "./build/messages",
         "enforceDescriptions": false}], config);  // adding messages
 
+    config = injectBabelPlugin(['recharts'], config);  // add charts
     config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);  // change importing css to less
     config = rewireLess.withLoaderOptions({
              modifyVars: {
