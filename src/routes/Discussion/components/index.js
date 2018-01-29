@@ -1,8 +1,13 @@
 import React, { PropTypes } from 'react';
-import { Form,Card,Row,Col,Button,Input,Icon,Avatar } from 'antd';
+import { Form,Card,Row,Col,Button,Input,List,Icon,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 const FormItem = Form.Item;
-
+const IconText = ({ type, text }) => (
+    <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+        {text}
+  </span>
+);
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -42,24 +47,24 @@ class Discussions extends React.Component{
         const {title,text,createdAt,replies} = discussion;
         const {edges} = replies;
 console.log(edges);
-        let mass =[];
+      //  let mass =[];
 
-            edges.forEach((item)=>{
-               mass.push(
-                   <div>
-                   <Row>
-                       <Col span={2}>
-                           <Avatar  style={{ verticalAlign: 'middle' }}>P</Avatar>
-                       </Col>
-                       <Col style={{ 'border-radius': "10px", border:"1px solid #c7ebfb" ,background:'#eef9fe'}} span={15}>
-                           <p>{item.text}</p>
-                           <h5>{item.createdAt.slice(0,10)}</h5>
-                       </Col>
-                   </Row>
-                   <br/>
-                       </div>
-               )
-            })
+            {/*edges.forEach((item)=>{*/}
+               {/*mass.push(*/}
+                   {/*<div>*/}
+                   {/*<Row>*/}
+                       {/*<Col span={2}>*/}
+                           {/*<Avatar  style={{ verticalAlign: 'middle' }}>P</Avatar>*/}
+            //            </Col>
+            //            <Col style={{ 'border-radius': "10px", border:"1px solid #c7ebfb" ,background:'#eef9fe'}} span={15}>
+            //                <p>{item.text}</p>
+            //                <h5>{item.createdAt.slice(0,10)}</h5>
+            //            </Col>
+            //        </Row>
+            //        <br/>
+            //            </div>
+            //    )
+            // })
 
         return(
             <div>
@@ -93,7 +98,26 @@ console.log(edges);
                     </Row>
                 }
                 >
-                    {mass}
+                    <Row>
+                        <List
+                            loading={loading}
+                            itemLayout="vertical"
+                            dataSource={edges}
+                            renderItem={item => (
+                                <List.Item key={item.id}
+                                           actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+
+                                >
+
+                                    <List.Item.Meta
+                                        avatar={<Avatar size="large"></Avatar>}
+                                        description={item.text}
+                                    />
+                                </List.Item>
+
+                            )}
+                        />
+                    </Row>
                 </Card>
             </div>
         );
