@@ -22,14 +22,14 @@ class Family extends React.Component {
 
 
         if (loading) {
-            return  <Card loading title={<FormattedMessage id="user.family.family.title" defaultMessage="MY FAMILY" description="MY FAMILY" />}>
+            return  <Card loading title={<FormattedMessage id="user.family.family.title" defaultMessage="My Family" description="MY FAMILY" />}>
                 Loading</Card>;
         }
         const  {family} = info;
         const  {edges,totalCount} = family;
         let Item = [];
-        family ?
-        Item.push( <Card title={<FormattedMessage id="user.family.family.title" defaultMessage="MY FAMILY"
+        return edges.length > 0 ?
+        ( <Card title={<FormattedMessage id="user.family.family.title" defaultMessage="My Family"
                                                   description="MY FAMILY"/>}>
             <List
                 split={false}
@@ -58,15 +58,8 @@ class Family extends React.Component {
                     </List.Item>
                 )}
             />
-        </Card>) : Item.push(  <Card title={<FormattedMessage id="user.family.family.title1" defaultMessage="MY FAMILY"
-                                                              description="MY FAMILY"/>}><center> <p>No Family</p></center></Card>)
+        </Card>) : null;
 
-        return (
-
-            Item
-
-
-        );
     }
 }
 

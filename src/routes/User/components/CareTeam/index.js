@@ -20,16 +20,15 @@ class CareTeam extends React.Component {
         const  {info,loading} = this.props;
 
 
-
+        const title = <FormattedMessage id="user.careteam.careteam.title2" defaultMessage="My CareTeam" description="My CareTeam" />;
         if (loading) {
-            return  <Card loading title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM" description="MY CARETEAM" />}>
+            return  <Card loading title={title}>
                 Loading</Card>;
         }
         const  {careTeam} = info;
         const  {edges,totalCount} = careTeam;
-        let Item = [];
-        careTeam ?
-            Item.push( <Card title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM" description="MY CARETEAM" />}>
+        return edges.length > 0 ?
+            ( <Card title={title}>
                 <List
                     split={false}
                     loading={loading}
@@ -53,12 +52,7 @@ class CareTeam extends React.Component {
                         </List.Item>
                     )}
                 />
-            </Card>) : Item.push(  <Card title={<FormattedMessage id="user.careteam.careteam.title" defaultMessage="MY CARETEAM"
-                                                                  description="MY CARETEAM"/>}><center> <p>No Careteam</p></center></Card>)
-        return (
-           Item
-
-        );
+            </Card>) : null;
     }
 }
 

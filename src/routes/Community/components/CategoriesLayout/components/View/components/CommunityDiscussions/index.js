@@ -76,11 +76,38 @@ class CommunityDiscussions extends React.Component{
             );
         }
         const { getFieldDecorator } = this.props.form;
-        const {name,discussions} = this.props;
+        const {name,discussions, canAdd} = this.props;
 
 
         return(
-            <div>
+
+
+
+            <Card
+                title={name.toUpperCase()+" Community Discussions"}
+                extra={canAdd && <Button type="primary" onClick={this.showModal}>Start discussion</Button>}
+            >
+                <Row>
+                    <List
+                        loading={loading}
+                        itemLayout="vertical"
+                        dataSource={discussions}
+                        renderItem={item => (
+                            <List.Item key={item.id}
+                                       actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+
+                            >
+
+                                <List.Item.Meta
+                                    avatar={<Avatar size="large"></Avatar>}
+                                    title={<Link to={'/discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
+                                    description={item.text.substr(0, 100)}
+                                />
+                            </List.Item>
+
+                        )}
+                    />
+                </Row>
                 <Modal
                     title="Start discussion"
                     visible={this.state.visible}
@@ -106,40 +133,12 @@ class CommunityDiscussions extends React.Component{
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Button type="primary" htmlType="submit" className="register-form-button">
-                              Send
+                                Send
                             </Button>
                         </FormItem>
                     </Form>
                 </Modal>
-
-
-            <Card
-                title={name.toUpperCase()+" COMMUNITY DISCUSSIONS"}
-                extra={<Button type="primary" onClick={this.showModal}>Start discussion</Button>}
-            >
-                <Row>
-                    <List
-                        loading={loading}
-                        itemLayout="vertical"
-                        dataSource={discussions}
-                        renderItem={item => (
-                            <List.Item key={item.id}
-                                       actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
-
-                            >
-
-                                <List.Item.Meta
-                                    avatar={<Avatar size="large"></Avatar>}
-                                    title={<Link to={'/discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
-                                    description={item.text.substr(0, 100)}
-                                />
-                            </List.Item>
-
-                        )}
-                    />
-                </Row>
             </Card>
-                </div>
         );
     }
 

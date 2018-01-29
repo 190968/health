@@ -7,6 +7,7 @@ import {
 import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import {TrackerAddForm, TrackerEditForm} from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
+import TrackerChartPopup from "../../../components/Tracker/components/TrackerChartPopup";
 import {  Menu, Dropdown, Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
 import moment from "moment/moment";
 
@@ -83,14 +84,14 @@ export class BiometricPlanBody extends React.Component {
 
         const {columns, trackers} = info;
         const listColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  <div>{text}<Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>},
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  {console.log(item);return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}},
            //
             { title: '', dataIndex: 'input', key: 'input', width: 150  },
             //{ title: '', dataIndex: 'icon', key: 'acts', width: 50}
         ];
 
         const tableColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  <div>{text}<Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div> },
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  {console.log(item);return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>} },
         ];
         // adding columns
         columns.map(column => {
@@ -109,7 +110,7 @@ export class BiometricPlanBody extends React.Component {
             //console.log(measurement);
             // if we have columns - put it into columns table
             if (tracker_columns.length > 0) {
-                let tracker_column_info = { key: tracker.id, name: measurement.label, input: <TrackerField info={tracker} date={date} list_id={info.id} />};
+                let tracker_column_info = { key: tracker.id, name: measurement.label, item:measurement, input: <TrackerField info={tracker} date={date} list_id={info.id} />};
                 tracker_columns.map(column_id => {
                     //console.log(column_id);
                     let inputFields = [];
@@ -154,7 +155,7 @@ export class BiometricPlanBody extends React.Component {
                 //
                 let trackerName = measurement.label;
 
-                dataList.push({ key: tracker.id, name: trackerName, input: <List
+                dataList.push({ key: tracker.id, item:measurement, name: trackerName, input: <List
                     size="small"
                     dataSource={inputFields}
                     renderItem={item => (<List.Item>{item}</List.Item>)}

@@ -24,6 +24,15 @@ export class Biometric extends React.Component {
                         isCritical
                         value
                     }
+                    graph
+                    criticalRange {
+                        min
+                        max
+                    }
+                    normalRange {
+                        min
+                        max
+                    }
                 }
                 timesToReport,
                 

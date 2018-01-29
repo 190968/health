@@ -7,7 +7,7 @@ import {
     FormattedMessage,
 } from 'react-intl';
 
-import { Form,  List,Avatar, Card } from 'antd';
+import { Form,  List,Avatar, Card, Button, Tooltip, Icon } from 'antd';
 
 class Motivators extends React.Component {
 
@@ -22,15 +22,15 @@ class Motivators extends React.Component {
 
 
         if (loading) {
-            return  <Card loading title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS" description="MY MOTIVATORS" />}>
+            return  <Card loading title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}>
                                  Loading</Card>;
         }
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
-        let Item = [];
-        motivators ?
-            Item.push(  <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS" description="MY MOTIVATORS" />}>
-                <List
+        return <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
+        extra={<Tooltip title='Invite Motivators'><Button size={"small"} ><Icon type="plus"  /></Button></Tooltip>}
+        >
+            {edges.length > 0 ? <List
                     split={false}
                     loading={loading}
                     grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
@@ -52,14 +52,8 @@ class Motivators extends React.Component {
 
                         </List.Item>
                     )}
-                />
-            </Card>) : Item.push(  <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="MY MOTIVATORS"
-                                                                  description="MY MOTIVATORS"/>}><center> <p>No Motivators</p></center></Card>)
-        return (
-            Item
-
-        );
-       ;
+                /> : 'No Motivators'}
+            </Card>;
     }
 }
 

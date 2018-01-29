@@ -4,6 +4,8 @@ import moment from 'moment'
 
 import Tracker from '../../../Tracker';
 import { Card, Row, Col, Progress, Popover, Icon, Tooltip, Input, TimePicker, Dropdown, Menu } from 'antd';
+
+import TrackerChartPopup from "../../../Tracker/components/TrackerChartPopup";
 const { TextArea } = Input;
 
 export default class PlanMeasurement extends React.Component {
@@ -104,9 +106,11 @@ export default class PlanMeasurement extends React.Component {
     }
 
     render() {
-       const {item, date} = this.props;
-       const {label, textBefore, description, units, reports, targets} = item;
+       const {item, date, } = this.props;
+       const {id, label, textBefore, description, units, reports, targets} = item;
        const unitsName = units.name;
+
+       const userId = 2;
 
         let isCritical  = false;
 
@@ -126,7 +130,7 @@ export default class PlanMeasurement extends React.Component {
         );
         return (<Card hoverable title={label}
                       extra={<Dropdown overlay={menu} trigger={['click']}><Tooltip title="Tracker Settings"><Icon type="ellipsis" /></Tooltip></Dropdown>}
-                      actions={[<Popover content={<TimePicker use12Hours value={time && moment(date+' '+time)} onChange={this.changeTime} format="h:mm a" />} title="Reported at"><Icon type="clock-circle-o" /></Popover>, <Popover content={<TextArea placeholder="Enter comments" value={comments} onChange={this.handleComments}  />} title="Comments"><Icon type="message" /></Popover>,  <Icon type="area-chart" style={{marginLeft:10}} />]}
+                      actions={[<Popover content={<TimePicker use12Hours value={time && moment(date+' '+time)} onChange={this.changeTime} format="h:mm a" />} title="Reported at"><Icon type="clock-circle-o" /></Popover>, <Popover content={<TextArea placeholder="Enter comments" value={comments} onChange={this.handleComments}  />} title="Comments"><Icon type="message" /></Popover>,  <TrackerChartPopup item={item} userId={userId} date={date} label={label} />]}
         >
 
             <Row><Col md={12}>

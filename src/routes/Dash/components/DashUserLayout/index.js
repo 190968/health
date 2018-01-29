@@ -7,7 +7,7 @@ import Motivators from '../../../User/containers/motivatorsContainer';
 import CareTeam from '../../../User/containers/careTeamContainer';
 import Family from '../../../User/containers/familyContainer';
 
-import { Icon, Alert, Row, Col, Calendar, List,Card } from 'antd';
+import { Button,Icon, Alert, Row, Col, Calendar, List,Card } from 'antd';
 
 
 
@@ -69,7 +69,7 @@ export class DashUserLayout extends React.Component {
 
 
                          <Card title="Health Calendar"
-                         extra={<div><Icon type="calendar" /> <Icon type="plus" /></div>}
+                               extra={<Button.Group><Button size={"small"} ><Icon type="calendar" /></Button><Button size={"small"} ><Icon type="plus" /></Button></Button.Group>}
                          >
                              <Calendar fullscreen={false}  />
                          </Card>

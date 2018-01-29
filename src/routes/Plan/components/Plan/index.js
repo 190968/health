@@ -77,6 +77,8 @@ export class Plan extends React.PureComponent {
                     label
                     textBefore
                     description
+                    graph
+                    allowMultipleReports
                     units {
                         id
                         name
@@ -87,6 +89,15 @@ export class Plan extends React.PureComponent {
                         title
                         value
                     }
+                    criticalRange {
+                        min
+                        max
+                    }
+                    normalRange {
+                        min
+                        max
+                    }
+                    
                     reports (date: $date){
                         id
                         time,

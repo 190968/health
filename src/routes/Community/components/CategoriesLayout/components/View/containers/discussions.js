@@ -41,10 +41,10 @@ mutation discussionCreate($categoryId:ID!,$subject:String!,$message:String!) {
 `;
 
 const withMutation = graphql(addDuscussion, {
-    props: ({ mutate }) => ({
+    props: ({ ownProps, mutate }) => ({
         addDuscussion: input => {
             return mutate({
-                variables: { categoryId: 492,subject: input.title,message: input.text} ,
+                variables: { categoryId: ownProps.categoryId,subject: input.title,message: input.text} ,
             })
         },
     }),
