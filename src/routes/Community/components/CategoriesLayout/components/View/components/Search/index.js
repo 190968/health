@@ -3,7 +3,7 @@
  */
 
 import React, { PropTypes } from 'react';
-import { Card,Form,AutoComplete ,Input } from 'antd';
+import { Icon, Card,Form,AutoComplete ,Input } from 'antd';
 import apolloClient from '../../../../../../../../clients/apolloClient';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -50,7 +50,10 @@ class Search extends React.PureComponent{
                     filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                     onSearch = {this.onChange}
                     onSelect = {this.onSelect}
-                />
+                >
+                    <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+
+                </AutoComplete>
             </div>
         );
     }

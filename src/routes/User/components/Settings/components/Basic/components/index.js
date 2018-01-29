@@ -93,8 +93,10 @@ const tailFormItemLayout = {
 
 
 
-        const { intl } = this.props;
+
+        const { intl,form } = this.props;
         const { getFieldDecorator } = this.props.form;
+        const phoneNumberError = form.getFieldError('phone[number]');
 
 
 
@@ -198,6 +200,8 @@ const tailFormItemLayout = {
                 {...formItemLayout}
                 label={intl.formatMessage(messages.phone_number)}
                 required
+                validateStatus={phoneNumberError ? 'error' : ''}
+                help={phoneNumberError || ''}
             >
                 <PhoneForm getFieldDecorator={getFieldDecorator} required phone={phone} />
             </FormItem>
@@ -244,7 +248,7 @@ const tailFormItemLayout = {
             > {getFieldDecorator('dateFormat', {
                 initialValue: user.dateFormat
             })(
-                <Select style={{ width: 120 }} >
+                <Select style={{ width: 150 }} >
                     <Option value={1}>MM/DD/YY</Option>
                     <Option value={2}>DD/MM/YY</Option>
                 </Select>

@@ -131,7 +131,7 @@ export class Plan extends React.PureComponent {
   render() {
     var name = this.props.info.title;
     let description = this.props.info.description;
-    var img = this.props.info.thumb.small;
+    var img = this.props.info.thumb.large;
     var id = this.props.info.id;
     var upid = this.props.info.upid || 0;
     var ribbon = this.props.info.ribbon || '';

@@ -98,10 +98,10 @@ console.log(plans,"=========================================")
         return(
 
             <div>
-                    <Card title={name}  extra={ <Row>
-                        <Col span={10}>
+                    <Card title={name}  extra={<Row style={{width:300}}>
+                        <Col span={6}>
                             {canJoin ? isJoined ? <Button onClick={this.clickUNJoin} type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
-                        <Col offset={1}  span={13}>
+                        <Col offset={1}  span={16}>
                             <Search categories={categoriesKV} />
                         </Col>
                     </Row>
@@ -123,7 +123,7 @@ console.log(plans,"=========================================")
                 }
 
                 <DiscussionsForm name={name} discussions={discussions}  />
-                <Plan />
+                {plans.length > 0 && <Plan />}
             </div>
         );
     }

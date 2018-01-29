@@ -54,8 +54,8 @@ class PhoneForm extends React.Component{
 
 
     render(){
-        console.log(this.props);
-        const { intl, required, prefix, countries,  getFieldDecorator, phone } = this.props;
+        //console.log(this.props);
+        const { form, intl, required, prefix, countries,  getFieldDecorator, phone } = this.props;
         //let {required} = this.props;
 
         const {code, number} = phone;
@@ -64,7 +64,8 @@ class PhoneForm extends React.Component{
                 <InputGroup compact >
 
                         {getFieldDecorator(prefix+'[code]', {
-                            initialValue: code
+                            initialValue: code,
+                            rules: [{ required: required, message: 'Please select code' }],
                         })(
                             <Select style={{width:'100px'}} notFoundContent="Loading...">
                                 {countries.map(country => <Option key={country.id} value={country.id}>{country.phoneCode} ({country.name})</Option>)}
@@ -72,7 +73,7 @@ class PhoneForm extends React.Component{
                         )}
                         {getFieldDecorator(prefix+'[number]', {
                             initialValue: number,
-                            rules: [{ required: required, message: <FormattedMessage id="user.registration.phone.rules" defaultMessage="Please input your phone number" description="Please input your phone number"/> }],
+                            rules: [{ required: required, message: "Please input your phone number."}/*, {type:'number', message: "Phone number consist of numbers only."}*/],
                         })(
 
 

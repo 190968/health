@@ -73,8 +73,9 @@ class VerifyPhoneForm extends React.Component {
         //console.log();
         //const {account} = this.props.phone;//.user.phone;
 
-        const { getFieldDecorator } = this.props.form;
-
+        const { form } = this.props;
+        const { getFieldDecorator } = form;
+        const phoneNumberError = form.getFieldError('phone[number]');
 
 
 
@@ -90,8 +91,10 @@ class VerifyPhoneForm extends React.Component {
 
                         <FormItem
                             {...formItemLayout}
-                            label={<FormattedMessage id="user.settings.verifyphone.phone" defaultMessage="Phone" description="Phone" />}
+                            label={'Phone'}
                             hasFeedback
+                            validateStatus={phoneNumberError ? 'error' : ''}
+                            help={phoneNumberError || ''}
                         >
 
                             <PhoneForm getFieldDecorator={getFieldDecorator} required phone={this.props.phone} />

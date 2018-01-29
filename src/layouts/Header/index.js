@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 // add placeholders
 import ReactPlaceholder from 'react-placeholder';
 import Notification from './containers/Notifications'
@@ -34,7 +34,8 @@ class LHeader extends React.Component {
     render() {
         const loading = this.props.loading;
         const token = this.props.token;
-        //const location = this.props.location;
+        const location = this.props.location;
+        //console.log(location);
         const new_messages = this.props.messages;
         const new_notifications = this.props.notifications;
         const menu_items = [
@@ -57,8 +58,9 @@ class LHeader extends React.Component {
             //console.log(item.toString());
             if (item[1] ) {
                 /*<HaveModule module={item[2]}>*/
+                //console.log(item[1]);
                 return (
-                    <Menu.Item as={NavLink} to={item[1]} key={item.toString()}>
+                    <Menu.Item as={NavLink} to={item[1]} key={item[1]}>
                         <NavLink to={item[1]}>{item[0]}</NavLink>
                     </Menu.Item>
                 )
@@ -71,6 +73,7 @@ class LHeader extends React.Component {
 
         });
 
+        const locationPath = '/'+location.pathname.split('/')[1];
 //{/*customPlaceholder={HeaderPlaceholder}*/}
 
         if (!token) {
@@ -81,23 +84,21 @@ class LHeader extends React.Component {
             )
         }
         const content = (
-            <div>
-                <Tabs defaultActiveKey="1" >
+                <Tabs defaultActiveKey="1" style={{width: 336}} >
                     <TabPane tab="Notifications" key="1"><Notification /></TabPane>
-                    <TabPane tab="News" key="2">Content of Tab Pane 2</TabPane>
+                    <TabPane tab="News" key="2">News Content</TabPane>
                 </Tabs>
-            </div>
         );
         return (
             <ReactPlaceholder ready={!loading} rows={3} >
 
 
                 <Row type="flex" justify="space-between" align="middle">
-                    <Col span={5}><img className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /> <Tag color="blue">Patient</Tag></Col>
+                    <Col span={5}><Link to={'/'}><img className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /></Link> <Tag color="blue">Patient</Tag></Col>
                     <Col >
                         <Menu
                             onClick={this.handleClick}
-                            defaultSelectedKeys={['1']}
+                            defaultSelectedKeys={[locationPath]}
                             mode="horizontal"
                             style={{'borderBottom':'none'}}
                         >
@@ -109,7 +110,7 @@ class LHeader extends React.Component {
 
                         <Menu
                             onClick={this.handleClick}
-                            defaultSelectedKeys={['1']}
+                            selectedKeys={['1']}
                             mode="horizontal"
                             style={{'borderBottom':'none'}}
                         >
@@ -117,14 +118,11 @@ class LHeader extends React.Component {
 
 
                             <Menu.Item key='inbox'>
-
-
-                                    <NavLink exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></NavLink>
-
+                                <Link to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></Link>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
-                                <Popover placement="bottomRight"  content={content} trigger="click">
-                                   <NavLink exact to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></NavLink>
+                                <Popover placement="bottomRight"  content={content} trigger="click" style={{width: 336}}>
+                                   <Link to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></Link>
                                 </Popover>
                             </Menu.Item>
 
@@ -137,7 +135,7 @@ class LHeader extends React.Component {
                                     }
                                     return (
                                         <Menu.Item key={item.toString()}>
-                                            <NavLink exact to={item[1]}>{item[0]}</NavLink>
+                                            <Link to={item[1]}>{item[0]}</Link>
                                         </Menu.Item>)
 
                                 })}

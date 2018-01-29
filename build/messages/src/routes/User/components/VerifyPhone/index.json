@@ -3,10 +3,5 @@
     "id": "user.settings.verifyphone.send",
     "description": "Send",
     "defaultMessage": "Send"
-  },
-  {
-    "id": "user.settings.verifyphone.phone",
-    "description": "Phone",
-    "defaultMessage": "Phone"
   }
 ]

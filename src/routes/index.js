@@ -155,6 +155,17 @@ export const asyncDiscussion = (store) => {
     );
 }
 
+export const asyncCalendar = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/Calendar/components'),
+            modules: ['../routes/Calendar/components'],
+            webpack: () => [require.resolveWeak('../routes/Calendar/components')],
+        })
+    );
+}
+
+
 export const asyncPlan = (store) => {
     return (
         Loadable({

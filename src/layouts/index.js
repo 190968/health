@@ -11,8 +11,9 @@ import { withRouter } from 'react-router-dom';
 import LayoutHeader from './Header';
 
 
-// add Routes
-import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity,asyncDiscussion/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+
+import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity, asyncCalendar,asyncDiscussion/*,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+
 
 import PrivateRoute from '../routes/privateRoute';
 
@@ -60,6 +61,7 @@ export const Core = ({loading, user, store, location}) =>  {
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
                 <PrivateRoute path="/community" component={asyncCommynity(store)} />
                 <PrivateRoute path="/discussion/:id" component={asyncDiscussion(store)} />
+                <PrivateRoute path="/calendar" component={asyncCalendar(store)} />
                 <PrivateRoute  path="/plan/:upid" component={asyncPlan(store)} />
             </Content>
             <Footer>
