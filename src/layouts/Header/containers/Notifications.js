@@ -24,7 +24,7 @@ const NOTIFICATIONS  = gql`
           }
           sender {
             id
-            first_name
+            firstName
             color
           }
           patient {

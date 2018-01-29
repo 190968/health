@@ -120,14 +120,11 @@ class LHeader extends React.Component {
 
 
                             <Menu.Item key='inbox'>
-
-
-                                    <Link exact to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></Link>
-
+                                <Link to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></Link>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
                                 <Popover placement="bottomRight"  content={content} trigger="click">
-                                   <Link exact to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></Link>
+                                   <Link to="/notifications"><Badge count={new_notifications}><Icon type="bell" /></Badge></Link>
                                 </Popover>
                             </Menu.Item>
 
@@ -140,7 +137,7 @@ class LHeader extends React.Component {
                                     }
                                     return (
                                         <Menu.Item key={item.toString()}>
-                                            <Link exact to={item[1]}>{item[0]}</Link>
+                                            <Link to={item[1]}>{item[0]}</Link>
                                         </Menu.Item>)
 
                                 })}
