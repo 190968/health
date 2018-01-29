@@ -2,7 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import DiscussionsForm from  './components/CommunityDiscussions';
+import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/ListCommunities';
 import Articles from  './components/Articles';
 import Plan from  './components/Plan';
