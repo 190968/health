@@ -4,20 +4,27 @@
 import React, { PropTypes } from 'react';
 import {Modal, DatePicker, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
 import moment from "moment/moment";
-import Tracker from '../../../../../../Tracker';
-import {
-    FormattedMessage,
-} from 'react-intl';
 const { Option } = Select;
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
 
-class EditTrackerForm extends React.Component {
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 20 },
+        sm: { span: 6 },
+
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+    },
+};
+
+class UserPlanEditForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.checkEndDate = this.checkEndDate.bind(this);
         this.checkEndDate = this.checkEndDate.bind(this);
     };
 
@@ -74,7 +81,7 @@ class EditTrackerForm extends React.Component {
     }
 
     render() {
-        const { loading, columns, info } = this.props;
+        const { loading, plan, info } = this.props;
         const { getFieldDecorator } = this.props.form;
 
         if (loading) {
@@ -89,25 +96,9 @@ class EditTrackerForm extends React.Component {
             </Modal>
         }
 
+        const {startDate, endDate, privacy, dateFormat} = info
 
-        let timesToReport = info.timesToReport;
-        timesToReport = timesToReport > 0 ? timesToReport : 1;
 
-        const startDate = info.startDate
-            const endDate = info.endDate;
-        const dateFormat = 'YYYY-MM-DD';
-
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 20 },
-                sm: { span: 6 },
-
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
-        };
         return (
             <Modal
                 visible={true}
@@ -122,104 +113,7 @@ class EditTrackerForm extends React.Component {
             <Form>
                 <FormItem
                     {...formItemLayout}
-                    label="Critical Range"
-                >
-                    {getFieldDecorator('criticalRangeMin', {
-                        initialValue: info.criticalRange.min
-                    })(
-                            <Col offset={1} span={10}>
-                                <Col span={8}> below </Col><Col span={14}><Tracker item={info.measurement} /></Col>
-                            </Col>
-
-                    )}
-                    {getFieldDecorator('criticalRangeMax', {
-                        initialValue: info.criticalRange.max
-                    })(
-                        <Col offset={1} span={10}>
-                            <Col  span={8}> above </Col><Col span={14}><Tracker item={info.measurement} /></Col>
-                        </Col>
-
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Normal Range"
-                >
-                    {getFieldDecorator('normalRangeMin', {
-                        initialValue: info.normalRange.min
-                    })(
-                        <Col offset={1} span={10}>
-                            <Col span={8}> below </Col><Col span={14}><Tracker item={info.measurement} /></Col>
-                        </Col>
-
-                    )}
-                    {getFieldDecorator('normalRangeMax', {
-                        initialValue: info.normalRange.max
-                    })(
-                        <Col offset={1} span={10}>
-                            <Col  span={8}> above </Col><Col span={14}><Tracker item={info.measurement} /></Col>
-                        </Col>
-
-                    )}
-                </FormItem>
-                {/*<FormItem
-                    {...formItemLayout}
-                    label="Attach Diagnoses"
-                >
-                    {getFieldDecorator('attachDiagnoses', {
-
-                    })(
-                        <Col offset={1} span={10}>
-                            <Select defaultValue="lucy" style={{ width: 300 }}>
-                                <Option value="lucy">Select ICD-10 code</Option>
-                            </Select>
-                        </Col>
-
-                    )}
-
-                </FormItem>*/}
-
-                {columns.length > 0 && <FormItem
-                    {...formItemLayout}
-                    label="Columns"
-                >
-                    {getFieldDecorator('columns', {
-                        initialValue: info.columns
-                    })(
-                    <CheckboxGroup options={columns.map((column) => {
-                        return { label: column.name, value: column.id };
-                    })} /*defaultValue={['Apple']} onChange={onChange}*/ />
-                    )}
-
-                </FormItem>}
-                <FormItem
-                    {...formItemLayout}
-                    label="# of Reports"
-                >
-                    {getFieldDecorator('timesToReport', {
-                        initialValue: timesToReport,
-                        rules: [{
-                            required: true, message: 'Please Select',
-                        }],
-                    })(
-                            <Select style={{ width: 120 }}>
-                                <Option value={1}>1 Time</Option>
-                                <Option value={2}>2 Times</Option>
-                                <Option value={3}>3 Times</Option>
-                                <Option value={4}>4 Times</Option>
-                                <Option value={5}>5 Times</Option>
-                                <Option value={6}>6 Times</Option>
-                                <Option value={7}>7 Times</Option>
-                                <Option value={8}>8 Times</Option>
-                                <Option value={9}>9 Times</Option>
-                            </Select>
-
-                    )}
-
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label={<FormattedMessage id="biometric.period" defaultMessage="Period" description="Period"/>}
+                    label={'Period'}
                 >
                     <Col span={11}>
                         <FormItem
@@ -264,10 +158,10 @@ class EditTrackerForm extends React.Component {
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label="Graph"
+                    label="Privacy"
                 >
                     {getFieldDecorator('graph', {
-                        initialValue: info.measurement.graph
+                        initialValue: info.privacy
                     })(
                             <Select style={{ width: 120 }}>
                                 <Option value="area">Area</Option>
@@ -284,5 +178,5 @@ class EditTrackerForm extends React.Component {
     }
 }
 
-const WrappedEditTrackerForm = Form.create()(EditTrackerForm);
-export default WrappedEditTrackerForm;
+const WrappedUserPlanEditFormForm = Form.create()(UserPlanEditForm);
+export default WrappedUserPlanEditFormForm;

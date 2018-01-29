@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import {RadialBarChart, RadialBar, Legend} from 'recharts';
 
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
 import PlanBody from './containers/PlanBody';
-import {Icon,Avatar, Card,Row, Col, Button, Tooltip ,Popover, Dropdown, Menu, Checkbox } from 'antd';
+import UserPlanEdit from './containers/UserPlanEdit';
+import {Icon, Avatar, Card,Row, Col, Button, Tooltip ,Popover, Dropdown, Menu, Checkbox } from 'antd';
 
 import {
     FormattedMessage,
@@ -25,12 +27,15 @@ export class PlanLayout extends React.Component {
         super(props);
         this.state = {
             infoModal: false,
+            openEditModal:false,
             date: props.date
         };
         this.showDate = this.showDate.bind(this);
         this.showIntro = this.showIntro.bind(this);
         this.hideIntro = this.hideIntro.bind(this);
         this.inviteMotivators = this.inviteMotivators.bind(this);
+        this.showEditPlan = this.showEditPlan.bind(this);
+        this.hideEditPlan = this.hideEditPlan.bind(this);
         this.deletePlan = this.deletePlan.bind(this);
         this.completePlan = this.completePlan.bind(this);
     };
@@ -59,8 +64,11 @@ export class PlanLayout extends React.Component {
         this.setState({infoModal:true});
         /**/
     };
-    editPlan = () => {
-        // open edit plan here
+    showEditPlan () {
+        this.setState({openEditModal:true});
+    };
+    hideEditPlan () {
+        this.setState({openEditModal:false});
     };
     deletePlan = () => {
         // delete plan here
@@ -69,6 +77,7 @@ export class PlanLayout extends React.Component {
     completePlan = () => {
         // delete plan here
         //this.props.completePlan();
+        this.props.completePlan();
     };
     inviteMotivators = () => {
 
@@ -99,7 +108,7 @@ export class PlanLayout extends React.Component {
                 </Menu.Item>
                 <Menu.SubMenu title="Actions">
                     <Menu.Item key="edit">
-                        <a onClick={this.editPlan}>Edit</a>
+                        <a onClick={this.showEditPlan}>Edit</a>
                     </Menu.Item>
                     <Menu.Item key="delete">
                         <a onClick={this.deletePlan}>Delete</a>
@@ -108,22 +117,36 @@ export class PlanLayout extends React.Component {
                         <a onClick={this.completePlan}>Complete</a>
                     </Menu.Item>
                 </Menu.SubMenu>
-                <Menu.Item key="reminders">
+                <Menu.Item key="reminders" disabled>
                     <a >Reminders</a>
                 </Menu.Item>
-                <Menu.Item key="print">
+                <Menu.Item key="print" disabled>
                     <a >Print</a>
                 </Menu.Item>
-                <Menu.Item key="export">
+                <Menu.Item key="export" disabled>
                     <a >Export</a>
                 </Menu.Item>
             </Menu>
         );
+
+
+        const data = [
+            {name: 'Lessons', progress: 100, pv: 2400, fill: '#8884d8'},
+            {name: 'Today Activities', progress: 15, pv: 4567, fill: '#83a6ed'},
+            {name: 'Weekly Adherence', progress: 86, pv: 1398, fill: '#8dd1e1'},
+        ];
+
+        const style = {
+            top: 0,
+            left: 200,
+            lineHeight: '24px'
+        };
+
         return (
             <div>
                 <Card
                     title={plan.title}
-                    cover={<img alt={plan.title} height={300} src={img} /*https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"*/ />}
+                    /*cover={<img alt={plan.title} height={300} src={img} />}*/
                     actions={[<div><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}> <Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip><FormattedDate
                         value={new Date(this.state.date)}
                         year='numeric'
@@ -134,6 +157,8 @@ export class PlanLayout extends React.Component {
                     </Dropdown>,
                         <Popover content={<div>Messages here</div>} title="Comments" trigger="click"><Icon type="message" /></Popover>]}
                 >
+                    <Row>
+                        <Col md={16}>
                     <Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                         title={user.firstName + ' '+ user.lastName}
@@ -146,6 +171,19 @@ export class PlanLayout extends React.Component {
                             />
                         }} description="date for Today" />}
                     />
+                        </Col>
+<Col md={8}>
+    {/*<RadialBarChart width={400} height={250} innerRadius="10%" outerRadius="80%" data={data} startAngle={180} endAngle={0}>
+        <RadialBar minAngle={15} label={{ fill: '#fff', position: 'insideStart' }} background clockWise={true} dataKey='progress' />
+        <Tooltip />
+    </RadialBarChart>*/}
+</Col>
+                    </Row>
+
+                    {this.state.openEditModal &&
+                    <UserPlanEdit id={info.id} info={info} plan={plan}
+                                    title='Edit Settings' onCancel={this.hideEditPlan}  />}
+
                 </Card>
             <Card>
                 <div className="box">

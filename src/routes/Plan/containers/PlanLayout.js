@@ -18,15 +18,18 @@ const CURRENT_PERSONAL_PLAN = gql`
         userPlan (upid: $upid) {
             id
             joinDate
+            startDate
+            endDate
+            privacy
+            canEdit
             plan {
-            ...PlanCardInfo
+                ...PlanCardInfo
             }
-           user {
-           id
-           firstName
-           lastName
-           }
-
+            user {
+               id
+               firstName
+               lastName
+            }
         }
     }
     ${Plan.fragments.plan}
@@ -103,7 +106,6 @@ const withMutationComplete = graphql(completePlan,
     {
         props: ({ ownProps, mutate }) => ({
             completePlan: input => {
-                console.log(ownProps);
                 return mutate({
                     variables: { upid: ownProps.info.id},
                 })
