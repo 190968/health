@@ -39,10 +39,10 @@ class Discussions extends React.Component{
     handleSubmit = (e) => {
 
         e.preventDefault();
-       // const { onSubmit } = this.props;
+        const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             console.log(values);
-          //  return onSubmit(values);
+            return onSubmit(values);
         });
 
     }

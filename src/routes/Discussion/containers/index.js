@@ -45,7 +45,19 @@ const DISCUSSION  = gql`
        }
 }
 `;
+const discussionReply = gql`
+   mutation discussionReply($id:ID!,$parentMessageId:ID,$message:String!) {
 
+  discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
+         id
+         text
+    createdAt
+    isImportant
+    unread
+       }
+}
+
+`;
 const withQuery = graphql(DISCUSSION, {
     options: (ownProps) => {
         console.log(ownProps);
@@ -67,8 +79,20 @@ const withQuery = graphql(DISCUSSION, {
             return {loading: data.loading}
         }
     },
-});
+})(Discussion);
 
+const withMutation = graphql(discussionReply, {
+    props: ({ mutate }) => ({
+        discussionReply: (input,id) => {
+            return mutate({
+                variables:  {
+                    id: id,
+                    message: input.text
+                },
+            })
+        },
+    }),
+});
 const mapStateToProps = (state) => {
     return {
 
@@ -76,7 +100,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-
+    onSubmit: (value) => {
+       // console.log(value);
+        ownProps.discussionReply(value,ownProps.match.params.id).then(({data}) => {
+console.log(data,"------------ pam")
+        })
+    },
 });
 
-export default withQuery(connect(mapStateToProps, mapDispatchToProps)(Discussion));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery));
