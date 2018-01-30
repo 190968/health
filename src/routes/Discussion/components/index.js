@@ -31,9 +31,20 @@ const tailFormItemLayout = {
         },
     },
 };
+
 class Discussions extends React.Component{
     constructor(props){
         super(props);
+    }
+    handleSubmit = (e) => {
+
+        e.preventDefault();
+       // const { onSubmit } = this.props;
+        this.props.form.validateFields((err, values) => {
+            console.log(values);
+          //  return onSubmit(values);
+        });
+
     }
 
     render(){
@@ -48,26 +59,8 @@ class Discussions extends React.Component{
         const {title,text,createdAt,category,replies} = discussion;
         const {edges} = replies;
         const {isJoined} = category;
-console.log(isJoined);
-      //  let mass =[];
 
-            {/*edges.forEach((item)=>{*/}
-               {/*mass.push(*/}
-                   {/*<div>*/}
-                   {/*<Row>*/}
-                       {/*<Col span={2}>*/}
-                           {/*<Avatar  style={{ verticalAlign: 'middle' }}>P</Avatar>*/}
-            //            </Col>
-            //            <Col style={{ 'border-radius': "10px", border:"1px solid #c7ebfb" ,background:'#eef9fe'}} span={15}>
-            //                <p>{item.text}</p>
-            //                <h5>{item.createdAt.slice(0,10)}</h5>
-            //            </Col>
-            //        </Row>
-            //        <br/>
-            //            </div>
-            //    )
-            // })
-
+        const { getFieldDecorator } = this.props.form;
         return(
             <div>
 
@@ -85,21 +78,30 @@ console.log(isJoined);
                 </Card><br/>
                 <Card
                 title={
-                    <Row>
-                        <Col span={2}>
-                            <Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar>
-                        </Col>
+                    <Form onSubmit={this.handleSubmit} >
+                            <Col span={2}>
+                                <Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar>
+                            </Col>
                         <Col span={19}>
-                            <Input
-                                suffix={<Icon type="paper-clip" />}
-                            />
+                        <FormItem>
+                            {getFieldDecorator('text')(
+
+                                    <Input
+                                        suffix={<Icon type="paper-clip" />}
+                                    />
+
+                            )}
+                        </FormItem>
                         </Col>
-                        <Col offset={1} span={2}>
-                            {
-                                isJoined ? <Button  type="primary">Post</Button>:<Button disabled type="primary">Post</Button>
-                            }
-                        </Col>
-                    </Row>
+                            <Col offset={1} span={2}>
+                                {
+                                    isJoined ? <Button type="primary" htmlType="submit">Post</Button>:<Button disabled type="primary" htmlType="submit">Post</Button>
+                                }
+                            </Col>
+                    </Form>
+
+
+
                 }
                 >
                     <Row>
