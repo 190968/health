@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Form,Card,Row,Col,Button,Input,Tooltip,List,Icon,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import moment from 'moment';
 import {withRouter} from "react-router-dom";
 const FormItem = Form.Item;
 const IconText = ({ type, text }) => (
@@ -9,6 +10,7 @@ const IconText = ({ type, text }) => (
         {text}
   </span>
 );
+const format = 'MMMM Do YYYY, h:mm:ss a';
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -48,10 +50,8 @@ class Discussions extends React.Component{
     }
 
     handleClick = (e) => {
-
         const { onClick } = this.props;
             return onClick();
-
     }
 
 
@@ -67,7 +67,7 @@ class Discussions extends React.Component{
         const {title,text,createdAt,category,replies} = discussion;
         const {edges} = replies;
         const {isJoined} = category;
-
+console.log(createdAt);
         const { getFieldDecorator } = this.props.form;
         return(
             <div>
@@ -76,15 +76,14 @@ class Discussions extends React.Component{
                     title={title}
                     extra={
                         <Tooltip title={'Delete'}><Icon type="close" onClick={this.handleClick} /></Tooltip>
-
                     }
                 >
-                    <Row>
+                        <Row>
                           <p>{text}</p>
                         </Row>
                     <Row>
 
-                    <Avatar style={{ verticalAlign: 'middle' }}>N</Avatar> <label>{createdAt.slice(0,10)}</label>
+                    <Avatar style={{ verticalAlign: 'middle' }}>N</Avatar> <label>{ moment(createdAt).format('h:mm:ss a')}</label>
 
                         </Row>
                 </Card>

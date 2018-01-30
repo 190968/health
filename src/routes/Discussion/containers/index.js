@@ -15,6 +15,7 @@ import Discussion from '../components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import {withRouter} from "react-router-dom";
 
 const DISCUSSION  = gql`
  query GET_DISCUSSION($id:ID) {
@@ -142,8 +143,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     onClick: () => {
         ownProps.discussionDelete(ownProps.match.params.id).then(({data}) => {
+            ownProps.history.push("/community/"+data.discussionDelete.category.id);
         })
     },
 });
 
-export default WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery));
+export default withRouter(WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery)));
