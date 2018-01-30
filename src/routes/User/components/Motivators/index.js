@@ -47,7 +47,6 @@ class Motivators extends React.Component {
         });
     }
     handleCancel = (e) => {
-        console.log(e);
         this.setState({
             visible: false,
         });
@@ -57,8 +56,7 @@ class Motivators extends React.Component {
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
-            console.log(values);
-            return onSubmit(values);
+            return onSubmit(values, this.handleCancel);
         });
 
     }
@@ -66,8 +64,6 @@ class Motivators extends React.Component {
     render() {
 
         const  {info,loading} = this.props;
-
-
 
         if (loading) {
             return  <Card loading title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}>
@@ -77,38 +73,7 @@ class Motivators extends React.Component {
         const  {edges,totalCount} = motivators;
         const { getFieldDecorator } = this.props.form;
         return(
-        <div>
-            <Modal
-                title="Invite motivators"
-                visible={this.state.visible}
-                onCancel={this.handleCancel}
-                okText="Submit"
-                onOk={this.handleSubmit}
-            >
-                <Form onSubmit={this.handleSubmit} >
-                    <FormItem
-                        {...formItemLayout}
-                        label="Emails"
-                    >
-                        {getFieldDecorator('emails')(
-                            <Input
-                                mode="tags"
-                                style={{ width: '100%' }}
-                                tokenSeparators={[',']}
-                           />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="Text message"
-                    >
-                        {getFieldDecorator('text')(
-                            <TextArea autosize />
-                        )}
-                    </FormItem>
-                </Form>
 
-            </Modal>
 
         <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
         extra={<Tooltip title='Invite Motivators'><Button size={"small"} onClick={this.showModal} ><Icon type="plus"  /></Button></Tooltip>}
@@ -136,8 +101,36 @@ class Motivators extends React.Component {
                         </List.Item>
                     )}
                 /> : 'No Motivators'}
-            </Card>;
-            </div>
+            <Modal
+                title="Invite motivators"
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+                okText="Submit"
+                onOk={this.handleSubmit}
+            >
+                <Form onSubmit={this.handleSubmit} >
+                    <FormItem
+                        {...formItemLayout}
+                        label="Email"
+                    >
+                        {getFieldDecorator('email')(
+                            <Input
+                                style={{ width: '100%' }}
+                            />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="Text message"
+                    >
+                        {getFieldDecorator('text')(
+                            <TextArea autosize />
+                        )}
+                    </FormItem>
+                </Form>
+
+            </Modal>
+            </Card>
         )
     }
 }

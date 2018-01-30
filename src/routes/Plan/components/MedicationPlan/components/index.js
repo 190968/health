@@ -4,6 +4,7 @@ import MedicationCoin from './Medication/components/MedicationCoin/containers';
 import MedicationSelect from './Medication/components/MedicationSelect/containers';
 import MedicationInfo from './Medication/components/MedicationInfo/containers';
 import {MedicationAddForm as MedicationAddForm} from './Medication/components/MedicationEdit/containers';
+import MedicationSummary from './Medication/containers/MedicationSummary';
 import moment from 'moment';
 import {
     FormattedMessage,
@@ -13,42 +14,6 @@ import {
 
 import { Menu, Dropdown, Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
 
-/*const Placeholder = (
-    <div>
-        <Divider><RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} /></Divider>
-            <Table columns={[{
-                title: <TextBlock color='#E0E0E0' rows={1} />,
-                dataIndex: 'name',
-                key: 'name',
-                width: 300
-            }, {
-                title: <RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} />,
-                dataIndex: 'time1',
-                key: 'time1',
-            }, {
-                title: <RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} />,
-                dataIndex: 'time2',
-                key: 'time2',
-            }, {
-                title: <RectShape  color="#E0E0E0" style={{ width: 90, height: '1em' }} />,
-                dataIndex: 'time3',
-                key: 'time3',
-            }]} dataSource={[{
-                key: '1',
-                name: <div><RectShape color='#afafaf' style={{ width: '50%', height: '1em'}} /><RectShape color='#E0E0E0' style={{ marginTop:5, width: '60%', height: '0.9em'}} /></div>,
-                time1: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />,
-                time2: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />,
-                time3: ''
-            }, {
-                key: '2',
-                name: <div><RectShape color='#afafaf' style={{ width: '80%', height: '1em'}} /><RectShape color='#E0E0E0' style={{ marginTop:5, width: '60%', height: '0.9em'}} /></div>,
-                time1: '',
-                time2: '',
-                time3: <RoundShape color='#E0E0E0' style={{ width: 35, height: 35 }} />
-            }]} scroll={{x: 600}} pagination={false} />
-        </div>
-);*/
-
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
         super(props);
@@ -56,10 +21,12 @@ export class MedicationPlanBody extends React.Component {
             isBuilderMode: false,// if this is a builder mode
             date: props.date,
             addModal:false,
+            showSummary:false,
             medId:''
         };
 
         this.addMedication = this.addMedication.bind(this);
+        this.toggleSummary = this.toggleSummary.bind(this);
     };
     static propTypes = {
     };
@@ -97,13 +64,21 @@ export class MedicationPlanBody extends React.Component {
         });
     }
 
+    toggleSummary() {
+        if (this.state.showSummary) {
+            this.setState({showSummary:false});
+        } else {
+            this.setState({showSummary:true});
+        }
+
+    }
+
 
     render() {
         //console.log(this.props, 'Load');
         const {info,  loading, user_id} = this.props;
         const {date} = this.state;
         //console.log(date);
-        //console.log(this.props);
         if (loading) {
             return (
                 <Card loading title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
@@ -203,7 +178,7 @@ export class MedicationPlanBody extends React.Component {
                 }} description="Medications for Today" />}
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                           <Button.Group style={{marginLeft:10}}>
-                              <Tooltip title="Summary"><Button size="small" ><Icon type="area-chart"  /></Button></Tooltip>
+                              <Tooltip title="Summary"><Button size="small" onClick={this.toggleSummary}><Icon type="area-chart"  /></Button></Tooltip>
                               <Tooltip title="Chat"><Button size="small" ><Icon type="message"  /></Button></Tooltip>
                               <Tooltip title="Settings"><Dropdown overlay={menu}  >
                                   <Button size="small" ><Icon type="setting" /></Button>
@@ -241,6 +216,8 @@ export class MedicationPlanBody extends React.Component {
                         />
                         </div>)
                     }
+
+                    {this.state.showSummary && <MedicationSummary userId={user_id} date={date} onCancel={this.toggleSummary} />}
 
                     {this.state.addModal &&
                         <MedicationAddForm drugId={this.state.medId}
