@@ -34,11 +34,11 @@ export class PlansList extends React.Component {
 
     return (
         <Card title={<FormattedMessage id="plan.title1" defaultMessage="Today's Actionplans" description="Medications for Today" />}
-              extra={<div><Tooltip title={<FormattedMessage id="plan.settings" defaultMessage="Settings" />}><Dropdown overlay={menu} >
-                  <Button size="small" style={{ marginRight: 8 }}>
+              extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.settings" defaultMessage="Settings" />}><Dropdown overlay={menu} placement="bottomRight" >
+                  <Button size="small">
                       <Icon type="setting" />
                   </Button>
-              </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add Actionplan" />}><Link to={'/planstore'}><Button size="small"><Icon type="plus" /></Button></Link></Tooltip></div>}
+              </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add Actionplan" />}><Button size="small"><Link to={'/planstore'}><Icon type="plus" /></Link></Button></Tooltip></Button.Group>}
         >
             {plans.length > 0 ? <List
                 split={false}
