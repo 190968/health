@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Form,Card,Row,Col,Button,Input,List,Icon,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import {withRouter} from "react-router-dom";
 const FormItem = Form.Item;
 const IconText = ({ type, text }) => (
     <span>
@@ -44,9 +45,10 @@ class Discussions extends React.Component{
             );
         }
 
-        const {title,text,createdAt,replies} = discussion;
+        const {title,text,createdAt,category,replies} = discussion;
         const {edges} = replies;
-console.log(edges);
+        const {isJoined} = category;
+console.log(isJoined);
       //  let mass =[];
 
             {/*edges.forEach((item)=>{*/}
@@ -93,7 +95,9 @@ console.log(edges);
                             />
                         </Col>
                         <Col offset={1} span={2}>
-                            <Button type="primary">Post</Button>
+                            {
+                                isJoined ? <Button  type="primary">Post</Button>:<Button disabled type="primary">Post</Button>
+                            }
                         </Col>
                     </Row>
                 }
@@ -126,4 +130,4 @@ console.log(edges);
 }
 
 const WrappedDiscussions = Form.create()(Discussions);
-export default withApollo(WrappedDiscussions);
+export default withApollo(withRouter(WrappedDiscussions));

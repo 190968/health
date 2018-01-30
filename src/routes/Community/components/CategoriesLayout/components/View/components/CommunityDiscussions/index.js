@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Icon,Form,Input,Button,Modal,Card,List,Row,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -145,4 +146,6 @@ class CommunityDiscussions extends React.Component{
 }
 
 const WrappedCommunityDiscussions = Form.create()(CommunityDiscussions);
-export default withApollo(WrappedCommunityDiscussions);
+
+
+export default withApollo(withRouter(WrappedCommunityDiscussions));

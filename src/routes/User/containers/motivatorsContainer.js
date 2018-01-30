@@ -7,7 +7,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-
+import { message } from 'antd';
 /*  This is a container components. Notice it does not contain any JSX,
  nor does it import React. This components is **only** responsible for
  wiring in the actions and state necessary to render a presentational
@@ -39,7 +39,16 @@ const motivators = gql`
      }
 `;
 
-const withMutation = graphql(motivators, {
+const motivatorInvite = gql`
+   mutation motivatorInvite($userId:ID!,$emails:[Email]!,$message:String) {
+
+  motivatorInvite(userId:$userId,emails:$emails,message:$message) {
+         id
+       }
+}
+`;
+
+const withQuery = graphql(motivators, {
     props: ({ ownProps, data }) => {
         if (!data.loading) {
             return {
@@ -51,8 +60,21 @@ const withMutation = graphql(motivators, {
             return {loading: data.loading}
         }
     },
-});
+})(Motivators);
 
+const withMutation = graphql(motivatorInvite, {
+    props: ({ mutate }) => ({
+        motivatorInvite: (input,userID) => {
+            return mutate({
+                variables:  {
+                    userId: userID,
+                    emails:  input.emails,
+                    message: input.text
+                } ,
+            })
+        },
+    }),
+});
 const mapStateToProps = (state) => {
     return {
 
@@ -60,7 +82,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-
+    onSubmit: (value) => {
+        ownProps.motivatorInvite(value,ownProps.user_id).then(({data}) => {
+            message.success('okay');
+          //  ownProps.history.push('/');
+        })
+    },
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Motivators));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery));
+

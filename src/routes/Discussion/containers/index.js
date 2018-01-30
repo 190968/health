@@ -27,6 +27,8 @@ const DISCUSSION  = gql`
          lastReplyAt
          category {
            id
+           isJoined
+           canJoin
          }
          views
         replies{

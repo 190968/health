@@ -4,9 +4,6 @@
 
 import React from 'react'
 import {connect} from 'react-redux'
-import {compose} from 'react-apollo';
-import {message} from 'antd';
-import { Redirect} from 'react-router-dom'
 import Discussions from '../components/CommunityDiscussions';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
@@ -58,11 +55,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (values) => {
         ownProps.addDuscussion(values).then(({data}) => {
-            console.log("addDuscussion"+data.discussionCreate.id);
-            return  <Redirect to={{
-                pathname: '/discussion/'+data.discussionCreate.id
-            }} />;
-        })
+            ownProps.history.push('/discussion/'+data.discussionCreate.id);
+        }).catch((error) => {
+            console.log("FAIL!!!!"+error);
+        });
     },
 });
 

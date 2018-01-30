@@ -10,6 +10,7 @@ import Plan from  './components/Plan';
 // import Search from  './components/Search';
 import { Card,Dropdown,Menu, List,Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import {withRouter} from "react-router-dom";
 import '../../../../style.css';
 
 
@@ -131,4 +132,4 @@ console.log(plans,"=========================================")
 }
 
 const WrappedViewForm = Form.create()(ViewForm);
-export default withApollo(WrappedViewForm);
+export default withApollo(withRouter(WrappedViewForm));

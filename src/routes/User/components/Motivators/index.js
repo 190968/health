@@ -3,16 +3,64 @@
  */
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import {
     FormattedMessage,
 } from 'react-intl';
 
-import { Form,  List,Avatar, Card, Button, Tooltip, Icon } from 'antd';
+import { Form,  List,Avatar,Select, Card,Modal,Input, Button, Tooltip, Icon } from 'antd';
 
+const FormItem = Form.Item;
+const { TextArea } = Input;
+const Option = Select.Option;
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+    },
+};
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 14,
+            offset: 6,
+        },
+    },
+};
 class Motivators extends React.Component {
-
+    state = { visible: false }
     constructor(props) {
         super(props);
+    }
+
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    }
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            visible: false,
+        });
+    }
+    handleSubmit = (e) => {
+
+        e.preventDefault();
+        const { onSubmit } = this.props;
+        this.props.form.validateFields((err, values) => {
+            console.log(values);
+            return onSubmit(values);
+        });
+
     }
 
     render() {
@@ -27,8 +75,47 @@ class Motivators extends React.Component {
         }
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
-        return <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
-        extra={<Tooltip title='Invite Motivators'><Button size={"small"} ><Icon type="plus"  /></Button></Tooltip>}
+        const { getFieldDecorator } = this.props.form;
+        return(
+        <div>
+            <Modal
+                title="Basic Modal"
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+            >
+                <Form onSubmit={this.handleSubmit} >
+                    <FormItem
+                        {...formItemLayout}
+                        label="Emails"
+                    >
+                        {getFieldDecorator('emails')(
+                            <Select
+                                mode="tags"
+                                style={{ width: '100%' }}
+                                tokenSeparators={[',']}
+                            >
+                            </Select>
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="Text message"
+                    >
+                        {getFieldDecorator('text')(
+                            <TextArea autosize />
+                        )}
+                    </FormItem>
+                    <FormItem {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit" className="register-form-button">
+                            Send
+                        </Button>
+                    </FormItem>
+                </Form>
+
+            </Modal>
+
+        <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
+        extra={<Tooltip title='Invite Motivators'><Button size={"small"} onClick={this.showModal} ><Icon type="plus"  /></Button></Tooltip>}
         >
             {edges.length > 0 ? <List
                     split={false}
@@ -54,8 +141,10 @@ class Motivators extends React.Component {
                     )}
                 /> : 'No Motivators'}
             </Card>;
+            </div>
+        )
     }
 }
 
 const WrappedMotivators= Form.create()(Motivators);
-export default WrappedMotivators;
+export default withRouter(WrappedMotivators);

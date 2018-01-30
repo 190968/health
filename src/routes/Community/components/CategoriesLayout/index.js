@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Card, Tooltip,Form,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
+import {withRouter} from "react-router-dom";
 import MyCommutinies from '../../containers/myCommunities.js'
 import MainCategories from './components/MainCategories'
 import { Link } from 'react-router-dom'
@@ -37,4 +38,4 @@ class MyCategories extends React.Component{
 }
 
 const WrappedMyCategories = Form.create()(MyCategories);
-export default withApollo(WrappedMyCategories);
+export default withApollo(withRouter(WrappedMyCategories));
