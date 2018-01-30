@@ -178,7 +178,7 @@ export class MedicationPlanBody extends React.Component {
                 }} description="Medications for Today" />}
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                           <Button.Group style={{marginLeft:10}}>
-                              <Tooltip title="Summary"><Button size="small" onClick={this.toggleSummary}><Icon type="area-chart"  /></Button></Tooltip>
+                              {/*<Tooltip title="Summary"><Button size="small" onClick={this.toggleSummary}><Icon type="area-chart"  /></Button></Tooltip>*/}
                               <Tooltip title="Chat"><Button size="small" ><Icon type="message"  /></Button></Tooltip>
                               <Tooltip title="Settings"><Dropdown overlay={menu}  >
                                   <Button size="small" ><Icon type="setting" /></Button>

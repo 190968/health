@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 
 import MedicationEditForm from '../../MedicationEdit/containers'
+import MedicationChartPopup from '../../MedicationChartPopup';
 
 /*const AsyncModalEdit = () => {
     return (
@@ -79,7 +80,7 @@ export class MedicationInfo extends React.PureComponent {
 
 
             <Col span={22} >
-                         {name} <Icon onClick={()=> this.iconClick()} type="edit" /> <Popconfirm title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete} okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm>
+                         {name} <MedicationChartPopup item={this.props.info} userId={user_id} date={date}  /> <Icon onClick={()=> this.iconClick()} type="edit" /> <Popconfirm title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete} okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm>
             </Col>
 
         </Row>

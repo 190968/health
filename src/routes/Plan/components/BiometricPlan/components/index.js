@@ -101,14 +101,14 @@ export class BiometricPlanBody extends React.Component {
 
         const {columns, trackers} = info;
         const listColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  {console.log(item);return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}},
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}},
            //
             { title: '', dataIndex: 'input', key: 'input', width: 150  },
             //{ title: '', dataIndex: 'icon', key: 'acts', width: 50}
         ];
 
         const tableColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  {console.log(item);return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>} },
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>} },
         ];
         // adding columns
         columns.map(column => {
@@ -184,7 +184,6 @@ export class BiometricPlanBody extends React.Component {
         const menu = (
             <Menu onClick={this.handleMenuClick}>
                 <Menu.Item disabled key="reminders">Reminders</Menu.Item>
-                <Menu.Item disabled key="view">Change view</Menu.Item>
                 <Menu.Item key="motivators" on>Motivators</Menu.Item>
                 <Menu.Item disabled key="commitment">Make a Commitment</Menu.Item>
                 <Menu.Item disabled key="promise">Make a Promise</Menu.Item>
@@ -205,7 +204,7 @@ export class BiometricPlanBody extends React.Component {
 
                   extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                       <Button.Group style={{marginLeft:10}}>
-                          <Tooltip title="Summary"><Button size="small" ><Icon type="area-chart"  /></Button></Tooltip>
+                          {/*<Tooltip title="Summary"><Button size="small" ><Icon type="area-chart"  /></Button></Tooltip>*/}
                           <Tooltip title="Chat"><Button size="small" ><Icon type="message"  /></Button></Tooltip>
                           <Tooltip title="Settings"><Dropdown overlay={menu}   >
                               <Button size="small" ><Icon type="setting" /></Button>
