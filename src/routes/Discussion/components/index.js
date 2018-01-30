@@ -129,8 +129,8 @@ class Discussions extends React.Component{
 
                                     <List.Item.Meta
                                         avatar={<Avatar size="large"></Avatar>}
-                                        description={item.text}
                                     />
+                                    {item.text}
                                 </List.Item>
 
                             )}
