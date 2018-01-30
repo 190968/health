@@ -75,7 +75,7 @@ class Discussions extends React.Component{
                 <Card
                     title={title}
                     extra={
-                        <Tooltip title={'Delete'}><Icon type="close-square" onClick={this.handleClick} /></Tooltip>
+                        <Tooltip title={'Delete'}><Icon type="close" onClick={this.handleClick} /></Tooltip>
 
                     }
                 >
@@ -87,7 +87,7 @@ class Discussions extends React.Component{
                     <Avatar style={{ verticalAlign: 'middle' }}>N</Avatar> <label>{createdAt.slice(0,10)}</label>
 
                         </Row>
-                </Card><br/>
+                </Card>
                 <Card
                 title={
                     <Form onSubmit={this.handleSubmit} >
