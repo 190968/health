@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form,Card,Row,Col,Button,Input,Tooltip,List,Icon,Avatar } from 'antd';
+import { Form,Card,Row,Col,Button,Input,Popconfirm,Tooltip,List,Icon,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
@@ -74,8 +74,9 @@ console.log(createdAt);
 
                 <Card
                     title={title}
-                    extra={
-                        <Tooltip title={'Delete'}><Icon type="close" onClick={this.handleClick} /></Tooltip>
+                    extra={<Popconfirm title="Are you sure delete this discussion?" onConfirm={this.handleClick} okText="Yes" cancelText="No">
+                        <Tooltip title={'Delete'}><Icon type="close" /></Tooltip>
+                        </Popconfirm>
                     }
                 >
                         <Row>

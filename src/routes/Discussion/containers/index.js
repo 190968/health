@@ -62,22 +62,7 @@ const discussionReply = gql`
 const discussionDelete = gql`
   mutation discussionDelete($id:ID!) {
 
-  discussionDelete(id:$id) {
-         id
-         title
-    text
-    createdAt
-    lastReplyAt
-    category {
-      id
-    }
-    views
-    replies {
-      edges {
-        id
-      }
-    }
-       }
+  discussionDelete(id:$id) 
 }
 `;
 const withQuery = graphql(DISCUSSION, {
@@ -142,8 +127,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         })
     },
     onClick: () => {
+        console.log(ownProps);
         ownProps.discussionDelete(ownProps.match.params.id).then(({data}) => {
-            ownProps.history.push("/community/"+data.discussionDelete.category.id);
+   
+            ownProps.history.push("/community/"+);
         })
     },
 });
