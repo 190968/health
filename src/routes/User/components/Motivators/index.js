@@ -79,9 +79,11 @@ class Motivators extends React.Component {
         return(
         <div>
             <Modal
-                title="Basic Modal"
+                title="Invite motivators"
                 visible={this.state.visible}
                 onCancel={this.handleCancel}
+                okText="Submit"
+                onOk={this.handleSubmit}
             >
                 <Form onSubmit={this.handleSubmit} >
                     <FormItem
@@ -89,12 +91,11 @@ class Motivators extends React.Component {
                         label="Emails"
                     >
                         {getFieldDecorator('emails')(
-                            <Select
+                            <Input
                                 mode="tags"
                                 style={{ width: '100%' }}
                                 tokenSeparators={[',']}
-                            >
-                            </Select>
+                           />
                         )}
                     </FormItem>
                     <FormItem
@@ -104,11 +105,6 @@ class Motivators extends React.Component {
                         {getFieldDecorator('text')(
                             <TextArea autosize />
                         )}
-                    </FormItem>
-                    <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit" className="register-form-button">
-                            Send
-                        </Button>
                     </FormItem>
                 </Form>
 

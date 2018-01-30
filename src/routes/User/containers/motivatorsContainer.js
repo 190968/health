@@ -16,7 +16,7 @@ import { message } from 'antd';
 import Motivators from '../components/Motivators';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import {withRouter} from "react-router-dom";
 
 const motivators = gql`
    query GET_MOTIVATORS {
@@ -85,10 +85,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
         ownProps.motivatorInvite(value,ownProps.user_id).then(({data}) => {
             message.success('okay');
-          //  ownProps.history.push('/');
+            ownProps.history.push('/');
         })
     },
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery));
+export default withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery)));
 

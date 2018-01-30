@@ -47,12 +47,6 @@ class CommunityDiscussions extends React.Component{
             visible: true,
         });
     }
-    handleOk = (e) => {
-        console.log(e);
-        this.setState({
-            visible: false,
-        });
-    }
     handleCancel = (e) => {
         console.log(e);
         this.setState({
@@ -112,8 +106,9 @@ class CommunityDiscussions extends React.Component{
                 <Modal
                     title="Start discussion"
                     visible={this.state.visible}
-                    onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    okText="Submit"
+                    onOk={this.handleSubmit}
                 >
                     <Form onSubmit={this.handleSubmit} >
                         <FormItem
@@ -132,11 +127,7 @@ class CommunityDiscussions extends React.Component{
                                 <TextArea autosize />
                             )}
                         </FormItem>
-                        <FormItem {...tailFormItemLayout}>
-                            <Button type="primary" htmlType="submit" className="register-form-button">
-                                Send
-                            </Button>
-                        </FormItem>
+
                     </Form>
                 </Modal>
             </Card>

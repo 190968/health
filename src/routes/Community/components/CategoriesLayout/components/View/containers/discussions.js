@@ -7,6 +7,8 @@ import {connect} from 'react-redux'
 import Discussions from '../components/CommunityDiscussions';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
+import { withApollo} from 'react-apollo'
+import {withRouter} from "react-router-dom";
 
 const addDuscussion = gql`
 mutation discussionCreate($categoryId:ID!,$subject:String!,$message:String!) {
@@ -62,4 +64,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Discussions));
+export default withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(Discussions)));
