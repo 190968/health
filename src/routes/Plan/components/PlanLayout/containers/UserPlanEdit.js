@@ -43,16 +43,21 @@ const UserPlanEditWithQuery = graphql(
 
 const updatePlan = gql`
     mutation userPlanUpdate($upid:ID!, $input: UserPlanInput!) {
-       userPlanUpdate(upid:$upid, input:$input)
+        userPlanUpdate(upid:$upid, input:$input) {
+            id
+            startDate
+            endDate
+            privacy
+        }
     }
 
 `;
 const withMutationUpdate = graphql(updatePlan,
     {
         props: ({ ownProps, mutate }) => ({
-            updatePlan: input => {
+            updateUserPlan: input => {
                 return mutate({
-                    variables: {upid: ownProps.info.id, input},
+                    variables: {upid: ownProps.id, input},
                 })
             },
         }),
@@ -65,7 +70,7 @@ const withMutationUpdate = graphql(updatePlan,
 
 const mapStateToProps = (state) => {
     return {
-        dateFormat:state.user.dateFormat,
+        dateFormat:state.user.info.dateFormat,
     };
 };
 

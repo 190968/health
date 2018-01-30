@@ -2,11 +2,12 @@
  * Created by Pavel on 21.12.2017.
  */
 import React, { PropTypes } from 'react';
-import {Modal, DatePicker, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
+import {Modal, DatePicker, Form ,Spin, Col, Radio, Popover } from 'antd';
 import moment from "moment/moment";
-const { Option } = Select;
+import {message} from "antd/lib/index";
 const FormItem = Form.Item;
-const CheckboxGroup = Checkbox.Group;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 
 const formItemLayout = {
@@ -24,7 +25,7 @@ const formItemLayout = {
 class UserPlanEditForm extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {confirmLoading:false}
         this.checkEndDate = this.checkEndDate.bind(this);
     };
 
@@ -45,43 +46,33 @@ class UserPlanEditForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { amid, updateTracker } = this.props;
-        //console.log(this.props);
+        const { updateUserPlan, onCancel } = this.props;
         this.props.form.validateFields((err, values) => {
-            //console.log(values);
             if (!err) {
-                const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns, startDate, endDate } = values;
+                const{privacy, startDate, endDate } = values;
 
-                //console.log(columns);
                 const startDateYMD = startDate.format("YYYY-MM-DD");
                 const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
                 const input = {
-                    amid:amid,
-                    graph:graph,
-                    timesToReport:timesToReport,
-                    criticalRange: {min:criticalRangeMin, max:criticalRangeMax},
-                    normalRange: {min:normalRangeMin, max:normalRangeMax},
-                    columns: columns,
-                    icd10Codes: attachDiagnoses,
-                    startDate: startDateYMD,
-                    endDate: endDateYMD,
+                    privacy,
+                    startDate:startDateYMD,
+                    endDate:endDateYMD
                 }
 
-            //console.log(id);
-            //console.log(userId);
-                console.log(input);
+                this.setState({confirmLoading:true});
 
-                // prepare fields here
-                //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
-                //console.log(onCancel);
-                return updateTracker(input);
+                return updateUserPlan(input).then((data) => {
+                    //message.success('Saved');
+                    this.setState({confirmLoading:false});
+                    onCancel();
+                })
             }
         });
 
     }
 
     render() {
-        const { loading, plan, info } = this.props;
+        const { loading, plan, info, dateFormat } = this.props;
         const { getFieldDecorator } = this.props.form;
 
         if (loading) {
@@ -96,7 +87,7 @@ class UserPlanEditForm extends React.Component {
             </Modal>
         }
 
-        const {startDate, endDate, privacy, dateFormat} = info
+        const {startDate, endDate, privacy} = info
 
 
         return (
@@ -107,10 +98,13 @@ class UserPlanEditForm extends React.Component {
                 keyboard = {false}
                 okText="Save"
                 onCancel={this.props.onCancel}
-                title={this.props.title+' '+info.measurement.label}
+                title={this.props.title}
+                confirmLoading={this.state.confirmLoading}
                 onOk={this.handleSubmit}
             >
             <Form>
+
+                {!plan.isFixedDated ?
                 <FormItem
                     {...formItemLayout}
                     label={'Period'}
@@ -125,9 +119,10 @@ class UserPlanEditForm extends React.Component {
                                 }],
                             })(
                                 <DatePicker
-                                    /*disabledDate={this.disabledStartDate}
-                                    format={dateFormat}*/
+                                    /*disabledDate={this.disabledStartDate}*/
+                                    format={dateFormat}
                                     placeholder="Start date"
+                                    allowClear={false}
                                 />
                             )}
                         </FormItem>
@@ -141,34 +136,45 @@ class UserPlanEditForm extends React.Component {
                         <FormItem
                         >
                             {getFieldDecorator('endDate', {
-                                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
+                                initialValue: endDate ? moment(endDate) : undefined,
                                 rules: [{
                                     validator: this.checkEndDate, message: 'End date must be after Start Date',
                                 }],
                             })(
                                 <DatePicker
                                     placeholder="End date"
-                                    /*disabledDate={this.disabledEndDate}
                                     format={dateFormat}
+
+                                    /*disabledDate={this.disabledEndDate}
+
                                     placeholder="End"*/
                                 />
                             )}
                         </FormItem>
                     </Col>
                 </FormItem>
+                    :
+                <div>sssss</div>
+                }
                 <FormItem
                     {...formItemLayout}
                     label="Privacy"
                 >
-                    {getFieldDecorator('graph', {
-                        initialValue: info.privacy
+                    {getFieldDecorator('privacy', {
+                        initialValue: info.privacy,
+                        rules: [{
+                            required: true, message: 'Please Select',
+                        }],
                     })(
-                            <Select style={{ width: 120 }}>
-                                <Option value="area">Area</Option>
-                                <Option value="line">Line</Option>
-                                <Option value="bar">Bar</Option>
-                            </Select>
-
+                        <RadioGroup>
+                            <Popover content="Visible to anyone">
+                                <RadioButton value="open">Open
+                                </RadioButton>
+                            </Popover>
+                            <Popover content="Visible to you">
+                                <RadioButton value="private">Private</RadioButton>
+                            </Popover>
+                        </RadioGroup>
                     )}
 
                 </FormItem>
