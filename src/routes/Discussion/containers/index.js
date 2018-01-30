@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
  nor does it import React. This components is **only** responsible for
  wiring in the actions and state necessary to render a presentational
  components - in this case, the counter:   */
-
+import {compose} from 'react-apollo';
 import Discussion from '../components';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -58,6 +58,27 @@ const discussionReply = gql`
 }
 
 `;
+const discussionDelete = gql`
+  mutation discussionDelete($id:ID!) {
+
+  discussionDelete(id:$id) {
+         id
+         title
+    text
+    createdAt
+    lastReplyAt
+    category {
+      id
+    }
+    views
+    replies {
+      edges {
+        id
+      }
+    }
+       }
+}
+`;
 const withQuery = graphql(DISCUSSION, {
     options: (ownProps) => {
         console.log(ownProps);
@@ -93,6 +114,21 @@ const withMutation = graphql(discussionReply, {
         },
     }),
 });
+const withMutationDelete = graphql(discussionDelete, {
+    props: ({ mutate }) => ({
+        discussionDelete: (id) => {
+            return mutate({
+                variables:  {
+                    id: id
+                },
+            })
+        },
+    }),
+});
+const WithMutations = compose(
+    withMutation,
+    withMutationDelete
+);
 const mapStateToProps = (state) => {
     return {
 
@@ -101,11 +137,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
-       // console.log(value);
         ownProps.discussionReply(value,ownProps.match.params.id).then(({data}) => {
-console.log(data,"------------ pam")
+        })
+    },
+    onClick: () => {
+        ownProps.discussionDelete(ownProps.match.params.id).then(({data}) => {
         })
     },
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery));
+export default WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery));

@@ -8,7 +8,7 @@ import Articles from  './components/Articles';
 import Plan from  './components/Plan';
  import Search from  '../../../../containers/Search.js';
 // import Search from  './components/Search';
-import { Card,Dropdown,Menu, List,Button,Form,Input ,Row,Col  } from 'antd';
+import { Card,Dropdown,Menu, List,Popconfirm, message,Button,Form,Input ,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import '../../../../style.css';
@@ -101,7 +101,8 @@ console.log(plans,"=========================================")
             <div>
                     <Card title={name}  extra={<Row style={{width:300}}>
                         <Col span={6}>
-                            {canJoin ? isJoined ? <Button onClick={this.clickUNJoin} type="danger">Leave</Button>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
+                            {canJoin ? isJoined ?  <Popconfirm title="Are you sure leave this community?" onConfirm={this.clickUNJoin} okText="Yes" cancelText="No">
+                            <Button  type="danger">Leave</Button></Popconfirm>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
                         <Col offset={1}  span={16}>
                             <Search categories={categoriesKV} />
                         </Col>

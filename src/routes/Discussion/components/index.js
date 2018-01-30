@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form,Card,Row,Col,Button,Input,List,Icon,Avatar } from 'antd';
+import { Form,Card,Row,Col,Button,Input,Tooltip,List,Icon,Avatar } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 const FormItem = Form.Item;
@@ -47,6 +47,14 @@ class Discussions extends React.Component{
 
     }
 
+    handleClick = (e) => {
+
+        const { onClick } = this.props;
+            return onClick();
+
+    }
+
+
     render(){
 
         const {loading,discussion} = this.props;
@@ -66,6 +74,10 @@ class Discussions extends React.Component{
 
                 <Card
                     title={title}
+                    extra={
+                        <Tooltip title={'Delete'}><Icon type="close-square" onClick={this.handleClick} /></Tooltip>
+
+                    }
                 >
                     <Row>
                           <p>{text}</p>
