@@ -129,8 +129,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick: () => {
         console.log(ownProps);
         ownProps.discussionDelete(ownProps.match.params.id).then(({data}) => {
-   
-            ownProps.history.push("/community/"+);
+
+
         })
     },
 });
