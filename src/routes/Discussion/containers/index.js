@@ -101,7 +101,7 @@ const withMutation = graphql(discussionReply, {
     }),
 });
 const withMutationDelete = graphql(discussionDelete, {
-    props: ({ mutate }) => ({
+    props: ({ ownProps, mutate }) => ({
         discussionDelete: (id) => {
             return mutate({
                 variables:  {
@@ -126,13 +126,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.discussionReply(value,ownProps.match.params.id).then(({data}) => {
         })
     },
-    onClick: () => {
-        console.log(ownProps);
-        ownProps.discussionDelete(ownProps.match.params.id).then(({data}) => {
-   
-            ownProps.history.push("/community/"+);
-        })
-    },
 });
 
-export default withRouter(WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery)));
+export default WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery));

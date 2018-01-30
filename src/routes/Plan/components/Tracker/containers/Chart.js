@@ -30,7 +30,7 @@ const TrackerChartWithQuery = graphql(
                 userId:ownProps.userId,
                 date:ownProps.date
             },
-            // fetchPolicy: 'network-only'
+            fetchPolicy: 'network-only'
 
         }),
         props: ({ ownProps, data }) => {

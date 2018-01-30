@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Form,Card,Row,Col,Button,Input,Popconfirm,Tooltip,List,Icon,Avatar } from 'antd';
-import { withApollo, gql } from 'react-apollo'
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
 const FormItem = Form.Item;
@@ -49,9 +48,11 @@ class Discussions extends React.Component{
 
     }
 
-    handleClick = (e) => {
-        const { onClick } = this.props;
-            return onClick();
+    handleClick = () => {
+        const { discussion, discussionDelete, history } = this.props;
+        discussionDelete(discussion.id).then(({data}) => {
+            history.push("/community/"+discussion.category.id);
+        });
     }
 
 
@@ -84,7 +85,7 @@ console.log(createdAt);
                         </Row>
                     <Row>
 
-                    <Avatar style={{ verticalAlign: 'middle' }}>N</Avatar> <label>{ moment(createdAt).format('h:mm:ss a')}</label>
+                    <Avatar style={{ verticalAlign: 'middle' }}>N</Avatar> <label>{ moment(createdAt).format('LLL')}</label>
 
                         </Row>
                 </Card>
@@ -144,4 +145,4 @@ console.log(createdAt);
 }
 
 const WrappedDiscussions = Form.create()(Discussions);
-export default withApollo(withRouter(WrappedDiscussions));
+export default withRouter(WrappedDiscussions);

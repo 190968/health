@@ -12,6 +12,17 @@ const { Option } = Select;
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
 
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 20 },
+        sm: { span: 6 },
+
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+    },
+};
 
 class EditTrackerForm extends React.Component {
     constructor(props) {
@@ -74,7 +85,7 @@ class EditTrackerForm extends React.Component {
     }
 
     render() {
-        const { loading, columns, info } = this.props;
+        const { loading, columns, info, dateFormat } = this.props;
         const { getFieldDecorator } = this.props.form;
 
         if (loading) {
@@ -93,21 +104,10 @@ class EditTrackerForm extends React.Component {
         let timesToReport = info.timesToReport;
         timesToReport = timesToReport > 0 ? timesToReport : 1;
 
-        const startDate = info.startDate
-            const endDate = info.endDate;
-        const dateFormat = 'YYYY-MM-DD';
+        const startDate = info.startDate;
+        const endDate = info.endDate;
 
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 20 },
-                sm: { span: 6 },
 
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
-        };
         return (
             <Modal
                 visible={true}
@@ -116,7 +116,7 @@ class EditTrackerForm extends React.Component {
                 keyboard = {false}
                 okText="Save"
                 onCancel={this.props.onCancel}
-                title={this.props.title+' '+info.measurement.label}
+                title={info.measurement.label}
                 onOk={this.handleSubmit}
             >
             <Form>
@@ -231,8 +231,9 @@ class EditTrackerForm extends React.Component {
                                 }],
                             })(
                                 <DatePicker
-                                    /*disabledDate={this.disabledStartDate}
-                                    format={dateFormat}*/
+                                    /*disabledDate={this.disabledStartDate}*/
+                                    format={dateFormat}
+                                    allowClear={false}
                                     placeholder="Start date"
                                 />
                             )}
@@ -254,6 +255,7 @@ class EditTrackerForm extends React.Component {
                             })(
                                 <DatePicker
                                     placeholder="End date"
+                                    format={dateFormat}
                                     /*disabledDate={this.disabledEndDate}
                                     format={dateFormat}
                                     placeholder="End"*/

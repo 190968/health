@@ -25,6 +25,7 @@ export class BiometricPlanBody extends React.Component {
         };
         this.editClick = this.editClick.bind(this);
         this.closeClick = this.closeClick.bind(this);
+        this.hideAddTracker = this.hideAddTracker.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
         this.addTracker = this.addTracker.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);

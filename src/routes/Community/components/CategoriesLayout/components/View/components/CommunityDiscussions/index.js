@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import { Icon,Form,Input,Button,Modal,Card,List,Row,Avatar } from 'antd';
+import moment from 'moment';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
@@ -89,14 +90,14 @@ class CommunityDiscussions extends React.Component{
                         dataSource={discussions}
                         renderItem={item => (
                             <List.Item key={item.id}
-                                       actions={[<IconText type="eye-o" text={item.views} />, <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} />]}
+                                       actions={[<IconText type="clock-circle-o" text={moment(item.createdAt).format('LLL')} />,<IconText type="eye-o" text={item.views} />, <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} />]}
 
                             >
 
                                 <List.Item.Meta
-                                    avatar={<Avatar size="large"></Avatar>}
+                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                     title={<Link to={'/discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
-                                    description={item.text.substr(0, 100)}
+                                    description={item.text}
                                 />
                             </List.Item>
 
