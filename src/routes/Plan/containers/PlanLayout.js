@@ -22,8 +22,10 @@ const CURRENT_PERSONAL_PLAN = gql`
             endDate
             privacy
             canEdit
+            isCompleted
             plan {
                 ...PlanCardInfo
+                isFixedDated
             }
             user {
                id
@@ -98,7 +100,10 @@ const withMutationDelete = graphql(deletePlan,
 
 const completePlan = gql`
     mutation userPlanComplete($upid:ID!) {
-       userPlanComplete(upid:$upid)
+       userPlanComplete(upid:$upid) {
+            id
+            isCompleted
+       }
     }
 
 `;
@@ -107,7 +112,7 @@ const withMutationComplete = graphql(completePlan,
         props: ({ ownProps, mutate }) => ({
             completePlan: input => {
                 return mutate({
-                    variables: { upid: ownProps.info.id},
+                    variables: {upid: ownProps.match.params.upid},
                 })
             },
         }),
