@@ -5,9 +5,11 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
-
+import messages from './motivators.json';
 import { Form,  List,Avatar,Select, Card,Modal,Input, Button, Tooltip, Icon } from 'antd';
 
 const FormItem = Form.Item;
@@ -72,6 +74,7 @@ class Motivators extends React.Component {
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
         const { getFieldDecorator } = this.props.form;
+        const { intl } = this.props;
         return(
 
 
@@ -113,7 +116,13 @@ class Motivators extends React.Component {
                         {...formItemLayout}
                         label="Email"
                     >
-                        {getFieldDecorator('email')(
+                        {getFieldDecorator('email', {
+                            rules: [{
+                                type: 'email', message: intl.formatMessage(messages.email_rule_type),
+                            }, {
+                                required: true,  message: intl.formatMessage(messages.email_rule_required),
+                            }],
+                        })(
                             <Input
                                 style={{ width: '100%' }}
                             />
@@ -136,4 +145,4 @@ class Motivators extends React.Component {
 }
 
 const WrappedMotivators= Form.create()(Motivators);
-export default withRouter(WrappedMotivators);
+export default withRouter(injectIntl(WrappedMotivators));
