@@ -31,7 +31,7 @@ const DISCUSSION  = gql`
            canJoin
          }
          views
-        replies{
+         replies{
           totalCount
           edges{
             id
