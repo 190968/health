@@ -54,6 +54,9 @@ query GET_CATEGORY($id:ID) {
             id
           }
           views
+          replies {
+            totalCount
+          }
         }
         plans{
                 id

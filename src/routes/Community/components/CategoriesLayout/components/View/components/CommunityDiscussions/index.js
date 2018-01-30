@@ -89,7 +89,7 @@ class CommunityDiscussions extends React.Component{
                         dataSource={discussions}
                         renderItem={item => (
                             <List.Item key={item.id}
-                                       actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+                                       actions={[<IconText type="eye-o" text={item.views} />, <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} />]}
 
                             >
 
