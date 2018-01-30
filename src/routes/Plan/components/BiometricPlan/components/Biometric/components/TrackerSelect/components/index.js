@@ -9,7 +9,7 @@ export class TrackerSelect extends React.Component {
         this.state = {
             amid: 0,
             addModal: false,
-            fetching: false,
+            fetching: true,
         }
 
     };

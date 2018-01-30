@@ -199,7 +199,7 @@ export const TrackerAddForm = graphql(addMutation, {
 const mapStateToProps = (state) => {
 
     return {
-
+        dateFormat:state.user.info.dateFormat
     };
 };
 
