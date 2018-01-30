@@ -5,15 +5,6 @@ import moment from 'moment';
 import {Text,AreaChart, Area, LineChart, Line, BarChart, Bar, XAxis, ReferenceLine, CartesianGrid, Tooltip} from 'recharts';
 
 
-const data = [
-    {date: '2017-01-01', value: 12, pv: 2400, amt: 2400},
-    {date: '2017-01-02', value: 44, pv: 2400, amt: 2400},
-    {date: '2017-01-03', value: 7, pv: 2400, amt: 2400},
-    {date: '2017-01-04', value: null, pv: 2400, amt: 2400},
-    {date: '2017-01-05', value: 1, pv: 2400, amt: 2400},
-];
-
-
 export default class TrackerChart extends React.Component {
     constructor(props) {
         super(props);

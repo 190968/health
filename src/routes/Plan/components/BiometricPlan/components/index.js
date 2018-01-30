@@ -8,8 +8,9 @@ import TrackerSelect from './Biometric/components/TrackerSelect/containers';
 import TrackerField from  './Biometric/components/TrackerField/containers';
 import {TrackerAddForm, TrackerEditForm} from '../../BiometricPlan/components/Biometric/components/TrackerModal/containers'
 import TrackerChartPopup from "../../../components/Tracker/components/TrackerChartPopup";
-import {  Menu, Dropdown, Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
+import {  Modal, Menu, Dropdown, Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
 import moment from "moment/moment";
+import Motivators from '../../../../User/containers/motivatorsContainer';
 
 export class BiometricPlanBody extends React.Component {
     constructor(props) {
@@ -18,6 +19,7 @@ export class BiometricPlanBody extends React.Component {
             isBuilderMode: false,// if this is a builder mode
             visible: false,
             addModal: false,
+            showMotivatorsModal: false,
             amid: 0,
             date: props.date,
         };
@@ -25,6 +27,8 @@ export class BiometricPlanBody extends React.Component {
         this.closeClick = this.closeClick.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
         this.addTracker = this.addTracker.bind(this);
+        this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.toggleMotivators = this.toggleMotivators.bind(this);
     };
     static propTypes = {
     };
@@ -51,6 +55,19 @@ export class BiometricPlanBody extends React.Component {
         });
     }
 
+    handleMenuClick(e) {
+
+        switch(e.key) {
+            case 'motivators':
+                // show motivators modal
+                this.toggleMotivators();
+                break;
+        }
+    }
+
+    toggleMotivators() {
+        this.setState({showMotivatorsModal:!this.state.showMotivatorsModal});
+    }
     showDate = (type) => {
         var dateTime = new Date(this.state.date);
         let date = '';
@@ -165,10 +182,10 @@ export class BiometricPlanBody extends React.Component {
         });
 
         const menu = (
-            <Menu>
+            <Menu onClick={this.handleMenuClick}>
                 <Menu.Item disabled key="reminders">Reminders</Menu.Item>
                 <Menu.Item disabled key="view">Change view</Menu.Item>
-                <Menu.Item disabled key="motivators">Motivators</Menu.Item>
+                <Menu.Item key="motivators" on>Motivators</Menu.Item>
                 <Menu.Item disabled key="commitment">Make a Commitment</Menu.Item>
                 <Menu.Item disabled key="promise">Make a Promise</Menu.Item>
                 <Menu.Item disabled key="print">Print</Menu.Item>
@@ -190,7 +207,7 @@ export class BiometricPlanBody extends React.Component {
                       <Button.Group style={{marginLeft:10}}>
                           <Tooltip title="Summary"><Button size="small" ><Icon type="area-chart"  /></Button></Tooltip>
                           <Tooltip title="Chat"><Button size="small" ><Icon type="message"  /></Button></Tooltip>
-                          <Tooltip title="Settings"><Dropdown overlay={menu}  >
+                          <Tooltip title="Settings"><Dropdown overlay={menu}   >
                               <Button size="small" ><Icon type="setting" /></Button>
                           </Dropdown></Tooltip>
                           <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
@@ -204,6 +221,17 @@ export class BiometricPlanBody extends React.Component {
 
 
 
+                {this.state.showMotivatorsModal && <Modal
+                    visible={true}
+                    destroyOnClose
+                    footer={false}
+
+                    maskClosable = {false}
+                    keyboard = {false}
+                    onCancel={this.toggleMotivators}
+                    title={'Motivators'}
+
+                ><Motivators user_id={user_id} /></Modal>}
                 {this.state.addModal &&
                 <TrackerAddForm amid={this.state.amid}
                                     userId={user_id}

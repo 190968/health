@@ -40,11 +40,10 @@ const motivators = gql`
 `;
 
 const motivatorInvite = gql`
-   mutation motivatorInvite($userId:ID!,$emails:[Email]!,$message:String) {
-
-  motivatorInvite(userId:$userId,emails:$emails,message:$message) {
-         id
-       }
+   mutation motivatorInvite($userId:ID!,$email:Email!,$message:String) {
+        motivatorInvite(userId:$userId,email:$email,message:$message) {
+            id
+        }
 }
 `;
 
@@ -68,7 +67,7 @@ const withMutation = graphql(motivatorInvite, {
             return mutate({
                 variables:  {
                     userId: userID,
-                    emails:  input.emails,
+                    email:  input.email,
                     message: input.text
                 } ,
             })
@@ -82,10 +81,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (value) => {
+    onSubmit: (value, handleCancel) => {
         ownProps.motivatorInvite(value,ownProps.user_id).then(({data}) => {
-            message.success('okay');
-            ownProps.history.push('/');
+            message.success('Invited');
+            handleCancel();
         })
     },
 });
