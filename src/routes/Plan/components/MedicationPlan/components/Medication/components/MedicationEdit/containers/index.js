@@ -1,13 +1,13 @@
 /**
  * Created by Pavel on 26.12.2017.
  */
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 
 import MedicationEditForm from '../components'
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-import { message } from 'antd';
+import {message} from 'antd';
 import {MedicationPlan} from "../../../../../containers";
 
 //import { compose } from 'react-apollo';
@@ -37,7 +37,7 @@ query GET_MEDICATION($user_id: ID!, $id: ID, $drugId: ID) {
             }
 }
 `;
-const editMutation=gql`
+const editMutation = gql`
  mutation MedicationUpdate($id: ID!, $userId: ID!, $input: MedicationInput!) {
         medicationUpdate(id:$id, userId: $userId, input: $input) {
              id,
@@ -62,7 +62,7 @@ const editMutation=gql`
         }
     }
 `;
-const addMutation=gql`
+const addMutation = gql`
  mutation MedicationAdd($userId: ID!, $input: MedicationInput!) {
         medicationAdd(userId: $userId, input: $input) {
              id,
@@ -92,16 +92,17 @@ const MedicationEditWithQuery = graphql(medication,
     {
         options: (ownProps) => {
             //console.log(ownProps);
-            return   {
-            variables: {
-                user_id: ownProps.userId,
-                id: ownProps.id,
-                drugId: ownProps.drugId,
+            return {
+                variables: {
+                    user_id: ownProps.userId,
+                    id: ownProps.id,
+                    drugId: ownProps.drugId,
 
-            },
+                },
                 fetchPolicy: 'network-only'
-        }},
-        props: ({ ownProps, data }) => {
+            }
+        },
+        props: ({ownProps, data}) => {
             //console.log(data);
             if (!data.loading) {
                 return {
@@ -109,7 +110,7 @@ const MedicationEditWithQuery = graphql(medication,
                     loading: data.loading
                 }
             }
-             else {
+            else {
                 return {loading: data.loading}
             }
         },
@@ -117,12 +118,11 @@ const MedicationEditWithQuery = graphql(medication,
 )(MedicationEditForm);
 
 const withMutation = graphql(editMutation, {
-    props: ({ mutate }) => ({
+    props: ({mutate}) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
-            console.log("editMutation--------------------> ",id);
-            console.log(input);
+            //console.log(input);
             return mutate({
-                variables: {id:id, userId:uid, input: {details:input}},
+                variables: {id: id, userId: uid, input: {details: input}},
                 /*refetchQueries: [{
                     query: editMutation,
                     variables: {
@@ -130,7 +130,11 @@ const withMutation = graphql(editMutation, {
                         user_id: uid
                     },
                 }],*/
-                update: (store, { data: { medicationUpdate } }) => {
+                refetchQueries: [{
+                    query: MedicationPlan,
+                    variables: {user_id: uid, date: date},
+                }],
+                /*update: (store, { data: { medicationUpdate } }) => {
 
                     // Read the data from our cache for this query.
                     const data = store.readQuery({
@@ -155,36 +159,37 @@ const withMutation = graphql(editMutation, {
                             id: id,
                             user_id: uid
                         }});
-                },
+                },*/
             }).then((data) => {
                 onCancel(data);
                 message.success('Saved');
-            })},
+            })
+        },
     }),
 });
 
 
 export const MedicationAddForm = graphql(addMutation, {
-    props: ({ mutate }) => ({
+    props: ({mutate}) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
-            console.log("addMUtation--------------------> ",id);
             return mutate({
-                variables: {userId:uid, input: {details:input}},
+                variables: {userId: uid, input: {details: input}},
                 refetchQueries: [{
                     query: MedicationPlan,
-                    variables: { user_id: uid, date:date },
+                    variables: {user_id: uid, date: date},
                 }],
             }).then((data) => {
                 onCancel(data);
                 message.success('Saved');
-            })},
+            })
+        },
     }),
 })(MedicationEditWithQuery);
 
 const mapStateToProps = (state) => {
 
     return {
-
+        dateFormat: state.user.info.dateFormat
     };
 };
 
@@ -200,7 +205,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     //     })
     // },
 });
-
 
 
 export default withMutation(connect(

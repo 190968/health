@@ -43,7 +43,9 @@ export default class TrackerChart extends React.Component {
 
 
     render() {
-        const {data, item, graph, loading} = this.props;
+        const {data, item, loading} = this.props;
+
+        const graph = item.graph || this.props.graph;
         const {criticalRange, normalRange} = item;
         const {min: criticalRangeMin, max: criticalRangeMax} = criticalRange;
         const {min: normalRangeMin, max: normalRangeMax} = normalRange;

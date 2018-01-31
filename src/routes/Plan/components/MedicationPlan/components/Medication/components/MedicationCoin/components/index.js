@@ -85,11 +85,11 @@ export class MedicationCoin extends React.Component {
         //console.log(this.props);
         //console.log(hasReport);
         if (isTaken) {
-            return (<Button type="primary" shape="circle" onClick={this.handleClick} >
+            return (<Button type="primary" size="large" shape="circle" onClick={this.handleClick} >
                 <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
             </Button>)
         }
-        return (<Button shape="circle" onClick={this.handleClick} >
+        return (<Button shape="circle" size="large" onClick={this.handleClick} >
             <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
         </Button>)
     }

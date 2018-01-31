@@ -56,3 +56,54 @@ export default class Tracker extends React.Component {
         />)
     }
 }
+
+export class TrackerUncontrolled extends React.PureComponent {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value:props.value
+        };
+        this.onChange = this.onChange.bind(this);
+    };
+    static propTypes = {
+        item: PropTypes.object,
+        value: PropTypes.float
+    };
+    static defaultProps = {
+        value: null
+    };
+
+    onChange(value) {
+        this.setState({value:value});
+    }
+
+    render() {
+        const {item} = this.props;
+        //console.log(this.props);
+        const {value} = this.state;
+        const {units, inputMask} = item;
+        const unitsName = units.name;
+
+        return (<InputNumber
+            value={value}
+            //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
+            formatter={value => {
+                //console.log();
+                //console.log(value);
+                if (inputMask != '') {
+                    //console.log(inputMask);
+                    //console.log(value);
+                    return VMasker.toPattern(value, inputMask)
+                } else {
+
+                    return VMasker.toNumber(value);
+                }
+
+            }}
+            //parser={value => VMasker.toPattern(value, inputMask)}
+            //parser={value => value.replace(/\$\s?|(,*)/g, '')}
+            placeholder={unitsName}
+            onChange={this.onChange}
+        />)
+    }
+}

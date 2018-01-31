@@ -7,7 +7,6 @@ const TrackerSummaryQuery = gql`
     query GetTrackerSummary ($id: ID!, $userId:ID!, $date: Date!)  {
         trackerMeasurement(id: $id) {
             id
-            graph
             summary (date:$date, userId:$userId)  {
                 date
                 reports {
@@ -40,7 +39,7 @@ const TrackerChartWithQuery = graphql(
                 const trackerMeasurement = data.trackerMeasurement;
                 return {
                     data: trackerMeasurement.summary,
-                    graph: trackerMeasurement.graph,
+                    //graph: trackerMeasurement.graph,
                     loading: data.loading,
                     loadMoreEntries() {
                         //console.log(ownProps.page);

@@ -4,10 +4,11 @@
 import React, { PropTypes } from 'react';
 import {Modal, DatePicker, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
 import moment from "moment/moment";
-import Tracker from '../../../../../../Tracker';
+import {TrackerUncontrolled as Tracker} from '../../../../../../Tracker';
 import {
     FormattedMessage,
 } from 'react-intl';
+import {TrackerUncontrolled} from "../../../../../../Tracker";
 const { Option } = Select;
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
@@ -52,7 +53,7 @@ class EditTrackerForm extends React.Component {
         const { amid, updateTracker } = this.props;
         //console.log(this.props);
         this.props.form.validateFields((err, values) => {
-            //console.log(values);
+            console.log(values);
             if (!err) {
                 const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns, startDate, endDate } = values;
 
@@ -73,7 +74,7 @@ class EditTrackerForm extends React.Component {
 
             //console.log(id);
             //console.log(userId);
-                console.log(input);
+                //console.log(input);
 
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
@@ -126,6 +127,7 @@ class EditTrackerForm extends React.Component {
                 >
                     {getFieldDecorator('criticalRangeMin', {
                         initialValue: info.criticalRange.min
+                        /*rules: [{ type:"float" }]*/
                     })(
                             <Col offset={1} span={10}>
                                 <Col span={8}> below </Col><Col span={14}><Tracker item={info.measurement} /></Col>
@@ -248,7 +250,7 @@ class EditTrackerForm extends React.Component {
                         <FormItem
                         >
                             {getFieldDecorator('endDate', {
-                                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
+                                initialValue: endDate ? moment(endDate) : undefined,
                                 rules: [{
                                     validator: this.checkEndDate, message: 'End date must be after Start Date',
                                 }],
