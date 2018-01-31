@@ -18,7 +18,7 @@ mutation discussionCreate($categoryId:ID!,$subject:String!,$message:String!) {
          title
          text
          createdAt
-         lastReplyAt
+         
          category {
            id
          }

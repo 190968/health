@@ -90,14 +90,13 @@ class CommunityDiscussions extends React.Component{
                         dataSource={discussions}
                         renderItem={item => (
                             <List.Item key={item.id}
-                                       actions={[<IconText type="clock-circle-o" text={moment(item.createdAt).format('LLL')} />,<IconText type="eye-o" text={item.views} />, <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} />]}
-
+                                       actions={[<IconText type="clock-circle-o" text={moment(item.lastReply.createdAt || item.createdAt).format('LLL')} />,<IconText type="eye-o" text={item.views} />, <IconText type="like-o" text="0" />, <Link to={'/discussion/' + item.id} style={{color: 'inherit'}}><IconText type="message" text={item.replies.totalCount} /></Link>]}
                             >
 
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                     title={<Link to={'/discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
-                                    description={item.text}
+                                    description={item.lastReply.text || item.text}
                                 />
                             </List.Item>
 

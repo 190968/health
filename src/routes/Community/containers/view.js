@@ -49,7 +49,18 @@ query GET_CATEGORY($id:ID) {
           title
           text
           createdAt
-          lastReplyAt
+          lastReply {
+            id
+            date
+            text
+            author {
+              id
+              
+            }
+          }
+          author {
+            id
+          }
           category {
             id
           }

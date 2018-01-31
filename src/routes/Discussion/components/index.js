@@ -164,7 +164,7 @@ class Discussions extends React.Component{
                             dataSource={edges}
                             renderItem={item => (
                                 <List.Item key={item.id}
-                                           actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />, <IconText type="message" text="2" />, <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >R</p></Tooltip>]}
+                                           actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} onClick={this.showModal.bind(this,item.id)} />, <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >Reply</p></Tooltip>]}
 
                                 >
 
@@ -172,6 +172,25 @@ class Discussions extends React.Component{
                                         avatar={<Avatar size="large"></Avatar>}
                                     />
                                     {item.text}
+
+                                    {item.replies.totalCount > 0 && <List
+                                        style={{marginLeft:24}}
+                                        itemLayout="vertical"
+                                        dataSource={item.replies.edges}
+                                        renderItem={item => (
+                                            <List.Item key={item.id}
+                                                       actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />]}
+
+                                            >
+
+                                                <List.Item.Meta
+                                                    avatar={<Avatar size="large"></Avatar>}
+                                                />
+                                                {item.text}
+                                            </List.Item>
+
+                                        )}
+                                    />}
                                 </List.Item>
 
                             )}

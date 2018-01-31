@@ -19,31 +19,43 @@ import {withRouter} from "react-router-dom";
 
 const DISCUSSION  = gql`
  query GET_DISCUSSION($id:ID) {
-
-       discussion(id:$id) {
+    discussion(id:$id) {
          id
          title
          text
          createdAt
-         lastReplyAt
          category {
            id
            isJoined
            canJoin
          }
-         views
-         replies{
-          totalCount
-          edges{
+         author {
             id
-            text
-            date
-            createdAt
-            isImportant
-            unread
-          }
-        }      
-       }
+         }
+         views
+         replies {
+              totalCount
+              edges{
+                    id
+                    text
+                    date
+                    createdAt
+                    isImportant
+                    unread
+                    replies {
+                      totalCount
+                      edges{
+                            id
+                            text
+                            date
+                            createdAt
+                            isImportant
+                            unread
+                      }
+                  }    
+              }
+          }      
+    }
 }
 `;
 const discussionReply = gql`
