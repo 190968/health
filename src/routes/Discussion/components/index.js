@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Form,Card,Row,Col,Button,Input,Popconfirm,Tooltip,List,Icon,Avatar } from 'antd';
+import { Form,Card,Row,Col,Button,Modal,Input,Popconfirm,Tooltip,List,Icon,Avatar } from 'antd';
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
 const FormItem = Form.Item;
@@ -34,20 +34,39 @@ const tailFormItemLayout = {
 };
 
 class Discussions extends React.Component{
-    constructor(props){
+    state = { visible: false ,id:null}
+    constructor(props) {
         super(props);
     }
-    handleSubmit = (e) => {
 
+    showModal = (param) => {
+        this.setState({
+           visible: true,
+            id:param
+        });
+    }
+    handleCancel = (e) => {
+        this.setState({
+            visible: false,
+        });
+    }
+
+    handleSubmit = (e) => {
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
-            console.log(values);
             return onSubmit(values);
         });
-
     }
+    handleModalSubmit = () => {
+        const { discussionReply } = this.props;
+        this.props.form.validateFields((err, values) => {
+            discussionReply(values.textReply,this.props.match.params.id,this.state.id).then(({data}) => {
+                console.log(data);
+            });
 
+        });
+    }
     handleClick = () => {
         const { discussion, discussionDelete, history } = this.props;
         discussionDelete(discussion.id).then(({data}) => {
@@ -68,7 +87,6 @@ class Discussions extends React.Component{
         const {title,text,createdAt,category,replies} = discussion;
         const {edges} = replies;
         const {isJoined} = category;
-console.log(createdAt);
         const { getFieldDecorator } = this.props.form;
         return(
             <div>
@@ -80,6 +98,28 @@ console.log(createdAt);
                         </Popconfirm>
                     }
                 >
+
+                    <Modal
+                        title="Reply"
+                        visible={this.state.visible}
+                        onCancel={this.handleCancel}
+                        okText="Send"
+                        onOk={this.handleModalSubmit}
+                    >
+                        <Form onSubmit={this.handleModalSubmit} >
+                            <FormItem>
+                                {getFieldDecorator('textReply')(
+
+                                    <Input
+                                        suffix={<Icon type="paper-clip" />}
+                                    />
+
+                                )}
+                            </FormItem>
+                        </Form>
+
+                    </Modal>
+
                         <Row>
                           <p>{text}</p>
                         </Row>
@@ -124,7 +164,7 @@ console.log(createdAt);
                             dataSource={edges}
                             renderItem={item => (
                                 <List.Item key={item.id}
-                                           actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+                                           actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />, <IconText type="message" text="2" />, <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >R</p></Tooltip>]}
 
                                 >
 

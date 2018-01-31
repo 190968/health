@@ -90,11 +90,12 @@ const withQuery = graphql(DISCUSSION, {
 
 const withMutation = graphql(discussionReply, {
     props: ({ mutate }) => ({
-        discussionReply: (input,id) => {
+        discussionReply: (text,id,parentMessageId) => {
             return mutate({
                 variables:  {
                     id: id,
-                    message: input.text
+                    message: text,
+                    parentMessageId:parentMessageId
                 },
             })
         },
@@ -123,9 +124,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
-        ownProps.discussionReply(value,ownProps.match.params.id).then(({data}) => {
+        ownProps.discussionReply(value.text,ownProps.match.params.id).then(({data}) => {
+            console.log(data);
         })
-    },
+    }
 });
 
 export default WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery));

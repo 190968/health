@@ -125,7 +125,7 @@ console.log(plans,"=========================================")
                 }
 
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
-                {plans.length > 0 && <Plan />}
+                {plans.length > 0 && <Plan  plans={plans}/>}
             </div>
         );
     }
