@@ -20,6 +20,11 @@ export default class MedicationChart extends React.Component {
         date: PropTypes.string
     };
 
+    static defaultProps = {
+        width:300,
+        height:100,
+        useAxis:false
+    }
 
     formatDate(value) {
         return moment(value).format('M/D');
@@ -50,11 +55,11 @@ export default class MedicationChart extends React.Component {
 
 
     render() {
-        const {data, item, loading} = this.props;
+        const {data, item, loading, width, height, useAxis} = this.props;
         const graph = 'area';
 
         if (loading) {
-            return <LineChart width={300} height={100}>
+            return <LineChart width={width} height={height}>
                 <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                 Loading
             </LineChart>
@@ -65,30 +70,34 @@ export default class MedicationChart extends React.Component {
         }
         switch (graph) {
             default:
-                return <LineChart width={300} height={100} data={data}>
+                return <LineChart width={width} height={height} data={data}>
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+                    {useAxis && <XAxis dataKey="date"  padding={{left: 10, right: 10}} tickFormatter={this.formatDate} tickCount={7} interval="preserveStartEnd" axisLine={false} tickLine={false} />}
+
                     <Tooltip content={this.formatTooltip}/>
                     <Line type='monotone' dataKey={this.getValue} stroke='#1089ff' activeDot={{r: 4}} strokeWidth={2}
                           connectNulls={true}/>
                 </LineChart>
                 break;
             case 'area':
-                return (<AreaChart width={300} height={100} data={data}
+                return (<AreaChart width={width} height={height} data={data}
                                    margin={{top: 5, right: 0, left: 0, bottom: 5}}>
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
 
                     <Area type='monotone' dataKey={this.getValue} activeDot={{r: 4}} stroke='#1089ff' fill='#d2eaff'
                           connectNulls={true}/>
-                    {/*<XAxis dataKey="date"  padding={{left: 10, right: 10}} tickFormatter={this.formatDate} tickCount={7} interval="preserveStartEnd" axisLine={false} tickLine={false} />*/}
+                    {useAxis && <XAxis dataKey="date"  padding={{left: 10, right: 10}} tickFormatter={this.formatDate} tickCount={7} interval="preserveStartEnd" axisLine={false} tickLine={false} />}
                     <Tooltip content={this.formatTooltip}/>
 
 
                 </AreaChart>)
                 break;
             case 'bar':
-                return <BarChart width={300} height={100} data={data}>
+                return <BarChart width={width} height={height} data={data}>
                     <Bar dataKey={this.getValue} fill='#d2eaff'/>
                     <Tooltip content={this.formatTooltip}/>
+                    {useAxis && <XAxis dataKey="date"  padding={{left: 10, right: 10}} tickFormatter={this.formatDate} tickCount={7} interval="preserveStartEnd" axisLine={false} tickLine={false} />}
+
                 </BarChart>
                 break;
         }

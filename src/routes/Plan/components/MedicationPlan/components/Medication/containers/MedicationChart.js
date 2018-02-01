@@ -2,21 +2,16 @@ import { connect } from 'react-redux'
 import MedicationChart from '../components/MedicationChart';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {MedicationSummary} from '../components/fragments';
 
 const MedicationSummaryQuery = gql`    
     query GetMedicationSummary ($id: ID!, $userId:ID!, $date: Date!)  {
         medication(id: $id, userId:$userId) {
             id
-            summary (date:$date, userId:$userId)  {
-                date
-                reportsNeeded
-                reports {
-                    id
-                    isTaken
-                }
-            }
+            ...MedicationSummary
         }
     }
+    ${MedicationSummary}
 `;
 
 const MedicationChartWithQuery = graphql(

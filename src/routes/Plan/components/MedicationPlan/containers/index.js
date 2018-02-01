@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import MedicationPlanBody from '../components';
 import Medication from '../components/Medication/components';
+import {MedicationCardInfo} from '../components/Medication/components/fragments';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -31,9 +32,7 @@ export const MedicationPlan = gql`
                 textAfter
         }
     }
-
-
-    ${Medication.fragments.medication}
+    ${MedicationCardInfo}
 `;
 
 const MedicationPlanBodyWithQuery = graphql(

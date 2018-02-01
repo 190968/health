@@ -12,7 +12,8 @@ const AsyncCategoryView = (props) => {
     return (
         Loadable({
             loader: () => import('../../../routes/Community/containers/view.js'),
-
+            modules: ['../../../routes/Community/containers/view.js'],
+            webpack: () => [require.resolveWeak('../../../routes/Community/containers/view.js')],
         },undefined, props)
     );
 }

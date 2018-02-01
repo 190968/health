@@ -152,4 +152,4 @@ export class PlanElement extends React.Component {
 
 
 
-export default withApollo(PlanElement)
+export default PlanElement

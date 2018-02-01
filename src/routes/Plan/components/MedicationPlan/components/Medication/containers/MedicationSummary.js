@@ -5,6 +5,7 @@ import MedicationSummary from '../components/MedicationSummary'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+
 const Medications_SUMMARY = gql`
 query GET_MEDICATIONS_SUMMARY($userId: ID!, $date: Date) {
             medicationPlan(userId: $userId, date: $date) {

@@ -1,7 +1,7 @@
 import React  from 'react';
 // adding proptypes
 import PropTypes from 'prop-types'
-import IdleTimer from 'react-idle-timer';
+
 // adding router
 import { BrowserRouter } from 'react-router-dom'
 
@@ -9,6 +9,7 @@ import apolloClient from '../../clients/apolloClient';
 import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux'
 import gql from 'graphql-tag';
+import {Modal} from 'antd';
 //import logo from './logo.svg';
 //
 //core
@@ -82,7 +83,7 @@ const queryOptions =  {
 class App extends React.Component {
     constructor(props) {
         super(props);
-        //this.state = { loading: true } ;
+
     };
     static propTypes = {
         store: PropTypes.object.isRequired,
@@ -118,17 +119,7 @@ class App extends React.Component {
                 <Provider store={this.props.store}>
                     <BrowserRouter history={history} basename={basename} >
                         <LocaleProvider locale={enUS}>
-                            {/*<Modal>*/}
-                            {/*<IdleTimer*/}
-                                {/*ref="idleTimer"*/}
-                                {/*element={document}*/}
-                                {/*activeAction={this._onActive}*/}
-                                {/*idleAction={онклик}*/}
-                                {/*timeout={1000}*/}
-                                {/*format="MM-DD-YYYY HH:MM:ss.SSS">*/}
-                                    <Core store={this.props.store} />
-                            {/*</IdleTimer>*/}
-                            {/*</Modal>*/}
+                            <Core store={this.props.store} />
                         </LocaleProvider>
                     </BrowserRouter>
                 </Provider>

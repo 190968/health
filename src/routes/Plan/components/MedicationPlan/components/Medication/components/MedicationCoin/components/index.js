@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, message } from 'antd';
+import { Button, message, Tooltip } from 'antd';
 
 export class MedicationCoin extends React.Component {
 
@@ -85,13 +85,13 @@ export class MedicationCoin extends React.Component {
         //console.log(this.props);
         //console.log(hasReport);
         if (isTaken) {
-            return (<Button type="primary" size="large" shape="circle" onClick={this.handleClick} >
+            return (<Tooltip title="Untake"><Button type="primary" size="large" shape="circle" onClick={this.handleClick} >
                 <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
-            </Button>)
+            </Button></Tooltip>)
         }
-        return (<Button shape="circle" size="large" onClick={this.handleClick} >
+        return (<Tooltip title="Take"><Button shape="circle" size="large" onClick={this.handleClick} >
             <div  dangerouslySetInnerHTML={{__html: quantity}}></div>
-        </Button>)
+        </Button></Tooltip>)
     }
 }
 

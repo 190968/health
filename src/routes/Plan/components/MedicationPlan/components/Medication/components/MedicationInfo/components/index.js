@@ -1,25 +1,20 @@
 import React from 'react'
-import {Icon ,Row, Col, Popconfirm} from 'antd';
+import {Icon, Row, Col, Popconfirm} from 'antd';
 import {
     FormattedMessage,
 } from 'react-intl';
 
 import MedicationEditForm from '../../MedicationEdit/containers'
 import MedicationChartPopup from '../../MedicationChartPopup';
+import MedicationFullDetails from '../../../containers/MedicationFullDetails';
 
-/*const AsyncModalEdit = () => {
-    return (
-        Loadable({
-            loader: () => import('../../../../../../../../../routes/Plan/components/MedicationPlan/components/Medication/components/MedicationEdit/containers'),
-        })
-    );
-}*/
 
 const options = {
-    followCursor:false,
+    followCursor: false,
     shiftX: 50,
     shiftY: 40
 }
+
 export class MedicationInfo extends React.PureComponent {
 
     constructor(props) {
@@ -27,76 +22,86 @@ export class MedicationInfo extends React.PureComponent {
         this.state = {
             isClicked: false,
         };
-        this.state = { flipped: false };
-        this.state = { visible: false };
+        this.state = {visible: false, showDetails: false};
+        this.toggleDetails = this.toggleDetails.bind(this);
     };
-    static propTypes = {
-    };
+
+    static propTypes = {};
     handleCancel = () => {
         //console.log("handleCancel");
         this.setState({
-            visible:false,
+            visible: false,
         });
     }
     handleDelete = () => {
-        const { deleteMed, info, user_id } = this.props;
+        const {deleteMed, info, user_id} = this.props;
         const {id} = info;
         return deleteMed(id, user_id);//, !this.state.isClicked, this.toggleCoin);
     }
-    mouseOver() {
-        //console.log("Mouse over!!!");
-        this.setState({flipped: true});
+
+    toggleDetails() {
+        this.setState({showDetails:!this.state.showDetails});
     }
+
     iconClick() {
-       // console.log("modalVisible");
-       this.setState({visible: true});
+        // console.log("modalVisible");
+        this.setState({visible: true});
     }
+
     render() {
-        const {loading,user_id, date} = this.props;
-        if(loading){
-            return(<div>Loading</div>)
+        const {loading, user_id, date} = this.props;
+        if (loading) {
+            return (<div>Loading</div>)
         }
-   //     console.log(user_id);
+        //     console.log(user_id);
         // const userId = 24038;
-        const {id,drug} = this.props.info;
+        const {id, drug} = this.props.info;
         //console.log(id);
         const {name, dosage} = drug;
         return (
-<div>
+            <div>
 
 
-    {this.state.visible &&
-    <MedicationEditForm id={id}
-                        userId={user_id}
-                        date={date}
-                        title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal" defaultMessage="Edit" description="Edit" />}
-                        onCancel={this.handleCancel} />}
+                {this.state.visible &&
+                <MedicationEditForm id={id}
+                                    userId={user_id}
+                                    date={date}
+                                    title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal"
+                                                             defaultMessage="Edit" description="Edit"/>}
+                                    onCancel={this.handleCancel}/>}
 
 
-        <Row>
-            <Col span={2} >
-                <Icon type="video-camera" />
-            </Col>
+                {this.state.showDetails && <MedicationFullDetails id={id}  userId={user_id}
+                                                                  date={date} onClose={this.toggleDetails} />}
 
 
-            <Col span={22} >
-                         {name} <MedicationChartPopup item={this.props.info} userId={user_id} date={date}  /> <Icon onClick={()=> this.iconClick()} type="edit" /> <Popconfirm title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete} okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm>
-            </Col>
+                <Row>
+                    <Col span={2}>
+                        <Icon type="video-camera"/>
+                    </Col>
 
-        </Row>
-        <Row style={{fontSize:'0.8em'}}>
-            <Col span={2}>
-                <Icon type="camera-o" />
-            </Col>
-            <Col span={22}>
-                {dosage}
-            </Col>
-        </Row>
-    </div>
-      )
+
+                    <Col span={22}>
+                        {name} <Icon type="info-circle-o" style={{marginLeft:10}} onClick={this.toggleDetails}/> <MedicationChartPopup
+                        item={this.props.info} userId={user_id} date={date} label="Weekly" /> <Icon onClick={() => this.iconClick()}
+                                                                                    type="edit"/> <Popconfirm
+                        title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete}
+                        okText="Yes" cancelText="No"><Icon type="delete"/></Popconfirm>
+                    </Col>
+
+                </Row>
+                <Row style={{fontSize: '0.8em'}}>
+                    <Col span={2}>
+                        <Icon type="camera-o"/>
+                    </Col>
+                    <Col span={22}>
+                        {dosage}
+                    </Col>
+                </Row>
+            </div>
+        )
     }
 }
-
 
 
 export default MedicationInfo

@@ -35,6 +35,7 @@ class MedicationSummary extends React.Component {
 
     static defaultProps = {
         date: '',
+        width:500,
     }
 
     formatDate(value) {
@@ -161,8 +162,6 @@ const data = [
                 key: i,
             });
         });
-
-        console.log(medicationsRows);
 
         return (<Modal
             visible={true}
