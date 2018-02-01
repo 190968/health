@@ -5,14 +5,16 @@ import MedicationSelect from './Medication/components/MedicationSelect/container
 import MedicationInfo from './Medication/components/MedicationInfo/containers';
 import {MedicationAddForm as MedicationAddForm} from './Medication/components/MedicationEdit/containers';
 import MedicationSummary from './Medication/containers/MedicationSummary';
+import Motivators from '../../../../User/containers/motivatorsContainer';
 import moment from 'moment';
+import './index.css';
 import {
     FormattedMessage,
     FormattedDate,
     FormattedTime,
 } from 'react-intl';
 
-import { Menu, Dropdown, Popover, Table,Button, Icon, List, Divider, Card, Tooltip } from 'antd';
+import { Menu, Dropdown, Popover, Table,Button, Icon, Modal, Divider, Card, Tooltip, Col } from 'antd';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -22,11 +24,14 @@ export class MedicationPlanBody extends React.Component {
             date: props.date,
             addModal:false,
             showSummary:false,
-            medId:''
+            medId:'',
+            showMotivatorsModal:false,
         };
 
         this.addMedication = this.addMedication.bind(this);
         this.toggleSummary = this.toggleSummary.bind(this);
+        this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.toggleMotivators = this.toggleMotivators.bind(this);
     };
     static propTypes = {
     };
@@ -61,7 +66,23 @@ export class MedicationPlanBody extends React.Component {
         this.setState({
             addModal:false,
             medId:0
+
+
         });
+    }
+
+    handleMenuClick(e) {
+
+        switch(e.key) {
+            case 'motivators':
+                // show motivators modal
+                this.toggleMotivators();
+                break;
+        }
+    }
+
+    toggleMotivators() {
+        this.setState({showMotivatorsModal:!this.state.showMotivatorsModal});
     }
 
     toggleSummary() {
@@ -96,6 +117,10 @@ export class MedicationPlanBody extends React.Component {
         const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
         //console.log(info);
         let columns = [];
+        let takeDailyColumns = [];
+        let takeDailyData = [];
+        let takeAsNeededColumns = [];
+        let takeAsNeededData = [];
         let data = [];
 
         if (takeAtTimes.length > 0/*type == 'at_times'*/) {
@@ -116,7 +141,6 @@ export class MedicationPlanBody extends React.Component {
                 //console.log(medication);
                 at_times.map(function (time_info) {
 
-
                     let report = {};
                     if (reports) {
                          report = reports.filter((e) => e.time === time_info.time);
@@ -124,14 +148,7 @@ export class MedicationPlanBody extends React.Component {
                              report = report[0];
                          }
                     }
-                    //console.log(report);
 
-                        //.map(e => e)
-                    /*let report = {};
-                    if (reports && !reports.some(item => time_info.time === item.time)) {
-                        report = reports[0] || {};
-                    }*/
-                    //console.log(columns);
                     const {time, quantity} = time_info;
                     if (!columns.some(item => time === item.time)) {
                         columns.push({
@@ -142,7 +159,6 @@ export class MedicationPlanBody extends React.Component {
                             //render: (info) => {console.log(info)}
                         });
                     }
-                    //console.log(report, date);
                     medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} userId={user_id} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
                 });
 
@@ -150,16 +166,90 @@ export class MedicationPlanBody extends React.Component {
                 data.push(
                     medic_times
                 );
-                //return
+            });
+        }
+
+        //take daily
+        if (takeDaily.length > 0) {
+            takeDailyColumns = [
+                {
+                    title: 'Medication',
+                    width: 300,
+                    dataIndex: 'name',
+                    key: 'name',
+                    fixed: 'left',
+                    className: 'transparent'
+                },
+                {
+                    title: 'Report',
+                    dataIndex: 'report',
+                    key: 'report',
+                },
+            ];
+            takeDaily.map(medication => {
+
+                const {reports} = medication;
+                //const report = reports && reports[0] || {};
+                let rows = [];
+                const timesPerDay = medication.timesPerDay;
+                const quantity = medication.quantity;
+
+                for (var i = 0; i < timesPerDay; i++) {
+                    const report = reports && reports[i] || {};
+
+                    rows.push(<Col xs={3} key={i}><MedicationCoin med_id={medication.id} userId={user_id} quantity={quantity} report={report} date={date} /></Col>);
+                }
+                takeDailyData.push({
+                    key: medication.id + 'drug',
+                    name: <MedicationInfo user_id={user_id} date={date} info={medication}/>,
+                    report: rows
+                });
+            });
+        }
+
+        if (takeAsNeeded.length > 0) {
+            takeAsNeededColumns = [
+                {
+                    title: 'Medication',
+                    width: 300,
+                    dataIndex: 'name',
+                    key: 'name',
+                    fixed: 'left',
+                    className: 'transparent'
+                },
+                {
+                    title: 'Report',
+                    dataIndex: 'report',
+                    key: 'report',
+                },
+            ];
+            takeAsNeeded.map(medication => {
+
+                const {reports} = medication;
+                //const report = reports && reports[0] || {};
+                let rows = [];
+                const timesPerDay = medication.timesPerDay;
+                const quantity = medication.quantity;
+
+                for (var i = 0; i < timesPerDay; i++) {
+                    const report = reports && reports[i] || {};
+
+                    rows.push(<Col xs={3} key={i}><MedicationCoin med_id={medication.id} userId={user_id} quantity={quantity} report={report} date={date} /></Col>);
+                }
+                takeAsNeededData.push({
+                    key: medication.id + 'drug',
+                    name: <MedicationInfo user_id={user_id} date={date} info={medication}/>,
+                    report: rows
+                });
             });
         }
 
 
         const menu = (
-            <Menu>
+            <Menu onClick={this.handleMenuClick}>
                 <Menu.Item disabled key="reminders">Reminders</Menu.Item>
-                <Menu.Item disabled key="refill">Add Refill</Menu.Item>
-                <Menu.Item disabled key="motivators">Motivators</Menu.Item>
+                {/*<Menu.Item disabled key="refill">Add Refill</Menu.Item>*/}
+                <Menu.Item  key="motivators">Motivators</Menu.Item>
                 <Menu.Item disabled key="commitment">Make a Commitment</Menu.Item>
                 <Menu.Item disabled key="promise">Make a Promise</Menu.Item>
                 <Menu.Item disabled key="print">Print</Menu.Item>
@@ -197,23 +287,13 @@ export class MedicationPlanBody extends React.Component {
                     {takeDaily.length > 0 &&
                         (<div>
                         <Divider><FormattedMessage id="plan.medication.daily" defaultMessage="Take Daily" /></Divider>
-                        <List
-                            dataSource={takeDaily}
-                            grid={{ column: 1}}
-                            size="small"
-                            renderItem={medication => (<List.Item>
-                                <Medication user_id={user_id} key={medication.id+'d'} info={medication} date={date} /></List.Item>)}
-                        /></div>)
+                            <Table columns={takeDailyColumns} dataSource={takeDailyData} scroll={{x: 600}} pagination={false} showHeader={false} />
+                       </div>)
                     }
                     {takeAsNeeded.length > 0 &&
                     (<div>
                         <Divider><FormattedMessage id="plan.medication.as_needed" defaultMessage="Take As Needed" /></Divider>
-                        <List
-                            dataSource={takeAsNeeded}
-                            grid={{ column: 1}}
-                            size="small"
-                            renderItem={medication => (<List.Item><Medication key={medication.id+'a'} user_id={user_id} info={medication} date={date} /></List.Item>)}
-                        />
+                        <Table columns={takeAsNeededColumns} dataSource={takeAsNeededData} scroll={{x: 600}} pagination={false} showHeader={false} />
                         </div>)
                     }
 
@@ -225,6 +305,17 @@ export class MedicationPlanBody extends React.Component {
                                             date={date}
                                             title={<FormattedMessage id="plan.medication.add" defaultMessage="Add" description="Add Medication" />}
                                             onCancel={this.hideAddMedication} />}
+                    {this.state.showMotivatorsModal && <Modal
+                        visible={true}
+                        destroyOnClose
+                        footer={false}
+
+                        maskClosable = {false}
+                        keyboard = {false}
+                        onCancel={this.toggleMotivators}
+                        title={'Motivators'}
+
+                    ><Motivators user_id={user_id} /></Modal>}
             </Card>
             )
     }

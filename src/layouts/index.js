@@ -6,7 +6,7 @@ import React from 'react'
 import ReactPlaceholder from 'react-placeholder';
 import { Spin,Modal,Button } from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
-import { Layout } from 'antd';
+import { Layout, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
 import LayoutHeader from './Header';
 
@@ -16,28 +16,16 @@ import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSett
 
 
 import PrivateRoute from '../routes/privateRoute';
+import IdleTimer from 'react-idle-timer';
 
 //const App = require('../components/App').default
 const { Header, Content, Footer } = Layout;
 
-export const Core = ({loading, user, store, location}) =>  {
-//console.log(store);
+export const CoreLayout = ({loading, user, store, location}) =>  {
 
-    if (loading) {
-        return (
-            <div style={{height:'100%', width:'100%',overflow: 'auto', display: 'flex',top: '50%', position: 'absolute',
-                'minHeight': '100vh',
-                'flexDirection':'column'}}>
-          <Spin />
-                </div>
-        );
-    }
 
-    if(user.info.id && !user.info.phoneConfirmed){
-        return(
-            <VerifyPhone  />
-        )
-    }
+
+
 
 
     return (
@@ -71,28 +59,85 @@ export const Core = ({loading, user, store, location}) =>  {
         </div>
     )}
 
-/*
-            <Route exact path="/logout" components={asyncLogout(store)} />
-            <PrivateRoute path="/planbuilder" components={asyncPlanbuilder(store)} />
-            <PrivateRoute exact path="/plan/:upid" components={asyncPlan(store)} />
-            <PrivateRoute exact path="/planstore" components={asyncPlantore(store)} />
-            <PrivateRoute exact path="/planstore/plan/:id" components={asyncPlantorePlan(store)} />
-            <PrivateRoute path="/settings" components={asyncSettings(store)} />*/
-Core.propTypes = {
-    token: PropTypes.string,
-    //logout: PropTypes.func,
-    //children: PropTypes.node.isRequired,
-    loading: PropTypes.bool,
-    modalChildrens: PropTypes.array,
-    hideModal: PropTypes.func
-};
+class Core extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { isIddle: false } ;
+        this._onActive = this._onActive.bind(this);
+        this._onIdle = this._onIdle.bind(this);
+        this._onLogout = this._onLogout.bind(this);
+    };
+    static propTypes = {
+        token: PropTypes.string,
+        //logout: PropTypes.func,
+        //children: PropTypes.node.isRequired,
+        loading: PropTypes.bool,
+        modalChildrens: PropTypes.array,
+        hideModal: PropTypes.func
+    };
 
-Core.defaultProps = {
-    token: null,
-    children: null,
-    user: null,
-    loading: false,
-};
+    static defaultProps = {
+        token: null,
+        children: null,
+        user: null,
+        loading: false,
+    };
+
+    _onLogout() {
+        console.log( this.props);
+        //this.props.history.push('/logout');
+    };
+    _onActive() {
+        this.setState({isIddle:false});
+    };
+    _onIdle() {
+        this.setState({isIddle:true});
+    };
+
+
+    render() {
+
+        const {loading, user, store, location} = this.props;
+
+        if (loading) {
+            return (
+                <div style={{height:'100%', width:'100%',overflow: 'auto', display: 'flex',top: '50%', position: 'absolute',
+                    'minHeight': '100vh',
+                    'flexDirection':'column'}}>
+                    <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
+                </div>
+            );
+        }
+
+        if(user.info.id && !user.info.phoneConfirmed){
+            return(
+                <VerifyPhone  />
+            )
+        }
+
+        return (
+
+            <React.Fragment>
+                {this.state.isIddle ? <Modal title="No Activity" visible={true}
+                                             onCancel={this._onLogout}
+                                             onOk={this._onActive} okText="Continue" cancelText="Logout"
+                    >
+                        You've been inactive. Would you like to continue or logout
+                    </Modal> :
+
+                    ( user.info.id ?
+                    <IdleTimer
+                        ref="idleTimer"
+                        element={document}
+                        idleAction={this._onIdle}
+                        timeout={300000}
+                        format="MM-DD-YYYY HH:MM:ss.SSS">
+                        <CoreLayout {...this.props} />
+                    </IdleTimer> : <CoreLayout {...this.props} />)
+                }
+            </React.Fragment>)
+    }
+}
 
 
 
@@ -117,4 +162,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Core));
+export  default withRouter(connect(mapStateToProps, mapDispatchToProps)(Core));

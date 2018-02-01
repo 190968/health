@@ -1,6 +1,3 @@
-/**
- * Created by Pavel on 04.12.2017.
- */
 import React,{PropTypes} from 'react';
 import { Redirect} from 'react-router-dom'
 

@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import Plan from 'routes/Plan/components/Plan';
-import Medication from 'routes/Plan/components/MedicationPlan/components/Medication/components';
+import {MedicationsByType} from 'routes/Plan/components/MedicationPlan/components/Medication/components/fragments';
 import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
 
 
@@ -23,22 +23,7 @@ const QUERY = gql`
                 id
                 upid
                 isPersonal
-                medicationsByType (date: $date) {
-                    takeAtTimes {
-                        ...MedicationCardInfo
-                        timesPerHour {
-                            id
-                            time
-                            quantity
-                        }
-                    }
-                    takeDaily {
-                        ...MedicationCardInfo
-                    }
-                    takeAsNeeded {
-                        ...MedicationCardInfo
-                    }
-                }
+                ...MedicationsByType
                 textBefore
                 textAfter
             }
@@ -63,7 +48,7 @@ const QUERY = gql`
    
     
     ${Plan.fragments.plan}
-    ${Medication.fragments.medication}
+    ${MedicationsByType}
     ${Biometric.fragments.tracker}
 `;
 /*

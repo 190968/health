@@ -2,40 +2,9 @@ import React from 'react'
 import MedicationCoin from './MedicationCoin/containers';
 import MedicationInfo from './MedicationInfo/containers';
 import { Row, Col } from 'antd';
-import gql from 'graphql-tag';
+
 
 export class Medication extends React.Component {
-
-    // fragment for the plan info
-    static fragments = {
-        medication: gql`
-            fragment MedicationCardInfo on Medication {
-                id
-                drug {
-                    name
-                    dosage
-                    id
-                    form
-                }
-                type
-                timesPerDay
-                quantity
-                directions
-                purpose
-                sideEffects
-                image
-                isPersonal
-                startDate
-                endDate
-                reports (date: $date) {
-                    id
-                    time
-                    date
-                    isTaken
-                }
-            }
-        `
-    }
 
     constructor(props) {
         super(props);
