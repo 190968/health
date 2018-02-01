@@ -5,8 +5,11 @@ import React, { PropTypes } from 'react';
 import { Card, Form, Select, Input,Button } from 'antd';
 import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
+import messages from './verifyPhone.json';
 import PhoneForm from '../../../../components/PhoneForm';
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -76,22 +79,22 @@ class VerifyPhoneForm extends React.Component {
         const { form } = this.props;
         const { getFieldDecorator } = form;
         const phoneNumberError = form.getFieldError('phone[number]');
-
+        const {intl}=this.props;
 
 
         return (
             <div className="register-form"  style={{padding:'8% 30% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
-                    title="Verify Phone"
+                    title={intl.formatMessage(messages.verifyPhone)}
                     actions={[ <Button  loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
-                        <FormattedMessage id="user.settings.verifyphone.send" defaultMessage="Send" description="Send" />
+                        {intl.formatMessage(messages.send)}
                     </Button>]}
                 >
 
                         <FormItem
                             {...formItemLayout}
-                            label={'Phone'}
+                            label={intl.formatMessage(messages.phone)}
                             hasFeedback
                             validateStatus={phoneNumberError ? 'error' : ''}
                             help={phoneNumberError || ''}
@@ -107,4 +110,4 @@ class VerifyPhoneForm extends React.Component {
     }
 }
 const WrappedVerifyPhoneForm = Form.create()(VerifyPhoneForm);
-export default WrappedVerifyPhoneForm;
+export default injectIntl(WrappedVerifyPhoneForm);

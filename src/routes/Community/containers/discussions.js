@@ -82,15 +82,14 @@ const discussionDelete = gql`
 `;
 const withQuery = graphql(DISCUSSION, {
     options: (ownProps) => {
-        console.log(ownProps);
-        return   {
+
+        return   {   pollInterval: 1000,
             variables: {
                 id: ownProps.match.params.id,
             },
             fetchPolicy: 'network-only'
         }},
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
                 discussion: data.discussion,

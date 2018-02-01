@@ -4,9 +4,11 @@
 import React, { PropTypes } from 'react';
 import {  Link } from 'react-router-dom'
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
-
+import messages from './careteam.json';
 import {Form,List,Avatar, Card } from 'antd';
 
 class CareTeam extends React.Component {
@@ -20,11 +22,13 @@ class CareTeam extends React.Component {
         const  {info,loading} = this.props;
 
 
-        const title = <FormattedMessage id="user.careteam.careteam.title2" defaultMessage="My CareTeam" description="My CareTeam" />;
+
         if (loading) {
-            return  <Card loading title={title}>
+            return  <Card loading >
                 Loading</Card>;
         }
+        const {intl}=this.props;
+        const title = intl.formatMessage(messages.myCareTeam);
         const  {careTeam} = info;
         const  {edges,totalCount} = careTeam;
         return edges.length > 0 ?
@@ -45,7 +49,7 @@ class CareTeam extends React.Component {
                                     </Link> :
                                     <div>
                                         <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
-                                        <label>No name</label>
+                                        <label>{intl.formatMessage(messages.noName)}</label>
                                     </div>
                             }
 
@@ -57,4 +61,4 @@ class CareTeam extends React.Component {
 }
 
 const WrappedCareTeam = Form.create()(CareTeam);
-export default WrappedCareTeam;
+export default injectIntl(WrappedCareTeam);

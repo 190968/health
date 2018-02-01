@@ -3,12 +3,14 @@
  */
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom'
-import {
-    FormattedMessage,
-} from 'react-intl';
 
 import { Form,  List,Avatar, Card } from 'antd';
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './family.json';
 class Family extends React.Component {
 
     constructor(props) {
@@ -26,11 +28,11 @@ class Family extends React.Component {
                 Loading</Card>;
         }
         const  {family} = info;
+        const {intl}=this.props;
         const  {edges,totalCount} = family;
         let Item = [];
         return edges.length > 0 ?
-        ( <Card title={<FormattedMessage id="user.family.family.title" defaultMessage="My Family"
-                                                  description="MY FAMILY"/>}>
+        ( <Card title={intl.formatMessage(messages.myFamily)}>
             <List
                 split={false}
                 loading={loading}
@@ -51,7 +53,7 @@ class Family extends React.Component {
                                 </Link> :
                                 <div>
                                     <span><Avatar style={{verticalAlign: 'middle'}}>N</Avatar> </span>
-                                    <label>No name</label>
+                                    <label>{intl.formatMessage(messages.noName)}</label>
                                 </div>
                         }
 
@@ -64,4 +66,4 @@ class Family extends React.Component {
 }
 
 const WrappedFamily = Form.create()(Family);
-export default WrappedFamily;
+export default injectIntl(WrappedFamily);

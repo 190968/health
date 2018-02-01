@@ -6,6 +6,12 @@ import { Card, Tooltip,Row,Col,Form,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import { Link } from 'react-router-dom'
 import Search from  '../../../../containers/Search.js';
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './mainCategory.json';
 class MyCategories extends React.Component{
 
     constructor(props){
@@ -21,6 +27,7 @@ class MyCategories extends React.Component{
                 <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
+        const { intl } = this.props;
         let categoriesKV = [];
         info.forEach((item)=>{
             categoriesKV.push({value:item.id, text:item.name});
@@ -30,7 +37,7 @@ class MyCategories extends React.Component{
 
 
                 <Card
-                    title="Main Categories"
+                    title={intl.formatMessage(messages.title)}
                     extra={ <Row>
                         <Col offset={11}  span={13}>
                             <Search categories={categoriesKV} />
@@ -62,4 +69,4 @@ class MyCategories extends React.Component{
 }
 
 const WrappedMyCategories = Form.create()(MyCategories);
-export default withApollo(WrappedMyCategories);
+export default withApollo(injectIntl(WrappedMyCategories));

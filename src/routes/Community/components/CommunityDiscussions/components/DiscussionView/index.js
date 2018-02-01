@@ -9,7 +9,7 @@ import {withRouter} from "react-router-dom";
 
 
 class DiscussionView extends React.Component{
-    state = { visible: false ,id:null}
+
     constructor(props) {
         super(props);
     }
