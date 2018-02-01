@@ -23,8 +23,8 @@ const AsyncView = () => {
 
 export const PlanstoreLayout = ({plans, loading, loadMoreEntries}) => (
     <div>
-    <Route exact path='/planstore' component={AsyncIndex()} />
-    <Route exact path='/planstore/plan/:id' component={AsyncView()} />
+        <Route exact path='/planstore' component={AsyncIndex()} />
+        <Route exact path='/planstore/plan/:id' component={AsyncView()} />
     </div>
 )
 //

@@ -123,7 +123,6 @@ console.log(plans,"=========================================")
                     categories.length != 0 ?  <ListCommunityForm name={name}  categories={categories} />: null
 
                 }
-
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
                 {plans.length > 0 && <Plan  plans={plans}/>}
             </div>

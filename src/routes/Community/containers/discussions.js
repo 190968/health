@@ -1,4 +1,7 @@
 /**
+ * Created by Павел on 31.01.2018.
+ */
+/**
  * Created by Павел on 29.01.2018.
  */
 
@@ -11,7 +14,7 @@ import { connect } from 'react-redux'
  wiring in the actions and state necessary to render a presentational
  components - in this case, the counter:   */
 import {compose} from 'react-apollo';
-import Discussion from '../components';
+import Discussion from '../components/CommunityDiscussions';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

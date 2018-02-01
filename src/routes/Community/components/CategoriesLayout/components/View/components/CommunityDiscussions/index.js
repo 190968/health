@@ -7,6 +7,7 @@ import moment from 'moment';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
+
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const IconText = ({ type, text }) => (
@@ -37,6 +38,9 @@ const tailFormItemLayout = {
         },
     },
 };
+
+
+
 class CommunityDiscussions extends React.Component{
     state = { visible: false }
     constructor(props){
@@ -83,6 +87,7 @@ class CommunityDiscussions extends React.Component{
                 title={name.toUpperCase()+" Community Discussions"}
                 extra={canAdd && <Button type="primary" onClick={this.showModal}>Start discussion</Button>}
             >
+
                 <Row>
                     <List
                         loading={loading}
@@ -95,7 +100,7 @@ class CommunityDiscussions extends React.Component{
 
                                 <List.Item.Meta
                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<Link to={'/discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
+                                    title={<Link to={'discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
                                     description={item.lastReply.text || item.text}
                                 />
                             </List.Item>

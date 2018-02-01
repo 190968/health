@@ -145,15 +145,15 @@ export const asyncCommynity = (store) => {
         })
     );
 }
-export const asyncDiscussion = (store) => {
-    return (
-        Loadable({
-            loader: () => import('../routes/Discussion/containers'),
-            modules: ['../routes/Discussion/containers'],
-        webpack: () => [require.resolveWeak('../routes/Discussion/containers')],
-})
-    );
-}
+// export const asyncDiscussion = (store) => {
+//     return (
+//         Loadable({
+//             loader: () => import('../routes/Discussion/containers'),
+//             modules: ['../routes/CommunityDiscussions/containers'],
+//         webpack: () => [require.resolveWeak('../routes/CommunityDiscussions/containers')],
+// })
+//     );
+// }
 
 export const asyncCalendar = (store) => {
     return (

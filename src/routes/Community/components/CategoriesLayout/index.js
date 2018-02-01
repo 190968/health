@@ -3,12 +3,15 @@
  */
 import React, { PropTypes } from 'react';
 import { Card, Tooltip,Form,List } from 'antd';
+import { Route } from 'react-router-dom'
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import MyCommutinies from '../../containers/myCommunities.js'
 import MainCategories from './components/MainCategories'
 import { Link } from 'react-router-dom'
 import '../../style.css';
+import Loadable from '../../../../components/Loadable';
+
 class MyCategories extends React.Component{
 
     constructor(props){
@@ -31,7 +34,7 @@ class MyCategories extends React.Component{
                     <div>
                         <MyCommutinies />
                         <MainCategories info={info} />
-                        </div>
+                    </div>
         )
     }
 

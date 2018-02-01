@@ -26,7 +26,13 @@ const AsyncCategoryView = (props) => {
  )
     );
 }
-
+const AsyncCommynityDiscussion = () => {
+    return (
+        Loadable({
+            loader: () => import('../../../routes/Community/containers/discussions.js')
+})
+    );
+}
 
 class CommunityLayout extends React.Component {
 
@@ -57,6 +63,7 @@ class CommunityLayout extends React.Component {
                 </Breadcrumb>
             </Row>
             <Route exact path='/community' component={AsyncCategoryDash()} />
+            <Route exact path="/community/discussion/:id" component={AsyncCommynityDiscussion()} />
             <Route exact path="/community/:id" component={AsyncCategoryView({handleBreadcrumbChange:this.handleBreadcrumbChange})}/>
         </div>)
     }
