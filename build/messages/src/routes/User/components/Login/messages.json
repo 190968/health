@@ -1,0 +1,72 @@
+[
+  {
+    "id": "user.login.title",
+    "description": "Login",
+    "defaultMessage": "Login"
+  },
+  {
+    "id": "user.login.forgot_question",
+    "description": "Forgot password?",
+    "defaultMessage": "Forgot password?"
+  },
+  {
+    "id": "user.login.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "user.login.rule",
+    "description": "Please enter the email address you registered with to help us locate your Fitango Demo account.",
+    "defaultMessage": "Please enter the email address you registered with to help us locate your Fitango Demo account."
+  },
+  {
+    "id": "user.login.forgot_rule",
+    "description": "The input is not valid E-mail!",
+    "defaultMessage": "The input is not valid E-mail!"
+  },
+  {
+    "id": "user.login.enter_email",
+    "description": "Enter email",
+    "defaultMessage": "Enter email"
+  },
+  {
+    "id": "user.login.input_email",
+    "description": "Please input valid Email!",
+    "defaultMessage": "Please input valid Email!"
+  },
+  {
+    "id": "user.login.email",
+    "description": "Email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "user.login.password.rule",
+    "description": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "defaultMessage": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."
+  },
+  {
+    "id": "user.login.passwrod",
+    "description": "Password",
+    "defaultMessage": "Password"
+  },
+  {
+    "id": "user.login.forgot",
+    "description": "Forgot password",
+    "defaultMessage": "Forgot password"
+  },
+  {
+    "id": "user.login.or",
+    "description": "Or",
+    "defaultMessage": "Or"
+  },
+  {
+    "id": "user.login.signup",
+    "description": "Sign up",
+    "defaultMessage": "Sign up"
+  },
+  {
+    "id": "user.login.login",
+    "description": "Log in",
+    "defaultMessage": "Log in"
+  }
+]

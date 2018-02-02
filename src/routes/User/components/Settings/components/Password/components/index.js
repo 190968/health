@@ -9,7 +9,7 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './password.json';
+import messages from './mesages';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {

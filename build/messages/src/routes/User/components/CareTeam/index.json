@@ -1,7 +1,7 @@
 [
   {
-    "id": "user.careteam.careteam.title2",
-    "description": "My CareTeam",
-    "defaultMessage": "My CareTeam"
+    "id": "app.home.greeting",
+    "description": "Message to greet the user.",
+    "defaultMessage": "Hello, {name}!"
   }
 ]

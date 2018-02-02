@@ -90,10 +90,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 // show success message
                 message.success('Reset password link has been sent');
 
-            }).catch((error) => {
+            });/*.catch((error) => {
                 console.log(1);
 
-        });
+        });*/
 
 
     },

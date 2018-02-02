@@ -17,7 +17,7 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './view.json';
+import messages from './messages';
 
 
 

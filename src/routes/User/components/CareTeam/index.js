@@ -8,9 +8,8 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './careteam.json';
+import messages from './messages';
 import {Form,List,Avatar, Card } from 'antd';
-
 class CareTeam extends React.Component {
 
     constructor(props) {
