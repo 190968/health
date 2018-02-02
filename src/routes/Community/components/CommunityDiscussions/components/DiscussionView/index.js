@@ -39,7 +39,6 @@ class DiscussionView extends React.Component{
         const {title,text,createdAt} = discussion;
         const {intl}=this.props;
         return(
-            <div>
 
                 <Card
                     title={title}
@@ -57,7 +56,6 @@ class DiscussionView extends React.Component{
 
                     </Row>
                 </Card>
-            </div>
         );
     }
 

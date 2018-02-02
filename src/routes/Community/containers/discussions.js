@@ -83,7 +83,7 @@ const discussionDelete = gql`
 const withQuery = graphql(DISCUSSION, {
     options: (ownProps) => {
 
-        return   {   pollInterval: 1000,
+        return   {   pollInterval: 20000,
             variables: {
                 id: ownProps.match.params.id,
             },

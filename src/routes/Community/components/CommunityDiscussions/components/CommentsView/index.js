@@ -45,7 +45,6 @@ class CommentsView extends React.Component{
         const {intl}=this.props;
         const { getFieldDecorator } = this.props.form;
         return(
-            <div>
                 <Card
                     title={
                         <Form onSubmit={this.handleSubmit} >
@@ -73,7 +72,6 @@ class CommentsView extends React.Component{
                 >
                     <Comment discussion={{replies}}  discussionReply={this.props.discussionReply} />
                 </Card>
-            </div>
         );
     }
 
