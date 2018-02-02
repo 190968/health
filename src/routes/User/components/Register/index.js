@@ -8,14 +8,13 @@ import PhoneForm from '../../../../components/PhoneForm';
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
 
-import { Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
+import { Modal,Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {
     injectIntl,
-    defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './register.json';
+import messages from './messages';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -45,8 +44,6 @@ const tailFormItemLayout = {
     },
 };
 
-//const messages = defineMessages(Messages);
-
 
 class NormalRegisterForm extends React.Component {
 
@@ -54,6 +51,8 @@ class NormalRegisterForm extends React.Component {
         super();
         this.state = {checked:true, loading:false};
         this.stopLoading = this.stopLoading.bind(this);
+        this.showTerms = this.showTerms.bind(this);
+        this.showPolicy = this.showPolicy.bind(this);
     }
 
     componentWillMount() {
@@ -79,7 +78,32 @@ class NormalRegisterForm extends React.Component {
                 return onSubmit(values,  this.stopLoading);
             }
         });
-    }
+    };
+
+    showTerms(e) {
+        e.preventDefault();
+        Modal.info({
+            title: 'Terms of use',
+            content: (
+                <div>
+                    Terms of use
+                </div>
+            ),
+            onOk() {},
+        });
+    };
+    showPolicy(e) {
+        e.preventDefault();
+        Modal.info({
+            title: 'Privacy policy',
+            content: (
+                <div>
+                    Privacy policy
+                </div>
+            ),
+            onOk() {},
+        });
+    };
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
@@ -116,11 +140,15 @@ class NormalRegisterForm extends React.Component {
         const phoneNumberError = form.getFieldError('phone[number]');
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
+
+        const termsOfUseLink = <a onClick={this.showTerms}>{intl.formatMessage(messages.terms)}</a>;
+        const policyLink = <a onClick={this.showPolicy}>{intl.formatMessage(messages.privacy_policy)}</a>;
         return (
             <div className="register-form" style={{padding:'0 20%'}}>
                 <Card
                     title={intl.formatMessage(messages.sign_up)}
                 >
+
             <Form onSubmit={this.handleSubmit} >
 
                 <FormItem
@@ -243,7 +271,10 @@ class NormalRegisterForm extends React.Component {
                         valuePropName: 'checked',
 
                     })(
-                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} >{intl.formatMessage(messages.read)} <a href="">{intl.formatMessage(messages.agreement)}</a></Checkbox>
+                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} ><FormattedMessage {...messages.agreement} values={{
+                            terms_of_use: termsOfUseLink,
+                            privacy_policy: policyLink
+                        }} /></Checkbox>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
@@ -252,7 +283,7 @@ class NormalRegisterForm extends React.Component {
                     <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                         {intl.formatMessage(messages.sign_up)}
                     </Button>
-                    {intl.formatMessage(messages.or)} <Link  to={'/login'}>{intl.formatMessage(messages.login_now)}</Link>
+                    {intl.formatMessage(messages.or)} <Link to={'/login'}>{intl.formatMessage(messages.login_now)}</Link>
                 </FormItem>
             </Form>
                 </Card>

@@ -1,4 +1,6 @@
-{
+import { defineMessages } from 'react-intl';
+
+export default defineMessages({
   "inconsistent": {
     "id": "user.title",
     "defaultMessage": "Two passwords that you enter is inconsistent!",
@@ -55,7 +57,7 @@
     "description": "Your input no valid date"
   },
   "birthday_rule_required": {
-    "id": "user.birthday.rule.type",
+    "id": "user.birthday.rule.required",
     "defaultMessage": "Please input your birthday",
     "description": "Please input your birthday"
   },
@@ -70,7 +72,7 @@
     "description": "Your input no valid email"
   },
   "email_rule_required": {
-    "id": "user.email.rule.type",
+    "id": "user.email.rule.required",
     "defaultMessage": "Please input your email",
     "description": "Please input your email"
   },
@@ -101,9 +103,19 @@
   },
   "agreement": {
     "id": "user.agreement",
-    "defaultMessage": "By signing up I agree to the {terms_of_use} and {privacy_policy}.",
+    "defaultMessage": 'By signing up I agree to the {terms_of_use} and {privacy_policy}.',
     "description": "Agreement agree"
   },
+    'terms': {
+        "id": "terms_of_use",
+        "defaultMessage": 'Terms of use',
+        "description": "Terms of usee"
+    },
+    'privacy_policy': {
+        "id": "privacy_policy",
+        "defaultMessage": 'Privacy Policy',
+        "description": "Privacy Policy"
+    },
   "sign_up": {
     "id": "user.sign_up",
     "defaultMessage": "Sign Up",
@@ -119,4 +131,4 @@
     "defaultMessage": "login now!",
     "description": "login now!"
   }
-}
+});
