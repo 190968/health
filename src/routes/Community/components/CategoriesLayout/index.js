@@ -2,7 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Card, Tooltip,Form,List } from 'antd';
+import { Card,Breadcrumb, Tooltip,Form,List } from 'antd';
 import { Route } from 'react-router-dom'
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
@@ -26,12 +26,12 @@ class MyCategories extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
-
-
+            console.log(this.props);
         return(
 
 
                     <div>
+                        {/*<Breadcrumb routes={routes} params={params} />*/}
                         <MyCommutinies />
                         <MainCategories info={info} />
                     </div>
