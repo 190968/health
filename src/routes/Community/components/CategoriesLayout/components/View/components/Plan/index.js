@@ -13,7 +13,12 @@ import '../../../../../../style.css';
 import {
     withRouter
 } from 'react-router-dom'
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './plan.json';
 class Plan extends React.PureComponent{
 
     constructor(props) {
@@ -39,9 +44,10 @@ class Plan extends React.PureComponent{
 
     render(){
     const {plans,loading}= this.props;
+        const { intl } = this.props;
         return(
             <Card
-            title="Related Actionplan"
+            title={intl.formatMessage(messages.relatedPlan)}
             >
                 {plans.length > 0 ? <List
                     split={false}
@@ -53,12 +59,11 @@ class Plan extends React.PureComponent{
                             <PlanWidget info={product} key={product.id}/>
                         </List.Item>
                     )}
-                /> : <Card style={{textAlign:'center'}}>No ActionPlans Found</Card>}
+                /> : <Card style={{textAlign:'center'}}>{intl.formatMessage(messages.noPlan)}</Card>}
             </Card>
         );
     }
-
 }
 
 const WrappedPlan = Form.create()(Plan);
-export default withApollo(withRouter(WrappedPlan));
+export default withApollo(withRouter(injectIntl(WrappedPlan)));

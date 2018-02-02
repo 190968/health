@@ -12,7 +12,12 @@ import '../../../../../../style.css';
 import {
     withRouter
 } from 'react-router-dom'
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './search.json';
 class Search extends React.PureComponent{
 
     constructor(props) {
@@ -39,14 +44,13 @@ class Search extends React.PureComponent{
 
 
     render(){
-        const {items,loading} = this.props;
-
+        const {items,intl,loading} = this.props;
         return(
             <div>
                 <AutoComplete
                     dataSource={items}
                     allowClear={true}
-                    placeholder="Search Community"
+                    placeholder={intl.formatMessage(messages.search)}
                     filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                     onSearch = {this.onChange}
                     onSelect = {this.onSelect}
@@ -61,4 +65,4 @@ class Search extends React.PureComponent{
 }
 
 const WrappedSearch = Form.create()(Search);
-export default withApollo(withRouter(WrappedSearch));
+export default withApollo(withRouter(injectIntl(WrappedSearch)));

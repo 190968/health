@@ -7,7 +7,12 @@ import moment from 'moment';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './communityDiscussion.json';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const IconText = ({ type, text }) => (
@@ -63,7 +68,6 @@ class CommunityDiscussions extends React.Component{
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
-           console.log(values);
             return onSubmit(values);
         });
     }
@@ -75,6 +79,7 @@ class CommunityDiscussions extends React.Component{
                 <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
+        const { intl } = this.props;
         const { getFieldDecorator } = this.props.form;
         const {name,discussions, canAdd} = this.props;
 
@@ -84,8 +89,8 @@ class CommunityDiscussions extends React.Component{
 
 
             <Card
-                title={name.toUpperCase()+" Community Discussions"}
-                extra={canAdd && <Button type="primary" onClick={this.showModal}>Start discussion</Button>}
+                title={name.toUpperCase()+intl.formatMessage(messages.communityDiscussion)}
+                extra={canAdd && <Button type="primary" onClick={this.showModal}>{intl.formatMessage(messages.start)}</Button>}
             >
 
                 <Row>
@@ -109,16 +114,16 @@ class CommunityDiscussions extends React.Component{
                     />
                 </Row>
                 <Modal
-                    title="Start discussion"
+                    title={intl.formatMessage(messages.start)}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
-                    okText="Submit"
+                    okText={intl.formatMessage(messages.submit)}
                     onOk={this.handleSubmit}
                 >
                     <Form onSubmit={this.handleSubmit} >
                         <FormItem
                             {...formItemLayout}
-                            label="Title"
+                            label={intl.formatMessage(messages.title)}
                         >
                             {getFieldDecorator('title')(
                                 <Input />
@@ -126,7 +131,7 @@ class CommunityDiscussions extends React.Component{
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
-                            label="Text"
+                            label={intl.formatMessage(messages.text)}
                         >
                             {getFieldDecorator('text')(
                                 <TextArea autosize />
@@ -144,4 +149,4 @@ class CommunityDiscussions extends React.Component{
 const WrappedCommunityDiscussions = Form.create()(CommunityDiscussions);
 
 
-export default withApollo(withRouter(WrappedCommunityDiscussions));
+export default withApollo(withRouter(injectIntl(WrappedCommunityDiscussions)));

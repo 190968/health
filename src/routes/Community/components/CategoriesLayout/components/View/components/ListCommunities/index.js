@@ -8,7 +8,12 @@ import React, { PropTypes } from 'react';
 import { Tooltip,Form,Card,List,Row} from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import { Link } from 'react-router-dom'
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './listCommunity.json';
 class ListCommunity extends React.Component{
 
     constructor(props){
@@ -23,12 +28,13 @@ class ListCommunity extends React.Component{
                 <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
+        const { intl } = this.props;
         const {name,categories} = this.props;
 
 
         return(
             <Card
-                title={name.toUpperCase()+" COMMUNITIES"}
+                title={name.toUpperCase()+intl.formatMessage(messages.communities)}
             >
                 <Row>
                     <List
@@ -51,8 +57,7 @@ class ListCommunity extends React.Component{
             </Card>
         );
     }
-
 }
 
 const WrappedListCommunity = Form.create()(ListCommunity);
-export default withApollo(WrappedListCommunity);
+export default withApollo(injectIntl(WrappedListCommunity));

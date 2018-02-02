@@ -3,13 +3,14 @@
  */
 import React, { PropTypes } from 'react';
 import { Form,Card,Col,Button,Input,Icon,Avatar } from 'antd';
-import moment from 'moment';
 import {withRouter} from "react-router-dom";
+import Comment from '../../components/Comment';
+
 const FormItem = Form.Item;
 
 
 class CommentsView extends React.Component{
-    state = { visible: false ,id:null}
+
     constructor(props) {
         super(props);
     }
@@ -27,7 +28,6 @@ class CommentsView extends React.Component{
 
 
     render(){
-
         const {loading,discussion} = this.props;
         if (loading) {
             return (
@@ -35,7 +35,7 @@ class CommentsView extends React.Component{
             );
         }
 
-        const {category} = discussion;
+        const {category,replies} = discussion;
         const {isJoined} = category;
         const { getFieldDecorator } = this.props.form;
         return(
@@ -63,12 +63,9 @@ class CommentsView extends React.Component{
                                 }
                             </Col>
                         </Form>
-
-
-
                     }
                 >
-                  pasha
+                    <Comment discussion={{replies}}  discussionReply={this.props.discussionReply} />
                 </Card>
             </div>
         );

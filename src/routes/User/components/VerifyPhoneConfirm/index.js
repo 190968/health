@@ -4,8 +4,11 @@
 import React, { PropTypes } from 'react';
 import { Card, Form, Input,Button } from 'antd';
 import {
-    FormattedMessage,
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
+import messages from './verifyPhoneConfirm.json';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -15,18 +18,6 @@ const formItemLayout = {
     wrapperCol: {
         xs: { span: 24 },
         sm: { span: 14 },
-    },
-};
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
     },
 };
 
@@ -54,24 +45,25 @@ class VerifyPhoneConfirmForm extends React.Component {
     render() {
 
         const { getFieldDecorator } = this.props.form;
+        const {intl}=this.props;
         return (
             <div className="register-form" style={{padding:'8% 35% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
-                    title={<FormattedMessage id="user.settings.verifyconfirm" defaultMessage="Verify Phone Confirm" description="Confirm" />}
+                    title={intl.formatMessage(messages.verifyPhoneConfirm)}
                     actions={[ <Button  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
-                        <FormattedMessage id="user.settings.verifyconfirm.send" defaultMessage="Send" description="Send"/>
+                        {intl.formatMessage(messages.send)}
                     </Button>]}
                 >
 
                         <FormItem
                             {...formItemLayout}
-                            label={<FormattedMessage id="user.settings.verifyconfirm.code" defaultMessage="Code" description="Code" />}
+                            label={intl.formatMessage(messages.code)}
                             hasFeedback
                         >
                             {getFieldDecorator('code', {
-                                rules: [{ required: true, message: <FormattedMessage id="user.settings.verifyconfirm.rule" defaultMessage="Please input your code" description="code" /> },
-                                    {len:4, message:'must be 4 digits'}
+                                rules: [{ required: true, message:intl.formatMessage(messages.rules) },
+                                    {len:4, message:intl.formatMessage(messages.message)}
                                 ],
                             })(
                                 <Input size="large" />
@@ -85,4 +77,4 @@ class VerifyPhoneConfirmForm extends React.Component {
     }
 }
 const WrappedVerifyPhoneConfirmForm = Form.create()(VerifyPhoneConfirmForm);
-export default WrappedVerifyPhoneConfirmForm;
+export default injectIntl(WrappedVerifyPhoneConfirmForm);

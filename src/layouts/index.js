@@ -44,11 +44,10 @@ export const CoreLayout = ({loading, user, store, location}) =>  {
                 <Route exact path="/login" component={asyncLogin(store)} />
                 <Route exact path="/logout" component={asyncLogout(store)} />
                 <Route exact path="/register/:code?" component={asyncRegister(store)} />
-
+                <Route exact path="/password/reset" component={asyncForgotPassword(store)} />
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
                 <PrivateRoute path="/community" component={asyncCommynity(store)} />
-                {/*<PrivateRoute path="/discussion/:id" component={asyncDiscussion(store)} />*/}
                 <PrivateRoute path="/calendar" component={asyncCalendar(store)} />
                 <PrivateRoute  path="/plan/:upid" component={asyncPlan(store)} />
             </Content>

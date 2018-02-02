@@ -12,7 +12,12 @@ import { Card,Dropdown,Menu, List,Popconfirm, message,Button,Form,Input ,Row,Col
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import '../../../../style.css';
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './view.json';
 
 
 
@@ -29,8 +34,6 @@ class ViewForm extends React.Component{
     }
 
     handleChange() {
-        console.log("handleChange");
-        //this.props.handleBreadcrumbChange("pasha");
     }
     clickJoin = () => {
         const { onSubmit, info} = this.props;
@@ -42,11 +45,9 @@ class ViewForm extends React.Component{
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
         window.addEventListener('load', this.handleChange());
     }
     onTabChange = (key, type) => {
-        console.log(key, type);
         this.setState({ [type]: key });
     }
 
@@ -61,14 +62,15 @@ class ViewForm extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
+        const { intl } = this.props;
         const {name,canJoin, isJoined,articles,discussions,categories,plans} = info;
-console.log(plans,"=========================================")
+
         let categoriesKV = [];
         categories.forEach((item)=>{
             categoriesKV.push({value:item.id, text:item.name});
         });
 
-        console.log(this.props);
+
 
         const tabListNoTitle = [];
         let contentListNoTitle={};
@@ -94,15 +96,13 @@ console.log(plans,"=========================================")
             }
             )
         }
-        console.log(tabListNoTitle);
-        console.log(contentListNoTitle);
         return(
 
             <div>
                     <Card title={name}  extra={<Row style={{width:300}}>
                         <Col span={6}>
-                            {canJoin ? isJoined ?  <Popconfirm title="Are you sure leave this community?" onConfirm={this.clickUNJoin} okText="Yes" cancelText="No">
-                            <Button  type="danger">Leave</Button></Popconfirm>:<Button onClick={this.clickJoin}  type="primary">Join</Button> : ''}</Col>
+                            {canJoin ? isJoined ?  <Popconfirm title={intl.formatMessage(messages.popTitle)} onConfirm={this.clickUNJoin} okText={intl.formatMessage(messages.okText)} cancelText={intl.formatMessage(messages.cancelText)}>
+                            <Button  type="danger">{intl.formatMessage(messages.leave)}</Button></Popconfirm>:<Button onClick={this.clickJoin}  type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
                         <Col offset={1}  span={16}>
                             <Search categories={categoriesKV} />
                         </Col>
@@ -132,4 +132,4 @@ console.log(plans,"=========================================")
 }
 
 const WrappedViewForm = Form.create()(ViewForm);
-export default withApollo(withRouter(WrappedViewForm));
+export default withApollo(withRouter(injectIntl(WrappedViewForm)));
