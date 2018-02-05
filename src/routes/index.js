@@ -144,6 +144,29 @@ export const asyncMessages = (store) => {
     );
 }
 
+export const asyncHealth = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/Health/components'),
+            modules: ['../routes/Health/components'],
+            webpack: () => [require.resolveWeak('../routes/Health/components')],
+        })
+    );
+}
+
+export const asyncHelp = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/Help/containers'),
+            modules: ['../routes/Help/containers'],
+            webpack: () => [require.resolveWeak('../routes/Help/containers')],
+        })
+    );
+}
+
+
+
+
 
 export const asyncCommynity = (store) => {
     return (
