@@ -35,11 +35,11 @@ class Replies extends React.Component{
 
         const {replies} = discussion;
         const {edges} = replies;
-
+console.log(edges);
         return(
             <div>
 
-                    <List
+                {edges.length > 0 ? <List
                         loading={loading}
                         itemLayout="vertical"
                         dataSource={edges}
@@ -65,7 +65,7 @@ class Replies extends React.Component{
                                 />}
                             </div>
                         )}
-                    />
+                /> : <div>No replies</div>}
     </div>
         );
     }

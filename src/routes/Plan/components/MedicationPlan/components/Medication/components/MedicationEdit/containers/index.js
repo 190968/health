@@ -169,7 +169,7 @@ const withMutation = graphql(editMutation, {
 });
 
 
-export const MedicationAddForm = graphql(addMutation, {
+ const withMutationAdd = graphql(addMutation, {
     props: ({mutate}) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
             return mutate({
@@ -184,7 +184,7 @@ export const MedicationAddForm = graphql(addMutation, {
             })
         },
     }),
-})(MedicationEditWithQuery);
+});
 
 const mapStateToProps = (state) => {
 
@@ -206,6 +206,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // },
 });
 
+
+export const MedicationAddForm =  withMutationAdd(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MedicationEditWithQuery));
 
 export default withMutation(connect(
     mapStateToProps,

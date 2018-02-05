@@ -46,6 +46,7 @@ class Comment extends React.Component{
                 this.setState({
                     visible: false
                 });
+
             });
 
         });
@@ -89,7 +90,7 @@ class Comment extends React.Component{
 
                 </Modal>
                 <Row>
-                    <List
+                    {edges.length > 0 ? <List
                         loading={loading}
                         itemLayout="vertical"
                         dataSource={edges}
@@ -108,7 +109,7 @@ class Comment extends React.Component{
                             </List.Item>
 
                         )}
-                    />
+                    /> : <div style={{textAlign:'center'}}>No Replies</div>}
                 </Row>
             </div>
         );

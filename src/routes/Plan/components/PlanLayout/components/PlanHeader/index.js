@@ -12,7 +12,7 @@ import {
 import moment from "moment/moment";
 import Motivators from '../../../../../User/containers/motivatorsContainer';
 
-
+const confirm = Modal.confirm;
 const { Meta } = Card;
 
 
@@ -68,14 +68,39 @@ export class PlanHeader extends React.Component {
     hideEditPlan () {
         this.setState({openEditModal:false});
     };
-    deletePlan = () => {
+    deletePlan() {
         // delete plan here
-        this.props.deletePlan(this.props.info.id);
+        const {deletePlan, info} = this.props;
+        confirm({
+            title: 'Are you sure you want to archive this Plan?',
+            content: 'It will be available in archived section',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+               deletePlan(info.id);
+            },
+            onCancel() {
+                //console.log('Cancel');
+            },
+        });
+
+
     };
-    completePlan = () => {
+    completePlan () {
+        const {completePlan, info} = this.props;
+        confirm({
+            title: 'Do you want to complete this Plan?',
+            content: 'It will be available in completed plans section',
+            onOk() {
+                completePlan(info.id);
+            },
+            onCancel() {
+            },
+        });
         // delete plan here
         //this.props.completePlan();
-        this.props.completePlan();
+
     };
 
     toggleReminders() {

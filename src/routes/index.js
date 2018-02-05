@@ -134,6 +134,15 @@ export const asyncVerifyPhoneConfirm = (store) => {
     );
 }
 
+export const asyncMessages = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/Messages/components'),
+            modules: ['../routes/Messages/components'],
+            webpack: () => [require.resolveWeak('../routes/Messages/components')],
+        })
+    );
+}
 
 
 export const asyncCommynity = (store) => {

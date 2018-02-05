@@ -8,13 +8,14 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const QUERY = gql`    
-    query GET_USER_PLANS ($user_id: ID)  {
-        account {
-            plans (user_id: $user_id)  {
-                ...PlanCardInfo
-                upid
+    query GET_USER_PLANS ($user_id: ID, $status:UserPlanStatusEnum)  {
+            user (id:$user_id) {
+              id
+              plans (status: $status)  {
+                  ...PlanCardInfo
+                  upid
+              }
             }
-        }
     }
     ${Plan.fragments.plan}
 `;
@@ -29,6 +30,7 @@ const PlansListWithQuery = graphql(
     options: (ownProps) => ({
       variables: {
           user_id:ownProps.user_id,
+          status:'active'
           //date:ownProps.date
       },
        // fetchPolicy: 'network-only'
@@ -39,9 +41,22 @@ const PlansListWithQuery = graphql(
         //console.log(ownProps);
         //console.log(data);
         return {
-          plans: data.account.plans,
+          plans: data.user.plans,
           //modules: data.network.modules,
           loading: data.loading,
+          loadByStatus(status) {
+              return data.fetchMore({
+                  // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                  variables: {
+                      user_id:ownProps.user_id,
+                      status:status
+                  },
+                  updateQuery: (previousResult, {fetchMoreResult}) => {
+                      if (!fetchMoreResult) { return previousResult; }
+                      return fetchMoreResult;
+                  },
+              });
+          },
           loadMoreEntries() {
             //console.log(ownProps.page);
             return data.fetchMore({

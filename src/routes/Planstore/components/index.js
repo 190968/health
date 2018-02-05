@@ -27,19 +27,5 @@ export const PlanstoreLayout = ({plans, loading, loadMoreEntries}) => (
         <Route exact path='/planstore/plan/:id' component={AsyncView()} />
     </div>
 )
-//
-PlanstoreLayout.propTypes = {
-    //counter: PropTypes.number.isRequired,
-    //increment: PropTypes.func.isRequired,
-    //doubleAsync: PropTypes.func.isRequired,
-    //loading: PropTypes.bool,
-
-    /*  data: React.PropTypes.shape({
-          loading: React.PropTypes.bool,
-          error: React.PropTypes.object,
-          plans: React.PropTypes.object,
-      }).isRequired,*/
-}
-
 
 export default PlanstoreLayout

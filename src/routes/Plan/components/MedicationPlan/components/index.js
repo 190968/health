@@ -247,7 +247,6 @@ export class MedicationPlanBody extends React.Component {
 
         const menu = (
             <Menu onClick={this.handleMenuClick}>
-                <Menu.Item disabled key="reminders">Reminders</Menu.Item>
                 {/*<Menu.Item disabled key="refill">Add Refill</Menu.Item>*/}
                 <Menu.Item  key="motivators">Motivators</Menu.Item>
                 <Menu.Item disabled key="commitment">Make a Commitment</Menu.Item>

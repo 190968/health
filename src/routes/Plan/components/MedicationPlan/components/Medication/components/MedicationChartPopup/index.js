@@ -13,12 +13,15 @@ export default class MedicationChartPopup extends React.Component {
             date:props.date
         };
         this.showDate = this.showDate.bind(this);
+        this.onVisibleChange = this.onVisibleChange.bind(this);
     };
     static propTypes = {
         date: PropTypes.string
     };
 
-
+    onVisibleChange(e) {
+        console.log(e);
+    }
     showDate = (type) => {
         var dateTime = new Date(this.state.date);
         let date = '';
@@ -34,6 +37,6 @@ export default class MedicationChartPopup extends React.Component {
         const {item, userId, label} = this.props;
         const {date} = this.state;
 
-        return (<Popover content={<MedicationChart date={date} item={item} userId={userId} />} title={<div>{label} Summary <div style={{float:'right'}}><Tooltip title={'Previous'}><Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip> <Tooltip title={'Next'}><Icon type="right" onClick={() => this.showDate('next')} style={{marginRight:10}} /></Tooltip></div></div>} trigger='click'><Icon type="area-chart" /></Popover>)
+        return (<Popover content={<MedicationChart date={date} item={item} userId={userId} />} title={<div>{label} Summary <div style={{float:'right'}} onVisibleChange={this.onVisibleChange}><Tooltip title={'Previous'}><Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip> <Tooltip title={'Next'}><Icon type="right" onClick={() => this.showDate('next')} style={{marginRight:10}} /></Tooltip></div></div>} trigger='click'><Icon type="area-chart" /></Popover>)
     }
 }

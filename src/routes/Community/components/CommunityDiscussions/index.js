@@ -24,13 +24,16 @@ class Discussions extends React.Component{
     }
 
     render(){
-        const {loading,discussion} = this.props;
+        const {loading,discussion, handleBreadcrumbChange} = this.props;
+        console.log(handleBreadcrumbChange);
 
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
             );
         }
+
+        handleBreadcrumbChange([['aaa','bbbb']]);
 
         const {title,id,text,createdAt,category,replies} = discussion;
 

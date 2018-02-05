@@ -41,11 +41,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props) => {
+    onSubmit: (props, resetForm) => {
         const{current_password, password, password_repeat} = props;
         ownProps.updatePassword({current_password:current_password, password:password,password_repeat:password_repeat})
             .then(({data}) => {
                 message.success('Saved');
+                resetForm();
             }).catch((error) => {
             console.log(error);
         });

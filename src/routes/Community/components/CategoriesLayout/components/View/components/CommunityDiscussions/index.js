@@ -94,7 +94,7 @@ class CommunityDiscussions extends React.Component{
             >
 
                 <Row>
-                    <List
+                    {discussions.length > 0 ? <List
                         loading={loading}
                         itemLayout="vertical"
                         dataSource={discussions}
@@ -111,7 +111,7 @@ class CommunityDiscussions extends React.Component{
                             </List.Item>
 
                         )}
-                    />
+                    /> : <div style={{textAlign:'center'}}>No Discussions</div>}
                 </Row>
                 <Modal
                     title={intl.formatMessage(messages.start)}
@@ -134,7 +134,7 @@ class CommunityDiscussions extends React.Component{
                             label={intl.formatMessage(messages.text)}
                         >
                             {getFieldDecorator('text')(
-                                <TextArea autosize />
+                                <TextArea autosize autosize={{ minRows: 2 }} />
                             )}
                         </FormItem>
 

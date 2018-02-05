@@ -8,17 +8,19 @@ import {
     FormattedMessage,
 } from 'react-intl';
 
-const menu = (
-    <Menu>
-        <Menu.Item disabled key="1">Show Active</Menu.Item>
-        <Menu.Item disabled key="2">Show Completed</Menu.Item>
-        <Menu.Item disabled key="3">Show Elapsed</Menu.Item>
-    </Menu>
-);
+
 export class PlansList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleStatus = this.handleStatus.bind(this);
+    }
     changePage = (page) => {
         this.props.loadMoreEntries(page)
     }
+    handleStatus(e) {
+        this.props.loadByStatus(e.key);
+    }
+
 
 
   render () {
@@ -31,6 +33,14 @@ export class PlansList extends React.Component {
            Loading
         </Card>)
     }
+      const menu = (
+          <Menu onClick={this.handleStatus}>
+              <Menu.Item  key="active">Show Active</Menu.Item>
+              <Menu.Item  key="completed">Show Completed</Menu.Item>
+              <Menu.Item  key="elapsed">Show Elapsed</Menu.Item>
+              <Menu.Item  key="archived">Show Archived</Menu.Item>
+          </Menu>
+      );
 
     return (
         <Card title={<FormattedMessage id="plan.title1" defaultMessage="Today's Actionplans" description="Medications for Today" />}

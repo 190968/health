@@ -67,6 +67,7 @@ export class PlanstoreLayout extends React.Component {
                         <List
                             grid={{gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 4}}
                             dataSource={planPlaceholder}
+
                             renderItem={item => (
                                 <List.Item>
                                     {item.item}

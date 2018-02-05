@@ -41,6 +41,7 @@ class PasswordForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {displayedFamily: props};
+        this.resetForm = this.resetForm.bind(this);
     }
 
     /**
@@ -49,12 +50,16 @@ class PasswordForm extends React.Component{
      */
     handleSubmit = (e) => {
         e.preventDefault();
-        const { onSubmit } = this.props;
+        const { onSubmit, resetForm } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                return onSubmit(values);
+                return onSubmit(values, resetForm);
             }
         });
+    }
+
+    resetForm () {
+        this.props.form.resetFields();
     }
 
     render(){
@@ -79,7 +84,7 @@ class PasswordForm extends React.Component{
                             {getFieldDecorator('current_password', {
                                 rules: [{ required: true, message:intl.formatMessage(messages.current_label), whitespace: true }],
                             })(
-                                <Input  placeholder={intl.formatMessage(messages.current_label)}/>
+                                <Input  placeholder={intl.formatMessage(messages.current_label)} type="password" />
                             )}
                 </FormItem>
                 <FormItem
@@ -91,7 +96,7 @@ class PasswordForm extends React.Component{
                     {getFieldDecorator('password', {
                         rules: [{ required: true, message:intl.formatMessage(messages.newpass_rule) , whitespace: true }],
                     })(
-                        <Input  placeholder={intl.formatMessage(messages.newpass_label)} />
+                        <Input  placeholder={intl.formatMessage(messages.newpass_label)} type="password" />
 
                     )}
                 </FormItem>
@@ -102,7 +107,7 @@ class PasswordForm extends React.Component{
                     {getFieldDecorator('password_repeat', {
                         rules: [{ required: true, message:intl.formatMessage(messages.confirm_newpass_rule), whitespace: true }],
                     })(
-                        <Input  placeholder={intl.formatMessage(messages.confirm_newpass_label)} />
+                        <Input  placeholder={intl.formatMessage(messages.confirm_newpass_label)} type="password" />
                     )}
                 </FormItem>
 

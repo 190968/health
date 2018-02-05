@@ -12,11 +12,16 @@ export default class PlanInputText extends React.PureComponent {
             value:this.props.reports
         };
         this.onChange = this.onChange.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
     };
     static propTypes = {
         reportValue: PropTypes.number
     };
 
+    onKeyUp(e) {
+        const { value } = e.target;
+        this.setState({value:value});
+    }
     triggerChange(value) {
         this.setState({value:value});
         this.props.onChange(value, 'input');
@@ -49,7 +54,7 @@ export default class PlanInputText extends React.PureComponent {
         } else if (!isLong) {
             return <Input onBlur={this.onChange} value={value} />;
         } else {
-            return <TextArea autosize={{ minRows: 2, maxRows: 6 }} value={value} onChange={this.onChange} />
+            return <TextArea autosize={{ minRows: 2, maxRows: 6 }} value={value} onChange={this.onKeyUp} onBlur={this.onChange} />
         }
     }
 }

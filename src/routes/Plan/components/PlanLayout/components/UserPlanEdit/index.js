@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import {Modal, DatePicker, Form ,Spin, Col, Radio, Popover } from 'antd';
 import moment from "moment/moment";
+import {FormattedDate} from 'react-intl';
 import {message} from "antd/lib/index";
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
@@ -45,13 +46,21 @@ class UserPlanEditForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { updateUserPlan, onCancel } = this.props;
+        const { updateUserPlan, onCancel, plan, info } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const{privacy, startDate, endDate } = values;
 
-                const startDateYMD = startDate.format("YYYY-MM-DD");
-                const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
+                let startDateYMD = '';
+                let endDateYMD = '';
+                if (!plan.isFixedDated) {
+                     startDateYMD = startDate.format("YYYY-MM-DD");
+                     endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
+                } else {
+                     startDateYMD = info.startDate;
+                     endDateYMD = info.endDate;
+                }
+
                 const input = {
                     privacy,
                     startDate:startDateYMD,
@@ -103,6 +112,28 @@ class UserPlanEditForm extends React.Component {
             >
             <Form>
 
+                <FormItem
+                    {...formItemLayout}
+                    label="Privacy"
+                >
+                    {getFieldDecorator('privacy', {
+                        initialValue: info.privacy,
+                        rules: [{
+                            required: true, message: 'Please Select',
+                        }],
+                    })(
+                        <RadioGroup>
+                            <Popover content="Visible to anyone">
+                                <RadioButton value="open">Open
+                                </RadioButton>
+                            </Popover>
+                            <Popover content="Visible to you">
+                                <RadioButton value="private">Private</RadioButton>
+                            </Popover>
+                        </RadioGroup>
+                    )}
+
+                </FormItem>
                 {!plan.isFixedDated ?
                 <FormItem
                     {...formItemLayout}
@@ -153,30 +184,32 @@ class UserPlanEditForm extends React.Component {
                     </Col>
                 </FormItem>
                     :
-                <div>sssss</div>
-                }
-                <FormItem
+                <div>
+                    <FormItem
                     {...formItemLayout}
-                    label="Privacy"
+                    style={{marginBottom:0}}
+                    label="Start Date"
                 >
-                    {getFieldDecorator('privacy', {
-                        initialValue: info.privacy,
-                        rules: [{
-                            required: true, message: 'Please Select',
-                        }],
-                    })(
-                        <RadioGroup>
-                            <Popover content="Visible to anyone">
-                                <RadioButton value="open">Open
-                                </RadioButton>
-                            </Popover>
-                            <Popover content="Visible to you">
-                                <RadioButton value="private">Private</RadioButton>
-                            </Popover>
-                        </RadioGroup>
-                    )}
-
+                                <span className="ant-form-text"><FormattedDate value={startDate} year='numeric'
+                                                                               month='long'
+                                                                               day='numeric'
+                                                                               weekday='long' /></span>
                 </FormItem>
+                    {endDate !== '' &&
+                    <FormItem
+                        {...formItemLayout}
+                        style={{marginBottom:0}}
+                        label="End Date"
+                    >
+                                <span className="ant-form-text"><FormattedDate value={endDate} year='numeric'
+                                                                               month='long'
+                                                                               day='numeric'
+                                                                               weekday='long' /></span>
+                    </FormItem>}
+                </div>
+                }
+
+
             </Form>
             </Modal>
         );
