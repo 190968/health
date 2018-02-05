@@ -103,7 +103,7 @@ class Comment extends React.Component{
                                 />
                                 {item.text}
 
-                               < Replies discussion={discussion} discussionReply={this.props.discussionReply} />
+                               <Replies discussion={discussion} discussionReply={this.props.discussionReply} />
                             </List.Item>
 
                         )}
