@@ -5,7 +5,12 @@ import React, { PropTypes } from 'react';
 import { Form,Card,Row,Popconfirm,Tooltip,Icon,Avatar } from 'antd';
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './messages';
 
 
 class DiscussionView extends React.Component{
@@ -32,13 +37,13 @@ class DiscussionView extends React.Component{
         }
 
         const {title,text,createdAt} = discussion;
-
+        const {intl}=this.props;
         return(
 
                 <Card
                     title={title}
-                    extra={<Popconfirm title="Are you sure delete this discussion?" onConfirm={this.handleClick} okText="Yes" cancelText="No">
-                        <Tooltip title={'Delete'}><Icon type="close" /></Tooltip>
+                    extra={<Popconfirm title={intl.formatMessage(messages.popconfirm)} onConfirm={this.handleClick} okText={intl.formatMessage(messages.yes)} cancelText={intl.formatMessage(messages.no)}>
+                        <Tooltip title={intl.formatMessage(messages.delete)}><Icon type="close" /></Tooltip>
                     </Popconfirm>
                     }
                 >
@@ -57,4 +62,4 @@ class DiscussionView extends React.Component{
 }
 
 const WrappedDiscussionView = Form.create()(DiscussionView);
-export default withRouter(WrappedDiscussionView);
+export default withRouter(injectIntl(WrappedDiscussionView));

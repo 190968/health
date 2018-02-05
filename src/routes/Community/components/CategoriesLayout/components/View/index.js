@@ -17,7 +17,7 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './view.json';
+import messages from './messages';
 
 
 
@@ -33,7 +33,10 @@ class ViewForm extends React.Component{
         this.clickJoin = this.clickJoin.bind(this);
     }
 
-    handleChange() {
+    handleChange(value) {
+        console.log("-------handleChange-------");
+
+        this.props.handleBreadcrumbChange(value);
     }
     clickJoin = () => {
         const { onSubmit, info} = this.props;
@@ -45,7 +48,7 @@ class ViewForm extends React.Component{
     }
 
     componentDidMount() {
-        window.addEventListener('load', this.handleChange());
+        // window.addEventListener('load',());
     }
     onTabChange = (key, type) => {
         this.setState({ [type]: key });

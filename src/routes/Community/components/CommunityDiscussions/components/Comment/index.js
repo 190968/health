@@ -6,7 +6,12 @@ import { Form,Card,Icon,Modal,Input,Row,Avatar,Tooltip,List} from 'antd';
 import {withRouter} from "react-router-dom";
 import Replies from '../Replies';
 import moment from 'moment';
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './messages';
 const FormItem = Form.Item;
 const IconText = ({ type, text }) => (
     <span>
@@ -54,16 +59,17 @@ class Comment extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
+        const {intl}=this.props;
         const {getFieldDecorator} = this.props.form;
         const {replies} = discussion;
         const {edges} = replies;
         return(
             <div>
                 <Modal
-                    title="Reply"
+                    title={intl.formatMessage(messages.reply)}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
-                    okText="Send"
+                    okText={intl.formatMessage(messages.send)}
                     onOk={this.handleModalSubmit}
                 >
                     <Form onSubmit={this.handleModalSubmit} >
@@ -89,7 +95,7 @@ class Comment extends React.Component{
                         dataSource={edges}
                         renderItem={item => (
                             <List.Item key={item.id}
-                                       actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} onClick={this.showModal.bind(this,item.id)} />, <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >Reply</p></Tooltip>]}
+                                       actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} onClick={this.showModal.bind(this,item.id)} />, <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >{intl.formatMessage(messages.reply)}</p></Tooltip>]}
 
                             >
 
@@ -111,5 +117,5 @@ class Comment extends React.Component{
 }
 
 const WrappedComment = Form.create()(Comment);
-export default withRouter(WrappedComment);
+export default withRouter(injectIntl(WrappedComment));
 

@@ -9,9 +9,8 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './motivators.json';
+import messages from './messages';
 import { Form,  List,Avatar,Select, Card,Modal,Input, Button, Tooltip, Icon } from 'antd';
-
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -118,7 +117,7 @@ class Motivators extends React.Component {
                     >
                         {getFieldDecorator('email', {
                             rules: [{
-                                type: 'email', message: intl.formatMessage(messages.email_rule_type),
+                                type: 'email', message:intl.formatMessage(messages.email_rule_type),
                             }, {
                                 required: true,  message: intl.formatMessage(messages.email_rule_required),
                             }],

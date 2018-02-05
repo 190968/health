@@ -5,7 +5,12 @@ import React, { PropTypes } from 'react';
 import { Form,Card,Col,Button,Input,Icon,Avatar } from 'antd';
 import {withRouter} from "react-router-dom";
 import Comment from '../../components/Comment';
-
+import {
+    injectIntl,
+    defineMessages,
+    FormattedMessage
+} from 'react-intl';
+import messages from './messages';
 const FormItem = Form.Item;
 
 
@@ -37,6 +42,7 @@ class CommentsView extends React.Component{
 
         const {category,replies} = discussion;
         const {isJoined} = category;
+        const {intl}=this.props;
         const { getFieldDecorator } = this.props.form;
         return(
                 <Card
@@ -58,7 +64,7 @@ class CommentsView extends React.Component{
                             </Col>
                             <Col offset={1} span={2}>
                                 {
-                                    isJoined ? <Button type="primary" htmlType="submit">Post</Button>:<Button disabled type="primary" htmlType="submit">Post</Button>
+                                    isJoined ? <Button type="primary" htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled type="primary" htmlType="submit">{intl.formatMessage(messages.post)}</Button>
                                 }
                             </Col>
                         </Form>
@@ -72,4 +78,4 @@ class CommentsView extends React.Component{
 }
 
 const WrappedCommentsView = Form.create()(CommentsView);
-export default withRouter(WrappedCommentsView);
+export default withRouter(injectIntl(WrappedCommentsView));

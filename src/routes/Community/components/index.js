@@ -1,30 +1,28 @@
-/**
- * Created by Pavel on 13.01.2018.
- */
-
 
 import React from 'react';
 import Loadable from '../../../components/Loadable';
-import { Route ,Link} from 'react-router-dom'
-import {Breadcrumb ,Row } from 'antd';
+import {Breadcrumb,Alert ,Row } from 'antd';
+import { Router, Route, Link } from 'react-router-dom';
+
 let Crumb = [];
+
 const AsyncCategoryView = (props) => {
     return (
         Loadable({
             loader: () => import('../../../routes/Community/containers/view.js'),
             modules: ['../../../routes/Community/containers/view.js'],
-            webpack: () => [require.resolveWeak('../../../routes/Community/containers/view.js')],
-        },undefined, props)
+        webpack: () => [require.resolveWeak('../../../routes/Community/containers/view.js')],
+},undefined, props)
     );
 }
 
- const AsyncCategoryDash = (props) => {
+const AsyncCategoryDash = (props) => {
     return (
-     Loadable({
-         loader: () => import('../../../routes/Community/containers/mainCategories.js'),
+        Loadable({
+            loader: () => import('../../../routes/Community/containers/mainCategories.js'),
 
-     }, undefined, props
- )
+}, undefined, props
+    )
     );
 }
 const AsyncCommynityDiscussion = () => {
@@ -56,17 +54,21 @@ class CommunityLayout extends React.Component {
                 <Breadcrumb.Item><Link to="/community">{this.state.breadcrumbitem}</Link></Breadcrumb.Item>
             )
         }
-        return (<div>
-            <Row style={{marginBottom: 10}}>
-                <Breadcrumb separator=">">
-                    <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
-                    {Crumb}
-                </Breadcrumb>
-            </Row>
-            <Route exact path='/community' component={AsyncCategoryDash()} />
-            <Route exact path="/community/discussion/:id" component={AsyncCommynityDiscussion()} />
-            <Route exact path="/community/:id" component={AsyncCategoryView({handleBreadcrumbChange:this.handleBreadcrumbChange})}/>
-        </div>)
+        return (
+            <div>
+                <Row style={{marginBottom: 10}}>
+                    <Breadcrumb separator=">">
+                        <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
+                        {Crumb}
+                    </Breadcrumb>
+                </Row>
+                <Route exact path='/community' component={AsyncCategoryDash()} />
+                <Route exact path="/community/discussion/:id" component={AsyncCommynityDiscussion()} />
+                <Route exact path="/community/:id" component={AsyncCategoryView({handleBreadcrumbChange:this.handleBreadcrumbChange})}/>
+            </div>
+
+
+        )
     }
 }
 

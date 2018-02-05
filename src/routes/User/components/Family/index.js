@@ -10,7 +10,7 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './family.json';
+import messages from './messages';
 class Family extends React.Component {
 
     constructor(props) {

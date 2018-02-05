@@ -11,7 +11,7 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './mainCategory.json';
+import messages from './messages';
 class MyCategories extends React.Component{
 
     constructor(props){

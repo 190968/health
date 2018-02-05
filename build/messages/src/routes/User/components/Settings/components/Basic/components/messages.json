@@ -1,0 +1,132 @@
+[
+  {
+    "id": "user.title",
+    "description": "Title",
+    "defaultMessage": "Title"
+  },
+  {
+    "id": "user.name",
+    "description": "Name",
+    "defaultMessage": "Name"
+  },
+  {
+    "id": "user.first_name",
+    "description": "First name",
+    "defaultMessage": "First name"
+  },
+  {
+    "id": "user.last_name",
+    "description": "Last name",
+    "defaultMessage": "Last name"
+  },
+  {
+    "id": "user.last_name_rule",
+    "description": "Please input your Last name",
+    "defaultMessage": "Please input your Last name"
+  },
+  {
+    "id": "user.middle_name",
+    "description": "Middle name",
+    "defaultMessage": "Middle name"
+  },
+  {
+    "id": "user.birthday",
+    "description": "Birthday",
+    "defaultMessage": "Birthday"
+  },
+  {
+    "id": "user.address",
+    "description": "Address",
+    "defaultMessage": "Address"
+  },
+  {
+    "id": "user.birthday.novalid",
+    "description": "The input not valid date!",
+    "defaultMessage": "The input not valid date!"
+  },
+  {
+    "id": "user.dateformat",
+    "description": "Date format",
+    "defaultMessage": "Date format"
+  },
+  {
+    "id": "user.birthday.rule",
+    "description": "Please input your birthday",
+    "defaultMessage": "Please input your birthday"
+  },
+  {
+    "id": "user.timezone",
+    "description": "Timezone",
+    "defaultMessage": "Timezone"
+  },
+  {
+    "id": "user.timezone_rule",
+    "description": "Timezone",
+    "defaultMessage": "Select Timezone"
+  },
+  {
+    "id": "user.gender",
+    "description": "Gender",
+    "defaultMessage": "Gender"
+  },
+  {
+    "id": "user.gender.rule",
+    "description": "Please input your gender",
+    "defaultMessage": "Please input your gender"
+  },
+  {
+    "id": "user.female",
+    "description": "Female",
+    "defaultMessage": "Female"
+  },
+  {
+    "id": "user.male",
+    "description": "Male",
+    "defaultMessage": "Male"
+  },
+  {
+    "id": "user.phone_number",
+    "description": "Phone number",
+    "defaultMessage": "Phone number"
+  },
+  {
+    "id": "user.phonenumber.rule",
+    "description": "Please input your phone number",
+    "defaultMessage": "Please input your phone number"
+  },
+  {
+    "id": "user.language",
+    "description": "Language",
+    "defaultMessage": "Language"
+  },
+  {
+    "id": "user.language.rule",
+    "description": "Please Select your language!",
+    "defaultMessage": "Please Select your language!"
+  },
+  {
+    "id": "user.language.english",
+    "description": "English",
+    "defaultMessage": "English"
+  },
+  {
+    "id": "user.language.russian",
+    "description": "Russian",
+    "defaultMessage": "Russian"
+  },
+  {
+    "id": "user.email",
+    "description": "Email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "user.email.rule",
+    "description": "The input is not valid emal!",
+    "defaultMessage": "The input is not valid emal!"
+  },
+  {
+    "id": "user.submit",
+    "description": "Submit",
+    "defaultMessage": "Submit"
+  }
+]

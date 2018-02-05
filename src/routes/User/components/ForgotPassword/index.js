@@ -9,7 +9,7 @@ import {
     defineMessages,
     FormattedMessage
 } from 'react-intl';
-import messages from './forgot.json';
+import messages from './messages';
 import {Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
 
