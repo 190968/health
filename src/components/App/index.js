@@ -22,7 +22,6 @@ import ru from 'react-intl/locale-data/ru';
 import es from 'react-intl/locale-data/es';
 
 
-
 /**
  * Creating a browser history
  */
@@ -115,6 +114,7 @@ class App extends React.Component {
         return (
 
             <ApolloProvider client={apolloClient}>
+
                 <IntlProvider locale={'en'}>
                 <Provider store={this.props.store}>
                     <BrowserRouter history={history} basename={basename} >
@@ -124,6 +124,7 @@ class App extends React.Component {
                     </BrowserRouter>
                 </Provider>
                 </IntlProvider>
+
             </ApolloProvider>
 
         );

@@ -45,7 +45,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "jest",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "build:langs": "./node_modules/.bin/babel-node src/utils/translator.js",
     "trans": "atool-l10n"
