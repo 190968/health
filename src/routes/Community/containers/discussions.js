@@ -32,6 +32,7 @@ const DISCUSSION  = gql`
            id
            isJoined
            canJoin
+           name
          }
          author {
             id

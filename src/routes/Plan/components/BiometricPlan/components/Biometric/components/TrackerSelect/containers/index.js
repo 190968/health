@@ -29,6 +29,10 @@ const trackersMutate=gql`
 
 const withQuery = graphql(trackersList,
     {
+        options: (ownProps) => {
+            return {
+                fetchPolicy: 'network-only'
+            }},
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {

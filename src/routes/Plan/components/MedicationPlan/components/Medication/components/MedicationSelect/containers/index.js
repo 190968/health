@@ -27,6 +27,10 @@ const settingUserMutate=gql`
 
 const withQuery = graphql(medicationList,
     {
+        options: (ownProps) => {
+            return {
+                fetchPolicy: 'network-only'
+            }},
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {

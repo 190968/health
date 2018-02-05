@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Loadable from '../../../components/Loadable';
+import Breadcrumbs from '../components/Breadcrumbs';
 import {Breadcrumb,Alert ,Row } from 'antd';
 import { Router, Route, Link } from 'react-router-dom';
 
@@ -25,11 +26,11 @@ const AsyncCategoryDash = (props) => {
     )
     );
 }
-const AsyncCommynityDiscussion = () => {
+const AsyncCommynityDiscussion = (props) => {
     return (
         Loadable({
             loader: () => import('../../../routes/Community/containers/discussions.js')
-})
+}, undefined, props)
     );
 }
 
@@ -37,33 +38,31 @@ class CommunityLayout extends React.Component {
 
     constructor(props){
         super(props);
+        this.state = {breadcrumbitems: []};
         this.handleBreadcrumbChange = this.handleBreadcrumbChange.bind(this);
-        this.state = {breadcrumbitem: ''};
+        this.getBreadcrumbs = this.getBreadcrumbs.bind(this);
     }
 
-    handleBreadcrumbChange(breadcrumbitem) {
-        console.log(breadcrumbitem,"-------breadcrumbitem-------");
+    handleBreadcrumbChange(breadcrumbitems) {
+        //console.log(breadcrumbitems,"-------breadcrumbitem-------");
 
-        this.setState({ breadcrumbitem});
+        //this.setState({breadcrumbitems: breadcrumbitems});
+    }
+
+    getBreadcrumbs() {
+        return this.state.breadcrumbitems;
     }
 
     render() {
         const {loading, loadMoreEntries} = this.props;
-        if(this.state.breadcrumbitem) {
-            Crumb.push(
-                <Breadcrumb.Item><Link to="/community">{this.state.breadcrumbitem}</Link></Breadcrumb.Item>
-            )
-        }
+
         return (
             <div>
                 <Row style={{marginBottom: 10}}>
-                    <Breadcrumb separator=">">
-                        <Breadcrumb.Item><Link to="/community">Community</Link></Breadcrumb.Item>
-                        {Crumb}
-                    </Breadcrumb>
+                    <Breadcrumbs breadcrubsHandle={this.getBreadcrumbs}  />
                 </Row>
                 <Route exact path='/community' component={AsyncCategoryDash()} />
-                <Route exact path="/community/discussion/:id" component={AsyncCommynityDiscussion()} />
+                <Route exact path="/community/discussion/:id" component={AsyncCommynityDiscussion({handleBreadcrumbChange:this.handleBreadcrumbChange})} />
                 <Route exact path="/community/:id" component={AsyncCategoryView({handleBreadcrumbChange:this.handleBreadcrumbChange})}/>
             </div>
 

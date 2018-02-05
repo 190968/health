@@ -178,7 +178,7 @@ const withMutation = graphql(updateTrackerMutate, {
     }),
 });
 
-export const TrackerAddForm = graphql(addMutation, {
+ const withMutationAdd = graphql(addMutation, {
     props: ({ ownProps, mutate }) => ({
         updateTracker: (input) => {
             return mutate({
@@ -192,12 +192,10 @@ export const TrackerAddForm = graphql(addMutation, {
                 message.success('Saved');
             })},
     }),
-})(withQuery);
-
+});
 
 
 const mapStateToProps = (state) => {
-
     return {
         dateFormat:state.user.info.dateFormat
     };
@@ -216,6 +214,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // },
 });
 
+export const TrackerAddForm = withMutationAdd(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withQuery));
 
 export const TrackerEditForm = withMutation(connect(
     mapStateToProps,
