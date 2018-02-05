@@ -6,7 +6,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import MyCategories from '../components/CategoriesLayout';
+import MyCategories from '../components/CommunityLayout';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

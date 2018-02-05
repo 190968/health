@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import Search from '../components/CategoriesLayout/components/View/components/Search';
+import Search from '../components/CommunityLayout/components/View/components/Search';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
