@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import PlanHeader from './components/PlanHeader';
+import PlanHeader from './containers/PlanHeader';
 import PlanBody from './containers/PlanBody';
 import {Icon, Avatar, Card,Row, Col, Tooltip ,Popover, Dropdown, Modal } from 'antd';
 

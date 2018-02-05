@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { withApollo } from 'react-apollo'
 import moment from 'moment';
+import {FormattedDate} from 'react-intl';
 
 import { arrayChunk, intersperse } from '../../../../utils/main';
 
@@ -68,16 +69,25 @@ const CollectionCreateForm = Form.create()(
                     {plan.isFixedDated ? <Card title="Scheduling" type="inner">
                             <FormItem
                                 {...formItemLayout}
+                                style={{marginBottom:0}}
                                 label="Start Date"
                             >
-                                <span className="ant-form-text">{plan.start_date}</span>
+                                <span className="ant-form-text"><FormattedDate value={plan.start_date} year='numeric'
+                                                                               month='long'
+                                                                               day='numeric'
+                                                                               weekday='long' /></span>
                             </FormItem>
+                            {plan.end_date !== '' &&
                             <FormItem
                                 {...formItemLayout}
+                                style={{marginBottom:0}}
                                 label="End Date"
                             >
-                                <span className="ant-form-text">{plan.end_date}</span>
-                            </FormItem>
+                                <span className="ant-form-text"><FormattedDate value={plan.end_date} year='numeric'
+                                                                               month='long'
+                                                                               day='numeric'
+                                                                               weekday='long' /></span>
+                            </FormItem>}
                         </Card> :
                         <Card title="Scheduling" type="inner">
                             <FormItem
@@ -259,6 +269,8 @@ export class PlanstorPlanLayout extends React.Component {
                         loading: false
                     });
                     this.props.history.push('/plan/'+upid)
+                }).catch(() => {
+
                 });
             } else if (err.endDate) {
                 message.warning(err.endDate);
@@ -350,7 +362,6 @@ export class PlanstorPlanLayout extends React.Component {
                 </Row>
                 <Row>
                 <Card title="Plan Details">
-
                         {this.planDetails()}
                 </Card>
                 </Row>

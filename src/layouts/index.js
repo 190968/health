@@ -12,7 +12,7 @@ import LayoutHeader from './components/Header';
 
 
 
-import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity, asyncCalendar/*,asyncDiscussion,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity, asyncCalendar, asyncMessages/*,asyncDiscussion,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 
 
 import PrivateRoute from '../routes/privateRoute';
@@ -47,6 +47,7 @@ export const CoreLayout = ({loading, user, store, location}) =>  {
                 <Route exact path="/password/reset" component={asyncForgotPassword(store)} />
                 <PrivateRoute path="/settings" component={asyncSettings(store)} />
                 <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
+                <PrivateRoute path="/messages" component={asyncMessages(store)} />
                 <PrivateRoute path="/community" component={asyncCommynity(store)} />
                 <PrivateRoute path="/calendar" component={asyncCalendar(store)} />
                 <PrivateRoute  path="/plan/:upid" component={asyncPlan(store)} />

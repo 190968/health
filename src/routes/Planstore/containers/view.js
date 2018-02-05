@@ -45,7 +45,7 @@ const CURRENT_PLANSTORE_PLAN = gql`
 
 
 // 1- add queries:
-const PlanstorPlanLayoutWithQuery = graphql(
+const withQuery = graphql(
     CURRENT_PLANSTORE_PLAN,
     {
         options: (ownProps) => ({
@@ -79,13 +79,12 @@ const PlanstorPlanLayoutWithQuery = graphql(
             }
         },
     }
-)(PlanstorPlanLayout);
+);
 /* -----------------------------------------
   Redux
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         dateFormat: state.user.info.dateFormat
         // view store:
@@ -99,16 +98,25 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         getPlan: (props, client) => {
+
+
             //dispatch(loginUserRequest({ email }));
             //console.log(props);
             //const{first_name,last_name,birthday,gender,email, password,password_repeat,prefix,phone} = props;
             //console.log(props);
             const {start_date, privacy, end_date_set} = props;
-            const startDate = start_date.format("YYYY-MM-DD");
-            const endDate = end_date_set ? props.endDate.format("YYYY-MM-DD") : '';
+            let input = {};
+            if (!ownProps.plan.isFixedDated) {
+                const startDate = start_date.format("YYYY-MM-DD");
+                const endDate = end_date_set ? props.endDate.format("YYYY-MM-DD") : '';
+                 input = {startDate: startDate, privacy:privacy, endDate:endDate};
+            } else {
+                 input = {privacy:privacy, startDate: ownProps.plan.start_date};
+            }
+
             //var birth = birthday.substring(0,10);
             //console.log(birth);
-            const input = {startDate: startDate, privacy:privacy, endDate:endDate};
+
             return client.mutate({
                 mutation: getPlanMutation,
                 variables: { id: ownProps.match.params.id, input: input}
@@ -118,7 +126,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 
-export default connect(
+export default withQuery(connect(
     mapStateToProps,
     mapDispatchToProps
-)(PlanstorPlanLayoutWithQuery);
+)(PlanstorPlanLayout));

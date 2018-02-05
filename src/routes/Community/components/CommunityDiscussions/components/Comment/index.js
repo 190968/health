@@ -46,6 +46,7 @@ class Comment extends React.Component{
                 this.setState({
                     visible: false
                 });
+
             });
 
         });

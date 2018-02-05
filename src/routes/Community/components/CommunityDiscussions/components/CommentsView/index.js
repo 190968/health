@@ -26,7 +26,9 @@ class CommentsView extends React.Component{
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
-            return onSubmit(values);
+            return onSubmit(values).then(({data}) => {
+                this.props.form.resetFields();
+            })
         });
     }
 

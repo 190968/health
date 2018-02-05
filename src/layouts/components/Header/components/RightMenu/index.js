@@ -52,7 +52,7 @@ export default class RightMenu extends React.Component {
                 description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
             });
         }
-        console.log(this.props.endCursor);
+        //console.log(this.props.endCursor);
         const user_menu_items = [
             ['Settings', '/settings'],
             ['Calendar', '/calendar', 'calendar'],
@@ -81,7 +81,7 @@ export default class RightMenu extends React.Component {
 
 
                             <Menu.Item key='inbox'>
-                                <Link to="/inbox"><Badge count={new_messages}><Icon type="mail" /></Badge></Link>
+                                <Link to="/messages"><Badge count={new_messages}><Icon type="mail" /></Badge></Link>
                             </Menu.Item>
                             <Menu.Item key='notifications'>
                                 <Popover placement="bottomRight"  content={content} trigger="click" style={{width: 336}}>

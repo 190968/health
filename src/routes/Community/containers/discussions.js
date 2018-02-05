@@ -19,6 +19,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {withRouter} from "react-router-dom";
+import {MedicationPlan} from "../../Plan/components/MedicationPlan/containers";
 
 const DISCUSSION  = gql`
  query GET_DISCUSSION($id:ID) {
@@ -103,7 +104,7 @@ const withQuery = graphql(DISCUSSION, {
 })(Discussion);
 
 const withMutation = graphql(discussionReply, {
-    props: ({ mutate }) => ({
+    props: ({ mutate, ownProps }) => ({
         discussionReply: (text,id,parentMessageId) => {
             return mutate({
                 variables:  {
@@ -111,6 +112,10 @@ const withMutation = graphql(discussionReply, {
                     message: text,
                     parentMessageId:parentMessageId
                 },
+                refetchQueries: [{
+                    query: DISCUSSION,
+                    variables: {id: ownProps.match.params.id}
+                }],
             })
         },
     }),
@@ -138,9 +143,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
-        ownProps.discussionReply(value.text,ownProps.match.params.id).then(({data}) => {
-            console.log(data);
-        })
+        return ownProps.discussionReply(value.text,ownProps.match.params.id);
     }
 });
 
