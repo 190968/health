@@ -26,7 +26,7 @@ const formItemLayout = {
 };
 const CollectionCreateForm = Form.create()(
     (props) => {
-        const { visible, confirmLoading, onCancel, onSubmit, onChangeEnd, checkEndDate, form, plan, end_date } = props;
+        const { visible, confirmLoading, onCancel, onSubmit, onChangeEnd, checkEndDate, form, plan, end_date, dateFormat } = props;
         const { getFieldDecorator } = form;
 
         const radioStyle = {
@@ -34,7 +34,6 @@ const CollectionCreateForm = Form.create()(
             height: '30px',
             lineHeight: '33px',
         };
-
 
         return (
             <Modal
@@ -66,54 +65,67 @@ const CollectionCreateForm = Form.create()(
                         </FormItem>
                     </Card>
 
-                    <Card title="Scheduling"  type="inner">
-                        <FormItem
-                            {...formItemLayout}
-                            label="Start Date"
-                        >
-                            {getFieldDecorator('start_date', {
-                                initialValue: moment(),
-                                rules: [{
-                                    required: true, message: 'Please Select Start Date',
-                                }],
-                            })(
-                                <DatePicker allowClear={false}/>
-                            )}
-                        </FormItem>
+                    {plan.isFixedDated ? <Card title="Scheduling" type="inner">
+                            <FormItem
+                                {...formItemLayout}
+                                label="Start Date"
+                            >
+                                <span className="ant-form-text">{plan.start_date}</span>
+                            </FormItem>
+                            <FormItem
+                                {...formItemLayout}
+                                label="End Date"
+                            >
+                                <span className="ant-form-text">{plan.end_date}</span>
+                            </FormItem>
+                        </Card> :
+                        <Card title="Scheduling" type="inner">
+                            <FormItem
+                                {...formItemLayout}
+                                label="Start Date"
+                            >
+                                {getFieldDecorator('start_date', {
+                                    initialValue: moment(),
+                                    rules: [{
+                                        required: true, message: 'Please Select Start Date',
+                                    }],
+                                })(
+                                    <DatePicker allowClear={false} allowClear={false}
+                                                format={dateFormat}/>
+                                )}
+                            </FormItem>
 
-                        <FormItem
-                            {...formItemLayout}
-                            label="End Date"
-                        >
-                            {getFieldDecorator('end_date_set', {
-                                rules: [{
-                                    required: true, message: 'Please Select End Date',
-                                }],
-                            })(
-                                <RadioGroup onChange={onChangeEnd}>
-                                    <Radio style={radioStyle} value={false}>Never</Radio>
-                                    <Radio style={radioStyle} value={true}>
-                                        On {end_date === true ?
+                            <FormItem
+                                {...formItemLayout}
+                                label="End Date"
+                            >
+                                {getFieldDecorator('end_date_set', {
+                                    rules: [{
+                                        required: true, message: 'Please Select End Date',
+                                    }],
+                                })(
+                                    <RadioGroup onChange={onChangeEnd}>
+                                        <Radio style={radioStyle} value={false}>Never</Radio>
+                                        <Radio style={radioStyle} value={true}>
+                                            On {end_date === true ?
 
-                                        getFieldDecorator('endDate', {
-                                            rules: [{
-                                                validator: checkEndDate, message: 'End date must be after Start Date',
-                                            }],
-                                        })(
-                                            <DatePicker/>
-                                        )
+                                            getFieldDecorator('endDate', {
+                                                rules: [{
+                                                    validator: checkEndDate,
+                                                    message: 'End date must be after Start Date',
+                                                }],
+                                            })(
+                                                <DatePicker format={dateFormat}/>
+                                            )
 
-                                        : null}
-                                    </Radio>
-                                </RadioGroup>
-                            )}
-                        </FormItem>
-
-
-                    </Card>
+                                            : null}
+                                        </Radio>
+                                    </RadioGroup>
+                                )}
+                            </FormItem>
+                        </Card>
+                    }
                 </Form>
-
-
             </Modal>
         );
     }

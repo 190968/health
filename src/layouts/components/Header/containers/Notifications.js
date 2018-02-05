@@ -5,7 +5,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Notifications from '../components/Notifications';
+import Notifications from '../components/Notifications/index';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

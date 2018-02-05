@@ -26,8 +26,8 @@ export class LoginForm extends React.Component {
                 dateFormat
                 token,
                 phoneConfirmed,
-                newNotifications,
-                newMessages,
+                unreadNotifications,
+                unreadMessages,
                 phone {
                     code
                     number

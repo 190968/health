@@ -8,7 +8,7 @@ import { Spin,Modal,Button } from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
 import { Layout, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
-import LayoutHeader from './Header';
+import LayoutHeader from './components/Header';
 
 
 

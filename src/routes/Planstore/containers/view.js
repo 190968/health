@@ -31,7 +31,8 @@ const CURRENT_PLANSTORE_PLAN = gql`
             gender,
             elements,
             language,
-            alreadyDownloadedId
+            alreadyDownloadedId,
+            isFixedDated
             categories {
                 id,
                 name
@@ -84,7 +85,9 @@ const PlanstorPlanLayoutWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
+        dateFormat: state.user.info.dateFormat
         // view store:
         //currentView:  state.views.currentView,
         // userAuth:
@@ -105,7 +108,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             const endDate = end_date_set ? props.endDate.format("YYYY-MM-DD") : '';
             //var birth = birthday.substring(0,10);
             //console.log(birth);
-            const input = {start_date: startDate, privacy:privacy, end_date:endDate};
+            const input = {startDate: startDate, privacy:privacy, endDate:endDate};
             return client.mutate({
                 mutation: getPlanMutation,
                 variables: { id: ownProps.match.params.id, input: input}
