@@ -7,6 +7,8 @@ import { withApollo, gql } from 'react-apollo'
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom'
 import '../../../../style.css';
+import messages from "../MainCategories/messages";
+import CategoryCard from '../CategoryCard';
 
 let settings = {
     accessibility:true,
@@ -29,7 +31,7 @@ class MyCommynities extends React.Component{
                 <Card loading title="My Categories">Loading!!!</Card>
             );
         }
-       let CarouselItem =[];
+        /*let CarouselItem =[];
 
         let i=0;
         info.forEach(function(item) {
@@ -44,10 +46,30 @@ class MyCommynities extends React.Component{
 
             )
 
-        });
+        });*/
+
+        console.log(info);
 
 
         return(
+            <Card
+                title="My Communities"
+            >
+                <List
+                    split={false}
+                    loading={loading}
+                    grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 6, xl: 6}}
+                    dataSource={info}
+                    renderItem={item => (
+                        <List.Item key={item.category.id}>
+                            <CategoryCard item={item.category} />
+                        </List.Item>
+                    )}
+                />
+
+            </Card>
+        )
+        /*return(
             <Card title="My Categories">
                 <Carousel slidesToShow={6} arrows={true} centerPadding={20} slidesToScroll={6} responsive={[{ breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll:3 }}]}>
 
@@ -55,7 +77,7 @@ class MyCommynities extends React.Component{
 
                 </Carousel>
             </Card>
-        )
+        )*/
     }
 
 }

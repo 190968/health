@@ -26,12 +26,8 @@ class MyCategories extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
-            console.log(this.props);
         return(
-
-
                     <div>
-                        {/*<Breadcrumb routes={routes} params={params} />*/}
                         <MyCommutinies />
                         <MainCategories info={info} />
                     </div>

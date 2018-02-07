@@ -3,6 +3,7 @@ import styles from './index.less';
 import { getRequestAnimationFrame, easeInOutCubic } from '../../../../../../utils/animate';
 import moment from 'moment';
 import {Avatar, Card} from 'antd';
+import InfiniteScroll from 'react-infinite-scroller';
 
 const reqAnimFrame = getRequestAnimationFrame();
 
@@ -13,36 +14,68 @@ class ChatPresent extends React.Component {
     }
     componentDidMount() {
         this.scrollIntoView();
+        // add scroll
+        //window.addEventListener('scroll', this.handleScroll);
     }
     componentDidUpdate() {
         this.scrollIntoView();
     }
+    componentWillUnmount() {
+        // remove scroll
+        //window.removeEventListener('scroll', this.handleScroll);
+    }
+    /*handleScroll = (event) => {
+        let scrollTop = event.srcElement.body.scrollTop,
+            itemTranslate = Math.min(0, scrollTop/3 - 60);
+
+        console.log(itemTranslate);
+    }*/
     scrollIntoView = () => {
         if (this.props.loading) { return; }
         if (!this.container) { return; }
+        const container = this.container;
         const startTime = Date.now();
-        const scrollTop = this.container.scrollTop;
-        const targetScrollTop = this.container.scrollHeight;
+        const scrollTop = container.scrollTop;
+        const targetScrollTop = container.scrollHeight;
+
+        // check if we scroll top
+
         const frameFunc = () => {
             const timestamp = Date.now();
             const time = timestamp - startTime;
-            this.container.scrollTop = easeInOutCubic(time, scrollTop, targetScrollTop, 450);
+            container.scrollTop = easeInOutCubic(time, scrollTop, targetScrollTop, 450);
             if (time < 450) {
                 reqAnimFrame(frameFunc);
             }
         };
         reqAnimFrame(frameFunc);
     }
+
+    loadItems = (page) => {
+        console.log('loading...', page);
+    }
+
     render() {
         const { loading, messages, userId } = this.props;
 
         if (loading) {
            // return <Card  bordered={false} loading>Loading...</Card>
         }
+
+        const loader = <div className="loader">Loading ...</div>;
+
         return (<div
             ref={c => {this.container = c;}}
             className={'chatPresent'}
         >
+            <InfiniteScroll
+                initialLoad={false}
+                pageStart={0}
+                isReverse={true}
+                loadMore={this.loadItems}
+                hasMore={true}
+                useWindow={false}
+            >
             {messages.map((conversation, idx) => {
                 const isMe = conversation.sender && conversation.sender.id === userId;
                 const from = isMe ? 'me' : conversation.sender.fullName;
@@ -69,6 +102,7 @@ class ChatPresent extends React.Component {
 
 
             })}
+            </InfiniteScroll>
         </div>);
     }
 }

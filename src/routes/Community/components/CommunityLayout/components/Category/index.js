@@ -27,6 +27,7 @@ class ViewForm extends React.Component{
         key:'Overview',
         noTitleKey: 'Overview',
     }
+
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -42,6 +43,7 @@ class ViewForm extends React.Component{
         const { onSubmit, info} = this.props;
         return onSubmit(info.id);
     }
+
     clickUNJoin = () => {
         const { onClick,info} = this.props;
         return onClick(info.id);
@@ -122,10 +124,8 @@ class ViewForm extends React.Component{
 
 
 
-                {
-                    categories.length != 0 ?  <ListCommunityForm name={name}  categories={categories} />: null
+                {categories.length > 0 && <ListCommunityForm name={name}  categories={categories} />}
 
-                }
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
                 {plans.length > 0 && <Plan  plans={plans}/>}
             </div>

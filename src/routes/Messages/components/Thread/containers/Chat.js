@@ -73,40 +73,13 @@ const ChatWithQuery = graphql(
                             updateQuery: (previousResult, { fetchMoreResult }) => {
 
                                 if (!fetchMoreResult) { return previousResult; }
-                                console.log(previousResult);
-                                console.log(fetchMoreResult);
-
+                                const newMessages = [...previousResult.inboxConversation.messages.edges, ...fetchMoreResult.inboxConversation.messages.edges]
+                                // add total count
                                 const obj =  Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    inboxConversation: {messages: [...previousResult.inboxConversation.messages, ...fetchMoreResult.inboxConversation.messages]},
+                                    inboxConversation: {...previousResult.inboxConversation, messages: { ...previousResult.inboxConversation.messages , edges: newMessages}}
                                 });
 
-                                console.log(obj);
-
-                                return fetchMoreResult;
-                                //planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-
-
-                                const previousEntry = previousResult.inboxConversation;
-                                const newComments = fetchMoreResult.inboxConversation.messages;
-                                //const newCursor = fetchMoreResult.moreComments.cursor;
-
-
-                                /*
-                                return Object.assign({}, previousResult, {
-                                  // Append the new feed results to the old one
-                                  planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                                });
-                                 */
-                                return {
-                                    // By returning `cursor` here, we update the `loadMore` function
-                                    // to the new cursor.
-                                    //lastCursor: newCursor,
-
-                                    inboxConversation: {
-                                        // Put the new comments in the front of the list
-                                    },
-                                };
+                                return obj;
                             },
                         });
                     }

@@ -12,6 +12,8 @@ import {
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
+import CategoryCard from '../CategoryCard';
+
 class MyCategories extends React.Component{
 
     constructor(props){
@@ -38,11 +40,7 @@ class MyCategories extends React.Component{
 
                 <Card
                     title={intl.formatMessage(messages.title)}
-                    extra={ <Row>
-                        <Col offset={11}  span={13}>
-                            <Search categories={categoriesKV} />
-                        </Col>
-                    </Row>
+                    extra={ <Search categories={categoriesKV} />
                     }
                 >
                     <List
@@ -52,12 +50,7 @@ class MyCategories extends React.Component{
                         dataSource={info}
                         renderItem={item => (
                             <List.Item key={item.id}>
-                                <Link to={"/community/"+item.id}>
-                                    <Card
-                                        cover={<img alt={item.name} height={120} src={item.thumb.large}/>}
-                                    >
-                                        <Tooltip title={item.name}>{item.name.substring(0, 10)}</Tooltip></Card>
-                                </Link>
+                                <CategoryCard item={item} />
                             </List.Item>
                         )}
                     />

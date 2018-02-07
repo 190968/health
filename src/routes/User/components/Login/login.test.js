@@ -9,7 +9,7 @@ describe('<Login>', () => {
     it('renders without crashing', () => {
         console.log("<Login> ----> Done")
         const div = document.createElement('div');
-        let component = wi
+        let component = w
         ReactDOM.render(<Login />,div);
         ReactDOM.unmountComponentAtNode(div);
     })

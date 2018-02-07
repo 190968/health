@@ -12,7 +12,7 @@ const AsyncCategoryView = (props) => {
         Loadable({
             loader: () => import('../../../routes/Community/containers/Category.js'),
             modules: ['../../../routes/Community/containers/Category.js'],
-        webpack: () => [require.resolveWeak('../../../routes/Community/containers/Category.js')],
+            webpack: () => [require.resolveWeak('../../../routes/Community/containers/Category.js')],
 },undefined, props)
     );
 }
@@ -54,8 +54,6 @@ class CommunityLayout extends React.Component {
     }
 
     render() {
-        const {loading, loadMoreEntries} = this.props;
-
         return (
             <div>
                 <Row style={{marginBottom: 10}}>

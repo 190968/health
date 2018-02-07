@@ -11,16 +11,17 @@ export default class ChatThreads extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-        //console.log(nextProps);
-        const {conversations, currentId} = nextProps;
-        conversations.map(info => {
-            if (info.id == currentId) {
-                // if it's current conversation, then check the last message
-                const {lastMessage} = info;
-                const {id} = lastMessage;
-                this.props.setLastCursor(id);
-            }
-        })
+        if (!nextProps.loading) {
+            const {conversations, currentId} = nextProps;
+            conversations.map(info => {
+                if (info.id == currentId) {
+                    // if it's current conversation, then check the last message
+                    const {lastMessage} = info;
+                    const {id} = lastMessage;
+                    this.props.setLastCursor(id);
+                }
+            })
+        }
         /*if (nextProps.lastCursor !== this.props.lastCursor  ) {
             this.props.setLastCursor(nextProps.lastCursor);
         }*/

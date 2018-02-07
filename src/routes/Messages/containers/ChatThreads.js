@@ -32,7 +32,7 @@ const ChatThreadsWithQuery = graphql(
     {
         options: (ownProps) => {
             return {
-                //pollInterval: 10000,
+                pollInterval: 10000,
                 fetchPolicy: 'network-only'
             }
         },
