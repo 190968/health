@@ -181,8 +181,8 @@ export const asyncCommynity = (store) => {
 //     return (
 //         Loadable({
 //             loader: () => import('../routes/Discussion/containers'),
-//             modules: ['../routes/CommunityDiscussions/containers'],
-//         webpack: () => [require.resolveWeak('../routes/CommunityDiscussions/containers')],
+//             modules: ['../routes/Discussion/containers'],
+//         webpack: () => [require.resolveWeak('../routes/Discussion/containers')],
 // })
 //     );
 // }

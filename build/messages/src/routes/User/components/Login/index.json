@@ -1,15 +1,5 @@
 [
   {
-    "id": "user.login.forgot.rules",
-    "description": "Forgot rules",
-    "defaultMessage": "Please enter the email address you registered with to help us locate your Fitango Demo account."
-  },
-  {
-    "id": "user.login.forgot.email",
-    "description": "Enter email",
-    "defaultMessage": "Enter email"
-  },
-  {
     "id": "user.login.email",
     "description": "Email",
     "defaultMessage": "Email"
@@ -18,20 +8,5 @@
     "id": "user.login.password",
     "description": "Password",
     "defaultMessage": "Password"
-  },
-  {
-    "id": "user.login.forgot",
-    "description": "Forgot password",
-    "defaultMessage": "Forgot password"
-  },
-  {
-    "id": "user.login.or",
-    "description": "Or",
-    "defaultMessage": "Or"
-  },
-  {
-    "id": "user.login.sign_up",
-    "description": "Sign up",
-    "defaultMessage": "Sign up"
   }
 ]

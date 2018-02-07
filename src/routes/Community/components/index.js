@@ -10,9 +10,9 @@ let Crumb = [];
 const AsyncCategoryView = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/containers/view.js'),
-            modules: ['../../../routes/Community/containers/view.js'],
-        webpack: () => [require.resolveWeak('../../../routes/Community/containers/view.js')],
+            loader: () => import('../../../routes/Community/containers/Category.js'),
+            modules: ['../../../routes/Community/containers/Category.js'],
+        webpack: () => [require.resolveWeak('../../../routes/Community/containers/Category.js')],
 },undefined, props)
     );
 }
@@ -20,7 +20,7 @@ const AsyncCategoryView = (props) => {
 const AsyncCategoryDash = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/containers/mainCategories.js'),
+            loader: () => import('../../../routes/Community/containers/CommunityLayout.js'),
 
 }, undefined, props
     )
@@ -29,7 +29,7 @@ const AsyncCategoryDash = (props) => {
 const AsyncCommynityDiscussion = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/containers/discussions.js')
+            loader: () => import('../../../routes/Community/components/CommunityLayout/components/Discussion/containers/discussions.js'),
 }, undefined, props)
     );
 }
