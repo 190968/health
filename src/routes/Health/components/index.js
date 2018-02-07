@@ -10,9 +10,9 @@ const TabPane = Tabs.TabPane;
 const AsyncRecords = () => {
     return (
         Loadable({
-            loader: () => import('./Records'),
-            modules: ['./Records'],
-            webpack: () => [require.resolveWeak('./Records')],
+            loader: () => import('../containers/Records'),
+            modules: ['../containers/Records'],
+            webpack: () => [require.resolveWeak('../containers/Records')],
         })
     );
 }

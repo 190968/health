@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'antd';
+import {Table, Button, Icon, Card} from 'antd';
 
 
 export default class Records extends React.Component{
@@ -32,7 +32,13 @@ export default class Records extends React.Component{
             key: 'address',
         }];
         return (
-            <Table dataSource={dataSource} columns={columns} />
+            <div>
+            <div style={{textAlign:'right'}}>
+                <Button size="small"><Icon type="plus" /></Button>
+            </div>
+                <Card bordered={false} style={{textAlign:'center'}}>No visits has been added</Card>
+
+            </div>
         );
     }
 }

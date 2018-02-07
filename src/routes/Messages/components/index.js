@@ -1,6 +1,8 @@
 import React from 'react';
-import {Card,Row, Col, Affix, Layout, Menu, Icon} from 'antd';
-
+import { Card,Row, Col, Affix, Layout, Menu, Icon} from 'antd';
+import ChatThreads from '../containers/ChatThreads';
+import Thread from './Thread';
+import styles from './index.css';
 // RCE CSS
 import 'react-chat-elements/dist/main.css';
 // MessageBox component
@@ -11,12 +13,31 @@ class MessagesLayout extends React.Component {
 
     constructor(props){
         super(props);
+        this.state = {
+            lastCursor: ''
+        }
+    }
+
+    setLastCursor = (cursor) => {
+        this.setState({lastCursor:cursor});
     }
 
     render() {
-
-
-        return (<Layout>
+        const {match} = this.props;
+        const {params} = match;
+        const {id} = params;
+        console.log(this.state.lastCursor);
+        return (
+            <div className="wrapper">
+                <div className="chat">
+                    <div className="body">
+                        <ChatThreads currentId={id} setLastCursor={this.setLastCursor} />
+                        <Thread id={id} lastCursor={this.state.lastCursor} />
+                    </div>
+                </div>
+            </div>
+        );
+        /*return (<Layout>
             <Sider style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
                 <div className="logo" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
@@ -55,7 +76,7 @@ class MessagesLayout extends React.Component {
                 </Menu>
             </Sider>
             <Layout style={{ marginLeft: 200 }}>
-                <Header style={{ background: '#fff', padding: 0 }} />
+                <Affix><Header style={{ background: '#fff', padding: 0 }} /></Affix>
                 <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                     <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>
                         ...
@@ -73,11 +94,11 @@ class MessagesLayout extends React.Component {
                         content
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>
+                <Affix offsetBottom={0}><Footer style={{ textAlign: 'center' }}>
                     Ant Design ©2016 Created by Ant UED
-                </Footer>
+                </Footer></Affix>
             </Layout>
-        </Layout>);
+        </Layout>);*/
 
         return (<Card><Row>
             <Col xs={5} >

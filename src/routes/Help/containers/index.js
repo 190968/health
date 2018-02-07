@@ -14,6 +14,10 @@ const GET_HELP_QUERY = gql`
             children {
                 subject
                 text
+                children {
+                    subject
+                    text
+                }
             }
           }
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'antd';
+import {Card,Table} from 'antd';
 
 
 export default class Records extends React.Component{
@@ -32,7 +32,7 @@ export default class Records extends React.Component{
             key: 'address',
         }];
         return (
-            <Table dataSource={dataSource} columns={columns} />
+            <Card style={{textAlign:'center'}}>No immunizations has been added</Card>
         );
     }
 }
