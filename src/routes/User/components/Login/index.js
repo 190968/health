@@ -92,7 +92,13 @@ export class LoginForm extends React.Component {
 
 
     render() {
+
         const token = this.props.token;
+        if (token !== '') {
+            return  <Redirect to={{
+                pathname: '/'
+            }} />;
+        }
 
         const { getFieldDecorator } = this.props.form;
         const { visible } = this.state;
