@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {compose} from 'react-apollo';
 import {message} from 'antd';
 
-import View from '../components/CommunityLayout/components/View';
+import Category from '../components/CommunityLayout/components/Category';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -219,4 +219,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-export default compose(withQuery, withMutation, withMutationUnjoin, connect(mapStateToProps, mapDispatchToProps))((View));
+export default compose(withQuery, withMutation, withMutationUnjoin, connect(mapStateToProps, mapDispatchToProps))((Category));

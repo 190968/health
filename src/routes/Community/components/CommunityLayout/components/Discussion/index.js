@@ -24,7 +24,7 @@ class Discussions extends React.Component{
     }
 
     render(){
-        const {loading,discussion, handleBreadcrumbChange} = this.props;
+        const {loading,discussion,user, handleBreadcrumbChange} = this.props;
         console.log(handleBreadcrumbChange);
 
         if (loading) {
@@ -35,11 +35,10 @@ class Discussions extends React.Component{
 
         handleBreadcrumbChange([['aaa','bbbb']]);
 
-        const {title,id,text,createdAt,category,replies} = discussion;
-
+        const {title,id,text,createdAt,category,author,replies} = discussion;
         return(
             <div>
-                    <DiscussionView discussion={{title,category,id,text,createdAt}}  discussionDelete={this.props.discussionDelete}/>
+                    <DiscussionView user={user} discussion={{title,category,id,text,author,createdAt}}  discussionDelete={this.props.discussionDelete}/>
                     <CommentsView discussion={{category,replies}} onSubmit={this.props.onSubmit} discussionReply={this.props.discussionReply}   />
             </div>
         );

@@ -6,7 +6,7 @@ import { Tooltip,Form ,Carousel,Row,Col,Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom'
-import '../../style.css';
+import '../../../../style.css';
 
 let settings = {
     accessibility:true,
@@ -32,13 +32,8 @@ class MyCommynities extends React.Component{
        let CarouselItem =[];
 
         let i=0;
-        //Start huinya
         info.forEach(function(item) {
             i++;
-            // if (!(i == 1 || i == 7 || i == 14)) {
-            // } else {
-            //     CarouselItem.push('<div className="ant-carousel" key={i}>    <Row className="ant-carousel" key={i}>');
-            // }
             CarouselItem.push(
                             <Link key={item.category.id} to={"/community/"+item.category.id} >
                                 <Card style={{ margin:5}}
@@ -48,12 +43,9 @@ class MyCommynities extends React.Component{
                             </Link>
 
             )
-            // if (!(i == 6 || i == 13)) {
-            // } else {
-            //     CarouselItem.push('  </Row></div>');
-            // }
+
         });
-        //End huinya
+
 
         return(
             <Card title="My Categories">

@@ -6,7 +6,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import MyCommynities from '../components/MyCommunities';
+import MyCategories from '../components/CommunityLayout/components/MyCategories';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -64,4 +64,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MyCommynities));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MyCategories));

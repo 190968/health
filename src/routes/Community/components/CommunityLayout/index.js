@@ -6,7 +6,7 @@ import { Card,Breadcrumb, Tooltip,Form,List } from 'antd';
 import { Route } from 'react-router-dom'
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
-import MyCommutinies from '../../containers/myCommunities.js'
+import MyCommutinies from '../../containers/MyCategories.js'
 import MainCategories from './components/MainCategories'
 import { Link } from 'react-router-dom'
 import '../../style.css';

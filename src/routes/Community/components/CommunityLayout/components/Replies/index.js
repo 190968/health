@@ -26,29 +26,18 @@ class Replies extends React.Component{
 
     render(){
 
-        const {loading,discussion} = this.props;
-        if (loading) {
-            return (
-                <Card loading >Loading!!!</Card>
-            );
-        }
-
-        const {replies} = discussion;
-        const {edges} = replies;
-console.log(edges);
+        const {discussion} = this.props;
+const{edges} = discussion;
+console.log(discussion);
         return(
             <div>
 
-                {edges.length > 0 ? <List
-                        loading={loading}
-                        itemLayout="vertical"
-                        dataSource={edges}
-                        renderItem={item => (
+                {edges.length > 0 ?
                             <div>
-                                {item.replies.totalCount > 0 && <List
+                                <List
                                     style={{marginLeft:24}}
                                     itemLayout="vertical"
-                                    dataSource={item.replies.edges}
+                                    dataSource={edges}
                                     renderItem={item => (
                                         <List.Item key={item.id}
                                                    actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />]}
@@ -62,10 +51,7 @@ console.log(edges);
                                         </List.Item>
 
                                     )}
-                                />}
-                            </div>
-                        )}
-                /> : <div>No replies</div>}
+                /></div> : <div>No replies</div>}
     </div>
         );
     }

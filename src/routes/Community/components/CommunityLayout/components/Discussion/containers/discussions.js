@@ -14,15 +14,17 @@ import { connect } from 'react-redux'
  wiring in the actions and state necessary to render a presentational
  components - in this case, the counter:   */
 import {compose} from 'react-apollo';
-import Discussion from '../components/CommunityDiscussions';
+import Discussion from '../index.js';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {withRouter} from "react-router-dom";
-import {MedicationPlan} from "../../Plan/components/MedicationPlan/containers";
-
+// import {MedicationPlan} from "../../Plan/components/MedicationPlan/containers";
 const DISCUSSION  = gql`
  query GET_DISCUSSION($id:ID) {
+   user{
+    id
+  }
     discussion(id:$id) {
          id
          title
@@ -92,8 +94,10 @@ const withQuery = graphql(DISCUSSION, {
             fetchPolicy: 'network-only'
         }},
     props: ({ ownProps, data }) => {
+
         if (!data.loading) {
             return {
+                user:data.user,
                 discussion: data.discussion,
                 loading: data.loading
             }

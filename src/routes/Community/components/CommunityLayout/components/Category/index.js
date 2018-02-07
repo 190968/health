@@ -3,7 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import DiscussionsForm from  './containers/discussions';
-import ListCommunityForm from  './components/ListCommunities';
+import ListCommunityForm from  './components/Communities';
 import Articles from  './components/Articles';
 import Plan from  './components/Plan';
  import Search from  '../../../../containers/Search.js';

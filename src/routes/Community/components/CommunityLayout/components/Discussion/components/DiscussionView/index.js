@@ -29,23 +29,30 @@ class DiscussionView extends React.Component{
 
     render(){
 
-        const {loading,discussion} = this.props;
+        const {loading,discussion,user} = this.props;
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
             );
         }
 
-        const {title,text,createdAt} = discussion;
+        const {title,text,author,createdAt} = discussion;
+        const {id} = author;
         const {intl}=this.props;
         return(
 
                 <Card
                     title={title}
-                    extra={<Popconfirm title={intl.formatMessage(messages.popconfirm)} onConfirm={this.handleClick} okText={intl.formatMessage(messages.yes)} cancelText={intl.formatMessage(messages.no)}>
+
+                    extra={
+                      <div>
+                          {id==user.id ?
+                        <Popconfirm title={intl.formatMessage(messages.popconfirm)} onConfirm={this.handleClick} okText={intl.formatMessage(messages.yes)} cancelText={intl.formatMessage(messages.no)}>
                         <Tooltip title={intl.formatMessage(messages.delete)}><Icon type="close" /></Tooltip>
-                    </Popconfirm>
+                        </Popconfirm> :null}
+                          </div>
                     }
+
                 >
                     <Row>
                         <p>{text}</p>

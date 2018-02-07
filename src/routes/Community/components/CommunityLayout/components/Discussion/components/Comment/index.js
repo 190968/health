@@ -4,7 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Form,Card,Icon,Modal,Input,Row,Avatar,Tooltip,List} from 'antd';
 import {withRouter} from "react-router-dom";
-import Replies from '../Replies';
+import Replies from '../../../Replies';
 import moment from 'moment';
 import {
     injectIntl,
@@ -62,6 +62,7 @@ class Comment extends React.Component{
         const {getFieldDecorator} = this.props.form;
         const {replies} = discussion;
         const {edges} = replies;
+        console.log(edges);
         return(
             <div>
                 <Modal
@@ -103,7 +104,7 @@ class Comment extends React.Component{
                                 />
                                 {item.text}
 
-                               <Replies discussion={discussion} discussionReply={this.props.discussionReply} />
+                                {item.replies.totalCount>0 ?<Replies discussion={item.replies} discussionReply={this.props.discussionReply} />:null}
                             </List.Item>
 
                         )}
