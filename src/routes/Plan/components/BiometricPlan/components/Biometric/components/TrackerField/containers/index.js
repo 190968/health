@@ -17,10 +17,18 @@ export const reportOnTracker = gql`
 
 
 const withMutation = graphql(reportOnTracker, {
-    props: ({ mutate }) => ({
+    props: ({ ownProps, mutate }) => ({
         trackerReport: (input, id) => {
             return mutate({
                 variables: { input: input, id: id },
+                /*refetchQueries: [{
+                    query: getTrackerQuery,
+                    variables: {
+                        id: id,
+                        userId: userId,
+                        date:date
+                    },
+                }],*/
             })
         },
     }),

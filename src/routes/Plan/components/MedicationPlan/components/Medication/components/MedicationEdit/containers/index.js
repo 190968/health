@@ -8,7 +8,7 @@ import MedicationEditForm from '../components'
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from 'antd';
-import {MedicationPlan} from "../../../../../containers";
+import {MedicationPlan_QUERY} from "../../../../../containers";
 
 //import { compose } from 'react-apollo';
 
@@ -131,7 +131,7 @@ const withMutation = graphql(editMutation, {
                     },
                 }],*/
                 refetchQueries: [{
-                    query: MedicationPlan,
+                    query: MedicationPlan_QUERY,
                     variables: {user_id: uid, date: date},
                 }],
                 /*update: (store, { data: { medicationUpdate } }) => {
@@ -175,7 +175,7 @@ const withMutation = graphql(editMutation, {
             return mutate({
                 variables: {userId: uid, input: {details: input}},
                 refetchQueries: [{
-                    query: MedicationPlan,
+                    query: MedicationPlan_QUERY,
                     variables: {user_id: uid, date: date},
                 }],
             }).then((data) => {

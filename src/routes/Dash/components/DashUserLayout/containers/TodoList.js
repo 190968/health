@@ -1,24 +1,29 @@
 import { connect } from 'react-redux'
-import DashLayout from '../components/Todo'
+import TodoList from '../components/TodoList'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Plan from '../../../../Plan/components/Plan';
 
+
 // Query for grabbing everything for the dashboard items
-const QUERY = gql`
-    query GET_TODO ($user_id: ID)  {
+export const DASH_QUERY = gql`
+    query GET_DASH_PLANS ($user_id: ID, $date: Date)  {
         account {
             plans (user_id: $user_id)  {
                 ...PlanCardInfo
+                upid
+                progress
             }
         }
     }
+   
+    
     ${Plan.fragments.plan}
 `;
-
-const DashLayoutWithQuery = graphql(
-    QUERY,
+const TodoListWithQuery = graphql(
+    DASH_QUERY,
     {
+        //skip: (ownProps) => ownProps.loading,
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {
@@ -31,33 +36,14 @@ const DashLayoutWithQuery = graphql(
             }
         },
         options: (ownProps) => ({
+            skip: !ownProps.ready,
             variables: {
-                user_id:ownProps.user_id,
-            }
+                user_id:ownProps.userId,
+                date:ownProps.date,
+            },
+            fetchPolicy:  'cache-only'
         }),
     }
-)(DashLayout);
+)(TodoList);
 
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
-
-const mapStateToProps = (state) => {
-
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    //console.log(1);
-    return {
-        /*increment: (info) => {dispatch(increment(info))},
-        doubleAsync*/
-    }
-};
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DashLayoutWithQuery);
+export default TodoListWithQuery;

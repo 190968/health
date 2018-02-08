@@ -21,6 +21,7 @@ export const BiometricPlanQuery = gql`
                 }
                 startDate
                 endDate
+                progress(date: $date)
             }
     }
 
@@ -66,6 +67,7 @@ const BiometricPlanBodyWithQuery = graphql(
             }
         },
         options: (ownProps) => ({
+            skip: !ownProps.ready,
             variables: {
                 user_id:ownProps.user_id,
                 date:ownProps.date,

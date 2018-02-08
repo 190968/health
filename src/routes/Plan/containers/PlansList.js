@@ -7,7 +7,7 @@ import Plan from '../components/Plan';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const QUERY = gql`    
+export const PLANS_LIST_QUERY = gql`    
     query GET_USER_PLANS ($user_id: ID, $status:UserPlanStatusEnum)  {
             user (id:$user_id) {
               id
@@ -24,18 +24,21 @@ const PLANS_PER_PAGE = 20;
 
 // 1- add queries:
 const PlansListWithQuery = graphql(
-  QUERY,
+    PLANS_LIST_QUERY,
   {
     //name: 'PlanstorePlans',
-    options: (ownProps) => ({
-      variables: {
-          user_id:ownProps.user_id,
-          status:'active'
-          //date:ownProps.date
-      },
-       // fetchPolicy: 'network-only'
+    options: (ownProps) => {
+        return {
+            skip: !ownProps.ready,
+            variables: {
+                user_id: ownProps.user_id,
+                status: 'active'
+                //date:ownProps.date
+            },
+            // fetchPolicy: 'network-only'
+        }
 
-    }),
+    },
     props: ({ ownProps, data }) => {
       if (!data.loading) {
         //console.log(ownProps);
