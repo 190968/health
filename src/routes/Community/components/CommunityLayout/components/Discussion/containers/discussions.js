@@ -19,7 +19,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import {withRouter} from "react-router-dom";
-// import {MedicationPlan} from "../../Plan/components/MedicationPlan/containers";
+// import {MedicationPlan} from "../../PlansList/components/MedicationPlan/containers";
 const DISCUSSION  = gql`
  query GET_DISCUSSION($id:ID) {
    user{

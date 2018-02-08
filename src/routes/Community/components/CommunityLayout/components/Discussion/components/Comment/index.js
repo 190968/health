@@ -115,7 +115,5 @@ class Comment extends React.Component{
     }
 
 }
-
-const WrappedComment = Form.create()(Comment);
-export default withRouter(injectIntl(WrappedComment));
+export default withRouter(injectIntl(Comment));
 

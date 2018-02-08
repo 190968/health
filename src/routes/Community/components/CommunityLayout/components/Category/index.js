@@ -4,25 +4,18 @@
 import React, { PropTypes } from 'react';
 import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/Communities';
-import Articles from  './components/Articles';
-import Plan from  './components/Plan';
+import Plan from  './components/PlansList';
  import Search from  '../../../../containers/Search.js';
-// import Search from  './components/Search';
-import { Card,Dropdown,Menu, List,Popconfirm, message,Button,Form,Input ,Row,Col  } from 'antd';
+import { Card,Popconfirm,Button,Form,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import '../../../../style.css';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './messages';
 
-
-
-
-class ViewForm extends React.Component{
+class Category extends React.Component{
     state = {
         key:'Overview',
         noTitleKey: 'Overview',
@@ -133,6 +126,4 @@ class ViewForm extends React.Component{
     }
 
 }
-
-const WrappedViewForm = Form.create()(ViewForm);
-export default withApollo(withRouter(injectIntl(WrappedViewForm)));
+export default withApollo(withRouter(injectIntl(Category)));

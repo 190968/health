@@ -17,7 +17,7 @@ let settings = {
     slidesToShow: 5,
     slidesToScroll: 2
 };
-class MyCommynities extends React.Component{
+class MyCategories extends React.Component{
 
     constructor(props){
         super(props);
@@ -82,5 +82,5 @@ class MyCommynities extends React.Component{
 
 }
 
-const WrappedMyCommynities = Form.create()(MyCommynities);
-export default withApollo(WrappedMyCommynities);
+const WrappedMyCategories = Form.create()(MyCategories);
+export default withApollo(WrappedMyCategories);

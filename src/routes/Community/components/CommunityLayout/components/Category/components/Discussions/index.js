@@ -8,9 +8,7 @@ import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './communityDiscussion.json';
 const FormItem = Form.Item;
@@ -31,22 +29,11 @@ const formItemLayout = {
         sm: { span: 14 },
     },
 };
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
-    },
-};
 
 
 
-class CommunityDiscussions extends React.Component{
+
+class Discussions extends React.Component{
     state = { visible: false }
     constructor(props){
         super(props);
@@ -134,7 +121,7 @@ class CommunityDiscussions extends React.Component{
                             label={intl.formatMessage(messages.text)}
                         >
                             {getFieldDecorator('text')(
-                                <TextArea autosize autosize={{ minRows: 2 }} />
+                                <TextArea  autosize={{ minRows: 2 }} />
                             )}
                         </FormItem>
 
@@ -145,8 +132,4 @@ class CommunityDiscussions extends React.Component{
     }
 
 }
-
-const WrappedCommunityDiscussions = Form.create()(CommunityDiscussions);
-
-
-export default withApollo(withRouter(injectIntl(WrappedCommunityDiscussions)));
+export default withApollo(withRouter(injectIntl(Discussions)));

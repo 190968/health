@@ -2,10 +2,9 @@
 import React from 'react';
 import Loadable from '../../../components/Loadable';
 import Breadcrumbs from '../components/Breadcrumbs';
-import {Breadcrumb,Alert ,Row } from 'antd';
-import { Router, Route, Link } from 'react-router-dom';
+import {Row } from 'antd';
+import { Route } from 'react-router-dom';
 
-let Crumb = [];
 
 const AsyncCategoryView = (props) => {
     return (
@@ -34,7 +33,7 @@ const AsyncCommynityDiscussion = (props) => {
     );
 }
 
-class CommunityLayout extends React.Component {
+class Community extends React.Component {
 
     constructor(props){
         super(props);
@@ -69,4 +68,4 @@ class CommunityLayout extends React.Component {
     }
 }
 
-export default CommunityLayout
+export default Community

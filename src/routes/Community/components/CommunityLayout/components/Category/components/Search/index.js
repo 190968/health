@@ -4,18 +4,13 @@
 
 import React, { PropTypes } from 'react';
 import { Icon, Card,Form,AutoComplete ,Input } from 'antd';
-import apolloClient from '../../../../../../../../clients/apolloClient';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 import '../../../../../../style.css';
 import {
     withRouter
 } from 'react-router-dom'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './search.json';
 class Search extends React.PureComponent{
@@ -29,22 +24,18 @@ class Search extends React.PureComponent{
 
 
     onChange = (value) => {
-
-        //console.log(value);
         if (!this.props.loading)
         this.props.loadMoreEntries(value)
     };
 
     onSelect(value) {
-        // redirect to the proper category
-        //console.log(this.props);
         this.props.history.push('/community/'+value)
     }
 
 
 
     render(){
-        const {items,intl,loading} = this.props;
+        const {items,intl} = this.props;
         return(
             <div>
                 <AutoComplete
@@ -63,6 +54,4 @@ class Search extends React.PureComponent{
     }
 
 }
-
-const WrappedSearch = Form.create()(Search);
-export default withApollo(withRouter(injectIntl(WrappedSearch)));
+export default withApollo(withRouter(injectIntl(Search)));

@@ -48,6 +48,4 @@ class CommentsView extends React.Component{
     }
 
 }
-
-const WrappedCommentsView = Form.create()(CommentsView);
-export default withRouter(injectIntl(WrappedCommentsView));
+export default withRouter(injectIntl(CommentsView));

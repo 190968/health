@@ -2,7 +2,7 @@
  * Created by Павел on 31.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Form,Card } from 'antd';
+import {Card } from 'antd';
 import {withRouter} from "react-router-dom";
 import DiscussionView from './components/DiscussionView';
 import CommentsView from './components/CommentsView';
@@ -25,16 +25,12 @@ class Discussions extends React.Component{
 
     render(){
         const {loading,discussion,user, handleBreadcrumbChange} = this.props;
-        console.log(handleBreadcrumbChange);
-
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
             );
         }
-
         handleBreadcrumbChange([['aaa','bbbb']]);
-
         const {title,id,text,createdAt,category,author,replies} = discussion;
         return(
             <div>
@@ -45,6 +41,4 @@ class Discussions extends React.Component{
     }
 
 }
-
-const WrappedDiscussions = Form.create()(Discussions);
-export default withRouter(WrappedDiscussions);
+export default withRouter(Discussions);
