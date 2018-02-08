@@ -1,42 +1,29 @@
 import { connect } from 'react-redux'
 import MedicationPlanBody from '../components';
 import Medication from '../components/Medication/components';
-import {MedicationCardInfo} from '../components/Medication/components/fragments';
+import {MedicationCardInfo, MedicationsByType} from '../components/Medication/components/fragments';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
-export const MedicationPlan = gql`
+export const MedicationPlan_QUERY = gql`
     query GET_MEDICATION_PLAN ($user_id: ID!, $date: Date)  {
-            medicationPlan (userId: $user_id, date: $date) {
+            medicationPlan (userId: $user_id) {
                 id
                 upid
                 isPersonal
-                medicationsByType (date: $date) {
-                    takeAtTimes {
-                        ...MedicationCardInfo
-                        timesPerHour {
-                            id
-                            time
-                            quantity
-                        }
-                    }
-                    takeDaily {
-                        ...MedicationCardInfo
-                    }
-                    takeAsNeeded {
-                        ...MedicationCardInfo
-                    }
-                }
+                progress(date: $date)
+                ...MedicationsByType
                 textBefore
                 textAfter
         }
     }
+    ${MedicationsByType}
     ${MedicationCardInfo}
 `;
 
 const MedicationPlanBodyWithQuery = graphql(
-    MedicationPlan,
+    MedicationPlan_QUERY,
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
@@ -80,6 +67,7 @@ const MedicationPlanBodyWithQuery = graphql(
             }
         },
         options: (ownProps) => ({
+            skip: !ownProps.ready,
             variables: {
                 user_id:ownProps.user_id,
                 date:ownProps.date,

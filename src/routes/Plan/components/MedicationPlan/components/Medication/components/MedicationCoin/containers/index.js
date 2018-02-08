@@ -29,6 +29,10 @@ const getMedication = gql`
                 isTaken
             }
         }
+        medicationPlan (userId: $userId) {
+            id
+            progress(date: $date)
+        }
     }
 `;
 

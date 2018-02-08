@@ -9,41 +9,42 @@ import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric
 
 
 // Query for grabbing everything for the dashboard items
-const QUERY = gql`
-    query GET_DASH_PLANS ($user_id: ID, $date: Date)  {
-        account {
-            plans (user_id: $user_id)  {
+export const DASH_QUERY = gql`
+    query GET_DASH_PLANS ($user_id: ID!, $date: Date, $status: UserPlanStatusEnum)  {
+        user (id:$user_id) {
+            id
+            plans (status: $status) {
                 ...PlanCardInfo
                 upid
+                progress
             }
-            
-        
-         
-            medicationPlan (userId: $user_id, date: $date) {
+        }
+         medicationPlan (userId: $user_id) {
                 id
                 upid
                 isPersonal
+                progress(date: $date)
                 ...MedicationsByType
                 textBefore
                 textAfter
+                
             }
-
-            biometricPlan (userId: $user_id,  date: $date) {
+            biometricPlan (userId: $user_id) {
                 id
                 upid
                 isPersonal
+                progress(date: $date)
                 columns {
                     id
                     name
                 }
-                trackers {
+                trackers (date: $date) {
                     ...BiometricCardInfo
                     columns
                 }
                 startDate
                 endDate
             }
-        }
     }
    
     
@@ -63,13 +64,13 @@ const QUERY = gql`
  */
 
 const DashLayoutWithQuery = graphql(
-    QUERY,
+    DASH_QUERY,
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {
-                    plans: data.account.plans,
-                    medicationPlan: data.account.medicationPlan,
+                    plans: data.user.plans,
+                    medicationPlan: data.medicationPlan,
                     loading: data.loading,
                 }
 
@@ -80,7 +81,8 @@ const DashLayoutWithQuery = graphql(
         options: (ownProps) => ({
             variables: {
                 user_id:ownProps.user_id,
-                date:ownProps.date
+                date:ownProps.date,
+                status: 'active'
             },
             fetchPolicy: 'network-only'
         }),
