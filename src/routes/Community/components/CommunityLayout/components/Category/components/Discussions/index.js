@@ -7,6 +7,8 @@ import moment from 'moment';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
+import DiscussionModal from '../DiscussionModal/components'
+import DiscussionListItem from '../DiscussionListItem'
 import {
     injectIntl
 } from 'react-intl';
@@ -34,14 +36,14 @@ const formItemLayout = {
 
 
 class Discussions extends React.Component{
-    state = { visible: false }
+    state = {discussionModal: false }
     constructor(props){
         super(props);
     }
 
     showModal = () => {
         this.setState({
-            visible: true,
+            discussionModal: true
         });
     }
     handleCancel = (e) => {
@@ -67,7 +69,6 @@ class Discussions extends React.Component{
             );
         }
         const { intl } = this.props;
-        const { getFieldDecorator } = this.props.form;
         const {name,discussions, canAdd} = this.props;
 
 
@@ -86,50 +87,16 @@ class Discussions extends React.Component{
                         itemLayout="vertical"
                         dataSource={discussions}
                         renderItem={item => (
-                            <List.Item key={item.id}
-                                       actions={[<IconText type="clock-circle-o" text={moment(item.lastReply.createdAt || item.createdAt).format('LLL')} />,<IconText type="eye-o" text={item.views} />, <IconText type="like-o" text="0" />, <Link to={'/discussion/' + item.id} style={{color: 'inherit'}}><IconText type="message" text={item.replies.totalCount} /></Link>]}
-                            >
-
-                                <List.Item.Meta
-                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<Link to={'discussion/' + item.id} style={{color: 'inherit'}}>{item.title}</Link>}
-                                    description={item.lastReply.text || item.text}
-                                />
-                            </List.Item>
+                           <DiscussionListItem item={item}/>
 
                         )}
                     /> : <div style={{textAlign:'center'}}>No Discussions</div>}
                 </Row>
-                <Modal
-                    title={intl.formatMessage(messages.start)}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    okText={intl.formatMessage(messages.submit)}
-                    onOk={this.handleSubmit}
-                >
-                    <Form onSubmit={this.handleSubmit} >
-                        <FormItem
-                            {...formItemLayout}
-                            label={intl.formatMessage(messages.title)}
-                        >
-                            {getFieldDecorator('title')(
-                                <Input />
-                            )}
-                        </FormItem>
-                        <FormItem
-                            {...formItemLayout}
-                            label={intl.formatMessage(messages.text)}
-                        >
-                            {getFieldDecorator('text')(
-                                <TextArea  autosize={{ minRows: 2 }} />
-                            )}
-                        </FormItem>
-
-                    </Form>
-                </Modal>
+                { this.state.discussionModal && <DiscussionModal onSubmit={this.props.onSubmit} />}
             </Card>
         );
     }
 
 }
+
 export default withApollo(withRouter(injectIntl(Discussions)));

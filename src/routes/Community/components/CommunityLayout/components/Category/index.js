@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
 import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/Communities';
 import Plan from  './components/PlansList';
- import Search from  '../../../../containers/Search.js';
+ import Search from  './containers/Search.js';
 import { Card,Popconfirm,Button,Form,Row,Col  } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";

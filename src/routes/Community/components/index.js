@@ -9,9 +9,9 @@ import { Route } from 'react-router-dom';
 const AsyncCategoryView = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/containers/Category.js'),
-            modules: ['../../../routes/Community/containers/Category.js'],
-            webpack: () => [require.resolveWeak('../../../routes/Community/containers/Category.js')],
+            loader: () => import('../../../routes/Community/components/CommunityLayout/containers/Category.js'),
+            modules: ['../../../routes/Community/components/CommunityLayout/containers/Category.js'],
+            webpack: () => [require.resolveWeak('../../../routes/Community/components/CommunityLayout/containers/Category.js')],
 },undefined, props)
     );
 }

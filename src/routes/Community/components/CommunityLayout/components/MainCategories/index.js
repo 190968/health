@@ -4,7 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
-import Search from  '../../../../containers/Search.js';
+import Search from  '../Category/containers/Search.js';
 import {
     injectIntl
 } from 'react-intl';
@@ -33,8 +33,6 @@ class MainCategories extends React.Component{
         });
 
         return(
-
-
                 <Card
                     title={intl.formatMessage(messages.title)}
                     extra={ <Search categories={categoriesKV} />

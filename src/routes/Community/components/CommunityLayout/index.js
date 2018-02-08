@@ -5,7 +5,7 @@ import React, { PropTypes } from 'react';
 import { Card} from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
-import MyCommutinies from '../../containers/MyCategories.js'
+import MyCommutinies from '../CommunityLayout/containers/MyCategories.js'
 import MainCategories from './components/MainCategories'
 import '../../style.css';
 
