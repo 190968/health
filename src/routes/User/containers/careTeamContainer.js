@@ -20,6 +20,7 @@ const CARETEAM  = gql`
         account {
             user {
             id
+              motivation{
             careTeam {
                     totalCount,
                   edges{
@@ -31,7 +32,7 @@ const CARETEAM  = gql`
                     }
                   }
                 }
-            }
+            }}
          }
      }
 `;
@@ -41,7 +42,7 @@ const withMutation = graphql(CARETEAM, {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user,
+                info: data.account.user.motivation,
                 loading: data.loading
             }
         }

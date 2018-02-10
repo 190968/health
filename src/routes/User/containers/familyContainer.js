@@ -20,6 +20,7 @@ const FAMILY  = gql`
         account {
             user {
             id
+            motivation{
             family {
                     totalCount,
                   edges{
@@ -32,6 +33,7 @@ const FAMILY  = gql`
                   }
                 }
             }
+            }
          }
      }
 `;
@@ -41,7 +43,7 @@ const withMutation = graphql(FAMILY, {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user,
+                info: data.account.user.motivation,
                 loading: data.loading
             }
         }

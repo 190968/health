@@ -23,6 +23,7 @@ const motivators = gql`
         account {
             user {
             id
+                motivation{
             motivators {
                   totalCount,
                   edges{
@@ -34,7 +35,7 @@ const motivators = gql`
                     }
                   }
                 }
-            }
+            }}
          }
      }
 `;
@@ -51,7 +52,7 @@ const withQuery = graphql(motivators, {
     props: ({ ownProps, data }) => {
         if (!data.loading) {
             return {
-                info: data.account.user,
+                info: data.account.user.motivation,
                 loading: data.loading
             }
         }
