@@ -2,22 +2,14 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Card,Breadcrumb, Tooltip,Form,List } from 'antd';
-import { Route } from 'react-router-dom'
+import { Card} from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
-import MyCommutinies from '../../containers/MyCategories.js'
+import MyCommutinies from '../CommunityLayout/containers/MyCategories.js'
 import MainCategories from './components/MainCategories'
-import { Link } from 'react-router-dom'
 import '../../style.css';
-import Loadable from '../../../../components/Loadable';
 
-class MyCategories extends React.Component{
-
-    constructor(props){
-        super(props);
-    }
-
+class CommunityLayout extends React.Component{
 
     render(){
         const {info,loading} = this.props;
@@ -36,5 +28,4 @@ class MyCategories extends React.Component{
 
 }
 
-const WrappedMyCategories = Form.create()(MyCategories);
-export default withApollo(withRouter(WrappedMyCategories));
+export default withApollo(withRouter(CommunityLayout));

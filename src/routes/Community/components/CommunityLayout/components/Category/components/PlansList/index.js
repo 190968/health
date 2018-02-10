@@ -4,9 +4,6 @@
 
 import React, { PropTypes } from 'react';
 import { Card,Form,List  } from 'antd';
-import apolloClient from '../../../../../../../../clients/apolloClient';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import PlanWidget from '../../../../../../../Plan/components/Plan';
 import { withApollo } from 'react-apollo'
 import '../../../../../../style.css';
@@ -14,12 +11,10 @@ import {
     withRouter
 } from 'react-router-dom'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './plan.json';
-class Plan extends React.PureComponent{
+class PlansList extends React.PureComponent{
 
     constructor(props) {
         super(props);
@@ -28,15 +23,11 @@ class Plan extends React.PureComponent{
 
 
     onChange = (value) => {
-
-        //console.log(value);
         if (!this.props.loading)
             this.props.loadMoreEntries(value)
     };
 
     onSelect(value) {
-        // redirect to the proper category
-        //console.log(this.props);
         this.props.history.push('/community/'+value)
     }
 
@@ -64,6 +55,4 @@ class Plan extends React.PureComponent{
         );
     }
 }
-
-const WrappedPlan = Form.create()(Plan);
-export default withApollo(withRouter(injectIntl(WrappedPlan)));
+export default withApollo(withRouter(injectIntl(PlansList)));

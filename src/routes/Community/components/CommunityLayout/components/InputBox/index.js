@@ -2,12 +2,10 @@
  * Created by Павел on 31.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Form,Card,Col,Button,Input,Icon,Avatar } from 'antd';
+import { Form,Col,Button,Input,Icon,Avatar } from 'antd';
 import messages from './messages';
 import {
     injectIntl,
-    defineMessages,
-    FormattedMessage
 } from 'react-intl';
 const FormItem = Form.Item;
 
@@ -17,6 +15,10 @@ class InputBox extends React.Component{
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
+            if(err!=null)
+            {
+                return null;
+            }
             return onSubmit(values).then(({data}) => {
                 this.props.form.resetFields();
             })
@@ -35,7 +37,9 @@ class InputBox extends React.Component{
             </Col>
             <Col span={19}>
                 <FormItem>
-                    {getFieldDecorator('text')(
+                    {getFieldDecorator('text', {
+                        rules: [{ required: true, message:"Input text Please" , whitespace: true }],
+                    })(
 
                         <Input
                             suffix={<Icon type="paper-clip" />}
@@ -50,12 +54,8 @@ class InputBox extends React.Component{
                 }
             </Col>
         </Form>
-
-
-
         );
     }
-
 }
 
 const WrappedInputBox = Form.create()(InputBox);

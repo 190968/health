@@ -2,13 +2,11 @@
  * Created by Павел on 31.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Form,Card,Row,Popconfirm,Tooltip,Icon,Avatar } from 'antd';
+import {Card,Row,Popconfirm,Tooltip,Icon,Avatar } from 'antd';
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './messages';
 
@@ -67,6 +65,4 @@ class DiscussionView extends React.Component{
     }
 
 }
-
-const WrappedDiscussionView = Form.create()(DiscussionView);
-export default withRouter(injectIntl(WrappedDiscussionView));
+export default withRouter(injectIntl(DiscussionView));

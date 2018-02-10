@@ -2,19 +2,16 @@
  * Created by Pavel on 10.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Card, Tooltip,Row,Col,Form,List } from 'antd';
+import { Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
-import { Link } from 'react-router-dom'
-import Search from  '../../../../containers/Search.js';
+import Search from  '../Category/containers/Search.js';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './messages';
 import CategoryCard from '../CategoryCard';
 
-class MyCategories extends React.Component{
+class MainCategories extends React.Component{
 
     constructor(props){
         super(props);
@@ -36,8 +33,6 @@ class MyCategories extends React.Component{
         });
 
         return(
-
-
                 <Card
                     title={intl.formatMessage(messages.title)}
                     extra={ <Search categories={categoriesKV} />
@@ -61,5 +56,4 @@ class MyCategories extends React.Component{
 
 }
 
-const WrappedMyCategories = Form.create()(MyCategories);
-export default withApollo(injectIntl(WrappedMyCategories));
+export default withApollo(injectIntl(MainCategories));

@@ -2,10 +2,9 @@
  * Created by Павел on 31.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Form,Card,Icon,Avatar,List} from 'antd';
+import { Form,Icon,Avatar,List} from 'antd';
 import {withRouter} from "react-router-dom";
 import moment from 'moment';
-
 
 const IconText = ({ type, text }) => (
     <span>
@@ -20,18 +19,12 @@ class Replies extends React.Component{
         super(props);
     }
 
-
-
-
-
     render(){
 
         const {discussion} = this.props;
-const{edges} = discussion;
-console.log(discussion);
+        const{edges} = discussion;
         return(
             <div>
-
                 {edges.length > 0 ?
                             <div>
                                 <List
@@ -43,7 +36,6 @@ console.log(discussion);
                                                    actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />]}
 
                                         >
-
                                             <List.Item.Meta
                                                 avatar={<Avatar size="large"></Avatar>}
                                             />
@@ -57,7 +49,5 @@ console.log(discussion);
     }
 
 }
-
-const WrappedReplies = Form.create()(Replies);
-export default withRouter(WrappedReplies);
+export default withRouter(Replies);
 

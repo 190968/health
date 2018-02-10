@@ -5,6 +5,7 @@ import React, { PropTypes } from 'react';
 import { Form,Card,Icon,Modal,Input,Row,Avatar,Tooltip,List} from 'antd';
 import {withRouter} from "react-router-dom";
 import Replies from '../../../Replies';
+import CommentModal from '../CommentModal/containers/CommentModal.js'
 import moment from 'moment';
 import {
     injectIntl,
@@ -21,34 +22,18 @@ const IconText = ({ type, text }) => (
 );
 
 class Comment extends React.Component{
-    state = { visible: false ,id:null,title:""}
+    state = { visibleReplyModal: false ,id:null,title:""}
     constructor(props) {
         super(props);
     }
 
     showModal = (param) => {
         this.setState({
-            visible: true,
+            visibleReplyModal: true,
             id:param
         });
     }
 
-    handleCancel = (e) => {
-        this.setState({
-            visible: false,
-        });
-    }
-
-    handleModalSubmit = () => {
-        const { discussionReply } = this.props;
-        this.props.form.validateFields((err, values) => {
-            discussionReply(values.textReply,this.props.match.params.id,this.state.id).then(({data}) => {
-                this.setState({
-                    visible: false
-                });
-            });
-        });
-    }
 
     render(){
 
@@ -59,35 +44,12 @@ class Comment extends React.Component{
             );
         }
         const {intl}=this.props;
-        const {getFieldDecorator} = this.props.form;
         const {replies} = discussion;
         const {edges} = replies;
         console.log(edges);
         return(
             <div>
-                <Modal
-                    title={intl.formatMessage(messages.reply)}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    okText={intl.formatMessage(messages.send)}
-                    onOk={this.handleModalSubmit}
-                >
-                    <Form onSubmit={this.handleModalSubmit} >
-                        <FormItem>
-                            {getFieldDecorator('textReply',{
-                                initialValue: this.state.title
-                                }
-                            )(
-
-                                <Input
-                                    suffix={<Icon type="paper-clip" />}
-                                />
-
-                            )}
-                        </FormItem>
-                    </Form>
-
-                </Modal>
+                {this.state.visibleReplyModal && <CommentModal params={this.state.id}  parentMessageId={this.props.match.params.id} />}
                 <Row>
                     {edges.length > 0 ? <List
                         loading={loading}
@@ -115,7 +77,5 @@ class Comment extends React.Component{
     }
 
 }
-
-const WrappedComment = Form.create()(Comment);
-export default withRouter(injectIntl(WrappedComment));
+export default withRouter(injectIntl(Comment));
 

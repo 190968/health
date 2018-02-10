@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {compose} from 'react-apollo';
 import {message} from 'antd';
 
-import Category from '../components/CommunityLayout/components/Category';
+import Category from '../components/Category';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 

@@ -202,10 +202,10 @@ export const asyncPlan = (store) => {
     return (
         Loadable({
                 loader: () => import('../routes/Plan/containers/PlanLayout'),
-            modules: ['../routes/Plan/containers/PlanLayout'],
+            modules: ['../routes/PlansList/containers/PlanLayout'],
             webpack: () => [require.resolveWeak('../routes/Plan/containers/PlanLayout')],
                 reducers: {
-                    'url': 'Plan/modules/plan',
+                    'url': 'PlansList/modules/plan',
                     'key': 'plan'
                 }
             }, store

@@ -7,6 +7,7 @@ import Content  from '../components'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Plan from 'routes/Plan/components/Plan';
+
 import {setSearch} from "../../../../../modules";
 
 

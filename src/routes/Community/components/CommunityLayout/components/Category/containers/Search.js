@@ -4,7 +4,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import Search from '../components/CommunityLayout/components/Category/components/Search';
+import Search from '../components/Search';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -29,7 +29,6 @@ const withQuery = graphql(CATEGORYSEARCH, {
         }
     },
     props: ({ ownProps, data }) => {
-             console.log("CATEGORYSEARCH")
         if (!data.loading) {
 
                 // console.log(data);

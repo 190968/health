@@ -5,11 +5,12 @@ import {
     FormattedMessage
 } from 'react-intl';
 import './login.css'
-import {withRouter} from "react-router-dom";
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import gql from 'graphql-tag';
 import {Modal, Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
-
+configure({ adapter: new Adapter() });
 export class LoginForm extends React.Component {
 
     // fragment for the plan info
@@ -41,6 +42,7 @@ export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            pasha:"guzu",
             email: {
                 value: 'demo2patient@fitango.com',
             },
@@ -59,6 +61,9 @@ export class LoginForm extends React.Component {
         this.setState({
             visible: true,
         });
+    }
+    Test = (text) => {
+        return text;
     }
     handleCancel = () => {
         this.setState({ visible: false });
@@ -92,11 +97,11 @@ export class LoginForm extends React.Component {
     render() {
 
         const token = this.props.token;
-        if (token !== '') {
-            return  <Redirect to={{
-                pathname: '/'
-            }} />;
-        }
+        // if (token !== '') {
+        //     return  <Redirect to={{
+        //         pathname: '/'
+        //     }} />;
+        // }
 
         const { getFieldDecorator } = this.props.form;
         const { visible } = this.state;
@@ -106,7 +111,7 @@ export class LoginForm extends React.Component {
             <Card
                 title="Login"//{intl.formatMessage(messages.title)}
             >
-            <Form onSubmit={this.handleSubmit} className="login-form">
+            <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
                 <FormItem>
                     {getFieldDecorator('email', {
                         initialValue: this.state.email.value,
@@ -127,14 +132,14 @@ export class LoginForm extends React.Component {
                 </FormItem>
                 <FormItem>
 
-                    <Button type="primary" htmlType="submit"  loading={loading}  className="login-form-button">
+                    <Button type="primary" htmlType="submit"  loading={loading}  className="login-form-button" id="submitButton">
                         Log in
                     </Button>
                     <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
                    Or
-                    <Link  to={'/register'}>
-                        Sign up
-                    </Link>
+                    {/*<Link to={'/register'}>*/}
+                        {/*Sign up*/}
+                    {/*</Link>*/}
 
 
                 </FormItem>
@@ -148,3 +153,4 @@ export class LoginForm extends React.Component {
 
  const WrappedLoginForm = Form.create()(LoginForm);
 export default WrappedLoginForm;
+

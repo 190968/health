@@ -1,11 +1,8 @@
 import React, { PropTypes } from 'react';
-import { Tooltip,Form,Card,List,Row} from 'antd';
+import {Card,List} from 'antd';
 import { withApollo, gql } from 'react-apollo'
-import { Link } from 'react-router-dom'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './listCommunity.json';
 import CategoryCard from '../../../CategoryCard';
@@ -46,6 +43,4 @@ class ListCommunity extends React.Component{
         );
     }
 }
-
-const WrappedListCommunity = Form.create()(ListCommunity);
-export default withApollo(injectIntl(WrappedListCommunity));
+export default withApollo(injectIntl(ListCommunity));
