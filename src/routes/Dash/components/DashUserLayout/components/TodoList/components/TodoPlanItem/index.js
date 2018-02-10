@@ -10,7 +10,6 @@ export default class TodoPlanItem extends React.PureComponent {
         const {
             plan
         } = this.props;
-        console.log(plan);
         return (
             <Link to={'/plan/'+plan.upid} style={{color:'inherit'}}>
             <Row type="flex" justify="space-between" align="top" style={{padding:5}}>

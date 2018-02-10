@@ -148,7 +148,7 @@ const mapStateToProps = (state) => {
     return {
         loading: state.network.loading,
         token: state.user.token,
-        user: state.user
+        user: state.user,
     }
 };
 

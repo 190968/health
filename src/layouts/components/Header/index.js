@@ -88,7 +88,7 @@ class LHeader extends React.Component {
                     </Col>
 
                     <Col>
-                        <RightMenu   />
+                        <RightMenu />
                     </Col>
 
                 </Row>

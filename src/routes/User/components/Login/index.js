@@ -28,8 +28,6 @@ export class LoginForm extends React.Component {
                 dateFormat
                 token,
                 phoneConfirmed,
-                unreadNotifications,
-                unreadMessages,
                 phone {
                     code
                     number
