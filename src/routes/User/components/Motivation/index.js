@@ -7,7 +7,8 @@ import Actionplans from './components/Actionplans'
 import Trackers from './components/Trackers'
 import Badges from './containers/Badges.js'
 import Motivators from '../../containers/motivatorsContainer';
-import Points from './containers/Points.js'
+import Points from './containers/Points.js';
+import Promises from './containers/Promises.js';
 import {Row,Col,Card} from 'antd';
 class Motivation extends React.Component {
 
@@ -47,8 +48,12 @@ const{adherenceSummary} = info;
                     <Motivators />
 
                 </Col>
+                {/*<Col offset={2} xs={24} md={10} lg={9} xl={6}>*/}
+                    {/*<Points />*/}
+
+                {/*</Col>*/}
                 <Col offset={2} xs={24} md={10} lg={9} xl={6}>
-                    <Points />
+                    <Promises />
 
                 </Col>
             </Row>
