@@ -12,7 +12,7 @@ import LayoutHeader from './components/Header';
 
 
 
-import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncHealth,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity, asyncCalendar, asyncMessages, asyncHelp/*,asyncDiscussion,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
+import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncHealth,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity, asyncCalendar, asyncMessages, asyncHelp,asyncMotivation/*,asyncDiscussion,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
 
 
 import PrivateRoute from '../routes/privateRoute';
@@ -52,6 +52,7 @@ export const CoreLayout = ({loading, user, store, location}) =>  {
                 <PrivateRoute path="/calendar" component={asyncCalendar(store)} />
                 <PrivateRoute path="/health" component={asyncHealth(store)} />
                 <PrivateRoute path="/help" component={asyncHelp(store)} />
+                <PrivateRoute path="/motivation" component={asyncMotivation(store)} />
                 <PrivateRoute  path="/plan/:upid" component={asyncPlan(store)} />
             </Content>
             <Footer>

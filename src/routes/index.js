@@ -177,6 +177,16 @@ export const asyncCommynity = (store) => {
         })
     );
 }
+
+export const asyncMotivation = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/components/Motivation/containers/Motivation.js'),
+            modules: ['../routes/User/components/Motivation/containers/Motivation.js'],
+        webpack: () => [require.resolveWeak('../routes/User/components/Motivation/containers/Motivation.js')],
+})
+    );
+}
 // export const asyncDiscussion = (store) => {
 //     return (
 //         Loadable({
