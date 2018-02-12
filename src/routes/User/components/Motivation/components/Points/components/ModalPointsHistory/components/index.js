@@ -3,7 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import {Button ,Spin, Table, Icon, Divider,Card,Modal } from 'antd';
-class Points extends React.Component {
+class ModalPointsHistory extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,53 +15,36 @@ class Points extends React.Component {
         this.setState({ visible: false});
     }
     render() {
-        // const data = [];
-        const  {info,loading} = this.props;
+        const data = [];
+        const  {pointsHistory,loading} = this.props;
         if (loading) {
             return    <Modal>
                 <Spin/>
                 </Modal> ;
         }
-        const {edges} = info;
-        // edges.forEach(item=>{
-        //     data.push({})
-        // })
-        const data = [{
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-        }, {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-        }, {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        }];
+        const {edges} = pointsHistory;
+
+        edges.forEach(item=>{
+            data.push(
+                {points:item.amountReceived,receivedFor:item.info.title,receivedOn:item.dateReceived}
+              )
+        })
+
         const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name'
+            title: 'Points',
+            dataIndex: 'points',
+            key: 'points'
         }, {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Received For',
+            dataIndex: 'receivedFor',
+            key: 'receivedFor',
         }, {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        }, {
-            title: 'Action',
-            key: 'action',
+            title: 'Received On',
+            dataIndex: 'receivedOn',
+            key: 'receivedOn',
         }];
 
-
-
-        console.log(info);
+        console.log(pointsHistory);
         return  (
 
             <Modal
@@ -79,4 +62,4 @@ class Points extends React.Component {
         );
     }
 }
-export default Points;
+export default ModalPointsHistory;

@@ -21,6 +21,8 @@ account{
         id
         info {
           id
+          title
+          amount
         }
         amountReceived
         dateReceived
@@ -37,7 +39,7 @@ const withMutation = graphql(GET_POINTHISTORY, {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user.motivation,
+                pointsHistory: data.account.user.motivation,
                 loading: data.loading
             }
         }
