@@ -9,6 +9,7 @@ import {
 
 import moment from 'moment';
 import {Spin, Modal, Form, List, Radio, Row, TimePicker, Col, Select, Input, DatePicker} from 'antd';
+import {StartEndForm} from 'components/FormCustomFields';
 
 const {Option, OptGroup} = Select;
 const FormItem = Form.Item;
@@ -544,49 +545,9 @@ class EditMedicationForm extends React.Component {
                         {...formItemLayout}
                         label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period"/>}
                     >
-                        <Col span={11}>
-                            <FormItem
-                            >
-                                {getFieldDecorator('startDate', {
-                                    initialValue: startDate ? moment(startDate) : moment(),
-                                    rules: [{
-                                        required: true, message: 'Please Select',
-                                    }],
-                                })(
-                                    <DatePicker
-                                        /*disabledDate={this.disabledStartDate}
-                                        */
-                                        allowClear={false}
-                                        format={dateFormat}
-                                        placeholder="Start date"
-                                    />
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col span={2}>
-                    <span style={{display: 'inline-block', width: '100%', textAlign: 'center'}}>
-                      -
-                    </span>
-                        </Col>
-                        <Col span={11}>
-                            <FormItem
-                            >
-                                {getFieldDecorator('endDate', {
-                                    initialValue: endDate ? moment(endDate, dateFormat) : undefined,
-                                    rules: [{
-                                        validator: this.checkEndDate, message: 'End date must be after Start Date',
-                                    }],
-                                })(
-                                    <DatePicker
-                                        placeholder="End date"
-                                        format={dateFormat}
-                                        /*disabledDate={this.disabledEndDate}
-                                        format={dateFormat}
-                                        placeholder="End"*/
-                                    />
-                                )}
-                            </FormItem>
-                        </Col>
+
+                        <StartEndForm startDate={startDate} endDate={endDate} dateFormat={dateFormat}  getFieldDecorator={getFieldDecorator} required form={this.props.form} />
+
                     </FormItem>
 
 

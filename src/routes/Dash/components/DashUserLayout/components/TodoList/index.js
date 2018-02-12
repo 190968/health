@@ -17,6 +17,7 @@ export default class TodoList extends React.Component {
             date,
             haveTodo
         } = this.props;
+        console.log(this.props);
         return (
             <Card title='Todo'>
                 {haveTodo ?

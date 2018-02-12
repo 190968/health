@@ -7,9 +7,10 @@ import Plan from '../../../../Plan/components/Plan';
 
 // Query for grabbing everything for the dashboard items
 export const DASH_QUERY = gql`
-    query GET_DASH_PLANS ($user_id: ID, $date: Date)  {
-        account {
-            plans (user_id: $user_id)  {
+    query GET_DASH_TODO ($user_id: ID!, $status: UserPlanStatusEnum)  {
+        user (id:$user_id) {
+            id
+            plans (status: $status) {
                 ...PlanCardInfo
                 upid
                 progress
@@ -30,9 +31,11 @@ const TodoListWithQuery = graphql(
     DASH_QUERY,
     {
         props: ({ ownProps, data }) => {
+            //console.log(data);
             if (!data.loading) {
-                const {plans, medicationPlan, biometricPlan} = data.account;
-                const haveTodo = data.account.plans.length > 0 || medicationPlan.id !== null || biometricPlan.id !== null;
+                const {user, medicationPlan, biometricPlan} = data;
+                const {plans} = user;
+                const haveTodo = plans.length > 0 || medicationPlan.id !== null || biometricPlan.id !== null;
                 return {
                     plans: plans,
                     haveTodo: haveTodo,
@@ -40,7 +43,7 @@ const TodoListWithQuery = graphql(
                 }
 
             } else {
-                return {loading: data.loading, haveTodo:false}
+                return {loading: data.loading, plans: [], haveTodo:false}
             }
         },
         options: (ownProps) => ({
@@ -48,6 +51,7 @@ const TodoListWithQuery = graphql(
             variables: {
                 user_id:ownProps.userId,
                 date:ownProps.date,
+                status:'active'
             },
             fetchPolicy:  'cache-only'
         }),
