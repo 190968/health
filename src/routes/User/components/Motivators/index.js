@@ -102,7 +102,7 @@ class Motivators extends React.Component {
 
                         </List.Item>
                     )}
-                /> : 'No Motivators'}
+            /> : <div className="ant-list-empty-text">No Motivators</div>}
             <Modal
                 title="Invite motivators"
                 visible={this.state.visible}

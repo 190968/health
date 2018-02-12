@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import {Button ,Spin, Table, Icon, Divider,Card,Modal } from 'antd';
+import moment from 'moment';
 class ModalPointsHistory extends React.Component {
 
     constructor(props) {
@@ -42,6 +43,7 @@ class ModalPointsHistory extends React.Component {
             title: 'Received On',
             dataIndex: 'receivedOn',
             key: 'receivedOn',
+            render: (date) => moment(date).format('LLL')
         }];
 
         console.log(pointsHistory);

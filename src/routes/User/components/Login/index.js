@@ -136,8 +136,7 @@ export class LoginForm extends React.Component {
                         Log in
                     </Button>
                     <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
-                   Or
-                    <Link to={'/register'}>
+                   Or <Link to={'/register'}>
                         Sign up
                     </Link>
 

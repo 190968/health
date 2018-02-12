@@ -8,6 +8,8 @@ import { connect } from 'react-redux'
 import Notifications from '../components/Notifications/index';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {MedicationPlan_QUERY} from "../../../../routes/Plan/components/MedicationPlan/containers";
+import {message} from "antd/lib/index";
 
 
 export const NOTIFICATIONS_QUERY  = gql`
@@ -15,7 +17,7 @@ export const NOTIFICATIONS_QUERY  = gql`
   account {
     user {
       id
-      notifications (cursors:$cursors) @connection(key: "notifications") {
+      notifications (cursors:$cursors, unread:true) @connection(key: "notifications") {
         totalCount
         edges {
           id
@@ -29,6 +31,7 @@ export const NOTIFICATIONS_QUERY  = gql`
           }
           text
           isApproved
+          isRequest
           dateSent
           isCritical
         }
@@ -99,4 +102,31 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
     },
 });
 
-export default withQuery(Notifications);
+
+const handleNotification_Mutation = gql`
+mutation HandleNotification($id: UID!, $approved: Boolean!) {
+  handleNotification(id: $id, approved: $approved) {
+    id
+    action
+    actionId
+    userId
+    date
+  }
+}
+`;
+
+const withMutation = graphql(handleNotification_Mutation, {
+    props: ({mutate}) => ({
+        handleNotification: (id, approved) => {
+            return mutate({
+                variables: {id:id, approved:approved},
+                /*refetchQueries: [{
+                    query: MedicationPlan_QUERY,
+                    variables: {user_id: uid, date: date},
+                }],*/
+            })
+        },
+    }),
+});
+
+export default withMutation(withQuery(Notifications));

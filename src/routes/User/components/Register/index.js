@@ -107,9 +107,7 @@ class NormalRegisterForm extends React.Component {
     checkPassword = (rule, value, callback) => {
         const form = this.props.form;
         if (value && value !== form.getFieldValue('password')) {
-            callback(<FormattedMessage id="user.registration.inconsistent"
-                                       defaultMessage="Two passwords that you enter is inconsistent!"
-                                       description="inconsistent"/>);
+            callback(this.props.intl.formatMessage(messages.inconsistent));
         } else {
             callback();
         }
@@ -278,8 +276,6 @@ class NormalRegisterForm extends React.Component {
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-
-
                     <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                         {intl.formatMessage(messages.sign_up)}
                     </Button>

@@ -63,6 +63,8 @@ class DiscussionModal extends React.Component{
                     visible={true}
                     okText={intl.formatMessage(messages.submit)}
                     onOk={this.handleSubmit}
+                    onCancel={this.props.onCancel}
+                    destroyOnClose
                 >
                     <Form onSubmit={this.handleSubmit} >
                         <FormItem

@@ -73,6 +73,12 @@ const tailFormItemLayout = {
          this.setState({ loading: false });
      }
 
+     disabledDate = (current) => {
+         // Can not select future
+         return current && current > moment().endOf('day');
+
+     }
+
 
     render(){
         const settingsPlaceholder = [];
@@ -163,7 +169,7 @@ const tailFormItemLayout = {
                         required: true, message:intl.formatMessage(messages.rule),
                     }],
                 })(
-                    <DatePicker format={dateFormat} allowClear={false} />
+                    <DatePicker format={dateFormat} allowClear={false} disabledDate={this.disabledDate} />
                 )}
             </FormItem>
 

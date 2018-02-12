@@ -31,6 +31,11 @@ export default class ThreadList extends React.Component {
 
         const {conversations, currentId} = this.props;
 
+
+        if (conversations.length === 0) {
+            return <div className="ant-list-empty-text">No Conversations</div>;
+        }
+
         return <div>
             <div style={{padding:10}}>
                 <Search

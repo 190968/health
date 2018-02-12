@@ -15,6 +15,12 @@ export const DASH_QUERY = gql`
                 progress
             }
         }
+        medicationPlan (userId: $user_id) {
+                id
+        }
+        biometricPlan (userId: $user_id) {
+                id
+        }
     }
    
     
@@ -23,16 +29,18 @@ export const DASH_QUERY = gql`
 const TodoListWithQuery = graphql(
     DASH_QUERY,
     {
-        //skip: (ownProps) => ownProps.loading,
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                const {plans, medicationPlan, biometricPlan} = data.account;
+                const haveTodo = data.account.plans.length > 0 || medicationPlan.id !== null || biometricPlan.id !== null;
                 return {
-                    plans: data.account.plans,
+                    plans: plans,
+                    haveTodo: haveTodo,
                     loading: data.loading
                 }
 
             } else {
-                return {loading: data.loading}
+                return {loading: data.loading, haveTodo:false}
             }
         },
         options: (ownProps) => ({

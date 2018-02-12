@@ -14,13 +14,18 @@ export default class TodoList extends React.Component {
         const {
             userId,
             ready,
-            date
+            date,
+            haveTodo
         } = this.props;
         return (
             <Card title='Todo'>
+                {haveTodo ?
+                    <React.Fragment>
                 <TodoPlansList ready={ready} userId={userId} date={date} />
                 <TodoMedicationItem ready={ready} userId={userId} date={date} />
                 <TodoTrackerItem ready={ready} userId={userId} date={date} />
+                    </React.Fragment>
+                    : <div className="ant-list-empty-text">Nothing for today</div>}
             </Card>);
     }
 }

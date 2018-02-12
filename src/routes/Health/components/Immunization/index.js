@@ -32,7 +32,7 @@ export default class Records extends React.Component{
             key: 'address',
         }];
         return (
-            <Card style={{textAlign:'center'}}>No immunizations has been added</Card>
+           <div className="ant-list-empty-text">No immunizations has been added</div>
         );
     }
 }

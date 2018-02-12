@@ -1,6 +1,7 @@
 import React from 'react';
 import {Table, Card, DatePicker, Button, Icon} from 'antd';
 import moment from "moment/moment";
+import Loading from 'components/Loading';
 
 
 export default class Records extends React.Component{
@@ -10,7 +11,7 @@ export default class Records extends React.Component{
     };
 
     handleChange = (pagination, filters, sorter) => {
-        console.log('Various parameters', pagination, filters, sorter);
+        //console.log('Various parameters', pagination, filters, sorter);
         this.setState({
             filteredInfo: filters,
             sortedInfo: sorter,
@@ -39,7 +40,7 @@ export default class Records extends React.Component{
         const {loading} = this.props;
 
         if (loading) {
-            return <Card loading>loading....</Card>;
+            return <Loading />;
         }
         const {healthRecords, totalCount} = this.props;
         let { sortedInfo, filteredInfo } = this.state;
@@ -119,10 +120,13 @@ export default class Records extends React.Component{
         }];
         return (
             <div>
-                <div style={{textAlign:'right', 'marginBottom':10}}>
+                {/*<div style={{textAlign:'right', 'marginBottom':10}}>
                     <Button size="small" icon="plus">Add</Button>
-                </div>
+                </div>*/}
+                {dataSource.length > 0 ?
             <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange} ref={(input) => { this.table = input; }} />
+                    :
+                    <div className="ant-list-empty-text">No Health Records</div>}
             </div>
                 );
     }

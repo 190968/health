@@ -8,6 +8,7 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
+const { TextArea } = Input;
 const FormItem = Form.Item;
 
 class CommentModal extends React.Component{
@@ -30,7 +31,7 @@ class CommentModal extends React.Component{
 
                 return null;
             }
-            discussionReply(values.textReply,this.props.params,this.props.match.params.id).then(({data}) => {
+            discussionReply(values.textReply,this.props.match.params.id, this.props.params).then(({data}) => {
                 this.setState({
                     visible: false
                 });
@@ -59,8 +60,9 @@ class CommentModal extends React.Component{
                                 }
                             )(
 
-                                <Input
+                                <TextArea
                                     suffix={<Icon type="paper-clip" />}
+                                    autosize={{ minRows: 2}}
                                 />
 
                             )}

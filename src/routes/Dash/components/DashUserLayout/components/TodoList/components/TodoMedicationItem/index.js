@@ -7,8 +7,13 @@ export default class TodoMedicationItem extends React.PureComponent {
 
     render () {
         const {
-            progress
+            progress,
+            medicationPlan
         } = this.props;
+
+        if (medicationPlan.id === null) {
+            return null;
+        }
         return (
             <Row type="flex" justify="space-between" align="top" style={{padding:5}}>
                 <Col xs={3} md={2}>

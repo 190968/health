@@ -2,12 +2,14 @@
  * Created by Павел on 31.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Form,Col,Button,Input,Icon,Avatar } from 'antd';
+import { Form,Row, Col,Button,Input,Icon,Avatar } from 'antd';
 import messages from './messages';
+
 import {
     injectIntl,
 } from 'react-intl';
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 class InputBox extends React.Component{
 
@@ -32,17 +34,19 @@ class InputBox extends React.Component{
             const { getFieldDecorator } = this.props.form;
         return(
         <Form onSubmit={this.handleSubmit} >
+            <Row type="flex" justify="space-between" align="middle">
             <Col span={2}>
-                <Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar>
+                <Avatar  size="large" style={{ verticalAlign: 'middle' }}>N</Avatar>
             </Col>
             <Col span={19}>
-                <FormItem>
+                <FormItem style={{margin:0}}>
                     {getFieldDecorator('text', {
                         rules: [{ required: true, message:"Input text Please" , whitespace: true }],
                     })(
 
-                        <Input
+                        <TextArea
                             suffix={<Icon type="paper-clip" />}
+                            autosize={{ minRows: 2}}
                         />
 
                     )}
@@ -50,9 +54,10 @@ class InputBox extends React.Component{
             </Col>
             <Col offset={1} span={2}>
                 {
-                    isJoined ? <Button type="primary" htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled type="primary" htmlType="submit">{intl.formatMessage(messages.post)}</Button>
+                    isJoined ? <Button type="primary" size="large" htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled type="primary"  size="large" htmlType="submit">{intl.formatMessage(messages.post)}</Button>
                 }
             </Col>
+            </Row>
         </Form>
         );
     }
