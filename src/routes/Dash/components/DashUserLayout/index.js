@@ -40,7 +40,7 @@ export class DashUserLayout extends React.Component {
                 <Card loading>Loading...</Card>
             );
         }
-        console.log(loading, 'Loading');
+        //console.log(loading, 'Loading');
         //console.log(date);
 
         return (

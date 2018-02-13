@@ -50,7 +50,11 @@ class ModalPointsHistory extends React.Component {
             <Modal
                 title="Earned Points"
                 visible={true}
+<<<<<<< HEAD:src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/index.js
                 onCancel={this.props.handleCancel}
+=======
+                onCa ncel={this.handleCancel}
+>>>>>>> 2c80e5e558e46d4dfb4f8d40c1c11d045830c619:src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/components/index.js
                 footer={[
                     <Button key="back" onClick={this.props.handleCancel}>Cancel</Button>
                 ]}

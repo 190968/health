@@ -10,37 +10,33 @@ import gql from 'graphql-tag';
 
 
 const ADHERENCESUMMARY  = gql`
-   query GET_ADHERENCESUMMARY {
-account{
-  user{
-  id
-    motivation{
-     adherenceSummary{
-        medications {
-          level
-          color
-          description
+  query GET_ADHERENCESUMMARY {
+  account {
+    user {
+      id
+      motivation {
+        adherenceSummary {
+          medications {
+            level
+            color
+            description
+          }
+          trackers {
+            level
+            color
+            description
+          }
+          plans {
+            level
+            color
+            description
+          }
         }
-      trackers {
-        level
-        color
-        description
-      }
-      plans {
-        level
-        color
-        description
-      }
-      total {
-        level
-        color
-        description
-      }
       }
     }
   }
 }
-}
+
 `;
 
 const withMutation = graphql(ADHERENCESUMMARY, {
