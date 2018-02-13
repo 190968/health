@@ -145,7 +145,7 @@ export class BiometricPlanBody extends React.Component {
                             }
                         }
                         //console.log(report);
-                        inputFields.push(<TrackerField info={tracker} date={date} column={column_id} report={report} reportKey={i} list_id={info.id} />);
+                        inputFields.push(<TrackerField info={tracker} date={date} userId={user_id} column={column_id} report={report} reportKey={i} list_id={info.id} />);
                     }
 
                     tracker_column_info['col_'+column_id] = <List
@@ -168,7 +168,7 @@ export class BiometricPlanBody extends React.Component {
                         }
                     }
                    // console.log(report);
-                    inputFields.push(<TrackerField info={tracker} date={date} report={report} reportKey={i} list_id={info.id} />);
+                    inputFields.push(<TrackerField info={tracker} date={date} userId={user_id} report={report} reportKey={i} list_id={info.id} />);
                 }
                 //
                 let trackerName = measurement.label;

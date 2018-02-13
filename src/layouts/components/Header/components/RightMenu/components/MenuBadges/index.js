@@ -13,7 +13,7 @@ export default class RightMenu extends React.Component {
         this.state = {
             isOpen: false,
             isOpenUser: false,
-            loading: false
+            loading: false,
         };
     }
     static defaultProps = {
@@ -31,7 +31,7 @@ export default class RightMenu extends React.Component {
     }
 
     render() {
-        const {messages, loading, lastNotificationCursor, newCursor, newNotificationsNum} = this.props;
+        const {unreadMessages, loading, lastNotificationCursor, newCursor, newNotificationsNum} = this.props;
         //console.log(this.props, 'PropsIn Menu Badge');
         // first call - lastNotification - empty, but lastCursor has value. It means that we can load the notifications
         const loadNew = !loading && lastNotificationCursor !== newCursor;
@@ -46,7 +46,7 @@ export default class RightMenu extends React.Component {
                 style={{'borderBottom':'none', 'float':'right'}}
             >
                 <Menu.Item key='inbox'>
-                    <NavLink to="/messages"><Badge count={messages}><Icon type="mail" style={{margin:0}} /></Badge></NavLink>
+                    <NavLink to="/messages"><Badge count={unreadMessages}><Icon type="mail" /></Badge></NavLink>
                 </Menu.Item>
                 {/*<Menu.Item key='points'>
                     <Popover content={content} title='250 points'  >
@@ -55,7 +55,7 @@ export default class RightMenu extends React.Component {
                 </Menu.Item>*/}
 
                 <Menu.Item key='notifications'>
-                    <NotificationBadge newNotificationsNum={newNotificationsNum}  loadNew={loadNew} newCursor={newCursor} lastCursor={lastNotificationCursor} updateLastNotification={this.props.updateLastNotification} />
+                    <NotificationBadge  newNotificationsNum={newNotificationsNum}  loadNew={loadNew} newCursor={newCursor} lastCursor={lastNotificationCursor} updateLastNotification={this.props.updateLastNotification} />
                 </Menu.Item>
             </Menu>
         );

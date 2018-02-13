@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Icom, Avatar, List } from 'antd';
+import { Badge, Input, Icom, Avatar, List } from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import styles from './index.less';
@@ -44,14 +44,16 @@ export default class ThreadList extends React.Component {
             </div>
 
             <div>
-                {conversations.map(conversation => <NavLink to={'/messages/'+conversation.id}><div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
+                {conversations.map(conversation => {
+                    const unreadMessages = conversation.unreadMessages
+                    return <NavLink to={'/messages/'+conversation.id}><div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
                     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     <div className="conversation--details">
-                        <div className="conversation--details_name"><span class="subject">{conversation.subject}</span><span class="date">{moment(conversation.lastMessage.sentAt).fromNow()}</span></div>
+                        <div className="conversation--details_name"><span class="subject"><Badge count={unreadMessages} >{conversation.subject}</Badge> </span><span class="date">{moment(conversation.lastMessage.sentAt).fromNow()}</span></div>
                         <div className="conversation--details_text"><Truncate>{conversation.lastMessage.text}</Truncate></div>
                     </div>
 
-                </div></NavLink>)}
+                </div></NavLink>})}
 
             </div>
             </div>

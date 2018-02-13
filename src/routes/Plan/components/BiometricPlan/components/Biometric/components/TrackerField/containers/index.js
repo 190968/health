@@ -15,20 +15,29 @@ export const reportOnTracker = gql`
     }
 `;
 
+export const getTrackerProgress = gql`
+    query GET_BIOMETRIC_PLAN_PROGRESS ($userId: ID!, $date: Date)  {
+            biometricPlan (userId: $userId) {
+                id
+                progress(date: $date)
+            }
+    }
+`;
+
 
 const withMutation = graphql(reportOnTracker, {
     props: ({ ownProps, mutate }) => ({
         trackerReport: (input, id) => {
             return mutate({
                 variables: { input: input, id: id },
-                /*refetchQueries: [{
-                    query: getTrackerQuery,
+                refetchQueries: [{
+                    // after we reported - refetch tracker adherence
+                    query: getTrackerProgress,
                     variables: {
-                        id: id,
-                        userId: userId,
-                        date:date
+                        userId: ownProps.userId,
+                        date:ownProps.date
                     },
-                }],*/
+                }],
             })
         },
     }),
