@@ -10,14 +10,17 @@ class ModalMakeCommitments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible:true
+            visible:true,
+            title:null
         };
     }
     handleCancel = () => {
         this.setState({ visible: true});
 
     }
-    onChange = () => {
+    onChange = (e) => {
+        console.log(e);
+        this.setState({ title: e});
         this.setState({ visible: false});
 
     }
@@ -55,7 +58,7 @@ class ModalMakeCommitments extends React.Component {
 
 
             </Modal>}
-                {!this.state.visible &&  <ModalMakeCommitmentsFor handleCancel={this.handleCancel} />}
+                {!this.state.visible &&  <ModalMakeCommitmentsFor title={this.state.title} cancelParent={this.props.handleCancel} handleCancel={this.handleCancel} />}
                 </div>
         );
     }

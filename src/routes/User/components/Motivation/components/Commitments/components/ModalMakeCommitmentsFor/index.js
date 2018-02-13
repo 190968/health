@@ -32,35 +32,42 @@ class ModalMakeCommitmentsFor extends React.Component {
 
             <Modal
                 style={{height:800, width: 800 }}
-                title="Make a Commitment for ....."
+                title={"Make a Commitment for "+this.props.title}
                 visible={true}
-                onCancel={this.props.handleCancel}
+                onCancel={this.props.cancelParent}
                 footer={[
-                  <center> <Button type="primary"  onClick={this.props.handleCancel}>Finish</Button></center>
+                  <center> <Button type="primary"  onClick={this.props.cancelParent}>Finish</Button></center>
                 ]}
             >
              <div>
                         <Row>
-                            <Col span={9}>
-                                <p>  If I do not complete my plan </p>
+                            <Col span={24}>
+                                <p>  If I do not complete my plan {this.props.title}</p>
                             </Col>
-                            <Col offset={1} span={7}>
+                            <Col  span={6}>
                                 <DatePicker />
                             </Col>
-                            <Col offset={1} span={4}>
+                            <Col offset={1} span={3}>
                                 I will...
                             </Col>
                         </Row>
+                 <br/>
                         <Row>
+
                             <Col span={7}>
+                                <center>
                                 <Avatar style={{
                                     verticalAlign: 'middle'
                                 }} size="large"  />
+
                                 <span
-                                    style={{textAlign: 'center', 'marginLeft': 10}}><p>Donate to a charity</p>
+                                    style={{textAlign: 'center', 'marginLeft': 10}}><p>Pay a motivator</p>
                                             </span>
+
+                                </center>
                             </Col>
-                            <Col offset={1} span={7}>
+                            <Col offset={2} span={7}>
+                                <center>
                                 <Avatar style={{
                                     verticalAlign: 'middle'
                                 }} size="large"  />
@@ -70,17 +77,28 @@ class ModalMakeCommitmentsFor extends React.Component {
                                 <Select style={{ width: 150 }}>
                                     {/*{selectItem}*/}
                                 </Select>
-                                <span>How much?</span><Input addonAfter="$" />
+                                    <Col span={7}>
+                                        <span>How much?</span>
+                                    </Col>
+                                    <Col>
+                                        <Input addonAfter="$" />
+                                    </Col>
+                                    </center>
                             </Col>
-                            <Col  offset={1}  span={7}>
+                            <Col  offset={2}  span={5}>
+                                <center>
                                 <Avatar style={{
                                     verticalAlign: 'middle'
                                 }} size="large"  />
                                 <span
-                                    style={{textAlign: 'center', 'marginLeft': 10}}><p>Donate to a charity</p>
+                                    style={{textAlign: 'center', 'marginLeft': 10}}><p>Other</p>
                                             </span>
                                 <Input  />
+                                </center>
                             </Col>
+
+
+
                         </Row>
                         <Row>
                             <Col  span={7}>
