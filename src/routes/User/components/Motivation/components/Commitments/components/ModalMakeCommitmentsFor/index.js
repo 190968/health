@@ -4,7 +4,7 @@
 import React, { PropTypes } from 'react';
 import {Button ,Row,Col,Avatar,Spin,Select, DatePicker , Input, Divider,Card,Modal } from 'antd';
 const {Option} = Select;
-class ModalPointsHistory extends React.Component {
+class ModalMakeCommitmentsFor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,42 +22,34 @@ class ModalPointsHistory extends React.Component {
                 <Spin/>
             </Modal> ;
         }
-        console.log(info);
-        let selectItem =[];
-        info.forEach(item=>{
-            selectItem.push(  <Option key={item.id} value={item.title}>{item.title}</Option>)
-        })
+        // console.log(info);
+        // let selectItem =[];
+        // info.forEach(item=>{
+        //     selectItem.push(  <Option key={item.id} value={item.title}>{item.title}</Option>)
+        // })
 
         return  (
 
             <Modal
-                title="Make a Commitment"
+                style={{height:800, width: 800 }}
+                title="Make a Commitment for ....."
                 visible={true}
-                onCancel={this.handleCancel}
+                onCancel={this.props.handleCancel}
                 footer={[
-                    <Button key="back" onClick={this.handleCancel}>Cancel</Button>
+                  <center> <Button type="primary"  onClick={this.props.handleCancel}>Finish</Button></center>
                 ]}
             >
-                {
-                    this.state.visible && <div>
-                <p>Select which Plan you would like to make a commitment to.</p><hr/>
-                <center>
-                    <Select defaultValue={info[0].title} style={{ width: 470 }} onChange={this.onChange}>
-                        {selectItem}
-                    </Select>
-                </center></div>}
-                {
-                    !this.state.visible && <div>
+             <div>
                         <Row>
                             <Col span={9}>
-                          <p>  If I do not complete my plan </p>
-                                </Col>
+                                <p>  If I do not complete my plan </p>
+                            </Col>
                             <Col offset={1} span={7}>
-                            <DatePicker />
-                                </Col>
+                                <DatePicker />
+                            </Col>
                             <Col offset={1} span={4}>
                                 I will...
-                             </Col>
+                            </Col>
                         </Row>
                         <Row>
                             <Col span={7}>
@@ -75,8 +67,8 @@ class ModalPointsHistory extends React.Component {
                                 <span
                                     style={{textAlign: 'center', 'marginLeft': 10}}><p>Donate to a charity</p>
                                             </span>
-                                <Select defaultValue={info[0].title} style={{ width: 150 }}>
-                                    {selectItem}
+                                <Select style={{ width: 150 }}>
+                                    {/*{selectItem}*/}
                                 </Select>
                                 <span>How much?</span><Input addonAfter="$" />
                             </Col>
@@ -90,7 +82,7 @@ class ModalPointsHistory extends React.Component {
                                 <Input  />
                             </Col>
                         </Row>
-                            <Row>
+                        <Row>
                             <Col  span={7}>
                                 Add a URL describing your promise
                             </Col>
@@ -98,10 +90,10 @@ class ModalPointsHistory extends React.Component {
 
                                 <Input  />
                             </Col>
-                       </Row>
-                    </div>}
+                        </Row>
+                    </div>
             </Modal>
         );
     }
 }
-export default ModalPointsHistory;
+export default ModalMakeCommitmentsFor;

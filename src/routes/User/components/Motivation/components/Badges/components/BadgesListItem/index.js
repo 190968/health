@@ -2,7 +2,7 @@
  * Created by Павел on 12.02.2018.
  */
 import React, { PropTypes } from 'react';
-import {Avatar,Button,Popover,Col,List, Modal } from 'antd';
+import {Avatar,Button,Tooltip,Col,List, Modal } from 'antd';
 class BadgesListItem extends React.Component {
 
     constructor(props) {
@@ -41,14 +41,14 @@ class BadgesListItem extends React.Component {
                                     </span>
                             </Modal>
                             <List.Item key={item.id}>
-                                <Popover placement="bottom" content={item.badge.title+" - "+item.badge.description} trigger="hover">
+                                <Tooltip  style={{height:100,background:"red"}} placement="bottom" title={item.badge.title+" - "+item.badge.description}>
                                     <Avatar style={{
                                         verticalAlign: 'middle'
                                     }} size="large" src={item.badge.image} onClick={this.showModal} />
                                     <span
                                         style={{textAlign: 'center', 'marginLeft': 10}}><p>{item.badge.title}</p>
                                     </span>
-                                </Popover>
+                                </Tooltip >
                             </List.Item>
                         </Col>
 

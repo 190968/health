@@ -4,7 +4,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import ModalPointsHistory from '../components';
+import ModalPointsHistory from '../components/ModalPointsHistory';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

@@ -12,9 +12,7 @@ class ModalPointsHistory extends React.Component {
             visible:true
         };
     }
-    handleCancel = () => {
-        this.setState({ visible: false});
-    }
+
     render() {
         const data = [];
         const  {pointsHistory,loading} = this.props;
@@ -52,9 +50,9 @@ class ModalPointsHistory extends React.Component {
             <Modal
                 title="Earned Points"
                 visible={true}
-                onCancel={this.handleCancel}
+                onCancel={this.props.handleCancel}
                 footer={[
-                    <Button key="back" onClick={this.handleCancel}>Cancel</Button>
+                    <Button key="back" onClick={this.props.handleCancel}>Cancel</Button>
                 ]}
             >
 

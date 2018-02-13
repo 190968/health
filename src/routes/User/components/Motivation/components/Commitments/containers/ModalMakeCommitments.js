@@ -4,7 +4,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import ModalMakeCommitment from '../components';
+import ModalMakeCommitment from '../components/ModalMakeCommitments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -27,7 +27,7 @@ const withMutation = graphql(GET_PLANS, {
     options: (ownProps) => ({
 
         variables: {
-            user_id: 24038
+            user_id: ownProps.userId
         }
 
     }),
@@ -46,8 +46,9 @@ const withMutation = graphql(GET_PLANS, {
 
 const mapStateToProps = (state) => {
     return {
-
+        userId: state.user.info.id
     };
+
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

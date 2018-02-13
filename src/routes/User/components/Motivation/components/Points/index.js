@@ -3,7 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import {Progress , Icon,Card } from 'antd';
-import ModalPointsHistory from './components/ModalPointsHistory/containers/ModalPointsHistory'
+import ModalPointsHistory from './containers/ModalPointsHistory'
 class Points extends React.Component {
 
     constructor(props) {
@@ -14,6 +14,9 @@ class Points extends React.Component {
     }
     showModal = () => {
         this.setState({visible: true});
+    }
+    handleCancel = () => {
+        this.setState({ visible: false});
     }
     render() {
         const  {info,loading} = this.props;
@@ -27,9 +30,9 @@ class Points extends React.Component {
         const percent = Math.round(points/amount*100);
         return  (
             <Card title="My Points">
-                { this.state.visible && <ModalPointsHistory />}
-                <Icon type="star" onClick={this.showModal} />
+                { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel} />}
                 <center>
+                <Icon type="star" style={{ fontSize: 40, color: '#FFFF00' }} onClick={this.showModal} />
                     <Progress percent={percent} />
                 </center>
                <center><span><h2>{points}</h2></span></center>
