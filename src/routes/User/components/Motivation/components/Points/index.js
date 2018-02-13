@@ -27,7 +27,7 @@ class Points extends React.Component {
         const percent = Math.round(points/amount*100);
         return  (
             <Card title="My Points">
-                { this.state.visible && <ModalPointsHistory />}
+                { this.state.visible && <ModalPointsHistory  />}
                 <Icon type="star" onClick={this.showModal} />
                 <center>
                     <Progress percent={percent} />
