@@ -6,7 +6,8 @@ import { compose, withState, lifecycle } from "recompose";
 
 export const GET_CONVERSATION_MESSAGES_QUERY = gql`    
     query GET_CONVERSATION_MESSAGES ($id: UID!, $cursors: CursorInput) {
-      inboxConversation (id:$id) {
+      account {
+        inboxConversation (id:$id) {
           id
           subject
           messages (cursors:$cursors) @connection(key: "messages") {
@@ -25,6 +26,7 @@ export const GET_CONVERSATION_MESSAGES_QUERY = gql`
                 sentAt
               }
           }
+        }
       }
     }
 `;
@@ -46,11 +48,12 @@ const ChatWithQuery = graphql(
 
         },
         props: ({ ownProps, data }) => {
-            if (data.inboxConversation || !data.loading) {
-                const {edges, totalCount, pageInfo} = data.inboxConversation.messages;
+            console.log(data);
+            if (!data.loading && data.account.inboxConversation) {
+                const {edges, totalCount, pageInfo} = data.account.inboxConversation.messages;
                 const {endCursor} = pageInfo;
                 let messages = [];
-                if (data.inboxConversation) {
+                if (data.account.inboxConversation) {
                     //console.log(ownProps);
                     messages = edges;
                 } else {
@@ -58,7 +61,7 @@ const ChatWithQuery = graphql(
                 }
 
                 return {
-                    subject: data.inboxConversation.subject,
+                    subject: data.account.inboxConversation.subject,
                     messages: messages,
                     totalCount: totalCount,
                     //lastCursor: endCursor,
@@ -73,10 +76,13 @@ const ChatWithQuery = graphql(
                             updateQuery: (previousResult, { fetchMoreResult }) => {
 
                                 if (!fetchMoreResult) { return previousResult; }
-                                const newMessages = [...previousResult.inboxConversation.messages.edges, ...fetchMoreResult.inboxConversation.messages.edges]
+                                const newMessages = [...previousResult.account.inboxConversation.messages.edges, ...fetchMoreResult.account.inboxConversation.messages.edges]
                                 // add total count
                                 const obj =  Object.assign({}, previousResult, {
-                                    inboxConversation: {...previousResult.inboxConversation, messages: { ...previousResult.inboxConversation.messages , edges: newMessages}}
+                                    account: {
+                                        ...previousResult.account, inboxConversation:
+                                            {...previousResult.account.inboxConversation, messages: { ...previousResult.account.inboxConversation.messages , edges: newMessages}}
+                                    }
                                 });
 
                                 return obj;

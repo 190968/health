@@ -16,6 +16,8 @@ const TabPane = Tabs.TabPane;
         super(props);
 
         this.state = {
+            visible: false,
+            totalNewNotifications:props.totalNewNotifications
         };
     }
     static defaultProps = {
@@ -23,23 +25,28 @@ const TabPane = Tabs.TabPane;
         loading:true
     }
 
-    /*componentWillReceiveProps(nextProps) {
-        console.log(nextProps, 'lastCursor');
-        console.log(this.props,'Cur props');
-        if (!nextProps.loading && nextProps.lastCursor !== this.props.lastCursor) {
-            // update notification
-            console.log(nextProps.lastCursor, 'Cursor has been changed');
-            console.log(this.props.lastCursor, 'Previous cursor');
-            //this.props.updateLastNotification(nextProps.lastCursor);
+     handleVisibleChange = (visible) => {
+         this.setState({ visible });
+     }
+
+     handleTotalNewNotifications = (totalNewNotifications) => {
+         this.setState({ totalNewNotifications });
+     }
+
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.loading && nextProps.totalNewNotifications !== this.props.totalNewNotifications) {
+            this.handleTotalNewNotifications(nextProps.totalNewNotifications);
         }
-    }*/
+    }
 
     componentDidUpdate(prevProps) {
 
         //console.log(prevProps);
         //console.log(this.props);
         if (!this.props.loading) {
-            const {newCursor, lastCursor, newNotificationsNum} = this.props;
+            const {newCursor, lastCursor, newNotificationsNum, totalNewNotifications} = this.props;
+
+
             if (newCursor && newCursor !== lastCursor) {
                 this.props.updateLastNotification(newCursor);
 
@@ -61,18 +68,21 @@ const TabPane = Tabs.TabPane;
         }
     }
     render() {
-        const unreadNotifications = this.props.totalNewNotifications;
+        const unreadNotifications = this.state.totalNewNotifications;
 
         const content = (
             <Tabs defaultActiveKey="1" style={{width: 336}} tabPosition="top">
-                <TabPane tab="Notifications" key="1"><Notification lastCursor={this.props.lastCursor} /></TabPane>
+                <TabPane tab="Notifications" key="1"><Notification lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications} /></TabPane>
                 <TabPane tab="Tasks" key="2"><div className="ant-list-empty-text">No tasks</div></TabPane>
             </Tabs>
         );
 
         return (
-            <Popover placement="bottomRight" content={content} trigger="click" style={{width: 336}}>
-                <Link to="/notifications"><Badge count={unreadNotifications} overflowCount={999}><Icon type="bell" style={{margin:0}}  /></Badge></Link>
+            <Popover placement="bottomRight" content={content}
+                     visible={this.state.visible}
+                     onVisibleChange={this.handleVisibleChange}
+                     trigger="click" style={{width: 336}}>
+                 <Badge count={unreadNotifications} overflowCount={999}><Icon type="bell" /></Badge>
             </Popover>
         );
     }

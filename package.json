@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://2clinic.fitangolocal.com/static/myapp",
   "dependencies": {
-    "antd": "^3.2.0",
+    "antd": "^3.2.1",
     "apollo-client-preset": "^1.0.6",
     "apollo-link-context": "^1.0.3",
     "apollo-link-error": "^1.0.3",
@@ -42,6 +42,7 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "renderer": "^0.1.5",
+    "source-map-explorer": "^1.5.0",
     "uppy": "^0.22.2",
     "vanilla-masker": "^1.2.0"
   },

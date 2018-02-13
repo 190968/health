@@ -6,7 +6,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-export const NOTIFICATIONS_QUERY  = gql`
+export const BADGE_NOTIFICATIONS_QUERY  = gql`
   query GET_NOTIFICATIONS ($cursors: CursorInput!) {
   account {
     user {
@@ -35,7 +35,7 @@ export const NOTIFICATIONS_QUERY  = gql`
 
 `;
 
-const withQuery = graphql(NOTIFICATIONS_QUERY, {
+const withQuery = graphql(BADGE_NOTIFICATIONS_QUERY, {
     options: (ownProps) => {
         //console.log(ownProps, 'Loading cursor')
         return {

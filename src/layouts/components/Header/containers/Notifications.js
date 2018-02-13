@@ -10,6 +10,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {MedicationPlan_QUERY} from "../../../../routes/Plan/components/MedicationPlan/containers";
 import {message} from "antd/lib/index";
+import {BADGE_NOTIFICATIONS_QUERY} from '../components/RightMenu/containers/NotificationBadge'
 
 
 export const NOTIFICATIONS_QUERY  = gql`
@@ -66,6 +67,7 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
                 notifications: edges,
                 endCursor: endCursor,
                 loading: data.loading,
+                totalCount:totalCount,
                 hasMore: edges.length < totalCount,
                 loadMore(endCursor, callback) {
                     //console.log(date);
@@ -97,7 +99,7 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
             }
         }
         else {
-            return {loading: data.loading, notifications: [], endCursor:'', hasMore:false}
+            return {loading: data.loading, notifications: [], totalCount:0, endCursor:'', hasMore:false}
         }
     },
 });
@@ -120,10 +122,14 @@ const withMutation = graphql(handleNotification_Mutation, {
         handleNotification: (id, approved) => {
             return mutate({
                 variables: {id:id, approved:approved},
-                /*refetchQueries: [{
-                    query: MedicationPlan_QUERY,
-                    variables: {user_id: uid, date: date},
-                }],*/
+                refetchQueries: [
+                    {
+                        query: NOTIFICATIONS_QUERY,
+                        variables: {cursors: {after: ''}}
+                    }
+
+
+                ],
             })
         },
     }),

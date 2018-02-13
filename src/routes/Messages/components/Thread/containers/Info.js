@@ -6,16 +6,18 @@ import { compose, withState, lifecycle } from "recompose";
 
 export const GET_CONVERSATION_MESSAGES_QUERY = gql`
     query GET_CONVERSATION_INFO ($id: UID!) {
-      inboxConversation (id:$id) {
-          id
-          subject
-          createdAt
-          participants {
-            totalCount
-            edges {
+      account {
+          inboxConversation (id:$id) {
               id
-              fullName
-            }
+              subject
+              createdAt
+              participants {
+                totalCount
+                edges {
+                  id
+                  fullName
+                }
+              }
           }
       }
     }
@@ -34,7 +36,7 @@ const ChatWithQuery = graphql(
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {
-                    info: data.inboxConversation,
+                    info: data.account.inboxConversation,
                     loading: data.loading,
                 }
             } else {

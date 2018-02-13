@@ -5,24 +5,27 @@ import gql from 'graphql-tag';
 
 const GET_CONVERSATIONS = gql`    
     query GET_CONVERSATIONS {
-      inboxConversations {
-        totalCount
-        edges {
-          id
-          subject
-          lastMessage {
-              id
-              text
-              sentAt
-          }
-          participants {
+        account {
+          inboxConversations {
             totalCount
             edges {
               id
-              fullName
+              subject
+              unreadMessages
+              lastMessage {
+                  id
+                  text
+                  sentAt
+              }
+              participants {
+                totalCount
+                edges {
+                  id
+                  fullName
+                }
+              }
             }
           }
-        }
       }
     }
 `;
@@ -38,7 +41,7 @@ const ChatThreadsWithQuery = graphql(
         },
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                const {edges, totalCount} = data.inboxConversations;
+                const {edges, totalCount} = data.account.inboxConversations;
                 return {
                     conversations: edges,
                     totalCount: totalCount,

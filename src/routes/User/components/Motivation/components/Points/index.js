@@ -31,7 +31,9 @@ class Points extends React.Component {
         return  (
             <Card title="My Points">
 
+
                 { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel} />}
+
 
                 <center>
                 <Icon type="star" style={{ fontSize: 40, color: '#FFFF00' }} onClick={this.showModal} />

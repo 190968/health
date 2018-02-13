@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import styles from './index.less';
 
 import { Popconfirm, Row, Col,Button, Modal, List, Avatar, Spin, Icon, Card } from 'antd';
+import messages from "../RightMenu/components/NotificationBadge/messages";
 const confirm = Modal.confirm;
 
 class Notifications extends React.Component {
@@ -26,8 +27,29 @@ class Notifications extends React.Component {
         });
     }
 
-    handleNotification = (id, approved) => {
+
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.loading && nextProps.totalCount !== this.props.totalCount) {
+            this.props.handleTotalNewNotifications(nextProps.totalCount);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+
+        //console.log(prevProps);
+        //console.log(this.props);
+        if (!this.props.loading) {
+           // this.props.handleTotalNewNotifications(11);
+        }
+    }
+
+    handleNotification = (e, id, approved) => {
+        e.preventDefault();
         this.props.handleNotification(id, approved).then(({data}) => {
+
+            if (!approved) {
+                return;
+            }
             // check on notification
             const {id,
                 action,
@@ -154,9 +176,9 @@ class Notifications extends React.Component {
                                 title={message.text}
                                 description={<Row type="flex" justify="space-between" >
                                     <Col xs={12}>{moment(message.dateSent).calendar()}</Col>
-                                    {message.isRequest && <Col xs={12}><Popconfirm title="Are you sure decline this request?"
-                                                             onConfirm={ () => this.handleNotification(message.id, false)}
-                                    ><Button size='small' type="dashed" >Decline</Button></Popconfirm> <Button size='small' type="primary" ghost onClick={ () => this.handleNotification(message.id, true)}>Approve</Button></Col>}
+                                    {message.isRequest && <Col xs={12}><Popconfirm title="Are you sure decline this request?" getPopupContainer={triggerNode => triggerNode.parentNode}
+                                                             onConfirm={ (e) => this.handleNotification(e, message.id, false)}
+                                    ><Button size='small' type="dashed" >Decline</Button></Popconfirm> <Button size='small' type="primary" ghost onClick={ (e) => this.handleNotification(e, message.id, true)}>Approve</Button></Col>}
                                 </Row>}
                             />
                         </List.Item>

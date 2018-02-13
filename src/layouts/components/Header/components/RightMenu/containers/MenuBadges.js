@@ -3,9 +3,10 @@ import MenuBadges from '../components/MenuBadges/index.js';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const NOTIFICATIONS_POOL_QUERY  = gql`
+export const NOTIFICATIONS_POOL_QUERY  = gql`
    query NOTIFICATIONS_POOL ($cursors: CursorInput!) {
       account {
+        token
         user {
           id
           notifications (cursors:$cursors) @connection(key: "notificationPool") {
@@ -15,6 +16,7 @@ const NOTIFICATIONS_POOL_QUERY  = gql`
             }
           }
         }
+        unreadMessages
       }
     }
 `;
@@ -27,7 +29,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
             variables: {
                 cursors: {first:1, after:ownProps.lastNotificationCursor},// last cursor for notifications
             },
-            pollInterval: 10000,
+            pollInterval: 5000,
             fetchPolicy: 'network-only',
             //notifyOnNetworkStatusChange: true// adding loading placeholder
         }
@@ -37,8 +39,9 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
 
         const lastCursor = !data.loading && data.account.user.notifications.pageInfo.endCursor != '' ?  data.account.user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
         const totalCount = !data.loading && data.account.user.notifications.totalCount;
+        const unreadMessages = data.account && data.account.unreadMessages;
 
-        return {loading: data.loading, newCursor:lastCursor, newNotificationsNum: totalCount}
+        return {loading: data.loading, unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}
 
     },
 });
@@ -48,7 +51,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
 
 const mapStateToProps = (state) => {
     return {
-        messages: state.user.info.unreadMessages,
+        //messages: state.user.info.unreadMessages,
     };
 };
 
