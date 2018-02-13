@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import { DatePicker, Input,Col,Select,Form } from 'antd';
 import {
@@ -9,6 +10,7 @@ import {
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from "moment/moment";
+import {connect} from "react-redux";
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
@@ -38,17 +40,41 @@ const tailFormItemLayout = {
 };
 
 
-export class StartEndForm extends React.Component{
+export class StartEndFormInit extends React.Component{
 
     constructor(props){
         super(props);
     }
 
+    static propTypes = {
+        startDate: PropTypes.string,
+        endDate: PropTypes.string,
+        dateFormat: PropTypes.string,
+        form: PropTypes.object.isRequired,
+        endDateRequired: PropTypes.bool,
+    }
+
     static defaultProps = {
         startDate: '',
         endDate: '',
+        endDateRequired: false,
     }
 
+
+    checkEndDate = (rule, value, callback) => {
+        const form = this.props.form;
+        //callback();
+        //  console.log(value);
+        const start_date = form.getFieldValue('startDate');
+        //console.log(start_date);
+        //console.log(value);
+        if (start_date && value && value < start_date) {
+            //console.log(callback);
+            callback('End date is wrong');
+        } else {
+            callback();
+        }
+    }
 
     disabledStartDate = (endValue) => {
         const form = this.props.form;
@@ -76,8 +102,9 @@ export class StartEndForm extends React.Component{
 
     render(){
         //console.log(this.props);
-        const {  intl, prefix, countries,  getFieldDecorator, startDate, endDate, dateFormat } = this.props;
+        const {  form, intl, endDateRequired, startDate, endDate, dateFormat } = this.props;
 
+        const {getFieldDecorator} = form;
 
         return (
                 <React.Fragment>
@@ -110,13 +137,14 @@ export class StartEndForm extends React.Component{
                             {getFieldDecorator('endDate', {
                                 initialValue: endDate ? moment(endDate, dateFormat) : undefined,
                                 rules: [{
-                                    validator: this.checkEndDate, message: 'End date must be after Start Date',
+                                    required: endDateRequired, validator: this.checkEndDate, message: 'End date must be after Start Date',
                                 }],
                             })(
                                 <DatePicker
                                     placeholder="End date"
                                     format={dateFormat}
                                     disabledDate={this.disabledEndDate}
+                                    allowClear={!endDateRequired}
                                 />
                             )}
                         </FormItem>
@@ -126,5 +154,23 @@ export class StartEndForm extends React.Component{
     }
 
 }
- 
-export default injectIntl(StartEndForm);
+
+
+const mapStateToProps = (state) => {
+    return {
+        dateFormat: state.user.info.dateFormat
+    };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+});
+
+
+
+
+
+
+export const StartEndForm = injectIntl(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(StartEndFormInit));

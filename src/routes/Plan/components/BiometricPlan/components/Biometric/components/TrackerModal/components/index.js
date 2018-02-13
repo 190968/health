@@ -9,6 +9,7 @@ import {
     FormattedMessage,
 } from 'react-intl';
 import {TrackerUncontrolled} from "../../../../../../Tracker";
+import {StartEndForm} from "../../../../../../../../../components/FormCustomFields";
 const { Option } = Select;
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
@@ -223,48 +224,7 @@ class EditTrackerForm extends React.Component {
                     {...formItemLayout}
                     label={<FormattedMessage id="biometric.period" defaultMessage="Period" description="Period"/>}
                 >
-                    <Col span={11}>
-                        <FormItem
-                        >
-                            {getFieldDecorator('startDate', {
-                                initialValue: startDate ? moment(startDate) : moment(),
-                                rules: [{
-                                    required: true, message: 'Please Select Start Date',
-                                }],
-                            })(
-                                <DatePicker
-                                    /*disabledDate={this.disabledStartDate}*/
-                                    format={dateFormat}
-                                    allowClear={false}
-                                    placeholder="Start date"
-                                />
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={2}>
-                    <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
-                      -
-                    </span>
-                    </Col>
-                    <Col span={11}>
-                        <FormItem
-                        >
-                            {getFieldDecorator('endDate', {
-                                initialValue: endDate ? moment(endDate) : undefined,
-                                rules: [{
-                                    validator: this.checkEndDate, message: 'End date must be after Start Date',
-                                }],
-                            })(
-                                <DatePicker
-                                    placeholder="End date"
-                                    format={dateFormat}
-                                    /*disabledDate={this.disabledEndDate}
-                                    format={dateFormat}
-                                    placeholder="End"*/
-                                />
-                            )}
-                        </FormItem>
-                    </Col>
+                    <StartEndForm startDate={startDate} endDate={endDate} dateFormat={dateFormat} form={this.props.form} />
                 </FormItem>
                 <FormItem
                     {...formItemLayout}

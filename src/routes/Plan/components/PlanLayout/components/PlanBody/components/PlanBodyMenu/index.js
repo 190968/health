@@ -11,34 +11,29 @@ export class PlanBodyMenu extends React.Component {
             currentTab: [props.currentTab],
             currentKey: props.currentKey
         };
-
-        this.onClick = this.onClick.bind(this);
     };
 
     static propTypes = {
     };
 
-    onClick(e) {
+    onOpenChange = (e) => {
+        this.setState({currentTab:e});
+
+    }
+    onClick = (e) => {
 
         const{onClick} = this.props;
 
         this.setState({currentKey:e.key});
 
-        onClick(e.key, e.item.props.index);
+        onClick(e.key, e.item.props.index, this.state.currentTab);
     }
 
     componentWillMount() {
 
-//return true;
-
-       // console.log(this.props);
-
-
-        //if (nextProps.loading === false) {
             let currentTab = '';
             let currentKey = '';
             let currentKeyI = 0;
-            //console.log(nextProps);
             // check what should we open
             const{onClick, activities, lessons} = this.props;
             let foundMatch = false;
@@ -50,7 +45,7 @@ export class PlanBodyMenu extends React.Component {
                 // check on incompleted lessons
                 //console.log(lessons);
                 lessons.map((lesson, i) => {
-                    if (currentKey == 'lesson_0' && !lesson.completed) {
+                    if (!foundMatch && currentKey == 'lesson_0' && !lesson.completed) {
                         currentTab = 'lessons';
                         currentKey = 'lesson_'+i;
                         currentKeyI = i;
@@ -74,12 +69,7 @@ export class PlanBodyMenu extends React.Component {
                     }
                 })
             }
-            /*console.log(activities);
-            console.log(currentTab);
-            console.log(currentKey);
-            console.log(currentKeyI);*/
-            //console.log(currentTab);
-            //console.log(currentKey);
+
             if (currentTab !== '') {
                 this.setState({
                     currentTab: [currentTab],
@@ -88,8 +78,6 @@ export class PlanBodyMenu extends React.Component {
                 });
                 onClick(currentKey, currentKeyI, currentTab);
             }
-
-       //}*/
     };
 
     componentWillReceiveProps(nextProps) {
@@ -117,9 +105,10 @@ export class PlanBodyMenu extends React.Component {
         console.log(currentTab, 'curtab');
         console.log(currentKey, 'curkey');
         return (<Menu
+            onOpenChange={this.onOpenChange}
             onClick={this.onClick}
             selectedKeys={[currentKey]}
-            defaultOpenKeys={currentTab}
+            openKeys={currentTab}
             mode="inline"
         >
             {lessons.length > 0 && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>

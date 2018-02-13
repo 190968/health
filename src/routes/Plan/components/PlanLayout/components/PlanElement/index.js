@@ -107,7 +107,7 @@ export class PlanElement extends React.Component {
            case 'file_input':
                fieldTitle = item.label;
                 field = <Upload>
-                    <Button>
+                    <Button disabled>
                         <Icon type="upload" /> Upload
                     </Button>
                 </Upload>
@@ -115,7 +115,7 @@ export class PlanElement extends React.Component {
            case 'exam_input':
                fieldTitle = item.label;
                //console.log(item);
-               field = <Button>{fieldTitle}</Button>;
+               field = <Button disabled>{fieldTitle}</Button>;
                break;
            case 'instruction':
                fieldTitle = '';

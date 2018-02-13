@@ -9,7 +9,7 @@ import {
 
 import moment from 'moment';
 import {Spin, Modal, Form, List, Radio, Row, TimePicker, Col, Select, Input, DatePicker} from 'antd';
-import {StartEndForm} from 'components/FormCustomFields';
+import {StartEndForm} from "../../../../../../../../../components/FormCustomFields";
 
 const {Option, OptGroup} = Select;
 const FormItem = Form.Item;
@@ -50,7 +50,6 @@ class EditMedicationForm extends React.Component {
             //select_value:null,
             total: null
         };
-        this.checkEndDate = this.checkEndDate.bind(this);
     };
 
     static propTypes = {
@@ -89,20 +88,7 @@ class EditMedicationForm extends React.Component {
         });
     }*/
 
-    checkEndDate = (rule, value, callback) => {
-        const form = this.props.form;
-        //callback();
-        //  console.log(value);
-        const start_date = form.getFieldValue('startDate');
-        //console.log(start_date);
-        //console.log(value);
-        if (start_date && value && value < start_date) {
-            //console.log(callback);
-            callback('End date is wrong');
-        } else {
-            callback();
-        }
-    }
+
     handleCancel = () => {
         console.log("handleCancel");
     }
@@ -546,7 +532,7 @@ class EditMedicationForm extends React.Component {
                         label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period"/>}
                     >
 
-                        <StartEndForm startDate={startDate} endDate={endDate} dateFormat={dateFormat}  getFieldDecorator={getFieldDecorator} required form={this.props.form} />
+                        <StartEndForm startDate={startDate} endDate={endDate} dateFormat={dateFormat} form={this.props.form} />
 
                     </FormItem>
 

@@ -1,7 +1,0 @@
-[
-  {
-    "id": "app.home.greeting",
-    "description": "Message to greet the user.",
-    "defaultMessage": "Hello, {name}!"
-  }
-]
