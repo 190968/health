@@ -41,6 +41,8 @@ export class PlanBody extends React.Component {
 
 
     handleClick = (key, currentKeyI, tab) => {
+        //console.log(tab);
+        //console.log(this.state.tab);
         this.setState({
             currentTab: tab || this.state.tab,
             currentKey: key,
@@ -85,17 +87,6 @@ export class PlanBody extends React.Component {
             currentKeyI: currentKeyI,
         });
     };
-
-    /*componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        console.log( this.props);
-        console.log(this.state.inited);
-        if (!nextProps.loading && this.state.inited  ) {
-            console.log('FIRST section show')
-
-            this.showFirstSection();
-        }
-    }*/
 
 
 
@@ -152,9 +143,9 @@ export class PlanBody extends React.Component {
             });
         }
 
-        console.log('Loading Body');
-        console.log(currentTab, 'tab');
-        console.log(currentKey, 'key');
+        //console.log('Loading Body');
+        //console.log(currentTab, 'tab');
+        //console.log(currentKey, 'key');
         return (<Row>
             <BackTop />
             <Col xs={5} >
@@ -166,7 +157,6 @@ export class PlanBody extends React.Component {
 
                 {lessonsNum > 0 && lessons.map((section, i) => {
                     let anchors = [];
-                    //console.log(section);
                     if (currentKey == 'lesson_'+i) {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>

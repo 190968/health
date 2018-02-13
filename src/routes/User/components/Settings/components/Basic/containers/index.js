@@ -8,6 +8,7 @@ import SettingForm from '../components'
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {loadFullUser} from "../../../../../modules/user";
+import { message } from 'antd';
 //import { compose } from 'react-apollo';
 
 const settingUser = gql`
@@ -133,7 +134,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (values, stopLoading) => {
-        console.log(values);
+        //console.log(values);
 
         const {title,firstName, lastName, middleName, birthday, prefix, phone, gender, email, timezone, address, language, dateFormat} = values;
 
@@ -155,6 +156,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         return ownProps.updateInfo(input).then(({data}) => {
             //console.log("----settings----");
             //console.log(data);
+            message.success('Updated');
             stopLoading();
             dispatch(loadFullUser(data.updateUser));
         })

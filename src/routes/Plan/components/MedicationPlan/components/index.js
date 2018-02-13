@@ -276,7 +276,7 @@ export class MedicationPlanBody extends React.Component {
                           </Button.Group>
                       </div>}>
 
-                    {takeAtTimes.length === 0 && takeDaily.length === 0 && takeAsNeeded.length === 0 && <div class="ant-list-empty-text">No Medications</div>}
+                    {takeAtTimes.length === 0 && takeDaily.length === 0 && takeAsNeeded.length === 0 && <div className="ant-list-empty-text">No Medications</div>}
                     {takeAtTimes.length > 0 &&
                         (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
                                 <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />

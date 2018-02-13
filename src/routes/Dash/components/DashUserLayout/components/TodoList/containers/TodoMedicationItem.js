@@ -10,6 +10,7 @@ const TodoMedicationItemWithQuery = graphql(
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {
+                    medicationPlan: data.medicationPlan,
                     progress: data.medicationPlan.progress,
                     loading: data.loading
                 }

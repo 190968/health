@@ -8,8 +8,13 @@ export default class TodoTrackerItem extends React.PureComponent {
     render () {
 
         const {
-            progress
+            progress,
+            biometricPlan
         } = this.props;
+        console.log(this.props);
+        if (biometricPlan.id === null) {
+            return null;
+        }
         return (
             <Row type="flex" justify="space-between" align="top" style={{padding:5}}>
                 <Col xs={3} md={2}>

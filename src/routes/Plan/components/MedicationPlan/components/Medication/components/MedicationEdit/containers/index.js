@@ -207,12 +207,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-export const MedicationAddForm =  withMutationAdd(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MedicationEditWithQuery));
+export const MedicationAddForm = withMutationAdd(MedicationEditWithQuery);
 
-export default withMutation(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MedicationEditWithQuery));
+export default withMutation(MedicationEditWithQuery);

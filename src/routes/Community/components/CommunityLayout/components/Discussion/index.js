@@ -35,7 +35,7 @@ class Discussions extends React.Component{
         return(
             <div>
                     <DiscussionView user={user} discussion={{title,category,id,text,author,createdAt}}  discussionDelete={this.props.discussionDelete}/>
-                    <CommentsView discussion={{category,replies}} onSubmit={this.props.onSubmit} discussionReply={this.props.discussionReply}   />
+                    <CommentsView discussion={{id,category,replies}} onSubmit={this.props.onSubmit} discussionReply={this.props.discussionReply}   />
             </div>
         );
     }

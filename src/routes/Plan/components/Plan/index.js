@@ -6,7 +6,7 @@ import Truncate from 'react-truncate';
 //import PropType from 'prop-types'
 import PlanElement from '../../components/PlanLayout/components/PlanElement';
 
-import './styles.scss'
+import styles from './styles.less'
 export class Plan extends React.PureComponent {
   // fragment for the plan info
   static fragments = {
@@ -164,8 +164,9 @@ export class Plan extends React.PureComponent {
           to={link}
         >
             <Card
-                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} height={height} src={img} /></div>}
+                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} width={'100%'} src={img} /></div>}
                 hoverable={true}
+                type='plan'
             >
 
                 <Card.Meta

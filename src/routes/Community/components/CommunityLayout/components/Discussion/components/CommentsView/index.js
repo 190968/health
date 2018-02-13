@@ -12,7 +12,6 @@ import {
     FormattedMessage
 } from 'react-intl';
 import messages from '../../../InputBox/messages';
-const FormItem = Form.Item;
 
 
 class CommentsView extends React.Component{
@@ -38,10 +37,9 @@ class CommentsView extends React.Component{
 
         return(
                 <Card
-                    title={
-                     <InputBox discussion={discussion} onSubmit={this.props.onSubmit}/>
-                    }
+                    title="Replies"
                 >
+                    <InputBox discussion={discussion} onSubmit={this.props.onSubmit}/>
                     <Comment discussion={{replies}}  discussionReply={this.props.discussionReply} />
                 </Card>
         );

@@ -47,35 +47,32 @@ export default class RightMenu extends React.Component {
 
 
         return (
-            <Row type="flex" justify="space-between" align="middle">
-                <Col md={12}>
-                <MenuBadges lastNotificationCursor={this.state.notificationsLastCursor} updateLastNotification={this.updateLastNotification} />
-                </Col>
-                <Col md={12}>
-                <Menu
-                            onClick={this.handleClick}
-                            selectedKeys={['1']}
-                            mode="horizontal"
-                            style={{'borderBottom':'none'}}
-                        >
+            <Row type="flex" justify="end" align="middle">
+                <Col>
+                    <Menu
+                        onClick={this.handleClick}
+                        selectedKeys={['1']}
+                        mode="horizontal"
+                        style={{'borderBottom':'none', 'float':'right'}}
+                    >
+                        <SubMenu key="sub1" title={<span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{this.props.user.firstName}</Avatar> <span>{this.props.user.firstName}!</span></span>}>
+
+                            {user_menu_items.map((item) => {
+                                if (item.length == 1) {
+                                    return (<Menu.Divider key={'div'} />)
+                                }
+                                return (
+                                    <Menu.Item key={item.toString()}>
+                                        <Link to={item[1]}>{item[0]}</Link>
+                                    </Menu.Item>)
+
+                            })}
+                        </SubMenu>
+
+                    </Menu>
+                    <MenuBadges lastNotificationCursor={this.state.notificationsLastCursor} updateLastNotification={this.updateLastNotification} />
 
 
-
-                            <SubMenu key="sub1" title={<span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{this.props.user.firstName}</Avatar> <span>{this.props.user.firstName}!</span></span>}>
-
-                                {user_menu_items.map((item) => {
-                                    if (item.length == 1) {
-                                        return (<Menu.Divider key={'div'} />)
-                                    }
-                                    return (
-                                        <Menu.Item key={item.toString()}>
-                                            <Link to={item[1]}>{item[0]}</Link>
-                                        </Menu.Item>)
-
-                                })}
-                            </SubMenu>
-
-                        </Menu>
                 </Col>
             </Row>
         );

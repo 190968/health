@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon, Row, Col} from 'antd';
+import {Tooltip, Icon, Row, Col} from 'antd';
 import ThreadList from './components/ThreadList';
 import styles from './index.css';
 
@@ -31,9 +31,9 @@ export default class ChatThreads extends React.Component {
         const {conversations, currentId} = this.props;
         return (<div className={'slider'}>
             <div className={'visitorList'}>
-                <Row className={'sliderHeader'}>
-                    <Col md={18}>Messages</Col>
-                    <Col md={6} style={{textAlign: 'right'}}><Icon type="form" style={{color: '#1a8fff'}}/></Col>
+                <Row type="flex" className={'sliderHeader'}>
+                    <Col md={18}>Conversations</Col>
+                    <Col md={6} style={{textAlign: 'right'}}><Tooltip title="Create Conversation"><Icon type="form" style={{color: '#1a8fff'}}/></Tooltip></Col>
                 </Row>
                 <ThreadList conversations={conversations} currentId={currentId}/>
             </div>

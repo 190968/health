@@ -33,10 +33,10 @@ export default class Records extends React.Component{
         }];
         return (
             <div>
-            <div style={{textAlign:'right'}}>
+                {/*<div style={{textAlign:'right'}}>
                 <Button size="small"><Icon type="plus" /></Button>
-            </div>
-                <Card bordered={false} style={{textAlign:'center'}}>No visits has been added</Card>
+            </div>*/}
+                <div className="ant-list-empty-text">No visits has been added</div>
 
             </div>
         );

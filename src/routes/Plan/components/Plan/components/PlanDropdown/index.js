@@ -31,7 +31,9 @@ export default class PlanDropdown extends React.PureComponent {
 
     render() {
         const {item} = this.props;
-        const {value} = this.state;
+        let {value} = this.state;
+        value = value !== '' ? value : null;
+        console.log(value);
         //console.log(reports);
         const options = item.options;
         return <Select

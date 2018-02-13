@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import {Menu, Icon,  Badge } from 'antd';
+import { Link, NavLink } from 'react-router-dom';
+import { Progress, Popover, Menu, Icon,  Badge } from 'antd';
 import NotificationBadge from '../../containers/NotificationBadge';
 
 
@@ -35,15 +35,25 @@ export default class RightMenu extends React.Component {
         //console.log(this.props, 'PropsIn Menu Badge');
         // first call - lastNotification - empty, but lastCursor has value. It means that we can load the notifications
         const loadNew = !loading && lastNotificationCursor !== newCursor;
+
+        const content = <div>
+            <Progress percent={30} size="small" />
+        </div>;
         return (
             <Menu
                 selectedKeys={['1']}
                 mode="horizontal"
-                style={{'borderBottom':'none'}}
+                style={{'borderBottom':'none', 'float':'right'}}
             >
                 <Menu.Item key='inbox'>
-                    <Link to="/messages"><Badge count={messages}><Icon type="mail" /></Badge></Link>
+                    <NavLink to="/messages"><Badge count={messages}><Icon type="mail" style={{margin:0}} /></Badge></NavLink>
                 </Menu.Item>
+                {/*<Menu.Item key='points'>
+                    <Popover content={content} title='250 points'  >
+                        <Link to="/motivation"> <Icon type="star-o" /></Link>
+                    </Popover>
+                </Menu.Item>*/}
+
                 <Menu.Item key='notifications'>
                     <NotificationBadge newNotificationsNum={newNotificationsNum}  loadNew={loadNew} newCursor={newCursor} lastCursor={lastNotificationCursor} updateLastNotification={this.props.updateLastNotification} />
                 </Menu.Item>

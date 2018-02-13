@@ -29,7 +29,8 @@ class Motivation extends React.Component {
 const{adherenceSummary} = info;
         const {medications,trackers,plans} = adherenceSummary;
         return  (
-            <Row>
+            <React.Fragment>
+            <Row gutter={8}>
                 {medications && <Col offset={2} xs={24} md={10} lg={9} xl={6}>
                     <Medications medications={medications} />
 
@@ -42,6 +43,8 @@ const{adherenceSummary} = info;
                     <Actionplans plans={plans} />
 
                 </Col>}
+            </Row>
+            <Row gutter={8}>
                  <Col offset={2} xs={24} md={10} lg={9} xl={6}>
                     <Badges />
 
@@ -63,6 +66,7 @@ const{adherenceSummary} = info;
 
                 </Col>
             </Row>
+            </React.Fragment>
             );
     }
 }

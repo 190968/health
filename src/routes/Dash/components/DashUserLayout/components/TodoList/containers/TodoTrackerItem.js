@@ -10,6 +10,7 @@ const TodoTrackerItemWithQuery = graphql(
         props: ({ ownProps, data }) => {
             if (!data.loading) {
                 return {
+                    biometricPlan: data.biometricPlan,
                     progress: data.biometricPlan.progress || 0,
                     loading: data.loading
                 }

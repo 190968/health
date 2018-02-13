@@ -13,6 +13,8 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './communityDiscussion.json';
+import {Empty, Loading} from "../../../../../../../../components/Loading";
+
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const IconText = ({ type, text }) => (
@@ -47,13 +49,11 @@ class Discussions extends React.Component{
         });
     }
     handleCancel = (e) => {
-        console.log(e);
         this.setState({
-            visible: false,
+            discussionModal: false,
         });
     }
     handleSubmit = (e) => {
-
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
@@ -65,7 +65,7 @@ class Discussions extends React.Component{
         const {loading} = this.props;
         if (loading) {
             return (
-                <Card loading  title="Main Categories">Loading!!!</Card>
+                <Loading/>
             );
         }
         const { intl } = this.props;
@@ -78,7 +78,7 @@ class Discussions extends React.Component{
 
             <Card
                 title={name.toUpperCase()+intl.formatMessage(messages.communityDiscussion)}
-                extra={canAdd && <Button type="primary" onClick={this.showModal}>{intl.formatMessage(messages.start)}</Button>}
+                extra={canAdd && <Button type="primary" size="small" onClick={this.showModal}>{intl.formatMessage(messages.start)}</Button>}
             >
 
                 <Row>
@@ -90,9 +90,9 @@ class Discussions extends React.Component{
                            <DiscussionListItem item={item}/>
 
                         )}
-                    /> : <div style={{textAlign:'center'}}>No Discussions</div>}
+                    /> : <Empty text='No Discussions' />}
                 </Row>
-                { this.state.discussionModal && <DiscussionModal onSubmit={this.props.onSubmit} />}
+                { this.state.discussionModal && <DiscussionModal onSubmit={this.props.onSubmit} onCancel={this.handleCancel} />}
             </Card>
         );
     }

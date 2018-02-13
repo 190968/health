@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TodoList from './components/TodoList';
+import TodoList from './containers/TodoList';
 import PlansList from '../../../Plan/containers/PlansList';
 import MedicationPlan from '../../../Plan/components/MedicationPlan/containers';
 import BiometricPlan from '../../../Plan/components/BiometricPlan/containers';
@@ -40,7 +40,7 @@ export class DashUserLayout extends React.Component {
                 <Card loading>Loading...</Card>
             );
         }
-        //onsole.log("Logkout");
+        console.log(loading, 'Loading');
         //console.log(date);
 
         return (

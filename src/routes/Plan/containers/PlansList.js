@@ -14,6 +14,7 @@ export const PLANS_LIST_QUERY = gql`
               plans (status: $status)  {
                   ...PlanCardInfo
                   upid
+                  progress
               }
             }
     }

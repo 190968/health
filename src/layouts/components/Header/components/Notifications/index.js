@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import moment from 'moment';
+import Loading from 'components/Loading';
 import {
     FormattedMessage,
 } from 'react-intl';
@@ -8,7 +9,8 @@ import {
 import InfiniteScroll from 'react-infinite-scroller';
 import styles from './index.less';
 
-import { Form, Row,Col, List,Avatar, Spin, Icon, Card } from 'antd';
+import { Popconfirm, Row, Col,Button, Modal, List, Avatar, Spin, Icon, Card } from 'antd';
+const confirm = Modal.confirm;
 
 class Notifications extends React.Component {
 
@@ -21,6 +23,94 @@ class Notifications extends React.Component {
     stopLoading = () => {
         this.setState({
             loading: false,
+        });
+    }
+
+    handleNotification = (id, approved) => {
+        this.props.handleNotification(id, approved).then(({data}) => {
+            // check on notification
+            const {id,
+                action,
+                actionId,
+                userId,
+                date} = data.handleNotification;
+            //console.log(action);
+            switch(action) {
+                case 'goUser':
+                    //'description' => 'Go to user profile by User ID'
+                    this.props.history.push('/u/'+userId);
+                    break;
+                case 'goUserPlan':
+                    //'description' => 'Go to user Plan by User Plan ID'
+                    this.props.history.push('/plan/'+actionId);
+                    break;
+                case 'goPlanstorePlan':
+                    //'description' => 'Go to planstore plan by Plan ID'
+                    this.props.history.push('/planstore/plan/'+actionId);
+                    break;
+                case 'getUserPlan':
+                    // 'description' => 'Get User plan By User Plan ID. Show page where we can get plan by User Plan ID. REQUEST ID IS MANDATORY TO PASS'
+                    break;
+                case 'goPlanBuilderPlan':
+                    // 'description' => 'Go to plan builder plan by Plan ID'
+                    this.props.history.push('/pb/'+actionId);
+                    break;
+                case 'getPlan':
+                    // 'description' => 'Get Plan by Plan ID.  REQUEST ID IS MANDATORY TO PASS'
+                    this.props.history.push('/planstore/plan/'+actionId+'/#download');
+                    break;
+                case 'goBiometricPlan':
+                    // 'description' => 'Go to biometric plan by User ID'
+                    this.props.history.push('/u/'+userId+'/biometric/#date='+date);
+                    break;
+                case 'goMedicationPlan':
+                    // 'description' => 'Go to medication plan by User ID'
+                    this.props.history.push('/u/'+userId+'/medication/#date='+date);
+                    break;
+                case 'goAssessment':
+                    //  'description' => 'Go to assessment by ID'
+                    this.props.history.push('/assessment/'+actionId);
+                    break;
+                case 'goReferral':
+                    this.props.history.push('/referral/'+actionId);
+                    break;
+                case 'goDiscussion':
+                    this.props.history.push('/community/discussion/'+actionId);
+                    break;
+                case 'goComment':
+                    this.props.history.push('/community/discussion/comment/'+actionId);
+                    break;
+                case 'goCalendar':
+                    this.props.history.push('/calendar');
+                    break;
+                case 'goTask':
+                    this.props.history.push('/tasks/'+actionId);
+                    break;
+                case 'goHealth':
+                    this.props.history.push('/u/'+userId+'/health');
+                    break;
+                case 'goTransition':
+                    // 'description' => 'Go to Transition by User ID and ID'
+                    this.props.history.push('/u/'+userId+'/transition');
+                    break;
+                case 'goDME':
+                    this.props.history.push('/dme/'+actionId);
+                    break;
+                case 'goPromise':
+                    this.props.history.push('/u/'+userId+'/promises/'+actionId);
+                    break;
+                case 'goCommitment':
+                    this.props.history.push('/u/'+userId+'/commitments/'+actionId);
+                    break;
+                case 'goMedication':
+                    // 'description' => 'Go to Medication by ID and User ID'
+                    this.props.history.push('/u/'+userId+'/medication/#'+actionId+'&date='+date);
+                    break;
+                case 'goTracker':
+                    // 'description' => 'Go to Tracker by ID and User ID'
+                    this.props.history.push('/u/'+userId+'/biometric/#'+actionId+'&date='+date);
+                    break;
+            }
         });
     }
 
@@ -39,7 +129,11 @@ class Notifications extends React.Component {
         //console.log(notifications)
         //console.log(endCursor)
         if (loading) {
-            return <Card bordered={false} loading>Loading...</Card>;
+            return <Loading />;
+        }
+
+        if (notifications.length === 0) {
+            return <div className="ant-list-empty-text">No notifications</div>
         }
         return (
             <div className="demo-infinite-container">
@@ -53,16 +147,18 @@ class Notifications extends React.Component {
                 <List
                     dataSource={notifications}
                     renderItem={message => (
-                        <List.Item key={message.id}>
+                        <List.Item key={message.id} >
 
                             <List.Item.Meta
                                 avatar={<Avatar style={{ verticalAlign: 'middle', backgroundColor: message.sender.color }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                 title={message.text}
-                                description={moment(message.dateSent).calendar()}
+                                description={<Row type="flex" justify="space-between" >
+                                    <Col xs={12}>{moment(message.dateSent).calendar()}</Col>
+                                    {message.isRequest && <Col xs={12}><Popconfirm title="Are you sure decline this request?"
+                                                             onConfirm={ () => this.handleNotification(message.id, false)}
+                                    ><Button size='small' type="dashed" >Decline</Button></Popconfirm> <Button size='small' type="primary" ghost onClick={ () => this.handleNotification(message.id, true)}>Approve</Button></Col>}
+                                </Row>}
                             />
-
-
-
                         </List.Item>
                     )}
                 />
@@ -71,44 +167,6 @@ class Notifications extends React.Component {
             </div>
         );
     }
-    /*render() {
-
-        const  {loading} = this.props;
-
-
-
-        if (loading) {
-            return  <Card loading bordered={false} >
-                Loading</Card>;
-        }
-        console.log(this.props);
-        const {notifications} = this.props;
-        const  {edges} = notifications;
-        //console.log(edges);
-        return (
-             <List
-                    style={{ maxHeight: 400, maxWidth:400, overflow: 'auto'}}
-                    loading={loading}
-                    notificationsSource={edges}
-                    renderItem={message => (
-
-                        <List.Item key={message.id}>
-
-                            <List.Item.Meta
-                                avatar={<Avatar style={{ verticalAlign: 'middle', backgroundColor: message.sender.color }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                title={message.text}
-                                description={moment(message.dateSent).calendar()}
-                            />
-
-
-
-                        </List.Item>
-                    )}
-                />
-
-
-        );
-    }*/
 }
 
-export default Notifications;
+export default withRouter(Notifications);

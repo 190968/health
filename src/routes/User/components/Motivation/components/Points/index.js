@@ -24,13 +24,13 @@ class Points extends React.Component {
         const {points,nextLevel} = info.currentLevel;
         const {amount,title} = nextLevel;
         let remainingPoint = amount-points;
-
+        const percent = Math.round(points/amount*100);
         return  (
             <Card title="My Points">
                 { this.state.visible && <ModalPointsHistory />}
-                <Icon type="star-o" onClick={this.showModal} />
+                <Icon type="star" onClick={this.showModal} />
                 <center>
-                    <Progress percent={points} />
+                    <Progress percent={percent} />
                 </center>
                <center><span><h2>{points}</h2></span></center>
                 <center><span>{remainingPoint} points to next {title} level</span></center>

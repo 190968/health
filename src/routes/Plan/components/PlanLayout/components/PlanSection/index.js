@@ -59,7 +59,7 @@ export class PlanSection extends React.Component {
         return (<Card title={item.title} bordered={false} actions={footer}>
 
             {item.elements.length > 0 ? <Row>
-                <Col xs={19}><List
+                <Col xs={22}><List
                 size="large"
                 itemLayout="vertical"
                 split={false}
@@ -72,14 +72,14 @@ export class PlanSection extends React.Component {
                     </List.Item>
                 }}
                 /></Col>
-                <Col xs={4} offset={1}>
+                {/*<Col xs={4} offset={1}>
 
                     <Anchor offsetTop={10}>
                         {item.elements !== null && item.elements.map((item) => (
 
                             item.itemInfo.label && <Anchor.Link key={item.id} href={'#field' + item.id} title={item.itemInfo.label}/>))}
                     </Anchor>
-                </Col>
+                </Col>*/}
             </Row>: 'No section content'}
 
         </Card>)

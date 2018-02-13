@@ -48,7 +48,7 @@ class Health extends React.Component{
 
         return (
             <Card>
-                <Tabs defaultActiveKey={this.props.location.pathname} onChange={this.handleChange}>
+                <Tabs tabPosition="top" defaultActiveKey={this.props.location.pathname} onChange={this.handleChange}>
                     <TabPane tab={'My Records'} key={match.url}><Route exact path={match.url} component={AsyncRecords()} /></TabPane>
                     <TabPane tab={'Immunizations'} key={match.url+'/immunization'} ><Route exact path={match.url+'/immunization'} component={AsyncImmunization()} /></TabPane>
                     <TabPane tab={'Visits'} key={match.url+'/visits'} ><Route exact path={match.url+'/visits'} component={AsyncVisits()} /></TabPane>

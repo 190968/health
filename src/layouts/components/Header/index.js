@@ -75,8 +75,8 @@ class LHeader extends React.Component {
 
 
                 <Row type="flex" justify="space-between" align="middle">
-                    <Col span={5}><Link to={'/'}><img className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /></Link> <Tag color="blue">Patient</Tag></Col>
-                    <Col >
+                    <Col md={5}><Link to={'/'}><img className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /></Link></Col>
+                    <Col>
                         <Menu
                             onClick={this.handleClick}
                             defaultSelectedKeys={[locationPath]}
@@ -87,7 +87,7 @@ class LHeader extends React.Component {
                         </Menu>
                     </Col>
 
-                    <Col>
+                    <Col md={9}>
                         <RightMenu />
                     </Col>
 
