@@ -19,8 +19,9 @@ class Badges extends React.Component {
             }
             const {badges} = info;
             const {totalCount, edges} = badges;
+            console.log(edges[0].id);
             return (
-                <Card title="My Badges">
+                <Card style={{height:250}}  title="My Badges">
 
                     <List
                         split={false}

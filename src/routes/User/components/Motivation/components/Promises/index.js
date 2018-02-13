@@ -12,7 +12,7 @@ class Promises extends React.Component {
 
     render() {
         return  (
-            <Card title="Promises">
+            <Card style={{height:250}} title="Promises">
                MyPromises
             </Card>
 

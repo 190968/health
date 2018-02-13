@@ -30,42 +30,42 @@ const{adherenceSummary} = info;
         const {medications,trackers,plans} = adherenceSummary;
         return  (
             <React.Fragment>
-            <Row gutter={8}>
-                {medications && <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+
+                {medications && <Col style={{marginLeft:100,marginBottom:15}}  xs={24} md={10} lg={9} xl={6}>
                     <Medications medications={medications} />
 
                 </Col>}
-                {trackers && <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+                {trackers && <Col  style={{marginLeft:100,marginBottom:15}} xs={24} md={10} lg={9} xl={6}>
                     <Trackers trackers={trackers} />
 
                 </Col>}
-                {plans && <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+                {plans && <Col style={{marginLeft:100,marginBottom:15}} xs={24} md={10} lg={9} xl={6}>
                     <Actionplans plans={plans} />
 
                 </Col>}
-            </Row>
-            <Row gutter={8}>
-                 <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+
+
+                 <Col style={{marginLeft:15,marginBottom:15}}  xs={24} md={10} lg={9} xl={6}>
                     <Badges />
 
                 </Col>
-                <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+                <Col style={{marginLeft:15,marginBottom:15}} xs={24} md={10} lg={9} xl={6}>
                     <Motivators />
 
                 </Col>
-                <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+                <Col style={{marginLeft:100,marginBottom:15}} xs={24} md={10} lg={9} xl={6}>
                     <Points />
 
                 </Col>
-                <Col offset={2} xs={24} md={10} lg={9} xl={6}>
-                    <Promises />
+                {/*<Col offset={2} xs={24} md={10} lg={9} xl={6}>*/}
+                    {/*<Promises />*/}
 
-                </Col>
-                <Col offset={2} xs={24} md={10} lg={9} xl={6}>
+                {/*</Col>*/}
+                <Col style={{marginLeft:15,marginBottom:15}}  xs={24} md={10} lg={9} xl={6}>
                     <Commitments />
 
                 </Col>
-            </Row>
+
             </React.Fragment>
             );
     }
