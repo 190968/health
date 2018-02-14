@@ -3,8 +3,8 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   "inconsistent": {
     "id": "user.title",
-    "defaultMessage": "Two passwords that you enter is inconsistent!",
-    "description": "Two passwords that you enter is inconsistent!"
+    "defaultMessage": "Two passwords that you enter is inconsistent",
+    "description": "Two passwords that you enter is inconsistent"
   },
   "first_name": {
     "id": "user.first_name",
@@ -53,8 +53,8 @@ export default defineMessages({
   },
   "birthday_rule_type": {
     "id": "user.birthday.rule.type",
-    "defaultMessage": "Your input no valid date",
-    "description": "Your input no valid date"
+    "defaultMessage": "Please enter a valid date",
+    "description": "Please enter a valid date"
   },
   "birthday_rule_required": {
     "id": "user.birthday.rule.required",
@@ -68,8 +68,8 @@ export default defineMessages({
   },
   "email_rule_type": {
     "id": "user.email.rule.type",
-    "defaultMessage": "Your input no valid email",
-    "description": "Your input no valid email"
+    "defaultMessage": "Please enter a valid email address",
+    "description": "Please enter a valid email address"
   },
   "email_rule_required": {
     "id": "user.email.rule.required",
@@ -128,7 +128,7 @@ export default defineMessages({
   },
   "login_now": {
     "id": "user.login_now",
-    "defaultMessage": "login now!",
-    "description": "login now!"
+    "defaultMessage": "Login Now!",
+    "description": "Login Now!"
   }
 });

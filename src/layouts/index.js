@@ -133,7 +133,7 @@ class Core extends React.Component {
                         ref="idleTimer"
                         element={document}
                         idleAction={this._onIdle}
-                        timeout={300000}
+                        timeout={1000*60*15}
                         format="MM-DD-YYYY HH:MM:ss.SSS">
                         <CoreLayout {...this.props} />
                     </IdleTimer> : <CoreLayout {...this.props} />)

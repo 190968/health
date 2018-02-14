@@ -43,12 +43,12 @@ export class PlansList extends React.Component {
       );
 
     return (
-        <Card title={<FormattedMessage id="plan.title1" defaultMessage="Today's Actionplans" description="Medications for Today" />}
+        <Card title={<FormattedMessage id="plan.title1" defaultMessage="Today's ActionPlans" description="Today's ActionPlans" />}
               extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.settings" defaultMessage="Settings" />}><Dropdown overlay={menu} placement="bottomRight" >
                   <Button size="small">
                       <Icon type="setting" />
                   </Button>
-              </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add Actionplan" />}><Button size="small"><Link to={'/planstore'}><Icon type="plus" /></Link></Button></Tooltip></Button.Group>}
+              </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add ActionPlan" />}><Button size="small"><Link to={'/planstore'}><Icon type="plus" /></Link></Button></Tooltip></Button.Group>}
         >
             {plans.length > 0 ? <List
                 split={false}
