@@ -29,7 +29,7 @@ class Points extends React.Component {
         let remainingPoint = amount-points;
         const percent = Math.round(points/amount*100);
         return  (
-            <Card title="My Points">
+            <Card style={{height:250}} title="My Points">
 
 
                 { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel} />}

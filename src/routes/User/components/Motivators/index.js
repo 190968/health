@@ -78,7 +78,7 @@ class Motivators extends React.Component {
 
 
         <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
-        extra={<Tooltip title='Invite Motivators'><Button size={"small"} onClick={this.showModal} ><Icon type="plus"  /></Button></Tooltip>}
+
         >
             {edges.length > 0 ? <List
                     split={false}

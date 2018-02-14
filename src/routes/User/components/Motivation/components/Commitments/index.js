@@ -31,6 +31,7 @@ class Commitments extends React.Component {
 
         return  (
             <Card
+                style={{height:250}}
                 title="My Commitments"
                 extra={<Tooltip title='Add Commitments'><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
             >

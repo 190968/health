@@ -3,7 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import {Button ,Row,Col,Avatar,Spin,Select, DatePicker , Input, Divider,Card,Modal } from 'antd';
-import ModalMakeCommitmentsFor from '../ModalMakeCommitmentsFor';
+import ModalMakeCommitmentsFor from '../../containers/ModalMakeCommitmentsFor';
 const {Option} = Select;
 class ModalMakeCommitments extends React.Component {
 

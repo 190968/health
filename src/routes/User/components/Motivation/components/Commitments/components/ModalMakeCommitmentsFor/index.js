@@ -36,7 +36,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                 visible={true}
                 onCancel={this.props.cancelParent}
                 footer={[
-                  <center> <Button type="primary"  onClick={this.props.cancelParent}>Finish</Button></center>
+                  <center> <Button type="primary"  onClick={this.props.makeCommitment}>Finish</Button></center>
                 ]}
             >
              <div>
@@ -74,14 +74,16 @@ class ModalMakeCommitmentsFor extends React.Component {
                                 <span
                                     style={{textAlign: 'center', 'marginLeft': 10}}><p>Donate to a charity</p>
                                             </span>
-                                <Select style={{ width: 150 }}>
+                                <Select  style={{ width: 150,marginBottom: 10 }}>
                                     {/*{selectItem}*/}
                                 </Select>
-                                    <Col span={7}>
+                                    <Col style={{marginBottom: 10}} span={13}>
                                         <span>How much?</span>
                                     </Col>
-                                    <Col>
-                                        <Input addonAfter="$" />
+                                    <Col style={{marginBottom: 10}} offset={1} span={10}>
+                                        <Input
+                                            suffix="$"
+                                        />
                                     </Col>
                                     </center>
                             </Col>
@@ -101,10 +103,10 @@ class ModalMakeCommitmentsFor extends React.Component {
 
                         </Row>
                         <Row>
-                            <Col  span={7}>
+                            <Col  span={12}>
                                 Add a URL describing your promise
                             </Col>
-                            <Col  offset={1}  span={16}>
+                            <Col    span={12}>
 
                                 <Input  />
                             </Col>
