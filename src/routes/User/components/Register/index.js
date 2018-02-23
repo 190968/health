@@ -15,6 +15,8 @@ import {
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
+import moment from 'moment';
+
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -43,6 +45,8 @@ const tailFormItemLayout = {
         },
     },
 };
+
+const dateFormat = 'MM/DD/YYYY';
 
 
 class NormalRegisterForm extends React.Component {
@@ -123,6 +127,12 @@ class NormalRegisterForm extends React.Component {
         console.log('stop loading');
         this.setState({ loading: false });
     }
+
+    disabledDate = (current) => {
+        // Can not select future
+        return current && current > moment().endOf('day');
+
+    }
     render() {
 
         const token = this.props.token;
@@ -175,7 +185,6 @@ class NormalRegisterForm extends React.Component {
                 <FormItem
                     {...formItemLayout}
                     label={intl.formatMessage(messages.gender)}
-                    hasFeedback
                 >
                     {getFieldDecorator('gender',{
                         rules: [{ required: true, message:intl.formatMessage(messages.gender_rule), whitespace: true }],
@@ -199,7 +208,7 @@ class NormalRegisterForm extends React.Component {
                             required: true, message:intl.formatMessage(messages.birthday_rule_required) ,
                         }],
                     })(
-                        <DatePicker />
+                        <DatePicker format={dateFormat} allowClear={false} disabledDate={this.disabledDate} />
                     )}
                 </FormItem>
 

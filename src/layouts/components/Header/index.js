@@ -33,7 +33,7 @@ class LHeader extends React.Component {
         const loading = this.props.loading;
         const token = this.props.token;
         const location = this.props.location;
-        //console.log(location);
+        console.log(location);
         const menu_items = [
             ['Dashboard', '/'],
             ['Planstore', '/planstore', 'aps'],
@@ -60,6 +60,7 @@ class LHeader extends React.Component {
         });
 
         const locationPath = '/'+location.pathname.split('/')[1];
+        console.log(locationPath);
 //{/*customPlaceholder={HeaderPlaceholder}*/}
 
         if (!token) {
@@ -79,7 +80,7 @@ class LHeader extends React.Component {
                     <Col>
                         <Menu
                             onClick={this.handleClick}
-                            defaultSelectedKeys={[locationPath]}
+                            selectedKeys={[locationPath]}
                             mode="horizontal"
                             style={{'borderBottom':'none'}}
                         >
