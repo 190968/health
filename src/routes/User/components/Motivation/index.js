@@ -2,14 +2,15 @@
  * Created by Павел on 10.02.2018.
  */
 import React, { PropTypes } from 'react';
-import Medications from './components/Medications'
-import Actionplans from './components/Actionplans'
-import Trackers from './components/Trackers'
+import Medications from './components/AdheranseSummary/components/Medications'
+import Actionplans from './components/AdheranseSummary/components/Actionplans'
+import Trackers from './components/AdheranseSummary/components/Trackers'
 import Badges from './containers/Badges.js'
 import Motivators from '../../containers/motivatorsContainer';
 import Points from './containers/Points.js';
 import Promises from './containers/Promises.js';
 import Commitments from './containers/Commitments.js';
+import IMotivate from './containers/iMotivate';
 
 import {Row,Col,Card} from 'antd';
 class Motivation extends React.Component {
@@ -57,12 +58,16 @@ const{adherenceSummary} = info;
                     <Points />
 
                 </Col>
-                {/*<Col offset={2} xs={24} md={10} lg={9} xl={6}>*/}
-                    {/*<Promises />*/}
+                <Col  style={{marginLeft:15,marginBottom:15}} xs={24} md={10} lg={9} xl={6}>
+                    <Promises />
 
-                {/*</Col>*/}
+                </Col>
                 <Col style={{marginLeft:15,marginBottom:15}}  xs={24} md={10} lg={9} xl={6}>
                     <Commitments />
+
+                </Col>
+                <Col style={{marginLeft:15,marginBottom:15}}  xs={24} md={10} lg={9} xl={6}>
+                    <IMotivate />
 
                 </Col>
 

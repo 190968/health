@@ -1,0 +1,12 @@
+{
+  "myCommitments": {
+    "id": "user.motivation.mycommitments",
+    "defaultMessage": "My Commitments",
+    "description": "My Commitments"
+  },
+  "addCommitments": {
+    "id": "user.motivation.addcommitments",
+    "defaultMessage": "Add Commitments",
+    "description": "Add Commitments"
+  }
+}

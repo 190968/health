@@ -4,6 +4,11 @@
 import React, { PropTypes } from 'react';
 import {Button ,Row,Col,Avatar,Spin,Select, DatePicker , Input, Divider,Card,Modal } from 'antd';
 import ModalMakeCommitmentsFor from '../../containers/ModalMakeCommitmentsFor';
+import SelectPlans from '../../../../../../../Plan/containers/SelectPlans';
+import {
+    injectIntl
+} from 'react-intl';
+import messages from './messages';
 const {Option} = Select;
 class ModalMakeCommitments extends React.Component {
 
@@ -31,6 +36,8 @@ class ModalMakeCommitments extends React.Component {
                 <Spin/>
             </Modal> ;
         }
+        const {intl}=this.props;
+
         console.log(info);
         let selectItem =[];
         info.forEach(item=>{
@@ -41,26 +48,22 @@ class ModalMakeCommitments extends React.Component {
             <div>
         {this.state.visible &&
             <Modal
-                title="Make a Commitment"
+                title={intl.formatMessage(messages.makeCommitment)}
                 visible={true}
                 onCancel={this.props.handleCancel}
                 footer={[
-                    <Button key="back" onClick={this.props.handleCancel}>Cancel</Button>
+                    <Button key="back" onClick={this.props.handleCancel}>{intl.formatMessage(messages.makeCommitment)}</Button>
                 ]}
             >
 
-                <p>Select which Plan you would like to make a commitment to.</p><hr/>
+                <p>{intl.formatMessage(messages.text)}</p><hr/>
                 <center>
-                    <Select defaultValue={info[0].title} style={{ width: 470 }} onChange={this.onChange}>
-                        {selectItem}
-                    </Select>
+                    <SelectPlans onChange={this.onChange}/>
                 </center>
-
-
             </Modal>}
-                {!this.state.visible &&  <ModalMakeCommitmentsFor title={this.state.title} cancelParent={this.props.handleCancel} handleCancel={this.handleCancel} />}
+                {!this.state.visible &&  <ModalMakeCommitmentsFor motivators={this.props.motivators} title={this.state.title} cancelParent={this.props.handleCancel} handleCancel={this.handleCancel} />}
                 </div>
         );
     }
 }
-export default ModalMakeCommitments;
+export default injectIntl(ModalMakeCommitments);

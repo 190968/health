@@ -3,17 +3,21 @@
  */
 import React, { PropTypes } from 'react';
 import {Progress , Card } from 'antd';
-
-class Trackers extends React.Component {
+import {
+    injectIntl
+} from 'react-intl';
+import messages from './messages';
+class Medications extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
     render() {
-        const{level} = this.props.trackers;
+        const{level} = this.props.medications;
+        const {intl}=this.props;
         return  (
-            <Card title="Trackers">
+            <Card style={{height:250}} title={intl.formatMessage(messages.medications)}>
                 <center>
                     <Progress type="dashboard" percent={level} />
                 </center>
@@ -22,4 +26,4 @@ class Trackers extends React.Component {
         );
     }
 }
-export default Trackers;
+export default injectIntl(Medications);

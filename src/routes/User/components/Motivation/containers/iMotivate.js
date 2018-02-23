@@ -4,45 +4,33 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Commitments from '../components/Commitments';
+import iMotivate from '../components/IMotivate';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const COMMITMENTS  = gql`
- query GET_COMMITMENTS($cursors: CursorInput) {
+const IMOTIVATE  = gql`
+  query GET_IMOTIVATE($cursors: CursorInput) {
   account {
     user {
       id
       motivation {
-        motivators {
+        iMotivate(cursors: $cursors) {
           totalCount
           edges {
             id
             user {
               id
-              firstName
-              email
-            }
-          }
-        }
-        commitments(cursors: $cursors) {
-          totalCount
-          edges {
-            id
-            motivators {
-              id
-              user {
-                id
-                firstName
+              fullName
+               thumb {
+                original
+                small
+                large
+                medium
+                wide
               }
-              email
             }
-            date
-            donate
-            payment
-            url
-            description
+            email
           }
         }
       }
@@ -50,15 +38,15 @@ const COMMITMENTS  = gql`
   }
 }
 
+
 `;
 
-const withMutation = graphql(COMMITMENTS, {
+const withMutation = graphql(IMOTIVATE, {
     props: ({ ownProps, data }) => {
         console.log(data);
         if (!data.loading) {
             return {
                 info: data.account.user.motivation,
-                motivators: data.account.user.motivation.motivators,
                 loading: data.loading
             }
         }
@@ -78,4 +66,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 });
 
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(Commitments));
+export default withMutation(connect(mapStateToProps, mapDispatchToProps)(iMotivate));

@@ -10,7 +10,7 @@ import {
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
-import { Form,  List,Avatar,Select, Card,Modal,Input, Button, Tooltip, Icon } from 'antd';
+import { Form,  List,Avatar,Select, Card,Modal,Input,Button, Pagination, Tooltip, Icon } from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -73,14 +73,18 @@ class Motivators extends React.Component {
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
         const { getFieldDecorator } = this.props.form;
+        console.log(edges)
         const { intl } = this.props;
+
         return(
 
 
-        <Card title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
-
+        <Card  style={{height:250}} title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
+               extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
+               className="demo-infinite-container"
         >
-            {edges.length > 0 ? <List
+            {edges.length > 0 ?
+                <List
                     split={false}
                     loading={loading}
                     grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
@@ -94,15 +98,15 @@ class Motivators extends React.Component {
                                         <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.firstName[0]}</Avatar>
                                         <span style={{textAlign:'center','marginLeft':10}}>{person.user.firstName}</span>
                                     </Link> :
-                                    <div>
-                                        <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
-                                        <label>No name</label>
-                                    </div>
+                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle' }}>N</Avatar>
+                                        <span style={{textAlign:'center','marginLeft':10}}>No name</span>
+                                    </Link>
                             }
 
                         </List.Item>
                     )}
-            /> : <div className="ant-list-empty-text">No Motivators</div>}
+            />: <div className="ant-list-empty-text">No Motivators</div>}
             <Modal
                 title="Invite motivators"
                 visible={this.state.visible}
@@ -138,6 +142,7 @@ class Motivators extends React.Component {
                 </Form>
 
             </Modal>
+
             </Card>
         )
     }

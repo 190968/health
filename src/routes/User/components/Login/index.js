@@ -108,48 +108,47 @@ export class LoginForm extends React.Component {
         const loading = this.props.loading;
         return (
             <div style={{padding:'8% 35% 20px'}}>
-            <Card
-                title="Login"//{intl.formatMessage(messages.title)}
-            >
-            <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
-                <FormItem>
-                    {getFieldDecorator('email', {
-                        initialValue: this.state.email.value,
-                        rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
-                    })(
-                        <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />
-                    )}
+                <Card
+                    title="Login"//{intl.formatMessage(messages.title)}
+                >
+                    <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
+                        <FormItem>
+                            {getFieldDecorator('email', {
+                                initialValue: this.state.email.value,
+                                rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
+                            })(
+                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />
+                            )}
 
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator('password', {
-                        initialValue: this.state.password.value,
-                        /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
-                        rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.' }],
-                    })(
-                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />//{intl.formatMessage(messages.title)}
-                    )}
-                </FormItem>
-                <FormItem>
+                        </FormItem>
+                        <FormItem>
+                            {getFieldDecorator('password', {
+                                initialValue: this.state.password.value,
+                                /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
+                                rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.' }],
+                            })(
+                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />//{intl.formatMessage(messages.title)}
+                            )}
+                        </FormItem>
+                        <FormItem>
 
-                    <Button type="primary" htmlType="submit"  loading={loading}  className="login-form-button" id="submitButton">
-                        Log in
-                    </Button>
-                    <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
-                   Or <Link to={'/register'}>
-                        Sign up
-                    </Link>
+                            <Button type="primary" htmlType="submit"  loading={loading}  className="login-form-button" id="submitButton">
+                                Log in
+                            </Button>
+                            <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
+                            Or <Link to={'/register'}>
+                            Sign up
+                        </Link>
 
 
-                </FormItem>
+                        </FormItem>
 
-            </Form>
-            </Card>
+                    </Form>
+                </Card>
             </div>
         );
     }
 }
 
- const WrappedLoginForm = Form.create()(LoginForm);
+const WrappedLoginForm = Form.create()(LoginForm);
 export default WrappedLoginForm;
-

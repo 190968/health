@@ -3,6 +3,10 @@
  */
 import React, { PropTypes } from 'react';
 import {Avatar,Button,Tooltip,Col,List, Modal } from 'antd';
+import {
+    injectIntl
+} from 'react-intl';
+import messages from './messages';
 class BadgesListItem extends React.Component {
 
     constructor(props) {
@@ -19,7 +23,7 @@ class BadgesListItem extends React.Component {
     }
     render() {
         const  {item} = this.props;
-
+        const {intl}=this.props;
         return  (
 
                         <Col span={8}>
@@ -28,7 +32,7 @@ class BadgesListItem extends React.Component {
                                   title={item.badge.title}
                                 onCancel={this.handleCancel}
                                 footer={[
-                                    <Button key="back" onClick={this.handleCancel}>Cancel</Button>
+                                    <Button key="back" onClick={this.handleCancel}>{intl.formatMessage(messages.cancel)}</Button>
                                 ]}
                             >
                                <center>
@@ -56,4 +60,4 @@ class BadgesListItem extends React.Component {
         );
     }
 }
-export default BadgesListItem;
+export default injectIntl(BadgesListItem);
