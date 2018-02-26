@@ -31,7 +31,7 @@ class Compose extends React.Component{
         const { sendMessage } = this.props;
         this.props.form.validateFields((err, values) => {
 
-            console.log(values);
+
             if (!err) {
                 return sendMessage(values).then(() => {
                     message.success(this.props.intl.formatMessage(messages.sent));

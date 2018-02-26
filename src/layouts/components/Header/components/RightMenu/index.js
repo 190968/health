@@ -44,7 +44,7 @@ export default class RightMenu extends React.Component {
 
     handleClick = ({key}) => {
        // if (key == 'onclick')
-        //console.log(value);
+
     }
 
     render() {
@@ -60,7 +60,7 @@ export default class RightMenu extends React.Component {
         if (haveOtherRoles) {
             user_menu_items.push(['Change Role', 'onclick',this.toggleRole]);
         }
-        //console.log(currentRole);
+
         if (currentRole == 'patient') {
             defaultMenu = [
                 ['Settings', '/settings'],

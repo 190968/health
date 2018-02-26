@@ -24,13 +24,12 @@ const withQuery = graphql(GET_ACCOUNT_MENU_INFO_QUERY, {
         }
     },
     props: ({ ownProps, data }) => {
-        console.log(ownProps);
-        console.log(data);
+
         const {account} = data;
         //const
         //const newNotifications = data.account ? data.account.user.notifications : [];
         //const totalNewNotifications =  data.account ? data.account.user.notifications.totalCount : 0;
-        //console.log(totalNewNotifications, 'total');
+
         return {user: account.user, account:account || {}};//{loading: data.loading, newNotifications:newNotifications, totalNewNotifications:totalNewNotifications}
     },
 });

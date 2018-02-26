@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 const PROMISES  = gql`
-query GET_PROMISES($cursors:CursorInput,$userId: ID) {
+query GET_PROMISES($cursors:CursorInput,$userId: UID) {
 
   user(id: $userId){
     id

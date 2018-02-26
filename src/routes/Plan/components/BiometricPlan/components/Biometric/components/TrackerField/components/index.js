@@ -80,22 +80,8 @@ export class TrackerField extends React.Component {
 
     render() {
 
-        const {info, report} = this.props;
-
-
-        const {id, label, units, inputMask} = info.measurement;
-        const unit_id = units.id;
-        const unit_name = units.name;
+        const {info} = this.props;
         const report_value = this.state.value;
-
-        //const pattern = '/(\\d{3})(?=\\d)/g';
-        //let inputMask = '999/999';
-
-        //let outputMask = '999/999';
-
-        //const hasReport = this.state.isClicked;
-
-        //return (<InputMask value={report_value}  mask={inputMask} maskChar=" " onChange={this.handleChange} />)
 
         return (<Tracker item={info.measurement} value={report_value} onChange={this.handleChange} />)
     }

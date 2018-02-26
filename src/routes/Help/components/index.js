@@ -1,7 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { withApollo } from 'react-apollo'
-import Loadable from '../../../components/Loadable';
-import { Route } from 'react-router-dom'
 import {Card, Tabs, Collapse} from 'antd';
 const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;

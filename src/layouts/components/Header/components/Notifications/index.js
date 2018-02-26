@@ -1,17 +1,14 @@
-import React, { PropTypes } from 'react';
-import { withRouter, Link } from 'react-router-dom'
+import React from 'react';
+import { withRouter } from 'react-router-dom'
 import moment from 'moment';
 import Loading from 'components/Loading';
-import {
-    FormattedMessage,
-} from 'react-intl';
+
 
 import InfiniteScroll from 'react-infinite-scroller';
-import styles from './index.less';
 
-import { Popconfirm, Row, Col,Button, Modal, List, Avatar, Spin, Icon, Card } from 'antd';
-import messages from "../RightMenu/components/NotificationBadge/messages";
-const confirm = Modal.confirm;
+
+import { Popconfirm, Row, Col,Button, List, Avatar, Spin, Icon,} from 'antd';
+
 
 class Notifications extends React.Component {
 
@@ -50,7 +47,7 @@ class Notifications extends React.Component {
                 return;
             }
             // check on notification
-            const {id,
+            const {
                 action,
                 actionId,
                 userId,
@@ -146,7 +143,7 @@ class Notifications extends React.Component {
     }
 
     render() {
-        const { loading, notifications, endCursor, hasMore } = this.props;
+        const { loading, notifications, hasMore } = this.props;
 
         if (loading) {
             return <Loading />;

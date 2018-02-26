@@ -29,14 +29,14 @@ const withQuery = graphql(participantsList_QUERY,
                 fetchPolicy: 'network-only'
             }},
         props: ({ ownProps, data }) => {
-            //console.log(data);
+
             if (!data.loading) {
                 return {
                     participants: data.account.getInboxParticipants,
                     loading: data.loading,
 
                     search(search) {
-                        //console.log(search);
+
                         return data.fetchMore({
                             variables: {
                                 search: search,

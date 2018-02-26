@@ -20,13 +20,13 @@ const withMutation = graphql(ChangeRole_Mutation, {
                 variables: {role:role},
 
                 update: (store, { data: { changeRole: {currentRole} } }) => {
-                    //console.log(trackerUpdate);
+
                     // Read the data from our cache for this query.
                     const data = store.readQuery({
                         query: GET_CURRENT_ROLE_QUERY,
                     });
 
-                    //console.log(data);
+
                     const newData = {...data, ...{account: {...data.accelerator, ...{currentRole:currentRole}}}};
 
                     store.writeQuery({
@@ -39,7 +39,7 @@ const withMutation = graphql(ChangeRole_Mutation, {
                         // add new to the list
                     //}
 /*
-                    // console.log(data);
+
                     // Add our comment from the mutation to the end.
                     //data = medicationUpdate;
                     // Write our data back to the cache.
@@ -61,7 +61,7 @@ const withMutation = graphql(ChangeRole_Mutation, {
                                 user_id: ownProps.userId
                             }
                         });
-                        //console.log(trackerUpdate, 'need to append');
+
                     }*/
                 },
 

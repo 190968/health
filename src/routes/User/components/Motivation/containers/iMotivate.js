@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 const IMOTIVATE  = gql`
-  query GET_IMOTIVATE($cursors: CursorInput,$userId: ID) {
+  query GET_IMOTIVATE($cursors: CursorInput,$userId: UID) {
 
     user(id: $userId) {
       id

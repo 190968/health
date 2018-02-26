@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 const COMMITMENTS  = gql`
- query GET_COMMITMENTS($cursors: CursorInput,$userId: ID) {
+ query GET_COMMITMENTS($cursors: CursorInput,$userId: UID) {
 
     user (id: $userId) {
       id

@@ -61,16 +61,14 @@ const withMutation = graphql(loginUser, {
                 // update query
 
                 update: (store, { data: { login} }) => {
-                    //console.log(trackerUpdate);
+
                     // Read the data from our cache for this query.
                     const data = store.readQuery({
                         query: UserMainInfo_QUERY,
                     });
 
-                    //console.log(data);
-                    //console.log(login);
                     const newData = {...data, ...{account: {...data.account, ...login}}};
-                    //console.log(newData);
+
                     store.writeQuery({
                         query: UserMainInfo_QUERY,
                         data: newData

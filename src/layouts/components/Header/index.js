@@ -62,7 +62,7 @@ class LHeader extends React.Component {
         const locationPath = '/'+location.pathname.split('/')[1];
 
 //{/*customPlaceholder={HeaderPlaceholder}*/}
-        console.log(this.props);
+
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>

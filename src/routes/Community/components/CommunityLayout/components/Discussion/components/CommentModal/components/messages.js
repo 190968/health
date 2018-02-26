@@ -13,10 +13,5 @@ export default defineMessages({
         "id": "send",
         "defaultMessage": "Send",
         "description": "Send"
-    },
-    "reply": {
-        "id": "reply",
-        "defaultMessage": "Reply",
-        "description": "Reply"
     }
 });

@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 const ADHERENCESUMMARY  = gql`
- query GET_ADHERENCESUMMARY($userId: ID) {
+ query GET_ADHERENCESUMMARY($userId: UID) {
   user(id: $userId) {
     id
     motivation {
