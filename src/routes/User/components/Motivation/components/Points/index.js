@@ -4,6 +4,10 @@
 import React, { PropTypes } from 'react';
 import {Progress , Icon,Card } from 'antd';
 import ModalPointsHistory from './containers/ModalPointsHistory'
+import {
+    injectIntl
+} from 'react-intl';
+import messages from './messages';
 class Points extends React.Component {
 
     constructor(props) {
@@ -21,15 +25,16 @@ class Points extends React.Component {
     render() {
         const  {info,loading} = this.props;
         if (loading) {
-            return  <Card loading >
-                Loading</Card>;
+            return  <Card style={{height:250}} loading title="My Points" >
+               </Card>;
         }
         const {points,nextLevel} = info.currentLevel;
         const {amount,title} = nextLevel;
         let remainingPoint = amount-points;
+        const {intl}=this.props;
         const percent = Math.round(points/amount*100);
         return  (
-            <Card style={{height:250}} title="My Points">
+            <Card style={{height:250}} title={intl.formatMessage(messages.points)}>
 
 
                 { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel} />}
@@ -40,10 +45,10 @@ class Points extends React.Component {
                     <Progress percent={percent} />
                 </center>
                <center><span><h2>{points}</h2></span></center>
-                <center><span>{remainingPoint} points to next {title} level</span></center>
+                <center><span>{remainingPoint} {intl.formatMessage(messages.pointsNext)} {title} {intl.formatMessage(messages.level)}</span></center>
             </Card>
 
         );
     }
 }
-export default Points;
+export default injectIntl(Points);

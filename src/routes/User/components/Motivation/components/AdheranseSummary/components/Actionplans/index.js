@@ -3,14 +3,18 @@
  */
 import React, { PropTypes } from 'react';
 import {Progress , Card } from 'antd';
-
+import {
+    injectIntl
+} from 'react-intl';
+import messages from './messages';
 class Actionplans extends React.Component {
 
 
     render() {
         const{level} = this.props.plans;
+        const {intl}=this.props;
         return  (
-            <Card title="Actionplans">
+            <Card style={{height:250}} title={intl.formatMessage(messages.actionPlans)}>
                 <center>
                     <Progress type="dashboard" percent={level} />
                 </center>
@@ -19,4 +23,4 @@ class Actionplans extends React.Component {
         );
     }
 }
-export default Actionplans;
+export default injectIntl(Actionplans);

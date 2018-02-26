@@ -4,6 +4,10 @@
 import React, { PropTypes } from 'react';
 import {Button ,Spin, Table, Icon, Divider,Card,Modal } from 'antd';
 import moment from 'moment';
+import {
+    injectIntl
+} from 'react-intl';
+import messages from './messages';
 class ModalPointsHistory extends React.Component {
 
     constructor(props) {
@@ -15,12 +19,15 @@ class ModalPointsHistory extends React.Component {
 
     render() {
         const data = [];
+
+
         const  {pointsHistory,loading} = this.props;
         if (loading) {
             return    <Modal>
                 <Spin/>
                 </Modal> ;
         }
+        const {intl}=this.props;
         const {edges} = pointsHistory;
 
         edges.forEach(item=>{
@@ -30,15 +37,15 @@ class ModalPointsHistory extends React.Component {
         })
 
         const columns = [{
-            title: 'Points',
+            title: intl.formatMessage(messages.points),
             dataIndex: 'points',
             key: 'points'
         }, {
-            title: 'Received For',
+            title: intl.formatMessage(messages.receivedFor),
             dataIndex: 'receivedFor',
             key: 'receivedFor',
         }, {
-            title: 'Received On',
+            title: intl.formatMessage(messages.receivedOn),
             dataIndex: 'receivedOn',
             key: 'receivedOn',
             render: (date) => moment(date).format('LLL')
@@ -48,18 +55,18 @@ class ModalPointsHistory extends React.Component {
         return  (
 
             <Modal
-                title="Earned Points"
+                title={intl.formatMessage(messages.earnedPoints)}
                 visible={true}
                 onCancel={this.props.handleCancel}
                 footer={[
-                    <Button key="back" onClick={this.props.handleCancel}>Cancel</Button>
+                    <Button key="back" onClick={this.props.handleCancel}>{intl.formatMessage(messages.cancel)}</Button>
                 ]}
             >
 
-           <p>You are currently on the Newbie level. You need 260 more points to reach the Pioneer level. Stay active on the system to advance!</p><hr/>
+           <p>{intl.formatMessage(messages.text)}</p><hr/>
                 <Table columns={columns} dataSource={data} />
             </Modal>
         );
     }
 }
-export default ModalPointsHistory;
+export default injectIntl(ModalPointsHistory);

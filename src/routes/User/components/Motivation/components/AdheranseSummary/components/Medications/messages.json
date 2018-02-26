@@ -1,0 +1,7 @@
+{
+  "medications": {
+    "id": "user.motivation.medications",
+    "defaultMessage": "Medications",
+    "description": "Medications"
+  }
+}

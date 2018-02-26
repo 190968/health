@@ -181,9 +181,19 @@ export const asyncCommynity = (store) => {
 export const asyncMotivation = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/components/Motivation/containers/Motivation.js'),
-            modules: ['../routes/User/components/Motivation/containers/Motivation.js'],
-        webpack: () => [require.resolveWeak('../routes/User/components/Motivation/containers/Motivation.js')],
+            loader: () => import('../routes/User/components/Motivation/containers/AdheranseSummary.js'),
+            modules: ['../routes/User/components/Motivation/containers/AdheranseSummary.js'],
+        webpack: () => [require.resolveWeak('../routes/User/components/Motivation/containers/AdheranseSummary.js')],
+})
+    );
+}
+
+export const asyncProfile = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../routes/User/containers/profileContainer.js'),
+            modules: ['../routes/User/containers/profileContainer.js'],
+        webpack: () => [require.resolveWeak('../routes/User/containers/profileContainer.js')],
 })
     );
 }
