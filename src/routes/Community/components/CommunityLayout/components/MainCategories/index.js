@@ -13,9 +13,6 @@ import CategoryCard from '../CategoryCard';
 
 class MainCategories extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
 
 
     render(){

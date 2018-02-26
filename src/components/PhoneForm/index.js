@@ -41,9 +41,6 @@ const dateFormat = 'YYYY-MM-DD';
 
 class PhoneForm extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
 
     static defaultProps = {
         required:false,

@@ -90,3 +90,15 @@ export default function MyLoadable (opts, store, initProps) {
         ...opts,
     });*/
 }
+
+export function LoadSimple (url) {
+    const load = '../routes/Manager/containers/Workflow';//'../routes/'+url;
+    return (
+
+        MyLoadable({
+            loader: () => import(load),
+            modules: [load],
+            webpack: () => [require.resolveWeak(load)],
+        })
+    )
+}

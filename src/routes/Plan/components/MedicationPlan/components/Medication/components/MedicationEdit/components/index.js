@@ -8,10 +8,10 @@ import {
 } from 'react-intl';
 
 import moment from 'moment';
-import {Spin, Modal, Form, List, Radio, Row, TimePicker, Col, Select, Input, DatePicker} from 'antd';
+import {Spin, Modal, Form, List, Radio, Row, TimePicker, Col, Select, Input} from 'antd';
 import {StartEndForm} from "../../../../../../../../../components/FormCustomFields";
 
-const {Option, OptGroup} = Select;
+const {Option} = Select;
 const FormItem = Form.Item;
 const format = 'h:mm a';
 const RadioGroup = Radio.Group;
@@ -190,7 +190,7 @@ class EditMedicationForm extends React.Component {
         //console.log(info);
 
 
-        if (timesPerDay == 0) {
+        if (timesPerDay === 0) {
             timesPerDay = 1;
         }
 

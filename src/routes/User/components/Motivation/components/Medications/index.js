@@ -6,9 +6,7 @@ import {Progress , Card } from 'antd';
 
 class Medications extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         const{level} = this.props.medications;

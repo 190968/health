@@ -6,9 +6,7 @@ import {Progress , Card } from 'antd';
 
 class Promises extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         return  (

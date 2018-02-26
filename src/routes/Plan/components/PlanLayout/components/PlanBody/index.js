@@ -95,9 +95,6 @@ export class PlanBody extends React.Component {
 
     render() {
         const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading} = this.props;
-
-
-
         let {currentTab, currentKey} = this.state;
         if (loading) {
             return (

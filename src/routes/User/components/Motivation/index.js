@@ -14,9 +14,7 @@ import Commitments from './containers/Commitments.js';
 import {Row,Col,Card} from 'antd';
 class Motivation extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
 

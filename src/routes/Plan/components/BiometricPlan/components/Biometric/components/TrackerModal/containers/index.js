@@ -9,9 +9,6 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from "antd/lib/index";
 import {BiometricPlanQuery} from "../../../../../containers";
-import Biometric from "../../index";
-
-//import { compose } from 'react-apollo';
 
 const tracker = gql`
 query GET_TRACKER($id: ID, $user_id: ID!, $amid: ID) {

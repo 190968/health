@@ -3,9 +3,7 @@ import PanelComponent from '../../Filter/components/Panel';
 
 export class FormsComponent extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
 

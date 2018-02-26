@@ -6,9 +6,7 @@ import {Avatar,Popover,Col,List, Card } from 'antd';
 import BadgesListItem from './components/BadgesListItem';
 class Badges extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
         render()
         {
             const {info, loading} = this.props;

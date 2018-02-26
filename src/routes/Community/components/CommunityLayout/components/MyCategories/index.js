@@ -19,9 +19,7 @@ let settings = {
 };
 class MyCategories extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
+
 
 
     render(){

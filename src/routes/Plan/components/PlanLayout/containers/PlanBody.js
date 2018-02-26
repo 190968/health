@@ -97,9 +97,9 @@ const PlanBodyWithQuery = graphql(
                                 //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
+                                /*return Object.assign({}, previousResult, {
                                     medicationPlan: fetchMoreResult.medicationPlan,
-                                });
+                                });*/
                             },
                         });
                     }

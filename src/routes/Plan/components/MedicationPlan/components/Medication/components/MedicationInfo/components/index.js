@@ -8,13 +8,6 @@ import MedicationEditForm from '../../MedicationEdit/containers'
 import MedicationChartPopup from '../../MedicationChartPopup';
 import MedicationFullDetails from '../../../containers/MedicationFullDetails';
 
-
-const options = {
-    followCursor: false,
-    shiftX: 50,
-    shiftY: 40
-}
-
 export class MedicationInfo extends React.PureComponent {
 
     constructor(props) {

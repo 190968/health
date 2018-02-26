@@ -42,9 +42,6 @@ const tailFormItemLayout = {
 
 export class StartEndFormInit extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
 
     static propTypes = {
         startDate: PropTypes.string,

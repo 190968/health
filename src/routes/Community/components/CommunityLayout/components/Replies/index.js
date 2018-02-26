@@ -15,9 +15,7 @@ const IconText = ({ type, text }) => (
 
 class Replies extends React.Component{
     state = { visible: false ,id:null}
-    constructor(props) {
-        super(props);
-    }
+
 
     render(){
 

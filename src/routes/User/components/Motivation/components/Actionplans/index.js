@@ -6,9 +6,6 @@ import {Progress , Card } from 'antd';
 
 class Actionplans extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const{level} = this.props.plans;

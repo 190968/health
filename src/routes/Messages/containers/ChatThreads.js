@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const GET_CONVERSATIONS = gql`    
+export const GET_CONVERSATIONS = gql`    
     query GET_CONVERSATIONS {
         account {
           inboxConversations {

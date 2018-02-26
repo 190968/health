@@ -13,9 +13,7 @@ import messages from './messages';
 
 class DiscussionView extends React.Component{
 
-    constructor(props) {
-        super(props);
-    }
+
 
     handleClick = () => {
         const { discussion, discussionDelete, history } = this.props;

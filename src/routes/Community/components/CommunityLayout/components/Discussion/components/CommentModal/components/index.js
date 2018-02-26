@@ -13,9 +13,7 @@ const FormItem = Form.Item;
 
 class CommentModal extends React.Component{
     state = { visible: true ,title:""}
-    constructor(props) {
-        super(props);
-    }
+
 
     handleCancel = (e) => {
         this.setState({

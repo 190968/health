@@ -10,11 +10,6 @@ import MedicationReminders from "../../components/MedicationReminders";
 
 export default class MedicationsFullDetails extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-
-    };
 
     static propTypes = {
         userId: PropTypes.string,

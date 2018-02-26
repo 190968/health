@@ -12,9 +12,7 @@ import messages from './messages';
 import {Form,List,Avatar, Card } from 'antd';
 class CareTeam extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
 

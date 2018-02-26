@@ -16,9 +16,6 @@ import messages from '../../../InputBox/messages';
 
 class CommentsView extends React.Component{
 
-    constructor(props) {
-        super(props);
-    }
 
 
 

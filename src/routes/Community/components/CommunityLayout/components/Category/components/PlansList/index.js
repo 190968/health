@@ -16,10 +16,7 @@ import {
 import messages from './plan.json';
 class PlansList extends React.PureComponent{
 
-    constructor(props) {
-        super(props);
 
-    }
 
 
     onChange = (value) => {

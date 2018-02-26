@@ -8,7 +8,7 @@ import Motivators from '../../../User/containers/motivatorsContainer';
 import CareTeam from '../../../User/containers/careTeamContainer';
 import Family from '../../../User/containers/familyContainer';
 
-import { Button,Icon, Alert, Row, Col, Calendar, List,Card } from 'antd';
+import { Button,Icon, Alert, Row, Col, Calendar,Card } from 'antd';
 
 
 

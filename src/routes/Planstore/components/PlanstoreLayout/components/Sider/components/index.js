@@ -10,9 +10,6 @@ import Filters from '../../Filters/components'
 
 export class PlanstoreLayout extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     changePage = (page) => {
         this.props.loadMoreEntries(page)

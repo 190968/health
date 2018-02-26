@@ -33,7 +33,7 @@ class LHeader extends React.Component {
         const loading = this.props.loading;
         const token = this.props.token;
         const location = this.props.location;
-        console.log(location);
+        //console.log(location);
         const menu_items = [
             ['Dashboard', '/'],
             ['Planstore', '/planstore', 'aps'],
@@ -60,9 +60,9 @@ class LHeader extends React.Component {
         });
 
         const locationPath = '/'+location.pathname.split('/')[1];
-        console.log(locationPath);
+        //console.log(locationPath);
 //{/*customPlaceholder={HeaderPlaceholder}*/}
-
+        console.log(this.props);
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
@@ -106,12 +106,12 @@ const mapStateToProps = (state) => {
         // view store:
         //currentView:  state.views.currentView,
         // userAuth:
-        messages:    state.user.info.unreadMessages,
-        notifications:    state.user.info.unreadNotifications,
+        //messages:    state.user.info.unreadMessages,
+        //notifications:    state.user.info.unreadNotifications,
         network:    state.network,
         //loading: state.user.loading,
-        user: state.user.info,
-        token: state.user.token
+        //user: state.user.info,
+        //token: state.user.token
     };
 };
 

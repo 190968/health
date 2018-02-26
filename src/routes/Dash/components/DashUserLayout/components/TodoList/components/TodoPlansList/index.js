@@ -10,7 +10,7 @@ export default class TodoPlansList extends React.PureComponent {
         } = this.props;
         return (
             <React.Fragment>
-            {plans.map(plan => <div key={plan.id}>
+            {plans.map(plan => <div key={plan.upid}>
                 <TodoPlanItem plan={plan} />
             </div>)}
             </React.Fragment>);

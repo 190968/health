@@ -1,24 +1,34 @@
-import { connect } from 'react-redux'
 import DashLayout from '../components/DashLayout'
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
-
-const mapStateToProps = (state) => {
-
-    return {
-        current_role: 'user'//for now state.network.current_role
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
+export const GET_CURRENT_ROLE_QUERY = gql`
+    query GET_CURRENT_ROLE {
+      account {
+         currentRole
+      }
     }
-};
+`;
 
+const withQuery = graphql(
+    GET_CURRENT_ROLE_QUERY,
+    {
+        options: () => {
+            return {
+                fetchPolicy: 'cache-first'
+            }
+        },
+        props: ({ ownProps, data }) => {
+            if (!data.loading) {
+                return {
+                    currentRole: data.account.currentRole,
+                    loading: data.loading,
+                }
+            } else {
+                return {loading: data.loading}
+            }
+        },
+    }
+)
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DashLayout);
+export default withQuery(DashLayout);

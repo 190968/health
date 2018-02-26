@@ -10,10 +10,26 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
+const UserMainInfo_QUERY = gql`
+    query ACCOUNT_INFO {
+        account {
+            ...CurrenUserInfo
+            possibleNetworkRoles
+            possibleProviderRoles
+            currentRole
+        }
+    }
+    ${LoginForm.fragments.user}
+`;
+
 const loginUser = gql`
     mutation loginUser($input: LoginInput!) {
         login(input: $input) {
            ...CurrenUserInfo
+            possibleNetworkRoles
+            possibleProviderRoles
+            currentRole
+            checkToken
         }
     }
     ${LoginForm.fragments.user}
@@ -41,7 +57,25 @@ const withMutation = graphql(loginUser, {
     props: ({ mutate }) => ({
         loginUser: input => {
             return mutate({
-                variables: { input: {email: input.email, password: input.password} },
+                variables: { input: {email: input.email, password: input.password}},
+                // update query
+
+                update: (store, { data: { login} }) => {
+                    //console.log(trackerUpdate);
+                    // Read the data from our cache for this query.
+                    const data = store.readQuery({
+                        query: UserMainInfo_QUERY,
+                    });
+
+                    //console.log(data);
+                    //console.log(login);
+                    const newData = {...data, ...{account: {...data.account, ...login}}};
+                    //console.log(newData);
+                    store.writeQuery({
+                        query: UserMainInfo_QUERY,
+                        data: newData
+                    });
+                }
             })
         },
     }),
