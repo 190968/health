@@ -195,7 +195,7 @@ export class BiometricPlanBody extends React.Component {
 
             <Card title={<FormattedMessage id="plan.trackers.medication.card.title2" defaultMessage="Trackers for {date}" values={{
                 date: <FormattedDate
-                    value={new Date(date)}
+                    value={moment(date)}
                     year='numeric'
                     month='long'
                     day='2-digit'
@@ -209,7 +209,7 @@ export class BiometricPlanBody extends React.Component {
                           <Tooltip title="Settings"><Dropdown overlay={menu}   >
                               <Button size="small" ><Icon type="setting" /></Button>
                           </Dropdown></Tooltip>
-                          <Tooltip title={<FormattedMessage id="medication.add" defaultMessage="Add Medication" />} placement={'top'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
+                          <Tooltip title={<FormattedMessage id="tracker.add" defaultMessage="Add Tracker" />} placement={'top'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
                       </Button.Group>
                   </div>}>
 

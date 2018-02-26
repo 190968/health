@@ -197,7 +197,7 @@ export class PlanHeader extends React.Component {
                     bodyStyle={{margin:0, padding:0}}
                     /*cover={<img alt={plan.title} height={300} src={img} />}*/
                     actions={[<div><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}> <Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip><FormattedDate
-                        value={new Date(this.state.date)}
+                        value={moment(this.state.date)}
                         year='numeric'
                         month='long'
                         day='2-digit'
@@ -213,7 +213,7 @@ export class PlanHeader extends React.Component {
                                 title={user.firstName + ' '+ user.lastName}
                                 description={<FormattedMessage id="userplan.joined" defaultMessage="From {date}" values={{
                                     date: <FormattedDate
-                                        value={new Date(info.joinDate)}
+                                        value={moment(info.joinDate)}
                                         year='numeric'
                                         month='long'
                                         day='2-digit'

@@ -49,7 +49,7 @@ export default class ThreadList extends React.Component {
                     return <NavLink to={'/messages/'+conversation.id}><div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
                     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     <div className="conversation--details">
-                        <div className="conversation--details_name"><span class="subject"><Badge count={unreadMessages} >{conversation.subject}</Badge> </span><span class="date">{moment(conversation.lastMessage.sentAt).fromNow()}</span></div>
+                        <div className="conversation--details_name"><span className="subject"><Badge count={unreadMessages} >{conversation.subject}</Badge> </span><span className="date">{moment(conversation.lastMessage.sentAt).fromNow()}</span></div>
                         <div className="conversation--details_text"><Truncate>{conversation.lastMessage.text}</Truncate></div>
                     </div>
 

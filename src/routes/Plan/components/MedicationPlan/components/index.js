@@ -104,7 +104,7 @@ export class MedicationPlanBody extends React.Component {
             return (
                 <Card loading title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
                     date: <FormattedDate
-                        value={new Date(date)}
+                        value={moment(date)}
                         year='numeric'
                         month='long'
                         day='2-digit'
@@ -255,11 +255,10 @@ export class MedicationPlanBody extends React.Component {
             </Menu>
         );
 
-
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
                     date: <FormattedDate
-                        value={new Date(date)}
+                        value={moment(date)}
                         year='numeric'
                         month='long'
                         day='2-digit'
