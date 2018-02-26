@@ -55,7 +55,10 @@ class Comment extends React.Component{
                         dataSource={edges}
                         renderItem={item => (
                             <List.Item key={item.id}
-                                       actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />, <IconText type="message" text={item.replies.totalCount} onClick={this.showModal.bind(this,item.id)} />, <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >{intl.formatMessage(messages.reply)}</p></Tooltip>]}
+                                       actions={[ moment(item.createdAt).format('LLL'),
+                                           <IconText type="like-o" text="0" />,
+                                           <IconText type="message" text={item.replies.totalCount} onClick={this.showModal.bind(this,item.id)} />,
+                                           <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >{intl.formatMessage(messages.reply)}</p></Tooltip>]}
 
                             >
 

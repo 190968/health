@@ -28,7 +28,7 @@ const AsyncCategoryDash = (props) => {
 const AsyncCommynityDiscussion = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/components/CommunityLayout/components/Discussion/containers/discussions.js'),
+            loader: () => import('../../../routes/Community/components/CommunityLayout/components/Discussion/containers/Discussion.js'),
 }, undefined, props)
     );
 }

@@ -10,27 +10,25 @@ import gql from 'graphql-tag';
 
 
 const ADHERENCESUMMARY  = gql`
-  query GET_ADHERENCESUMMARY {
-  account {
-    user {
-      id
-      motivation {
-        adherenceSummary {
-          medications {
-            level
-            color
-            description
-          }
-          trackers {
-            level
-            color
-            description
-          }
-          plans {
-            level
-            color
-            description
-          }
+ query GET_ADHERENCESUMMARY($userId: ID) {
+  user(id: $userId) {
+    id
+    motivation {
+      adherenceSummary {
+        medications {
+          level
+          color
+          description
+        }
+        trackers {
+          level
+          color
+          description
+        }
+        plans {
+          level
+          color
+          description
         }
       }
     }
@@ -40,11 +38,17 @@ const ADHERENCESUMMARY  = gql`
 `;
 
 const withMutation = graphql(ADHERENCESUMMARY, {
+    options: (ownProps) => ({
+
+        variables: {
+            user_id: ownProps.userId
+        }
+
+    }),
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user.motivation,
+                info: data.user.motivation,
                 loading: data.loading
             }
         }
@@ -55,9 +59,10 @@ const withMutation = graphql(ADHERENCESUMMARY, {
 });
 
 const mapStateToProps = (state) => {
-    return {
+    return{
+            userId:state.user.info.id
+    }
 
-    };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

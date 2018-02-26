@@ -10,9 +10,9 @@ import gql from 'graphql-tag';
 
 
 const IMOTIVATE  = gql`
-  query GET_IMOTIVATE($cursors: CursorInput) {
-  account {
-    user {
+  query GET_IMOTIVATE($cursors: CursorInput,$userId: ID) {
+
+    user(id: $userId) {
       id
       motivation {
         iMotivate(cursors: $cursors) {
@@ -36,17 +36,24 @@ const IMOTIVATE  = gql`
       }
     }
   }
-}
+
 
 
 `;
 
 const withMutation = graphql(IMOTIVATE, {
+    options: (ownProps) => ({
+
+        variables: {
+            user_id: ownProps.userId
+        }
+
+    }),
     props: ({ ownProps, data }) => {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user.motivation,
+                info: data.user.motivation,
                 loading: data.loading
             }
         }
@@ -57,9 +64,9 @@ const withMutation = graphql(IMOTIVATE, {
 });
 
 const mapStateToProps = (state) => {
-    return {
-
-    };
+    return{
+        userId:state.user.info.id
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

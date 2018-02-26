@@ -10,9 +10,9 @@ import gql from 'graphql-tag';
 
 
 const COMMITMENTS  = gql`
- query GET_COMMITMENTS($cursors: CursorInput) {
-  account {
-    user {
+ query GET_COMMITMENTS($cursors: CursorInput,$userId: ID) {
+
+    user (id: $userId) {
       id
       motivation {
         motivators {
@@ -48,17 +48,24 @@ const COMMITMENTS  = gql`
       }
     }
   }
-}
+
 
 `;
 
 const withMutation = graphql(COMMITMENTS, {
+    options: (ownProps) => ({
+
+        variables: {
+            user_id: ownProps.userId
+        }
+
+    }),
     props: ({ ownProps, data }) => {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user.motivation,
-                motivators: data.account.user.motivation.motivators,
+                info: data.user.motivation,
+                motivators: data.user.motivation.motivators,
                 loading: data.loading
             }
         }
@@ -69,9 +76,9 @@ const withMutation = graphql(COMMITMENTS, {
 });
 
 const mapStateToProps = (state) => {
-    return {
-
-    };
+    return{
+        userId:state.user.info.id
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
