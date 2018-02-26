@@ -1,8 +1,8 @@
-import React from 'react'
-import { connect } from 'react-redux'
+//import React from 'react'
+
 
 import PlanSection from '../components/PlanSection'
-import { message } from 'antd';
+
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 

@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 
 import PlanElement from '../components/PlanElement'
 import { graphql } from 'react-apollo';

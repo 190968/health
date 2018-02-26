@@ -1,10 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
+//import React from 'react'
+
 
 import PlanMeasurement from '../components/PlanMeasurement'
 import { message } from 'antd';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import {reportOnTracker} from '../../../components/BiometricPlan/components/Biometric/components/TrackerField/containers/index.js';
 
 
