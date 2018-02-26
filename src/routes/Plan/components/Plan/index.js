@@ -144,11 +144,11 @@ export class Plan extends React.PureComponent {
     let description = this.props.info.description;
     var img = this.props.info.thumb.large;
     var id = this.props.info.id;
-    var upid = this.props.upid || 0;
+    var upid = this.props.upid || '';
     var ribbon = this.props.info.ribbon || '';
 
     let link = '/planstore/plan/'+id;
-    const is_user = upid > 0;
+    const is_user = upid !== '';
     // if the link is personal - then open user link
       let height = 154;
       let limit = 25;
