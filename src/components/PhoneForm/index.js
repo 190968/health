@@ -1,41 +1,16 @@
 import React, { PropTypes } from 'react';
 
-import { Row, Input,Col,Select,Form } from 'antd';
+import {Input,Select,Form } from 'antd';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
-const FormItem = Form.Item;
 
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
-};
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
-    },
-};
-const dateFormat = 'YYYY-MM-DD';
+
 
 
 
@@ -52,7 +27,7 @@ class PhoneForm extends React.Component{
 
     render(){
 
-        const { form, intl, required, prefix, countries,  getFieldDecorator, phone } = this.props;
+        const { required, prefix, countries,  getFieldDecorator, phone } = this.props;
         //let {required} = this.props;
 
         const {code, number} = phone;

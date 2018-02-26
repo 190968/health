@@ -1,50 +1,18 @@
 import React, { PropTypes } from 'react';
 
-import { Row, Input,Col,Select,Form } from 'antd';
+import {Input,Col,Select } from 'antd';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
-import moment from 'moment';
-import messages from './messages.json';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
-const FormItem = Form.Item;
-
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
-};
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
-    },
-};
-const dateFormat = 'YYYY-MM-DD';
-
-
-
 class AddressForm extends React.Component{
 
 
 
     render(){
-        const { intl,countries, states, getFieldDecorator, address } = this.props;
+        const { countries, states, getFieldDecorator, address } = this.props;
         const {line1, line2,country,city, state, zipcode} = address;
 
         const prefix = 'address';

@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 import MedicationInfo from '../components'
 import { message } from 'antd';

@@ -1,8 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Measurement from '../../containers/PlanMeasurement';
-import { withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
 import { Divider, Icon, Upload, Alert, Button, Card } from 'antd';
 import PlanChecklist from "../../../Plan/components/Checklist";
 import PlanRadio from "../../../Plan/components/Radio";
@@ -10,7 +7,6 @@ import PlanInputText from "../../../Plan/components/PlanInputText";
 import PlanScale from "../../../Plan/components/PlanScale";
 import PlanDropdown from "../../../Plan/components/PlanDropdown";
 import PlanMedia from "../../../Plan/components/PlanMedia";
-import Plan from "../../../Plan";
 
 
 
@@ -28,7 +24,7 @@ export class PlanElement extends React.Component {
 
     };
 
-    onChange(value, type) {
+    onChange(value) {
 
         const {upid, element, date} = this.props;
         this.props.makeReport(upid, element.id, date, value);
