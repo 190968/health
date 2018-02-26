@@ -29,11 +29,9 @@ class CommentModal extends React.Component{
 
                 return null;
             }
-            discussionReply(values.textReply,this.props.match.params.id, this.props.params).then(({data}) => {
-                this.setState({
-                    visible: false
-                });
-            });
+
+            discussionReply(values.textReply,this.props.match.params.id, this.props.params);
+
         });
     }
 
@@ -45,8 +43,8 @@ class CommentModal extends React.Component{
         return(
                 <Modal
                     title={intl.formatMessage(messages.reply)}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
+                    visible={true}
+                    onCancel={this.props.unshowModal}
                     okText={intl.formatMessage(messages.send)}
                     onOk={this.handleModalSubmit}
                 >

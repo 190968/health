@@ -31,10 +31,13 @@ class Comment extends React.Component{
             id:param
         });
     }
-
+    unshowModal = () => {
+        this.setState({
+            visibleReplyModal: false
+        });
+    }
 
     render(){
-
         const {loading,discussion} = this.props;
         if (loading) {
             return (
@@ -47,7 +50,7 @@ class Comment extends React.Component{
 
         return(
             <div>
-                {this.state.visibleReplyModal && <CommentModal params={this.state.id}  parentMessageId={this.props.match.params.id} />}
+                {this.state.visibleReplyModal && <CommentModal params={this.state.id} unshowModal={this.unshowModal}  parentMessageId={this.props.match.params.id} />}
                 <Row>
                     {edges.length > 0 ? <List
                         loading={loading}
