@@ -4,9 +4,7 @@ import TodoList from './containers/TodoList';
 import PlansList from '../../../Plan/containers/PlansList';
 import MedicationPlan from '../../../Plan/components/MedicationPlan/containers';
 import BiometricPlan from '../../../Plan/components/BiometricPlan/containers';
-import Motivators from '../../../User/containers/motivatorsContainer';
-import CareTeam from '../../../User/containers/careTeamContainer';
-import Family from '../../../User/containers/familyContainer';
+
 
 import { Button,Icon, Alert, Row, Col, Calendar,Card } from 'antd';
 
@@ -68,9 +66,6 @@ export class DashUserLayout extends React.Component {
                          >
                              <Calendar fullscreen={false}  />
                          </Card>
-                       <Family user_id={user_id} />
-                       <CareTeam user_id={user_id} />
-                       <Motivators user_id={user_id} />
 
                </Col>
            </Row>

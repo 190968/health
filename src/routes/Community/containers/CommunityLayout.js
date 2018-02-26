@@ -46,7 +46,7 @@ const withMutation = graphql(CATEGORIES, {
 
 const mapStateToProps = (state) => {
     return {
-
+        user_id: state.user.info.id
     };
 };
 

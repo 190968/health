@@ -116,7 +116,7 @@ class GetPlanstorePlan extends React.Component {
         endDateError = endDateError || form.getFieldError('end_date_set');
         return (
             <Modal
-                title={'Set your ActionPlan:' + plan.title}
+                title={'Set your ActionPlan: ' + plan.title}
                 visible={visible}
                 confirmLoading={confirmLoading}
                 onCancel={onCancel} onOk={this.handleSubmit}>
@@ -132,11 +132,11 @@ class GetPlanstorePlan extends React.Component {
                                 }],
                             })(
                                 <RadioGroup>
-                                    <Popover content="Visible to anyone">
+                                    <Popover content="Visible to all team members">
                                         <RadioButton value="open">Open
                                         </RadioButton>
                                     </Popover>
-                                    <Popover content="Visible to you">
+                                    <Popover content="Visible to only you">
                                         <RadioButton value="private">Private</RadioButton>
                                     </Popover>
                                 </RadioGroup>

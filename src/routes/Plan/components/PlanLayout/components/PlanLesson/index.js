@@ -40,7 +40,7 @@ export class PlanLesson extends React.Component {
                 this.clearLoading();
             } else {
                 this.clearLoading();
-                message.success('Lessons has been completed');
+                message.success('Lesson has been completed');
                 this.props.showNextLesson();
             }
         }).catch((error) => {

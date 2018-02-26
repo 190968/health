@@ -279,20 +279,20 @@ export class MedicationPlanBody extends React.Component {
                     {takeAtTimes.length === 0 && takeDaily.length === 0 && takeAsNeeded.length === 0 && <div className="ant-list-empty-text">No Medications</div>}
                     {takeAtTimes.length > 0 &&
                         (   <div><Divider><FormattedMessage id="plan.medication.at_times" defaultMessage="Take At Times" /></Divider>
-                                <Table columns={columns} dataSource={data} scroll={{x: 600}} pagination={false} />
+                                <Table columns={columns} dataSource={data} /*scroll={{x: 600}}*/ pagination={false} />
                             </div>
                         )
                     }
                     {takeDaily.length > 0 &&
                         (<div>
                         <Divider><FormattedMessage id="plan.medication.daily" defaultMessage="Take Daily" /></Divider>
-                            <Table columns={takeDailyColumns} dataSource={takeDailyData} scroll={{x: 600}} pagination={false} showHeader={false} />
+                            <Table columns={takeDailyColumns} dataSource={takeDailyData} /*scroll={{x: 600}}*/ pagination={false} showHeader={false} />
                        </div>)
                     }
                     {takeAsNeeded.length > 0 &&
                     (<div>
                         <Divider><FormattedMessage id="plan.medication.as_needed" defaultMessage="Take As Needed" /></Divider>
-                        <Table columns={takeAsNeededColumns} dataSource={takeAsNeededData} scroll={{x: 600}} pagination={false} showHeader={false} />
+                        <Table columns={takeAsNeededColumns} dataSource={takeAsNeededData} /*scroll={{x: 600}}*/ pagination={false} showHeader={false} />
                         </div>)
                     }
 

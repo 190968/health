@@ -252,92 +252,6 @@ class EditMedicationForm extends React.Component {
 
 
 
-        /*// if we have at times from db
-        if (timesPerHour.length > 0) {
-            timesPerHour.forEach((item, i) => {
-                //col++;
-                Take.push({
-                    item: <div>
-                        <Col span={10}>
-                            <FormItem
-                                {...formItemLayout}
-                            >
-                                {getFieldDecorator('timesAtHours['+i+'][time]', {
-                                    initialValue: moment(item.time, format),
-                                    rules: [{
-                                        required: true, message: 'Please Select',
-                                    }],
-                                })(
-                                    <TimePicker format={format} minuteStep={30} use12Hours={true}/>
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col offset={1} span={6}>
-                            <FormItem
-                                {...formItemLayout}
-                            >
-
-                                {getFieldDecorator('timesAtHours['+i+'][quantity]', {
-                                    initialValue: item.quantity,
-                                    rules: [{
-                                        required: true, message: 'Please Select',
-                                    }],
-                                })(
-                                    <Select onChange={this.onTotal} style={{width: 80}}>
-                                        <Option value={0.25}>¼</Option>
-                                        <Option value={0.50}>½</Option>
-                                        <Option value={0.75}>¾</Option>
-                                        <Option value={1}>1</Option>
-                                        <Option value={1.25}>1¼</Option>
-                                        <Option value={1.50}>1½</Option>
-                                        <Option value={1.75}>1¾</Option>
-                                        <Option value={2}>2</Option>
-                                        <Option value={2.25}>2¼</Option>
-                                        <Option value={2.50}>2½</Option>
-                                        <Option value={2.75}>2¾</Option>
-                                        <Option value={3}>3</Option>
-                                        <Option value={3.25}>3¼</Option>
-                                        <Option value={3.50}>3½</Option>
-                                        <Option value={3.75}>3¾</Option>
-                                        <Option value={4}>4</Option>
-                                        <Option value={4.25}>4¼</Option>
-                                        <Option value={4.50}>4½</Option>
-                                        <Option value={4.75}>4¾</Option>
-                                        <Option value={5}>5</Option>
-                                        <Option value={5.25}>5¼</Option>
-                                        <Option value={5.50}>5½</Option>
-                                        <Option value={5.75}>5¾</Option>
-                                        <Option value={6}>6</Option>
-                                        <Option value={6.25}>6¼</Option>
-                                        <Option value={6.50}>6½</Option>
-                                        <Option value={6.75}>6¾</Option>
-                                        <Option value={7}>7</Option>
-                                        <Option value={7.25}>7¼</Option>
-                                        <Option value={7.50}>7½</Option>
-                                        <Option value={7.75}>7¾</Option>
-                                        <Option value={8}>8</Option>
-                                        <Option value={8.25}>8¼</Option>
-                                        <Option value={8.50}>8½</Option>
-                                        <Option value={8.75}>8¾</Option>
-                                        <Option value={9}>9</Option>
-                                        <Option value={9.25}>9¼</Option>
-                                        <Option value={9.50}>9½</Option>
-                                        <Option value={9.75}>9¾</Option>
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
-                    </div>
-                })
-            })
-        }*/
-
-        //this.state.timesAtHours ? finishTake = dopTake : finishTake = Take;
-
-
-        //const {title} = this.props;
-
-
 
         return (
             <Modal
@@ -364,7 +278,7 @@ class EditMedicationForm extends React.Component {
                                 required: true, message: 'Please Select',
                             }],
                         })(
-                            <RadioGroup onChange={this.onTotal}>
+                            <RadioGroup onChange={this.onTotal} style={{marginTop:5}}>
                                 <Radio style={radioStyle} value="at_times">At specific times</Radio>
                                 <Radio style={radioStyle} value="along_day">Along the day</Radio>
                                 <Radio style={radioStyle} value="as_needed">As needed</Radio>
@@ -506,8 +420,7 @@ class EditMedicationForm extends React.Component {
 
                     </FormItem>
 
-
-                    <FormItem
+                    {/*<FormItem
                         {...formItemLayout}
                         label={<FormattedMessage id="user.settings.basic.tdegsiftdle" defaultMessage="Image"
                                                  description="Image"/>}
@@ -517,11 +430,10 @@ class EditMedicationForm extends React.Component {
                         })(
                             <Col>
                                 <a>Browse</a>
-                                <p>Min. dimensions: 150x150px</p>  {/*style*/}
-
+                                <p>Min. dimensions: 150x150px</p>
                             </Col>
                         )}
-                    </FormItem>
+                    </FormItem>*/}
 
                     {/*Advanced settings*/}
                     {!this.state.advance ?

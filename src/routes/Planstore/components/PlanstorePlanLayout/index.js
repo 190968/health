@@ -48,10 +48,10 @@ export class PlanstorPlanLayout extends React.Component {
         const {start_date, end_date, gender, language, elements, categories} = plan;
         const details = [];
         if (start_date !== '') {
-            details.push(['Start Date', start_date]);
+            details.push(['Start Date', <FormattedDate value={start_date} />]);
         }
         if (end_date !== '') {
-            details.push(['End Date', end_date]);
+            details.push(['End Date', <FormattedDate value={end_date} />]);
         }
         if (gender !== '') {
             details.push(['Gender', gender]);
@@ -83,24 +83,24 @@ export class PlanstorPlanLayout extends React.Component {
 
             cols[i] = chunked_arr[i].map(el => {
                 return <React.Fragment key={el[0]}>
-                    <Col md={6}>
+                    <Row><Col xs={12} md={6}>
                         <strong>{el[0]}:</strong>
                     </Col>
-                    <Col md={6} >
+                    <Col  xs={12} md={12} >
                         {el[1]}
-                    </Col>
+                    </Col> </Row>
                 </React.Fragment>;
 
             });
         }
 
         return <Row>
-            <Col>
-                <Row>
+            <Col xs={24} md={12}>
+
                 {cols[0]}
-                </Row>
+
             </Col>
-            <Col>{cols[1]}</Col>
+            <Col xs={24} md={12}><Row>{cols[1]} </Row></Col>
         </Row>
     };
 

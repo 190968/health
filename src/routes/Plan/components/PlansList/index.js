@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Truncate from 'react-truncate';
 import PlanWidget from 'routes/Plan/components/Plan';
 import { Progress,List, Card, Tooltip, Dropdown, Button, Icon, Menu  } from 'antd';
 import { Link } from 'react-router-dom';
@@ -66,7 +66,7 @@ export class PlansList extends React.Component {
                         >
                             <List.Item.Meta
                                 title={<Link to={'/plan/'+product.id}>{product.plan.title}</Link>}
-                                description={product.plan.description}
+                                description={<Truncate lines={3}>{product.plan.description}</Truncate>}
                             />
 
 
