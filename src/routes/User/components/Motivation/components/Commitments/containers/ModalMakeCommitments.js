@@ -14,10 +14,12 @@ query GET_PLANS($user_id:UID) {
  user (id:$user_id) {
             id
             plans {
-                upid
-              title
-              description              
-                progress
+                id
+                plan {
+                    title
+                    description              
+                    progress
+                }
             }
         }
 }

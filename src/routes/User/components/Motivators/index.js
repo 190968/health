@@ -76,10 +76,11 @@ class Motivators extends React.Component {
         return(
 
 
-        <Card  style={{height:250}} title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
+        <Card  title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
                extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
-               className="demo-infinite-container"
+
         >
+            <div  style={{height:250}} className="demo-infinite-container">
             {edges.length > 0 ?
                 <List
                     split={false}
@@ -91,11 +92,11 @@ class Motivators extends React.Component {
                         <List.Item key={person.id}>
                             {
                                 person.user.firstName ?
-                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                    <Link to={'/u/'+person.user.id} style={{color: 'inherit'}}>
                                         <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.firstName[0]}</Avatar>
                                         <span style={{textAlign:'center','marginLeft':10}}>{person.user.firstName}</span>
                                     </Link> :
-                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                    <Link to={'/u/'+person.user.id} style={{color: 'inherit'}}>
                                         <Avatar /*size="large"*/ style={{ verticalAlign: 'middle' }}>N</Avatar>
                                         <span style={{textAlign:'center','marginLeft':10}}>No name</span>
                                     </Link>
@@ -104,6 +105,7 @@ class Motivators extends React.Component {
                         </List.Item>
                     )}
             />: <div className="ant-list-empty-text">No Motivators</div>}
+            </div>
             <Modal
                 title="Invite motivators"
                 visible={this.state.visible}

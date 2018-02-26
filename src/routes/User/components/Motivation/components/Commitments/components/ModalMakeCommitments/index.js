@@ -41,7 +41,7 @@ class ModalMakeCommitments extends React.Component {
 
         let selectItem =[];
         info.forEach(item=>{
-            selectItem.push(  <Option key={item.id} value={item.title}>{item.title}</Option>)
+            selectItem.push(  <Option key={item.id} value={item.plan.title}>{item.plan.title}</Option>)
         })
 
         return  (
