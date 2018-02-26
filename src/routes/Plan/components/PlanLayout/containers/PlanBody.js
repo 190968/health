@@ -27,7 +27,6 @@ export const PLAN_BODY_QUERY = gql`
                     ...PlanElement,
                 }
             }
-
             activities(date:$date) {
                 id
                 title
@@ -35,8 +34,7 @@ export const PLAN_BODY_QUERY = gql`
                 elements {
                     ...PlanElement,
                 }
-            }
-            
+            }            
             intro {
                  ...PlanElement,
             }

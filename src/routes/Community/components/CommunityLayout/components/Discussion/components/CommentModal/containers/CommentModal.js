@@ -21,10 +21,53 @@ import CommentModal from '../components/'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-
+const DISCUSSION  = gql`
+ query GET_DISCUSSION($id:UID) {
+   user{
+    id
+  }
+    discussion(id:$id) {
+         id
+         title
+         text
+         createdAt
+         category {
+           id
+           isJoined
+           canJoin
+           name
+         }
+         author {
+            id
+         }
+         views
+         replies {
+              totalCount
+              edges{
+                    id
+                    text
+                    date
+                    createdAt
+                    isImportant
+                    unread
+                    replies {
+                      totalCount
+                      edges{
+                            id
+                            text
+                            date
+                            createdAt
+                            isImportant
+                            unread
+                      }
+                  }    
+              }
+          }      
+    }
+}
+`;
 const discussionReply = gql`
    mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {
-
   discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
          id
          text
@@ -33,7 +76,6 @@ const discussionReply = gql`
     unread
        }
 }
-
 `;
 
 const withMutation = graphql(discussionReply, {
@@ -45,10 +87,12 @@ const withMutation = graphql(discussionReply, {
                     message: text,
                     parentMessageId:parentMessageId
                 },
-                // refetchQueries: [{
-                //     query: DISCUSSION,
-                //     variables: {id: ownProps.match.params.id}
-                // }],
+                refetchQueries: [{
+                    query: DISCUSSION,
+                    variables: {id: id}
+                }],
+            }).then(({data})=>{
+                ownProps.unshowModal();
             })
         },
     }),
