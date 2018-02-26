@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 
 
 const Medications_SUMMARY = gql`
-query GET_MEDICATIONS_SUMMARY($userId: ID!, $date: Date) {
+query GET_MEDICATIONS_SUMMARY($userId: UID!, $date: Date) {
             medicationPlan(userId: $userId, date: $date) {
                 id,
                 summary (date:$date)  {

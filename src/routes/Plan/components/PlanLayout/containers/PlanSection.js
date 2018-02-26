@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 
 const reportOnLesson = gql`
-    mutation sectionReport($id: ID!, $upid: ID! $date: Date!) {
+    mutation sectionReport($id: UID!, $upid: UID! $date: Date!) {
         sectionComplete(id:$id, upid:$upid, date:$date) {
              id
              completed(date:$date, upid:$upid)

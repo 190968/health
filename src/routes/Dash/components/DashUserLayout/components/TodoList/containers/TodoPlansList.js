@@ -22,7 +22,7 @@ const TodoPlansListWithQuery = graphql(
         options: (ownProps) => ({
             skip: !ownProps.ready,
             variables: {
-                user_id:ownProps.userId,
+                user_id: ownProps.userId,
                 status: 'active'
             },
             fetchPolicy:  'cache-only'

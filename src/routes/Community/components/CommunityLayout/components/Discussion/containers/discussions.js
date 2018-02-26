@@ -21,7 +21,7 @@ import gql from 'graphql-tag';
 import {withRouter} from "react-router-dom";
 // import {MedicationPlan} from "../../PlansList/components/MedicationPlan/containers";
 const DISCUSSION  = gql`
- query GET_DISCUSSION($id:ID) {
+ query GET_DISCUSSION($id:UID) {
    user{
     id
   }
@@ -66,7 +66,7 @@ const DISCUSSION  = gql`
 }
 `;
 const discussionReply = gql`
-   mutation discussionReply($id:ID!,$parentMessageId:ID,$message:String!) {
+   mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {
 
   discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
          id
@@ -79,7 +79,7 @@ const discussionReply = gql`
 
 `;
 const discussionDelete = gql`
-  mutation discussionDelete($id:ID!) {
+  mutation discussionDelete($id:UID!) {
 
   discussionDelete(id:$id) 
 }

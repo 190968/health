@@ -8,13 +8,15 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const PLANS_LIST_QUERY = gql`    
-    query GET_USER_PLANS ($user_id: ID, $status:UserPlanStatusEnum)  {
+    query GET_USER_PLANS ($user_id:UID, $status:UserPlanStatusEnum)  {
             user (id:$user_id) {
               id
               plans (status: $status)  {
-                  ...PlanCardInfo
-                  upid
-                  progress
+                  id
+                  plan {
+                    ...PlanCardInfo
+                    progress
+                  }
               }
             }
     }

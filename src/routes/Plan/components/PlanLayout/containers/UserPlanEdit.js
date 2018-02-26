@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import { message } from 'antd';
 
 const USER_PLAN_INFO = gql`
-    query GET_USER_PLAN_SETTINGS ($upid: ID!) {
+    query GET_USER_PLAN_SETTINGS ($upid: UID!) {
         userPlan (upid: $upid) {
             id
             startDate
@@ -42,7 +42,7 @@ const UserPlanEditWithQuery = graphql(
 
 
 const updatePlan = gql`
-    mutation userPlanUpdate($upid:ID!, $input: UserPlanInput!) {
+    mutation userPlanUpdate($upid:UID!, $input: UserPlanInput!) {
         userPlanUpdate(upid:$upid, input:$input) {
             id
             startDate

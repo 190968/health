@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const getPlanMutation = gql`
-    mutation getPlan($id: ID!, $input:UserPlanInput!){
+    mutation getPlan($id: UID!, $input:UserPlanInput!){
         getPlan(id:$id, input:$input) {
             id
         }

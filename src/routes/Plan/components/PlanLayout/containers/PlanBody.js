@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 
 
 export const PLAN_BODY_QUERY = gql`
-    query GET_PLAN_BODY ($id: ID!, $upid: ID!, $date: Date!) {
+    query GET_PLAN_BODY ($id: UID!, $upid: UID!, $date: Date!) {
         plan (id: $id) {
             ...PlanCardInfo,
             upid,

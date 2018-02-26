@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const TrackerSummaryQuery = gql`    
-    query GetTrackerSummary ($id: ID!, $userId:ID!, $date: Date!)  {
+    query GetTrackerSummary ($id: UID!, $userId:UID!, $date: Date!)  {
         trackerMeasurement(id: $id) {
             id
             summary (date:$date, userId:$userId)  {

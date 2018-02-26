@@ -6,7 +6,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
 export const BiometricPlanQuery = gql`
-    query GET_BIOMETRIC_PLAN ($user_id: ID!, $date: Date)  {
+    query GET_BIOMETRIC_PLAN ($user_id: UID!, $date: Date)  {
             biometricPlan (userId: $user_id) {
                 id
                 upid
@@ -80,7 +80,7 @@ const BiometricPlanBodyWithQuery = graphql(
 
 
 const deleteTracker = gql`
-    mutation trackerDelete($id: ID!, $uid: ID!) {
+    mutation trackerDelete($id: UID!, $uid: UID!) {
         trackerDelete(id:$id, uid: $uid)
     }
 `;

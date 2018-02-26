@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const trackersList = gql`
-    query GET_TRACKERS_LIST ($userId: ID!, $search: String)  {
+    query GET_TRACKERS_LIST ($userId: UID!, $search: String)  {
             trackersList (userId: $userId, search: $search) {
                 id
                 label

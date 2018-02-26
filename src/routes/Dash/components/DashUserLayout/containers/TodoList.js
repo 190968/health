@@ -7,13 +7,15 @@ import Plan from '../../../../Plan/components/Plan';
 
 // Query for grabbing everything for the dashboard items
 export const DASH_QUERY = gql`
-    query GET_DASH_TODO ($user_id: ID!, $status: UserPlanStatusEnum)  {
+    query GET_DASH_TODO ($user_id: UID!, $status: UserPlanStatusEnum)  {
         user (id:$user_id) {
             id
             plans (status: $status) {
-                ...PlanCardInfo
-                upid
-                progress
+                id
+                plan {
+                    ...PlanCardInfo
+                    progress
+                }
             }
         }
         medicationPlan (userId: $user_id) {

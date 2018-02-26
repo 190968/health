@@ -8,7 +8,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const QUERY = gql`
-    query GET_USER_PLANS ($user_id: ID)  {
+    query GET_USER_PLANS ($user_id:UID)  {
         account {
             plans (user_id: $user_id)  {
                 ...PlanCardInfo

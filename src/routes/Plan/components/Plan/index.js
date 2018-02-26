@@ -144,7 +144,7 @@ export class Plan extends React.PureComponent {
     let description = this.props.info.description;
     var img = this.props.info.thumb.large;
     var id = this.props.info.id;
-    var upid = this.props.info.upid || 0;
+    var upid = this.props.upid || 0;
     var ribbon = this.props.info.ribbon || '';
 
     let link = '/planstore/plan/'+id;
@@ -171,7 +171,7 @@ export class Plan extends React.PureComponent {
 
                 <Card.Meta
                     title={<Tooltip title={name}>{name.substring(0, limit)}</Tooltip>}
-                    description={<Truncate lines={1}>{description}</Truncate>}
+                    description={<Truncate lines={2}>{description}</Truncate>}
                 />
 
 

@@ -9,7 +9,7 @@ import Plan from '../../../../Plan/components/Plan';
 
 /*
 const GET_ELEMENT = gql`
-    query GET_ELEMENT ($id: ID!, $date: Date) {
+    query GET_ELEMENT ($id: UID!, $date: Date) {
         PlanElement (id: $id, date:$date) {
         ...PlanElement
         }
@@ -85,7 +85,7 @@ const PlanElementWithQuery = graphql(
 )(PlanElement);*/
 
 const reportOnField = gql`
-    mutation planFieldReport($id: ID!, $date: Date!, $value: [String], $upid: ID!) {
+    mutation planFieldReport($id: UID!, $date: Date!, $value: [String], $upid: UID!) {
         planElementReport(id:$id, upid: $upid, date: $date, value: $value) {
                 ...PlanElement
         }
