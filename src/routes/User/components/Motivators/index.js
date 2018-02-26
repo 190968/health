@@ -77,10 +77,11 @@ class Motivators extends React.Component {
         return(
 
 
-        <Card  style={{height:250}} title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
+        <Card  title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
                extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
-               className="demo-infinite-container"
+
         >
+            <div  style={{height:250}} className="demo-infinite-container">
             {edges.length > 0 ?
                 <List
                     split={false}
@@ -105,6 +106,7 @@ class Motivators extends React.Component {
                         </List.Item>
                     )}
             />: <div className="ant-list-empty-text">No Motivators</div>}
+            </div>
             <Modal
                 title="Invite motivators"
                 visible={this.state.visible}
