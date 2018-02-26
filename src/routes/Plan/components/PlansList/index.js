@@ -10,6 +10,10 @@ import {
 
 
 export class PlansList extends React.Component {
+
+    static defaultProps = {
+        list: false
+    }
     constructor(props) {
         super(props);
         this.handleStatus = this.handleStatus.bind(this);
@@ -25,7 +29,7 @@ export class PlansList extends React.Component {
 
   render () {
     const {
-      plans, user_id, loading
+      plans, user_id, loading, list
     } = this.props;
 
     if (loading) {
@@ -50,7 +54,18 @@ export class PlansList extends React.Component {
                   </Button>
               </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add ActionPlan" />}><Button size="small"><Link to={'/planstore'}><Icon type="plus" /></Link></Button></Tooltip></Button.Group>}
         >
-            {plans.length > 0 ? <List
+            {plans.length > 0 ? (list ?
+                <List
+                    split={false}
+                    pagination={false}
+                    dataSource={plans}
+                    renderItem={product => (
+                        <List.Item>
+                            <PlanWidget info={product.plan} upid={product.id} key={product.id} user_id={user_id}/>
+                        </List.Item>
+                    )}
+                />
+                : <List
                 split={false}
                 grid={{gutter: 15, xs: 1, sm: 2, md: 2, lg: 3, xl: 4}}
                 pagination={false}
@@ -60,7 +75,7 @@ export class PlansList extends React.Component {
                         <PlanWidget info={product.plan} upid={product.id} key={product.id} user_id={user_id}/>
                     </List.Item>
                 )}
-            /> : <div className="ant-list-empty-text">No ActionPlans</div>}
+            />) : <div className="ant-list-empty-text">No ActionPlans</div>}
         </Card>);
   }
 }

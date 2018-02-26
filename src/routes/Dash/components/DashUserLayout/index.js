@@ -56,7 +56,7 @@ export class DashUserLayout extends React.Component {
                    />
                </Col>
                <Col xs={24} md={14} lg={15} xl={17}>
-                   <PlansList ready={!loading} date={date} user_id={user_id} />
+                   <PlansList ready={!loading} date={date} user_id={user_id} list />
                    <MedicationPlan ready={!loading} date={date} user_id={user_id} />
                    <BiometricPlan ready={!loading} date={date} user_id={user_id} />
                </Col>
