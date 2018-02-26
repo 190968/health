@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/Communities';
 import Plan from  './components/PlansList';

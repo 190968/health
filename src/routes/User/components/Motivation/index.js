@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 10.02.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Medications from './components/AdheranseSummary/components/Medications'
 import Actionplans from './components/AdheranseSummary/components/Actionplans'
 import Trackers from './components/AdheranseSummary/components/Trackers'

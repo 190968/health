@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 08.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 import {
@@ -80,8 +80,9 @@ class Motivators extends React.Component {
                extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
 
         >
-            <div  style={{height:250}} className="demo-infinite-container">
+
             {edges.length > 0 ?
+                <div  style={{height:250}} className="demo-infinite-container">
                 <List
                     split={false}
                     loading={loading}
@@ -104,8 +105,8 @@ class Motivators extends React.Component {
 
                         </List.Item>
                     )}
-            />: <div className="ant-list-empty-text">No Motivators</div>}
-            </div>
+            /> </div>: <div className="ant-list-empty-text">No Motivators</div>}
+
             <Modal
                 title="Invite motivators"
                 visible={this.state.visible}

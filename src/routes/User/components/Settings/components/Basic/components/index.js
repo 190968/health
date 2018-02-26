@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 06.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import AddressForm from '../../../../../../../components/AddressForm';
 import PhoneForm from '../../../../../../../components/PhoneForm';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import styles from './index.less';
 import moment from 'moment';
 import {Avatar, Col, Row, Card, Button} from 'antd';
@@ -15,12 +16,11 @@ class ChatInfo extends React.Component {
         const {info} = this.props;
         const {subject,participants, createdAt} = info;
 
-
         let details = [
             ['Subject',subject],
             ['Created At',moment(createdAt).fromNow()],
             ['Participants', <div>{participants.edges.map((info, i) => {
-            <div key={i}>{info.fullname}</div>
+                return <div key={i}><Link to={'/u/'+info.id}>{info.fullName}</Link></div>
         })}</div>]
         ];
 

@@ -194,9 +194,10 @@ export class PlanHeader extends React.Component {
         return (
                 <Card
                     title={plan.title}
+                    bodyStyle={{margin:0, padding:0}}
                     /*cover={<img alt={plan.title} height={300} src={img} />}*/
                     actions={[<div><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}> <Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip><FormattedDate
-                        value={new Date(this.state.date)}
+                        value={moment(this.state.date)}
                         year='numeric'
                         month='long'
                         day='2-digit'
@@ -205,14 +206,14 @@ export class PlanHeader extends React.Component {
                     </Dropdown>,
                         <Popover content={<div>Messages here</div>} title="Comments" trigger="click"><Icon type="message" /></Popover>]}
                 >
-                    <Row>
+                    {11===5 && <Row>
                         <Col md={16}>
                             <Meta
                                 avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                 title={user.firstName + ' '+ user.lastName}
                                 description={<FormattedMessage id="userplan.joined" defaultMessage="From {date}" values={{
                                     date: <FormattedDate
-                                        value={new Date(info.joinDate)}
+                                        value={moment(info.joinDate)}
                                         year='numeric'
                                         month='long'
                                         day='2-digit'
@@ -226,7 +227,7 @@ export class PlanHeader extends React.Component {
         <Tooltip />
     </RadialBarChart>*/}
                         </Col>
-                    </Row>
+                    </Row>}
 
                     {this.state.openEditModal &&
                     <UserPlanEdit id={info.id} info={info} plan={plan}

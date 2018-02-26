@@ -107,6 +107,7 @@ const mapStateToProps = (state) => {
 
 
   return {
+      activeUid: state.user.info.id
   };
 };
 

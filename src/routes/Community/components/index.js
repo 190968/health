@@ -55,9 +55,9 @@ class Community extends React.Component {
     render() {
         return (
             <div>
-                <Row style={{marginBottom: 10}}>
+                {/*<Row style={{marginBottom: 10}}>
                     <Breadcrumbs breadcrubsHandle={this.getBreadcrumbs}  />
-                </Row>
+                </Row>*/}
                 <Route exact path='/community' component={AsyncCategoryDash()} />
                 <Route exact path="/community/discussion/:id" component={AsyncCommynityDiscussion({handleBreadcrumbChange:this.handleBreadcrumbChange})} />
                 <Route exact path="/community/:id" component={AsyncCategoryView({handleBreadcrumbChange:this.handleBreadcrumbChange})}/>

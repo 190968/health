@@ -4,9 +4,8 @@ import TodoList from './containers/TodoList';
 import PlansList from '../../../Plan/containers/PlansList';
 import MedicationPlan from '../../../Plan/components/MedicationPlan/containers';
 import BiometricPlan from '../../../Plan/components/BiometricPlan/containers';
-import Motivators from '../../../User/containers/motivatorsContainer';
-import CareTeam from '../../../User/containers/careTeamContainer';
-import Family from '../../../User/containers/familyContainer';
+import CalendarWidget from '../../../Calendar/components/Widget';
+
 
 import { Button,Icon, Alert, Row, Col, Calendar,Card } from 'antd';
 
@@ -55,22 +54,14 @@ export class DashUserLayout extends React.Component {
                    />
                </Col>
                <Col xs={24} md={14} lg={15} xl={17}>
-                   <PlansList ready={!loading} date={date} user_id={user_id} />
+                   <PlansList ready={!loading} date={date} user_id={user_id} list />
                    <MedicationPlan ready={!loading} date={date} user_id={user_id} />
                    <BiometricPlan ready={!loading} date={date} user_id={user_id} />
                </Col>
                <Col xs={24} md={10} lg={9} xl={7}>
                    <TodoList ready={!loading} userId={user_id} date={date} />
 
-
-                         <Card title="Health Calendar"
-                               extra={<Button.Group><Button size={"small"} ><Icon type="calendar" /></Button><Button size={"small"} ><Icon type="plus" /></Button></Button.Group>}
-                         >
-                             <Calendar fullscreen={false}  />
-                         </Card>
-                       <Family user_id={user_id} />
-                       <CareTeam user_id={user_id} />
-                       <Motivators user_id={user_id} />
+                   <CalendarWidget ready={!loading} date={date} user_id={user_id} />
 
                </Col>
            </Row>

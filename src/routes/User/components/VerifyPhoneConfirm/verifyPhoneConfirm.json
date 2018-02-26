@@ -1,8 +1,8 @@
 {
   "verifyPhoneConfirm": {
     "id": "user.verifyphone.verifyphoneConfirm",
-    "defaultMessage": "Verify Phone Confirm",
-    "description": "Verify Phone Confirm"
+    "defaultMessage": "Verify Phone",
+    "description": "Verify Phone"
   },
   "send": {
     "id": "user.verifyphone.send",

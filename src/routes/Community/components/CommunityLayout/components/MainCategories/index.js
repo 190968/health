@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import Search from  '../Category/containers/Search.js';
@@ -38,7 +38,7 @@ class MainCategories extends React.Component{
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 6, xl: 6}}
+                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 4}}
                         dataSource={info}
                         renderItem={item => (
                             <List.Item key={item.id}>

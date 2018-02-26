@@ -53,7 +53,7 @@ export default class RightMenu extends React.Component {
 
         // check if we have other roles - add switcher
         const {possibleNetworkRoles, possibleProviderRoles, currentRole} = account;
-        const haveOtherRoles = possibleNetworkRoles.length > 0 || possibleProviderRoles.length > 0;
+        const haveOtherRoles = possibleNetworkRoles.length > 1 || possibleProviderRoles.length > 1;
         const roles = possibleNetworkRoles;
         let user_menu_items = [];
         let defaultMenu = [];

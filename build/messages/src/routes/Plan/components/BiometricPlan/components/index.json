@@ -13,8 +13,8 @@
     "defaultMessage": "Next day"
   },
   {
-    "id": "medication.add",
-    "defaultMessage": "Add Medication"
+    "id": "tracker.add",
+    "defaultMessage": "Add Tracker"
   },
   {
     "id": "plan.tracker.add",

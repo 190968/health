@@ -10,7 +10,7 @@ export class TrackerField extends React.Component {
         const {report} = this.props;
         this.state = {
             isReported: false,
-            value: report && report.value || null
+            value: (report && report.value) || null
         };
         this.handleChange = this.handleChange.bind(this);
         this.triggerChange = this.triggerChange.bind(this);

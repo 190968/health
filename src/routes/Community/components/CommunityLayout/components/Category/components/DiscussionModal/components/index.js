@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Form,Input,Modal,Card} from 'antd';
 import { gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";

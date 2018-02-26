@@ -1,5 +1,5 @@
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Form,Checkbox,Modal,Input, AutoComplete, message} from 'antd';
 import {
     injectIntl

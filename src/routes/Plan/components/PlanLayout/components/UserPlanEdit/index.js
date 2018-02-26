@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 21.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Modal, DatePicker, Form ,Spin, Col, Radio, Popover } from 'antd';
 import moment from "moment/moment";
 import {FormattedDate} from 'react-intl';

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 import {Modal, Form, Icon, Input, Button, TimePicker, Select, Spin, Tooltip, Col } from 'antd';
 const FormItem = Form.Item;

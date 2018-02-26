@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 06.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { withApollo } from 'react-apollo'
 import {Tabs, Card} from 'antd';
 import Loadable from '../../../../../components/Loadable';

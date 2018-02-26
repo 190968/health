@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Select } from 'antd';
 const {Option} = Select;
 class SelectPlans extends React.Component {

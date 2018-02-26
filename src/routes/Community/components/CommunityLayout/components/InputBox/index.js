@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 31.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Form,Row, Col,Button,Input,Icon,Avatar } from 'antd';
 import messages from './messages';
 

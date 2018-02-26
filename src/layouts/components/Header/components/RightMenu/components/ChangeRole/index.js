@@ -1,5 +1,5 @@
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Form,Select,Modal, message} from 'antd';
 import {withRouter} from 'react-router-dom'
 import {

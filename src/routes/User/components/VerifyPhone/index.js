@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 09.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Card, Form, Select, Input,Button } from 'antd';
 import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {

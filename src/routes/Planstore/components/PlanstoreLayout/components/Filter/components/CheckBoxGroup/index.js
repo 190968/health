@@ -3,6 +3,12 @@ import React from 'react';
 import {Checkbox} from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
+const vertStyle = {
+    display: 'block',
+    /*height: '30px',
+    lineHeight: '30px',*/
+    marginLeft: 0,
+};
 export default  class CheckBoxGroup extends React.PureComponent {
 
     constructor(props){
@@ -39,9 +45,17 @@ export default  class CheckBoxGroup extends React.PureComponent {
         })));
       */
 
+        let plainOptions = [];
+        item.items.map((option) => {
+            const coid = option.value;
+            const name = option.label;
+
+            plainOptions.push(<Checkbox key={coid} value={coid} style={vertStyle} >{name}</Checkbox>);
+        });
+
         return (
                 <div>
-                    <CheckboxGroup options={item.items}  onChange={this.handleChange} />
+                    <CheckboxGroup onChange={this.handleChange} >{plainOptions}</CheckboxGroup>
                 </div>
         )
     }

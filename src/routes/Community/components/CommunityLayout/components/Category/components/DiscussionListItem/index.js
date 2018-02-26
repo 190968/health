@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Icon,List,Avatar } from 'antd';
 import moment from 'moment';
 import { withApollo, gql } from 'react-apollo'

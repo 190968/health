@@ -1,9 +1,9 @@
 import React from 'react'
-import {Icon, Row, Col, Popconfirm} from 'antd';
+import {Tooltip, Icon, Row, Col, Popconfirm, Popover} from 'antd';
 import {
     FormattedMessage,
 } from 'react-intl';
-
+import styles from './index.less';
 import MedicationEditForm from '../../MedicationEdit/containers'
 import MedicationChartPopup from '../../MedicationChartPopup';
 import MedicationFullDetails from '../../../containers/MedicationFullDetails';
@@ -49,6 +49,14 @@ export class MedicationInfo extends React.PureComponent {
         const {id, drug} = this.props.info;
 
         const {name, dosage} = drug;
+
+        const content = <div>
+            <Tooltip title="Details"><Icon type="info-circle-o" onClick={this.toggleDetails}/></Tooltip> <MedicationChartPopup
+            item={this.props.info} userId={user_id} date={date} label="Weekly" /> <Tooltip title="Edit"><Icon onClick={() => this.iconClick()}
+                                        type="edit"/></Tooltip> <Tooltip title="Delete"><Popconfirm
+            title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete}
+            okText="Yes" cancelText="No"><Icon type="delete"/></Popconfirm></Tooltip>
+        </div>;
         return (
             <div>
 
@@ -67,28 +75,14 @@ export class MedicationInfo extends React.PureComponent {
 
 
                 <Row>
-                    <Col span={2}>
-                        <Icon type="video-camera"/>
+                    <Col>
+                        <Popover content={content} trigger="hover">{name}</Popover> <Icon type="video-camera"/> <Icon type="camera-o"/>
                     </Col>
-
-
-                    <Col span={22}>
-                        {name} <Icon type="info-circle-o" style={{marginLeft:10}} onClick={this.toggleDetails}/> <MedicationChartPopup
-                        item={this.props.info} userId={user_id} date={date} label="Weekly" /> <Icon onClick={() => this.iconClick()}
-                                                                                    type="edit"/> <Popconfirm
-                        title="Are you sure you want to delete this medication?" onConfirm={this.handleDelete}
-                        okText="Yes" cancelText="No"><Icon type="delete"/></Popconfirm>
-                    </Col>
-
-                </Row>
-                <Row style={{fontSize: '0.8em'}}>
-                    <Col span={2}>
-                        <Icon type="camera-o"/>
-                    </Col>
-                    <Col span={22}>
+                    <Col style={{fontSize: '0.8em'}}>
                         {dosage}
                     </Col>
                 </Row>
+
             </div>
         )
     }

@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 08.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 import './index.css'
 import {

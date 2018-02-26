@@ -1,17 +1,23 @@
-/**
- * Created by Павел on 12.02.2018.
- */
-import React, { PropTypes } from 'react';
-import {Layout, Avatar,Icon,Col,Card,Progress } from 'antd';
-const { Content, Sider } = Layout;
+import React from 'react';
+import moment from 'moment';
+import {Row, Avatar,Icon,Col,Card,Progress } from 'antd';
+import PlansList from '../../../Plan/containers/PlansList';
+import Promises from '../../components/Motivation/containers/Promises.js';
+import Commitments from '../../components/Motivation/containers/Commitments.js';
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
 };
 class ViewProfile extends React.Component {
+
+    static defaultProps = {
+        date: moment()
+    }
     render() {
 
-        const{info,loading}=this.props;
+        const{info,loading, match, date}=this.props;
+
+        const uid = match.params.uid;
         if (loading) {
             return  <Card loading > </Card>;
         }
@@ -26,23 +32,26 @@ class ViewProfile extends React.Component {
         let remainingPoint = amount-points;
         const percent = Math.round(points/amount*100);
         return  (
-        <Layout>
-            <Content style={{marginLeft:50,marginRight:10}}>
+
+
+            <Row gutter={15}>
+
+                <Col xs={24} md={14} lg={15} xl={17}>
                     <Card style={{marginBottom:15}}>
                         <Col span={8}>
                             <center>
-                            <Avatar style={{width:100,height:100,borderRadius:50}} />
+                                <Avatar style={{width:100,height:100,borderRadius:50}} />
 
-                            <p>{info.fullName}</p>
-                                </center>
+                                <p>{info.fullName}</p>
+                            </center>
                         </Col>
                         <Col span={8}>
                             <center>
                                 <Icon type="star" style={{ fontSize: 40, color: '#FFFF00' }} />
-                                <Progress percent={percent} />
                             </center>
-                            <center><span><h2>{points}</h2></span></center>
-                            <center><span>{remainingPoint} Total Point</span></center>
+                                <Progress percent={percent} />
+
+                            <center><div><h2>{points}</h2></div><div>{remainingPoint} Total Point</div></center>
 
                         </Col>
                         <Col span={8}>
@@ -50,25 +59,18 @@ class ViewProfile extends React.Component {
                                 <Progress type="dashboard" percent={level} />
                             </center>
                         </Col>
-                </Card>
-                <Card title={"ACTIONPLANS YOU MOTIVATE "+info.fullName} style={{marginBottom:15}} >
-sv
-                </Card>
-                <Card title={"COMMUNICATION WITH "+info.fullName} style={{marginRight:10,marginBottom:15}} >
-sdvs
-                </Card>
-            </Content>
-            <Sider>
+                    </Card>
+                    <PlansList title={"ActionPlans you Motivate "+info.fullName} ready={!loading} date={date} user_id={uid} list />
 
-                <Card title={"MY PROMISES"} style={{marginBottom:15}} >
-                    sv
-                </Card>
-                <Card title={"COMMITMENTS"} style={{marginBottom:15}}>
-                    sv
-                </Card>
-            </Sider>
+                </Col>
+                <Col xs={24} md={10} lg={9} xl={7}>
+                    <Promises userId={uid} />
+                    <Commitments userId={uid} />
+                </Col>
+            </Row>
 
-</Layout>
+
+
         );
     }
 }

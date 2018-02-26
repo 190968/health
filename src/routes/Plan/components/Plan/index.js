@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tag,Card, Tooltip } from 'antd';
+import { Row, Col,Tag,Card, Tooltip } from 'antd';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
@@ -134,12 +134,18 @@ export class Plan extends React.PureComponent {
     `
   }
 
+
+  static defaultProps = {
+      list:false
+  }
   static propTypes = {
     //plan: propType(Plan.fragments.plan).isRequired,
     //handleCancel: React.PropTypes.func.isRequired,
   }
 
   render() {
+
+    const list = this.props.list;
     var name = this.props.info.title;
     let description = this.props.info.description;
     var img = this.props.info.thumb.large;
@@ -157,6 +163,19 @@ export class Plan extends React.PureComponent {
           //description = '';
           height = 120;
           limit = 15;
+      }
+
+      if (list) {
+          return (
+              <Link style={{width:'100%'}}
+                  to={link}
+              >
+                  <Row>
+                      <Col span={5}><div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} width={'100%'} src={img} /></div></Col>
+                      <Col offset={1} span={18}>{name}</Col>
+                  </Row>
+              </Link>
+          );
       }
       //description = '//return (<div>aaa</div>); //handleCancel: React.PropTypes.func.isRequired';
     return (

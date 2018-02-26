@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 import {Input,Col,Select } from 'antd';
 import {
