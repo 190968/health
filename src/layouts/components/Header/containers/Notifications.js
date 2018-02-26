@@ -48,7 +48,7 @@ export const NOTIFICATIONS_QUERY  = gql`
 
 const withQuery = graphql(NOTIFICATIONS_QUERY, {
     options: (ownProps) => {
-        //console.log(ownProps);
+
         return {
             variables: {
                 cursors: {after: ''/*ownProps.lastCursor*/}
@@ -62,7 +62,7 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
     props: ({ ownProps, data }) => {
         if (!data.loading) {
             const {edges, totalCount, pageInfo: {endCursor}} = data.account.user.notifications;
-            //console.log(edges.length < totalCount);
+
             return {
                 notifications: edges,
                 endCursor: endCursor,
@@ -70,7 +70,6 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
                 totalCount:totalCount,
                 hasMore: edges.length < totalCount,
                 loadMore(endCursor, callback) {
-                    //console.log(date);
                     return data.fetchMore({
                         variables: {
                             cursors: {before: endCursor, last:10}

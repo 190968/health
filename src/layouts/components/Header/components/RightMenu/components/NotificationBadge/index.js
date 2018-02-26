@@ -41,8 +41,7 @@ const TabPane = Tabs.TabPane;
 
     componentDidUpdate(prevProps) {
 
-        //console.log(prevProps);
-        //console.log(this.props);
+
         if (!this.props.loading) {
             const {newCursor, lastCursor, newNotificationsNum, totalNewNotifications} = this.props;
 

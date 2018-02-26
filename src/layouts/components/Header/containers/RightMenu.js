@@ -3,8 +3,6 @@ import RightMenu from '../components/RightMenu';
 
 
 const mapStateToProps = (state) => {
-    //console.log(state.network);
-    //console.log(state.user);
     return {
         // view store:
         // currentView:  state.views.currentView,

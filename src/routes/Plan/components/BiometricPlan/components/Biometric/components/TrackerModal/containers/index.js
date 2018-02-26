@@ -9,7 +9,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from "antd/lib/index";
 import {BiometricPlanQuery} from "../../../../../containers";
-import Biometric from "../../index";
+
 
 //import { compose } from 'react-apollo';
 
@@ -99,7 +99,7 @@ const addMutation=gql`
 const withQuery = graphql(tracker,
     {
         options: (ownProps) => {
-        //console.log(ownProps);
+
         return   {
             variables: {
                 user_id: ownProps.userId,
@@ -110,7 +110,7 @@ const withQuery = graphql(tracker,
             fetchPolicy: 'network-only'
         }},
         props: ({ ownProps, data }) => {
-            //console.log(data);
+
             if (!data.loading) {
                 return {
                     info: data.tracker,
@@ -133,7 +133,7 @@ const withMutation = graphql(updateTrackerMutate, {
                 variables: {id:id, userId:ownProps.userId, input: {details:input}},
 
                 update: (store, { data: { trackerUpdate } }) => {
-                    //console.log(trackerUpdate);
+
                     // Read the data from our cache for this query.
                     /*const data = store.readQuery({
                         query: tracker,
@@ -146,7 +146,7 @@ const withMutation = graphql(updateTrackerMutate, {
                         // add new to the list
                     }
 
-                    // console.log(data);
+
                     // Add our comment from the mutation to the end.
                     //data = medicationUpdate;
                     // Write our data back to the cache.
@@ -168,7 +168,7 @@ const withMutation = graphql(updateTrackerMutate, {
                                 user_id: ownProps.userId
                             }
                         });
-                        //console.log(trackerUpdate, 'need to append');
+
                     }
                 },
             }).then((data) => {
@@ -206,10 +206,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     //     values.birthday = values.birthday.format("YYYY-MM-DD")
     //     values.phone = [values.prefix, values.phone];
     //     delete values.prefix;
-    //     console.log(values);
+
     //     ownProps.updateInfo(values).then(({data}) => {
-    //         console.log("----settings----");
-    //         console.log(data);
+
     //     })
     // },
 });

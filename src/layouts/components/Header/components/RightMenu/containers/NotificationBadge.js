@@ -37,7 +37,7 @@ export const BADGE_NOTIFICATIONS_QUERY  = gql`
 
 const withQuery = graphql(BADGE_NOTIFICATIONS_QUERY, {
     options: (ownProps) => {
-        //console.log(ownProps, 'Loading cursor')
+
         return {
             //skip: ownProps.loading,// skip query if loading
             variables: {
@@ -47,11 +47,10 @@ const withQuery = graphql(BADGE_NOTIFICATIONS_QUERY, {
         }
     },
     props: ({ ownProps, data }) => {
-        //console.log(ownProps);
-        //console.log(data);
+
         const newNotifications = data.account ? data.account.user.notifications : [];
         const totalNewNotifications =  data.account ? data.account.user.notifications.totalCount : 0;
-        //console.log(totalNewNotifications, 'total');
+
         return {loading: data.loading, newNotifications:newNotifications, totalNewNotifications:totalNewNotifications}
     },
 });

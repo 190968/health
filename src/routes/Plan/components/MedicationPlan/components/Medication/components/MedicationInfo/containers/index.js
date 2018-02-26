@@ -31,7 +31,7 @@ const withMutation = graphql(deleteMed, {
                     // Read the data from our cache for this query.
                     const data = store.readQuery({ query: deleteMed });
 
-                    console.log(data);
+
                     // Add our comment from the mutation to the end.
                     //data.comments.push(medicationDelete);
                     // Write our data back to the cache.
@@ -56,12 +56,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         // delete medication
         ownProps.medicationDelete(med_id, uid, ownProps.date)
             .then(({data}) => {
-                //console.log(data);
+
 
                 message.warning('Deleted');
                 //const token = data.login.token;
                 //const user = data.login.user;
-                //console.log(data);
+
                 //ownProps.report.id = 0;
 
                 //toggleCoin();

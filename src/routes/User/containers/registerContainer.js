@@ -35,7 +35,7 @@ const withMutation = graphql(registerUser, {
 
 
                     //element.phoneConfirmed = verifyPhoneConfirm;
-                    //console.log(element);
+
                     store.writeFragment({
                         id: 'User:'+register.user.id,
                         fragment: LoginForm.fragments.user,
@@ -51,7 +51,7 @@ const withMutation = graphql(registerUser, {
 });
 
 const mapStateToProps = (state) => {
-    //console.log(state.user);
+
     return {
         // view store:
         //currentView:  state.views.currentView,
@@ -65,11 +65,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props, stopLoading) => {
         //dispatch(loginUserRequest({ email }));
-        //console.log(props);
+
         const{first_name,last_name,birthday,gender,email, password,password_repeat,phone} = props;
-        //console.log(birthday);
-        //var birth = birthday.substring(0,10);
-        //console.log(birth);
         ownProps.registerUser({firstName:first_name,lastName:last_name,birthday:birthday,gender:gender, email:email, password:password,password_repeat:password_repeat,phone })
             .then(({data}) => {
                 const token = data.register.token;
@@ -79,8 +76,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 //dispatch(setUserToken({token}));
                 dispatch(loginUserSuccess({token}));
                 stopLoading()
-              //  console.log("----registr----");
-                //console.log(data);
+
             }).catch((error) => {
                 stopLoading()
         });

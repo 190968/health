@@ -20,7 +20,7 @@ export default class MedicationChartPopup extends React.Component {
     };
 
     onVisibleChange(e) {
-        console.log(e);
+
     }
     showDate = (type) => {
         var dateTime = new Date(this.state.date);

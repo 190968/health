@@ -60,7 +60,7 @@ const withMutation = graphql(MAKECOMMITMENT,
     {
         props: ({ ownProps, mutate }) => ({
             makeCommitment: value => {
-                console.log(value);
+
                 return mutate({
                     variables:{
                         "id":"MTUzNTQ",
@@ -91,7 +91,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
         ownProps.makeCommitment(value).then(({data}) => {
-          console.log("-onSubmit-----------makeCommitment--------",data)
+
         })
     },
 });

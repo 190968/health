@@ -30,7 +30,7 @@ export default class TrackerChart extends React.Component {
         if (payload.length == 0) return null;
         const info = payload[0].payload || {};
         const date = info.date || '';
-        const value = this.getValue(info);//console.log(info);
+        const value = this.getValue(info);
         return (
             <div style={{backgroundColor: '#fff', padding: 5}}>{moment(date).format('M/D')} : {value}</div>
         );

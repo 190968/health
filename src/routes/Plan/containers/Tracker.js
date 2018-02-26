@@ -44,16 +44,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (ownProps.time) {
             new_report.time = ownProps.time;
         }*/
-        //console.log(new_report);
+
         //const input = {value:value,date:date};
         ownProps.trackerReport({report:report, list_id:list_id}, amid)
             .then(({data}) => {
 
                 message.success('Reported');
-                //console.log(data);
+
                 //const token = data.login.token;
                 //const user = data.login.user;
-                //console.log(data);
+
                 //ownProps.report.id = 0;
 
                 //toggleCoin();

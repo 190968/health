@@ -51,7 +51,7 @@ export default class MedicationReminders extends React.Component {
                 return;
             }
 
-            // console.log('Received values of form: ', values);
+
             // form.resetFields();
             // hide the modal
             this.setState({ showAdd: false });
@@ -153,7 +153,7 @@ const MedicationRemindersCreateForm = Form.create()(
 
 
         })
-        console.log(timesPerHour);
+
         //
         return (
             <Modal

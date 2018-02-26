@@ -11,7 +11,7 @@ export default class TodoTrackerItem extends React.PureComponent {
             progress,
             biometricPlan
         } = this.props;
-        console.log(this.props);
+
         if (biometricPlan.id === null) {
             return null;
         }

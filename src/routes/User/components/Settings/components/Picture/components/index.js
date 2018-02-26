@@ -32,7 +32,7 @@ uppy.use(Transloadit, {
     }
 })
 uppy.on('complete', (result) => {
-    console.log(result);
+
    // const url = result.successful[0].uploadURL
     /*store.dispatch({
         type: SET_USER_AVATAR_URL,

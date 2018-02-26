@@ -20,7 +20,7 @@ export default class RightMenu extends React.Component {
         };
     }
     updateLastNotification = (cursor) => {
-        //console.log(cursor, 'New cursor');
+
         this.setState({notificationsLastCursor: cursor});
     }
     toggle() {

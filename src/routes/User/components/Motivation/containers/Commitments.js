@@ -61,7 +61,6 @@ const withMutation = graphql(COMMITMENTS, {
 
     }),
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
                 info: data.user.motivation,

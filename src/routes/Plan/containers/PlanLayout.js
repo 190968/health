@@ -49,10 +49,9 @@ const PlanstorPlanLayoutWithQuery = graphql(
 
         }),
         props: ({ ownProps, data }) => {
-            //console.log(ownProps);
-            //console.log(CURRENT_PLANSTORE_PLAN);
+
             if (!data.loading) {
-                //console.log(ownProps);
+
 
                 return {
                     info: data.userPlan,

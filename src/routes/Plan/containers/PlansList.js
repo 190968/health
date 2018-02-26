@@ -42,8 +42,7 @@ const PlansListWithQuery = graphql(
     },
     props: ({ ownProps, data }) => {
       if (!data.loading) {
-        //console.log(ownProps);
-        //console.log(data);
+
         return {
           plans: data.user.plans,
           //modules: data.network.modules,
@@ -62,7 +61,7 @@ const PlansListWithQuery = graphql(
               });
           },
           loadMoreEntries() {
-            //console.log(ownProps.page);
+
             return data.fetchMore({
               // query: ... (you can specify a different query. FEED_QUERY is used by default)
               variables: {
@@ -73,7 +72,7 @@ const PlansListWithQuery = graphql(
               },
               updateQuery: (previousResult, {fetchMoreResult}) => {
                 if (!fetchMoreResult) { return previousResult; }
-                console.log(previousResult.planstore);
+
                  return fetchMoreResult;
                 return Object.assign({}, previousResult, {
                   // Append the new feed results to the old one

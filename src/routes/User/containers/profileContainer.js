@@ -56,7 +56,6 @@ const withQuery = graphql(GET_PROFILE, {
         }
     },
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
                 info: data.user,

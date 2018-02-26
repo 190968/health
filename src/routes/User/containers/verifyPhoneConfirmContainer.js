@@ -28,17 +28,17 @@ const withMutation = graphql(verifyPhoneConfirm, {
             return mutate({
                 variables: {code:input.code },
                 update: (store, { data: { verifyPhoneConfirm } }) => {
-                    //console.log(ownProps);
-                    //console.log('User:'+ownProps.userId);
+
+
                     let element = store.readFragment({
                         id: 'User:'+userId, // `id` is any id that could be returned by `dataIdFromObject`.
                         fragment: LoginForm.fragments.user,
                         fragmentName: 'UserInfo'
                     });
-                    console.log(element);
+
 
                     //element.phoneConfirmed = verifyPhoneConfirm;
-                    //console.log(element);
+
                     store.writeFragment({
                         id: 'User:'+userId,
                         fragment: LoginForm.fragments.user,
@@ -58,7 +58,7 @@ const withMutation = graphql(verifyPhoneConfirm, {
                             id: id,
                         }
                     });
-                    //console.log(data);
+
                     // Write our data back to the cache.
                     store.writeQuery({
                         query: UserQuery,
@@ -78,8 +78,7 @@ const withMutation = graphql(verifyPhoneConfirm, {
 });
 
 const mapStateToProps = (state) => {
-    console.log(state);
-    console.log(state.user.info.id);
+
     return {
         userId: state.user.info.id
     };
@@ -88,18 +87,18 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props, userId) => {
         const{code} = props;
-        //console.log(ownProps);
+
         ownProps.verifyPhoneConfirm({code:code }, userId)
             .then(({data}) => {
 
                 // update user info
                 dispatch(updatePhoneConfirm(data.verifyPhoneConfirm));
-                //console.log("----verifyPhoneConfirm----");
-                //console.log(data);
+
+
                 //ownProps.history.push('/');
 
             }).catch((error) => {
-            //console.log(error);
+
         });
     },
 });

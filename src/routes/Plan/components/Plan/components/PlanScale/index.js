@@ -16,8 +16,7 @@ export default class PlanScale extends React.PureComponent {
         reportValue: PropTypes.number
     };
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (nextProps.reports !== this.props.reports) {
             this.setState({value:nextProps.reports});
         }
@@ -27,7 +26,6 @@ export default class PlanScale extends React.PureComponent {
         const {item} = this.props;
         var options = item.options;
         const option = options[value];
-        console.log(option.value);
         this.setState({value:option.value});
         this.props.onChange(option.value, 'scale');
     }
@@ -38,9 +36,6 @@ export default class PlanScale extends React.PureComponent {
         var options = item.options;
         let marks = {};
         let selectedMark = null;
-
-        console.log(value);
-        console.log(options);
         {options.map((option, i) => {
             const coid = option.value;
             const name = option.label;
@@ -61,7 +56,7 @@ export default class PlanScale extends React.PureComponent {
             //const description = option.description;
             //return <Option value={coid}>{name}</Option>;
         })}
-        console.log(selectedMark);
+
         return <div style={{padding:'0 20px'}}><Slider onChange={this.onChange} marks={marks} max={options.length-1} value={selectedMark} /></div>;//<Slider marks={marks}    />
 
     }

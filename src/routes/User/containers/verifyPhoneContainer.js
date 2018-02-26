@@ -48,7 +48,7 @@ const withQuery = graphql(getPhone,
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(data.account);
+
                 return {
                     phone: data.account.user.phone,
                     loading: data.loading
@@ -78,7 +78,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 }
 
             }).catch((error) => {
-            console.log(error);
         });
     },
 });

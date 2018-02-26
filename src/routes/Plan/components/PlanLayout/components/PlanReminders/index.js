@@ -68,7 +68,7 @@ export class PlanReminders extends React.Component {
         const { saveReminders } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 //return saveReminders(values);
             }
         });

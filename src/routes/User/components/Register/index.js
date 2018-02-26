@@ -74,7 +74,7 @@ class NormalRegisterForm extends React.Component {
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
-            console.log(err);
+
             if (!err) {
                 this.setState({
                     loading: true
@@ -124,7 +124,6 @@ class NormalRegisterForm extends React.Component {
         callback();
     }
     stopLoading(){
-        console.log('stop loading');
         this.setState({ loading: false });
     }
 

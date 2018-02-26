@@ -22,7 +22,6 @@ class ViewProfile extends React.Component {
         }
         const {points,nextLevel} = info.motivation.currentLevel;
         const {medications} = info.motivation.adherenceSummary;
-        console.log(info.motivation.adherenceSummary);
         const {level} = medications;
         const {amount,title} = nextLevel;
         let remainingPoint = amount-points;
@@ -33,7 +32,7 @@ class ViewProfile extends React.Component {
                     <Card style={{marginBottom:15}}>
                         <Col span={8}>
                             <center>
-                            <Avatar style={{width:100,height:100}} />
+                            <Avatar style={{width:100,height:100,borderRadius:50}} />
 
                             <p>{info.fullName}</p>
                                 </center>

@@ -32,12 +32,11 @@ class UserPlanEditForm extends React.Component {
     checkEndDate = (rule, value, callback) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const start_date = form.getFieldValue('startDate');
-        //console.log(start_date);
-        //console.log(value);
+
         if (start_date && value && value < start_date) {
-            //console.log(callback);
+
             callback('End date is wrong');
         } else {
             callback();

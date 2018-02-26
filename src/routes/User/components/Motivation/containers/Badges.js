@@ -45,7 +45,7 @@ const withMutation = graphql(BADGES, {
 
     }),
     props: ({ ownProps, data }) => {
-        console.log(data);
+
         if (!data.loading) {
             return {
                 info: data.user.motivation,

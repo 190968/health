@@ -51,7 +51,7 @@ class ModalPointsHistory extends React.Component {
             render: (date) => moment(date).format('LLL')
         }];
 
-        console.log(pointsHistory);
+
         return  (
 
             <Modal

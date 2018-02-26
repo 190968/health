@@ -31,7 +31,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                 this.setState({
                     loading: true
                 });
-                //console.log(values);
+
                 return onSubmit(values);
             }
         });
@@ -48,7 +48,7 @@ class ModalMakeCommitmentsFor extends React.Component {
 
         const {motivators,charitiesEnum}=this.props;
         const {edges}=motivators;
-        console.log(motivators);
+
         const { getFieldDecorator } = this.props.form;
         const children = [];
         const enumChildren = [];

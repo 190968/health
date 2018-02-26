@@ -40,7 +40,6 @@ const FAMILY  = gql`
 
 const withMutation = graphql(FAMILY, {
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
                 info: data.account.user.motivation,

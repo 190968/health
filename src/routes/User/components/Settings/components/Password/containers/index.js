@@ -48,7 +48,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 message.success('Saved');
                 resetForm();
             }).catch((error) => {
-            console.log(error);
         });
     },
 });

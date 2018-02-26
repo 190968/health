@@ -24,7 +24,7 @@ export class PlanSection extends React.Component {
     };
 
     saveSection = (e, sectionId, isLastSection) => {
-        //console.log(this.props);
+
         const {upid, date, item, history} = this.props;
         this.setState({
             loading:true,
@@ -55,7 +55,7 @@ export class PlanSection extends React.Component {
 
         const {upid, date, item, isLastSection} = this.props;
         const footer = item.elements !== null && (item.elements.length > 0 || isLastSection)  ? [<Button type="primary" loading={this.state.loading} onClick={(e) => this.saveSection(e, item.id, isLastSection)}>{isLastSection ?  'Finish':'Next Section'}</Button>] : [];
-        //console.log('Section Render');
+
         return (<Card title={item.title} bordered={false} actions={footer}>
 
             {item.elements.length > 0 ? <Row>

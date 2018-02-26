@@ -22,7 +22,7 @@ const PlanElementWithQuery = graphql(
     GET_ELEMENT,
     {
         options: (ownProps) => {
-            //console.log(ownProps);
+
             return {
                 variables: {
                     id: ownProps.element.id,
@@ -33,11 +33,11 @@ const PlanElementWithQuery = graphql(
 
         },
         props: ({ ownProps, data }) => {
-            console.log(data);
+
 
 
             return data;
-            //console.log(CURRENT_PLANSTORE_PLAN);
+
             if (!data.loading) {
                 const plan = data.plan;
                 const body = plan.body;
@@ -54,7 +54,7 @@ const PlanElementWithQuery = graphql(
                     intro: intro,
 
                     loadDate(date) {
-                        console.log(date);
+
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -65,7 +65,7 @@ const PlanElementWithQuery = graphql(
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
                                 //return {medicationPlan:{id:29}};
-                                //console.log(fetchMoreResult);
+
                                 //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
@@ -103,18 +103,6 @@ export const PlanElementWithMutation = graphql(reportOnField, {
                 variables: { upid:upid, id: id, date: date, value:value},
                 update: (store, { data: { planElementReport } }) => {
 
-
-                    /*console.log(store);
-                    console.log(planElementReport);
-                    console.log(Plan.fragments.element);*/
-
-                    /*const element = store.readFragment({
-                        id: id, // `id` is any id that could be returned by `dataIdFromObject`.
-                        fragment: Plan.fragments.element
-                    });
-                    console.log(element);*/
-
-
                     /*store.writeFragment({
                         id: 'PlanBodyElement:'+id,
                         fragment: Plan.fragments.element,
@@ -136,7 +124,7 @@ export const PlanElementWithMutation = graphql(reportOnField, {
                         // add new to the list
                     }
 
-                    // console.log(data);
+
                     // Add our comment from the mutation to the end.
                     //data = medicationUpdate;
                     // Write our data back to the cache.

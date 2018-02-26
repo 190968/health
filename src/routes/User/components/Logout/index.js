@@ -13,7 +13,7 @@ class NormalLogoutForm extends React.Component{
         /*
         this.props.mutate().then((data) => {
             if (!data.loading) {
-                console.log(data);
+
                 this.props.logout();
 
                 return(
@@ -22,7 +22,7 @@ class NormalLogoutForm extends React.Component{
             }
         })*/
 
-       // console.log( );
+
        return ('')
 
         return(

@@ -39,7 +39,6 @@ const discussionReply = gql`
 const withMutation = graphql(discussionReply, {
     props: ({ mutate, ownProps }) => ({
         discussionReply: (text,id,parentMessageId) => {
-            console.log(text,id,parentMessageId);
             return mutate({
                 variables:  {
                     id: id,

@@ -46,7 +46,7 @@ export class PlanLayout extends React.Component {
     render() {
         const {info, plan, user, loading} = this.props;
         if (loading) {
-            // console.log(plan);
+
             //return (<div>Loading...</div>);
             return (
                 <Card loading>

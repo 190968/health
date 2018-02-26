@@ -101,7 +101,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    //console.log(1);
+
     return {
         /*increment: (info) => {dispatch(increment(info))},
         doubleAsync*/

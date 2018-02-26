@@ -2,13 +2,12 @@
  * Created by Pavel on 21.12.2017.
  */
 import React, { PropTypes } from 'react';
-import {Modal, DatePicker, Form ,Spin, Col,Select,Input, Checkbox } from 'antd';
-import moment from "moment/moment";
+import {Modal, Form ,Spin, Col,Select, Checkbox } from 'antd';
+
 import {TrackerUncontrolled as Tracker} from '../../../../../../Tracker';
 import {
     FormattedMessage,
 } from 'react-intl';
-import {TrackerUncontrolled} from "../../../../../../Tracker";
 import {StartEndForm} from "../../../../../../../../../components/FormCustomFields";
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -36,13 +35,11 @@ class EditTrackerForm extends React.Component {
 
     checkEndDate = (rule, value, callback) => {
         const form = this.props.form;
-        //callback();
-        //  console.log(value);
+
         const start_date = form.getFieldValue('startDate');
-        //console.log(start_date);
-        //console.log(value);
+
         if (start_date && value && value < start_date) {
-            //console.log(callback);
+
             callback('End date is wrong');
         } else {
             callback();
@@ -52,13 +49,13 @@ class EditTrackerForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const { amid, updateTracker } = this.props;
-        //console.log(this.props);
+
         this.props.form.validateFields((err, values) => {
-            console.log(values);
+
             if (!err) {
                 const{criticalRangeMin, criticalRangeMax, normalRangeMin, normalRangeMax, attachDiagnoses, timesToReport, graph, columns, startDate, endDate } = values;
 
-                //console.log(columns);
+
                 const startDateYMD = startDate.format("YYYY-MM-DD");
                 const endDateYMD = endDate ? endDate.format("YYYY-MM-DD") : '';
                 const input = {
@@ -73,13 +70,11 @@ class EditTrackerForm extends React.Component {
                     endDate: endDateYMD,
                 }
 
-            //console.log(id);
-            //console.log(userId);
-                //console.log(input);
+
 
                 // prepare fields here
                 //{"details":{ "purpose":"","timesPerDay":"2","quantity":"1.25","takeAt00":"2018-01-11T21:00:00.000Z","quantityTake0":1,"takeAt01":"2018-01-11T21:00:00.000Z"}}.
-                //console.log(onCancel);
+
                 return updateTracker(input);
             }
         });
@@ -165,22 +160,6 @@ class EditTrackerForm extends React.Component {
 
                     )}
                 </FormItem>
-                {/*<FormItem
-                    {...formItemLayout}
-                    label="Attach Diagnoses"
-                >
-                    {getFieldDecorator('attachDiagnoses', {
-
-                    })(
-                        <Col offset={1} span={10}>
-                            <Select defaultValue="lucy" style={{ width: 300 }}>
-                                <Option value="lucy">Select ICD-10 code</Option>
-                            </Select>
-                        </Col>
-
-                    )}
-
-                </FormItem>*/}
 
                 {columns.length > 0 && <FormItem
                     {...formItemLayout}

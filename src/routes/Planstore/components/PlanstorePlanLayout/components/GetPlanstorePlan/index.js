@@ -41,7 +41,7 @@ class GetPlanstorePlan extends React.Component {
     disabledStartDate = (endValue) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const startValue = form.getFieldValue('endDate');
         //const startValue = this.state.startValue;
         if (!endValue || !startValue) {
@@ -52,7 +52,7 @@ class GetPlanstorePlan extends React.Component {
     disabledEndDate = (endValue) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const startValue = form.getFieldValue('startDate');
         //const startValue = this.state.startValue;
         if (!endValue || !startValue) {
@@ -65,10 +65,9 @@ class GetPlanstorePlan extends React.Component {
     checkEndDate = (rule, value, callback) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const start_date = form.getFieldValue('startDate');
         if (start_date && value && value < start_date) {
-            //console.log(callback);
             callback('End date is wrong');
         } else {
             callback();

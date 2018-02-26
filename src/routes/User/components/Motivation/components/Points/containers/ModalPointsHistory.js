@@ -36,7 +36,7 @@ account{
 
 const withMutation = graphql(GET_POINTHISTORY, {
     props: ({ ownProps, data }) => {
-        console.log(data);
+
         if (!data.loading) {
             return {
                 pointsHistory: data.account.user.motivation.pointsHistory,

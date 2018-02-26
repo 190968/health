@@ -29,7 +29,7 @@ export default class Tracker extends React.Component {
 
     render() {
         const {item, value} = this.props;
-        //console.log(this.props);
+
         const {units, inputMask} = item;
         const unitsName = units.name;
 
@@ -37,11 +37,10 @@ export default class Tracker extends React.Component {
             value={value}
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
             formatter={value => {
-                //console.log();
-                //console.log(value);
+
+
                 if (inputMask != '') {
-                    //console.log(inputMask);
-                    //console.log(value);
+
                     return VMasker.toPattern(value, inputMask)
                 } else {
 
@@ -79,7 +78,7 @@ export class TrackerUncontrolled extends React.PureComponent {
 
     render() {
         const {item} = this.props;
-        //console.log(this.props);
+
         const {value} = this.state;
         const {units, inputMask} = item;
         const unitsName = units.name;
@@ -88,11 +87,9 @@ export class TrackerUncontrolled extends React.PureComponent {
             value={value}
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
             formatter={value => {
-                //console.log();
-                //console.log(value);
+
                 if (inputMask != '') {
-                    //console.log(inputMask);
-                    //console.log(value);
+
                     return VMasker.toPattern(value, inputMask)
                 } else {
 

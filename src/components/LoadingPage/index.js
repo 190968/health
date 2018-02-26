@@ -14,7 +14,7 @@ export default function LoadingPage(props) {
             return null;
         }
     } else if (props.error) {
-        //console.log(props.error);
+
         // If we aren't loading, maybe
         return <div>Error! Component failed to load </div>;
     } else {

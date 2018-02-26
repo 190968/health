@@ -43,7 +43,7 @@ const withQuery = graphql(medicationList,
                                 search: search,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                //console.log("Какой previousResult в updateQuery",previousResult);
+
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {

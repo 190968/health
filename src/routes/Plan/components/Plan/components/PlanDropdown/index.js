@@ -17,8 +17,7 @@ export default class PlanDropdown extends React.PureComponent {
     };
 
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (nextProps.reports !== this.props.reports) {
             this.setState({value:nextProps.reports});
         }
@@ -33,8 +32,6 @@ export default class PlanDropdown extends React.PureComponent {
         const {item} = this.props;
         let {value} = this.state;
         value = value !== '' ? value : null;
-        console.log(value);
-        //console.log(reports);
         const options = item.options;
         return <Select
             showSearch

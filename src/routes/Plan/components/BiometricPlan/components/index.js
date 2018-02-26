@@ -49,7 +49,7 @@ export class BiometricPlanBody extends React.Component {
     }
     addTracker (id) {
         // create a new medication
-        //console.log(id);
+
         this.setState({
             addModal:true,
             amid:id
@@ -83,7 +83,7 @@ export class BiometricPlanBody extends React.Component {
 
     hideAddTracker ()  {
         // create a new medication
-        //console.log(id);
+
         this.setState({
             addModal:false,
             amid:0
@@ -125,12 +125,12 @@ export class BiometricPlanBody extends React.Component {
             const timesToReport = tracker.timesToReport;
             const measurement = tracker.measurement;
             const reports = measurement.reports;
-            //console.log(measurement);
+
             // if we have columns - put it into columns table
             if (tracker_columns.length > 0) {
                 let tracker_column_info = { key: tracker.id, name: measurement.label, item:measurement, input: <TrackerField info={tracker} date={date} list_id={info.id} />};
                 tracker_columns.map(column_id => {
-                    //console.log(column_id);
+
                     let inputFields = [];
                     for (var i=0;i<timesToReport;i++) {
                         let report = null;
@@ -139,12 +139,12 @@ export class BiometricPlanBody extends React.Component {
                                 return e.reportKey === i && e.columnId === column_id
                             });
 
-                            //console.log(report_arr);
+
                             if (report_arr.length > 0) {
                                 report = report_arr[0];
                             }
                         }
-                        //console.log(report);
+
                         inputFields.push(<TrackerField info={tracker} date={date} userId={user_id} column={column_id} report={report} reportKey={i} list_id={info.id} />);
                     }
 
@@ -160,14 +160,14 @@ export class BiometricPlanBody extends React.Component {
                 let inputFields = [];
                 for (var i=0;i<timesToReport;i++) {
                     let report = null;
-                    //console.log(reports);
+
                     if (reports) {
                         const report_arr = reports.filter((e) => e.reportKey === i);
                         if (report_arr.length > 0) {
                             report = report_arr[0];
                         }
                     }
-                   // console.log(report);
+
                     inputFields.push(<TrackerField info={tracker} date={date} userId={user_id} report={report} reportKey={i} list_id={info.id} />);
                 }
                 //

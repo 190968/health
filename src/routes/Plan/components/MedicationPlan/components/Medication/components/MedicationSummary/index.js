@@ -68,13 +68,12 @@ class MedicationSummary extends React.Component {
         const medications = info.medications;
         let total = null;
         let items = 0;
-        //console.log(info.date);
-        //console.log(medications);
+
         medications.map((medication) => {
             if (medication.total > 0 ) {
                 const medTotal = Math.floor(medication.reported / medication.total * 100);
-                //console.log(medication.reported / medication.total);
-                //console.log(medTotal);
+
+
                 // return total;
                 total += medTotal;
                 items++;
@@ -128,7 +127,7 @@ const data = [
             //a.filter( onlyUnique );
 
             //const unique = [...new Set(medications.map(item => item.id))];
-            //console.log(unique);
+
 
             // checking medications
             medications.map((medication) => {

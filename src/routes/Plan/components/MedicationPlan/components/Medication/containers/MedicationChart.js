@@ -29,8 +29,7 @@ const MedicationChartWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(ownProps);
-                //console.log(data);
+
                 const medication = data.medication;
                 return {
                     data: medication.summary,

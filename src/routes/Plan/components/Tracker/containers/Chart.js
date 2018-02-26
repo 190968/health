@@ -34,15 +34,14 @@ const TrackerChartWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(ownProps);
-                //console.log(data);
+
                 const trackerMeasurement = data.trackerMeasurement;
                 return {
                     data: trackerMeasurement.summary,
                     //graph: trackerMeasurement.graph,
                     loading: data.loading,
                     loadMoreEntries() {
-                        //console.log(ownProps.page);
+
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -53,7 +52,7 @@ const TrackerChartWithQuery = graphql(
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
                                 if (!fetchMoreResult) { return previousResult; }
-                                console.log(previousResult.planstore);
+
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {
                                     // Append the new feed results to the old one

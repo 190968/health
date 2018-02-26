@@ -48,7 +48,7 @@ class MyCategories extends React.Component{
 
         });*/
 
-        console.log(info);
+
 
 
         return(

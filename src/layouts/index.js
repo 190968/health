@@ -88,8 +88,6 @@ class Core extends React.Component {
     };
 
     _onLogout() {
-        console.log( this.props);
-        //this.props.history.push('/logout');
     };
     _onActive() {
         this.setState({isIddle:false});
@@ -146,7 +144,7 @@ class Core extends React.Component {
 
 
 const mapStateToProps = (state) => {
-     //console.log(state);
+
     return {
         loading: state.network.loading,
         token: state.user.token,
@@ -158,7 +156,7 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch) => {
-    //console.log(1);
+
     return {
         /*increment: (info) => {dispatch(increment(info))},
         doubleAsync*/

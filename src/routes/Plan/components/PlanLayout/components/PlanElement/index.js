@@ -29,15 +29,14 @@ export class PlanElement extends React.Component {
     };
 
     onChange(value, type) {
-        //console.log(value);
-        //console.log(this.props);
+
         const {upid, element, date} = this.props;
         this.props.makeReport(upid, element.id, date, value);
     }
 
     render() {
 
-        //console.log(this.props);
+
         let {element, date} = this.props;
 
         /*element = client.readFragment({
@@ -47,7 +46,7 @@ export class PlanElement extends React.Component {
                 date: date
             }
         });*/
-        //console.log(element);
+
 
 
        const {itemType, itemInfo, reports} = element;
@@ -100,7 +99,7 @@ export class PlanElement extends React.Component {
                reportValues = reportValues && reportValues[0];
 
                fieldTitle = item.label;
-               //console.log(item);
+
                field = <PlanScale item={item} reports={reportValues} onChange={this.onChange} />
 
                break;
@@ -114,7 +113,7 @@ export class PlanElement extends React.Component {
                break;
            case 'exam_input':
                fieldTitle = item.label;
-               //console.log(item);
+
                field = <Button disabled>{fieldTitle}</Button>;
                break;
            case 'instruction':

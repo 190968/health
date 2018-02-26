@@ -28,7 +28,7 @@ class ChatPresent extends React.Component {
         let scrollTop = event.srcElement.body.scrollTop,
             itemTranslate = Math.min(0, scrollTop/3 - 60);
 
-        console.log(itemTranslate);
+
     }*/
     scrollIntoView = () => {
         if (this.props.loading) { return; }
@@ -52,7 +52,7 @@ class ChatPresent extends React.Component {
     }
 
     loadItems = (page) => {
-        console.log('loading...', page);
+
     }
 
     render() {

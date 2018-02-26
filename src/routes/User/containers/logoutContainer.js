@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     logout: () => {
         ownProps.mutate().then((data) => {
-            //console.log(data);
+
             if (!data.loading) {
                 ownProps.client.resetStore();
                 dispatch(logoutUser());

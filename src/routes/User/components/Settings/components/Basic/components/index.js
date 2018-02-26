@@ -54,7 +54,7 @@ const tailFormItemLayout = {
 
     constructor(props){
         super(props);
-        //console.log(props);
+
         this.state = {displayedFamily: props};
         this.stopLoading = this.stopLoading.bind(this);
     }
@@ -92,7 +92,7 @@ const tailFormItemLayout = {
                 </Card>
             );
         }
-       // console.log(this.props.account.user.birthday);
+
         const {dateFormat, countries, states, account, languages, timezones,} = this.props;
         const {user} = account;
         const phone = user.phone;

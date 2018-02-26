@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
                 dispatch(loginUserSuccess({token}));
             }).catch((error) => {
-                //console.log(error);
+
                 dispatch(loadUserFAIL({ error,
                 }));
                 dispatch(loginUserError({
@@ -84,14 +84,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick: ({forgot_email}) => {
         ownProps.forgotPassword({ email:forgot_email})
             .then(({data}) => {
-                //console.log(data);
+
                 // redirect to Enter code
                 ownProps.history.push('/password/reset');
                 // show success message
                 message.success('Reset password link has been sent');
 
             });/*.catch((error) => {
-                console.log(1);
+
 
         });*/
 

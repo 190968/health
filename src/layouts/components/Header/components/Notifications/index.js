@@ -36,8 +36,7 @@ class Notifications extends React.Component {
 
     componentDidUpdate(prevProps) {
 
-        //console.log(prevProps);
-        //console.log(this.props);
+
         if (!this.props.loading) {
            // this.props.handleTotalNewNotifications(11);
         }
@@ -56,7 +55,7 @@ class Notifications extends React.Component {
                 actionId,
                 userId,
                 date} = data.handleNotification;
-            //console.log(action);
+
             switch(action) {
                 case 'goUser':
                     //'description' => 'Go to user profile by User ID'
@@ -148,8 +147,7 @@ class Notifications extends React.Component {
 
     render() {
         const { loading, notifications, endCursor, hasMore } = this.props;
-        //console.log(notifications)
-        //console.log(endCursor)
+
         if (loading) {
             return <Loading />;
         }

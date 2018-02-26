@@ -24,8 +24,7 @@ export default class PlanChecklist extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (nextProps.reports !== this.props.reports) {
             this.setState({value:nextProps.reports});
         }
@@ -42,7 +41,7 @@ export default class PlanChecklist extends React.Component {
         const {item} = this.props;
         const {value} = this.state;
         //const {label} = item;
-        //console.log(item);
+
         let radioStyle = {};
         if (item.isVertical) {
             radioStyle = vertStyle;
@@ -56,7 +55,7 @@ export default class PlanChecklist extends React.Component {
             plainOptions.push(<Checkbox key={coid} value={coid} style={radioStyle} >{name}</Checkbox>);
         });
 
-        console.log(value);
+
 
 
         return <CheckboxGroup value={value} onChange={this.onChange} >{plainOptions}</CheckboxGroup>
