@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Progress ,List,Avatar, Card } from 'antd';
 import {
     injectIntl
@@ -19,19 +19,26 @@ class Promises extends React.Component {
             </Card>;
         }
         return  (
-            <Card style={{height:250}} title={intl.formatMessage(messages.promises)}>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={info.promises.edges}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                avatar={<Avatar onClick={this.showModalView} size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                description={<div><div dangerouslySetInnerHTML={{__html: item.description}}/></div>}
-                            />
-                        </List.Item>
-                    )}
-                />
+            <Card  title={intl.formatMessage(messages.promises)}>
+
+                {info.promises.edges > 0 ?
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={info.promises.edges}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar onClick={this.showModalView} size="large"
+                                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                    description={<div>
+                                        <div dangerouslySetInnerHTML={{__html: item.description}}/>
+                                    </div>}
+                                />
+                            </List.Item>
+                        )}
+                    /> :
+                    <div className="ant-list-empty-text">No Promises</div>
+                }
             </Card>
 
         );

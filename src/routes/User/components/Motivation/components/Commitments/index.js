@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {List ,Avatar,Tooltip,Button, Icon,Card } from 'antd';
 import ModalMakeCommitment from './containers/ModalMakeCommitments'
 import ModalView  from  './components/ModalView';
@@ -41,26 +41,34 @@ class Commitments extends React.Component {
 
         return  (
             <Card
-                style={{height:250}}
+
                 title={intl.formatMessage(messages.myCommitments)}
                 extra={<Tooltip title={intl.formatMessage(messages.addCommitments)}><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
-                className="demo-infinite-container"
+
             >
                 { this.state.visible && <ModalMakeCommitment motivators={motivators} handleCancel={this.handleCancel} />}
                 { this.state.viewVisible && <ModalView handleCancel={this.handleCancel} />}
 
-                <List
-                    itemLayout="horizontal"
-                    dataSource={edges}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                avatar={<Avatar onClick={this.showModalView} size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                description={<div><div dangerouslySetInnerHTML={{__html: item.description}}/> <br/> {moment(item.date).format("YYYY-MM-DD")}</div>}
-                            />
-                        </List.Item>
-                    )}
-                />
+                {edges.length > 0 ?
+                    <div  style={{height:250}} className="demo-infinite-container">
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={edges}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar onClick={this.showModalView} size="large"
+                                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                    description={<div>
+                                        <div dangerouslySetInnerHTML={{__html: item.description}}/>
+                                        <br/> {moment(item.date).format("YYYY-MM-DD")}</div>}
+                                />
+                            </List.Item>
+                        )}
+                    /></div>
+                    :
+                    <div className="ant-list-empty-text">No Commitments</div>
+                }
             </Card>
 
         );

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Card,List} from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {

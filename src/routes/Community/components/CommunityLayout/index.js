@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Row, Col,Card} from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";

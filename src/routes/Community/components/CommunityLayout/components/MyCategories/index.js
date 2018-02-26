@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 11.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Tooltip,Form ,Carousel,Row,Col,Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import Slider from 'react-slick';

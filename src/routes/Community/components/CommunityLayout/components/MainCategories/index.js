@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Card,List } from 'antd';
 import { withApollo, gql } from 'react-apollo'
 import Search from  '../Category/containers/Search.js';

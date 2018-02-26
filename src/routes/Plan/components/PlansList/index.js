@@ -12,7 +12,8 @@ import {
 export class PlansList extends React.Component {
 
     static defaultProps = {
-        list: false
+        list: false,
+        title: <FormattedMessage id="plan.title" defaultMessage="Today's Actionplans" description="ActionPlans for Today" />
     }
     constructor(props) {
         super(props);
@@ -29,14 +30,16 @@ export class PlansList extends React.Component {
 
   render () {
     const {
-      plans, user_id, loading, list
+      plans, user_id,activeUid, loading, list, title
     } = this.props;
 
     if (loading) {
-        return (<Card loading title={<FormattedMessage id="plan.title" defaultMessage="Today's Actionplans" description="Medications for Today" />}>
+        return (<Card loading title={title}>
            Loading
         </Card>)
     }
+
+    const isSelf = activeUid === user_id;
       const menu = (
           <Menu onClick={this.handleStatus}>
               <Menu.Item  key="active">Show Active</Menu.Item>
@@ -47,12 +50,12 @@ export class PlansList extends React.Component {
       );
 
     return (
-        <Card title={<FormattedMessage id="plan.title1" defaultMessage="Today's ActionPlans" description="Today's ActionPlans" />}
+        <Card title={title}
               extra={<Button.Group><Tooltip title={<FormattedMessage id="plan.settings" defaultMessage="Settings" />}><Dropdown overlay={menu} placement="bottomRight" >
                   <Button size="small">
                       <Icon type="setting" />
                   </Button>
-              </Dropdown></Tooltip><Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add ActionPlan" />}><Button size="small"><Link to={'/planstore'}><Icon type="plus" /></Link></Button></Tooltip></Button.Group>}
+              </Dropdown></Tooltip>{isSelf && <Tooltip title={<FormattedMessage id="plan.add" defaultMessage="Add ActionPlan" />}><Button size="small"><Link to={'/planstore'}><Icon type="plus" /></Link></Button></Tooltip>}</Button.Group>}
         >
             {plans.length > 0 ? (list ?
                 <List

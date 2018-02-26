@@ -2,7 +2,7 @@
  * Created by Павел on 27.01.2018.
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Card,Form,List  } from 'antd';
 import PlanWidget from '../../../../../../../Plan/components/Plan';
 import { withApollo } from 'react-apollo'

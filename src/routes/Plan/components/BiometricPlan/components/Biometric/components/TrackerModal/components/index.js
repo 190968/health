@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 21.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Modal, Form ,Spin, Col,Select, Checkbox } from 'antd';
 
 import {TrackerUncontrolled as Tracker} from '../../../../../../Tracker';

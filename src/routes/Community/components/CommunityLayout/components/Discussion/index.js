@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 31.01.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Card } from 'antd';
 import {withRouter} from "react-router-dom";
 import DiscussionView from './components/DiscussionView';

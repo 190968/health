@@ -1,4 +1,3 @@
-import { connect } from 'react-redux'
 import RightMenu from '../components/RightMenu';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';

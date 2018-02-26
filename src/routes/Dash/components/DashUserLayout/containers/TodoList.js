@@ -1,4 +1,3 @@
-import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';

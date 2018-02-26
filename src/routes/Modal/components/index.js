@@ -2,7 +2,7 @@
 /**
  * Created by Pavel on 21.12.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {
     FormattedMessage,
 

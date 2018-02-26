@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { withApollo } from 'react-apollo'
 import Loadable from '../../../components/Loadable';
 import { Route } from 'react-router-dom'

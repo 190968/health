@@ -4,6 +4,7 @@ import TodoList from './containers/TodoList';
 import PlansList from '../../../Plan/containers/PlansList';
 import MedicationPlan from '../../../Plan/components/MedicationPlan/containers';
 import BiometricPlan from '../../../Plan/components/BiometricPlan/containers';
+import CalendarWidget from '../../../Calendar/components/Widget';
 
 
 import { Button,Icon, Alert, Row, Col, Calendar,Card } from 'antd';
@@ -60,12 +61,7 @@ export class DashUserLayout extends React.Component {
                <Col xs={24} md={10} lg={9} xl={7}>
                    <TodoList ready={!loading} userId={user_id} date={date} />
 
-
-                         <Card title="Health Calendar"
-                               extra={<Button.Group><Button size={"small"} ><Icon type="calendar" /></Button><Button size={"small"} ><Icon type="plus" /></Button></Button.Group>}
-                         >
-                             <Calendar fullscreen={false}  />
-                         </Card>
+                   <CalendarWidget ready={!loading} date={date} user_id={user_id} />
 
                </Col>
            </Row>

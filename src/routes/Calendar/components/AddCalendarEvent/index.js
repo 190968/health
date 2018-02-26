@@ -1,5 +1,5 @@
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Form,Select,Modal,Input, DatePicker, TimePicker, message} from 'antd';
 import {
     injectIntl
@@ -49,7 +49,7 @@ class AddCalendarEvent extends React.Component{
             <Modal
                 title={intl.formatMessage(messages.modalTitle)}
                 visible={true}
-                onCancel={this.props.onCancel}
+                onCancel={this.props.onHide}
                 okText={intl.formatMessage(messages.send)}
                 onOk={this.handleSubmit}
             >

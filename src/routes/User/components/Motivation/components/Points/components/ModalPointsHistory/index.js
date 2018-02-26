@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Button ,Spin, Table, Icon, Divider,Card,Modal } from 'antd';
 import moment from 'moment';
 import {

@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 27.11.2017.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import './register.css'
 import PhoneForm from '../../../../components/PhoneForm';

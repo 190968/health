@@ -10,11 +10,7 @@ import gql from 'graphql-tag';
 
 
 const CURRENTLEVEL  = gql`
-<<<<<<< HEAD
-query GET_CURRENTLEVEL ($userId: UID){
-=======
 query GET_CURRENTLEVEL ($userId:UID){
->>>>>>> 527d3bff2ce86ef8ab529d164b43aec0e8901e04
 
   user(id: $userId){
   id

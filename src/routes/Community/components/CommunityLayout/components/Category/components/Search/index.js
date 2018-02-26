@@ -2,7 +2,7 @@
  * Created by Pavel on 10.01.2018.
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Icon, Card,Form,AutoComplete ,Input } from 'antd';
 import { withApollo } from 'react-apollo'
 import '../../../../../../style.css';

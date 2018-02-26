@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
 import {Avatar,Popover,Col,List, Card } from 'antd';
 import BadgesListItem from './components/BadgesListItem';
 import {

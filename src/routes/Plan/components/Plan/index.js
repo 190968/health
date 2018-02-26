@@ -144,6 +144,7 @@ export class Plan extends React.PureComponent {
   }
 
   render() {
+
     const list = this.props.list;
     var name = this.props.info.title;
     let description = this.props.info.description;
