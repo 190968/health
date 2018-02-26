@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 const BADGES  = gql`
-  query GET_BADGES($cursors:CursorInput,$userId: ID) {
+  query GET_BADGES($cursors:CursorInput,$userId:UID) {
 
   user(id: $userId){
   id

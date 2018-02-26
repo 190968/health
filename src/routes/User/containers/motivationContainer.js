@@ -16,7 +16,7 @@ import gql from 'graphql-tag';
 
 
 const MOTIVATION  = gql`
-   query GET_ALLMOTIVATION($cursors: CursorInput, $userId: ID) {
+   query GET_ALLMOTIVATION($cursors: CursorInput, $userId:UID) {
   user(id: $userId) {
     id
     motivation {

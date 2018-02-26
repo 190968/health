@@ -9,21 +9,18 @@ const gridStyle = {
     textAlign: 'center',
 };
 class ViewProfile extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         const{info,loading}=this.props;
         if (loading) {
             return  <Card loading > </Card>;
         }
+        //console.log(info);
         const {points,nextLevel} = info.motivation.currentLevel;
-        const {medications} = info.motivation.adherenceSummary;
-        console.log(info.motivation.adherenceSummary);
-        const {level} = medications;
+        //const {medications} = info.motivation.adherenceSummary;
+        //console.log(info.motivation.adherenceSummary);
+        //const {level} = medications;
+        const level = 0;
         const {amount,title} = nextLevel;
         let remainingPoint = amount-points;
         const percent = Math.round(points/amount*100);

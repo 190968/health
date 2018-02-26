@@ -13,6 +13,7 @@ import {
     asyncForgotPassword,
     asyncCalendar,
     asyncMessages,
+    asyncProfile
 } from '../routes';
 
 export const BasicRoutes = ({store}) => {
@@ -26,6 +27,7 @@ export const BasicRoutes = ({store}) => {
             <PrivateRoute path="/settings" component={asyncSettings(store)}/>
             <PrivateRoute path="/messages/:id?" component={asyncMessages(store)}/>
             <PrivateRoute path="/calendar" component={asyncCalendar(store)}/>
+            <PrivateRoute path="/u/:uid" component={asyncProfile(store)}/>
             <PrivateRoute path="/plan/:upid" component={asyncPlan(store)}/>
         </React.Fragment>
     )

@@ -92,11 +92,11 @@ class Motivators extends React.Component {
                         <List.Item key={person.id}>
                             {
                                 person.user.firstName ?
-                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                    <Link to={'/u/'+person.user.id} style={{color: 'inherit'}}>
                                         <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.firstName[0]}</Avatar>
                                         <span style={{textAlign:'center','marginLeft':10}}>{person.user.firstName}</span>
                                     </Link> :
-                                    <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                                    <Link to={'/u/'+person.user.id} style={{color: 'inherit'}}>
                                         <Avatar /*size="large"*/ style={{ verticalAlign: 'middle' }}>N</Avatar>
                                         <span style={{textAlign:'center','marginLeft':10}}>No name</span>
                                     </Link>
