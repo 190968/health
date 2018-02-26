@@ -26,7 +26,7 @@ const formItemLayoutWithOutLabel = {
         sm: { span: 20, offset: 4 },
     },
 };
-let uuid = 0;
+let UID = 0;
 
 export class PlanReminders extends React.Component {
 
@@ -44,8 +44,8 @@ export class PlanReminders extends React.Component {
         const { form } = this.props;
         // can use data-binding to get
         const keys = form.getFieldValue('keys');
-        const nextKeys = keys.concat(uuid);
-        uuid++;
+        const nextKeys = keys.concat(UID);
+        UID++;
         // can use data-binding to set
         // important! notify form to detect changes
         form.setFieldsValue({

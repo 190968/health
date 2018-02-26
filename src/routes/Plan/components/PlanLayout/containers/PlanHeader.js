@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import { message } from 'antd';
 
 const deletePlan = gql`
-    mutation userPlanDelete($upid:ID!) {
+    mutation userPlanDelete($upid:UID!) {
        userPlanDelete(upid:$upid)
     }
 
@@ -31,7 +31,7 @@ const withMutationDelete = graphql(deletePlan,
 
 
 const completePlan = gql`
-    mutation userPlanComplete($upid:ID!) {
+    mutation userPlanComplete($upid:UID!) {
        userPlanComplete(upid:$upid) {
             id
             isCompleted

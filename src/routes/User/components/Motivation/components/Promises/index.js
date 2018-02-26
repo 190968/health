@@ -9,9 +9,7 @@ import {
 import messages from './messages';
 class Promises extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
         const {info,intl, loading} = this.props;

@@ -15,9 +15,7 @@ import IMotivate from './containers/iMotivate';
 import {Row,Col,Card} from 'antd';
 class Motivation extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
 

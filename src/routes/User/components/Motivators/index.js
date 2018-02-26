@@ -38,9 +38,7 @@ const tailFormItemLayout = {
 };
 class Motivators extends React.Component {
     state = { visible: false }
-    constructor(props) {
-        super(props);
-    }
+
 
     showModal = () => {
         this.setState({

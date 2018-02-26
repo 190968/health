@@ -23,7 +23,7 @@ import gql from 'graphql-tag';
 
 
 const discussionReply = gql`
-   mutation discussionReply($id:ID!,$parentMessageId:ID,$message:String!) {
+   mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {
 
   discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
          id

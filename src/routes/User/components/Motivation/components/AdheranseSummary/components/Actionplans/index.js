@@ -9,9 +9,6 @@ import {
 import messages from './messages';
 class Actionplans extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const{level} = this.props.plans;

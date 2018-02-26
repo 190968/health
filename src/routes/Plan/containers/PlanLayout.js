@@ -14,7 +14,7 @@ import { message } from 'antd';
 import Plan from '../../Plan/components/Plan';
 
 const CURRENT_PERSONAL_PLAN = gql`
-    query GET_USER_PLAN ($upid: ID!) {
+    query GET_USER_PLAN ($upid: UID!) {
         userPlan (upid: $upid) {
             id
             joinDate

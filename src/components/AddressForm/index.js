@@ -41,10 +41,6 @@ const dateFormat = 'YYYY-MM-DD';
 
 class AddressForm extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
-
 
 
     render(){

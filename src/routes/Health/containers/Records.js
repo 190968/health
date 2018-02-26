@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const GET_Records_QUERY = gql`    
-    query GET_HEALTH_RECORDS ($userId: ID)  {
+    query GET_HEALTH_RECORDS ($userId:UID)  {
         patient(id:$userId) {
             id
             healthRecords {

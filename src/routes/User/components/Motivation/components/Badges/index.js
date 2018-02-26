@@ -10,9 +10,7 @@ import {
 import messages from './messages';
 class Badges extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
         render()
         {
             const {info, loading} = this.props;

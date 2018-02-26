@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 
 const reportOnMedication = gql`
-    mutation medicationReport($id: ID!, $date: Date!, $input: MedicationInput!) {
+    mutation medicationReport($id: UID!, $date: Date!, $input: MedicationInput!) {
         medicationReport(id:$id, date:$date, input: $input) {
              id
             time
@@ -19,7 +19,7 @@ const reportOnMedication = gql`
 `;
 
 const getMedication = gql`
-    query getMedication($id: ID!, $date: Date!, $userId: ID!) {
+    query getMedication($id: UID!, $date: Date!, $userId: UID!) {
         medication(id:$id, userId: $userId) {
             id
             reports(date:$date) {

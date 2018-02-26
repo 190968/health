@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import Network from '../components/Network'
 import { gql,graphql } from 'react-apollo';
 
-const NETWORK_INFO = gql`
-    query NETWORK_INFO {
+const NETWORK_ONLY_INFO = gql`
+    query NETWORK_DETAILS {
         network {
             id,
             name,
@@ -20,7 +20,7 @@ const NETWORK_INFO = gql`
 
 // 1- add queries:
 const NetworkWithQuery = graphql(
-    NETWORK_INFO,
+    NETWORK_ONLY_INFO,
     {
         //name: 'NetworkInfoQuery',
         props: ({ ownProps, data }) => {

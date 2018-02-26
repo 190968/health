@@ -11,7 +11,7 @@ import gql from 'graphql-tag';
 
 
 const GET_PROFILE  = gql`
- query GET_PROFILE($user_id: ID) {
+ query GET_PROFILE($user_id:UID) {
   user(id: $user_id) {
     id
     fullName

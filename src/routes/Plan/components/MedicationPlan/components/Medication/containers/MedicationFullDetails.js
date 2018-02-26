@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import {MedicationSummary, MedicationInfo} from '../components/fragments';
 
 const MED_DETAILS = gql`
-query GET_MEDICATION_DETAILS($id:ID!, $userId: ID!, $date: Date) {
+query GET_MEDICATION_DETAILS($id:UID!, $userId: UID!, $date: Date) {
             medication(id: $id,userId: $userId) {
                 ...MedicationInfo
                 ...MedicationSummary

@@ -9,7 +9,7 @@ import {MedicationPlan_QUERY} from "../../../../../containers";
 
 
 const deleteMed = gql`
-    mutation medicationDelete($id: ID!, $uid: ID!) {
+    mutation medicationDelete($id: UID!, $uid: UID!) {
         medicationDelete(id:$id, uid: $uid)
     }
 `;

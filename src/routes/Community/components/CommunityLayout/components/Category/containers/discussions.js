@@ -11,7 +11,7 @@ import { withApollo} from 'react-apollo'
 import {withRouter} from "react-router-dom";
 
 const addDuscussion = gql`
-mutation discussionCreate($categoryId:ID!,$subject:String!,$message:String!) {
+mutation discussionCreate($categoryId:UID!,$subject:String!,$message:String!) {
 
        discussionCreate(categoryId:$categoryId,subject:$subject,message:$message) {
          id

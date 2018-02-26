@@ -10,13 +10,15 @@ import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric
 
 // Query for grabbing everything for the dashboard items
 export const DASH_QUERY = gql`
-    query GET_DASH_PLANS ($user_id: ID!, $date: Date, $status: UserPlanStatusEnum)  {
+    query GET_DASH_PLANS ($user_id: UID!, $date: Date, $status: UserPlanStatusEnum)  {
         user (id:$user_id) {
             id
             plans (status: $status) {
-                ...PlanCardInfo
-                upid
-                progress
+                id
+                plan {
+                    ...PlanCardInfo
+                    progress
+                }
             }
         }
          medicationPlan (userId: $user_id) {

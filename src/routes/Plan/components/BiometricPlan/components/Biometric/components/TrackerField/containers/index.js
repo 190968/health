@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 
 export const reportOnTracker = gql`
-    mutation trackerReport($id: ID!, $input: TrackerReportInput!) {
+    mutation trackerReport($id: UID!, $input: TrackerReportInput!) {
         trackerReport(id:$id, input: $input) {
              id
         }
@@ -16,7 +16,7 @@ export const reportOnTracker = gql`
 `;
 
 export const getTrackerProgress = gql`
-    query GET_BIOMETRIC_PLAN_PROGRESS ($userId: ID!, $date: Date)  {
+    query GET_BIOMETRIC_PLAN_PROGRESS ($userId: UID!, $date: Date)  {
             biometricPlan (userId: $userId) {
                 id
                 progress(date: $date)

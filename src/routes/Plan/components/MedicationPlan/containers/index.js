@@ -7,7 +7,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 // Query for grabbing everything for the dashboard items
 export const MedicationPlan_QUERY = gql`
-    query GET_MEDICATION_PLAN ($user_id: ID!, $date: Date)  {
+    query GET_MEDICATION_PLAN ($user_id: UID!, $date: Date)  {
             medicationPlan (userId: $user_id) {
                 id
                 upid

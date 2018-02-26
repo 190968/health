@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import {MedicationSummary} from '../components/fragments';
 
 const MedicationSummaryQuery = gql`    
-    query GetMedicationSummary ($id: ID!, $userId:ID!, $date: Date!)  {
+    query GetMedicationSummary ($id: UID!, $userId:UID!, $date: Date!)  {
         medication(id: $id, userId:$userId) {
             id
             ...MedicationSummary

@@ -27,9 +27,7 @@ const formItemLayout = {
 
 class DiscussionModal extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
+
 
 
     handleSubmit = (e) => {

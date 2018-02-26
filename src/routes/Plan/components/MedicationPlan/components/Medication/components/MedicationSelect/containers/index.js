@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 //import Medication from '../components/Medication/components';
 // Query for grabbing everything for the dashboard items
 export const medicationList = gql`
-    query GET_MEDICATIONS_LIST ($userId: ID!, $search: String)  {
+    query GET_MEDICATIONS_LIST ($userId: UID!, $search: String)  {
             medicationsList (userId: $userId, search: $search) {
                 id
                 name

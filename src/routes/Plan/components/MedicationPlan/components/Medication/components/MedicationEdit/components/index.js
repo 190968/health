@@ -160,7 +160,7 @@ class EditMedicationForm extends React.Component {
 
 
 
-        if (timesPerDay == 0) {
+        if (timesPerDay === 0) {
             timesPerDay = 1;
         }
 

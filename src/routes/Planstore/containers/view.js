@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import Plan from '../../Plan/components/Plan';
 
 const PLANSTORE_PLAN = gql`
-    query GET_PLANSTORE_PLAN ($id: ID!) {
+    query GET_PLANSTORE_PLAN ($id: UID!) {
         plan (id: $id) {
             ...PlanCardInfo,
             description,

@@ -13,9 +13,7 @@ import {
 import messages from './messages';
 class Family extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     render() {
 

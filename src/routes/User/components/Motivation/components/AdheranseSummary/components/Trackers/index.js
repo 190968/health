@@ -9,9 +9,6 @@ import {
 import messages from './messages';
 class Trackers extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const{level} = this.props.trackers;

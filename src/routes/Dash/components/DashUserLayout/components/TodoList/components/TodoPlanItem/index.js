@@ -8,10 +8,11 @@ export default class TodoPlanItem extends React.PureComponent {
     render () {
 
         const {
-            plan
+            plan,
+            upid
         } = this.props;
         return (
-            <Link to={'/plan/'+plan.upid} style={{color:'inherit'}}>
+            <Link to={'/plan/'+upid} style={{color:'inherit'}}>
             <Row type="flex" justify="space-between" align="top" style={{padding:5}}>
                 <Col xs={3} md={2}>
                     <Progress type="circle" showInfo={plan.progress === 100} percent={plan.progress}  width={30} />

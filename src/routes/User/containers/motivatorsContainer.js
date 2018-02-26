@@ -41,7 +41,7 @@ const motivators = gql`
 `;
 
 const motivatorInvite = gql`
-   mutation motivatorInvite($userId:ID!,$email:Email!,$message:String) {
+   mutation motivatorInvite($userId:UID!,$email:Email!,$message:String) {
         motivatorInvite(userId:$userId,email:$email,message:$message) {
             id
         }

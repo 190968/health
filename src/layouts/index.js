@@ -1,119 +1,134 @@
-
-import { Switch, Route, IndexLink, Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import React from 'react'
-import ReactPlaceholder from 'react-placeholder';
-import { Spin,Modal,Button } from 'antd';
-import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
-import { Layout, Icon } from 'antd';
-import { withRouter } from 'react-router-dom';
-import LayoutHeader from './components/Header';
-
-
-
-import {asyncDash, asyncPlan,  asyncLogin, asyncRegister, asyncLogout, asyncSettings, asyncForgotPassword, asyncPlanstore,asyncHealth,asyncVerifyPhone,asyncVerifyPhoneConfirm,asyncCommynity, asyncCalendar, asyncMessages, asyncHelp,asyncMotivation,asyncProfile/*,asyncDiscussion,asyncPlan,asyncPlanbuilder, asyncPlantorePlan,  */} from 'routes';
-
-
-import PrivateRoute from '../routes/privateRoute';
+import {withRouter} from 'react-router-dom';
 import IdleTimer from 'react-idle-timer';
+import gql from 'graphql-tag';
+import {graphql} from 'react-apollo';
 
-//const App = require('../components/App').default
-const { Header, Content, Footer } = Layout;
+// import extra
+import {Card, Spin, Modal, Icon} from 'antd';
+import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
 
-export const CoreLayout = ({loading, user, store, location}) =>  {
-
-
-
-
-
-
-    return (
-
-        <div style={{height:'100%', display: 'flex',
-            'minHeight': '100vh',
-            'flexDirection':'column'}}>
+// import main layouts
+import ManagerLayout from './components/ManagerLayout';
+import PatientLayout from './components/PatientLayout';
 
 
+/**
+ * Show proper layout according to current role
+ */
+class CoreByMode extends React.Component {
 
-            <Header>
-                <LayoutHeader loading={loading} location={location}  />
-            </Header>
-            <Content style={{ padding: '20px 50px', flex: '1' }}>
-                <PrivateRoute exact path="/" component={asyncDash(store)} />
-                <Route exact path="/login" component={asyncLogin(store)} />
-                <Route exact path="/logout" component={asyncLogout(store)} />
-                <Route exact path="/register/:code?" component={asyncRegister(store)} />
-                <Route exact path="/password/reset" component={asyncForgotPassword(store)} />
-                <PrivateRoute path="/settings" component={asyncSettings(store)} />
-                <PrivateRoute path="/planstore" component={asyncPlanstore(store)} />
-                <PrivateRoute path="/messages/:id?" component={asyncMessages(store)} />
-                <PrivateRoute path="/community" component={asyncCommynity(store)} />
-                <PrivateRoute path="/calendar" component={asyncCalendar(store)} />
-                <PrivateRoute path="/health" component={asyncHealth(store)} />
-                <PrivateRoute path="/help" component={asyncHelp(store)} />
-                <PrivateRoute path="/motivation" component={asyncMotivation(store)} />
-                <PrivateRoute path="/u/:uid" component={asyncProfile(store)} />
-                <PrivateRoute  path="/plan/:upid" component={asyncPlan(store)} />
-            </Content>
-            <Footer>
-                Copyright © 2010-2017 Fitango Inc. All rights reserved
-            </Footer>
+    render() {
+        //console.log(this.props);
+        const {currentRole} = this.props;
 
-        </div>
-    )}
+       /* if (loading) {
+            return <Card loading/>
+        }
+
+        */
+        console.log(currentRole, 'currentRole');
+        //return null;
+        if (!currentRole || currentRole === 'patient') {
+            return <PatientLayout {...this.props} />;
+        } else {
+            return <ManagerLayout {...this.props} />;
+        }
+    }
+}
+
+/**
+ * Get current role of the patient from cache
+ */
+export const GET_CURRENT_ROLE_QUERY = gql`
+    query GET_CURRENT_ROLE {
+      account {
+         currentRole
+         token
+      }
+    }
+`;
+
+const withQuery = graphql(
+    GET_CURRENT_ROLE_QUERY,
+    {
+        options: () => {
+            return {
+                fetchPolicy: 'cache-only'
+            }
+        },
+        props: ({data}) => {
+
+            //console.log(data);
+            if (!data.loading) {
+                return {
+                    currentRole: data.account.currentRole,
+                    token: data.account.token,
+                }
+            } else {
+                return {loading: data.loading}
+            }
+        },
+    }
+)
+
+
+const CoreByModeWithQuery = withQuery(CoreByMode);
+
 
 class Core extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { isIddle: false } ;
+        this.state = {isIddle: false};
         this._onActive = this._onActive.bind(this);
         this._onIdle = this._onIdle.bind(this);
         this._onLogout = this._onLogout.bind(this);
     };
+
     static propTypes = {
-        token: PropTypes.string,
-        //logout: PropTypes.func,
-        //children: PropTypes.node.isRequired,
         loading: PropTypes.bool,
         modalChildrens: PropTypes.array,
         hideModal: PropTypes.func
     };
 
     static defaultProps = {
-        token: null,
         children: null,
         user: null,
         loading: false,
     };
 
     _onLogout() {
-    };
-    _onActive() {
-        this.setState({isIddle:false});
-    };
-    _onIdle() {
-        this.setState({isIddle:true});
+
     };
 
+    _onActive() {
+        this.setState({isIddle: false});
+    };
+
+    _onIdle() {
+        this.setState({isIddle: true});
+    };
 
     render() {
 
-        const {loading, user, store, location} = this.props;
-
+        const {loading, user} = this.props;
         if (loading) {
             return (
-                <div style={{height:'100%', width:'100%',overflow: 'auto', display: 'flex',top: '50%', position: 'absolute',
+                <div style={{
+                    height: '100%', width: '100%', overflow: 'auto', display: 'flex', top: '50%', position: 'absolute',
                     'minHeight': '100vh',
-                    'flexDirection':'column'}}>
-                    <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
+                    'flexDirection': 'column'
+                }}>
+                    <Spin indicator={<Icon type="loading" style={{fontSize: 24}} spin/>}/>
                 </div>
             );
         }
 
-        if(user.info.id && !user.info.phoneConfirmed){
-            return(
-                <VerifyPhone  />
+        if (user.info.id && !user.info.phoneConfirmed) {
+            return (
+                <VerifyPhone/>
             )
         }
 
@@ -122,32 +137,29 @@ class Core extends React.Component {
             <React.Fragment>
                 {this.state.isIddle ? <Modal title="No Activity" visible={true}
                                              onCancel={this._onLogout}
-                                             onOk={this._onActive} okText="Continue" cancelText="Logout"
-                    >
+                                             onOk={this._onActive} okText="Continue" cancelText="Logout">
                         You've been inactive. Would you like to continue or logout
                     </Modal> :
-
                     ( user.info.id ?
-                    <IdleTimer
-                        ref="idleTimer"
-                        element={document}
-                        idleAction={this._onIdle}
-                        timeout={1000*60*15}
-                        format="MM-DD-YYYY HH:MM:ss.SSS">
-                        <CoreLayout {...this.props} />
-                    </IdleTimer> : <CoreLayout {...this.props} />)
+                        <IdleTimer
+                            ref="idleTimer"
+                            element={document}
+                            idleAction={this._onIdle}
+                            timeout={1000 * 60 * 15}
+                            format="MM-DD-YYYY HH:MM:ss.SSS">
+                            <CoreByModeWithQuery {...this.props} />
+                        </IdleTimer> : <PatientLayout {...this.props} />)
                 }
             </React.Fragment>)
     }
 }
 
 
-
 const mapStateToProps = (state) => {
 
     return {
         loading: state.network.loading,
-        token: state.user.token,
+        //token: state.user.token,
         user: state.user,
     }
 };
@@ -155,13 +167,15 @@ const mapStateToProps = (state) => {
 
 
 
-const mapDispatchToProps = (dispatch) => {
+
+
+
+
+const mapDispatchToProps = () => {
 
     return {
-        /*increment: (info) => {dispatch(increment(info))},
-        doubleAsync*/
     }
 };
 
 
-export  default withRouter(connect(mapStateToProps, mapDispatchToProps)(Core));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Core));

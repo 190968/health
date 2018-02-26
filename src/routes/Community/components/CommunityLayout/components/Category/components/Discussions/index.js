@@ -39,9 +39,7 @@ const formItemLayout = {
 
 class Discussions extends React.Component{
     state = {discussionModal: false }
-    constructor(props){
-        super(props);
-    }
+
 
     showModal = () => {
         this.setState({

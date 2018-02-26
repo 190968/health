@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 const GET_PLANS  = gql`
-query GET_PLANS($user_id:ID) {
+query GET_PLANS($user_id:UID) {
  user (id:$user_id) {
             id
             plans {

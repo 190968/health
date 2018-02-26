@@ -15,9 +15,7 @@ const IconText = ({ type, text }) => (
 );
 
 class DiscussionListItem extends React.PureComponent{
-    constructor(props){
-        super(props);
-    }
+
 
     render(){
         const {item} = this.props;

@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 
 
 export const PLAN_BODY_QUERY = gql`
-    query GET_PLAN_BODY ($id: ID!, $upid: ID!, $date: Date!) {
+    query GET_PLAN_BODY ($id: UID!, $upid: UID!, $date: Date!) {
         plan (id: $id) {
             ...PlanCardInfo,
             upid,
@@ -95,9 +95,9 @@ const PlanBodyWithQuery = graphql(
                                 //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
+                                /*return Object.assign({}, previousResult, {
                                     medicationPlan: fetchMoreResult.medicationPlan,
-                                });
+                                });*/
                             },
                         });
                     }

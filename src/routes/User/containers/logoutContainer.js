@@ -3,6 +3,7 @@ import { withApollo,graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import LogoutForm from '../components/Logout'
 import { logoutUser } from '../modules/user';
+import { NETWORK_INFO_QUERY } from '../../../components/App';
 
 const logoutUserQuery = gql`
     mutation logout{
@@ -24,7 +25,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     logout: () => {
-        ownProps.mutate().then((data) => {
+
+        ownProps.mutate({
+            refetchQueries: [{
+                query: NETWORK_INFO_QUERY,
+            }],
+        }).then((data) => {
 
             if (!data.loading) {
                 ownProps.client.resetStore();

@@ -8,10 +8,7 @@ import messages from './listCommunity.json';
 import CategoryCard from '../../../CategoryCard';
 class ListCommunity extends React.Component{
 
-    constructor(props){
-        super(props);
 
-    }
 
     render(){
         const {loading} = this.props;

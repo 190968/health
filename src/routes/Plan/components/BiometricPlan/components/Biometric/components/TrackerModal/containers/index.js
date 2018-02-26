@@ -11,10 +11,8 @@ import {message} from "antd/lib/index";
 import {BiometricPlanQuery} from "../../../../../containers";
 
 
-//import { compose } from 'react-apollo';
-
 const tracker = gql`
-query GET_TRACKER($id: ID, $user_id: ID!, $amid: ID) {
+query GET_TRACKER($id:UID, $user_id: UID!, $amid:UID) {
     biometricPlan ( userId: $user_id) {
         id
         columns {
@@ -50,7 +48,7 @@ query GET_TRACKER($id: ID, $user_id: ID!, $amid: ID) {
 }
 `;
 const updateTrackerMutate=gql`
- mutation TrackerUpdate($id: ID, $userId: ID!, $input: TrackerInput!) {
+ mutation TrackerUpdate($id:UID, $userId: UID!, $input: TrackerInput!) {
         trackerUpdate(id:$id, userId: $userId, input: $input) {
               id,
             measurement {
@@ -72,7 +70,7 @@ const updateTrackerMutate=gql`
     }
 `;
 const addMutation=gql`
- mutation TrackerAdd($userId: ID!, $input: TrackerInput!) {
+ mutation TrackerAdd($userId: UID!, $input: TrackerInput!) {
         trackerAdd(userId: $userId, input: $input) {
               id,
                 measurement {

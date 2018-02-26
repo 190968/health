@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { Progress, Popover, Menu, Icon,  Badge } from 'antd';
 import NotificationBadge from '../../containers/NotificationBadge';
 
 
-export default class RightMenu extends React.Component {
+class RightMenu extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,6 +28,15 @@ export default class RightMenu extends React.Component {
         this.setState({
             isOpenUser: !this.state.isOpenUser
         });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        console.log(this.props);
+        if (!nextProps.token && nextProps.token !== this.props.token) {
+            // reload to logout
+            this.props.history.push('/logout');
+        }
     }
 
     render() {
@@ -61,3 +70,5 @@ export default class RightMenu extends React.Component {
         );
     }
 }
+
+export default withRouter(RightMenu);

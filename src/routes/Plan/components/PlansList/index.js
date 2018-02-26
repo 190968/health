@@ -57,7 +57,7 @@ export class PlansList extends React.Component {
                 dataSource={plans}
                 renderItem={product => (
                     <List.Item>
-                        <PlanWidget info={product} key={product.id} user_id={user_id}/>
+                        <PlanWidget info={product.plan} upid={product.id} key={product.id} user_id={user_id}/>
                     </List.Item>
                 )}
             /> : <div className="ant-list-empty-text">No ActionPlans</div>}

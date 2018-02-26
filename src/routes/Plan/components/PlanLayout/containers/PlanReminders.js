@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 
 export const PLAN_REMINDERS_QUERY = gql`
-    query GET_PLAN_REMINDERS ($upid: ID!) {
+    query GET_PLAN_REMINDERS ($upid: UID!) {
         userPlan (id: $upid) {
             id
             reminders {
@@ -57,7 +57,7 @@ const PlanRemindersWithQuery = graphql(
 
 
 const SaveRemindersMutation = gql`
-    mutation userPlanAddReminder($input: [PlanRemindersInput]!, $upid: ID!) {
+    mutation userPlanAddReminder($input: [PlanRemindersInput]!, $upid: UID!) {
         userPlanAddReminder(upid: $upid, input: $input)
     }
 `;

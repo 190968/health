@@ -5,9 +5,6 @@ import {Card, Icon, Tooltip} from 'antd';
 
 
 export default class PlanMedia extends React.PureComponent {
-    constructor(props) {
-        super(props);
-    };
     static propTypes = {
         reportValue: PropTypes.number
     };
@@ -24,7 +21,6 @@ export default class PlanMedia extends React.PureComponent {
                     title={label}
 
                 /></Card>;
-                break;
             case 'import':
             case 'audio':
                 return <Card
@@ -32,8 +28,7 @@ export default class PlanMedia extends React.PureComponent {
                 ><Card.Meta
                     avatar={<Icon type="play-circle-o" />}
                     title={label}
-                /></Card>;//<Slider marks={marks}    />
-                break;
+                /></Card>;
             default:
                 let icon = '';
                 if (type == 'presentation') {
@@ -46,7 +41,6 @@ export default class PlanMedia extends React.PureComponent {
                     title={<Tooltip title="Will be pened in a new tab">{item.label}</Tooltip>}
                     description="Will be opened in a new tab"
                 /></a></Card>;//<Slider marks={marks}    />
-                break;
         }
 
 

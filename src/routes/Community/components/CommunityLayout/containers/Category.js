@@ -12,7 +12,7 @@ import gql from 'graphql-tag';
 
 
 const CATEGORY = gql`
-query GET_CATEGORY($id:ID) {
+query GET_CATEGORY($id:UID) {
 
        category(id:$id) {
          id
@@ -96,14 +96,14 @@ query GET_CATEGORY($id:ID) {
 }
 `;
 const categoryJoinMutate = gql`
-mutation CATEGORY_JOIN ($id:ID!,$uid:ID){
+mutation CATEGORY_JOIN ($id:UID!,$uid:UID){
     categoryJoin(id:$id,uid:$uid)
   }
 
 `;
 
 const categoryUnjoinMutate = gql`
-mutation CATEGORY_UNJOIN ($id:ID!,$uid:ID){
+mutation CATEGORY_UNJOIN ($id:UID!,$uid:UID){
     categoryUnjoin(id:$id,uid:$uid)
   }
 

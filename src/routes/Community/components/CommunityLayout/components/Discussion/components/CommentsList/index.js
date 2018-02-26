@@ -23,9 +23,7 @@ const IconText = ({ type, text }) => (
 
 class Comment extends React.Component{
     state = { visibleReplyModal: false ,id:null,title:""}
-    constructor(props) {
-        super(props);
-    }
+
 
     showModal = (param) => {
         this.setState({

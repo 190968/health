@@ -11,9 +11,7 @@ import CommentsView from './components/CommentsView';
 
 class Discussions extends React.Component{
 
-    constructor(props) {
-        super(props);
-    }
+
 
     handleSubmit = (e) => {
         e.preventDefault();

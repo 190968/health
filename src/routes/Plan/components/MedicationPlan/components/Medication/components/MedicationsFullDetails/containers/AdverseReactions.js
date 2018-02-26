@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import {BiometricPlanQuery} from "../../../../../../BiometricPlan/containers";
 
 const GetMedReactionsQuery = gql`
-query getAdverseReactions($id:ID!, $userId: ID!) {
+query getAdverseReactions($id:UID!, $userId: UID!) {
     medication(id: $id,userId: $userId) {
        id
        reactions {
@@ -26,7 +26,7 @@ query getAdverseReactions($id:ID!, $userId: ID!) {
 }
 `;
 const AddMedReactionQuery = gql`
-    mutation addMedReaction($medicationId:ID!, $userId:ID!, $reaction:String!, $severity:Int!){
+    mutation addMedReaction($medicationId:UID!, $userId:UID!, $reaction:String!, $severity:Int!){
         medicationReactionAdd(medicationId:$medicationId, userId:$userId, reaction:$reaction, severity:$severity) {
             id
             reaction

@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 
 const reportOnTracker = gql`
-    mutation trackerReport($id: ID!, $input: TrackerInput!) {
+    mutation trackerReport($id: UID!, $input: TrackerInput!) {
         tracker(id:$id, input: $input) {
              id
         }

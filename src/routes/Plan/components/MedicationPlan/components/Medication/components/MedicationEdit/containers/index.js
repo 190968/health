@@ -13,7 +13,7 @@ import {MedicationPlan_QUERY} from "../../../../../containers";
 //import { compose } from 'react-apollo';
 
 const medication = gql`
-query GET_MEDICATION($user_id: ID!, $id: ID, $drugId: ID) {
+query GET_MEDICATION($user_id: UID!, $id:UID, $drugId:UID) {
             medication(id: $id, userId: $user_id) {
                 id,
                 startDate,
@@ -38,7 +38,7 @@ query GET_MEDICATION($user_id: ID!, $id: ID, $drugId: ID) {
 }
 `;
 const editMutation = gql`
- mutation MedicationUpdate($id: ID!, $userId: ID!, $input: MedicationInput!) {
+ mutation MedicationUpdate($id: UID!, $userId: UID!, $input: MedicationInput!) {
         medicationUpdate(id:$id, userId: $userId, input: $input) {
              id,
                 startDate,
@@ -63,7 +63,7 @@ const editMutation = gql`
     }
 `;
 const addMutation = gql`
- mutation MedicationAdd($userId: ID!, $input: MedicationInput!) {
+ mutation MedicationAdd($userId: UID!, $input: MedicationInput!) {
         medicationAdd(userId: $userId, input: $input) {
              id,
                 startDate,
