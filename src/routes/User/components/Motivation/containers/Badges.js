@@ -10,9 +10,9 @@ import gql from 'graphql-tag';
 
 
 const BADGES  = gql`
-  query GET_BADGES($cursors:CursorInput) {
-account{
-  user{
+  query GET_BADGES($cursors:CursorInput,$userId: ID) {
+
+  user(id: $userId){
   id
     motivation{
      badges(cursors:$cursors){
@@ -33,15 +33,22 @@ account{
     }
   }
 }
-}
+
 `;
 
 const withMutation = graphql(BADGES, {
+    options: (ownProps) => ({
+
+        variables: {
+            user_id: ownProps.userId
+        }
+
+    }),
     props: ({ ownProps, data }) => {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user.motivation,
+                info: data.user.motivation,
                 loading: data.loading
             }
         }
@@ -52,9 +59,9 @@ const withMutation = graphql(BADGES, {
 });
 
 const mapStateToProps = (state) => {
-    return {
-
-    };
+    return{
+        userId:state.user.info.id
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

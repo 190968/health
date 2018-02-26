@@ -4,7 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Form,Card,Col,Button,Input,Icon,Avatar } from 'antd';
 import {withRouter} from "react-router-dom";
-import Comment from '../../components/Comment';
+import Comment from '../../components/CommentsList';
 import InputBox from '../../../InputBox'
 import {
     injectIntl,

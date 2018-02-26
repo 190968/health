@@ -10,9 +10,9 @@ import gql from 'graphql-tag';
 
 
 const CURRENTLEVEL  = gql`
-query GET_CURRENTLEVEL{
-account{
-  user{
+query GET_CURRENTLEVEL ($userId: ID){
+
+  user(id: $userId){
   id
     motivation{
 currentLevel{
@@ -28,15 +28,22 @@ currentLevel{
   }
 }
 }
-}
+
 `;
 
 const withMutation = graphql(CURRENTLEVEL, {
+    options: (ownProps) => ({
+
+        variables: {
+            user_id: ownProps.userId
+        }
+
+    }),
     props: ({ ownProps, data }) => {
         console.log(data);
         if (!data.loading) {
             return {
-                info: data.account.user.motivation,
+                info: data.user.motivation,
                 loading: data.loading
             }
         }
@@ -47,9 +54,9 @@ const withMutation = graphql(CURRENTLEVEL, {
 });
 
 const mapStateToProps = (state) => {
-    return {
-
-    };
+    return{
+        userId:state.user.info.id
+    }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
