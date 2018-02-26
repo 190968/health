@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PlanWidget from 'routes/Plan/components/Plan';
-import { List, Card, Tooltip, Dropdown, Button, Icon, Menu  } from 'antd';
+import { Progress,List, Card, Tooltip, Dropdown, Button, Icon, Menu  } from 'antd';
 import { Link } from 'react-router-dom';
 import {
     FormattedMessage,
@@ -56,12 +56,20 @@ export class PlansList extends React.Component {
         >
             {plans.length > 0 ? (list ?
                 <List
-                    split={false}
+                    itemLayout="vertical"
                     pagination={false}
                     dataSource={plans}
                     renderItem={product => (
-                        <List.Item>
-                            <PlanWidget info={product.plan} upid={product.id} key={product.id} user_id={user_id}/>
+                        <List.Item
+                            key={product.id}
+                            extra={<Link to={'/plan/'+product.id}><img width={150} alt="logo" src={product.plan.thumb.large} /></Link>}
+                        >
+                            <List.Item.Meta
+                                title={<Link to={'/plan/'+product.id}>{product.plan.title}</Link>}
+                                description={product.plan.description}
+                            />
+
+
                         </List.Item>
                     )}
                 />
