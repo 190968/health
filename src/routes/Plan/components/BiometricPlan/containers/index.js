@@ -33,14 +33,14 @@ const BiometricPlanBodyWithQuery = graphql(
     BiometricPlanQuery,
     {
         props: ({ ownProps, data }) => {
-            //console.log(data);
+
             if (!data.loading) {
                 return {
                     info: data.biometricPlan,
                     loading: data.loading,
 
                     loadDate(date, user_id) {
-                        //console.log(date);
+
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -52,7 +52,7 @@ const BiometricPlanBodyWithQuery = graphql(
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
                                 //return {medicationPlan:{id:29}};
-                                //console.log(fetchMoreResult);
+
                                 //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
@@ -102,7 +102,7 @@ const withDeleteMutation = graphql(deleteTracker, {
                     // Read the data from our cache for this query.
                     const data = store.readQuery({ query: deleteMed });
 
-                    console.log(data);
+
                     // Add our comment from the mutation to the end.
                     //data.comments.push(medicationDelete);
                     // Write our data back to the cache.
@@ -125,7 +125,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-    //console.log(1);
+
     return {
         /*increment: (info) => {dispatch(increment(info))},
         doubleAsync*/

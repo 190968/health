@@ -44,9 +44,7 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(ownProps);
-                //console.log(data);
-                //  console.log(data.planstore.filters);
+
                 return {
 
                     plans: data.planstore.plans.edges,
@@ -56,7 +54,7 @@ const PlanstoreLayoutWithQuery = graphql(
 
 
                     loadMoreEntries(page) {
-                        //console.log("Какой page в props",page);
+
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -66,7 +64,7 @@ const PlanstoreLayoutWithQuery = graphql(
                                 page: page,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                console.log("Какой previousResult в updateQuery",previousResult);
+
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {

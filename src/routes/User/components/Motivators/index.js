@@ -71,7 +71,6 @@ class Motivators extends React.Component {
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
         const { getFieldDecorator } = this.props.form;
-        console.log(edges)
         const { intl } = this.props;
 
         return(

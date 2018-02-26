@@ -33,7 +33,7 @@ const TodoListWithQuery = graphql(
     DASH_QUERY,
     {
         props: ({ ownProps, data }) => {
-            //console.log(data);
+
             if (!data.loading) {
                 const {user, medicationPlan, biometricPlan} = data;
                 const {plans} = user;

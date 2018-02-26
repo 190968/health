@@ -24,7 +24,7 @@ class ModalMakeCommitments extends React.Component {
 
     }
     onChange = (e) => {
-        console.log(e);
+
         this.setState({ title: e});
         this.setState({ visible: false});
 
@@ -38,7 +38,7 @@ class ModalMakeCommitments extends React.Component {
         }
         const {intl}=this.props;
 
-        console.log(info);
+
         let selectItem =[];
         info.forEach(item=>{
             selectItem.push(  <Option key={item.id} value={item.plan.title}>{item.plan.title}</Option>)

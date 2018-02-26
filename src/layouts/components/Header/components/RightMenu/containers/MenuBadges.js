@@ -23,7 +23,7 @@ export const NOTIFICATIONS_POOL_QUERY  = gql`
 
 const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
     options: (ownProps) => {
-        //console.log(ownProps.lastNotification, 'LastNotification');
+
         return {
             //forceFetch: true,
             variables: {

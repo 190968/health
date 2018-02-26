@@ -33,15 +33,14 @@ export class DashUserLayout extends React.Component {
            loading, date, user_id
         } = this.props;
 
-      //console.log(user);
+
         if (loading) {
             //return (<div>Loading...</div>);
             return (
                 <Card loading>Loading...</Card>
             );
         }
-        //console.log(loading, 'Loading');
-        //console.log(date);
+
 
         return (
            <Row gutter={15}>

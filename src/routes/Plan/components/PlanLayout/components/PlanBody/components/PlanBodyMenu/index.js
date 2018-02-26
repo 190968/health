@@ -43,7 +43,7 @@ export class PlanBodyMenu extends React.Component {
                 currentKey = 'lesson_0';
                 //}
                 // check on incompleted lessons
-                //console.log(lessons);
+
                 lessons.map((lesson, i) => {
                     if (!foundMatch && currentKey == 'lesson_0' && !lesson.completed) {
                         currentTab = 'lessons';
@@ -60,7 +60,7 @@ export class PlanBodyMenu extends React.Component {
                 // check on incompleted sections
                 activities.map((section, i) => {
                     if (!foundMatch && currentKey == 'section_0' && !section.completed) {
-                        //console.log(section);
+
                         currentTab = 'activities';
                         currentKey = 'section_'+i;
                         currentKeyI = i;
@@ -81,8 +81,7 @@ export class PlanBodyMenu extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (nextProps.currentKey !== this.state.currentKey) {
             this.setState({
                 currentKey:nextProps.currentKey
@@ -99,11 +98,10 @@ export class PlanBodyMenu extends React.Component {
     }
 
     render() {
-       //console.log(this.props);
+
         const {lessons, activities} = this.props;
         let {currentTab, currentKey} = this.state;
-        console.log(currentTab, 'curtab');
-        console.log(currentKey, 'curkey');
+
         return (<Menu
             onOpenChange={this.onOpenChange}
             onClick={this.onClick}

@@ -11,10 +11,7 @@ export default class PlanMedia extends React.PureComponent {
 
     render() {
         const {item} = this.props;
-        console.log(item);
         const {label, type, url, embedHtml} = item;
-
-        //console.log(marks);
         switch(type) {
             case 'image':
                 return <Card

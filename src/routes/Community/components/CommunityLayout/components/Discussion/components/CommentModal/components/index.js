@@ -2,7 +2,7 @@
  * Created by Павел on 31.01.2018.
  */
 import React, { PropTypes } from 'react';
-import { Form,Card,Icon,Modal,Input} from 'antd';
+import { Form,Icon,Modal,Input} from 'antd';
 import {withRouter} from "react-router-dom";
 import {
     injectIntl
@@ -25,7 +25,7 @@ class CommentModal extends React.Component{
         const { discussionReply } = this.props;
         this.props.form.validateFields((err, values) => {
             if(err!=null)
-            {console.log(err);
+            {
 
                 return null;
             }

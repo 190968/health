@@ -1,6 +1,6 @@
 
 export const LOAD_NETWORK_DETAILS = 'LOAD_NETWORK_DETAILS';
-
+export const SET_CURRENT_ROLE = 'SET_CURRENT_ROLE';
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -23,7 +23,7 @@ export const actions = {
 const ACTION_HANDLERS = {
     [LOAD_NETWORK_DETAILS]    : (state, {network}) => {
         // load network with apollo
-        //console.log(payload);
+
         return {
         ...initialState,
             id:network.id,
@@ -34,7 +34,17 @@ const ACTION_HANDLERS = {
             colors:network.colors,
             loading:false,
         };
-    }
+
+    },
+    [SET_CURRENT_ROLE]    : (state, {role}) => {
+        // load network with apollo
+
+        return {
+            ...state,
+            current_role:role,
+        };
+    },
+
 }
 
 // ------------------------------------
@@ -56,6 +66,6 @@ const initialState = {
 export default function networkReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
     //action.payload = {};
-    //console.log('action',action);
+
     return handler ? handler(state, action) : state
 }

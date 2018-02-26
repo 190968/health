@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(({data}) => {
                 //const token = data.login.token;
                 //const user = data.login.user;
-                //console.log(data);
+
                 //ownProps.report.id = 0;
 
                 //toggleCoin();
@@ -59,12 +59,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         if (ownProps.time) {
             new_report.time = ownProps.time;
         }
-        //console.log(new_report);
+
         ownProps.medicationReport({ report: new_report}, med_id)
             .then(({data}) => {
                 //const token = data.login.token;
                 //const user = data.login.user;
-                //console.log(data);
+
                 //ownProps.report.id = 0;
 
                 toggleCoin();

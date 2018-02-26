@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
-import {
-    FormattedMessage,
-} from 'react-intl';
+
 import {Modal, Form, Icon, Input, Button, TimePicker, Select, Spin, Tooltip, Col } from 'antd';
 const FormItem = Form.Item;
 const InputGroup = Input.Group;
@@ -10,22 +8,6 @@ const Option = Select.Option;
 const format = 'h:mm a';
 
 
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
-    },
-};
-const formItemLayoutWithOutLabel = {
-    wrapperCol: {
-        xs: { span: 24, offset: 0 },
-        sm: { span: 20, offset: 4 },
-    },
-};
 let UID = 0;
 
 export class PlanReminders extends React.Component {
@@ -65,17 +47,16 @@ export class PlanReminders extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { saveReminders } = this.props;
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields((err) => {
             if (!err) {
-                console.log(values);
+
                 //return saveReminders(values);
             }
         });
     }
 
     render() {
-        const {loading, reminders, reminderTypes, notificationTypes} = this.props;
+        const {loading,reminderTypes, notificationTypes} = this.props;
 
         if (loading) {
             return <Modal
@@ -95,16 +76,9 @@ export class PlanReminders extends React.Component {
                 sm: { span: 24 },
             },
         };
-        const formItemLayoutWithOutLabel = {
-            wrapperCol: {
-                xs: { span: 24, offset: 0 },
-                sm: { span: 20, offset: 4 },
-            },
-        };
-
         getFieldDecorator('keys', { initialValue: [] });
         const keys = getFieldValue('keys');
-        const formItems = keys.map((k, index) => {
+        const formItems = keys.map((k) => {
             return (
                 <FormItem
                     {...formItemLayout}

@@ -24,12 +24,11 @@ const NetworkWithQuery = graphql(
     {
         //name: 'NetworkInfoQuery',
         props: ({ ownProps, data }) => {
-        //console.log(data);
+
             if (!data.loading) {
-                //console.log(ownProps);
+
                 const network = data.network;
-                //console.log(data);
-                //console.log(network);
+
                 return {
                     network: network,
                     //modules: data.network.modules,
@@ -55,7 +54,7 @@ const NetworkWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state) => {
-    //console.log(state);
+
     return {
         'network':state.network
     };

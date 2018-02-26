@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
         ownProps.forgotPasswordConfirm({ code:code, new_password:new_password,new_password_repeat:new_password_repeat})
             .then(({data}) => {
-                //console.log(data);
+
                 // redirect to Enter code
                 ownProps.history.push('/login');
                 // show success message

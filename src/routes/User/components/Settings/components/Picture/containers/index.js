@@ -47,7 +47,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(({data}) => {
                 message.success('Saved');
             }).catch((error) => {
-            console.log(error);
         });
     },
 });

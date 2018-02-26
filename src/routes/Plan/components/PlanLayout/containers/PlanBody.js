@@ -61,15 +61,13 @@ const PlanBodyWithQuery = graphql(
 
         }),
         props: ({ ownProps, data }) => {
-            //console.log(data);
-            //console.log(CURRENT_PLANSTORE_PLAN);
+
             if (!data.loading) {
                 const plan = data.plan;
                 //const body = plan.body;
                 const lessons = plan.lessons || [];
                 const activities = plan.activities || [];
                 const intro = plan.intro || [];
-                //console.log(activities);
                 return {
                     //upid: data.plan.upid,
                     //modules: data.network.modules,
@@ -80,7 +78,7 @@ const PlanBodyWithQuery = graphql(
                     intro: intro,
 
                     loadDate(date) {
-                        //console.log(date);
+
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -93,7 +91,7 @@ const PlanBodyWithQuery = graphql(
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
                                 //return {medicationPlan:{id:29}};
-                                //console.log(fetchMoreResult);
+
                                 //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;

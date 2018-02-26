@@ -81,7 +81,7 @@ export class PlanHeader extends React.Component {
                deletePlan(info.id);
             },
             onCancel() {
-                //console.log('Cancel');
+
             },
         });
 
@@ -136,7 +136,7 @@ export class PlanHeader extends React.Component {
     render() {
         const {info, plan, user, loading} = this.props;
         if (loading) {
-            // console.log(plan);
+
             //return (<div>Loading...</div>);
             return (
                 <Card loading>
@@ -144,13 +144,12 @@ export class PlanHeader extends React.Component {
                 </Card>
             );
         }
-        //console.log(plan);
-        //console.log(loading);
+
         var img = plan.thumb.wide;
         var divStyle = {
             backgroundImage: 'url(' + img + ')'
         }
-        //console.log('Loading plan layout');
+
         const options = (
             <Menu onClick={this.handleMenuClick}>
                 <Menu.Item key="motivators">

@@ -96,7 +96,7 @@ const settingUserMutate = gql`
 
 const withQuery = graphql(settingUser,
     {
-        props: ({ownProps, data}) => {
+        props: ({ data}) => {
             if (!data.loading) {
                 return {
                     account: data.account,
@@ -134,9 +134,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (values, stopLoading) => {
-        //console.log(values);
 
-        const {title,firstName, lastName, middleName, birthday, prefix, phone, gender, email, timezone, address, language, dateFormat} = values;
+
+        const {title,firstName, lastName, middleName, birthday, phone, gender, email, timezone, address, language, dateFormat} = values;
 
         const input = {
             title,
@@ -154,21 +154,20 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
         };
         return ownProps.updateInfo(input).then(({data}) => {
-            //console.log("----settings----");
-            //console.log(data);
+
+
             message.success('Updated');
             stopLoading();
             dispatch(loadFullUser(data.updateUser));
         })
 
         /*
-        console.log(ownProps);
+
         ownProps.settingUserMutate({user:{first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,phone:[prefix,phone] }})
             .then(({data}) => {
-                console.log("----settings----");
-                console.log(data);
+
             }).catch((error) => {
-            console.log(error);
+
         });*/
     },
 });

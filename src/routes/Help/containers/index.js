@@ -28,8 +28,8 @@ const HelpWithQuery = graphql(
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(ownProps);
-                console.log(data);
+
+
                 return {
                     glossary: data.glossary,
                     faq: data.faq,

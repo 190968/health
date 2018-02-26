@@ -17,8 +17,7 @@ const withMutation = graphql(reportOnTracker, {
         onChange: (value, time, comments) => {
 
             const input = {value:value, time:time, date:ownProps.date, reportKey:ownProps.reportKey, comments:comments};
-            //console.log(ownProps);
-            //console.log(input);
+
             //return false;
             return mutate({
                 variables: { input: input, id: ownProps.item.id },

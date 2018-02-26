@@ -44,10 +44,6 @@ class EditMedicationForm extends React.Component {
             timesAtHours:0,
             inited:false,
             advance:false,
-            //showHours : null,
-            //startDate: null,
-            //endDate: null,
-            //select_value:null,
             total: null
         };
     };
@@ -70,34 +66,18 @@ class EditMedicationForm extends React.Component {
             this.setState({timesAtHours:nextProps.info.timesPerHour.length, inited:true});
         }
     }
-    /*componentWillMount = (nextProps) => {
-        console.log(this.props);
-        this.setState({
-            //showHours: this.props.info.medication.type,
-            //startDate:nextProps.info.medication.startDate,
-            //endDate:nextProps.info.medication.endDate,
-        });
-    }
 
-    /*componentDidUpdate = (nextProps) => {
-        console.log(this.props);
-        this.setState({
-            //showHours: this.props.info.medication.type,
-            //startDate:nextProps.info.medication.startDate,
-            //endDate:nextProps.info.medication.endDate,
-        });
-    }*/
 
 
     handleCancel = () => {
-        console.log("handleCancel");
+
     }
 
     onChangeDate = (field, value) => {
         this.setState({
             [field]: value,
         });
-        console.log("onChangeDate");
+
     }
     onChange = (e) => {
         this.setState({
@@ -118,7 +98,7 @@ class EditMedicationForm extends React.Component {
         let notPermanent = 0;
         notPermanent += Number(e)
         total = notPermanent;
-        console.log(e, " -- onTotal", total);
+
     };
     handleSubmit = (e) => {
         e.preventDefault();
@@ -126,22 +106,12 @@ class EditMedicationForm extends React.Component {
         const {id, timesPerHour} = info;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+
                 const {type, startDate, endDate, purpose, timesAtHours, directions, sideEffects, quantity, timesPerDay} = values;
                 let times = [];
-                /*let timesAtHours = [];
-                let Quantity = [];
-                let takeAt = [];
-                Quantity.push(quantityTake1, quantityTake2, quantityTake3, quantityTake4, quantityTake5);
-                takeAt.push(takeAt1, takeAt2, takeAt3, takeAt4, takeAt5);
-                console.log(Quantity, " ------------ Quantity");
-                console.log(takeAt, " ------------- takeAt");
-                for (let i = 0; i < timesPerHour; i++) {
-                    timesAtHours.push({"id": i, "time": takeAt[i].format("hh:mm:ss"), "quantity": Quantity[i]});
-                }*/
+
                 if (type === 'at_times') {
                     times = timesAtHours.map((timeInfo, i) => {
-                        // get ID of the initial time
                         const id = timesPerHour[i] ? timesPerHour[i]['id'] : '';
                         return {id, "time": timeInfo.time.format("HH:mm:ss"), "quantity": timeInfo.quantity}
                     })
@@ -187,7 +157,7 @@ class EditMedicationForm extends React.Component {
 
         let {type, drug, timesPerDay, timesPerHour, quantity, startDate, endDate, purpose, sideEffects, directions} = info;//.medication;
 
-        //console.log(info);
+
 
 
         if (timesPerDay === 0) {
@@ -280,7 +250,7 @@ class EditMedicationForm extends React.Component {
             }
         }
 
-        //console.log(Take);
+
 
         /*// if we have at times from db
         if (timesPerHour.length > 0) {
@@ -367,7 +337,7 @@ class EditMedicationForm extends React.Component {
 
         //const {title} = this.props;
 
-        //console.log(title);
+
 
         return (
             <Modal

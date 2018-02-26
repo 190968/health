@@ -9,10 +9,6 @@ import apolloClient from '../../clients/apolloClient';
 import {ApolloProvider} from 'react-apollo';
 import {Provider} from 'react-redux'
 import gql from 'graphql-tag';
-import {Modal} from 'antd';
-//import logo from './logo.svg';
-//
-//core
 import Core from '../../layouts'
 import {loadNetwork} from 'routes/Network/modules/network'
 import {loadUser, loadUserFAIL} from '../../routes/User/modules/user'
@@ -29,8 +25,6 @@ import {createBrowserHistory} from 'history'
 // locale
 import {LocaleProvider} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
-import ruRu from 'antd/lib/locale-provider/ru_RU';
-import esEs from 'antd/lib/locale-provider/es_ES';
 import LoginForm from "../../routes/User/components/Login";
 
 var history = createBrowserHistory();
@@ -95,6 +89,7 @@ class App extends React.Component {
             //this.setState({loading:false})
                 if (checkToken) {
                     this.props.store.dispatch(loadUser(user));
+
                 } else {
                     this.props.store.dispatch(loadUserFAIL(user));
                 }

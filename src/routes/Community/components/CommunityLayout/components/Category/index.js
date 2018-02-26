@@ -28,7 +28,7 @@ class Category extends React.Component{
     }
 
     handleChange(value) {
-        console.log("-------handleChange-------");
+
 
         this.props.handleBreadcrumbChange(value);
     }

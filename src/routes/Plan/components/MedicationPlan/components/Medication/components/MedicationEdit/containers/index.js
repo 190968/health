@@ -91,7 +91,6 @@ const addMutation = gql`
 const MedicationEditWithQuery = graphql(medication,
     {
         options: (ownProps) => {
-            //console.log(ownProps);
             return {
                 variables: {
                     user_id: ownProps.userId,
@@ -103,7 +102,6 @@ const MedicationEditWithQuery = graphql(medication,
             }
         },
         props: ({ownProps, data}) => {
-            //console.log(data);
             if (!data.loading) {
                 return {
                     info: data.medication,
@@ -120,7 +118,6 @@ const MedicationEditWithQuery = graphql(medication,
 const withMutation = graphql(editMutation, {
     props: ({mutate}) => ({
         updateMedication: (id, uid, input, date, onCancel) => {
-            //console.log(input);
             return mutate({
                 variables: {id: id, userId: uid, input: {details: input}},
                 /*refetchQueries: [{
@@ -148,7 +145,7 @@ const withMutation = graphql(editMutation, {
                         // add new to the list
                     }
 
-                   // console.log(data);
+
                     // Add our comment from the mutation to the end.
                     //data = medicationUpdate;
                     // Write our data back to the cache.
@@ -198,10 +195,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     //     values.birthday = values.birthday.format("YYYY-MM-DD")
     //     values.phone = [values.prefix, values.phone];
     //     delete values.prefix;
-    //     console.log(values);
+
     //     ownProps.updateInfo(values).then(({data}) => {
-    //         console.log("----settings----");
-    //         console.log(data);
+
+
     //     })
     // },
 });

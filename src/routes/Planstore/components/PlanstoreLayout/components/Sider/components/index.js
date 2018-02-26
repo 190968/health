@@ -22,7 +22,7 @@ export class PlanstoreLayout extends React.Component {
      */
     updateFilters = (filter, values) => {
 
-        //console.log("-------updateFilters-------");
+
         const activeFilters = this.props.activeFilters;
         // get all current info of the type
         const activeFilter = activeFilters[filter] || {};
@@ -32,8 +32,7 @@ export class PlanstoreLayout extends React.Component {
             ...activeFilters,
             [filter]: values
         }
-        //console.log(activeFilter);
-        //console.log(filter1);
+
         // update the store
         this.props.updateFilterStore(filter1)
     }

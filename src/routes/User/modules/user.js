@@ -133,8 +133,7 @@ const initialState = {
 };
 export default function userReducer(state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
-    // console.log(handler);
-    //console.log(state);
+
     //action.payload = {};
     return handler ? handler(state, action) : state
 }

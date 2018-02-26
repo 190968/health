@@ -13,7 +13,7 @@ import {Checkbox} from 'antd';
 
         const value_id = e.target.params.value;
 
-        //console.log(value_id);
+
 
         const checked = e.target.checked ? 1 : 0;
         const {code} = this.props;

@@ -25,12 +25,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     logout: () => {
+
         ownProps.mutate({
             refetchQueries: [{
                 query: NETWORK_INFO_QUERY,
             }],
         }).then((data) => {
-            //console.log(data);
+
             if (!data.loading) {
                 ownProps.client.resetStore();
                 dispatch(logoutUser());

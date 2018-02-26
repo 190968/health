@@ -9,7 +9,7 @@ export default class UserWidget extends React.PureComponent {
     render() {
 
         const {user, onlyFirst} = this.props;
-        const {thumb, firstName, fullName} = user;
+        const {firstName, fullName} = user;
 
         const name = onlyFirst ? firstName : fullName;
 

@@ -35,7 +35,7 @@ class DiscussionModal extends React.Component{
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if(err!=null)
-            {console.log(err);
+            {
 
                 return null;
             }

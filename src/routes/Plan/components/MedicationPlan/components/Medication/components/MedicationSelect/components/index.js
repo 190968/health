@@ -19,7 +19,7 @@ export class MedicationSelect extends React.Component {
         medications: []
     };
     handleSearch = (value) => {
-        //console.log(this.props);
+
         this.setState({
             //value,
             fetching: true,
@@ -30,7 +30,7 @@ export class MedicationSelect extends React.Component {
     /*Get a list of all possible medications*/
     handleSelect = (value) => {
         // open add modal
-        //console.log(value);
+
         this.props.onSelect(value);
 
         //const {getListOfMedications } = this.props;

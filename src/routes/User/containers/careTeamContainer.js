@@ -39,7 +39,6 @@ const CARETEAM  = gql`
 
 const withMutation = graphql(CARETEAM, {
     props: ({ ownProps, data }) => {
-        console.log(data);
         if (!data.loading) {
             return {
                 info: data.account.user.motivation,

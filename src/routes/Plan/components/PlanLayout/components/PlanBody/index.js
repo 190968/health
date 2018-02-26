@@ -41,8 +41,7 @@ export class PlanBody extends React.Component {
 
 
     handleClick = (key, currentKeyI, tab) => {
-        //console.log(tab);
-        //console.log(this.state.tab);
+
         this.setState({
             currentTab: tab || this.state.tab,
             currentKey: key,
@@ -109,9 +108,9 @@ export class PlanBody extends React.Component {
                 date: date
             }
         });
-        console.log(plan);
+
         const {activities, lessons, intro} = plan;
-        console.log(lessons);*/
+       */
         const lessonsNum = lessons.length;
         const activitiesNum = activities.length;
 
@@ -140,9 +139,7 @@ export class PlanBody extends React.Component {
             });
         }
 
-        //console.log('Loading Body');
-        //console.log(currentTab, 'tab');
-        //console.log(currentKey, 'key');
+
         return (<Row>
             <BackTop />
             <Col xs={5} >

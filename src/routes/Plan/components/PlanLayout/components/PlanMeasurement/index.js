@@ -77,7 +77,6 @@ export default class PlanMeasurement extends React.Component {
     }
 
     changeComment(value) {
-        //console.log(value);
         this.setState({comments:value});
         this.onReport();
     }

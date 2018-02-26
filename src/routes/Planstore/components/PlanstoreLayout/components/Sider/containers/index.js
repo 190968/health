@@ -45,9 +45,9 @@ const PlanstoreLayoutWithQuery = graphql(
             fetchPolicy: 'cache-first'*/
         }),
         props: ({ ownProps, data }) => {
-            //console.log(ownProps);
+
             if (!data.loading) {
-                //  console.log(data.planstore.filters);
+
                 return {
                     filters: data.planstore.filters,
                     loading: data.loading,

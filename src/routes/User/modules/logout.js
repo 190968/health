@@ -32,13 +32,13 @@ export const actions = {
     logoutUserSuccess,
     logoutUserError
 }
-//console.log(1111);
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
     [LOGOUT_USER_REQUEST]    : (state, { type, ...payload }) => {
-        //console.log(payload);
+
         return {
             ...initialState,
             loading: true,
@@ -68,7 +68,7 @@ const initialState = {
 };
 export default function logoutReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
-    //console.log(action);
+
     //action.payload = {};
     return handler ? handler(state, action) : state
 }

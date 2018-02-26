@@ -15,8 +15,7 @@ export class PanelComponent extends React.Component {
     }
 
     onSuccess(code, value) {
-        console.log(code);
-        console.log(value);
+
         this.props.onSuccess(code, value);
     }
 

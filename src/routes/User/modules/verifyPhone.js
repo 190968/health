@@ -15,7 +15,7 @@ export const setUserToken = ({token}) => {
 };
 
 export const loadUser = (user) => {
-    //console.log(user);
+
     return {
         type: SET_USER_INFO,
         info: user
@@ -84,8 +84,7 @@ const initialState = {
 };
 export default function userReducer (state = initialState, action) {
     const handler = ACTION_HANDLERS[action.type]
-    // console.log(handler);
-    //console.log(state);
+
     //action.payload = {};
     return handler ? handler(state, action) : state
 }

@@ -8,7 +8,7 @@
  * Created by Павел on 29.01.2018.
  */
 
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 
@@ -39,7 +39,6 @@ const discussionReply = gql`
 const withMutation = graphql(discussionReply, {
     props: ({ mutate, ownProps }) => ({
         discussionReply: (text,id,parentMessageId) => {
-            console.log(text,id,parentMessageId);
             return mutate({
                 variables:  {
                     id: id,

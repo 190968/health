@@ -21,7 +21,6 @@ export class MedicationInfo extends React.PureComponent {
 
     static propTypes = {};
     handleCancel = () => {
-        //console.log("handleCancel");
         this.setState({
             visible: false,
         });
@@ -37,7 +36,6 @@ export class MedicationInfo extends React.PureComponent {
     }
 
     iconClick() {
-        // console.log("modalVisible");
         this.setState({visible: true});
     }
 
@@ -46,10 +44,10 @@ export class MedicationInfo extends React.PureComponent {
         if (loading) {
             return (<div>Loading</div>)
         }
-        //     console.log(user_id);
+
         // const userId = 24038;
         const {id, drug} = this.props.info;
-        //console.log(id);
+
         const {name, dosage} = drug;
         return (
             <div>

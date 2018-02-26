@@ -31,12 +31,11 @@ const withQuery = graphql(CATEGORYSEARCH, {
     props: ({ ownProps, data }) => {
         if (!data.loading) {
 
-                // console.log(data);
             let keyValue = [];
             data.categorySearch.forEach((item)=>{
                 keyValue.push({value:item.id, text:item.name});
             })
-            //console.log(keyValue);
+
             return {
                 items: keyValue,
                 loading: data.loading,

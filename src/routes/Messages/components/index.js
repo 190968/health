@@ -26,7 +26,6 @@ class MessagesLayout extends React.Component {
         const {match} = this.props;
         const {params} = match;
         const {id} = params;
-        console.log(this.state.lastCursor);
         return (
             <div className="wrapper">
                 <div className="chat">

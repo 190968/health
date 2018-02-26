@@ -27,8 +27,7 @@ export default class PlanInputText extends React.PureComponent {
         this.props.onChange(value, 'input');
     }
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (nextProps.reports !== this.props.reports) {
             this.setState({value:nextProps.reports});
         }
@@ -45,7 +44,7 @@ export default class PlanInputText extends React.PureComponent {
     render() {
         const {item} = this.props;
         const {value} = this.state;
-        //console.log(item);
+
         const {isLong, isDate, isTime} = item;
         if (isDate) {
             return  <DatePicker onChange={this.onChange} value={value} />;

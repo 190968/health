@@ -49,7 +49,7 @@ export class PlanstoreLayout extends React.Component {
 
 
         const {loading, plans, search} = this.props;
-       // console.log(filters,"plans");
+
         if (loading) {
             return (
                 <Col>

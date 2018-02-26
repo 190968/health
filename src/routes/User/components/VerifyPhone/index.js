@@ -73,7 +73,7 @@ class VerifyPhoneForm extends React.Component {
                 <VerifyPhoneConfirm />
             );
         }
-        //console.log();
+
         //const {account} = this.props.phone;//.user.phone;
 
         const { form } = this.props;

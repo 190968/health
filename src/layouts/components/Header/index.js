@@ -33,7 +33,7 @@ class LHeader extends React.Component {
         const loading = this.props.loading;
         const token = this.props.token;
         const location = this.props.location;
-        //console.log(location);
+
         const menu_items = [
             ['Dashboard', '/'],
             ['Planstore', '/planstore', 'aps'],
@@ -41,10 +41,10 @@ class LHeader extends React.Component {
         ];
 
         const menuHtml = menu_items.map((item) => {
-            //console.log(item.toString());
+
             if (item[1] ) {
                 /*<HaveModule module={item[2]}>*/
-                //console.log(item[1]);
+
                 return (
                     <Menu.Item as={NavLink} to={item[1]} key={item[1]}>
                         <NavLink to={item[1]}>{item[0]}</NavLink>
@@ -60,9 +60,9 @@ class LHeader extends React.Component {
         });
 
         const locationPath = '/'+location.pathname.split('/')[1];
-        //console.log(locationPath);
+
 //{/*customPlaceholder={HeaderPlaceholder}*/}
-        console.log(this.props);
+
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
@@ -100,8 +100,7 @@ class LHeader extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    //console.log(state.network);
-    //console.log(state.user);
+
     return {
         // view store:
         //currentView:  state.views.currentView,

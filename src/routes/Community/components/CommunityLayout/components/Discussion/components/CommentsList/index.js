@@ -44,7 +44,7 @@ class Comment extends React.Component{
         const {intl}=this.props;
         const {replies} = discussion;
         const {edges} = replies;
-        //console.log(edges);
+
         return(
             <div>
                 {this.state.visibleReplyModal && <CommentModal params={this.state.id}  parentMessageId={this.props.match.params.id} />}

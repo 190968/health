@@ -45,7 +45,7 @@ const withQuery = graphql(trackersList,
                                 search: search,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                //console.log("Какой previousResult в updateQuery",previousResult);
+
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                             },

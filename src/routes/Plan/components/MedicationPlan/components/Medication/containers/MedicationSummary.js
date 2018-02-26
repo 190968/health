@@ -29,7 +29,7 @@ const MedicationSummaryWithQuery = graphql(Medications_SUMMARY,
                 fetchPolicy: 'network-only'
             }},
         props: ({ ownProps, data }) => {
-            //console.log(data);
+
             if (!data.loading) {
                 return {
                     info: data.medication,

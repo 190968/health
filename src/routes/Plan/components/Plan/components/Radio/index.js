@@ -22,8 +22,7 @@ export default class PlanRadio extends React.PureComponent {
         reportValue: PropTypes.number
     };
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (nextProps.reports !== this.props.reports) {
             this.setState({value:nextProps.reports});
         }
@@ -48,7 +47,6 @@ export default class PlanRadio extends React.PureComponent {
             radioStyle = vertStyle;
         }
 
-        //console.log(reports);
 
         return <RadioGroup onChange={this.onChange} value={value} >
             {options.map((option, i) => {

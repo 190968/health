@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 
 // import extra
-import {Card, Spin, Modal, Icon} from 'antd';
+import { Spin, Modal, Icon} from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
 
 // import main layouts
@@ -21,7 +21,7 @@ import PatientLayout from './components/PatientLayout';
 class CoreByMode extends React.Component {
 
     render() {
-        //console.log(this.props);
+
         const {currentRole} = this.props;
 
        /* if (loading) {
@@ -29,7 +29,7 @@ class CoreByMode extends React.Component {
         }
 
         */
-        console.log(currentRole, 'currentRole');
+
         //return null;
         if (!currentRole || currentRole === 'patient') {
             return <PatientLayout {...this.props} />;
@@ -61,7 +61,7 @@ const withQuery = graphql(
         },
         props: ({data}) => {
 
-            //console.log(data);
+
             if (!data.loading) {
                 return {
                     currentRole: data.account.currentRole,
@@ -100,8 +100,7 @@ class Core extends React.Component {
     };
 
     _onLogout() {
-        //console.log( this.props);
-        //this.props.history.push('/logout');
+
     };
 
     _onActive() {
@@ -157,6 +156,7 @@ class Core extends React.Component {
 
 
 const mapStateToProps = (state) => {
+
     return {
         loading: state.network.loading,
         //token: state.user.token,
@@ -165,7 +165,14 @@ const mapStateToProps = (state) => {
 };
 
 
+
+
+
+
+
+
 const mapDispatchToProps = () => {
+
     return {
     }
 };

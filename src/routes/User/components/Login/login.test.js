@@ -21,7 +21,7 @@ describe('<Login>', () => {
         };
     };
     it('renders without crashing', () => {
-        console.log("<Login> ----> Done")
+
         // const div = document.createElement('div');
         // let component = withRouter(div);
         // ReactDOM.render(<Login />,component);
@@ -44,8 +44,7 @@ describe('<Login>', () => {
 
         //expect(LoanReview.state('email')).toEqual(data);
         // const wrapper = shallow(<Login />);
-        // console.log( wrapper.dive().instance().Test("PAsha"))
-        // console.log(wrapper.state("pasha"));
+
         // expect(LoanReview.state('email')).toEqual(correctlyLogin.email);
         // expect(LoanReview.state('password')).toEqual(correctlyLogin.password);
 
@@ -60,7 +59,7 @@ describe('<Login>', () => {
 
     })
     // it('incorrect data input', () => {
-    //     console.log("VAlid ----> Done")
+
     //     let incorrectlyLogin =
     //     {
     //         email: 'pgutzuf@fitango.com',

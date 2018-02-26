@@ -21,7 +21,7 @@ export class PlanLesson extends React.Component {
     saveLesson = (e, lessonId, isLastlesson) => {
         let haveSections = false;
 
-        //console.log( this.props);
+
         //return true;
         const {upid} = this.props;
         this.setState({

@@ -30,15 +30,14 @@ export default  class CheckBoxGroup extends React.PureComponent {
 
         const activeFilter = activeFilters[code] || {};
         //const checked = activeFilter[fields.value] || 0;
-        //console.log(activeFilters);
-        //console.log(activeFilter);
+       
         /*let options = []
          item.items.map((item) => (
              options.push({
             label: item.label,
             value: item.value,
         })));
-        console.log(options);*/
+      */
 
         return (
                 <div>

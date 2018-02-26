@@ -55,7 +55,7 @@ export default class AdverseReactions extends React.Component {
             }
             //const {reaction, severity} = values;
             this.props.addReaction(values);
-            // console.log('Received values of form: ', values);
+
             // form.resetFields();
             // hide the modal
             this.setState({ showAdd: false });

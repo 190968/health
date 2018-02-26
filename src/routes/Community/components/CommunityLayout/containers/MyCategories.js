@@ -42,7 +42,6 @@ const withMutation = graphql(MY_CATEGORIES, {
     props: ({ ownProps, data }) => {
 
         if (!data.loading) {
-            console.log(data);
             return {
                 info: data.account.user.categories,
                 loading: data.loading

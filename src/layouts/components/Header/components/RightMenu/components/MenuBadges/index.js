@@ -31,8 +31,7 @@ class RightMenu extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-        console.log(this.props);
+
         if (!nextProps.token && nextProps.token !== this.props.token) {
             // reload to logout
             this.props.history.push('/logout');
@@ -41,7 +40,7 @@ class RightMenu extends React.Component {
 
     render() {
         const {unreadMessages, loading, lastNotificationCursor, newCursor, newNotificationsNum} = this.props;
-        //console.log(this.props, 'PropsIn Menu Badge');
+
         // first call - lastNotification - empty, but lastCursor has value. It means that we can load the notifications
         const loadNew = !loading && lastNotificationCursor !== newCursor;
 

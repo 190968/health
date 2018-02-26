@@ -1,5 +1,4 @@
-import { connect } from 'react-redux'
-import { compose } from 'react-apollo'
+
 
 /*  This is a containers components. Notice it does not contain any JSX,
     nor does it import React. This components is **only** responsible for
@@ -9,7 +8,7 @@ import { compose } from 'react-apollo'
 import PlanLayout from '../../Plan/components/PlanLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { message } from 'antd';
+
 
 import Plan from '../../Plan/components/Plan';
 
@@ -49,10 +48,9 @@ const PlanstorPlanLayoutWithQuery = graphql(
 
         }),
         props: ({ ownProps, data }) => {
-            //console.log(ownProps);
-            //console.log(CURRENT_PLANSTORE_PLAN);
+
             if (!data.loading) {
-                //console.log(ownProps);
+
 
                 return {
                     info: data.userPlan,

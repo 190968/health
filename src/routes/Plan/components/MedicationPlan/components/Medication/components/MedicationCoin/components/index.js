@@ -13,7 +13,7 @@ export class MedicationCoin extends React.Component {
     };
 
     toggleCoin = () => {
-        //console.log(this.state.isClicked);
+
         if (this.state.isClicked) {
             //this.setState({isClicked:false});
             message.success('Untaken');
@@ -28,8 +28,8 @@ export class MedicationCoin extends React.Component {
         const {report, date} = this.props;
 
         const {isTaken} = report;
-        console.log('WillMount', date);
-        console.log(report);
+
+
         if (isTaken) {
             this.setState({isClicked: true});
         } else {
@@ -68,7 +68,7 @@ export class MedicationCoin extends React.Component {
         const qs = quantity % 1;//.split('.');
         let q = Math.floor(quantity);
         q = q > 0 ? q : '';
-        //console.log(qs);
+
         //const qs = qInfo[1];
         switch (qs) {
             case 0.25:
@@ -82,8 +82,7 @@ export class MedicationCoin extends React.Component {
                 break;
         }
         //const hasReport = this.state.isClicked;
-        //console.log(this.props);
-        //console.log(hasReport);
+
         if (isTaken) {
             return (<Tooltip title="Untake"><Button type="primary" size="large" shape="circle" onClick={this.handleClick} >
                 <div  dangerouslySetInnerHTML={{__html: quantity}}></div>

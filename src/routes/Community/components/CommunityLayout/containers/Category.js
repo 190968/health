@@ -147,7 +147,7 @@ const withMutation = graphql(categoryJoinMutate, {
                             id: id,
                         }
                     });
-                    //console.log(data);
+
                     // Write our data back to the cache.
                     store.writeQuery({
                         query: CATEGORY,
@@ -181,7 +181,7 @@ export const withMutationUnjoin = graphql(categoryUnjoinMutate, {
                             id: id,
                         }
                     });
-                    //console.log(data);
+
                     // Write our data back to the cache.
                     store.writeQuery({
                         query: CATEGORY,

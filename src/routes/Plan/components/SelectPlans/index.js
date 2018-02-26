@@ -17,7 +17,7 @@ class SelectPlans extends React.Component {
         }
 
 
-        console.log(info);
+
         let selectItem =[];
         info.forEach(item=>{
             selectItem.push(  <Option key={item.id} value={item.plan.title}>{item.plan.title}</Option>)

@@ -27,15 +27,13 @@ const MedicationPlanBodyWithQuery = graphql(
     {
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-                //console.log(ownProps);
-                //console.log(data);
-                //console.log(data);
+
                 return {
                     info: data.medicationPlan,
                     loading: data.loading,
 
                     loadDate(date, user_id) {
-                        //console.log(date);
+
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
@@ -47,9 +45,9 @@ const MedicationPlanBodyWithQuery = graphql(
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
                                 //return {medicationPlan:{id:29}};
-                                //console.log(fetchMoreResult);
+
                                 //fetchMoreResult.date = date;
-                                //console.log(fetchMoreResult);
+
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
                                 return Object.assign({}, previousResult, {
@@ -83,14 +81,14 @@ const MedicationPlanBodyWithQuery = graphql(
  ------------------------------------------*/
 
 const mapStateToProps = (state, ownProps) => {
-    //console.log(ownProps);
+
     return {
         //date: moment().format('YYYY-MM-DD'),
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    //console.log(1);
+
     return {
         /*increment: (info) => {dispatch(increment(info))},
         doubleAsync*/

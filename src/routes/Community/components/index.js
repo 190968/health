@@ -43,7 +43,7 @@ class Community extends React.Component {
     }
 
     handleBreadcrumbChange(breadcrumbitems) {
-        //console.log(breadcrumbitems,"-------breadcrumbitem-------");
+
 
         //this.setState({breadcrumbitems: breadcrumbitems});
     }

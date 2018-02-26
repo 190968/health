@@ -22,7 +22,7 @@ class Badges extends React.Component {
             const {badges} = info;
             const {intl}=this.props;
             const {totalCount, edges} = badges;
-            console.log(edges[0].id);
+
             return (
                 <Card style={{height:250}}  title={intl.formatMessage(messages.myBadges)}>
 

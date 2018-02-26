@@ -35,7 +35,7 @@ const ChatWithQuery = graphql(
     GET_CONVERSATION_MESSAGES_QUERY,
     {
         options: (ownProps) => {
-            //console.log(ownProps);
+
             return {
                 skip: !ownProps.id,
                 variables: {
@@ -48,13 +48,12 @@ const ChatWithQuery = graphql(
 
         },
         props: ({ ownProps, data }) => {
-            console.log(data);
             if (!data.loading && data.account.inboxConversation) {
                 const {edges, totalCount, pageInfo} = data.account.inboxConversation.messages;
                 const {endCursor} = pageInfo;
                 let messages = [];
                 if (data.account.inboxConversation) {
-                    //console.log(ownProps);
+
                     messages = edges;
                 } else {
                     messages = edges;

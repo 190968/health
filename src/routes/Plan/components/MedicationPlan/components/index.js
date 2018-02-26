@@ -53,7 +53,7 @@ export class MedicationPlanBody extends React.Component {
 
     addMedication = (id) => {
         // create a new medication
-        //console.log(id);
+
         this.setState({
             addModal:true,
             medId:id
@@ -62,7 +62,7 @@ export class MedicationPlanBody extends React.Component {
 
     hideAddMedication = () => {
         // create a new medication
-        //console.log(id);
+
         this.setState({
             addModal:false,
             medId:0
@@ -96,10 +96,10 @@ export class MedicationPlanBody extends React.Component {
 
 
     render() {
-        //console.log(this.props, 'Load');
+
         const {info,  loading, user_id} = this.props;
         const {date} = this.state;
-        //console.log(date);
+
         if (loading) {
             return (
                 <Card loading title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
@@ -115,7 +115,7 @@ export class MedicationPlanBody extends React.Component {
             );
         }
         const {takeDaily, takeAsNeeded, takeAtTimes} = info.medicationsByType;
-        //console.log(info);
+
         let columns = [];
         let takeDailyColumns = [];
         let takeDailyData = [];
@@ -138,7 +138,7 @@ export class MedicationPlanBody extends React.Component {
                 }
 
                 const at_times = medication.timesPerHour;
-                //console.log(medication);
+
                 at_times.map(function (time_info) {
 
                     let report = {};
@@ -156,7 +156,7 @@ export class MedicationPlanBody extends React.Component {
                             title: <FormattedTime value={new Date(date+' '+time)} />,
                             dataIndex: 'time_' + time_info.time,
                             key: 'time_' + time_info.id,
-                            //render: (info) => {console.log(info)}
+
                         });
                     }
                     medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} userId={user_id} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
@@ -255,7 +255,7 @@ export class MedicationPlanBody extends React.Component {
             </Menu>
         );
 
-        //console.log('med render');
+
         return (
                 <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
                     date: <FormattedDate

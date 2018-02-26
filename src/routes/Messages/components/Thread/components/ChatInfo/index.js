@@ -14,7 +14,7 @@ class ChatInfo extends React.Component {
         }
         const {info} = this.props;
         const {subject,participants, createdAt} = info;
-        console.log(this.props);
+
 
         let details = [
             ['Subject',subject],

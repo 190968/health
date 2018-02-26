@@ -66,21 +66,21 @@ export class PlanstorPlanLayout extends React.Component {
             });
             details.push(['Categories', intersperse(communities, ', ')]);
         }
-        //console.log(elements);
+
         if (elements.length > 0) {
             const inside = elements.map(el => {
                 return <div key={el[1]}><i className={el[0]+' bump-r'}></i>{el[1]}</div>;
             });
-            //console.log(inside);
+
             details.push(['Inside',inside]);
         }
-        //console.log(details);
+
         const chunks = Math.ceil(details.length/2);
-        //console.log(chunks);
+
         const chunked_arr = arrayChunk(details, chunks);
         const cols = [];
         for (var i=0,j=chunked_arr.length; i<j; i++) {
-            //console.log(i);
+
             cols[i] = chunked_arr[i].map(el => {
                 return <React.Fragment key={el[0]}>
                     <Col md={6}>
@@ -90,10 +90,10 @@ export class PlanstorPlanLayout extends React.Component {
                         {el[1]}
                     </Col>
                 </React.Fragment>;
-                //console.log(el.key);
+
             });
         }
-        //console.log(cols)
+
         return <Row>
             <Col>
                 <Row>
@@ -108,7 +108,7 @@ export class PlanstorPlanLayout extends React.Component {
     render() {
         const {plan, loading, alreadyDownloaded, alreadyDownloadedId} = this.props;
         if (1==12 || loading) {
-            // console.log(plan);
+
             //return (<div>Loading...</div>);
             return (
                 <div>
@@ -137,8 +137,7 @@ export class PlanstorPlanLayout extends React.Component {
 
 
 
-        //console.log(plan);
-        //console.log(loading);
+
         var img = plan.thumb.large;
         var divStyle = {
             backgroundImage: 'url(' + img + ')'

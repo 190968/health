@@ -51,7 +51,7 @@ class PhoneForm extends React.Component{
 
 
     render(){
-        //console.log(this.props);
+
         const { form, intl, required, prefix, countries,  getFieldDecorator, phone } = this.props;
         //let {required} = this.props;
 
@@ -107,7 +107,6 @@ const countriesQuery = gql`
 const PhoneFormWithQuery = graphql(countriesQuery,
     {
         props: ({ownProps, data}) => {
-            console.log(ownProps);
             if (!data.loading) {
                 return {
                     ...ownProps,

@@ -7,7 +7,7 @@ class RecipientAutoComplete extends React.Component{
 
 
     handleSearch = (value) => {
-        //console.log(value);
+
         this.props.search(value);
         this.setState({
             //value,
@@ -24,7 +24,7 @@ class RecipientAutoComplete extends React.Component{
     }
 
     render(){
-        //console.log(this.props);
+
         let {participants, label, formItemLayout} = this.props;
         const {fetching} = this.state;
         const {getFieldDecorator} = this.props.form;

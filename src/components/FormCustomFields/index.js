@@ -61,12 +61,12 @@ export class StartEndFormInit extends React.Component{
     checkEndDate = (rule, value, callback) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const start_date = form.getFieldValue('startDate');
-        //console.log(start_date);
-        //console.log(value);
+
+
         if (start_date && value && value < start_date) {
-            //console.log(callback);
+
             callback('End date is wrong');
         } else {
             callback();
@@ -76,7 +76,7 @@ export class StartEndFormInit extends React.Component{
     disabledStartDate = (endValue) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const startValue = form.getFieldValue('endDate');
         //const startValue = this.state.startValue;
         if (!endValue || !startValue) {
@@ -87,7 +87,7 @@ export class StartEndFormInit extends React.Component{
     disabledEndDate = (endValue) => {
         const form = this.props.form;
         //callback();
-        //  console.log(value);
+
         const startValue = form.getFieldValue('startDate');
         //const startValue = this.state.startValue;
         if (!endValue || !startValue) {
@@ -98,7 +98,7 @@ export class StartEndFormInit extends React.Component{
 
 
     render(){
-        //console.log(this.props);
+
         const {  form, intl, endDateRequired, startDate, endDate, dateFormat } = this.props;
 
         const {getFieldDecorator} = form;

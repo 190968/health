@@ -19,8 +19,7 @@ export default class Chat extends React.Component {
         lastCursor: '',
     }
     componentWillReceiveProps(nextProps) {
-        //console.log(nextProps);
-        //console.log(this.props);
+
         if (!nextProps.loading && nextProps.lastCursor !== this.props.lastCursor  ) {
             // fetch more results
             this.props.loadMoreEntries(this.props.lastCursor);

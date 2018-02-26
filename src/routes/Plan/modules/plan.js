@@ -32,7 +32,7 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
     [SET_PLAN_TAB]    : (state, {tab}) => {
-      console.log(tab);
+
         const nextState = state.set('tab', tab);
         return nextState;
     },

@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.addDuscussion(values).then(({data}) => {
             ownProps.history.push('discussion/'+data.discussionCreate.id);
         }).catch((error) => {
-            console.log("FAIL!!!!"+error);
+
         });
     },
 });
