@@ -17,6 +17,7 @@ module.exports = function override(config, env) {
                  "@layout-footer-background": "#303030",
                  // avatar
                  "@avatar-size-lg": '60px',
+                 "@card-padding-wider": '24px',
                  //"@avatar-font-size-lg": '40px',
              },
     })(config, env);

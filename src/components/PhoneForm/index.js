@@ -47,8 +47,6 @@ class PhoneForm extends React.Component{
                             initialValue: number,
                             rules: [{ required: required, message: "Please input your phone number."}/*, {type:'number', message: "Phone number consist of numbers only."}*/],
                         })(
-
-
                             <Input  style={{ width: '200px' }} />
                         )}
 
@@ -64,18 +62,14 @@ class PhoneForm extends React.Component{
 
 const countriesQuery = gql`
    query getCountries {
-    
-    staticContent {
-        
-        countries {
-            id
-            name
-            phoneCode
+        staticContent {
+            countries {
+                id
+                name
+                phoneCode
+            }
         }
-         
     }
-    
-}
 `;
 
 

@@ -171,7 +171,7 @@ export class Plan extends React.PureComponent {
                   to={link}
               >
                   <Row>
-                      <Col span={5}><div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} width={'100%'} src={img} /></div></Col>
+                      <Col span={5}><div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} width={'100%'}  src={img} /></div></Col>
                       <Col offset={1} span={18}>{name}</Col>
                   </Row>
               </Link>
@@ -183,13 +183,13 @@ export class Plan extends React.PureComponent {
           to={link}
         >
             <Card
-                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} width={'100%'} src={img} /></div>}
+                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} style={{maxHeight:154}} width={'100%'} src={img} /></div>}
                 hoverable={true}
                 type='plan'
             >
 
                 <Card.Meta
-                    title={<Tooltip title={name}>{name.substring(0, limit)}</Tooltip>}
+                    title={<Tooltip title={name}><Truncate lines={2}>{name}</Truncate></Tooltip>}
                     description={<Truncate lines={2}>{description}</Truncate>}
                 />
 

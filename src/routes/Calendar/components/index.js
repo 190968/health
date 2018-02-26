@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Calendar, Card} from 'antd';
 
-import AddCalendarEvent from './AddCalendarEvent';
+import AddCalendarEvent from '../containers/AddCalendarEvent';
 
 
 class CalendarLayout extends React.Component {

@@ -52,6 +52,7 @@ class MyCategories extends React.Component{
         return(
             <Card
                 title="My Communities"
+                type="static"
             >
                 <List
                     split={false}

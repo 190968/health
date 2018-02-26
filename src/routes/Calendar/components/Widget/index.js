@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Icon, Button, Calendar, Card} from 'antd';
 
-import AddCalendarEvent from '../AddCalendarEvent';
+import AddCalendarEvent from '../../containers/AddCalendarEvent';
 
 
 class CalendarWidget extends React.Component {

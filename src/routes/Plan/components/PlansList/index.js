@@ -69,7 +69,7 @@ export class PlansList extends React.Component {
                         >
                             <List.Item.Meta
                                 title={<Link to={'/plan/'+product.id}>{product.plan.title}</Link>}
-                                description={<Truncate lines={3}>{product.plan.description}</Truncate>}
+                                description={<Truncate lines={2}>{product.plan.description}</Truncate>}
                             />
 
 
