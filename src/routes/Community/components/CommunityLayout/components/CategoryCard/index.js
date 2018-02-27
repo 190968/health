@@ -2,6 +2,8 @@ import React from 'react';
 import { Tooltip, Card } from 'antd';
 import { Link } from 'react-router-dom'
 import Truncate from 'react-truncate';
+import styles from './index.less';
+const { Meta } = Card;
 
 export default class CategoryCard extends React.PureComponent {
     render(){
@@ -9,10 +11,11 @@ export default class CategoryCard extends React.PureComponent {
 
         return(
             <Link to={"/community/"+item.id}>
-                <Card
+                <Card type="community"
                     cover={<img alt={item.name} style={{maxHeight:120}} src={item.thumb.large} />}
                 >
-                    <Tooltip title={item.name}><Truncate line={1}>{item.name}</Truncate></Tooltip>
+                    <Meta title={<Tooltip title={item.name}><Truncate line={2}>{item.name}</Truncate></Tooltip>} />
+
                 </Card>
             </Link>
         )

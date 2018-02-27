@@ -5,6 +5,8 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
+import AddressForm from '../../../../components/AddressForm';
+import PhoneForm from '../../../../components/PhoneForm';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 
@@ -25,16 +27,21 @@ const formItemLayout = {
 class AddCalendarEvent extends React.Component{
     state = {}
 
+    static defaultProps = {
+        eventTypes: [],
+        eventDurations:[]
+    }
+
 
     handleSubmit = () => {
-        const { sendMessage } = this.props;
+        const { saveEvent } = this.props;
         this.props.form.validateFields((err, values) => {
 
-
+            console.log(err);
             if (!err) {
-                return sendMessage(values).then(() => {
+                return saveEvent(values).then(() => {
                     message.success(this.props.intl.formatMessage(messages.sent));
-                    this.props.onCancel();
+                    this.props.onHide();
                 });
             }
         });
@@ -42,8 +49,37 @@ class AddCalendarEvent extends React.Component{
 
     render(){
 
-        const {intl} = this.props;
-        const {getFieldDecorator} = this.props.form;
+        const {intl, eventTypes, eventDurations, form} = this.props;
+        const {getFieldDecorator, getFieldValue} = form;
+
+        const phoneNumberError = form.getFieldError('phone[number]');
+        const addressError = false;//form.getFieldError('address');
+        //console.log(addressError);
+        let typeFields = '';
+        switch(getFieldValue('type')) {
+            case "inPerson":
+                typeFields = <FormItem
+                    {...formItemLayout}
+                    label={'Address'}
+                    validateStatus={addressError ? 'error' : ''}
+                    help={addressError || ''}
+                >
+                    <AddressForm getFieldDecorator={getFieldDecorator} required  />
+                </FormItem>
+                    ;//countries={countries} states={states} address={user.address}
+                break;
+            case 'phone':
+                typeFields = <FormItem
+                    {...formItemLayout}
+                    label="Phone"
+                    required
+                    validateStatus={phoneNumberError ? 'error' : ''}
+                    help={phoneNumberError || ''}
+                >
+                   <PhoneForm getFieldDecorator={getFieldDecorator} required  />
+                </FormItem>
+                break;
+        }
 
         return(
             <Modal
@@ -52,6 +88,7 @@ class AddCalendarEvent extends React.Component{
                 onCancel={this.props.onHide}
                 okText={intl.formatMessage(messages.send)}
                 onOk={this.handleSubmit}
+                width={700}
             >
                 <Form onSubmit={this.handleModalSubmit} >
 
@@ -99,8 +136,10 @@ class AddCalendarEvent extends React.Component{
                                 rules: [{ required: true, message:"Select Duration"}],
                             }
                         )(
-                            <Select >
-                                <Select.Option key={1}></Select.Option>
+                            <Select>
+                                {eventDurations.map(info => {
+                                    return  <Select.Option key={info.name}>{info.description}</Select.Option>
+                                })}
                             </Select>
                         )}
                     </FormItem>
@@ -113,11 +152,15 @@ class AddCalendarEvent extends React.Component{
                             rules: [{ required: true, message:"Select Type"}],
                             }
                         )(
-                            <Select >
-                                <Select.Option key={1}></Select.Option>
+                            <Select>
+                                {eventTypes.map(info => {
+                                    return  <Select.Option key={info.name}>{info.description}</Select.Option>
+                                })}
                             </Select>
                         )}
                     </FormItem>
+
+                    {typeFields}
 
                     <FormItem
                         {...formItemLayout}
