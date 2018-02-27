@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom';
 import ReactPlaceholder from 'react-placeholder';
 import RightMenu from './containers/RightMenu';
-import { Tag, Row, Col, Menu} from 'antd';
+import { Row, Col, Menu} from 'antd';
 
 
 
@@ -66,7 +66,7 @@ class LHeader extends React.Component {
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
-                    <NavLink to="/"><img className="logo" style={{height:'50px'}} src={this.props.network.logo} /></NavLink>
+                    <NavLink to="/"><img alt="" className="logo" style={{height:'50px'}} src={this.props.network.logo} /></NavLink>
                 </div>
             )
         }
@@ -76,7 +76,7 @@ class LHeader extends React.Component {
 
 
                 <Row type="flex" justify="space-between" align="middle">
-                    <Col md={5}><Link to={'/'}><img className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /></Link></Col>
+                    <Col md={5}><Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /></Link></Col>
                     <Col>
                         <Menu
                             onClick={this.handleClick}

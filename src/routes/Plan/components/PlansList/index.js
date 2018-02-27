@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Truncate from 'react-truncate';
 import PlanWidget from 'routes/Plan/components/Plan';
-import { Progress,List, Card, Tooltip, Dropdown, Button, Icon, Menu  } from 'antd';
+import {List, Card, Tooltip, Dropdown, Button, Icon, Menu  } from 'antd';
 import { Link } from 'react-router-dom';
 import {
     FormattedMessage,

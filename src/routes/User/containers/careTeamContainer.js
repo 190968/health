@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 08.12.2017.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 
@@ -38,7 +38,7 @@ const CARETEAM  = gql`
 `;
 
 const withMutation = graphql(CARETEAM, {
-    props: ({ ownProps, data }) => {
+    props: ({ data }) => {
         if (!data.loading) {
             return {
                 info: data.account.user.motivation,

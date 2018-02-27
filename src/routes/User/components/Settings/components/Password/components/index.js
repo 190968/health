@@ -5,9 +5,7 @@ import React from 'react';
 import { Input,Form, Button } from 'antd';
 import { withApollo } from 'react-apollo'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './mesages';
 const FormItem = Form.Item;

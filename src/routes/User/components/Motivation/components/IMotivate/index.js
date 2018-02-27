@@ -2,16 +2,13 @@
  * Created by Павел on 12.02.2018.
  */
 import React from 'react';
-import {Avatar,Popover,Col,List, Card } from 'antd';
+import {Avatar,List, Card } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
 class iMotivate extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
     render()
     {
         const {info, loading} = this.props;
@@ -21,7 +18,7 @@ class iMotivate extends React.Component {
           </Card>;
         }
 
-        const {edges,totalCount} = info;
+        const {edges} = info;
         const {intl}=this.props;
 
         return (

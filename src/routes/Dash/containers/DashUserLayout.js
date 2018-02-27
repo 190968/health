@@ -68,7 +68,7 @@ export const DASH_QUERY = gql`
 const DashLayoutWithQuery = graphql(
     DASH_QUERY,
     {
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 return {
                     plans: data.user.plans,

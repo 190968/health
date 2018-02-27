@@ -6,14 +6,12 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 import {
     injectIntl,
-    defineMessages,
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
-import { Form,  List,Avatar,Select, Card,Modal,Input,Button, Pagination, Tooltip, Icon } from 'antd';
+import { Form,  List,Avatar, Card,Modal,Input,Button, Tooltip, Icon } from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
-const Option = Select.Option;
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -24,18 +22,7 @@ const formItemLayout = {
         sm: { span: 14 },
     },
 };
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
-    },
-};
+
 class Motivators extends React.Component {
     state = { visible: false }
 
@@ -69,7 +56,7 @@ class Motivators extends React.Component {
                                  Loading</Card>;
         }
         const  {motivators} = info;
-        const  {edges,totalCount} = motivators;
+        const  {edges} = motivators;
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
 

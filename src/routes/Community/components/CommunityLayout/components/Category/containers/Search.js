@@ -2,7 +2,7 @@
  * Created by Павел on 17.01.2018.
  */
 
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 import Search from '../components/Search';
 import { graphql } from 'react-apollo';
@@ -28,7 +28,7 @@ const withQuery = graphql(CATEGORYSEARCH, {
             }
         }
     },
-    props: ({ ownProps, data }) => {
+    props: ({  data }) => {
         if (!data.loading) {
 
             let keyValue = [];

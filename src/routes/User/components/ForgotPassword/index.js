@@ -5,9 +5,7 @@ import React from 'react';
 
 import './index.css'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './messages';
 import {Form, Icon, Input, Button, Card } from 'antd';
@@ -35,7 +33,6 @@ class NormalForgotForm extends React.Component {
         // get the code from url. As it's not mandatory we can enter it manually
         const code = this.props.match.params.code;
         const { getFieldDecorator } = this.props.form;
-        const { loading } = this.state;
         const {intl}=this.props;
         return (
 

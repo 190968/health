@@ -5,7 +5,6 @@ import React from 'react';
 import {Modal, DatePicker, Form ,Spin, Col, Radio, Popover } from 'antd';
 import moment from "moment/moment";
 import {FormattedDate} from 'react-intl';
-import {message} from "antd/lib/index";
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -94,7 +93,7 @@ class UserPlanEditForm extends React.Component {
             </Modal>
         }
 
-        const {startDate, endDate, privacy} = info
+        const {startDate, endDate} = info
 
 
         return (

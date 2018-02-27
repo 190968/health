@@ -1,16 +1,12 @@
 /**
  * Created by Pavel on 26.12.2017.
  */
-import {connect} from 'react-redux'
-
-
 import MedicationEditForm from '../components'
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from 'antd';
 import {MedicationPlan_QUERY} from "../../../../../containers";
 
-//import { compose } from 'react-apollo';
 
 const medication = gql`
 query GET_MEDICATION($user_id: UID!, $id:UID, $drugId:UID) {
@@ -101,7 +97,7 @@ const MedicationEditWithQuery = graphql(medication,
                 fetchPolicy: 'network-only'
             }
         },
-        props: ({ownProps, data}) => {
+        props: ({ data}) => {
             if (!data.loading) {
                 return {
                     info: data.medication,
@@ -183,25 +179,25 @@ const withMutation = graphql(editMutation, {
     }),
 });
 
-const mapStateToProps = (state) => {
-
-    return {
-        dateFormat: state.user.info.dateFormat
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    // onSubmit: (values) => {
-    //     values.birthday = values.birthday.format("YYYY-MM-DD")
-    //     values.phone = [values.prefix, values.phone];
-    //     delete values.prefix;
-
-    //     ownProps.updateInfo(values).then(({data}) => {
-
-
-    //     })
-    // },
-});
+// const mapStateToProps = (state) => {
+//
+//     return {
+//         dateFormat: state.user.info.dateFormat
+//     };
+// };
+//
+// const mapDispatchToProps = (dispatch, ownProps) => ({
+//     // onSubmit: (values) => {
+//     //     values.birthday = values.birthday.format("YYYY-MM-DD")
+//     //     values.phone = [values.prefix, values.phone];
+//     //     delete values.prefix;
+//
+//     //     ownProps.updateInfo(values).then(({data}) => {
+//
+//
+//     //     })
+//     // },
+// });
 
 
 export const MedicationAddForm = withMutationAdd(MedicationEditWithQuery);

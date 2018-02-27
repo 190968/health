@@ -23,7 +23,7 @@ export const PLANS_LIST_QUERY = gql`
     ${Plan.fragments.plan}
 `;
 
-const PLANS_PER_PAGE = 20;
+//const PLANS_PER_PAGE = 20;
 
 // 1- add queries:
 const PlansListWithQuery = graphql(
@@ -76,10 +76,6 @@ const PlansListWithQuery = graphql(
                 if (!fetchMoreResult) { return previousResult; }
 
                  return fetchMoreResult;
-                return Object.assign({}, previousResult, {
-                  // Append the new feed results to the old one
-                  planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                });
               },
             });
           }

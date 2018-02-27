@@ -1,23 +1,13 @@
 import React from 'react'
-import { withApollo } from 'react-apollo';
+
 import PlanElement from '../../containers/PlanElement'
 import PlanLesson from '../../containers/PlanLesson';
 import PlanSection from '../../containers/PlanSection';
 import PlanBodyMenu from './components/PlanBodyMenu';
-import {PLAN_BODY_QUERY} from '../../containers/PlanBody';
-
-
 
 // adding filters
 // for modal
-import { Modal, Button, BackTop, List, Affix, Anchor, Card, Row, Col, Menu, Icon } from 'antd';
-import Plan from "../../../Plan";
-
-
-
-
-
-
+import { Modal, BackTop, List, Affix, Card, Row, Col} from 'antd';
 
 export class PlanBody extends React.Component {
     constructor(props) {
@@ -149,24 +139,24 @@ export class PlanBody extends React.Component {
             </Col>
             <Col offset={5}>
 
-                {lessonsNum > 0 && lessons.map((section, i) => {
-                    let anchors = [];
-                    if (currentKey == 'lesson_'+i) {
+                {lessonsNum > 0 && lessons.map((section, i) =>{
+
+                    if (currentKey === 'lesson_'+i) {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
                                 <PlanLesson upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
-
                         </Row>;
 
                         return list;
                     }
+                    return section;
                 })}
 
                 {activitiesNum > 0 && activities.map((section, i) => {
-                    let anchors = [];
-                    if (currentKey == 'section_'+i) {
+
+                    if (currentKey === 'section_'+i) {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
@@ -176,6 +166,7 @@ export class PlanBody extends React.Component {
 
                         return list;
                     }
+                    return section;
                 })}
             </Col>
         </Row>)

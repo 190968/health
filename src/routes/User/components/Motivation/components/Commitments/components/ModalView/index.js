@@ -2,13 +2,12 @@
  * Created by Павел on 12.02.2018.
  */
 import React from 'react';
-import {Button ,Row,Col,Avatar,Spin,Select, List , Input, Divider,Card,Modal } from 'antd';
+import {Button ,Row,Col,Avatar,Spin,List ,Modal } from 'antd';
 import moment from 'moment';
 import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
-const {Option} = Select;
 class ModalView extends React.Component {
 
     constructor(props) {
@@ -21,14 +20,14 @@ class ModalView extends React.Component {
         this.setState({ visible: false});
     }
     render() {
-        const  {info,loading} = this.props;
+        const  {loading} = this.props;
         const {intl}=this.props;
 
         if (loading) {
-            return
+            return(
             <Modal>
                 <Spin/>
-            </Modal> ;
+            </Modal>) ;
         }
 
         return  (

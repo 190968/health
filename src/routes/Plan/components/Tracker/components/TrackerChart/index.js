@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment';
 
-import {Text,AreaChart, Area, LineChart, Line, BarChart, Bar, XAxis, ReferenceLine, CartesianGrid, Tooltip} from 'recharts';
+import {AreaChart, Area, LineChart, Line, BarChart, Bar, ReferenceLine, CartesianGrid, Tooltip} from 'recharts';
 
 
 export default class TrackerChart extends React.Component {
@@ -26,8 +26,8 @@ export default class TrackerChart extends React.Component {
     }
 
     formatTooltip(data) {
-        const {payload, label} = data;
-        if (payload.length == 0) return null;
+        const {payload} = data;
+        if (payload.length === 0) return null;
         const info = payload[0].payload || {};
         const date = info.date || '';
         const value = this.getValue(info);
@@ -76,7 +76,6 @@ export default class TrackerChart extends React.Component {
                     {normalRangeMin && <ReferenceLine y={normalRangeMin} stroke="#c9d9e8" strokeDasharray="3 3"/>}
                     {normalRangeMax && <ReferenceLine y={normalRangeMax} stroke="#c9d9e8" strokeDasharray="3 3"/>}
                 </LineChart>
-                break;
             case 'area':
                 return (<AreaChart width={300} height={100} data={data}
                                    margin={{top: 5, right: 0, left: 0, bottom: 5}}>
@@ -94,7 +93,6 @@ export default class TrackerChart extends React.Component {
                     {normalRangeMin && <ReferenceLine y={normalRangeMin} stroke="#c9d9e8" strokeDasharray="3 3"/>}
                     {normalRangeMax && <ReferenceLine y={normalRangeMax} stroke="#c9d9e8" strokeDasharray="3 3"/>}
                 </AreaChart>)
-                break;
             case 'bar':
                 return <BarChart width={300} height={100} data={data}>
                     <Bar dataKey={this.getValue} fill='#d2eaff'/>
@@ -105,7 +103,6 @@ export default class TrackerChart extends React.Component {
                     {normalRangeMin && <ReferenceLine y={normalRangeMin} stroke="#c9d9e8" strokeDasharray="3 3"/>}
                     {normalRangeMax && <ReferenceLine y={normalRangeMax} stroke="#c9d9e8" strokeDasharray="3 3"/>}
                 </BarChart>
-                break;
         }
 
     }

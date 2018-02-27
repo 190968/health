@@ -44,10 +44,6 @@ const withQuery = graphql(participantsList_QUERY,
                             updateQuery: (previousResult, {fetchMoreResult}) => {
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    getInboxParticipants: [...previousResult.getInboxParticipants, ...fetchMoreResult.getInboxParticipants]
-                                });
                             },
                         });
                     }

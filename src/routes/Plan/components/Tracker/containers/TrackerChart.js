@@ -19,7 +19,6 @@ const QUERY = gql`
     ${Plan.fragments.plan}
 `;
 
-const PLANS_PER_PAGE = 20;
 
 // 1- add queries:
 const PlansListWithQuery = graphql(

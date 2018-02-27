@@ -46,7 +46,7 @@ const MedicationDetailsWithQuery = graphql(MED_DETAILS,
                 },
                 fetchPolicy: 'network-only'
             }},
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 return {
                     info: data.medication,

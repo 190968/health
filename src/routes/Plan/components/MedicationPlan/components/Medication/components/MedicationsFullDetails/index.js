@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Icon,Row, Col,Card, Spin,  Modal} from 'antd';
+import { Row, Col,Card, Spin,  Modal} from 'antd';
 import MedicationChart from '../MedicationChart';
 import AdverseReactions from "./containers/AdverseReactions";
 import MedicationReminders from "../../components/MedicationReminders";
@@ -37,7 +37,7 @@ export default class MedicationsFullDetails extends React.Component {
             </Modal>
         }
         const {info, date, userId} = this.props;
-        const {drug, summary, timesPerHour} = info;
+        const {drug, summary} = info;
 
 
         const details = [
@@ -46,13 +46,13 @@ export default class MedicationsFullDetails extends React.Component {
             {label:'Period', details:   info.period},
             {label:'Prescribed', details: info.prescriber.fullName},
         ]
-        if (info.directions != '') {
+        if (info.directions !== '') {
             details.push({label:'Directions', details: info.directions});
         }
-        if (info.purpose != '') {
+        if (info.purpose !== '') {
             details.push({label:'Purpose', details: info.purpose});
         }
-        if (info.sideEffects != '') {
+        if (info.sideEffects !== '') {
             details.push({label:'Side Effects', details: info.sideEffects});
         }
 

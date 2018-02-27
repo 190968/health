@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import Badges from '../components/Badges';
@@ -44,7 +44,7 @@ const withMutation = graphql(BADGES, {
         }
 
     }),
-    props: ({ ownProps, data }) => {
+    props: ({ data }) => {
 
         if (!data.loading) {
             return {

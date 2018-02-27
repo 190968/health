@@ -3,21 +3,8 @@ import PropTypes from 'prop-types'
 
 import PlanHeader from './containers/PlanHeader';
 import PlanBody from './containers/PlanBody';
-import {Icon, Avatar, Card,Row, Col, Tooltip ,Popover, Dropdown, Modal } from 'antd';
-
-import {
-    FormattedMessage,
-    FormattedDate,
-} from 'react-intl';
+import {Card } from 'antd';
 import moment from "moment/moment";
-import Motivators from '../../../User/containers/motivatorsContainer';
-
-
-const { Meta } = Card;
-
-
-
-
 
 export class PlanLayout extends React.Component {
     constructor(props) {

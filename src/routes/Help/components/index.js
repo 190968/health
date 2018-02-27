@@ -6,11 +6,11 @@ const Panel = Collapse.Panel;
 
 
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+// const text = `
+//   A dog is a type of domesticated animal.
+//   Known for its loyalty and faithfulness,
+//   it can be found as a welcome guest in many households across the world.
+// `;
 
 class Health extends React.Component{
 
@@ -26,14 +26,14 @@ class Health extends React.Component{
                     <TabPane tab={'FAQ'} key={match.url}>
                         <Collapse bordered={false}>
                             {faq.map((info,i)=>  <Panel header={info.subject || 'Info'} key={i}>
-                                {info.text != '' &&  <p>{info.text}</p>}
+                                {info.text !== '' &&  <p>{info.text}</p>}
 
                                 {info.children.length > 0 ?
-                                    (info.children.length == 1 && info.children[0].children.length == 1 ?
+                                    (info.children.length === 1 && info.children[0].children.length === 1 ?
                                         info.children[0].children[0]['text']
                                         : <Collapse defaultActiveKey="0">
                                         {info.children.map((child,is) => <Panel header={child.subject || 'Info'} key={is}>
-                                            {child.text != '' &&  <p>{child.text}</p>}
+                                            {child.text !== '' &&  <p>{child.text}</p>}
                                             {child.children.length > 0 && <Collapse bordered={false}>
                                                 {child.children.map((child2,is2) => <Panel header={child2.subject || 'Info'} key={is2}>
                                                     <p>{child2.text}</p>

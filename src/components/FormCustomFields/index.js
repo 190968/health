@@ -1,43 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DatePicker, Input,Col,Select,Form } from 'antd';
+import { DatePicker,Col,Form } from 'antd';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
-import {graphql} from 'react-apollo';
-import gql from 'graphql-tag';
 import moment from "moment/moment";
 import {connect} from "react-redux";
 
-const InputGroup = Input.Group;
-const Option = Select.Option;
 const FormItem = Form.Item;
-
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
-};
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
-    },
-};
 
 
 export class StartEndFormInit extends React.Component{
@@ -99,7 +70,7 @@ export class StartEndFormInit extends React.Component{
 
     render(){
 
-        const {  form, intl, endDateRequired, startDate, endDate, dateFormat } = this.props;
+        const {  form,  endDateRequired, startDate, endDate, dateFormat } = this.props;
 
         const {getFieldDecorator} = form;
 

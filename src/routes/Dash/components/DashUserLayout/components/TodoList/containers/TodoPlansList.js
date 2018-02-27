@@ -7,7 +7,7 @@ const TodoPlansListWithQuery = graphql(
     PLANS_LIST_QUERY,
     {
         //skip: (ownProps) => ownProps.loading,
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
             if (!data.loading) {
                 return {
                     plans: data.user.plans,

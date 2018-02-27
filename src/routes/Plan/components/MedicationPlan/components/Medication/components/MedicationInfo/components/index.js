@@ -3,7 +3,6 @@ import {Tooltip, Icon, Row, Col, Popconfirm, Popover} from 'antd';
 import {
     FormattedMessage,
 } from 'react-intl';
-import styles from './index.less';
 import MedicationEditForm from '../../MedicationEdit/containers'
 import MedicationChartPopup from '../../MedicationChartPopup';
 import MedicationFullDetails from '../../../containers/MedicationFullDetails';

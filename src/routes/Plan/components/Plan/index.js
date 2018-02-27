@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 //import PropType from 'prop-types'
-import PlanElement from '../../components/PlanLayout/components/PlanElement';
 
-import styles from './styles.less'
 export class Plan extends React.PureComponent {
   // fragment for the plan info
   static fragments = {
@@ -156,12 +154,12 @@ export class Plan extends React.PureComponent {
     let link = '/planstore/plan/'+id;
     const is_user = upid !== '';
     // if the link is personal - then open user link
-      let height = 154;
+     // let height = 154;
       let limit = 25;
       if (is_user) {
           link = '/plan/'+upid;
           //description = '';
-          height = 120;
+         // height = 120;
           limit = 15;
       }
 

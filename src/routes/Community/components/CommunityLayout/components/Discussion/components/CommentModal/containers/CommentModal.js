@@ -4,9 +4,6 @@
 /**
  * Created by Павел on 31.01.2018.
  */
-/**
- * Created by Павел on 29.01.2018.
- */
 
 //import React from 'react'
 import { connect } from 'react-redux'

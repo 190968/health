@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import UserPlanEdit from '../components/UserPlanEdit';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { message } from 'antd';
 
 const USER_PLAN_INFO = gql`
     query GET_USER_PLAN_SETTINGS ($upid: UID!) {
@@ -27,7 +26,7 @@ const UserPlanEditWithQuery = graphql(
             }
 
         }),
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
             if (!data.loading) {
                 return {
                     info: data.userPlan,

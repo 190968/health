@@ -25,13 +25,14 @@ export class PanelComponent extends React.Component {
         return (
             <Card title={filter.name}>
                 {filter.fields.map((field) => {
-                    if (field.type == "checkboxGroup") {
+                    if (field.type === "checkboxGroup") {
                         return <CheckBoxGroup key={field.value} activeFilters={activeFilters} code={filter.code} item={field} onSuccess={this.onSuccess} />
-                    } else if (field.type == "checkbox") {
+                    } else if (field.type === "checkbox") {
                         return <CheckComponent key={field.value} activeFilters={activeFilters} code={filter.code} fields={field} onSuccess={this.onSuccess} />
-                    } else if (field.type == "range") {
+                    } else if (field.type === "range") {
                         return <SliderComponent key={field.value} activeFilters={activeFilters} onSuccess={this.onSuccess} code={filter.code} fields={field}/>
                     }
+                    return field;
                 })}
             </Card>
              )

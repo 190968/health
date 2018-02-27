@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import MedicationPlanBody from '../components';
-import Medication from '../components/Medication/components';
 import {MedicationCardInfo, MedicationsByType} from '../components/Medication/components/fragments';
 
 import { graphql } from 'react-apollo';
@@ -25,7 +24,7 @@ export const MedicationPlan_QUERY = gql`
 const MedicationPlanBodyWithQuery = graphql(
     MedicationPlan_QUERY,
     {
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
 
                 return {
@@ -50,9 +49,6 @@ const MedicationPlanBodyWithQuery = graphql(
 
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
-                                    medicationPlan: fetchMoreResult.medicationPlan,
-                                });
                             },
                             fetchPolicy: 'cache-first'//'cache-only'//'cache-and-network'
                         });

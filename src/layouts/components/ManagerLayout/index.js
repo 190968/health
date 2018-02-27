@@ -17,6 +17,7 @@ const ManagerLayout = ({loading, user, store, location}) => {
                 breakpoint="lg"
             >
                 <div className="logo" style={{margin: 16}}><a href="/static/myapp/"><img className="logo"
+                                                                                         alt=""
                                                                                          style={{width: '100%'}}
                                                                                          src="https://s3.amazonaws.com/moteevate-transloadit/82/ee3ba0f06a11e7a10a058d47b7a018/7b2fa890f06a11e78c255fe07671d9a1.png?AWSAccessKeyId=AKIAJIPDSQFP4EHPKEDQ&amp;Expires=1519210764&amp;Signature=whtbGLILBKalPKHd0ufwLswU9hI%3D"/></a>
                 </div>

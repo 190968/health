@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Input,Select,Form } from 'antd';
+import {Input,Select } from 'antd';
 import {
     injectIntl
 } from 'react-intl';

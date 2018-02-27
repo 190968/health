@@ -2,16 +2,13 @@
  * Created by Pavel on 09.12.2017.
  */
 import React from 'react';
-import { Card, Form, Select, Input,Button } from 'antd';
+import { Card, Form,Button } from 'antd';
 import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './verifyPhone.json';
 import PhoneForm from '../../../../components/PhoneForm';
-const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -23,18 +20,7 @@ const formItemLayout = {
         sm: { span: 14 },
     },
 };
-const tailFormItemLayout = {
-    wrapperCol: {
-        xs: {
-            span: 24,
-            offset: 0,
-        },
-        sm: {
-            span: 14,
-            offset: 6,
-        },
-    },
-};
+
 
 class VerifyPhoneForm extends React.Component {
 

@@ -58,7 +58,7 @@ const PlanBodyWithQuery = graphql(
             }
 
         }),
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
 
             if (!data.loading) {
                 const plan = data.plan;

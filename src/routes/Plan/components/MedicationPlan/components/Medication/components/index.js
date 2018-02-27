@@ -20,15 +20,11 @@ export class Medication extends React.Component {
     render() {
 
         const {info, date,user_id} = this.props;
-        const {id, type, drug, isPersonal, quantity, reports, timesPerDay} = info;
-        const {name, dosage} = drug;
+        const {id, type, quantity, reports, timesPerDay} = info;
         var rows = [];
 
         for (var i = 0; i < timesPerDay; i++) {
-            let report = reports && reports[i] || {};
-
-            // note: we add a key prop here to allow react to uniquely identify each
-            // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+            let report = (reports && reports[i]) || {};
             rows.push(<Col xs={3} key={i}><MedicationCoin med_id={id} userId={user_id} quantity={quantity} report={report} date={date} /></Col>);
         }
         return (

@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import ModalPointsHistory from '../components/ModalPointsHistory';
@@ -35,7 +35,7 @@ account{
 `;
 
 const withMutation = graphql(GET_POINTHISTORY, {
-    props: ({ ownProps, data }) => {
+    props: ({  data }) => {
 
         if (!data.loading) {
             return {

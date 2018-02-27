@@ -2,16 +2,13 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import { Form,Card,Col,Button,Input,Icon,Avatar } from 'antd';
+import {Card} from 'antd';
 import {withRouter} from "react-router-dom";
 import Comment from '../../components/CommentsList';
 import InputBox from '../../../InputBox'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
-import messages from '../../../InputBox/messages';
 
 
 class CommentsView extends React.Component{

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Row, Col, Progress} from 'antd';
-import {Circle } from 'rc-progress';
 
 export default class TodoPlanItem extends React.PureComponent {
 

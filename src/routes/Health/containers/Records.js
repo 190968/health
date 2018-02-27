@@ -31,7 +31,7 @@ const RecordsWithQuery = graphql(
             }
 
         }),
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
             if (!data.loading) {
                 const {totalCount, edges} = data.patient.healthRecords;
                 return {

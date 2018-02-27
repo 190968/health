@@ -80,6 +80,7 @@ export class MedicationCoin extends React.Component {
             case 0.75:
                 quantity = q+'&frac34';
                 break;
+            default:break;
         }
         //const hasReport = this.state.isClicked;
 

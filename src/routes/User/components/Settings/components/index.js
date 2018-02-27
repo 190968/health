@@ -29,13 +29,13 @@ const AsyncPassword = () => {
     );
 }
 
-const AsyncPicture = () => {
-    return (
-        Loadable({
-            loader: () => import('../../../../../routes/User/components/Settings/components/Picture/components'),
-        })
-    );
-}
+// const AsyncPicture = () => {
+//     return (
+//         Loadable({
+//             loader: () => import('../../../../../routes/User/components/Settings/components/Picture/components'),
+//         })
+//     );
+// }
 
 
 

@@ -42,7 +42,7 @@ class DiscussionView extends React.Component{
 
                     extra={
                       <div>
-                          {id==user.id ?
+                          {id===user.id ?
                         <Popconfirm title={intl.formatMessage(messages.popconfirm)} onConfirm={this.handleClick} okText={intl.formatMessage(messages.yes)} cancelText={intl.formatMessage(messages.no)}>
                         <Tooltip title={intl.formatMessage(messages.delete)}><Icon type="close" /></Tooltip>
                         </Popconfirm> :null}

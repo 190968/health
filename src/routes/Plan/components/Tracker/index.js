@@ -39,7 +39,7 @@ export default class Tracker extends React.Component {
             formatter={value => {
 
 
-                if (inputMask != '') {
+                if (inputMask !== '') {
 
                     return VMasker.toPattern(value, inputMask)
                 } else {
@@ -88,7 +88,7 @@ export class TrackerUncontrolled extends React.PureComponent {
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
             formatter={value => {
 
-                if (inputMask != '') {
+                if (inputMask !== '') {
 
                     return VMasker.toPattern(value, inputMask)
                 } else {

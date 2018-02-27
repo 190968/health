@@ -14,14 +14,6 @@ const { Content, Sider } = Layout;
 export class PlanstoreLayout extends React.Component {
 
 
-
-    changePage = (page) => {
-        this.props.loadMoreEntries(page)
-    }
-
-
-
-
     render() {
         const planPlaceholder = [];
         for(var i=0; i<8; i++) {
@@ -34,7 +26,7 @@ export class PlanstoreLayout extends React.Component {
         }
 
         const siderPlaceholder = [];
-        for(var i=0; i<4; i++) {
+        for(var j=0; j<4; j++) {
             siderPlaceholder.push(  {
                 item:   <div  className='my-awesome-placeholder'>
                 <RectShape color='#888888'  style={{width: 199, height: 20}}/>

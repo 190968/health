@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import {Form,Input,Modal,Card} from 'antd';
-import { gql } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import {
     injectIntl

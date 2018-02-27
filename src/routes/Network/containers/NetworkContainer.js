@@ -23,7 +23,7 @@ const NetworkWithQuery = graphql(
     NETWORK_ONLY_INFO,
     {
         //name: 'NetworkInfoQuery',
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
 
             if (!data.loading) {
 

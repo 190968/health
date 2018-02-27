@@ -63,6 +63,7 @@ export class BiometricPlanBody extends React.Component {
                 // show motivators modal
                 this.toggleMotivators();
                 break;
+            default:break;
         }
     }
 
@@ -114,6 +115,7 @@ export class BiometricPlanBody extends React.Component {
         // adding columns
         columns.map(column => {
             tableColumns.push({ title: column.name, dataIndex: 'col_'+column.id, key: column.id, width: 150 },)
+            return column;
         });
 
         const data = []
@@ -152,7 +154,8 @@ export class BiometricPlanBody extends React.Component {
                         size="small"
                         dataSource={inputFields}
                         renderItem={item => (<List.Item>{item}</List.Item>)}
-                    />});
+                    />
+                return column_id; });
 
                 data.push(tracker_column_info);
             } else {
@@ -179,7 +182,7 @@ export class BiometricPlanBody extends React.Component {
                     renderItem={item => (<List.Item>{item}</List.Item>)}
                 />});
             }
-
+            return tracker;
         });
 
         const menu = (

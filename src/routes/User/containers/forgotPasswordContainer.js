@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 08.12.2017.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 import { message } from 'antd';
 

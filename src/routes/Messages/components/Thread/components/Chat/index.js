@@ -3,8 +3,7 @@ import ChatHeader from '../ChatHeader';
 import ChatPresent from '../ChatPresent';
 import ChatInfo from '../../containers/Info';
 import ChatInput from '../../containers/ChatInput';
-import styles from './index.css';
-import {Card} from 'antd';
+
 
 
 export default class Chat extends React.Component {

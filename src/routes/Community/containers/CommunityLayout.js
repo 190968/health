@@ -2,7 +2,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 

@@ -2,7 +2,7 @@
  * Created by Павел on 12.02.2018.
  */
 import React from 'react';
-import {Progress ,List,Avatar, Card } from 'antd';
+import {List,Avatar, Card } from 'antd';
 import {
     injectIntl
 } from 'react-intl';

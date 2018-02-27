@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Icon,Card, Modal, TimePicker, Checkbox, Select, Form, Table} from 'antd';
-const FormItem = Form.Item;
-const Option = Select.Option;
+import { Button, Icon,Card, Modal, TimePicker, Checkbox, Form, Table} from 'antd';
+
 
 
 
@@ -46,7 +45,7 @@ export default class MedicationReminders extends React.Component {
 
     handleCreate = () => {
         const form = this.form;
-        form.validateFields((err, values) => {
+        form.validateFields((err) => {
             if (err) {
                 return;
             }
@@ -78,16 +77,7 @@ export default class MedicationReminders extends React.Component {
     }
 }
 
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 18 },
-    },
-};
+
 const format = 'h:mm a';
 
 
@@ -123,8 +113,8 @@ let columnsTimes = [{
 
 const MedicationRemindersCreateForm = Form.create()(
     (props) => {
-        const { visible, onCancel, onCreate, form, item } = props;
-        const { getFieldDecorator } = form;
+        const {onCancel, onCreate,item } = props;
+
 
         const {timesPerHour} = item;
 
@@ -149,9 +139,10 @@ const MedicationRemindersCreateForm = Form.create()(
 
             dataSourceTimes.map((info2) => {
                 info2[info.time] = false;
+                return info2;
             });
 
-
+                return info;
         })
 
         //

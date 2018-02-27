@@ -21,7 +21,7 @@ export class CheckComponent extends React.Component {
     render() {
 
 
-        const{loading, code, activeFilters} = this.props;
+        const{code, activeFilters} = this.props;
             const activeFilter = activeFilters[code] || {};
             const min = activeFilter.min || 0;
             const max = activeFilter.max || 99;

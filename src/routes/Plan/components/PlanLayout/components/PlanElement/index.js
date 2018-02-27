@@ -53,9 +53,10 @@ export class PlanElement extends React.Component {
        let fieldTitle = '';
        let reportValues = [];
        switch(itemType) {
+           default: break;
            case 'measurement_input':
                field = <Measurement item={item} date={date} onChange={this.onChange} />
-               break;
+           break;
            case 'choice_input':
            case 'checklist':
                reportValues = reports && reports.map((report) => (report.value));
@@ -63,7 +64,7 @@ export class PlanElement extends React.Component {
                field = <PlanChecklist item={item} reports={reportValues} onChange={this.onChange} />
                //const vertically = item.is_vertically;
                fieldTitle = item.label;
-               break;
+           break;
            case 'radio_input':
                reportValues = reports && reports.map((report) => (report.value));
                reportValues = reportValues && reportValues[0];
@@ -71,7 +72,7 @@ export class PlanElement extends React.Component {
                field = <PlanRadio item={item} reports={reportValues} onChange={this.onChange} />
                fieldTitle = item.label;
 
-               break;
+           break;
            case 'text_input':
 
                reportValues = reports && reports.map((report) => (report.value));
@@ -80,7 +81,7 @@ export class PlanElement extends React.Component {
                fieldTitle = item.label;
                field = <PlanInputText item={item} reports={reportValues} onChange={this.onChange} />
 
-               break;
+           break;
            case 'dropdown_input':
                reportValues = reports && reports.map((report) => (report.value));
                reportValues = reportValues && reportValues[0];
@@ -88,7 +89,7 @@ export class PlanElement extends React.Component {
                fieldTitle = item.label;
                field = <PlanDropdown item={item}  reports={reportValues} onChange={this.onChange} />
 
-               break;
+           break;
            case 'scale_input':
                reportValues = reports && reports.map((report) => (report.value));
                reportValues = reportValues && reportValues[0];
@@ -98,7 +99,7 @@ export class PlanElement extends React.Component {
 
                field = <PlanScale item={item} reports={reportValues} onChange={this.onChange} />
 
-               break;
+           break;
            case 'file_input':
                fieldTitle = item.label;
                 field = <Upload>
@@ -106,16 +107,16 @@ export class PlanElement extends React.Component {
                         <Icon type="upload" /> Upload
                     </Button>
                 </Upload>
-               break;
+           break;
            case 'exam_input':
                fieldTitle = item.label;
 
                field = <Button disabled>{fieldTitle}</Button>;
-               break;
+           break;
            case 'instruction':
                fieldTitle = '';
                field = <div dangerouslySetInnerHTML={{__html: item.text}}></div>;
-               break;
+           break;
            case 'line':
                const {height, color} = item;
                let opts = {height:height};
@@ -123,22 +124,22 @@ export class PlanElement extends React.Component {
                    opts.backgroundColor = '#'+color;
                }
                return <Divider style={opts}  />;
-               break;
            case 'instruction_tipbox':
                fieldTitle = '';
                field = <Alert message="Tipbox" description={<div dangerouslySetInnerHTML={{__html: item.text}}></div>} type="info" showIcon />;
-               break;
+           break;
            case 'link':
                field = <Card hoverable><a href={item.url}><Card.Meta
                    title={item.label}
                    description={item.description}
                /></a></Card>
                //link_path":"https://ya.ru","label":"Yandex","description":"search engine"
-               break;
+           break;
            case 'media':
                //fieldTitle = item.label;
                field = <PlanMedia item={item} />
-               break;
+           break;
+
        }
         return (<div>{fieldTitle && <h4>{fieldTitle}</h4>}
            <div>{field}</div></div>)

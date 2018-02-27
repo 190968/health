@@ -39,7 +39,7 @@ export class TrackerField extends React.Component {
 
         const {report} = nextProps;
         this.setState({
-            value: report && report.value || null
+            value: (report && report.value) || null
         });
 
         if (!nextProps.loading) {

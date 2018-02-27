@@ -2,21 +2,13 @@
  * Created by Pavel on 11.01.2018.
  */
 import React from 'react';
-import { Tooltip,Form ,Carousel,Row,Col,Card,List } from 'antd';
-import { withApollo, gql } from 'react-apollo'
-import Slider from 'react-slick';
-import { Link } from 'react-router-dom'
+import {Form ,Card,List } from 'antd';
+import { withApollo } from 'react-apollo'
+
 import '../../../../style.css';
-import messages from "../MainCategories/messages";
 import CategoryCard from '../CategoryCard';
 
-let settings = {
-    accessibility:true,
-    dots: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 2
-};
+
 class MyCategories extends React.Component{
 
 

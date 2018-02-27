@@ -1,24 +1,23 @@
 import React from 'react';
-import { Badge, Input, Icom, Avatar, List } from 'antd';
+import { Badge, Input,Avatar} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
-import styles from './index.less';
 import Truncate from 'react-truncate';
 const Search = Input.Search;
+//
+// const select = props => ({
+//     filterValue: props.conversations.filterValue,
+//     active: props.conversations.active,
+//     conversations: props.conversations.list,
+// });
 
-const select = props => ({
-    filterValue: props.conversations.filterValue,
-    active: props.conversations.active,
-    conversations: props.conversations.list,
-});
-
-function highlight(text, highlightValue) {
-    if (!highlightValue) return text;
-    return text.replace(
-        new RegExp(`(${highlightValue})`, 'g'),
-        (str, p1) => `<span style="color: #38b8f2">${p1}</span>`
-    );
-}
+// function highlight(text, highlightValue) {
+//     if (!highlightValue) return text;
+//     return text.replace(
+//         new RegExp(`(${highlightValue})`, 'g'),
+//         (str, p1) => `<span style="color: #38b8f2">${p1}</span>`
+//     );
+// }
 
 
 export default class ThreadList extends React.Component {

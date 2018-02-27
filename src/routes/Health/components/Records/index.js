@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Card, DatePicker, Button, Icon} from 'antd';
+import {Table, DatePicker, Button} from 'antd';
 import moment from "moment/moment";
 import Loading from 'components/Loading';
 
@@ -42,10 +42,9 @@ export default class Records extends React.Component{
         if (loading) {
             return <Loading />;
         }
-        const {healthRecords, totalCount} = this.props;
-        let { sortedInfo, filteredInfo } = this.state;
+        const {healthRecords} = this.props;
+        let { sortedInfo} = this.state;
         sortedInfo = sortedInfo || {};
-        filteredInfo = filteredInfo || {};
 
         const dataSource = healthRecords.map((info,i) => {
             return {...info, key:i};

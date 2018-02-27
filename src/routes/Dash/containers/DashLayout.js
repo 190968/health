@@ -18,7 +18,7 @@ const withQuery = graphql(
                 fetchPolicy: 'cache-first'
             }
         },
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 return {
                     currentRole: data.account.currentRole,

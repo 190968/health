@@ -2,8 +2,7 @@
  * Created by Pavel on 27.11.2017.
  */
 import { connect } from 'react-redux'
-import { registerUserError} from '../modules/register'
-import {loadUser, loadUserFAIL} from '../modules/user'
+import {loadUser} from '../modules/user'
 /*  This is a container components. Notice it does not contain any JSX,
  nor does it import React. This components is **only** responsible for
  wiring in the actions and state necessary to render a presentational

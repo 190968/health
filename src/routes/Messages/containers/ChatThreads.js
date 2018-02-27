@@ -33,13 +33,13 @@ export const GET_CONVERSATIONS = gql`
 const ChatThreadsWithQuery = graphql(
     GET_CONVERSATIONS,
     {
-        options: (ownProps) => {
+        options: () => {
             return {
                 pollInterval: 10000,
                 fetchPolicy: 'network-only'
             }
         },
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 const {edges, totalCount} = data.account.inboxConversations;
                 return {

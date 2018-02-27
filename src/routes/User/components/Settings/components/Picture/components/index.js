@@ -2,15 +2,10 @@
  * Created by Pavel on 08.12.2017.
  */
 import React from 'react';
-import { Input,message,Form, Button } from 'antd';
+import { Form} from 'antd';
 
 
 import { withApollo } from 'react-apollo'
-import {
-    FormattedMessage,
-    FormattedNumber,
-    FormattedPlural,
-} from 'react-intl';
 
 
 const Uppy = require('uppy/lib/core')

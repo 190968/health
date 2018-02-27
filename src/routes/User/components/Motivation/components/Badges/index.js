@@ -2,7 +2,7 @@
  * Created by Павел on 12.02.2018.
  */
 import React from 'react';
-import {Avatar,Popover,Col,List, Card } from 'antd';
+import {List, Card } from 'antd';
 import BadgesListItem from './components/BadgesListItem';
 import {
     injectIntl
@@ -21,7 +21,7 @@ class Badges extends React.Component {
             }
             const {badges} = info;
             const {intl}=this.props;
-            const {totalCount, edges} = badges;
+            const {edges} = badges;
 
             return (
                 <Card style={{height:250}}  title={intl.formatMessage(messages.myBadges)}>

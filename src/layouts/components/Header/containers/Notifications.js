@@ -2,15 +2,11 @@
  * Created by Павел on 20.01.2018.
  */
 
-import React from 'react'
-import { connect } from 'react-redux'
+//import React from 'react'
 
 import Notifications from '../components/Notifications/index';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {MedicationPlan_QUERY} from "../../../../routes/Plan/components/MedicationPlan/containers";
-import {message} from "antd/lib/index";
-import {BADGE_NOTIFICATIONS_QUERY} from '../components/RightMenu/containers/NotificationBadge'
 
 
 export const NOTIFICATIONS_QUERY  = gql`

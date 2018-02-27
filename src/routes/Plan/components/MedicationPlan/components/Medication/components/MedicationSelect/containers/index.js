@@ -27,11 +27,11 @@ const settingUserMutate=gql`
 
 const withQuery = graphql(medicationList,
     {
-        options: (ownProps) => {
+        options: () => {
             return {
                 fetchPolicy: 'network-only'
             }},
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 return {
                     medications: data.medicationsList,
@@ -45,11 +45,7 @@ const withQuery = graphql(medicationList,
                             updateQuery: (previousResult, {fetchMoreResult}) => {
 
                                 if (!fetchMoreResult) { return previousResult; }
-                                return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                                });
+                                return (fetchMoreResult);
                             },
                         });
                     }

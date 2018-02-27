@@ -1,5 +1,5 @@
 import React from 'react'
-import {Anchor, Row, Col, Button, Card, List } from 'antd';
+import {Row, Col, Button, Card, List } from 'antd';
 import PlanElement from '../../containers/PlanElement'
 import {message} from "antd/lib/index";
 
@@ -19,7 +19,7 @@ export class PlanLesson extends React.Component {
     };
 
     saveLesson = (e, lessonId, isLastlesson) => {
-        let haveSections = false;
+
 
 
         //return true;

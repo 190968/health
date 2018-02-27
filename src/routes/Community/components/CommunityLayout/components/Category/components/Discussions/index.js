@@ -2,11 +2,11 @@
  * Created by Pavel on 10.01.2018.
  */
 import React from 'react';
-import { Icon,Form,Input,Button,Modal,Card,List,Row,Avatar } from 'antd';
-import moment from 'moment';
-import { withApollo, gql } from 'react-apollo'
+import { Button,Card,List,Row } from 'antd';
+
+import { withApollo } from 'react-apollo'
 import {withRouter} from "react-router-dom";
-import { Link } from 'react-router-dom'
+
 import DiscussionModal from '../DiscussionModal/components'
 import DiscussionListItem from '../DiscussionListItem'
 import {
@@ -15,24 +15,7 @@ import {
 import messages from './communityDiscussion.json';
 import {Empty, Loading} from "../../../../../../../../components/Loading";
 
-const FormItem = Form.Item;
-const { TextArea } = Input;
-const IconText = ({ type, text }) => (
-    <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-        {text}
-  </span>
-);
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
-};
+
 
 
 
