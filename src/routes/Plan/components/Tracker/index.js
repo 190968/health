@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './index.less';
 import VMasker from "vanilla-masker";
 import { Input } from 'antd';
 
@@ -25,7 +24,7 @@ export default class Tracker extends React.Component {
         const {inputMask} = this.props.item;
 
         let value = event.target.value;
-        value = inputMask != '' ? VMasker.toPattern(value, inputMask) : VMasker.toNumber(value);
+        value = inputMask !== '' ? VMasker.toPattern(value, inputMask) : VMasker.toNumber(value);
         this.setState({value:value});
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(value);

@@ -155,12 +155,12 @@ export class Plan extends React.PureComponent {
     const is_user = upid !== '';
     // if the link is personal - then open user link
      // let height = 154;
-      let limit = 25;
+      //let limit = 25;
       if (is_user) {
           link = '/plan/'+upid;
           //description = '';
          // height = 120;
-          limit = 15;
+          //limit = 15;
       }
 
       if (list) {
