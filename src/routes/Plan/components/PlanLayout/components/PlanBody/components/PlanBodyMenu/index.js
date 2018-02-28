@@ -1,6 +1,9 @@
 import React from 'react'
 
 import { Menu, Icon } from 'antd';
+import { withApollo } from 'react-apollo';
+import AddLessonModal from '../../../../../../../Manager/components/Planbuilder/components/BuildBody/containers/AddLessonModal';
+import gql from 'graphql-tag';
 const SubMenu = Menu.SubMenu;
 
 export class PlanBodyMenu extends React.Component {
@@ -8,7 +11,8 @@ export class PlanBodyMenu extends React.Component {
         super(props);
         this.state = {
             currentTab: [props.currentTab],
-            currentKey: props.currentKey
+            currentKey: props.currentKey,
+            openAddLesson:false,// if to open add lesson modal
         };
     };
 
@@ -16,15 +20,124 @@ export class PlanBodyMenu extends React.Component {
     };
 
     static defaultProps = {
-        isBuilderMode:false
+        isBuilderMode:false,
+        planId: '',
     }
 
     onOpenChange = (e) => {
         this.setState({currentTab:e});
 
     }
+
+    hideAddLesson = () => {
+       const newKey = this.props.lessons.length+1;
+        // show last Lesson
+        console.log(this.props.lessons.length);
+        console.log(this.props.lessons);
+        console.log(this.state);
+
+        this.setState({openAddLesson:!this.state.openAddLesson, currentKey:newKey});
+    }
+
+    /**
+     * Adds new lesson to the list
+     */
+    appendLesson = () => {
+        const {client} = this.props;
+        console.log(this.props);
+
+
+        this.setState({openAddLesson:true});
+
+/*
+        const query = gql`
+                query GetPlanTitle($id: Int!) {
+                  plan(id: $id) {
+                  id
+                    lessons {
+                        id
+                        title
+                     }
+                  }
+                }
+              `;
+
+        const data = client.readQuery({
+            query: query,
+            variables: {
+                id: planId
+            },
+        });
+
+        console.log(data);
+        const emptyLesson = [{id:'',title:'',__typename: "PlanBodyLesson"}];
+
+        const newLessons = [...data.plan.lessons, ...emptyLesson];
+
+        //const newData = {...data, ...{account: {...data.account, ...login}}};
+
+        console.log(newLessons);
+        client.writeQuery({
+            query,
+            variables: {
+                id: planId
+            },
+            data: {
+                plan: {...data.plan, lessons: newLessons},
+                __typename:'Plan'
+            },
+        });
+
+        const data2 = client.readQuery({
+            query: query,
+            variables: {
+                id: planId
+            },
+        });
+
+        console.log(data2);*/
+
+/*
+        const fragment =  gql`
+           fragment PlanLessons on Plan {
+             lessons {
+                id
+                title
+             }
+           }
+         `;
+        let planLessons = client.readFragment({
+           id: 'Plan:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
+           fragment: fragment,
+       });
+
+        const emptyLesson = [{id:'',title:'',  __typename: "PlanBodyLesson"}];
+        const lessons =  [...planLessons.lessons,...emptyLesson];
+        client.writeFragment({
+            id: 'Plan:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
+            fragment: fragment,
+            data: {
+                lessons:lessons,
+                __typename:'Plan'
+            },
+        });
+*/
+
+    }
+
     onClick = (e) => {
 
+
+        switch(e.key) {
+            case 'addLesson':
+                // append lesson
+                this.appendLesson();
+                break;
+            case 'addSection':
+                //append section
+
+                break;
+        }
         const{onClick} = this.props;
 
         this.setState({currentKey:e.key});
@@ -104,10 +217,11 @@ export class PlanBodyMenu extends React.Component {
 
     render() {
 
-        const {lessons, activities, isBuilderMode} = this.props;
+        const {lessons, activities, isBuilderMode, planId} = this.props;
         let {currentTab, currentKey} = this.state;
 
-        return (<Menu
+        return (
+            <React.Fragment><Menu
             onOpenChange={this.onOpenChange}
             onClick={this.onClick}
             selectedKeys={[currentKey]}
@@ -117,14 +231,17 @@ export class PlanBodyMenu extends React.Component {
             {isBuilderMode && <Menu.Item key='introduction' style={{marginBottom:0}} > <Icon type="exclamation-circle-o" />Introduction</Menu.Item>}
             {(isBuilderMode || lessons.length > 0) && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
                 {lessons.map((lesson, i) => (<Menu.Item key={'lesson_'+i} i={i}>{lesson.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{lesson.title}</Menu.Item>))}
+                {isBuilderMode && <Menu.Item key='addLesson' style={{marginBottom:0}} > <Icon type="plus" />Add Lesson</Menu.Item>}
             </SubMenu>}
             {(isBuilderMode || activities.length > 0) && <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
                 {activities.map((section, i) => (<Menu.Item key={'section_'+i}>{section.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{section.title}</Menu.Item>))}
             </SubMenu>}
-        </Menu>)
+        </Menu>
+                {this.state.openAddLesson && <AddLessonModal planId={planId} onHide={this.hideAddLesson} />}
+            </React.Fragment>)
     }
 }
 
 
 
-export default PlanBodyMenu
+export default withApollo(PlanBodyMenu)

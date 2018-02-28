@@ -1,6 +1,3 @@
-//import React from 'react'
-
-
 import PlanSection from '../components/PlanSection'
 
 import { graphql } from 'react-apollo';

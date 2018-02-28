@@ -20,6 +20,11 @@ export class PlanSection extends React.Component {
     static propTypes = {
     };
 
+    static defaultProps = {
+        isBuilderMode:false,
+        planId:''
+    }
+
     saveSection = (e, sectionId, isLastSection) => {
 
         const {upid, date, item, history} = this.props;
@@ -50,7 +55,7 @@ export class PlanSection extends React.Component {
 
    render() {
 
-        const {upid, date, item, isLastSection} = this.props;
+        const {upid, date, item, isLastSection, isBuilderMode, planId} = this.props;
         const footer = item.elements !== null && (item.elements.length > 0 || isLastSection)  ? [<Button type="primary" loading={this.state.loading} onClick={(e) => this.saveSection(e, item.id, isLastSection)}>{isLastSection ?  'Finish':'Next Section'}</Button>] : [];
 
         return (<Card title={item.title} bordered={false} actions={footer}>
@@ -65,7 +70,7 @@ export class PlanSection extends React.Component {
                     return <List.Item
                         id={'field' + item.id}
                         key={item.id}>
-                        <PlanElement upid={upid} date={date} element={item} />
+                        <PlanElement isBuilderMode={isBuilderMode} planId={planId} upid={upid} date={date} element={item} />
                     </List.Item>
                 }}
                 /></Col>

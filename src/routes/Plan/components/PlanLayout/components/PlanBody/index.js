@@ -30,7 +30,8 @@ export class PlanBody extends React.Component {
     };
 
     static defaultProps = {
-        isBuilderMode:false
+        isBuilderMode:true,
+        planId:'NzUyNw'
     }
 
 
@@ -87,7 +88,7 @@ export class PlanBody extends React.Component {
 
 
     render() {
-        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading, isBuilderMode} = this.props;
+        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading, isBuilderMode, planId} = this.props;
         let {currentTab, currentKey} = this.state;
         if (loading) {
             return (
@@ -133,12 +134,16 @@ export class PlanBody extends React.Component {
             });
         }
 
+        console.log(currentKey);
+        console.log(currentTab);
+
+
 
         return (<Row>
             <BackTop />
             <Col xs={5} >
                 <Affix offsetTop={10} >
-                    <PlanBodyMenu isBuilderMode={isBuilderMode} lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
+                    <PlanBodyMenu isBuilderMode={isBuilderMode}  planId={planId}  lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
                 </Affix>
             </Col>
             <Col offset={5}>
@@ -150,7 +155,7 @@ export class PlanBody extends React.Component {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
-                                <PlanLesson isBuilderMode={isBuilderMode} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
+                                <PlanLesson isBuilderMode={isBuilderMode} planId={planId} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
                         </Row>;
 
@@ -165,7 +170,7 @@ export class PlanBody extends React.Component {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
-                                <PlanSection isBuilderMode={isBuilderMode} upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
+                                <PlanSection isBuilderMode={isBuilderMode}  planId={planId}  upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
                             </Col>
                         </Row>;
 
