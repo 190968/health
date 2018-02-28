@@ -2,9 +2,7 @@ import React from 'react';
 import ChatThreads from '../containers/ChatThreads';
 import Thread from './Thread';
 
-// RCE CSS
-import 'react-chat-elements/dist/main.css';
-// MessageBox component
+import  './index.less';
 
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
 import PrivateRoute from '../routes/privateRoute';
 
 
@@ -15,6 +15,16 @@ import {
     asyncMessages,
     asyncProfile
 } from '../routes';
+
+const NoMatch = ({ location }) => (
+    <center>
+        <h1>
+            404. Page not found
+
+        </h1>
+        <Link to="/">Go to main page</Link>
+    </center>
+);
 
 export const BasicRoutes = ({store}) => {
     return (

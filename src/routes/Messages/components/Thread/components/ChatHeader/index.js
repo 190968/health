@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon,Col, } from 'antd';
-
+import  './index.less';
 
 export default class ChatHeader extends React.Component {
 

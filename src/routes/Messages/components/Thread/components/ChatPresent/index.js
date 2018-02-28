@@ -3,7 +3,7 @@ import { getRequestAnimationFrame, easeInOutCubic } from '../../../../../../util
 import moment from 'moment';
 import {Avatar} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
-
+import  './index.less';
 const reqAnimFrame = getRequestAnimationFrame();
 
 class ChatPresent extends React.Component {

@@ -15,6 +15,10 @@ export class PlanBodyMenu extends React.Component {
     static propTypes = {
     };
 
+    static defaultProps = {
+        isBuilderMode:false
+    }
+
     onOpenChange = (e) => {
         this.setState({currentTab:e});
 
@@ -100,7 +104,7 @@ export class PlanBodyMenu extends React.Component {
 
     render() {
 
-        const {lessons, activities} = this.props;
+        const {lessons, activities, isBuilderMode} = this.props;
         let {currentTab, currentKey} = this.state;
 
         return (<Menu
@@ -110,10 +114,11 @@ export class PlanBodyMenu extends React.Component {
             openKeys={currentTab}
             mode="inline"
         >
-            {lessons.length > 0 && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
+            {isBuilderMode && <Menu.Item key='introduction' style={{marginBottom:0}} > <Icon type="exclamation-circle-o" />Introduction</Menu.Item>}
+            {(isBuilderMode || lessons.length > 0) && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
                 {lessons.map((lesson, i) => (<Menu.Item key={'lesson_'+i} i={i}>{lesson.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{lesson.title}</Menu.Item>))}
             </SubMenu>}
-            {activities.length > 0 && <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
+            {(isBuilderMode || activities.length > 0) && <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
                 {activities.map((section, i) => (<Menu.Item key={'section_'+i}>{section.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{section.title}</Menu.Item>))}
             </SubMenu>}
         </Menu>)

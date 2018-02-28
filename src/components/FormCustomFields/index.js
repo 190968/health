@@ -1,14 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { DatePicker,Col,Form } from 'antd';
+import { DatePicker, Input,Col,Select,Form } from 'antd';
 import {
-    injectIntl
+    injectIntl,
+    defineMessages,
+    FormattedMessage
 } from 'react-intl';
+import {graphql} from 'react-apollo';
+import gql from 'graphql-tag';
 import moment from "moment/moment";
 import {connect} from "react-redux";
 
+const InputGroup = Input.Group;
+const Option = Select.Option;
 const FormItem = Form.Item;
+
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 14,
+            offset: 6,
+        },
+    },
+};
 
 
 export class StartEndFormInit extends React.Component{
@@ -20,12 +39,24 @@ export class StartEndFormInit extends React.Component{
         dateFormat: PropTypes.string,
         form: PropTypes.object.isRequired,
         endDateRequired: PropTypes.bool,
+        inline: PropTypes.bool,
     }
 
     static defaultProps = {
         startDate: '',
         endDate: '',
         endDateRequired: false,
+        inline: true,
+        formItemLayout: {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 6 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 14 },
+            },
+        }
     }
 
 
@@ -70,29 +101,63 @@ export class StartEndFormInit extends React.Component{
 
     render(){
 
-        const {  form,  endDateRequired, startDate, endDate, dateFormat } = this.props;
+        const {  form, intl, endDateRequired, startDate, endDate, dateFormat, inline } = this.props;
+        let {formItemLayout} = this.props;
 
         const {getFieldDecorator} = form;
 
-        return (
+        if (inline) {
+            formItemLayout = {};
+        }
+
+
+        const startField = <FormItem
+            {...formItemLayout}
+            label={!inline && 'Start Date'}
+        >
+            {getFieldDecorator('startDate', {
+                initialValue: startDate ? moment(startDate) : moment(),
+                rules: [{
+                    required: true, message: 'Please Select',
+                }],
+            })(
+                <DatePicker
+                    disabledDate={this.disabledStartDate}
+                    allowClear={false}
+                    format={dateFormat}
+                    placeholder="Start date"
+                />
+            )}
+        </FormItem>;
+
+
+        const endfield =  <FormItem
+            {...formItemLayout}
+            label={!inline && 'End Date'}
+        >
+            {getFieldDecorator('endDate', {
+                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
+                rules: [{
+                    required: endDateRequired, validator: this.checkEndDate, message: 'End date must be after Start Date',
+                }],
+            })(
+                <DatePicker
+                    placeholder="End date"
+                    format={dateFormat}
+                    disabledDate={this.disabledEndDate}
+                    allowClear={!endDateRequired}
+                />
+            )}
+        </FormItem>;
+
+
+        if (inline) {
+            // if it's inline
+            return (
                 <React.Fragment>
                     <Col span={11}>
-                        <FormItem
-                        >
-                            {getFieldDecorator('startDate', {
-                                initialValue: startDate ? moment(startDate) : moment(),
-                                rules: [{
-                                    required: true, message: 'Please Select',
-                                }],
-                            })(
-                                <DatePicker
-                                    disabledDate={this.disabledStartDate}
-                                    allowClear={false}
-                                    format={dateFormat}
-                                    placeholder="Start date"
-                                />
-                            )}
-                        </FormItem>
+                        {startField}
+
                     </Col>
                     <Col span={2}>
                     <span style={{display: 'inline-block', width: '100%', textAlign: 'center'}}>
@@ -100,25 +165,21 @@ export class StartEndFormInit extends React.Component{
                     </span>
                     </Col>
                     <Col span={11}>
-                        <FormItem
-                        >
-                            {getFieldDecorator('endDate', {
-                                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
-                                rules: [{
-                                    required: endDateRequired, validator: this.checkEndDate, message: 'End date must be after Start Date',
-                                }],
-                            })(
-                                <DatePicker
-                                    placeholder="End date"
-                                    format={dateFormat}
-                                    disabledDate={this.disabledEndDate}
-                                    allowClear={!endDateRequired}
-                                />
-                            )}
-                        </FormItem>
+                        {endfield}
+
                     </Col>
                 </React.Fragment>
-        );
+            );
+        } else {
+            // in as separate field
+            return (
+                <React.Fragment>
+                        {startField}
+
+                        {endfield}
+                </React.Fragment>
+            );
+        }
     }
 
 }

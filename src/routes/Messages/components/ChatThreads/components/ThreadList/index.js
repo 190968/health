@@ -3,6 +3,7 @@ import { Badge, Input,Avatar} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import Truncate from 'react-truncate';
+import  './index.less';
 const Search = Input.Search;
 //
 // const select = props => ({
@@ -45,7 +46,7 @@ export default class ThreadList extends React.Component {
             <div>
                 {conversations.map(conversation => {
                     const unreadMessages = conversation.unreadMessages
-                    return <NavLink to={'/messages/'+conversation.id}><div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
+                    return <NavLink key={conversation.id} to={'/messages/'+conversation.id}><div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
                     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     <div className="conversation--details">
                         <div className="conversation--details_name"><span className="subject"><Badge count={unreadMessages} >{conversation.subject}</Badge> </span><span className="date">{moment(conversation.lastMessage.sentAt).fromNow()}</span></div>

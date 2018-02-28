@@ -29,7 +29,7 @@ class CoreByMode extends React.Component {
         }
 
         */
-
+        //console.log(currentRole);
         //return null;
         if (!currentRole || currentRole === 'patient') {
             return <PatientLayout {...this.props} />;
@@ -131,7 +131,6 @@ class Core extends React.Component {
                 <VerifyPhone/>
             )
         }
-
         return (
 
             <React.Fragment>

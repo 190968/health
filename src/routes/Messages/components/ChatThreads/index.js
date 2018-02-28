@@ -2,6 +2,7 @@ import React from 'react';
 import {Tooltip, Icon, Row, Col} from 'antd';
 import ThreadList from './components/ThreadList';
 import Compose from '../../containers/Compose';
+import styles from './index.less'
 
 export default class ChatThreads extends React.Component {
 
