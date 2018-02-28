@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user.settings.basic",
+    "description": "Basic",
+    "defaultMessage": "Basic"
+  },
+  {
+    "id": "user.settings.password",
+    "description": "Password",
+    "defaultMessage": "Password"
+  }
+]
