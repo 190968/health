@@ -1,5 +1,6 @@
 import React from 'react'
 import {Layout} from 'antd';
+import {Switch} from 'react-router-dom'
 import LayoutHeader from '../../components/Header';
 import {BasicRoutes} from '../../routes';
 import {PatientRoutes} from './routes';
@@ -16,8 +17,10 @@ const PatientLayout = ({loading, token, store, location}) =>  {
                 <LayoutHeader loading={loading} token={token} location={location}  />
             </Header>
             <Content style={{ padding: '20px 50px', flex: '1' }}>
-                <BasicRoutes store={store} />
-                <PatientRoutes store={store} />
+                <Switch>
+                    <PatientRoutes store={store} />
+                    <BasicRoutes store={store} />
+                </Switch>
             </Content>
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved

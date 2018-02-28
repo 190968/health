@@ -1,0 +1,27 @@
+[
+  {
+    "id": "pb.pageTitle",
+    "description": "Basic Info",
+    "defaultMessage": "Basic Info"
+  },
+  {
+    "id": "pb.title",
+    "description": "Title",
+    "defaultMessage": "Title"
+  },
+  {
+    "id": "pb.continue",
+    "description": "Continue",
+    "defaultMessage": "Continue"
+  },
+  {
+    "id": "pb.description",
+    "description": "Description",
+    "defaultMessage": "Description"
+  },
+  {
+    "id": "pb.schedulingTitle",
+    "description": "Scheduling",
+    "defaultMessage": "Scheduling"
+  }
+]

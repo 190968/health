@@ -29,7 +29,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
             variables: {
                 cursors: {first:1, after:ownProps.lastNotificationCursor},// last cursor for notifications
             },
-            pollInterval: 5000,
+            //pollInterval: 5000,
             fetchPolicy: 'network-only',
             //notifyOnNetworkStatusChange: true// adding loading placeholder
         }

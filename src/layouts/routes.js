@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
+import {Route, Link} from 'react-router-dom'
 import PrivateRoute from '../routes/privateRoute';
 
 
@@ -16,6 +16,16 @@ import {
     asyncProfile
 } from '../routes';
 
+const NoMatch = ({ location }) => (
+    <center>
+        <h1>
+            404. Page not found
+
+        </h1>
+        <Link to="/">Go to main page</Link>
+    </center>
+);
+
 export const BasicRoutes = ({store}) => {
     return (
         <React.Fragment>
@@ -29,6 +39,7 @@ export const BasicRoutes = ({store}) => {
             <PrivateRoute path="/calendar" component={asyncCalendar(store)}/>
             <PrivateRoute path="/u/:uid" component={asyncProfile(store)}/>
             <PrivateRoute path="/plan/:upid" component={asyncPlan(store)}/>
+            <Route component={NoMatch} />
         </React.Fragment>
     )
 }

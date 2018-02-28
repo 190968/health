@@ -16,3 +16,25 @@ export const asyncWorkflow = (store) => {
         //LoadSimple('Manager/containers/Workflow')
     );
 }
+
+export const asyncActionplans = (store) => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Actionplans'),
+            modules: ['../routes/Manager/containers/Actionplans'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Actionplans')],
+        })
+    );
+}
+
+export const asyncPlanbuilder = (store) => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Planbuilder'),
+            modules: ['../routes/Manager/containers/Planbuilder'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Planbuilder')],
+        })
+    );
+}
