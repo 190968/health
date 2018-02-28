@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import {Checkbox} from 'antd';
 const CheckboxGroup = Checkbox.Group;
@@ -53,6 +52,7 @@ export default class PlanChecklist extends React.Component {
             const name = option.label;
 
             plainOptions.push(<Checkbox key={coid} value={coid} style={radioStyle} >{name}</Checkbox>);
+            return option;
         });
 
 

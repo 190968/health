@@ -57,6 +57,7 @@ class AddCalendarEvent extends React.Component{
         //console.log(addressError);
         let typeFields = '';
         switch(getFieldValue('type')) {
+            default:break;
             case "inPerson":
                 typeFields = <FormItem
                     {...formItemLayout}

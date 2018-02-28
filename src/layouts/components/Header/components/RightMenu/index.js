@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Notification from '../../containers/Notifications'
 import MenuBadges from './containers/MenuBadges';
 import ChangeRoleModal from './containers/ChangeRole';
-import {Menu, Avatar, Row, Col } from 'antd';
+import {Menu, Row, Col } from 'antd';
 import UserWidget from '../../../../../routes/User/components/UserWidget';
 const SubMenu = Menu.SubMenu;
 
@@ -61,7 +60,7 @@ export default class RightMenu extends React.Component {
             user_menu_items.push(['Change Role', 'onclick',this.toggleRole]);
         }
 
-        if (currentRole == 'patient') {
+        if (currentRole === 'patient') {
             defaultMenu = [
                 ['Settings', '/settings'],
                 ['Calendar', '/calendar', 'calendar'],
@@ -87,7 +86,7 @@ export default class RightMenu extends React.Component {
                         <SubMenu key="sub1" title={<UserWidget user={user} onlyFirst={true} />}>
 
                             {user_menu_items.map((item) => {
-                                if (item.length == 1) {
+                                if (item.length === 1) {
                                     return (<Menu.Divider key={'div'} />)
                                 }
                                 return (

@@ -54,6 +54,7 @@ class Notifications extends React.Component {
                 date} = data.handleNotification;
 
             switch(action) {
+                default:break;
                 case 'goUser':
                     //'description' => 'Go to user profile by User ID'
                     this.props.history.push('/u/'+userId);

@@ -1,6 +1,5 @@
 import React from 'react';
-import {Row, Col, Input } from 'antd';
-import styles from './index.less';
+import {Input } from 'antd';
 
 export default class ChatInput extends React.Component {
     constructor() {

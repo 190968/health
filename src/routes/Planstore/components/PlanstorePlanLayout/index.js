@@ -1,23 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-
-import moment from 'moment';
 import {FormattedDate} from 'react-intl';
 
 import { arrayChunk, intersperse } from '../../../../utils/main';
 import GetPlanstorePlan from './containers/GetPlanstorePlan';
 
 // add placeholders
-import { Card, Modal, Row, Col, Button, message, Form ,Popover, Radio, DatePicker} from 'antd';
-const FormItem = Form.Item;
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-
-
-
-
-
+import { Card,Row, Col, Button,} from 'antd';
 
 export class PlanstorPlanLayout extends React.Component {
     constructor(props) {
@@ -31,9 +21,6 @@ export class PlanstorPlanLayout extends React.Component {
         plan: PropTypes.object,
     };
 
-    openModal = () => {
-        this.setState({modalIsOpen: true});
-    }
 
     toggle = () => {
         this.setState({
@@ -107,7 +94,7 @@ export class PlanstorPlanLayout extends React.Component {
 
     render() {
         const {plan, loading, alreadyDownloaded, alreadyDownloadedId} = this.props;
-        if (1==12 || loading) {
+        if (1===12 || loading) {
 
             //return (<div>Loading...</div>);
             return (
@@ -139,9 +126,6 @@ export class PlanstorPlanLayout extends React.Component {
 
 
         var img = plan.thumb.large;
-        var divStyle = {
-            backgroundImage: 'url(' + img + ')'
-        }
 
 
 

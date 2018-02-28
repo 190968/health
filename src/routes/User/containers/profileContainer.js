@@ -2,7 +2,7 @@
  * Created by Павел on 17.02.2018.
  */
 
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import Profile from '../components/Profile';
@@ -55,7 +55,7 @@ const withQuery = graphql(GET_PROFILE, {
             }
         }
     },
-    props: ({ ownProps, data }) => {
+    props: ({ data }) => {
         if (!data.loading) {
             return {
                 info: data.user,

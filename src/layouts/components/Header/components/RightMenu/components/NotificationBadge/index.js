@@ -1,13 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
 import Notification from '../../../../containers/Notifications'
 
-import {Menu, Tabs, Popover, Icon, Avatar, Badge, notification } from 'antd';
-const SubMenu = Menu.SubMenu;
+import {Tabs, Popover, Icon,  Badge, notification } from 'antd';
 const TabPane = Tabs.TabPane;
 
 
@@ -43,7 +41,7 @@ const TabPane = Tabs.TabPane;
 
 
         if (!this.props.loading) {
-            const {newCursor, lastCursor, newNotificationsNum, totalNewNotifications} = this.props;
+            const {newCursor, lastCursor, newNotificationsNum} = this.props;
 
 
             if (newCursor && newCursor !== lastCursor) {

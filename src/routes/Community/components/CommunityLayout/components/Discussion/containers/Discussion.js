@@ -5,7 +5,7 @@
  * Created by Павел on 29.01.2018.
  */
 
-import React from 'react'
+// import React from 'react'
 import { connect } from 'react-redux'
 
 
@@ -18,7 +18,7 @@ import Discussion from '../index.js';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import {withRouter} from "react-router-dom";
+
 // import {MedicationPlan} from "../../PlansList/components/MedicationPlan/containers";
 const DISCUSSION  = gql`
  query GET_DISCUSSION($id:UID) {
@@ -93,7 +93,7 @@ const withQuery = graphql(DISCUSSION, {
             },
             fetchPolicy: 'network-only'
         }},
-    props: ({ ownProps, data }) => {
+    props: ({  data }) => {
 
         if (!data.loading) {
             return {

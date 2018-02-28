@@ -1,9 +1,9 @@
 import React from 'react';
-import Medication from './Medication/components';
+//import Medication from './Medication/components';
 import MedicationCoin from './Medication/components/MedicationCoin/containers';
 import MedicationSelect from './Medication/components/MedicationSelect/containers';
 import MedicationInfo from './Medication/components/MedicationInfo/containers';
-import {MedicationAddForm as MedicationAddForm} from './Medication/components/MedicationEdit/containers';
+import {MedicationAddForm } from './Medication/components/MedicationEdit/containers';
 import MedicationSummary from './Medication/containers/MedicationSummary';
 import Motivators from '../../../../User/containers/motivatorsContainer';
 import moment from 'moment';
@@ -78,6 +78,7 @@ export class MedicationPlanBody extends React.Component {
                 // show motivators modal
                 this.toggleMotivators();
                 break;
+            default:break;
         }
     }
 
@@ -160,12 +161,14 @@ export class MedicationPlanBody extends React.Component {
                         });
                     }
                     medic_times['time_'+time_info.time] = <MedicationCoin key={time_info.id+'k'} userId={user_id} med_id={medication.id} report={report} quantity={quantity} time={time} date={date}/>;
+                    return time_info;
                 });
 
 
                 data.push(
                     medic_times
                 );
+                return medication;
             });
         }
 
@@ -195,7 +198,7 @@ export class MedicationPlanBody extends React.Component {
                 const quantity = medication.quantity;
 
                 for (var i = 0; i < timesPerDay; i++) {
-                    const report = reports && reports[i] || {};
+                    const report = (reports && reports[i]) || {};
 
                     rows.push(<Col xs={3} key={i}><MedicationCoin med_id={medication.id} userId={user_id} quantity={quantity} report={report} date={date} /></Col>);
                 }
@@ -204,6 +207,7 @@ export class MedicationPlanBody extends React.Component {
                     name: <MedicationInfo user_id={user_id} date={date} info={medication}/>,
                     report: rows
                 });
+                return medication;
             });
         }
 
@@ -232,7 +236,7 @@ export class MedicationPlanBody extends React.Component {
                 const quantity = medication.quantity;
 
                 for (var i = 0; i < timesPerDay; i++) {
-                    const report = reports && reports[i] || {};
+                    const report = (reports && reports[i]) || {};
 
                     rows.push(<Col xs={3} key={i}><MedicationCoin med_id={medication.id} userId={user_id} quantity={quantity} report={report} date={date} /></Col>);
                 }
@@ -241,6 +245,7 @@ export class MedicationPlanBody extends React.Component {
                     name: <MedicationInfo user_id={user_id} date={date} info={medication}/>,
                     report: rows
                 });
+                return medication;
             });
         }
 

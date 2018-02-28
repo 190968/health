@@ -37,7 +37,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
     props: ({ ownProps, data }) => {
 
 
-        const lastCursor = !data.loading && data.account.user.notifications.pageInfo.endCursor != '' ?  data.account.user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
+        const lastCursor = !data.loading && data.account.user.notifications.pageInfo.endCursor !== '' ?  data.account.user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
         const totalCount = !data.loading && data.account.user.notifications.totalCount;
         const unreadMessages = data.account && data.account.unreadMessages;
         const token = data.account && data.account.token;

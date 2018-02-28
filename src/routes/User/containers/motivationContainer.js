@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 08.12.2017.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 
@@ -138,7 +138,7 @@ const withMutation = graphql(MOTIVATION, {
         }
 
     }),
-    props: ({ ownProps, data }) => {
+    props: ({  data }) => {
         if (!data.loading) {
             return {
                 info: data.user.motivation,

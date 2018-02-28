@@ -5,18 +5,11 @@ import React from 'react';
 import {Select } from 'antd';
 const {Option} = Select;
 class SelectPlans extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const  {info,loading} = this.props;
         if (loading) {
             return  <p>Loading</p>;
         }
-
-
 
         let selectItem =[];
         info.forEach(item=>{
@@ -24,7 +17,6 @@ class SelectPlans extends React.Component {
         })
 
         return  (
-
                         <Select style={{ width: 470 }} onChange={this.props.onChange}>
                             {selectItem}
                         </Select>

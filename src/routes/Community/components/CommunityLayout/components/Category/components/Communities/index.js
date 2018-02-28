@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card,List} from 'antd';
-import { withApollo, gql } from 'react-apollo'
+import { withApollo } from 'react-apollo'
 import {
     injectIntl
 } from 'react-intl';

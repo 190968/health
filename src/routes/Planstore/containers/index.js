@@ -53,7 +53,7 @@ const PlanstoreLayoutWithQuery = graphql(
             fetchPolicy: 'network-only'
 
         }),
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
 
             if (!data.loading) {
 

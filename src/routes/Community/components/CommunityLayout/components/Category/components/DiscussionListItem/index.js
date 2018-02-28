@@ -4,7 +4,7 @@
 import React from 'react';
 import { Icon,List,Avatar } from 'antd';
 import moment from 'moment';
-import { withApollo, gql } from 'react-apollo'
+import { withApollo } from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import { Link } from 'react-router-dom'
 const IconText = ({ type, text }) => (

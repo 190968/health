@@ -32,7 +32,8 @@ const radioStyle = {
     height: '30px',
     lineHeight: '30px',
 };
-var total = 0;
+
+//let total;
 
 
 class EditMedicationForm extends React.Component {
@@ -95,9 +96,9 @@ class EditMedicationForm extends React.Component {
         });
     };
     onTotal = (e) => {
-        let notPermanent = 0;
-        notPermanent += Number(e)
-        total = notPermanent;
+        //let notPermanent = 0;
+       // notPermanent += Number(e)
+       // total = notPermanent;
 
     };
     handleSubmit = (e) => {

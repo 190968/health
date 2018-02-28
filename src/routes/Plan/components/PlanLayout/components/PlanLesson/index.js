@@ -1,5 +1,5 @@
 import React from 'react'
-import {Anchor, Row, Col, Button, Card, List, Input } from 'antd';
+import {Row, Col, Button, Card, List } from 'antd';
 import PlanElement from '../../containers/PlanElement'
 import {message} from "antd/lib/index";
 
@@ -19,7 +19,7 @@ export class PlanLesson extends React.Component {
     };
 
     saveLesson = (e, lessonId, isLastlesson) => {
-        let haveSections = false;
+
 
 
         //return true;
@@ -56,6 +56,7 @@ export class PlanLesson extends React.Component {
 
 
    render() {
+
         const {upid, item, isLastLesson, haveSections} = this.props;
         const footer = item.elements  || isLastLesson ? [<Button type="primary" loading={this.state.loading}  onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
 

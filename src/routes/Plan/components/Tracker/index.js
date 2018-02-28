@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styles from './index.less';
 import VMasker from "vanilla-masker";
 import { Input } from 'antd';
 
@@ -25,7 +24,7 @@ export default class Tracker extends React.Component {
         const {inputMask} = this.props.item;
 
         let value = event.target.value;
-        value = inputMask != '' ? VMasker.toPattern(value, inputMask) : VMasker.toNumber(value);
+        value = inputMask !== '' ? VMasker.toPattern(value, inputMask) : VMasker.toNumber(value);
         this.setState({value:value});
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(value);
@@ -44,7 +43,12 @@ export default class Tracker extends React.Component {
             value={value}
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
             formatter={value => {
-                if (inputMask != '') {
+
+
+
+                if (inputMask !== '') {
+
+
                     return VMasker.toPattern(value, inputMask)
                 } else {
                     return VMasker.toNumber(value);
@@ -92,7 +96,7 @@ export class TrackerUncontrolled extends React.PureComponent {
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
             formatter={value => {
 
-                if (inputMask != '') {
+                if (inputMask !== '') {
 
                     return VMasker.toPattern(value, inputMask)
                 } else {

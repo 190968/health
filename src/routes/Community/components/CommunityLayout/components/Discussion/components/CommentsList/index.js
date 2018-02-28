@@ -2,18 +2,15 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import { Form,Card,Icon,Modal,Input,Row,Avatar,Tooltip,List} from 'antd';
+import {Card,Icon,Row,Avatar,Tooltip,List} from 'antd';
 import {withRouter} from "react-router-dom";
 import Replies from '../../../Replies';
 import CommentModal from '../CommentModal/containers/CommentModal.js'
 import moment from 'moment';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './messages';
-const FormItem = Form.Item;
 const IconText = ({ type, text }) => (
     <span>
     <Icon type={type} style={{ marginRight: 8 }} />

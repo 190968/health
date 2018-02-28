@@ -2,7 +2,7 @@
  * Created by Павел on 12.02.2018.
  */
 import React from 'react';
-import {Button ,Row,Col,Avatar,Spin,Select, DatePicker , Input, Divider,Card,Modal } from 'antd';
+import {Button ,Spin,Select,Modal } from 'antd';
 import ModalMakeCommitmentsFor from '../../containers/ModalMakeCommitmentsFor';
 import SelectPlans from '../../../../../../../Plan/containers/SelectPlans';
 import {

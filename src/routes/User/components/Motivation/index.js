@@ -12,7 +12,7 @@ import Promises from './containers/Promises.js';
 import Commitments from './containers/Commitments.js';
 import IMotivate from './containers/iMotivate';
 
-import {Row,Col,Card} from 'antd';
+import {Col,Card} from 'antd';
 class Motivation extends React.Component {
 
 

@@ -5,8 +5,6 @@ const CheckboxGroup = Checkbox.Group;
 
 const vertStyle = {
     display: 'block',
-    /*height: '30px',
-    lineHeight: '30px',*/
     marginLeft: 0,
 };
 export default  class CheckBoxGroup extends React.PureComponent {
@@ -32,9 +30,9 @@ export default  class CheckBoxGroup extends React.PureComponent {
 
 
     render() {
-        const{item, code, activeFilters} = this.props;
+        const{item} = this.props;
 
-        const activeFilter = activeFilters[code] || {};
+
         //const checked = activeFilter[fields.value] || 0;
        
         /*let options = []
@@ -51,6 +49,7 @@ export default  class CheckBoxGroup extends React.PureComponent {
             const name = option.label;
 
             plainOptions.push(<Checkbox key={coid} value={coid} style={vertStyle} >{name}</Checkbox>);
+            return option;
         });
 
         return (

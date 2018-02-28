@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import UserPlanEdit from '../../containers/UserPlanEdit';
 import PlanReminders from '../../containers/PlanReminders';
-import {Icon, Avatar, Card,Row, Col, Button, Tooltip ,Popover, Dropdown, Menu, Modal } from 'antd';
+import {Icon, Avatar, Card,Row, Col, Tooltip ,Popover, Dropdown, Menu, Modal } from 'antd';
 
 import {
     FormattedMessage,
@@ -130,6 +130,7 @@ export class PlanHeader extends React.Component {
             case 'complete':
                 this.completePlan();
                 break;
+            default :break;
         }
     }
 
@@ -145,10 +146,7 @@ export class PlanHeader extends React.Component {
             );
         }
 
-        var img = plan.thumb.wide;
-        var divStyle = {
-            backgroundImage: 'url(' + img + ')'
-        }
+        //var img = plan.thumb.wide;
 
         const options = (
             <Menu onClick={this.handleMenuClick}>
@@ -177,19 +175,6 @@ export class PlanHeader extends React.Component {
                 </Menu.Item>
             </Menu>
         );
-
-
-        const data = [
-            {name: 'Lessons', progress: 100, pv: 2400, fill: '#8884d8'},
-            {name: 'Today Activities', progress: 15, pv: 4567, fill: '#83a6ed'},
-            {name: 'Weekly Adherence', progress: 86, pv: 1398, fill: '#8dd1e1'},
-        ];
-
-        const style = {
-            top: 0,
-            left: 200,
-            lineHeight: '24px'
-        };
 
         return (
                 <Card

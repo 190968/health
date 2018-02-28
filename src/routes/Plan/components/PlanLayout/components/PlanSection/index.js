@@ -1,12 +1,9 @@
 import React from 'react'
-import { Row, Col, Anchor, Button, Card, List } from 'antd';
+import { Row, Col,Button, Card, List } from 'antd';
 import PlanElement from '../../containers/PlanElement'
 import {message} from "antd/lib/index";
 import { withRouter } from 'react-router-dom'
-import moment from "moment";
-import {
-    FormattedDate
-} from 'react-intl';
+
 
 export class PlanSection extends React.Component {
 

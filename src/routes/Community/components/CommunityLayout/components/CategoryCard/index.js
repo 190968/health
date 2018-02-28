@@ -2,7 +2,6 @@ import React from 'react';
 import { Tooltip, Card } from 'antd';
 import { Link } from 'react-router-dom'
 import Truncate from 'react-truncate';
-import styles from './index.less';
 const { Meta } = Card;
 
 export default class CategoryCard extends React.PureComponent {

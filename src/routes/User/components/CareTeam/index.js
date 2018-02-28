@@ -4,9 +4,7 @@
 import React from 'react';
 import {  Link } from 'react-router-dom'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './messages';
 import {Form,List,Avatar, Card } from 'antd';
@@ -27,7 +25,7 @@ class CareTeam extends React.Component {
         const {intl}=this.props;
         const title = intl.formatMessage(messages.myCareTeam);
         const  {careTeam} = info;
-        const  {edges,totalCount} = careTeam;
+        const  {edges} = careTeam;
         return edges.length > 0 ?
             ( <Card title={title}>
                 <List

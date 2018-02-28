@@ -1,5 +1,4 @@
 import gql from 'graphql-tag';
-import Medication from "./index";
 
 
 export const MedicationInfo = gql`

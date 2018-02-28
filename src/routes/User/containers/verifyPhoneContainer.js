@@ -2,12 +2,7 @@
  * Created by Pavel on 09.12.2017.
  */
 import { connect } from 'react-redux'
-import React from 'react'
-
-import {
-    Redirect,
-} from 'react-router-dom'
-import VerifyPhoneConfirm from '../containers/verifyPhoneConfirmContainer';
+//import React from 'react'
 /*  This is a container components. Notice it does not contain any JSX,
  nor does it import React. This components is **only** responsible for
  wiring in the actions and state necessary to render a presentational
@@ -85,7 +80,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default withMutation(connect(
     mapStateToProps,
     mapDispatchToProps
-)(VerifyPhoneForm));
+)(withQuery));
 
 
 //export default withMutation(connect(mapStateToProps, mapDispatchToProps)(VerifyPhoneForm));

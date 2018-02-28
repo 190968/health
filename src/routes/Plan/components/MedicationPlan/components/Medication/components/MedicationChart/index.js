@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment';
 
-import {AreaChart, Area, LineChart, Line, BarChart, Bar, XAxis, ReferenceLine, CartesianGrid, Tooltip} from 'recharts';
+import {AreaChart, Area, LineChart, Line, BarChart, Bar, XAxis,CartesianGrid, Tooltip} from 'recharts';
 
 
 export default class MedicationChart extends React.Component {
@@ -31,8 +31,8 @@ export default class MedicationChart extends React.Component {
     }
 
     formatTooltip(data) {
-        const {payload, label} = data;
-        if (payload.length == 0) return null;
+        const {payload} = data;
+        if (payload.length === 0) return null;
         const info = payload[0].payload || {};
         const date = info.date || '';
         const value = this.getValue(info);
@@ -48,6 +48,7 @@ export default class MedicationChart extends React.Component {
             if (report.isTaken) {
                 reported++;
             }
+            return report;
         })
 
         return Math.round(reported/reportsNeeded*100);//report.value || null;
@@ -55,7 +56,7 @@ export default class MedicationChart extends React.Component {
 
 
     render() {
-        const {data, item, loading, width, height, useAxis} = this.props;
+        const {data,loading, width, height, useAxis} = this.props;
         const graph = 'area';
 
         if (loading) {
@@ -70,15 +71,14 @@ export default class MedicationChart extends React.Component {
         }
         switch (graph) {
             default:
-                return <LineChart width={width} height={height} data={data}>
+                return( <LineChart width={width} height={height} data={data}>
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
                     {useAxis && <XAxis dataKey="date"  padding={{left: 10, right: 10}} tickFormatter={this.formatDate} tickCount={7} interval="preserveStartEnd" axisLine={false} tickLine={false} />}
 
                     <Tooltip content={this.formatTooltip}/>
                     <Line type='monotone' dataKey={this.getValue} stroke='#1089ff' activeDot={{r: 4}} strokeWidth={2}
                           connectNulls={true}/>
-                </LineChart>
-                break;
+                </LineChart>)
             case 'area':
                 return (<AreaChart width={width} height={height} data={data}
                                    margin={{top: 5, right: 0, left: 0, bottom: 5}}>
@@ -91,15 +91,13 @@ export default class MedicationChart extends React.Component {
 
 
                 </AreaChart>)
-                break;
             case 'bar':
-                return <BarChart width={width} height={height} data={data}>
+                return (<BarChart width={width} height={height} data={data}>
                     <Bar dataKey={this.getValue} fill='#d2eaff'/>
                     <Tooltip content={this.formatTooltip}/>
                     {useAxis && <XAxis dataKey="date"  padding={{left: 10, right: 10}} tickFormatter={this.formatDate} tickCount={7} interval="preserveStartEnd" axisLine={false} tickLine={false} />}
 
-                </BarChart>
-                break;
+                </BarChart>)
         }
 
     }

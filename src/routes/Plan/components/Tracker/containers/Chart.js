@@ -54,10 +54,6 @@ const TrackerChartWithQuery = graphql(
                                 if (!fetchMoreResult) { return previousResult; }
 
                                 return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                                });
                             },
                         });
                     }

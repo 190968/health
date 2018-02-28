@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import moment from 'moment'
 
 import Tracker from '../../../Tracker';
@@ -97,7 +96,7 @@ export default class PlanMeasurement extends React.Component {
     }
 
     onReport() {
-        if (this.state.value != '') {
+        if (this.state.value !== '') {
             this.props.onChange(this.state.value, this.state.time, this.state.comments);
         } else {
             //alert('Enter');
@@ -106,17 +105,17 @@ export default class PlanMeasurement extends React.Component {
 
     render() {
        const {item, date, } = this.props;
-       const {id, label, textBefore, description, units, reports, targets} = item;
+       const {label, textBefore, description, units, reports, targets} = item;
        const unitsName = units.name;
 
        const userId = 2;
 
-        let isCritical  = false;
+       // let isCritical  = false;
 
         if (reports && reports.length > 0) {
-            const report =  reports[0];
+            // const report =  reports[0];
             //time = report.time;
-            isCritical = report.isCritical;
+           // isCritical = report.isCritical;
         }
 
         const{time, comments, value} = this.state;

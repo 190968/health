@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Row, Col,Card} from 'antd';
-import { withApollo, gql } from 'react-apollo'
+import { withApollo} from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import MyCommutinies from '../CommunityLayout/containers/MyCategories.js'
 import MainCategories from './components/MainCategories'

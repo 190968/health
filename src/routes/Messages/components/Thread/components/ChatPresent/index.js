@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './index.less';
 import { getRequestAnimationFrame, easeInOutCubic } from '../../../../../../utils/animate';
 import moment from 'moment';
-import {Avatar, Card} from 'antd';
+import {Avatar} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 
 const reqAnimFrame = getRequestAnimationFrame();
@@ -62,7 +61,6 @@ class ChatPresent extends React.Component {
            // return <Card  bordered={false} loading>Loading...</Card>
         }
 
-        const loader = <div className="loader">Loading ...</div>;
 
         return (<div
             ref={c => {this.container = c;}}

@@ -11,9 +11,6 @@ import Filters from '../../Filters/components'
 export class PlanstoreLayout extends React.Component {
 
 
-    changePage = (page) => {
-        this.props.loadMoreEntries(page)
-    }
 
     /**
      * Updates filter by type (category, price, etc)
@@ -25,7 +22,7 @@ export class PlanstoreLayout extends React.Component {
 
         const activeFilters = this.props.activeFilters;
         // get all current info of the type
-        const activeFilter = activeFilters[filter] || {};
+       // const activeFilter = activeFilters[filter] || {};
 
         // update filter by type(category or smth)
         const filter1 = {
@@ -55,7 +52,7 @@ export class PlanstoreLayout extends React.Component {
 
     render() {
         const {loading, filters, activeFilters} = this.props;
-        const pageOpts = {onChange: this.changePage, total: 50};
+        //const pageOpts = {onChange: this.changePage, total: 50};
 
         if (loading) {
             return (

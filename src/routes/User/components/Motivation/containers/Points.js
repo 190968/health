@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import Points from '../components/Points';
@@ -39,7 +39,7 @@ const withMutation = graphql(CURRENTLEVEL, {
         }
 
     }),
-    props: ({ ownProps, data }) => {
+    props: ({ data }) => {
 
         if (!data.loading) {
             return {

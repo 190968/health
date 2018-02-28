@@ -26,7 +26,7 @@ const GET_HELP_QUERY = gql`
 const HelpWithQuery = graphql(
     GET_HELP_QUERY,
     {
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
             if (!data.loading) {
 
 

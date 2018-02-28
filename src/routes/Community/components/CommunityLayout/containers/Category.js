@@ -1,7 +1,7 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-import React from 'react'
+//import React from 'react'
 import {connect} from 'react-redux'
 import {compose} from 'react-apollo';
 import {message} from 'antd';

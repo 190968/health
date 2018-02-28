@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import ModalMakeCommitment from '../components/ModalMakeCommitments';

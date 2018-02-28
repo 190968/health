@@ -30,11 +30,11 @@ const withMutation = graphql(verifyPhoneConfirm, {
                 update: (store, { data: { verifyPhoneConfirm } }) => {
 
 
-                    let element = store.readFragment({
-                        id: 'User:'+userId, // `id` is any id that could be returned by `dataIdFromObject`.
-                        fragment: LoginForm.fragments.user,
-                        fragmentName: 'UserInfo'
-                    });
+                    // let element = store.readFragment({
+                    //     id: 'User:'+userId, // `id` is any id that could be returned by `dataIdFromObject`.
+                    //     fragment: LoginForm.fragments.user,
+                    //     fragmentName: 'UserInfo'
+                    // });
 
 
                     //element.phoneConfirmed = verifyPhoneConfirm;

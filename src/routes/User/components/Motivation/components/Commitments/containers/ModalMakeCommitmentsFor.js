@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment';
 import ModalMakeCommitmentFor from '../components/ModalMakeCommitmentsFor';
@@ -74,7 +74,7 @@ const withMutation = graphql(MAKECOMMITMENT,
                         }
                     }
                 }).then((data) => {
-                    const {plan} = ownProps;
+
 
                 })
             },

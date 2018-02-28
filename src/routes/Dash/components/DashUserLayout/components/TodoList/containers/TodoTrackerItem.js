@@ -7,7 +7,7 @@ import {BiometricPlanQuery} from '../../../../../../Plan/components/BiometricPla
 const TodoTrackerItemWithQuery = graphql(
     BiometricPlanQuery,
     {
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
             if (!data.loading) {
                 return {
                     biometricPlan: data.biometricPlan,

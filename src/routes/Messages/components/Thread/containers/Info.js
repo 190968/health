@@ -1,8 +1,6 @@
 import ChatInfo from '../components/ChatInfo';
-import { connect } from 'react-redux'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { compose, withState, lifecycle } from "recompose";
 
 export const GET_CONVERSATION_MESSAGES_QUERY = gql`
     query GET_CONVERSATION_INFO ($id: UID!) {
@@ -33,7 +31,7 @@ const ChatWithQuery = graphql(
                 },
             }
         },
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 return {
                     info: data.account.inboxConversation,

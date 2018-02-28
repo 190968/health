@@ -23,7 +23,7 @@ class NormalLogoutForm extends React.Component{
         })*/
 
 
-       return ('')
+      //return ('')
 
         return(
             <Redirect to={{pathname: '/'}} />

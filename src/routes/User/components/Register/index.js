@@ -8,8 +8,8 @@ import PhoneForm from '../../../../components/PhoneForm';
 //import {Route } from 'react-router'
 //import { intl, FormattedMessage, defineMessages } from 'react-intl';
 
-import { Modal,Card, Form, Select, DatePicker, Input, Radio, Button, Checkbox } from 'antd';
-import { withApollo, gql } from 'react-apollo'
+import { Modal,Card, Form,  DatePicker, Input, Radio, Button, Checkbox } from 'antd';
+import { withApollo } from 'react-apollo'
 import {
     injectIntl,
     FormattedMessage
@@ -17,10 +17,9 @@ import {
 import messages from './messages';
 import moment from 'moment';
 
-const Option = Select.Option;
+
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
-const InputGroup = Input.Group;
 const FormItem = Form.Item;
 
 const formItemLayout = {
@@ -137,7 +136,7 @@ class NormalRegisterForm extends React.Component {
         const token = this.props.token;
         const form = this.props.form;
 
-        if (token != '') {
+        if (token !== '') {
             return  <Redirect to={{
                 pathname: '/'
             }} />;

@@ -7,7 +7,7 @@ import {MedicationPlan_QUERY} from '../../../../../../Plan/components/Medication
 const TodoMedicationItemWithQuery = graphql(
     MedicationPlan_QUERY,
     {
-        props: ({ ownProps, data }) => {
+        props: ({  data }) => {
             if (!data.loading) {
                 return {
                     medicationPlan: data.medicationPlan,

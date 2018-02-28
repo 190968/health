@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Table, Spin,  Modal} from 'antd';
-import {ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import {AreaChart, Area, XAxis, CartesianGrid, Tooltip} from 'recharts';
 import moment from "moment/moment";
 
 
@@ -78,6 +78,7 @@ class MedicationSummary extends React.Component {
                 total += medTotal;
                 items++;
             }
+            return medication;
         })
         return Math.round(total/items);//report.value || null;
     }
@@ -116,8 +117,6 @@ const data = [
          */
         let datesForColumns = [];
         let medicationsRows = [];
-        let medicationsWithReportsByDay = {};
-        let row = [];
         data.map((dateInfo) => {
             // get all the dates for columns.
             const date = dateInfo.date;
@@ -138,8 +137,9 @@ const data = [
                 //medicationsWithReportsByDay.
                 // create a list of all unique medications and append to them our results
                 //medicationsRows.push({'id':medication.id});
+                return medication;
             });
-
+            return dateInfo;
         });
 
 
@@ -160,6 +160,7 @@ const data = [
                 dataIndex: date,
                 key: i,
             });
+            return date;
         });
 
         return (<Modal

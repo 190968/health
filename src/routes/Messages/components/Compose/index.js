@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Form,Checkbox,Modal,Input, AutoComplete, message} from 'antd';
+import { Form,Checkbox,Modal,Input, message} from 'antd';
 import {
     injectIntl
 } from 'react-intl';

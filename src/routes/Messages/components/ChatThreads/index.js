@@ -1,7 +1,6 @@
 import React from 'react';
 import {Tooltip, Icon, Row, Col} from 'antd';
 import ThreadList from './components/ThreadList';
-import styles from './index.css';
 import Compose from '../../containers/Compose';
 
 export default class ChatThreads extends React.Component {
@@ -16,12 +15,13 @@ export default class ChatThreads extends React.Component {
         if (!nextProps.loading) {
             const {conversations, currentId} = nextProps;
             conversations.map(info => {
-                if (info.id == currentId) {
+                if (info.id === currentId) {
                     // if it's current conversation, then check the last message
                     const {lastMessage} = info;
                     const {id} = lastMessage;
                     this.props.setLastCursor(id);
                 }
+                return info;
             })
         }
         /*if (nextProps.lastCursor !== this.props.lastCursor  ) {

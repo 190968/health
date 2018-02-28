@@ -2,13 +2,13 @@
  * Created by Pavel on 20.12.2017.
  */
 import React from 'react';
-import {Layout,Input, Col,List, Card,Collapse} from 'antd';
+import {Input, Col,List, Card} from 'antd';
 import {
     FormattedMessage
 } from 'react-intl';
 
 import PlanWidget from '../../../../../../Plan/components/Plan';
-const { Content } = Layout;
+
 
 
 
@@ -56,7 +56,6 @@ export class PlanstoreLayout extends React.Component {
                         <div style={{marginBottom:24}}>
                             <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans" description="Action plan" />}>
                                 <Input.Search
-                                    placeholder={searchText}
                                     onKeyUp={this.search}
                                     defaultValue={search}
                                     size="large"

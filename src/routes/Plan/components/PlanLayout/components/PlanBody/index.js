@@ -1,22 +1,13 @@
 import React from 'react'
-import { withApollo } from 'react-apollo';
+
 import PlanElement from '../../containers/PlanElement'
 import PlanLesson from '../../containers/PlanLesson';
 import PlanSection from '../../containers/PlanSection';
 import PlanBodyMenu from './components/PlanBodyMenu';
 
-
-
 // adding filters
 // for modal
-import { Modal, Button, BackTop, List, Affix, Anchor, Card, Row, Col, Menu, Icon } from 'antd';
-import Plan from "../../../Plan";
-
-
-
-
-
-
+import { Modal, BackTop, List, Affix, Card, Row, Col} from 'antd';
 
 export class PlanBody extends React.Component {
     constructor(props) {
@@ -25,6 +16,7 @@ export class PlanBody extends React.Component {
             currentTab: '',
             currentKey: '',
             currentKeyI: 0,
+            inited: false,
 
         };
         this.handleClick = this.handleClick.bind(this);
@@ -36,10 +28,6 @@ export class PlanBody extends React.Component {
     };
     static propTypes = {
     };
-
-    static defaultProps = {
-        isBuilderMode:true//false
-    }
 
 
     handleClick = (key, currentKeyI, tab) => {
@@ -95,7 +83,7 @@ export class PlanBody extends React.Component {
 
 
     render() {
-        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading, isBuilderMode} = this.props;
+        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading} = this.props;
         let {currentTab, currentKey} = this.state;
         if (loading) {
             return (
@@ -146,36 +134,39 @@ export class PlanBody extends React.Component {
             <BackTop />
             <Col xs={5} >
                 <Affix offsetTop={10} >
-                    <PlanBodyMenu lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} isBuilderMode={isBuilderMode} />
+                    <PlanBodyMenu lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
                 </Affix>
             </Col>
             <Col offset={5}>
 
-                {lessonsNum > 0 && lessons.map((section, i) => {
-                    let anchors = [];
-                    if (currentKey == 'lesson_'+i) {
+                {lessonsNum > 0 && lessons.map((section, i) =>{
+
+                    if (currentKey === 'lesson_'+i) {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
-                                <PlanLesson upid={upid} isBuilderMode={isBuilderMode} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
+                                <PlanLesson upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
                         </Row>;
+
                         return list;
                     }
+                    return section;
                 })}
 
                 {activitiesNum > 0 && activities.map((section, i) => {
-                    let anchors = [];
-                    if (currentKey == 'section_'+i) {
+
+                    if (currentKey === 'section_'+i) {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
-                                <PlanSection upid={upid} date={date} isBuilderMode={isBuilderMode} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
+                                <PlanSection upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
                             </Col>
                         </Row>;
 
                         return list;
                     }
+                    return section;
                 })}
             </Col>
         </Row>)

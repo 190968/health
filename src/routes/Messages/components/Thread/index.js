@@ -1,12 +1,9 @@
 import React from 'react';
 import ChatConversation from './containers/Chat';
-import styles from './index.less';
 
 
 export default class ThreadList extends React.Component {
-    constructor() {
-        super();
-    }
+
     static defaultProps = {
         id: ''
     }

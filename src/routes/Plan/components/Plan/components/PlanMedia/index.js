@@ -31,7 +31,7 @@ export default class PlanMedia extends React.PureComponent {
                 /></Card>;
             default:
                 let icon = '';
-                if (type == 'presentation') {
+                if (type === 'presentation') {
                     icon = <Icon type="file-ppt" />;
                 } else {
                     icon = <Icon type="file-pdf" />;

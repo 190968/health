@@ -27,7 +27,7 @@ const MedicationChartWithQuery = graphql(
              fetchPolicy: 'network-only'
 
         }),
-        props: ({ ownProps, data }) => {
+        props: ({ data }) => {
             if (!data.loading) {
 
                 const medication = data.medication;

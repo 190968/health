@@ -4,9 +4,7 @@
 import React from 'react';
 import { Card, Form, Input,Button } from 'antd';
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import messages from './verifyPhoneConfirm.json';
 const FormItem = Form.Item;

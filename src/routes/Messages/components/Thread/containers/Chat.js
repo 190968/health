@@ -2,7 +2,7 @@ import Chat from '../components/Chat';
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { compose, withState, lifecycle } from "recompose";
+
 
 export const GET_CONVERSATION_MESSAGES_QUERY = gql`    
     query GET_CONVERSATION_MESSAGES ($id: UID!, $cursors: CursorInput) {
@@ -49,8 +49,7 @@ const ChatWithQuery = graphql(
         },
         props: ({ ownProps, data }) => {
             if (!data.loading && data.account.inboxConversation) {
-                const {edges, totalCount, pageInfo} = data.account.inboxConversation.messages;
-                const {endCursor} = pageInfo;
+                const {edges, totalCount} = data.account.inboxConversation.messages;
                 let messages = [];
                 if (data.account.inboxConversation) {
 

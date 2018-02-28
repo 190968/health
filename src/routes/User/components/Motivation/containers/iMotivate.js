@@ -1,7 +1,7 @@
 /**
  * Created by Павел on 12.02.2018.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import iMotivate from '../components/IMotivate';
@@ -49,7 +49,7 @@ const withMutation = graphql(IMOTIVATE, {
         }
 
     }),
-    props: ({ ownProps, data }) => {
+    props: ({ data }) => {
 
         if (!data.loading) {
             return {

@@ -5,12 +5,10 @@ import React from 'react';
 import AddressForm from '../../../../../../../components/AddressForm';
 import PhoneForm from '../../../../../../../components/PhoneForm';
 
-import { Card, Input,Col,Select,Form, DatePicker, Radio, Button, } from 'antd';
-import { withApollo, gql } from 'react-apollo'
+import { Card, Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import { withApollo } from 'react-apollo'
 import {
-    injectIntl,
-    defineMessages,
-    FormattedMessage
+    injectIntl
 } from 'react-intl';
 import moment from 'moment';
 import messages from './messages';
@@ -81,7 +79,7 @@ const tailFormItemLayout = {
 
 
     render(){
-        const settingsPlaceholder = [];
+
         // settingsPlaceholder.push(  {
         //     item:
         //

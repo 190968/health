@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link, NavLink, withRouter } from 'react-router-dom';
-import { Progress, Popover, Menu, Icon,  Badge } from 'antd';
+import {NavLink, withRouter } from 'react-router-dom';
+import { Menu, Icon,  Badge } from 'antd';
 import NotificationBadge from '../../containers/NotificationBadge';
 
 
@@ -43,10 +43,6 @@ class RightMenu extends React.Component {
 
         // first call - lastNotification - empty, but lastCursor has value. It means that we can load the notifications
         const loadNew = !loading && lastNotificationCursor !== newCursor;
-
-        const content = <div>
-            <Progress percent={30} size="small" />
-        </div>;
         return (
             <Menu
                 selectedKeys={['1']}

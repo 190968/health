@@ -4,7 +4,7 @@
 /**
  * Created by Pavel on 08.12.2017.
  */
-import React from 'react'
+//import React from 'react'
 import { connect } from 'react-redux'
 
 import { message } from 'antd';
@@ -49,7 +49,7 @@ const motivatorInvite = gql`
 `;
 
 const withQuery = graphql(motivators, {
-    props: ({ ownProps, data }) => {
+    props: ({ data }) => {
         if (!data.loading) {
             return {
                 info: data.account.user.motivation,

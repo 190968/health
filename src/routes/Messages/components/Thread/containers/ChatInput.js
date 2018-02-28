@@ -1,8 +1,6 @@
 import ChatInput from '../components/ChatInput';
-import { connect } from 'react-redux'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {GET_CONVERSATION_MESSAGES_QUERY} from './Chat';
 
 const SEND_MESSAGE = gql`
     mutation sendMessage($id: UID!, $message: String!) {

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
@@ -49,13 +48,14 @@ export class PlanBodyMenu extends React.Component {
                 // check on incompleted lessons
 
                 lessons.map((lesson, i) => {
-                    if (!foundMatch && currentKey == 'lesson_0' && !lesson.completed) {
+                    if (!foundMatch && currentKey === 'lesson_0' && !lesson.completed) {
                         currentTab = 'lessons';
                         currentKey = 'lesson_'+i;
                         currentKeyI = i;
                         foundMatch = true;
                         return false;
                     }
+                    return lesson;
                 })
             }
             if (!foundMatch && activities.length > 0) {
@@ -63,7 +63,7 @@ export class PlanBodyMenu extends React.Component {
                 currentKey = 'section_0';
                 // check on incompleted sections
                 activities.map((section, i) => {
-                    if (!foundMatch && currentKey == 'section_0' && !section.completed) {
+                    if (!foundMatch && currentKey === 'section_0' && !section.completed) {
 
                         currentTab = 'activities';
                         currentKey = 'section_'+i;
@@ -71,6 +71,7 @@ export class PlanBodyMenu extends React.Component {
                         foundMatch = true;
                         return false;
                     }
+                    return section;
                 })
             }
 

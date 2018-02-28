@@ -1,6 +1,5 @@
 import React from "react";
 import Loadable from 'react-loadable';
-import { injectReducer } from '../store/reducers'
 
 
 import LoadingPage from './LoadingPage';
@@ -23,7 +22,6 @@ export default function MyLoadable (opts, store, initProps) {
             if (opts.reducers) {
 
                 var url = opts.reducers.url;
-                var key = opts.reducers.key || 'fitango';
 
                 if (typeof url === 'string') {
                     url = [url];
@@ -34,6 +32,7 @@ export default function MyLoadable (opts, store, initProps) {
                     //const reducer = require('./modules/login').default
                     //const reducer = require('../routes/'+path).default;
                    // injectReducer(store, { key: key, reducer })
+                    return path;
                 });
 
             }

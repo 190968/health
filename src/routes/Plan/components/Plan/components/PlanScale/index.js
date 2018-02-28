@@ -36,7 +36,7 @@ export default class PlanScale extends React.PureComponent {
         var options = item.options;
         let marks = {};
         let selectedMark = null;
-        {options.map((option, i) => {
+        options.map((option, i) => {
             const coid = option.value;
             const name = option.label;
 
@@ -45,17 +45,8 @@ export default class PlanScale extends React.PureComponent {
             }
 
             marks[i] = name;
-            /*
-            {
-                    style: {
-                        color: '#f50',
-                    },
-                    label: <strong>100°C</strong>,
-                },
-             */
-            //const description = option.description;
-            //return <Option value={coid}>{name}</Option>;
-        })}
+            return option;
+        })
 
         return <div style={{padding:'0 20px'}}><Slider onChange={this.onChange} marks={marks} max={options.length-1} value={selectedMark} /></div>;//<Slider marks={marks}    />
 

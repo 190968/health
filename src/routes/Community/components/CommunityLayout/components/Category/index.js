@@ -6,8 +6,8 @@ import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/Communities';
 import Plan from  './components/PlansList';
  import Search from  './containers/Search.js';
-import { Card,Popconfirm,Button,Form,Row,Col  } from 'antd';
-import { withApollo, gql } from 'react-apollo'
+import { Card,Popconfirm,Button,Row,Col  } from 'antd';
+import { withApollo} from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import '../../../../style.css';
 import {
@@ -79,7 +79,7 @@ class Category extends React.Component{
                     <div dangerouslySetInnerHTML={{__html: item.text}} />
                 </Col>
                 <Col offset={1} span={7}>
-                    <img src={item.thumbs.large} />
+                    <img alt="" src={item.thumbs.large} />
                 </Col>
                 </div>
         })
@@ -110,7 +110,7 @@ class Category extends React.Component{
                           onTabChange={(key) => { this.onTabChange(key, 'noTitleKey'); }}
                     >
                         {
-                            articles.length != 0 && contentListNoTitle[this.state.noTitleKey]
+                            articles.length !== 0 && contentListNoTitle[this.state.noTitleKey]
                         }
                     </Card>
 

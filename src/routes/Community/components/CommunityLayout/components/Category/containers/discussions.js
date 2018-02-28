@@ -2,12 +2,11 @@
  * Created by Павел on 29.01.2018.
  */
 
-import React from 'react'
+//import React from 'react'
 import {connect} from 'react-redux'
 import Discussions from '../components/Discussions';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-import { withApollo} from 'react-apollo'
 import {withRouter} from "react-router-dom";
 
 const addDuscussion = gql`

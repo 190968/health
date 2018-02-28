@@ -7,7 +7,7 @@ import BiometricPlan from '../../../Plan/components/BiometricPlan/containers';
 import CalendarWidget from '../../../Calendar/components/Widget';
 
 
-import { Button,Icon, Alert, Row, Col, Calendar,Card } from 'antd';
+import {Icon, Alert, Row, Col,Card } from 'antd';
 
 
 

@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom'
 import { Form,  List,Avatar, Card } from 'antd';
 import {
     injectIntl,
-    defineMessages,
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
@@ -27,8 +26,8 @@ class Family extends React.Component {
         }
         const  {family} = info;
         const {intl}=this.props;
-        const  {edges,totalCount} = family;
-        let Item = [];
+        const  {edges} = family;
+
         return edges.length > 0 ?
         ( <Card title={intl.formatMessage(messages.myFamily)}>
             <List
