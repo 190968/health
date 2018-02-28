@@ -6,8 +6,9 @@ import {  Link } from 'react-router-dom'
 import {
     injectIntl
 } from 'react-intl';
+import AvatarWithName from '../AvatarWithName/index';
 import messages from './messages';
-import {Form,List,Avatar, Card } from 'antd';
+import {Form,List, Card } from 'antd';
 class CareTeam extends React.Component {
 
 
@@ -36,17 +37,11 @@ class CareTeam extends React.Component {
                     renderItem={person => (
 
                         <List.Item key={person.id}>
-                            {
-                                person.user.firstName ?
+
                                     <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
-                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.firstName[0]}</Avatar>
-                                        <span style={{textAlign:'center','marginLeft':10}}>{person.user.firstName}</span>
-                                    </Link> :
-                                    <div>
-                                        <span><Avatar  style={{ verticalAlign: 'middle' }}>N</Avatar> </span>
-                                        <label>{intl.formatMessage(messages.noName)}</label>
-                                    </div>
-                            }
+                                        <AvatarWithName info={person.user} />
+                                    </Link>
+
 
                         </List.Item>
                     )}

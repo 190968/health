@@ -24,6 +24,8 @@ const DISCUSSION  = gql`
  query GET_DISCUSSION($id:UID) {
    user{
     id
+    firstName
+    fullName
   }
     discussion(id:$id) {
          id

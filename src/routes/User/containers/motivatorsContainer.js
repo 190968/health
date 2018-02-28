@@ -31,6 +31,7 @@ const motivators = gql`
                     user {
                       id,
                       firstName,
+                      fullName,
                       email
                     }
                   }

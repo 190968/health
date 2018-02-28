@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom'
-
-import { Form,  List,Avatar, Card } from 'antd';
+import AvatarWithName from '../AvatarWithName/index';
+import { Form,  List, Card } from 'antd';
 import {
     injectIntl,
     FormattedMessage
@@ -38,21 +38,9 @@ class Family extends React.Component {
                 renderItem={person => (
 
                     <List.Item key={person.id}>
-                        {
-                            person.user.firstName ?
-                                <Link to={'/u/' + person.id} style={{color: 'inherit'}}>
-                                    <Avatar /*size="large"*/ style={{
-                                        verticalAlign: 'middle',
-                                        backgroundColor: person.user.color
-                                    }}>{person.user.firstName[0]}</Avatar>
-                                    <span
-                                        style={{textAlign: 'center', 'marginLeft': 10}}>{person.user.firstName}</span>
-                                </Link> :
-                                <div>
-                                    <span><Avatar style={{verticalAlign: 'middle'}}>N</Avatar> </span>
-                                    <label>{intl.formatMessage(messages.noName)}</label>
-                                </div>
-                        }
+                        <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                            <AvatarWithName info={person.user} />
+                        </Link>
 
                     </List.Item>
                 )}

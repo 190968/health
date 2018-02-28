@@ -2,7 +2,8 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import {Card,Row,Popconfirm,Tooltip,Icon,Avatar } from 'antd';
+import {Card,Row,Col,Popconfirm,Tooltip,Icon } from 'antd';
+import AvatarWithName from '../../../../../../../User/components/AvatarWithName';
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
 import {
@@ -26,6 +27,7 @@ class DiscussionView extends React.Component{
     render(){
 
         const {loading,discussion,user} = this.props;
+        console.log(user);
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
@@ -54,9 +56,12 @@ class DiscussionView extends React.Component{
                         <p>{text}</p>
                     </Row>
                     <Row>
-
-                        <Avatar style={{ verticalAlign: 'middle' }}>N</Avatar> <label>{ moment(createdAt).format('LLL')}</label>
-
+                    <Col span={2}>
+                         <AvatarWithName info={user}/>
+                    </Col>
+                    </Row>
+                    <Row>
+                    <label>{ moment(createdAt).format('LLL')}</label>
                     </Row>
                 </Card>
         );

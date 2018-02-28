@@ -1,9 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import {Row, Avatar,Icon,Col,Card,Progress } from 'antd';
+import {Row,Icon,Col,Card,Progress } from 'antd';
 import PlansList from '../../../Plan/containers/PlansList';
 import Promises from '../../components/Motivation/containers/Promises.js';
 import Commitments from '../../components/Motivation/containers/Commitments.js';
+import Avatar from '../Avatar/index'
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
@@ -21,7 +22,7 @@ class ViewProfile extends React.Component {
         if (loading) {
             return  <Card loading > </Card>;
         }
-        //console.log(info);
+       // console.log(this.props);
         const {points,nextLevel} = info.motivation.currentLevel;
         //const {medications} = info.motivation.adherenceSummary;
         //console.log(info.motivation.adherenceSummary);
@@ -39,11 +40,12 @@ class ViewProfile extends React.Component {
                 <Col xs={24} md={14} lg={15} xl={17}>
                     <Card style={{marginBottom:15}}>
                         <Col span={8}>
-                            <center>
-                                <Avatar style={{width:100,height:100,borderRadius:50}} />
-
-                                <p>{info.fullName}</p>
-                            </center>
+                            <Avatar info={this.props.info} />
+                            {/*<center>*/}
+                                {/*<Avatar style={{width:100,height:100,borderRadius:50}} />*/}
+                                {/**/}
+                                {/*<p>{info.fullName}</p>*/}
+                            {/*</center>*/}
                         </Col>
                         <Col span={8}>
                             <center>

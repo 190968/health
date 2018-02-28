@@ -2,10 +2,12 @@
  * Created by Павел on 12.02.2018.
  */
 import React from 'react';
-import {List,Avatar, Card } from 'antd';
+import {List, Card } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
+import Avatar from '../../../Avatar';
+
 import messages from './messages';
 class Promises extends React.Component {
 
