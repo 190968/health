@@ -3,7 +3,7 @@ import ChatHeader from '../ChatHeader';
 import ChatPresent from '../ChatPresent';
 import ChatInfo from '../../containers/Info';
 import ChatInput from '../../containers/ChatInput';
-
+import  './index.less';
 
 
 export default class Chat extends React.Component {

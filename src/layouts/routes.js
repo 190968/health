@@ -39,7 +39,6 @@ export const BasicRoutes = ({store}) => {
             <PrivateRoute path="/calendar" component={asyncCalendar(store)}/>
             <PrivateRoute path="/u/:uid" component={asyncProfile(store)}/>
             <PrivateRoute path="/plan/:upid" component={asyncPlan(store)}/>
-            <Route component={NoMatch} />
         </React.Fragment>
     )
 }

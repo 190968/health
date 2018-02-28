@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import { Col, Row, Card, Button} from 'antd';
+import  './index.less';
 
 class ChatInfo extends React.Component {
 

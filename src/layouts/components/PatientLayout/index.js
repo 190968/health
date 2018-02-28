@@ -17,10 +17,8 @@ const PatientLayout = ({loading, token, store, location}) =>  {
                 <LayoutHeader loading={loading} token={token} location={location}  />
             </Header>
             <Content style={{ padding: '20px 50px', flex: '1' }}>
-                <Switch>
-                    <PatientRoutes store={store} />
                     <BasicRoutes store={store} />
-                </Switch>
+                    <PatientRoutes store={store} />
             </Content>
             <Footer>
                 Copyright © 2010-2017 Fitango Inc. All rights reserved

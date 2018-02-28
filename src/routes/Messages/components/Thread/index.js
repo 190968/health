@@ -1,6 +1,6 @@
 import React from 'react';
 import ChatConversation from './containers/Chat';
-
+import  './index.less';
 
 export default class ThreadList extends React.Component {
 
