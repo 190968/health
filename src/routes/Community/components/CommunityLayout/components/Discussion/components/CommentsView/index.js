@@ -4,7 +4,7 @@
 import React from 'react';
 import {Card} from 'antd';
 import {withRouter} from "react-router-dom";
-import Comment from '../../components/CommentsList';
+import CommentsList from '../../components/CommentsList';
 import InputBox from '../../../InputBox'
 import {
     injectIntl
@@ -20,7 +20,7 @@ class CommentsView extends React.Component{
 
 
     render(){
-        const {loading,discussion} = this.props;
+        const {loading,discussion,user} = this.props;
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
@@ -33,8 +33,8 @@ class CommentsView extends React.Component{
                 <Card
                     title="Replies"
                 >
-                    <InputBox discussion={discussion} onSubmit={this.props.onSubmit}/>
-                    <Comment discussion={{replies}}  discussionReply={this.props.discussionReply} />
+                    <InputBox discussion={discussion} user={user} onSubmit={this.props.onSubmit}/>
+                    <CommentsList discussion={{replies}} user={user} discussionReply={this.props.discussionReply} />
                 </Card>
         );
     }

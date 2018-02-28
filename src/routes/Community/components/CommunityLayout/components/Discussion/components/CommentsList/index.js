@@ -2,7 +2,8 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import {Card,Icon,Row,Avatar,Tooltip,List} from 'antd';
+import {Card,Icon,Row,Tooltip,List} from 'antd';
+import Avatar from '../../../../../../../User/components/Avatar';
 import {withRouter} from "react-router-dom";
 import Replies from '../../../Replies';
 import CommentModal from '../CommentModal/containers/CommentModal.js'
@@ -63,7 +64,7 @@ class Comment extends React.Component{
                             >
 
                                 <List.Item.Meta
-                                    avatar={<Avatar size="large"></Avatar>}
+                                    avatar={<Avatar info={this.props.user}/>}
                                 />
                                 {item.text}
 

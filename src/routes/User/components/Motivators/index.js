@@ -9,7 +9,8 @@ import {
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
-import { Form,  List,Avatar, Card,Modal,Input,Button, Tooltip, Icon } from 'antd';
+import { Form,  List, Card,Modal,Input,Button, Tooltip, Icon } from 'antd';
+import AvatarWithName from '../AvatarWithName';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const formItemLayout = {
@@ -78,17 +79,8 @@ class Motivators extends React.Component {
                     renderItem={person => (
 
                         <List.Item key={person.id}>
-                            {
-                                person.user.firstName ?
-                                    <Link to={'/u/'+person.user.id} style={{color: 'inherit'}}>
-                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle', backgroundColor: person.user.color }}>{person.user.firstName[0]}</Avatar>
-                                        <span style={{textAlign:'center','marginLeft':10}}>{person.user.firstName}</span>
-                                    </Link> :
-                                    <Link to={'/u/'+person.user.id} style={{color: 'inherit'}}>
-                                        <Avatar /*size="large"*/ style={{ verticalAlign: 'middle' }}>N</Avatar>
-                                        <span style={{textAlign:'center','marginLeft':10}}>No name</span>
-                                    </Link>
-                            }
+                            <AvatarWithName info={person.user} />
+
 
                         </List.Item>
                     )}

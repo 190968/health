@@ -2,7 +2,8 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import { Form,Row, Col,Button,Input,Icon,Avatar } from 'antd';
+import { Form,Row, Col,Button,Input,Icon } from 'antd';
+import Avatar from '../../../../../User/components/Avatar';
 import messages from './messages';
 
 import {
@@ -27,7 +28,7 @@ class InputBox extends React.Component{
         });
     }
         render(){
-            const {discussion} = this.props;
+            const {discussion,user} = this.props;
             const {category} = discussion;
             const {isJoined} = category;
             const {intl}=this.props;
@@ -36,7 +37,7 @@ class InputBox extends React.Component{
         <Form onSubmit={this.handleSubmit} >
             <Row type="flex" justify="space-between" align="middle">
             <Col span={2}>
-                <Avatar  size="large" style={{ verticalAlign: 'middle' }}>N</Avatar>
+                <Avatar info={user}  />
             </Col>
             <Col span={19}>
                 <FormItem style={{margin:0}}>
