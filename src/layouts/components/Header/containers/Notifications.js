@@ -21,6 +21,11 @@ export const NOTIFICATIONS_QUERY  = gql`
           sender {
             id
             firstName
+            thumbs {
+                small
+                large
+                medium
+            }
             color
           }
           patient {

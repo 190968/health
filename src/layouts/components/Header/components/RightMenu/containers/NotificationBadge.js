@@ -18,6 +18,11 @@ export const BADGE_NOTIFICATIONS_QUERY  = gql`
           sender {
             id
             firstName
+            thumbs {
+                small
+                large
+                medium
+            }
             color
           }
           patient {

@@ -25,6 +25,11 @@ const DISCUSSION  = gql`
    user{
     id
     firstName
+            thumbs {
+                small
+                large
+                medium
+            }
     fullName
   }
     discussion(id:$id) {

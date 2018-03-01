@@ -4,11 +4,13 @@
 import React from 'react';
 import {Avatar as AvatarAntd} from 'antd';
 
-class Avatar extends React.Component {
+class Avatar extends React.PureComponent {
 
     render() {
 
         const {info} = this.props;
+        const {thumbs} = info;
+        console.log(thumbs);
         return (
                 <AvatarAntd size="small" style={{verticalAlign: 'middle', backgroundColor: info.color}}>
                     {info.firstName && info.fullName ? info.firstName[0] :

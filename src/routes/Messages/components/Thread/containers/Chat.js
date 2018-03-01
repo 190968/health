@@ -22,6 +22,11 @@ export const GET_CONVERSATION_MESSAGES_QUERY = gql`
                 sender {
                     id
                     firstName
+            thumbs {
+                small
+                large
+                medium
+            }
                 }
                 sentAt
               }

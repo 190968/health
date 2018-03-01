@@ -23,7 +23,12 @@ export class LoginForm extends React.Component {
         }
         fragment UserInfo on User {
                 id,
-                firstName,
+                firstName
+            thumbs {
+                small
+                large
+                medium
+            },
                 lastName,
                 dateFormat
                 token,
