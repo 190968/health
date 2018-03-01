@@ -1,6 +1,3 @@
-/**
- * Created by Pavel on 20.12.2017.
- */
 import { connect } from 'react-redux'
 import Slider  from '../components'
 
@@ -47,7 +44,7 @@ const PlanstoreLayoutWithQuery = graphql(
         props: ({ ownProps, data }) => {
 
             if (!data.loading) {
-
+                //console.log(data);
                 return {
                     filters: data.planstore.filters,
                     loading: data.loading,

@@ -9,6 +9,7 @@ module.exports = function override(config, env) {
     config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);  // change importing css to less
     config = rewireLess.withLoaderOptions({
              modifyVars: {
+                 "@blue-6": "#51ade2",
                  "@body-background": "#f2f2f2",
                  "@layout-body-background": "#f2f2f2",
                  //"@heading-color-dark": "#565a5c",

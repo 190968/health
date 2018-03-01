@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 //import PropType from 'prop-types'
+import './styles.less';
 
 export class Plan extends React.PureComponent {
   // fragment for the plan info

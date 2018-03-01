@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import VMasker from "vanilla-masker";
 import { Input } from 'antd';
+import './index.less';
 
 export default class Tracker extends React.Component {
     constructor(props) {

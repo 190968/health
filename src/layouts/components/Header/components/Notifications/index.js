@@ -14,7 +14,7 @@ class Notifications extends React.Component {
 
     state = {
         loading: false,
-        hasMore: true,
+        //hasMore: true,
     }
 
 

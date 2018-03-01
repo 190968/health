@@ -19,7 +19,7 @@ class AvatarWithName extends React.Component {
                 info.email ?
                     <center>
                         <Avatar size="small" style={{ verticalAlign: 'middle' }}>N/A</Avatar>
-                        <Truncate lines={1}><p>{info.email}</p></Truncate>
+                        <Truncate lines={2}><p>{info.email}</p></Truncate>
 
 
                     </center>:
