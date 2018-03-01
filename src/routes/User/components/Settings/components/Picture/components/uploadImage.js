@@ -81,6 +81,7 @@ const Dropbox = require('uppy/lib/plugins/Dropbox')
                  <DashboardModal
                      disableThumbnailGenerator
                      hideProgressAfterFinish
+                     disablePageScrollWhenModalOpen={false}
                      uppy={this.uppy}
                      closeModalOnClickOutside
                      open={true}

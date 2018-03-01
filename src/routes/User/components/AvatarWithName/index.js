@@ -14,9 +14,9 @@ class AvatarWithName extends React.PureComponent {
 
         const {info, align} = this.props;
 
-
+        console.log(info);
         return (
-<div>
+<React.Fragment>
     {
         align === "v" ?
              info.firstName ?
@@ -41,24 +41,12 @@ class AvatarWithName extends React.PureComponent {
                 <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>{info.firstName}</span></span>
                  :
                 info.email ?
-                    <Row>
-                        <Col span={5}>
-                            <Avatar info={info} />
-                            </Col>
-                        <Col  span={19}>
-                        <Truncate lines={2}><p>{info.email}</p></Truncate>
-                            </Col>
-                    </Row> :
-                    <Row>
-                        <Col span={5}>
-                            <Avatar info={info} />
-                            </Col>
-                        <Col  span={19}>
-                        <p>No name</p>
-                            </Col>
-                    </Row>
+                    <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>{info.email}</span></span>
+                    :
+                    <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>No name</span></span>
+
     }
-    </div>
+    </React.Fragment>
         );
     }
 }
