@@ -37,14 +37,9 @@ class AvatarWithName extends React.PureComponent {
             :
 
             info.firstName ?
-                <Row>
-                    <Col span={5}>
-                        <Avatar info={info} />
-                    </Col>
-                    <Col  span={19}>
-                        <p>{info.firstName}</p>
-                    </Col>
-                </Row> :
+
+                <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>{info.firstName}</span></span>
+                 :
                 info.email ?
                     <Row>
                         <Col span={5}>

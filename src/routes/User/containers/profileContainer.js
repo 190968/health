@@ -15,7 +15,7 @@ const GET_PROFILE  = gql`
   user(id: $user_id) {
     id
     fullName
-    thumb {
+    thumbs {
       original
       small
       large

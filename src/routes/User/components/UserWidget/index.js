@@ -11,6 +11,6 @@ export default class UserWidget extends React.PureComponent {
         const {user, onlyFirst} = this.props;
         const {firstName, fullName} = user;
 
-        return (<span><Avatar info={user}/> <span>{firstName}</span></span>);
+        return (<span><Avatar info={user}/> <span style={{verticalAlign: 'middle'}}>{firstName}</span></span>);
     }
 }

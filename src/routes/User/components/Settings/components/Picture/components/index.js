@@ -2,7 +2,8 @@
  * Created by Pavel on 08.12.2017.
  */
 import React from 'react';
-import {Avatar, Button} from 'antd';
+import {Button} from 'antd';
+import Avatar from '../../../../../components/Avatar';
 import './index.less';
 
 import UploadImage from './uploadImage';
@@ -65,7 +66,7 @@ class PictureForm extends React.Component{
         return(
 
             <center>
-                <Avatar size="large" className={'ant-avatar-huge'} src={this.state.avatar}>{letter}</Avatar>
+                <Avatar size="huge"  src={this.state.avatar}>{letter}</Avatar>
                 <div style={{marginTop:5}}>  <Button onClick={this.handleOpen}>Change avatar</Button>
                     {this.state.modalOpen && <UploadImage template='userpic' onComplete={this.onComplete} simpleResult />}
                 </div>
