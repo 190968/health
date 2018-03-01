@@ -10,6 +10,7 @@ class AvatarWithName extends React.Component {
 
         const {info,align=[]} = this.props;
 
+
         return (
 <div>
     {
@@ -59,22 +60,6 @@ class AvatarWithName extends React.Component {
                             </Col>
                     </Row>
     }
-    {/*{  info.firstName ?*/}
-        {/*<center>*/}
-            {/*<Avatar size="small"*/}
-                    {/*style={{verticalAlign: 'middle', backgroundColor: info.color}}>{info.firstName[0]}</Avatar>*/}
-            {/*<p>{info.firstName}</p>*/}
-        {/*</center> :*/}
-        {/*info.email ?*/}
-            {/*<center>*/}
-                {/*<Avatar size="small" style={{verticalAlign: 'middle'}}>N/A</Avatar>*/}
-                {/*<Truncate lines={2}><p>{info.email}</p></Truncate>*/}
-            {/*</center> :*/}
-            {/*<center>*/}
-                {/*<Avatar size="small" style={{verticalAlign: 'middle'}}>N/A</Avatar>*/}
-                {/*<p>No name</p>*/}
-            {/*</center>*/}
-    {/*}*/}
     </div>
         );
     }

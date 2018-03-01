@@ -43,7 +43,7 @@
     "redux-thunk": "^2.2.0",
     "renderer": "^0.1.5",
     "source-map-explorer": "^1.5.0",
-    "uppy": "^0.22.5",
+    "uppy": "^0.23.2",
     "vanilla-masker": "^1.2.0"
   },
   "scripts": {
