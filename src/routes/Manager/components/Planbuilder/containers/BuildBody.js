@@ -44,6 +44,7 @@ const PlanBodyWithQuery = graphql(
         options: (ownProps) => {
             console.log(ownProps);
             return {
+
             variables: {
                 id: ownProps.plan.id,
                 date: ''
@@ -51,8 +52,9 @@ const PlanBodyWithQuery = graphql(
 
         },
         props: ({ ownProps, data }) => {
-
-            if (!data.loading) {
+            console.log(ownProps);
+            console.log(data);
+            if (data.plan && !data.loading) {
                 const plan = data.plan;
                 //const body = plan.body;
                 const lessons = plan.lessons || [];
@@ -62,39 +64,14 @@ const PlanBodyWithQuery = graphql(
                     //upid: data.plan.upid,
                     //modules: data.network.modules,
                     loading: data.loading,
-                    //id: plan.id,
+                    planId: plan.id,
                     lessons: lessons,
                     activities: activities,
                     intro: intro,
-
-                    loadDate(date) {
-
-                        return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                            variables: {
-                                // We are able to figure out which offset to use because it matches
-                                // the feed length, but we could also use state, or the previous
-                                // variables to calculate this (see the cursor example below)
-                                //id: ownProps.id,
-                                //upid: ownProps.upid,
-                                date: date,
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                //return {medicationPlan:{id:29}};
-
-                                //fetchMoreResult.date = date;
-                                if (!fetchMoreResult) { return previousResult; }
-                                return fetchMoreResult;
-                                /*return Object.assign({}, previousResult, {
-                                    medicationPlan: fetchMoreResult.medicationPlan,
-                                });*/
-                            },
-                        });
-                    }
                 }
 
             } else {
-                return {loading: data.loading}
+                return {loading: data.loading, lessons:[], activities:[], intro:[]}
             }
         },
     }

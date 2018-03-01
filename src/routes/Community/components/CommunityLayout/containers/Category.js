@@ -72,6 +72,7 @@ query GET_CATEGORY($id:UID) {
         plans{
                 id
                 title
+                description
                 thumb {
                   original
                   small

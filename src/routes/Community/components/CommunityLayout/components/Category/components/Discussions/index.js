@@ -58,7 +58,7 @@ class Discussions extends React.Component{
 
 
             <Card
-                title={name.toUpperCase()+intl.formatMessage(messages.communityDiscussion)}
+                title={name+intl.formatMessage(messages.communityDiscussion)}
                 extra={canAdd && <Button type="primary" size="small" onClick={this.showModal}>{intl.formatMessage(messages.start)}</Button>}
             >
 

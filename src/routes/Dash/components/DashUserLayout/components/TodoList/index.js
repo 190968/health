@@ -18,7 +18,7 @@ export default class TodoList extends React.Component {
             haveTodo
         } = this.props;
         return (
-            <Card title='To Do'>
+            <Card title='To Do Today'>
                 {haveTodo ?
                     <React.Fragment>
                 <TodoPlansList ready={ready} userId={userId} date={date} />

@@ -1,8 +1,8 @@
 {
   "relatedPlan": {
     "id": "community.categoryLayout.view.plan",
-    "defaultMessage": "Related Actionplan",
-    "description": "Related Actionplan"
+    "defaultMessage": "Related ActionPlans",
+    "description": "Related ActionPlans"
   },
   "noPlan": {
     "id": "community.categoryLayout.view.plan",

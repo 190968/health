@@ -9,12 +9,31 @@ body {
 }
 
 .ant-card-padding-transition .ant-card-head, .ant-card-padding-transition .ant-card-body {
-  transition:none;
+  -webkit-transition: none !important;
+  -o-transition: none !important;
+   transition: none !important;
+}
+
+.ant-card-padding-transition .ant-card-head, .ant-card-padding-transition .ant-card-body {
+
 }
 
 .ant-card-type-table {
   .ant-card-body {
     padding:0 !important;
     padding-top: 1px !important;
+  }
+}
+
+
+
+.ant-btn-orange {
+  color: #fff;
+  background-color: #eca438;
+  border-color: #eca438;
+  &:hover {
+    color: #eca438;
+    background-color: #f7bd66;
+    border-color: #eca438;
   }
 }

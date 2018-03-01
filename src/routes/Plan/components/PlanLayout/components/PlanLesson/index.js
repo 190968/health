@@ -1,7 +1,9 @@
 import React from 'react'
-import {Row, Col, Button, Card, List } from 'antd';
+import {Row, Col, Button, Card, List, Input } from 'antd';
 import PlanElement from '../../containers/PlanElement'
 import {message} from "antd/lib/index";
+import { withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
 
 export class PlanLesson extends React.Component {
 
@@ -16,13 +18,14 @@ export class PlanLesson extends React.Component {
     };
 
     static propTypes = {
+
     };
 
+    static defaultProps = {
+        isBuilderMode:false
+    }
+
     saveLesson = (e, lessonId, isLastlesson) => {
-
-
-
-        //return true;
         const {upid} = this.props;
         this.setState({
             loading:true,
@@ -54,16 +57,119 @@ export class PlanLesson extends React.Component {
         });
     }
 
+    updateLabel = (e) => {
+        const value = e.target.value;
+
+        console.log(this.props);
+        const {client, item, planId} = this.props;
+        const {id} = item;
+        //
+
+        /*let lesson = client.readFragment({
+            id: 'PlanBodyLesson:'+id, // `id` is any id that could be returned by `dataIdFromObject`.
+            fragment: gql`
+            fragment PlanBodyLessonInfo on PlanBodyLesson {
+              title
+            }
+          `,
+        });
+
+        //lesson.title = value;
+
+        console.log(lesson);*/
+
+        client.writeFragment({
+            id: 'PlanBodyLesson:'+id, // `id` is any id that could be returned by `dataIdFromObject`.
+            fragment: gql`
+            fragment PlanBodyLessonInfo on PlanBodyLesson {
+              title
+            }
+            `,
+            data: {
+                title: value,
+                __typename:'PlanBodyLesson'
+            },
+        });
+
+
+        clearTimeout(this.timer);
+
+        const updateLessonMutation =  gql`
+           mutation updateLessonTitle($id: UID!, $planId: UID!, $title: String!) {
+                updatePlanLesson(id:$id, planId: $planId, title: $title) {
+                      id,
+                      title
+                }
+            }
+            `;
+
+
+        this.timer = setTimeout(function () {
+            client.mutate({mutation: updateLessonMutation, variables: {id:id, planId:planId, title:value}});
+        }.bind(this), 500);
+
+
+
+
+
+
+
+        // save the info with some delay
+        // save the element title in the DB
+
+
+/*
+
+
+        /*const {plan} = client.readQuery({
+            query: PLAN_BODY_QUERY,
+            variables: {
+                id: id,
+                upid: upid,
+                date: date
+            }
+        });
+
+
+
+
+        // let element = store.readFragment({
+            //     id: 'User:'+userId, // `id` is any id that could be returned by `dataIdFromObject`.
+            //     fragment: LoginForm.fragments.user,
+            //     fragmentName: 'UserInfo'
+            // });
+
+
+            //element.phoneConfirmed = verifyPhoneConfirm;
+
+            store.writeFragment({
+                id: 'User:'+userId,
+                fragment: LoginForm.fragments.user,
+                fragmentName: 'UserInfo',
+                data: {
+                    phoneConfirmed: verifyPhoneConfirm,
+                    __typename:'User'
+                },
+            });/*
+
+        */
+    }
+
 
    render() {
 
-        const {upid, item, isLastLesson, haveSections} = this.props;
-        const footer = item.elements  || isLastLesson ? [<Button type="primary" loading={this.state.loading}  onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
+        const {upid, item={}, isLastLesson, haveSections, isBuilderMode} = this.props;
+        const footer = !isBuilderMode && (item.elements || isLastLesson) ? [<Button type="primary" loading={this.state.loading}  onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
 
 
-       return (<Card title={item.title} bordered={false} actions={footer}>
+        let title = item.title || '';
+        if (isBuilderMode) {
+            title = <Input defaultValue={item.title} placeholder="Title" onKeyUp={this.updateLabel} />
+        }
+
+        return (<Card title={title} bordered={false} actions={footer}>
             {item.elements ? <Row>
-                <Col xs={22}><List
+                <Col><List
                     size="large"
                     itemLayout="vertical"
                     split={false}
@@ -72,7 +178,7 @@ export class PlanLesson extends React.Component {
                         return <List.Item
                             id={'field' + item.id}
                             key={item.id}>
-                            <PlanElement upid={upid} element={item} />
+                            <PlanElement isBuilderMode={isBuilderMode} upid={upid} element={item} />
                         </List.Item>
                     }}
                 /></Col>
@@ -92,4 +198,4 @@ export class PlanLesson extends React.Component {
 
 
 
-export default PlanLesson
+export default withApollo(PlanLesson)

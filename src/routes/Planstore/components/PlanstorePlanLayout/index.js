@@ -150,7 +150,7 @@ export class PlanstorPlanLayout extends React.Component {
                             </div>
                             <div className="ap-card__action">
                                 {alreadyDownloaded ? <Link to={'/plan/'+alreadyDownloadedId} ><Button icon="check" size="large" >Already Got It</Button></Link> :
-                                <Button type="primary"  icon="download" size="large" onClick={this.toggle} >Get It</Button>}
+                                <Button type="orange"  icon="download" size="large" onClick={this.toggle} >Get It</Button>}
                             </div>
                         </div>
                     </Col>

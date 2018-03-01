@@ -8,7 +8,6 @@ export class FormsComponent extends React.Component {
     render() {
 
         const {filters, onSuccess, activeFilters} = this.props;
-
         return (
             <div>
                 {filters.map((filter) => {

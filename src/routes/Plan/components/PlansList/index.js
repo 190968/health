@@ -13,7 +13,7 @@ export class PlansList extends React.Component {
 
     static defaultProps = {
         list: false,
-        title: <FormattedMessage id="plan.title" defaultMessage="Today's Actionplans" description="ActionPlans for Today" />
+        title: <FormattedMessage id="plan.title" defaultMessage="Today's ActionPlans" description="ActionPlans for Today" />
     }
     constructor(props) {
         super(props);

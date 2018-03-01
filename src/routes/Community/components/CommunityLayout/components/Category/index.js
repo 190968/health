@@ -98,7 +98,7 @@ class Category extends React.Component{
 
             <div>
                     <Card title={name}  extra={<Row style={{width:300}}>
-                        <Col span={6}>
+                        <Col span={7}>
                             {canJoin ? isJoined ?  <Popconfirm title={intl.formatMessage(messages.popTitle)} onConfirm={this.clickUNJoin} okText={intl.formatMessage(messages.okText)} cancelText={intl.formatMessage(messages.cancelText)}>
                             <Button  type="danger">{intl.formatMessage(messages.leave)}</Button></Popconfirm>:<Button onClick={this.clickJoin}  type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
                         <Col offset={1}  span={16}>

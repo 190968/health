@@ -1,6 +1,3 @@
-/**
- * Created by Pavel on 20.12.2017.
- */
 import React from 'react';
 import {
     FormattedMessage,
@@ -34,11 +31,11 @@ export class PlanstoreLayout extends React.Component {
         this.props.updateFilterStore(filter1)
     }
 
-    updateZeroFilters = (filter, values) => {
+    updateZeroFilters = () => {
         const activeFilters = {};
         const filter2 = {
-            ...activeFilters,
-            [filter]: values
+            //...activeFilters,
+            //[filter]: values
         }
         this.props.updateZeroFilterStore(filter2);
         this.props.updateFilterStore(filter2);

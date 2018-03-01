@@ -40,7 +40,7 @@ class PlansList extends React.PureComponent{
                 {plans.length > 0 ? <List
                     split={false}
                     loading={loading}
-                    grid={{gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 4}}
+                    grid={{gutter: 10, xs: 1, sm: 1, md: 2, lg: 3, xl: 5}}
                     dataSource={plans}
                     renderItem={product => (
                         <List.Item key={product.id}>

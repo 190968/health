@@ -44,14 +44,57 @@ const PlanstoreLayoutWithQuery = graphql(
         }),
         props: ({data }) => {
             if (!data.loading) {
-
+                const {edges, totalCount/*, pageInfo: {endCursor}*/} = data.planstore.plans;
+                console.log(edges.length);
+                console.log(totalCount);
                 return {
 
-                    plans: data.planstore.plans.edges,
-                    total: data.planstore.plans.totalCount,
-                    //filters: data.planstore.filters,
+                    plans: edges,
+                    total: totalCount,
+                    hasMore: edges.length < totalCount,
+                    //endCursor: endCursor,
                     loading: data.loading,
 
+
+
+                    loadMore(page, endCursor, callback) {
+                        return data.fetchMore({
+                            variables: {
+                                page:page,
+                               // cursors: {before: endCursor, last:10}
+                            },
+                            updateQuery: (previousResult, { fetchMoreResult }) => {
+
+                                callback();
+                                if (!fetchMoreResult) { return previousResult; }
+
+
+                                const newMessages = [...previousResult.planstore.plans.edges, ...fetchMoreResult.planstore.plans.edges]
+                                //console.log(newMessages);
+
+                                const obj =  Object.assign({}, previousResult, {
+                                    planstore: {
+                                        ...previousResult.planstore, plans: {
+                                            ...previousResult.planstore.plans,
+                                            edges: newMessages
+                                        }
+                                    }
+                                    /*
+                                    account: {
+                                    ...previousResult.account, user: {
+                                        ...previousResult.account.user, notifications: {
+                                            ...previousResult.account.user.notifications,
+                                            edges: newMessages
+                                        }
+                                    }
+                                }
+                                     */
+                                });
+
+                                return obj;
+                            },
+                        });
+                    },
 
                     loadMoreEntries(page) {
 
