@@ -17,14 +17,13 @@ class iMotivate extends React.Component {
             return <Card style={{height:250}} loading title="I Motivate">
           </Card>;
         }
-
-        const {edges} = info;
+        const {edges,totalCount} = info;
         const {intl}=this.props;
 
         return (
 
             <Card style={{height:250}}  title={intl.formatMessage(messages.imotivate)}>
-                {/*{totalCount!=0 &&<div><center>No Data</center></div>}*/}
+                {totalCount > 0 ?
                 <List
                     split={false}
                     loading={loading}
@@ -40,7 +39,8 @@ class iMotivate extends React.Component {
                                     </span>
                         </List.Item>
                     )}
-                />
+                />:   <div className="ant-list-empty-text">No IMotivation</div>
+                }
             </Card>
 
         );

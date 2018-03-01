@@ -23,12 +23,13 @@ class CareTeam extends React.Component {
             return  <Card loading >
                 Loading</Card>;
         }
+        //console.log(this.props.info.careTeam.totalCount);
         const {intl}=this.props;
         const title = intl.formatMessage(messages.myCareTeam);
         const  {careTeam} = info;
         const  {edges} = careTeam;
         return edges.length > 0 ?
-            ( <Card title={title}>
+            ( <Card title={title+" ("+this.props.info.careTeam.totalCount+")"}>
                 <List
                     split={false}
                     loading={loading}

@@ -42,7 +42,7 @@ class Commitments extends React.Component {
         return  (
             <Card
 
-                title={intl.formatMessage(messages.myCommitments)}
+                title={intl.formatMessage(messages.myCommitments)+" ("+this.props.info.commitments.totalCount+")"}
                 extra={<Tooltip title={intl.formatMessage(messages.addCommitments)}><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
 
             >
@@ -61,7 +61,7 @@ class Commitments extends React.Component {
                                                     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
                                     description={<div>
                                         <div dangerouslySetInnerHTML={{__html: item.description}}/>
-                                        <br/> {moment(item.date).format("YYYY-MM-DD")}</div>}
+                                        <br/> {moment(item.date).format("LLL")}</div>}
                                 />
                             </List.Item>
                         )}

@@ -21,29 +21,10 @@ class MyCategories extends React.Component{
                 <Card loading title="My Categories">Loading!!!</Card>
             );
         }
-        /*let CarouselItem =[];
-
-        let i=0;
-        info.forEach(function(item) {
-            i++;
-            CarouselItem.push(
-                            <Link key={item.category.id} to={"/community/"+item.category.id} >
-                                <Card style={{ margin:5}}
-                                    cover={<img alt={item.category.name} height={140} src={item.category.thumb.large}/>}
-                                >
-                                    <Tooltip title={item.category.name}>{item.category.name.substring(0, 10)}</Tooltip></Card>
-                            </Link>
-
-            )
-
-        });*/
-
-
-
 
         return(
             <Card
-                title="My Communities"
+                title={"My Communities"+" ("+info.length+")"}
                 type="static"
             >
                 <List

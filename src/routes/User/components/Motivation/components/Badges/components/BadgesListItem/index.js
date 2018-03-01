@@ -50,7 +50,7 @@ class BadgesListItem extends React.Component {
                                         verticalAlign: 'middle'
                                     }} size="large" src={item.badge.image} onClick={this.showModal} />
                                     <span
-                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{item.badge.title}</p>
+                                        style={{textAlign: 'center'}}><p>{item.badge.title}</p>
                                     </span>
                                 </Tooltip >
                             </List.Item>

@@ -20,7 +20,7 @@ class CommunityLayout extends React.Component{
             return (
                 <Card loading >Loading!!!</Card>
             );
-        }
+        }2
         return(
 
             <Row gutter={15}>

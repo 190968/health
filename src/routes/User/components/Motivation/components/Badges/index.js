@@ -24,12 +24,12 @@ class Badges extends React.Component {
             const {edges} = badges;
 
             return (
-                <Card style={{height:250}}  title={intl.formatMessage(messages.myBadges)}>
-
+                <Card style={{height:250}}  title={intl.formatMessage(messages.myBadges)+" ("+this.props.info.badges.totalCount+")"}>
                     <List
+                        style={{marginLeft:20}}
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 3, lg: 6, xl: 6}}
+                        grid={{gutter: 10, xs: 1, sm: 2, md: 2, lg: 6, xl: 6}}
                         dataSource={edges}
                         renderItem={item => (
                             <BadgesListItem item={item}/>

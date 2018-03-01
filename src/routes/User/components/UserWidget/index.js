@@ -1,5 +1,5 @@
 import React from 'react'
-import {Avatar} from 'antd';
+import Avatar from '../../../../routes/User/components/AvatarWithName';
 
 
 export default class UserWidget extends React.PureComponent {
@@ -11,10 +11,6 @@ export default class UserWidget extends React.PureComponent {
         const {user, onlyFirst} = this.props;
         const {firstName, fullName} = user;
 
-        const name = onlyFirst ? firstName : fullName;
-
-        return (
-            <span><Avatar size="small" style={{ verticalAlign: 'middle' }}>{name}</Avatar> <span>{name}!</span></span>
-        );
+        return (<Avatar info={user}/>);
     }
 }

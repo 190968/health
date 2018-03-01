@@ -37,13 +37,14 @@ class Points extends React.Component {
             <Card style={{height:250}} title={intl.formatMessage(messages.points)}>
 
 
-                { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel} />}
+                { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel}/>}
 
 
                 <center>
-                <Icon type="star" style={{ fontSize: 40, color: '#FFFF00' }} onClick={this.showModal} />
-                    <Progress percent={percent} />
+                    <Icon type="star" style={{ fontSize: 40, color: '#FFFF00' }} onClick={this.showModal} />
                 </center>
+                    <Progress percent={percent} />
+
                <center><span><h2>{points}</h2></span></center>
                 <center><span>{remainingPoint} {intl.formatMessage(messages.pointsNext)} {title} {intl.formatMessage(messages.level)}</span></center>
             </Card>

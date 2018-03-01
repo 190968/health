@@ -29,7 +29,7 @@ class Family extends React.Component {
         const  {edges} = family;
 
         return edges.length > 0 ?
-        ( <Card title={intl.formatMessage(messages.myFamily)}>
+        ( <Card title={intl.formatMessage(messages.myFamily)+" ("+this.props.info.family.totalCount+")"}>
             <List
                 split={false}
                 loading={loading}

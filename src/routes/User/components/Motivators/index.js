@@ -60,11 +60,11 @@ class Motivators extends React.Component {
         const  {edges} = motivators;
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
-
+        const text = "My Motivators"+" ("+info.length+")";
         return(
 
 
-        <Card  title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}
+        <Card  title={"My Motivators"+" ("+this.props.info.motivators.totalCount+")"}
                extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
 
         >
@@ -79,9 +79,7 @@ class Motivators extends React.Component {
                     renderItem={person => (
 
                         <List.Item key={person.id}>
-                            <AvatarWithName info={person.user} />
-
-
+                            <AvatarWithName align="v" info={person.user} />
                         </List.Item>
                     )}
             /> </div>: <div className="ant-list-empty-text">No Motivators</div>}
