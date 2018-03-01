@@ -11,7 +11,7 @@ describe('<Login>', () => {
     const setup = () => {
         const correctlyLogin =
         {
-            email: 'demco2patient@fitango.com',
+            email: 'demo2patient@fitango.com',
             password: 'Fitango2'
         };
         const LoanReview = wrapperFunc(correctlyLogin);

@@ -2,9 +2,9 @@
  * Created by Павел on 10.02.2018.
  */
 import React from 'react';
-import Medications from './components/AdheranseSummary/components/Medications'
-import Actionplans from './components/AdheranseSummary/components/Actionplans'
-import Trackers from './components/AdheranseSummary/components/Trackers'
+import Medications from './components/AdherenseSummary/components/Medications'
+import Actionplans from './components/AdherenseSummary/components/Actionplans'
+import Trackers from './components/AdherenseSummary/components/Trackers'
 import Badges from './containers/Badges.js'
 import Motivators from '../../containers/motivatorsContainer';
 import Points from './containers/Points.js';
