@@ -8,5 +8,10 @@
     "id": "user.settings.password",
     "description": "Password",
     "defaultMessage": "Password"
+  },
+  {
+    "id": "user.settings.picture",
+    "description": "Picture",
+    "defaultMessage": "Picture"
   }
 ]

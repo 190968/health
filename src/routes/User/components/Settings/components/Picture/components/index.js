@@ -6,8 +6,8 @@ import { Form} from 'antd';
 
 
 import { withApollo } from 'react-apollo'
-
-
+import UploadImage from './uploadImage';
+/*
 const Uppy = require('uppy/lib/core')
 const Tus = require('uppy/lib/plugins/Tus')
 const Transloadit = require('uppy/lib/plugins/Transloadit')
@@ -28,13 +28,8 @@ uppy.use(Transloadit, {
 })
 uppy.on('complete', (result) => {
 
-   // const url = result.successful[0].uploadURL
-    /*store.dispatch({
-        type: SET_USER_AVATAR_URL,
-        payload: { url: url }
-    })*/
 })
-uppy.run()
+uppy.run()*/
 
 class PictureForm extends React.Component{
 
@@ -60,14 +55,7 @@ class PictureForm extends React.Component{
         return(
 
             <div>
-                <DragDrop
-                    uppy={uppy}
-                    locale={{
-                        strings: {
-                            chooseFile: 'Pick a new avatar'
-                        }
-                    }}
-                />
+                <UploadImage />
             </div>
 
         );
@@ -75,5 +63,4 @@ class PictureForm extends React.Component{
 
 }
 
-const WrappedPasswordForm = Form.create()(PictureForm);
-export default withApollo(WrappedPasswordForm);
+export default withApollo(PictureForm);

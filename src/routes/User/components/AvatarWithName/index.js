@@ -6,9 +6,12 @@ import {Avatar } from 'antd';
 import Truncate from 'react-truncate';
 class AvatarWithName extends React.Component {
 
+    static defaultProps = {
+        vertical:false
+    }
     render() {
 
-        const {info} = this.props;
+        const {info, vertical} = this.props;
         return (
 
             info.firstName&&info.fullName ?

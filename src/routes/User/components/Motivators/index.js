@@ -70,7 +70,7 @@ class Motivators extends React.Component {
         >
 
             {edges.length > 0 ?
-                <div  style={{height:250}} className="demo-infinite-container">
+                <div className="demo-infinite-container">
                 <List
                     split={false}
                     loading={loading}

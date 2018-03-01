@@ -10,12 +10,10 @@ class Avatar extends React.Component {
 
         const {info} = this.props;
         return (
-            <center>
                 <AvatarAntd size="small" style={{verticalAlign: 'middle', backgroundColor: info.color}}>
                     {info.firstName && info.fullName ? info.firstName[0] :
                         (info.email ? info.email[0] : 'N/A' )}
                 </AvatarAntd>
-            </center>
 
         );
     }
