@@ -2,28 +2,23 @@
  * Created by Pavel on 09.12.2017.
  */
 import React from 'react';
-import {Avatar } from 'antd';
+import {Avatar as AvatarAntd} from 'antd';
 
-class AvatarX extends React.Component {
+class Avatar extends React.Component {
 
     render() {
 
         const {info} = this.props;
         return (
+            <center>
+                <AvatarAntd size="small" style={{verticalAlign: 'middle', backgroundColor: info.color}}>
+                    {info.firstName && info.fullName ? info.firstName[0] :
+                        (info.email ? info.email[0] : 'N/A' )}
+                </AvatarAntd>
+            </center>
 
-            info.firstName&&info.fullName ?
-                <center>
-                    <Avatar size="small" style={{ verticalAlign: 'middle', backgroundColor: info.color }}>{info.firstName[0]}</Avatar>
-                </center>
-                 :
-                info.email ?
-              <center>
-                    <Avatar size="small" style={{ verticalAlign: 'middle' }}>N/A</Avatar>
-              </center>:
-                    <center>
-                        <Avatar size="small" style={{ verticalAlign: 'middle' }}>N/A</Avatar>
-                    </center>
         );
     }
 }
-export default AvatarX;
+
+export default Avatar;
