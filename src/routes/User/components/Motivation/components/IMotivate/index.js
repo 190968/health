@@ -40,7 +40,7 @@ class iMotivate extends React.Component {
                                     </span>
                         </List.Item>
                     )}
-                />:   <div className="ant-list-empty-text">No IMotivation</div>
+                />:   <div className="ant-list-empty-text">{intl.formatMessage(messages.noImotivate)}</div>
                 }
             </Card>
 

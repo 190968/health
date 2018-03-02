@@ -32,9 +32,7 @@ export class PlanBodyMenu extends React.Component {
     hideAddLesson = () => {
        const newKey = this.props.lessons.length+1;
         // show last Lesson
-        console.log(this.props.lessons.length);
-        console.log(this.props.lessons);
-        console.log(this.state);
+
 
         this.setState({openAddLesson:!this.state.openAddLesson, currentKey:newKey});
     }

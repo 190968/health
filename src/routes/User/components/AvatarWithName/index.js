@@ -14,7 +14,7 @@ class AvatarWithName extends React.PureComponent {
 
         const {info, align} = this.props;
 
-        console.log(info);
+
         return (
 <React.Fragment>
     {

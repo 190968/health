@@ -68,7 +68,7 @@ class Commitments extends React.Component {
                         )}
                     /></div>
                     :
-                    <div className="ant-list-empty-text">No Commitments</div>
+                    <div className="ant-list-empty-text">{intl.formatMessage(messages.noCommitments)}</div>
                 }
             </Card>
 

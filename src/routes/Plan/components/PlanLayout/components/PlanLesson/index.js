@@ -60,7 +60,7 @@ export class PlanLesson extends React.Component {
     updateLabel = (e) => {
         const value = e.target.value;
 
-        console.log(this.props);
+
         const {client, item, planId} = this.props;
         const {id} = item;
         //

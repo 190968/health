@@ -108,7 +108,7 @@ class ModalMakeCommitmentsFor extends React.Component {
 
                                             <Select
                                                 mode="multiple"
-                                                placeholder="Please select"
+                                                placeholder={intl.formatMessage(messages.select)}
                                                 onChange={this.handleChange}
                                             >
                                                 {children}
@@ -145,7 +145,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                                     <FormItem>
                                         {getFieldDecorator('organization')(
 
-                                            <Select placeholder="Please select" >
+                                            <Select placeholder={intl.formatMessage(messages.select)} >
                                                 {enumChildren}
                                             </Select>
                                         )}

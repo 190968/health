@@ -39,7 +39,7 @@ class Promises extends React.Component {
                             </List.Item>
                         )}
                     /> :
-                    <div className="ant-list-empty-text">No Promises</div>
+                    <div className="ant-list-empty-text">{intl.formatMessage(messages.noPromises)}</div>
                 }
             </Card>
 

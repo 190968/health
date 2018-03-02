@@ -89,7 +89,7 @@ export class TrackerUncontrolled extends React.PureComponent {
         const {value} = this.state;
         const {units, inputMask} = item;
         const unitsName = units.name;
-        console.log(value);
+
         let className = "tracker-input"+(value ? ' tracker-input-reported' : '');
 
         return (<Input className={className}

@@ -27,7 +27,7 @@ class DiscussionView extends React.Component{
     render(){
 
         const {loading,discussion,user} = this.props;
-        console.log(user);
+
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
