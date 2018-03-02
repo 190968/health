@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card} from 'antd';
+import {Card,Modal, Spin} from 'antd';
 
 export class Loading extends React.PureComponent {
     render() {
@@ -14,6 +14,19 @@ export default Loading;
 
 export const Empty = ({text}) => {
    return <div className="ant-list-empty-text">{text}</div>
+}
+
+
+export const LoadingModal = () => {
+    return <Modal
+        visible={true}
+        closable={false}
+        destroyOnClose
+        footer={false}
+        bodyStyle={{height: 150, textAlign: 'center', lineHeight: 5}}
+    >
+        <Spin tip="Loading..."/>
+    </Modal>
 }
 
 

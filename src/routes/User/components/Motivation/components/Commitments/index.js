@@ -26,7 +26,7 @@ class Commitments extends React.Component {
         this.setState({viewVisible: true});
     }
     handleCancel = () => {
-        this.setState({ visible: false,viewVisible: false});
+        this.setState({ visible: false, viewVisible: false});
 
     }
     render() {
@@ -51,18 +51,17 @@ class Commitments extends React.Component {
                 { this.state.viewVisible && <ModalView handleCancel={this.handleCancel} />}
 
                 {edges.length > 0 ?
-                    <div  style={{height:250}} className="demo-infinite-container">
+                    <div  className="demo-infinite-container">
                     <List
                         itemLayout="horizontal"
                         dataSource={edges}
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar onClick={this.showModalView} size="large"
-                                                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>}
+                                    avatar={<Avatar onClick={this.showModalView} size="large" />}
                                     description={<div>
                                         <div dangerouslySetInnerHTML={{__html: item.description}}/>
-                                        <br/> {moment(item.date).format("LLL")}</div>}
+                                        <br/>{moment(item.date).format("LLL")}</div>}
                                 />
                             </List.Item>
                         )}

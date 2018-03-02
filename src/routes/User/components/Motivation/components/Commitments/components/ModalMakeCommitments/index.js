@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {Button ,Spin,Select,Modal } from 'antd';
+import {LoadingModal} from 'components/Loading';
 import ModalMakeCommitmentsFor from '../../containers/ModalMakeCommitmentsFor';
 import SelectPlans from '../../../../../../../Plan/containers/SelectPlans';
 import {
@@ -32,9 +33,7 @@ class ModalMakeCommitments extends React.Component {
     render() {
         const  {info,loading} = this.props;
         if (loading) {
-            return    <Modal>
-                <Spin/>
-            </Modal> ;
+            return <LoadingModal /> ;
         }
         const {intl}=this.props;
 
@@ -43,7 +42,6 @@ class ModalMakeCommitments extends React.Component {
         info.forEach(item=>{
             selectItem.push(  <Option key={item.id} value={item.plan.title}>{item.plan.title}</Option>)
         })
-
         return  (
             <div>
         {this.state.visible &&
@@ -52,11 +50,11 @@ class ModalMakeCommitments extends React.Component {
                 visible={true}
                 onCancel={this.props.handleCancel}
                 footer={[
-                    <Button key="back" onClick={this.props.handleCancel}>{intl.formatMessage(messages.makeCommitment)}</Button>
+                    <Button type="primary"  key="back" onClick={this.props.handleCancel}>{intl.formatMessage(messages.makeCommitment)}</Button>
                 ]}
             >
 
-                <p>{intl.formatMessage(messages.text)}</p><hr/>
+                <p>{intl.formatMessage(messages.text)}</p>
                 <center>
                     <SelectPlans onChange={this.onChange}/>
                 </center>
