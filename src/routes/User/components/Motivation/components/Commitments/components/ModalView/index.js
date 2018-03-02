@@ -44,7 +44,7 @@ class ModalView extends React.Component {
             >
                 <List.Item>
                     <List.Item.Meta
-                        avatar={<Avatar style={{width:75,height:75}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                        avatar={<Avatar style={{width:75,height:75,borderRadius:50}}  />}
                         description={
                             <div>
                             <Row>
@@ -52,7 +52,7 @@ class ModalView extends React.Component {
                                 <Col offset={1} span={16}><Link to={url}>{title}</Link></Col>
                             </Row>
                             <Row>
-                                <Col span={7}><h4>{intl.formatMessage(messages.commitedBy)}</h4></Col>
+                                <Col span={7}><h4>{intl.formatMessage(messages.commitedOn)}</h4></Col>
                                 <Col offset={1} span={16}>{moment(commitedBy).format("LLL")}</Col>
                             </Row>
                             <Row>

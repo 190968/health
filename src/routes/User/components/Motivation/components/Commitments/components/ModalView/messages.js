@@ -19,10 +19,10 @@ export default defineMessages({
             "defaultMessage": "Action Plan",
             "description": "Action Plan"
         },
-        "commitedBy": {
+        "commitedOn": {
             "id": "user.motivation.commitedOn",
-            "defaultMessage": "Committed By",
-            "description": "Committed By"
+            "defaultMessage": "Committed On",
+            "description": "Committed On"
         },
         "commited": {
             "id": "user.motivation.commited",
