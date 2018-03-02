@@ -6,6 +6,7 @@ import {
 import MedicationEditForm from '../../MedicationEdit/containers'
 import MedicationChartPopup from '../../MedicationChartPopup';
 import MedicationFullDetails from '../../../containers/MedicationFullDetails';
+import MedicationVideo from '../../../containers/MedicationVideo';
 
 export class MedicationInfo extends React.PureComponent {
 
@@ -13,6 +14,7 @@ export class MedicationInfo extends React.PureComponent {
         super(props);
         this.state = {
             isClicked: false,
+            showVideo:false
         };
         this.state = {visible: false, showDetails: false};
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -30,6 +32,14 @@ export class MedicationInfo extends React.PureComponent {
         return deleteMed(id, user_id);//, !this.state.isClicked, this.toggleCoin);
     }
 
+    showVideo = () => {
+        this.setState({showVideo:true});
+    }
+
+    hideVideo = () => {
+        this.setState({showVideo:false});
+    }
+
     toggleDetails() {
         this.setState({showDetails:!this.state.showDetails});
     }
@@ -45,7 +55,7 @@ export class MedicationInfo extends React.PureComponent {
         }
 
         // const userId = 24038;
-        const {id, drug} = this.props.info;
+        const {id, drug, image} = this.props.info;
 
         const {name, dosage} = drug;
 
@@ -59,7 +69,7 @@ export class MedicationInfo extends React.PureComponent {
         return (
             <div>
 
-
+                {this.state.showVideo && <MedicationVideo id={drug.id} onHide={this.hideVideo} />}
                 {this.state.visible &&
                 <MedicationEditForm id={id}
                                     userId={user_id}
@@ -75,7 +85,7 @@ export class MedicationInfo extends React.PureComponent {
 
                 <Row>
                     <Col>
-                        <Popover content={content} trigger="hover">{name}</Popover> <Icon type="video-camera"/> <Icon type="camera-o"/>
+                        <Popover content={content} trigger="hover">{name}</Popover> <Icon type="video-camera" onClick={this.showVideo} /> {image && <Popover content={<div><img src={image} /></div>} title="Title" trigger="hover"><Icon type="camera-o"/></Popover>}
                     </Col>
                     <Col style={{fontSize: '0.8em'}}>
                         {dosage}

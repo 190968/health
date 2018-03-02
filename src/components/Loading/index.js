@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,Modal, Spin} from 'antd';
+import {Card,Modal, Spin, Icon} from 'antd';
 
 export class Loading extends React.PureComponent {
     render() {
@@ -23,9 +23,9 @@ export const LoadingModal = () => {
         closable={false}
         destroyOnClose
         footer={false}
-        bodyStyle={{height: 150, textAlign: 'center', lineHeight: 5}}
+        bodyStyle={{height: 160, textAlign: 'center', lineHeight: 8}}
     >
-        <Spin tip="Loading..."/>
+        <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
     </Modal>
 }
 

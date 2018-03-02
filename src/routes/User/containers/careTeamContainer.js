@@ -28,6 +28,11 @@ const CARETEAM  = gql`
                     user {
                       id,
                       firstName,
+                       thumbs {
+                small
+                large
+                medium
+            },
                       email
                     }
                   }

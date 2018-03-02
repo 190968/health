@@ -13,7 +13,7 @@ export default class CategoryCard extends React.PureComponent {
         return(
             <Link to={"/community/"+item.id}>
                 <Card type="community"
-                    cover={<img alt={item.name} style={{maxHeight:120}} src={item.thumb.large} />}
+                    cover={<img alt={item.name} style={{maxHeight:150}} src={item.thumb.large} />}
                 >
                     <Meta title={<Tooltip title={item.name}><Truncate line={2}>{item.name}</Truncate></Tooltip>} />
 

@@ -7,7 +7,8 @@ import Loading from 'components/Loading';
 import InfiniteScroll from 'react-infinite-scroller';
 
 
-import { Popconfirm, Row, Col,Button, List, Avatar, Spin, Icon,} from 'antd';
+import { Popconfirm, Row, Col,Button, List, Spin, Icon,} from 'antd';
+import Avatar from 'routes/User/components/Avatar';
 
 
 class Notifications extends React.Component {
@@ -145,7 +146,7 @@ class Notifications extends React.Component {
 
     render() {
         const { loading, notifications, hasMore } = this.props;
-console.log(hasMore,"-------"+this.props.endCursor+"-----------------");
+        //console.log(hasMore,"-------"+this.props.endCursor+"-----------------");
         if (loading) {
             return <Loading />;
         }
@@ -168,7 +169,7 @@ console.log(hasMore,"-------"+this.props.endCursor+"-----------------");
                         <List.Item key={message.id} >
 
                             <List.Item.Meta
-                                avatar={<Avatar style={{ verticalAlign: 'middle', backgroundColor: message.sender.color }} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                avatar={<Avatar info={message.sender} />}
                                 title={message.text}
                                 description={<Row type="flex" justify="space-between" >
                                     <Col xs={12}>{moment(message.dateSent).calendar()}</Col>

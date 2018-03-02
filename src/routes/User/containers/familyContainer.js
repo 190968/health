@@ -28,6 +28,11 @@ const FAMILY  = gql`
                     user {
                       id,
                       firstName,
+                       thumbs {
+                small
+                large
+                medium
+            },
                       email
                     }
                   }

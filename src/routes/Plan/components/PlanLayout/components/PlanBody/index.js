@@ -30,8 +30,8 @@ export class PlanBody extends React.Component {
     };
 
     static defaultProps = {
-        isBuilderMode:true,
-        planId:'NzUyNw'
+        isBuilderMode: false,
+        planId:''//'NzUyNw'
     }
 
 

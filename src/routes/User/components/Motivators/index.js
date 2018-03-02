@@ -89,10 +89,7 @@ class Motivators extends React.Component {
                     dataSource={edges}
                     renderItem={person => (
                         <List.Item key={person.id}>
-
-                            <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
                                <AvatarWithName info={person.user} />
-                             </Link>
                         </List.Item>
                     )}
                      /></InfiniteScroll></div>

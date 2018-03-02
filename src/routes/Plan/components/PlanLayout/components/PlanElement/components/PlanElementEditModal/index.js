@@ -22,7 +22,7 @@ class PlanElementEditModal extends React.Component{
 
         const {intl}=this.props;
         const {getFieldDecorator} = this.props.form;
-
+        console.log(this.props);
         return(
             <Modal
                 title={intl.formatMessage(messages.modalTitle)}

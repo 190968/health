@@ -9,7 +9,7 @@ export const NOTIFICATIONS_POOL_QUERY  = gql`
         token
         user {
           id
-          notifications (cursors:$cursors) @connection(key: "notificationPool") {
+          notifications (cursors:$cursors, unread:true) @connection(key: "notificationPool") {
             totalCount
             pageInfo {
               endCursor
@@ -29,7 +29,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
             variables: {
                 cursors: {first:1, after:ownProps.lastNotificationCursor},// last cursor for notifications
             },
-            //pollInterval: 5000,
+            pollInterval: 5000,
             fetchPolicy: 'network-only',
             //notifyOnNetworkStatusChange: true// adding loading placeholder
         }
