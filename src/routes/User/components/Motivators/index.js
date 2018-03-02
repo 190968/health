@@ -72,7 +72,6 @@ class Motivators extends React.Component {
 
         <Card  title={title+count}
                extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
-               style={{height:250}}
         >
             {edges.length > 0 ?
                 <div className="demo-infinite-container">
