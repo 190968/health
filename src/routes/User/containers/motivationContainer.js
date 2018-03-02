@@ -59,6 +59,11 @@ const MOTIVATION  = gql`
           user {
             id
             firstName
+            thumbs {
+                small
+                large
+                medium
+            }
             email
           }
         }
@@ -72,6 +77,11 @@ const MOTIVATION  = gql`
             user {
               id
               firstName
+            thumbs {
+                small
+                large
+                medium
+            }
             }
             email
           }
@@ -121,6 +131,11 @@ const MOTIVATION  = gql`
           sender {
             id
             firstName
+            thumbs {
+                small
+                large
+                medium
+            }
           }
         }
       }

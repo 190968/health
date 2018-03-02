@@ -29,6 +29,11 @@ const CURRENT_PERSONAL_PLAN = gql`
             user {
                id
                firstName
+            thumbs {
+                small
+                large
+                medium
+            }
                lastName
             }
         }

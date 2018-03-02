@@ -22,6 +22,11 @@ const COMMITMENTS  = gql`
             user {
               id
               firstName
+            thumbs {
+                small
+                large
+                medium
+            }
               email
             }
           }
@@ -35,6 +40,11 @@ const COMMITMENTS  = gql`
               user {
                 id
                 firstName
+            thumbs {
+                small
+                large
+                medium
+            }
               }
               email
             }

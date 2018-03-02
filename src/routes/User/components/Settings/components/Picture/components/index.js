@@ -2,40 +2,17 @@
  * Created by Pavel on 08.12.2017.
  */
 import React from 'react';
-import { Form} from 'antd';
+import {Button} from 'antd';
+import Avatar from '../../../../../components/Avatar';
+import './index.less';
 
-
-import { withApollo } from 'react-apollo'
 import UploadImage from './uploadImage';
-/*
-const Uppy = require('uppy/lib/core')
-const Tus = require('uppy/lib/plugins/Tus')
-const Transloadit = require('uppy/lib/plugins/Transloadit')
-const DragDrop = require('uppy/lib/react/DragDrop')
-const uppy = Uppy({
-    meta: { type: 'avatar' },
-    restrictions: { maxNumberOfFiles: 1 },
-    autoProceed: true
-})
-
-uppy.use(Tus, { resume: false})
-uppy.use(Transloadit, {
-    // Transloadit plugin options
-    params: {
-        auth: { key: 'f0ae93b755c346b4864e79e9ac3613ed' },
-        template_id:  '80ee9b46f43f47969dea1599e77c7721'
-    }
-})
-uppy.on('complete', (result) => {
-
-})
-uppy.run()*/
 
 class PictureForm extends React.Component{
 
-    constructor(props){
-        super(props);
-        this.state = {};
+    state = {
+        modalOpen: false,
+        avatar:''
     }
 
     /**
@@ -48,19 +25,56 @@ class PictureForm extends React.Component{
 
     }
 
+    onComplete = (results) => {
+        console.log(results);
+        const {original, thumb25, thumb40, thumb80, thumb150} = results;
+        this.props.updatePicture({original:original,large:thumb150, medium:thumb80, small:thumb25});
+        this.setState({avatar:thumb150 });
+        this.handleClose();
+
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (!nextProps.loading) {
+            const {thumbs={large:''}} = nextProps;
+            const {large} = thumbs;
+
+            this.setState({avatar:large});
+        }
+    }
+
+
+
+
+    handleOpen = () => {
+        this.setState({
+            modalOpen: true
+        })
+    }
+
+    handleClose = () => {
+        this.setState({
+            modalOpen: false
+        })
+    }
+
     render(){
 
 
-
+        const {letter = ''} = this.props;
         return(
 
-            <div>
-                <UploadImage />
-            </div>
+            <center>
+                <Avatar size="huge"  src={this.state.avatar}>{letter}</Avatar>
+                <div style={{marginTop:5}}>  <Button onClick={this.handleOpen}>Change avatar</Button>
+                    {this.state.modalOpen && <UploadImage template='userpic' onComplete={this.onComplete} simpleResult />}
+                </div>
+            </center>
 
         );
     }
 
 }
 
-export default withApollo(PictureForm);
+export default PictureForm;

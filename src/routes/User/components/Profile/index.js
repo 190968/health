@@ -40,7 +40,7 @@ class ViewProfile extends React.Component {
                 <Col xs={24} md={14} lg={15} xl={17}>
                     <Card style={{marginBottom:15}}>
                         <Col span={8}>
-                            <Avatar info={this.props.info} />
+                            <Avatar info={this.props.info} size="huge" />
                             {/*<center>*/}
                                 {/*<Avatar style={{width:100,height:100,borderRadius:50}} />*/}
                                 {/**/}

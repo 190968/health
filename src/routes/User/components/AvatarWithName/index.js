@@ -2,65 +2,51 @@
  * Created by Pavel on 09.12.2017.
  */
 import React from 'react';
-import {Avatar,Row,Col} from 'antd';
+import {Row,Col} from 'antd';
+import Avatar from '../Avatar'
 import Truncate from 'react-truncate';
-class AvatarWithName extends React.Component {
+class AvatarWithName extends React.PureComponent {
 
+    static defaultProps = {
+        align:'h'
+    }
     render() {
 
-        const {info,align=[]} = this.props;
+        const {info, align} = this.props;
 
-
+        console.log(info);
         return (
-<div>
+<React.Fragment>
     {
         align === "v" ?
              info.firstName ?
                 <Row>
-                    <Avatar size="small"
-                            style={{verticalAlign: 'middle', backgroundColor: info.color}}>{info.firstName[0]}</Avatar>
+                    <Avatar info={info} />
                     <p>{info.firstName}</p>
                 </Row> :
                 info.email ?
                     <Row>
-                        <Avatar size="small" style={{verticalAlign: 'middle'}}>N/A</Avatar>
+                        <Avatar info={info} />
                         <Truncate lines={2}><p>{info.email}</p></Truncate>
                     </Row> :
-                    <Row>
-                        <Avatar size="small" style={{verticalAlign: 'middle'}}>N/A</Avatar>
+                    <center>
+                        <Avatar info={info} />
                         <p>No name</p>
-                    </Row>
+                    </center>
 
             :
 
             info.firstName ?
-                <Row>
-                    <Col span={11}>
-                        <Avatar size="small" style={{verticalAlign: 'middle', backgroundColor: info.color}}>{info.firstName[0]}</Avatar>
-                    </Col>
-                    <Col  span={12}>
-                        <p>{info.firstName}</p>
-                    </Col>
-                </Row> :
+
+                <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>{info.firstName}</span></span>
+                 :
                 info.email ?
-                    <Row>
-                        <Col span={11}>
-                            <Avatar size="small" style={{verticalAlign: 'middle'}}>N/A</Avatar>
-                            </Col>
-                        <Col  span={12}>
-                        <Truncate lines={2}><p>{info.email}</p></Truncate>
-                            </Col>
-                    </Row> :
-                    <Row>
-                        <Col span={11}>
-                        <Avatar size="small" style={{verticalAlign: 'middle'}}>N/A</Avatar>
-                            </Col>
-                        <Col  span={12}>
-                        <p>No name</p>
-                            </Col>
-                    </Row>
+                    <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>{info.email}</span></span>
+                    :
+                    <span><Avatar info={info}/> <span style={{verticalAlign: 'middle'}}>No name</span></span>
+
     }
-    </div>
+    </React.Fragment>
         );
     }
 }

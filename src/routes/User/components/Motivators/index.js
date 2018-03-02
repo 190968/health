@@ -79,7 +79,7 @@ class Motivators extends React.Component {
                     renderItem={person => (
 
                         <List.Item key={person.id}>
-                            <AvatarWithName align="v" info={person.user} />
+                            <AvatarWithName info={person.user} />
                         </List.Item>
                     )}
             /> </div>: <div className="ant-list-empty-text">No Motivators</div>}

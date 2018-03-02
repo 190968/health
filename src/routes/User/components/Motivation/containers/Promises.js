@@ -25,6 +25,11 @@ query GET_PROMISES($cursors:CursorInput,$userId:UID) {
         sender{
           id
           firstName
+            thumbs {
+                small
+                large
+                medium
+            }
         }
       }
       }
