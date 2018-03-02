@@ -15,22 +15,6 @@ const COMMITMENTS  = gql`
     user (id: $userId) {
       id
       motivation {
-        motivators {
-          totalCount
-          edges {
-            id
-            user {
-              id
-              firstName
-            thumbs {
-                small
-                large
-                medium
-            }
-              email
-            }
-          }
-        }
         commitments(cursors: $cursors) {
           totalCount
           edges {
@@ -74,7 +58,7 @@ const withMutation = graphql(COMMITMENTS, {
         if (!data.loading) {
             return {
                 info: data.user.motivation,
-                motivators: data.user.motivation.motivators,
+                // motivators: data.user.motivation.motivators,
                 loading: data.loading
             }
         }

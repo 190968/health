@@ -36,7 +36,6 @@ class Commitments extends React.Component {
                </Card>;
         }
         const{edges,totalCount} = info.commitments;
-        const{motivators} = this.props;
         const {intl}=this.props;
         const title = intl.formatMessage(messages.myCommitments);
         const count = totalCount > 0 ? " ("+totalCount+")":"";
@@ -47,7 +46,7 @@ class Commitments extends React.Component {
                 extra={<Tooltip title={intl.formatMessage(messages.addCommitments)}><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
 
             >
-                { this.state.visible && <ModalMakeCommitment motivators={motivators} handleCancel={this.handleCancel} />}
+                { this.state.visible && <ModalMakeCommitment  handleCancel={this.handleCancel} />}
                 { this.state.viewVisible && <ModalView handleCancel={this.handleCancel} />}
 
                 {edges.length > 0 ?

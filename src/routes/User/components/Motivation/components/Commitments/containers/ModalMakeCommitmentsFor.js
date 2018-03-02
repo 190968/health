@@ -20,6 +20,39 @@ const CHARITIESENUM  = gql`
   }
 }
 `;
+const GET_MOTIVATORS  = gql`
+query GET_MOTIVATORS($userId:UID) {
+  charitiesTypes: __type(name: "CharitiesEnum") {
+    name
+    enumValues {
+      name
+      description
+    }
+  }
+    user (id: $userId) {
+        id
+        motivation {
+            motivators {
+                totalCount
+                edges {
+                    id
+                    user {
+                        id
+                        firstName
+                        thumbs {
+                            small
+                            large
+                            medium
+                        }
+                        email
+                    }
+                }
+            }
+        }
+    }
+}
+`;
+
 
 const MAKECOMMITMENT  = gql`
 mutation MAKECOMMITMENT($id: UID!, $input: CommitmentInput!) {
@@ -39,12 +72,19 @@ mutation MAKECOMMITMENT($id: UID!, $input: CommitmentInput!) {
 
 `;
 
-const withQuery = graphql(CHARITIESENUM, {
-    props: ({ownProps, data}) => {
+const withQuery = graphql(GET_MOTIVATORS, {
+    options: (ownProps) => ({
+        variables: {
+            user_id: ownProps.userId
+        }
 
+    }),
+    props: ({ownProps, data}) => {
+      console.log(data);
         if (!data.loading) {
             return {
                 charitiesEnum: data.charitiesTypes.enumValues,
+                motivators: data.user.motivation.motivators,
                 loading: data.loading
             }
         }
