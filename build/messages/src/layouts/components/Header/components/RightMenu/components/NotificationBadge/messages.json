@@ -1,0 +1,7 @@
+[
+  {
+    "id": "new_notifications",
+    "description": "Login",
+    "defaultMessage": "You have {itemCount, plural, one {# Notification} other {# Notifications}}."
+  }
+]
