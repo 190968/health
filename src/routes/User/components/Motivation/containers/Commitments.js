@@ -19,6 +19,7 @@ const COMMITMENTS  = gql`
           totalCount
           edges {
             id
+            formattedText
             motivators {
               id
               user {

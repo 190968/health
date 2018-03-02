@@ -4,14 +4,13 @@
 import React from 'react';
 import {List ,Avatar,Tooltip,Button, Icon,Card } from 'antd';
 import ModalMakeCommitment from './containers/ModalMakeCommitments'
-import ModalView  from  './components/ModalView';
+import ModalView  from  './containers/ModalView';
 import moment from 'moment';
 import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
 class Commitments extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -58,9 +57,7 @@ class Commitments extends React.Component {
                             <List.Item>
                                 <List.Item.Meta
                                     avatar={<Avatar onClick={this.showModalView} size="large" />}
-                                    description={<div>
-                                        <div dangerouslySetInnerHTML={{__html: item.description}}/>
-                                        <br/>{moment(item.date).format("LLL")}</div>}
+                                    description={<p>{item.formattedText}</p>}
                                 />
                             </List.Item>
                         )}

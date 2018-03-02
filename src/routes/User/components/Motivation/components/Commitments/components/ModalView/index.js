@@ -20,7 +20,7 @@ class ModalView extends React.Component {
         this.setState({ visible: false});
     }
     render() {
-        const  {loading} = this.props;
+        const  {loading,title} = this.props;
         const {intl}=this.props;
 
         if (loading) {
@@ -48,7 +48,7 @@ class ModalView extends React.Component {
                             <div>
                             <Row>
                                 <Col span={7}><h4>{intl.formatMessage(messages.plan)}</h4></Col>
-                                <Col offset={1} span={7}>{moment("2019-10-10").format("YYYY-MM-DD")}</Col>
+                                <Col offset={1} span={7}>{title}</Col>
                             </Row>
                             <Row>
                                 <Col span={7}><h4>{intl.formatMessage(messages.commitedOn)}</h4></Col>

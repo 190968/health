@@ -80,7 +80,6 @@ const withQuery = graphql(GET_MOTIVATORS, {
 
     }),
     props: ({ownProps, data}) => {
-      console.log(data);
         if (!data.loading) {
             return {
                 charitiesEnum: data.charitiesTypes.enumValues,
