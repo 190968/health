@@ -38,6 +38,7 @@ const COMMITMENTS  = gql`
             payment
             url
             description
+            action
           }
         }
       }
