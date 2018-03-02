@@ -9,6 +9,7 @@ import {
     FormattedMessage
 } from 'react-intl';
 import messages from './messages';
+import InfiniteScroll from 'react-infinite-scroller';
 import { Form,  List, Card,Modal,Input,Button, Tooltip, Icon } from 'antd';
 import AvatarWithName from '../AvatarWithName';
 const FormItem = Form.Item;
@@ -39,50 +40,65 @@ class Motivators extends React.Component {
         });
     }
     handleSubmit = (e) => {
-
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             return onSubmit(values, this.handleCancel);
         });
+    }
 
+    handleInfiniteOnLoad = () => {
+        this.setState({
+            loading: true,
+        });
+        this.props.loadMore(this.props.endCursor, this.stopLoading);
     }
 
     render() {
 
-        const  {info,loading} = this.props;
+        const  {info,loading,hasMore} = this.props;
 
         if (loading) {
             return  <Card loading title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}>
                                  Loading</Card>;
         }
         const  {motivators} = info;
-        const  {edges} = motivators;
+        const  {edges,totalCount} = motivators;
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
-        const text = "My Motivators"+" ("+info.length+")";
-        return(
+        const title = "My Motivators";
+        const count = totalCount > 0 ?  " ("+totalCount+")":"";
+    return(
 
-
-        <Card  title={"My Motivators"+" ("+this.props.info.motivators.totalCount+")"}
+        <Card  title={title+count}
                extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
-
+               style={{height:250}}
         >
-
             {edges.length > 0 ?
                 <div className="demo-infinite-container">
+                    <InfiniteScroll
+                        initialLoad={false}
+                        pageStart={0}
+                        loadMore={this.handleInfiniteOnLoad}
+                        hasMore={true}
+                        useWindow={false}
+                    >
                 <List
                     split={false}
                     loading={loading}
                     grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
                     dataSource={edges}
                     renderItem={person => (
-
                         <List.Item key={person.id}>
-                            <AvatarWithName info={person.user} />
+
+                            <Link to={'/u/'+person.id} style={{color: 'inherit'}}>
+                               <AvatarWithName info={person.user} />
+                             </Link>
                         </List.Item>
                     )}
-            /> </div>: <div className="ant-list-empty-text">No Motivators</div>}
+                     /></InfiniteScroll></div>
+
+                : <div className="ant-list-empty-text">No Motivators</div>}
 
             <Modal
                 title="Invite motivators"

@@ -79,8 +79,6 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
 
                             callback();
                             if (!fetchMoreResult) { return previousResult; }
-
-
                             const newMessages = [...previousResult.account.user.notifications.edges, ...fetchMoreResult.account.user.notifications.edges]
                             const obj =  Object.assign({}, previousResult, {
                                 account: {

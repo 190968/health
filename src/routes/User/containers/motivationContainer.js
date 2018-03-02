@@ -99,7 +99,7 @@ const MOTIVATION  = gql`
           user {
             id
             fullName
-            thumb {
+            thumbs {
               original
               small
               large

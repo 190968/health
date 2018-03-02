@@ -19,10 +19,11 @@ class iMotivate extends React.Component {
         }
         const {edges,totalCount} = info;
         const {intl}=this.props;
-
+        const title = intl.formatMessage(messages.imotivate);
+        const count = totalCount > 0 ? " ("+totalCount+")":"";
         return (
 
-            <Card style={{height:250}}  title={intl.formatMessage(messages.imotivate)}>
+            <Card style={{height:250}}  title={title+count}>
                 {totalCount > 0 ?
                 <List
                     split={false}

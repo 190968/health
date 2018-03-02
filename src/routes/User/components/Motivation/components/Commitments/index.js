@@ -35,14 +35,15 @@ class Commitments extends React.Component {
             return  <Card style={{height:250}} loading title="My Commitments" >
                </Card>;
         }
-        const{edges} = info.commitments;
+        const{edges,totalCount} = info.commitments;
         const{motivators} = this.props;
         const {intl}=this.props;
-
+        const title = intl.formatMessage(messages.myCommitments);
+        const count = totalCount > 0 ? " ("+totalCount+")":"";
         return  (
             <Card
 
-                title={intl.formatMessage(messages.myCommitments)+" ("+this.props.info.commitments.totalCount+")"}
+                title={title+count}
                 extra={<Tooltip title={intl.formatMessage(messages.addCommitments)}><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
 
             >

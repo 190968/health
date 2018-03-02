@@ -145,7 +145,7 @@ class Notifications extends React.Component {
 
     render() {
         const { loading, notifications, hasMore } = this.props;
-
+console.log(hasMore,"-------"+this.props.endCursor+"-----------------");
         if (loading) {
             return <Loading />;
         }

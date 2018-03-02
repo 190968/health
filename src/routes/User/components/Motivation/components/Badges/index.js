@@ -22,9 +22,10 @@ class Badges extends React.Component {
             const {badges} = info;
             const {intl}=this.props;
             const {edges} = badges;
-
+            const title = intl.formatMessage(messages.myBadges);
+            const count = this.props.info.badges.totalCount > 0 ? " ("+this.props.info.badges.totalCount+")":"";
             return (
-                <Card style={{height:250}}  title={intl.formatMessage(messages.myBadges)+" ("+this.props.info.badges.totalCount+")"}>
+                <Card style={{height:250}} title={title+count}>
                     <List
                         style={{marginLeft:20}}
                         split={false}

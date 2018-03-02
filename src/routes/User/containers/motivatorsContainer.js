@@ -1,4 +1,4 @@
-/**
+    /**
  * Created by Pavel on 08.01.2018.
  */
 /**
@@ -59,7 +59,32 @@ const withQuery = graphql(motivators, {
         if (!data.loading) {
             return {
                 info: data.account.user.motivation,
-                loading: data.loading
+                loading: data.loading,
+                // hasMore: edges.length < totalCount,
+                // loadMore(endCursor, callback) {
+                //     return data.fetchMore({
+                //         variables: {
+                //             cursors: {before: endCursor, last:10}
+                //         },
+                //         updateQuery: (previousResult, { fetchMoreResult }) => {
+                //
+                //             callback();
+                //             if (!fetchMoreResult) { return previousResult; }
+                //             const newMessages = [...previousResult.account.user.notifications.edges, ...fetchMoreResult.account.user.notifications.edges]
+                //             const obj =  Object.assign({}, previousResult, {
+                //                 account: {
+                //                     ...previousResult.account, user: {
+                //                         ...previousResult.account.user, notifications: {
+                //                             ...previousResult.account.user.notifications,
+                //                             edges: newMessages
+                //                         }
+                //                     }
+                //                 }
+                //             });
+                //             return obj;
+                //         },
+                //     });
+                // }
             }
         }
         else {

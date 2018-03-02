@@ -25,11 +25,12 @@ class CareTeam extends React.Component {
         }
         //console.log(this.props.info.careTeam.totalCount);
         const {intl}=this.props;
-        const title = intl.formatMessage(messages.myCareTeam);
         const  {careTeam} = info;
         const  {edges} = careTeam;
+        const title = intl.formatMessage(messages.myCareTeam);
+        const count = this.props.info.careTeam.totalCount > 0 ?  " ("+this.props.info.careTeam.totalCount+")":"";
         return edges.length > 0 ?
-            ( <Card title={title+" ("+this.props.info.careTeam.totalCount+")"}>
+            ( <Card title={title+count}>
                 <List
                     split={false}
                     loading={loading}
