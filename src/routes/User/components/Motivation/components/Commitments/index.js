@@ -15,14 +15,19 @@ class Commitments extends React.Component {
         super(props);
         this.state = {
             visible:false,
-            viewVisible:false
+            viewVisible:false,
+                idPlan:"",
+                url:"",
+            commitedBy:"",
+            commited:""
         };
+       // this.showModalView = this.showModalView.bind(this);
     }
     showModal = () => {
         this.setState({visible: true});
     }
-    showModalView = () => {
-        this.setState({viewVisible: true});
+    showModalView = (idPlan,url,commitedBy,commited)=>  {
+        this.setState({viewVisible: true,idPlan:idPlan,url:url,commitedBy:commitedBy,commited:commited});
     }
     handleCancel = () => {
         this.setState({ visible: false, viewVisible: false});
@@ -46,7 +51,7 @@ class Commitments extends React.Component {
 
             >
                 { this.state.visible && <ModalMakeCommitment  handleCancel={this.handleCancel} />}
-                { this.state.viewVisible && <ModalView handleCancel={this.handleCancel} />}
+                { this.state.viewVisible && <ModalView id={this.state.idPlan} url={this.state.url} commitedBy={this.state.commitedBy} commited={this.state.commited} handleCancel={this.handleCancel} />}
 
                 {edges.length > 0 ?
                     <div  className="demo-infinite-container">
@@ -56,7 +61,7 @@ class Commitments extends React.Component {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    avatar={<Avatar onClick={this.showModalView} size="large" />}
+                                    avatar={<Avatar key={item.id} onClick={this.showModalView.bind(this,item.id,item.url,item.date,item.action)} size="large" />}
                                     description={<p>{item.formattedText}</p>}
                                 />
                             </List.Item>

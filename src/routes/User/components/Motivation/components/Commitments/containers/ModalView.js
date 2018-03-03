@@ -26,7 +26,7 @@ const withMutation = graphql(GET_PLANS, {
     options: (ownProps) => ({
         variables: {
             user_id: ownProps.userId,
-            upid:"NTY"
+            upid: ownProps.id
         }
 
     }),

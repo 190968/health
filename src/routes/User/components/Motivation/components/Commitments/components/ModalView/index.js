@@ -7,6 +7,7 @@ import moment from 'moment';
 import {
     injectIntl
 } from 'react-intl';
+import { Link } from 'react-router-dom'
 import messages from './messages';
 class ModalView extends React.Component {
 
@@ -20,7 +21,7 @@ class ModalView extends React.Component {
         this.setState({ visible: false});
     }
     render() {
-        const  {loading,title} = this.props;
+        const  {loading,title,url,commitedBy,commited} = this.props;
         const {intl}=this.props;
 
         if (loading) {
@@ -43,24 +44,20 @@ class ModalView extends React.Component {
             >
                 <List.Item>
                     <List.Item.Meta
-                        avatar={<Avatar style={{width:75,height:75}} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                        avatar={<Avatar style={{width:75,height:75,borderRadius:50}}  />}
                         description={
                             <div>
                             <Row>
                                 <Col span={7}><h4>{intl.formatMessage(messages.plan)}</h4></Col>
-                                <Col offset={1} span={7}>{title}</Col>
+                                <Col offset={1} span={16}><Link to={url}>{title}</Link></Col>
                             </Row>
                             <Row>
                                 <Col span={7}><h4>{intl.formatMessage(messages.commitedOn)}</h4></Col>
-                                <Col offset={1} span={7}>{moment("2019-10-10").format("YYYY-MM-DD")}</Col>
+                                <Col offset={1} span={16}>{moment(commitedBy).format("LLL")}</Col>
                             </Row>
                             <Row>
                                 <Col span={7}><h4>{intl.formatMessage(messages.commited)}</h4></Col>
-                                <Col offset={1} span={7}>{moment("2019-10-10").format("YYYY-MM-DD")}</Col>
-                            </Row>
-                            <Row>
-                                <Col span={7}><h4>{intl.formatMessage(messages.after)}</h4></Col>
-                                <Col offset={1} span={7}>{moment("2019-10-10").format("YYYY-MM-DD")}</Col>
+                                <Col offset={1} span={16}>{commited}</Col>
                             </Row>
                                 </div>
                         }

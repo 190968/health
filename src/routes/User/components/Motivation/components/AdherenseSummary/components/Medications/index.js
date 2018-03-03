@@ -9,8 +9,6 @@ import {
 import messages from './messages';
 class Medications extends React.Component {
 
-
-
     render() {
         const{level} = this.props.medications;
         const {intl}=this.props;

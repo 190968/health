@@ -1,0 +1,32 @@
+[
+  {
+    "id": "user.motivation.viewCommitment",
+    "description": "View Commitment",
+    "defaultMessage": "View Commitment"
+  },
+  {
+    "id": "user.motivation.close",
+    "description": "Close",
+    "defaultMessage": "Close"
+  },
+  {
+    "id": "user.motivation.plan",
+    "description": "Action Plan",
+    "defaultMessage": "Action Plan"
+  },
+  {
+    "id": "user.motivation.commitedOn",
+    "description": "Committed By",
+    "defaultMessage": "Committed By"
+  },
+  {
+    "id": "user.motivation.commited",
+    "description": "Committed",
+    "defaultMessage": "Committed"
+  },
+  {
+    "id": "user.motivation.after",
+    "description": "Commit after",
+    "defaultMessage": "Commit after"
+  }
+]
