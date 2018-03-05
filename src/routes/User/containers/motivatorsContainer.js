@@ -26,6 +26,9 @@ const motivators = gql`
                 motivation{
             motivators {
                   totalCount,
+                  pageInfo{
+                  endCursor
+                  },
                   edges{
                     id,
                     user {
@@ -55,36 +58,53 @@ const motivatorInvite = gql`
 `;
 
 const withQuery = graphql(motivators, {
+    options: (ownProps) => {
+
+        return {
+            variables: {
+                cursors: {after: ''/*ownProps.lastCursor*/}
+            },
+            fetchPolicy: 'network-only'
+        }
+
+    },
     props: ({ data }) => {
         if (!data.loading) {
+
+            console.log(data);
+            const {edges, totalCount, pageInfo: {endCursor}} = data.account.user.motivation.motivators;
             return {
                 info: data.account.user.motivation,
+                endCursor: endCursor,
                 loading: data.loading,
-                // hasMore: edges.length < totalCount,
-                // loadMore(endCursor, callback) {
-                //     return data.fetchMore({
-                //         variables: {
-                //             cursors: {before: endCursor, last:10}
-                //         },
-                //         updateQuery: (previousResult, { fetchMoreResult }) => {
-                //
-                //             callback();
-                //             if (!fetchMoreResult) { return previousResult; }
-                //             const newMessages = [...previousResult.account.user.notifications.edges, ...fetchMoreResult.account.user.notifications.edges]
-                //             const obj =  Object.assign({}, previousResult, {
-                //                 account: {
-                //                     ...previousResult.account, user: {
-                //                         ...previousResult.account.user, notifications: {
-                //                             ...previousResult.account.user.notifications,
-                //                             edges: newMessages
-                //                         }
-                //                     }
-                //                 }
-                //             });
-                //             return obj;
-                //         },
-                //     });
-                // }
+                hasMore: edges.length < totalCount,
+                loadMore(endCursor, callback) {
+                    console.log(endCursor,"-----------------------------");
+                    return data.fetchMore({
+                        variables: {
+                            cursors: {before: endCursor, last:2}
+                        },
+                        updateQuery: (previousResult, { fetchMoreResult }) => {
+
+                            callback();
+                            if (!fetchMoreResult) { return previousResult; }
+                            const newMessages = [...previousResult.account.user.motivation.motivators.edges, ...fetchMoreResult.account.user.motivation.motivators.edges]
+                            const obj =  Object.assign({}, previousResult, {
+                                account: {
+                                    ...previousResult.account, user: {
+                                        ...previousResult.account.user, motivation: {
+                                            ...previousResult.account.user.motivation, motivators: {
+                                                ...previousResult.account.user.motivation.motivators,
+                                                edges: newMessages
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                            return obj;
+                        },
+                    });
+                }
             }
         }
         else {

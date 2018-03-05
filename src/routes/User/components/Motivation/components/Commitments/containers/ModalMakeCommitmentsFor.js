@@ -102,14 +102,14 @@ const withMutation = graphql(MAKECOMMITMENT,
 
                 return mutate({
                     variables:{
-                        "id":"MTUzNTQ",
+                        "id":"MjQwMzg",
                         "input":{
                             "date": moment(value.date).format('YYYY-MM-DD'),
                             "description":value.description,
                             "url":value.url,
-                            "donate":value.donate,
+                            "donate":parseFloat(value.donate),
                             "motivators":value.motivators,
-                            "payment":value.payment
+                            "payment":parseFloat(value.payment)
                         }
                     }
                 }).then((data) => {
