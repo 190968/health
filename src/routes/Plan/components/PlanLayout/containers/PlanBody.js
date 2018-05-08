@@ -1,13 +1,7 @@
 import { connect } from 'react-redux'
-
-/*  This is a containers components. Notice it does not contain any JSX,
-    nor does it import React. This components is **only** responsible for
-    wiring in the actions and state necessary to render a presentational
-    components - in this case, the counter:   */
-
 import PlanBody from '../components/PlanBody'
 // gragement
-import Plan from '../../../../Plan/components/Plan';
+import {PlanCardFragment, PlanElementFragment} from '../../../../Plan/components/Plan/fragments';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -18,7 +12,7 @@ export const PLAN_BODY_QUERY = gql`
     query GET_PLAN_BODY ($id: UID!, $upid: UID!, $date: Date!) {
         plan (id: $id) {
             ...PlanCardInfo,
-            upid,
+            upid
             lessons {
                 id
                 title
@@ -41,8 +35,8 @@ export const PLAN_BODY_QUERY = gql`
 
         }
     }
-    ${Plan.fragments.plan}
-    ${Plan.fragments.element}
+    ${PlanCardFragment}
+    ${PlanElementFragment}
 `;
 
 

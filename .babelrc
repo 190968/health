@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
   "presets": ["env"]
+=======
+  "presets": ["babel-preset-react-app"]
+>>>>>>> 44e5ea25a715937cb7d62175f245e04390b23e10
 }

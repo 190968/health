@@ -10,6 +10,11 @@
     "defaultMessage": "Title"
   },
   {
+    "id": "pb.version",
+    "description": "Version",
+    "defaultMessage": "Version"
+  },
+  {
     "id": "pb.continue",
     "description": "Continue",
     "defaultMessage": "Continue"

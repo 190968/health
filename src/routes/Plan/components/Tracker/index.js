@@ -4,25 +4,29 @@ import VMasker from "vanilla-masker";
 import { Input } from 'antd';
 import './index.less';
 
-export default class Tracker extends React.Component {
+export class Tracker extends React.Component {
     constructor(props) {
         super(props);
+        //console.log(this.props);
+        const {inputMask=''} = this.props.item;
+        let value = props.value || '';
+        value = inputMask !== '' ? VMasker.toPattern(value, inputMask) : VMasker.toNumber(value);
         this.state = {
-            value:props.value
+            value
         };
         this.onChange = this.onChange.bind(this);
     };
     static propTypes = {
-        onChange: PropTypes.function,
+        onChange: PropTypes.func,
         item: PropTypes.object,
-        value: PropTypes.number
+        value: PropTypes.string
     };
     static defaultProps = {
         value: ''
     };
 
     onChange(event) {
-        const {inputMask} = this.props.item;
+        const {inputMask=''} = this.props.item;
 
         let value = event.target.value;
         value = inputMask !== '' ? VMasker.toPattern(value, inputMask) : VMasker.toNumber(value);
@@ -36,25 +40,25 @@ export default class Tracker extends React.Component {
         const {item} = this.props;
         const {value} = this.state;
 
-        const {units, inputMask} = item;
-        const unitsName = units.name;
+        const {units={}, inputMask=''} = item;
+        const unitsName = units.name || '';
         let className = "tracker-input"+(value ? ' tracker-input-reported' : '');
 
         return (<Input className={className}
             value={value}
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
-            formatter={value => {
-
-
-
-                if (inputMask !== '') {
-
-
-                    return VMasker.toPattern(value, inputMask)
-                } else {
-                    return VMasker.toNumber(value);
-                }
-            }}
+            // formatter={value => {
+            //
+            //
+            //
+            //     if (inputMask !== '') {
+            //
+            //
+            //         return VMasker.toPattern(value, inputMask)
+            //     } else {
+            //         return VMasker.toNumber(value);
+            //     }
+            // }}
             //parser={value => VMasker.toPattern(value, inputMask)}
             //parser={value => value.replace(/\$\s?|(,*)/g, '')}
             placeholder={unitsName}
@@ -62,6 +66,8 @@ export default class Tracker extends React.Component {
         />)
     }
 }
+
+export default Tracker;
 
 export class TrackerUncontrolled extends React.PureComponent {
     constructor(props) {
@@ -73,7 +79,7 @@ export class TrackerUncontrolled extends React.PureComponent {
     };
     static propTypes = {
         item: PropTypes.object,
-        value: PropTypes.float
+        value: PropTypes.string
     };
     static defaultProps = {
         value: null
@@ -84,28 +90,28 @@ export class TrackerUncontrolled extends React.PureComponent {
     }
 
     render() {
-        const {item} = this.props;
+        const {item={}} = this.props;
 
         const {value} = this.state;
-        const {units, inputMask} = item;
-        const unitsName = units.name;
+        const {units={}, inputMask} = item;
+        const unitsName = units.name || '';
 
         let className = "tracker-input"+(value ? ' tracker-input-reported' : '');
 
         return (<Input className={className}
             value={value}
             //formatter={value => value.replace(/\B(?=(\d{3})+(?!\d))/g, '/')}
-            formatter={value => {
-
-                if (inputMask !== '') {
-
-                    return VMasker.toPattern(value, inputMask)
-                } else {
-
-                    return VMasker.toNumber(value);
-                }
-
-            }}
+            // formatter={value => {
+            //
+            //     if (inputMask !== '') {
+            //
+            //         return VMasker.toPattern(value, inputMask)
+            //     } else {
+            //
+            //         return VMasker.toNumber(value);
+            //     }
+            //
+            // }}
             //parser={value => VMasker.toPattern(value, inputMask)}
             //parser={value => value.replace(/\$\s?|(,*)/g, '')}
             placeholder={unitsName}

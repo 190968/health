@@ -1,171 +1,65 @@
-import React from 'react'
-import Measurement from '../../containers/PlanMeasurement';
-import PlanElementActions from './containers/PlanElementActions';
-import { Divider, Modal, Icon, Upload, Alert, Button, Card } from 'antd';
-import PlanChecklist from "../../../Plan/components/Checklist";
-import PlanRadio from "../../../Plan/components/Radio";
-import PlanInputText from "../../../Plan/components/PlanInputText";
-import PlanScale from "../../../Plan/components/PlanScale";
-import PlanDropdown from "../../../Plan/components/PlanDropdown";
-import PlanMedia from "../../../Plan/components/PlanMedia";
-
-const confirm = Modal.confirm;
+import React from 'react';
+import PlanElementBox from './containers/PlanElementBox';
+import PlanElementChildrenList from './containers/PlanElementChildrenList';
+//import VisibilitySensor from 'react-visibility-sensor';
+import { compose, withProps, branch, withHandlers , defaultProps, withState} from 'recompose';
 
 
+const PlanElement = (props) => {
+    //console.log(props);
+    const {i,element, date, isDraggable, onDrop, isBuilderMode, isPreviewMode, planId, upid, schedule, mode} = props;
+    const {id,itemType, type, itemInfo, reports, hasChildren=false} = element;
+    return (
+        <React.Fragment>
+            <PlanElementBox {...props} showChildren={props.setShowChildren} /*showAlias={props.setShowAlias}*/ />
 
-
-export class PlanElement extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-         //   tab:''
-        };
-        this.onChange = this.onChange.bind(this);
-    };
-
-    static propTypes = {
-
-    };
-
-    static defaultProps = {
-        isBuilderMode:false
-    }
-
-    deleteElement = (id) => {
-        confirm({
-            title: 'Do you want to delete these element?',
-            //content: 'When clicked the OK button, this dialog will be closed after 1 second',
-            onOk() {
-
-            },
-        });
-    }
-
-    openEditElement = (id) => {
-        console.log(id);
-    }
-
-
-
-
-    onChange(value) {
-        if (this.props.isBuilderMode) {
-            return;
-        }
-        const {upid, element, date} = this.props;
-        this.props.makeReport(upid, element.id, date, value);
-    }
-
-    render() {
-        let {element, date, isBuilderMode, planId} = this.props;
-
-
-        const {itemType, itemInfo, reports} = element;
-        const item = itemInfo;
-
-        let field = itemType;
-        //field = item_type;
-        let fieldTitle = '';
-        let reportValues = [];
-        switch(itemType) {
-            default: break;
-            case 'measurement_input':
-               field = <Measurement item={item} date={date} onChange={this.onChange} />
-            break;
-            case 'choice_input':
-            case 'checklist':
-               reportValues = reports && reports.map((report) => (report.value));
-               reportValues = reportValues && reportValues[0];
-               field = <PlanChecklist item={item} reports={reportValues} onChange={this.onChange} />
-               //const vertically = item.is_vertically;
-               fieldTitle = item.label;
-            break;
-            case 'radio_input':
-               reportValues = reports && reports.map((report) => (report.value));
-               reportValues = reportValues && reportValues[0];
-               reportValues = reportValues && reportValues[0];
-               field = <PlanRadio item={item} reports={reportValues} onChange={this.onChange} />
-               fieldTitle = item.label;
-
-            break;
-            case 'text_input':
-
-               reportValues = reports && reports.map((report) => (report.value));
-               reportValues = reportValues && reportValues[0];
-
-               fieldTitle = item.label;
-               field = <PlanInputText item={item} reports={reportValues} onChange={this.onChange} />
-
-            break;
-            case 'dropdown_input':
-               reportValues = reports && reports.map((report) => (report.value));
-               reportValues = reportValues && reportValues[0];
-               reportValues = reportValues && reportValues[0];
-               fieldTitle = item.label;
-               field = <PlanDropdown item={item}  reports={reportValues} onChange={this.onChange} />
-
-            break;
-            case 'scale_input':
-               reportValues = reports && reports.map((report) => (report.value));
-               reportValues = reportValues && reportValues[0];
-               reportValues = reportValues && reportValues[0];
-
-               fieldTitle = item.label;
-
-               field = <PlanScale item={item} reports={reportValues} onChange={this.onChange} />
-
-            break;
-            case 'file_input':
-               fieldTitle = item.label;
-                field = <Upload>
-                    <Button disabled>
-                        <Icon type="upload" /> Upload
-                    </Button>
-                </Upload>
-            break;
-            case 'exam_input':
-               fieldTitle = item.label;
-
-               field = <Button disabled>{fieldTitle}</Button>;
-            break;
-            case 'instruction':
-               fieldTitle = '';
-               field = <div dangerouslySetInnerHTML={{__html: item.text}}></div>;
-            break;
-            case 'line':
-               const {height, color} = item;
-               let opts = {height:height};
-               if (color) {
-                   opts.backgroundColor = '#'+color;
-               }
-               return <Divider style={opts}  />;
-            case 'instruction_tipbox':
-               fieldTitle = '';
-               field = <Alert message="Tipbox" description={<div dangerouslySetInnerHTML={{__html: item.text}}></div>} type="info" showIcon />;
-            break;
-            case 'link':
-               field = <Card hoverable><a href={item.url}><Card.Meta
-                   title={item.label}
-                   description={item.description}
-               /></a></Card>
-               //link_path":"https://ya.ru","label":"Yandex","description":"search engine"
-            break;
-            case 'media':
-               //fieldTitle = item.label;
-               field = <PlanMedia item={item} />
-            break;
-
-        }
-        return (<div>
-            {isBuilderMode && <PlanElementActions id={item.id} planId={planId} />}
-            {fieldTitle && <h4>{fieldTitle}</h4>}
-
-           <div>{field}</div>
-        </div>)
-    }
+            {(props.showChildren) && <div style={{padding:20, paddingRight:0, background: '#fbfbfb', border: '1px solid #e8e8e8',
+                borderTop:'none'}} ><PlanElementChildrenList elementId={id} onDrop={onDrop} planId={planId} isDraggable={isDraggable} isPreviewMode={isPreviewMode} isBuilderMode={isBuilderMode} mode={mode} elementValue={props.elementValue}  /></div>}
+        </React.Fragment>
+        )
 }
 
 
 
-export default PlanElement
+
+
+
+
+// // Scrollable
+// const withAutoScroll = (Component) => {
+//     const onChange = isVisible => {
+//     console.log(isVisible);
+//     }
+//
+//     const Autoscroll = props => (
+//             <VisibilitySensor onChange={onChange}>
+//                 <Component {...props} />
+//             </VisibilitySensor>
+//     )
+//
+//     return Autoscroll
+// }
+
+
+const enhance = compose(
+    defaultProps({
+        isDraggable:false
+    }),
+    withState('showChildren', 'setShowChildren', false),
+    withState('showAlias', 'setShowAlias', false),
+    withState('elementValue', 'setElementValue', ''),
+    withHandlers({
+        setShowChildren: props => (value) => {
+            props.setShowChildren(true);
+            props.setElementValue(value);
+        }
+    }),
+    //branch(props => props.isDraggable, withAutoScroll )//
+);
+
+
+export default enhance(PlanElement);
+
+
+
+

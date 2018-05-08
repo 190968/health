@@ -11,6 +11,11 @@ export default defineMessages({
         "defaultMessage": "Title",
         "description": "Title"
     },
+     "version": {
+            "id": "pb.version",
+            "defaultMessage": "Version",
+            "description": "Version"
+        },
 
     'continue': {
         "id": "pb.continue",

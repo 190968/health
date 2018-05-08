@@ -25,3 +25,22 @@ export function intersperse(arr, sep) {
     return xs.concat([sep, x]);
   }, [arr[0]]);
 }
+
+
+
+export function toNumber(v) {
+    if (v === undefined) {
+        return v;
+    }
+
+    if (v === '') {
+        return undefined;
+    }
+    if (typeof v === 'number') {
+      return v;
+    }
+    if (v && v.trim() === '') {
+        return NaN;
+    }
+    return Number(v);
+}

@@ -26,11 +26,11 @@ export class LoginForm extends React.Component {
         fragment UserInfo on User {
                 id,
                 firstName
-            thumbs {
-                small
-                large
-                medium
-            },
+                thumbs {
+                    small
+                    large
+                    medium
+                },
                 lastName,
                 dateFormat
                 token,
@@ -48,12 +48,12 @@ export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: {
-                value: 'demo2patient@fitango.com',
-            },
-            password: {
-                value: 'Fitango2',
-            },
+            // email: {
+            //     value: 'demo2patient@fitango.com',
+            // },
+            // password: {
+            //     value: 'Fitango2',
+            // },
             //loading: false,
             visible: false,
         };
@@ -116,8 +116,8 @@ export class LoginForm extends React.Component {
                     <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
                         <FormItem>
                             {getFieldDecorator('email', {
-                                initialValue: this.state.email.value,
-                                rules: [{ required: true, message: 'Please input valid Email!', pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ }],
+                                //initialValue: this.state.email.value,
+                                rules: [{ required: true, message: 'Please enter Email'/*, pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/*/ }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />
                             )}
@@ -125,9 +125,9 @@ export class LoginForm extends React.Component {
                         </FormItem>
                         <FormItem>
                             {getFieldDecorator('password', {
-                                initialValue: this.state.password.value,
+                                //initialValue: this.state.password.value,
                                 /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
-                                rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.' }],
+                                rules: [{ required: true,  message: 'Please enter Password' /*pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.'*/ }],
                             })(
                                 <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />//{intl.formatMessage(messages.title)}
                             )}

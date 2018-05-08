@@ -209,9 +209,9 @@ export const asyncProfile = (store) => {
 export const asyncCalendar = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Calendar/components'),
-            modules: ['../routes/Calendar/components'],
-            webpack: () => [require.resolveWeak('../routes/Calendar/components')],
+            loader: () => import('../routes/Calendar/containers/Calendar'),
+            modules: ['../routes/Calendar/containers/Calendar'],
+            webpack: () => [require.resolveWeak('../routes/Calendar/containers/Calendar')],
         })
     );
 }

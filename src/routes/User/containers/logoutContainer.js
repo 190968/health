@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     logout: () => {
-
+        //console.log('Logout');
         ownProps.mutate({
             refetchQueries: [{
                 query: NETWORK_INFO_QUERY,

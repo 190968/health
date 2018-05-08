@@ -1,9 +1,21 @@
 import React from 'react'
 import {Row, Col, Button, Card, List, Input } from 'antd';
-import PlanElement from '../../containers/PlanElement'
-import {message} from "antd/lib/index";
+import { message, Modal, Divider, Tooltip, Icon} from 'antd';
+import {PlanElementListItem} from '../../containers/PlanElement';
+import PlanElementsSelectbox from '../../components/PlanElementsSelectbox';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
+import {EmptyList} from "../../../../../../components/Loading/index";
+import {SortableElement} from 'react-sortable-hoc';
+
+
+import {branch, compose, withHandlers, withProps, withState, renderComponent} from 'recompose';
+
+
+
+// const PlanElementEnhanced = compose(
+//     branch(props => props.isBuilderMode, SortableElement)
+// )(PlanElementListItem);
 
 export class PlanLesson extends React.Component {
 
@@ -158,43 +170,70 @@ export class PlanLesson extends React.Component {
 
    render() {
 
-        const {upid, item={}, isLastLesson, haveSections, isBuilderMode} = this.props;
-        const footer = !isBuilderMode && (item.elements || isLastLesson) ? [<Button type="primary" loading={this.state.loading}  onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
+        const {upid, planId, item={}, isLastLesson, haveSections, isBuilderMode, isPreviewMode, loading, elements=[]} = this.props;
+        const footer = !isBuilderMode && (elements || isLastLesson) ? [<Button type="primary" loading={this.state.loading}  onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}>{isLastLesson ? (haveSections > 0 ? 'Go to Activities' :'Finish'):'Next Lesson'}</Button>] : [];
 
 
         let title = item.title || '';
+        const lessonId = item.id;
         if (isBuilderMode) {
             title = <Input defaultValue={item.title} placeholder="Title" onKeyUp={this.updateLabel} />
         }
+        //console.log(loading);
+       console.log(this.props);
 
         return (<Card title={title} bordered={false} actions={footer}>
-            {item.elements ? <Row>
-                <Col><List
+            {1==5 &&isBuilderMode && !isPreviewMode && <PlanElementsSelectbox mode="lesson" lessonId={lessonId} planId={planId} />}
+            {elements ?
+                    <List
                     size="large"
                     itemLayout="vertical"
                     split={false}
-                    dataSource={item.elements}
-                    renderItem={item => {
-                        return <List.Item
-                            id={'field' + item.id}
-                            key={item.id}>
-                            <PlanElement isBuilderMode={isBuilderMode} upid={upid} element={item} />
-                        </List.Item>
+                    dataSource={elements}
+                    renderItem={(item, i) => {
+                        return <PlanElementEnhanced  key={'item' + item.id} index={i}  item={item} i={i} isBuilderMode={isBuilderMode} mode="lesson" lessonId={lessonId} isPreviewMode={isPreviewMode} planId={planId} upid={upid} element={item} />
                     }}
-                /></Col>
-                {/*<Col xs={4} offset={1}>
-
-                    <Anchor offsetTop={10}>
-                        {item.elements !== null && item.elements.map((item) => (
-                            item.itemInfo.label && <Anchor.Link key={item.id} href={'#field' + item.id} title={item.itemInfo.label}/>))}
-
-                    </Anchor>
-                </Col>*/}
-            </Row> : 'No lesson content'}
-
+                />
+                :  <EmptyResults {...this.props} lessonId={lessonId} />}
         </Card>)
     }
 }
+
+/**
+ * Enhance Plan element
+ */
+const PlanElementEnhanced = compose(
+    branch(props => props.isBuilderMode, SortableElement)
+)(PlanElementListItem);
+
+const EmptyResultsPure = (props) => {
+    return <EmptyList>No Elements has been added yet.</EmptyList>;
+}
+
+
+const PlanElementAddLinePure = (props) => {
+
+    return <Divider className="element-actions">
+    {props.modalAdd && <Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}><PlanElementsSelectbox  {...props} mode="lesson" /></Modal>}
+    <Tooltip title="Add Element" onClick={props.openAddElement} ><Icon type="plus-circle-o" style={{cursor:'pointer'}} /> Add First Element</Tooltip>
+    </Divider>;
+}
+
+const PlanElementAddLine = compose(
+withState('modalAdd', 'setModal', false),
+withHandlers({
+    openAddElement: props => () => {
+    props.setModal(true);
+},
+    openHideElement: props => () => {
+    props.setModal(false);
+}
+}),
+)(PlanElementAddLinePure);
+
+const EmptyResults = compose(
+branch(props => props.isBuilderMode === true, renderComponent(PlanElementAddLine))
+)(EmptyResultsPure);
 
 
 

@@ -26,11 +26,21 @@ class Avatar extends React.PureComponent {
         }
 
         const {thumbs={}} = info;
-        const {small=''} = thumbs;
+        const {small='', large='', medium=''} = thumbs;
         const name = info.firstName ? info.firstName : ((info.fullName && info.fullName !== ' ') ? info.fullName : '');
         //console.log(name);
+        let url = '';
+
+        switch (size) {
+            case 'huge':
+                url = large;
+                break;
+            default:
+                url = medium;
+                break;
+        }
         let avatar =
-                <AvatarAntd src={small} className={extraClass} size={size} style={{verticalAlign: 'middle', backgroundColor: info.color}}>
+                <AvatarAntd src={url} className={extraClass} size={size} style={{verticalAlign: 'middle', backgroundColor: info.color}}>
                     {name ? name[0] :
                         (info.email ? info.email[0] : 'N/A' )}
                 </AvatarAntd>;

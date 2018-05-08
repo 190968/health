@@ -70,6 +70,7 @@ export default class TrackerChart extends React.Component {
 
                     <Line type='monotone' dataKey={this.getValue} stroke='#1089ff' activeDot={{r: 4}} strokeWidth={2}
                           connectNulls={true}/>
+                    <CartesianGrid strokeDasharray="3 3"/>
                     {criticalRangeMin && <ReferenceLine y={criticalRangeMin} stroke="red" strokeDasharray="3 3"/>}
                     {criticalRangeMax && <ReferenceLine y={criticalRangeMax} stroke="red" strokeDasharray="3 3"/>}
 
