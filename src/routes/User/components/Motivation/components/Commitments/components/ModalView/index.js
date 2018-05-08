@@ -7,6 +7,7 @@ import moment from 'moment';
 import {
     injectIntl
 } from 'react-intl';
+import {LoadingModal} from 'components/Loading';
 import { Link } from 'react-router-dom'
 import messages from './messages';
 class ModalView extends React.Component {
@@ -26,9 +27,7 @@ class ModalView extends React.Component {
 
         if (loading) {
             return(
-            <Modal>
-                <Spin/>
-            </Modal>) ;
+            <LoadingModal />) ;
         }
 
         return  (

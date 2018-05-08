@@ -7,6 +7,7 @@ import moment from 'moment';
 import {
     injectIntl
 } from 'react-intl';
+import {LoadingModal} from 'components/Loading';
 import messages from './messages';
 class ModalPointsHistory extends React.Component {
 
@@ -23,9 +24,7 @@ class ModalPointsHistory extends React.Component {
 
         const  {pointsHistory,loading} = this.props;
         if (loading) {
-            return    <Modal>
-                <Spin/>
-                </Modal> ;
+            return    <LoadingModal /> ;
         }
         const {intl}=this.props;
         const {edges} = pointsHistory;

@@ -51,6 +51,7 @@ class Motivators extends React.Component {
         this.setState({
             loading: true,
         });
+        console.log("asvw=v-wv-w-evw-evw-eb-erberb");
         this.props.loadMore(this.props.endCursor, this.stopLoading);
     }
 
@@ -69,17 +70,12 @@ class Motivators extends React.Component {
         const title = "My Motivators";
         const count = totalCount > 0 ?  " ("+totalCount+")":"";
     return(
-
-        <Card  title={title+count}
-               extra={<Tooltip title="Add Motivators"><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
-        >
-            {edges.length > 0 ?
-                <div className="demo-infinite-container">
+                <div style={{height:100}} className="demo-infinite-container">
                     <InfiniteScroll
                         initialLoad={false}
                         pageStart={0}
                         loadMore={this.handleInfiniteOnLoad}
-                        hasMore={true}
+                        hasMore={!this.state.loading && hasMore}
                         useWindow={false}
                     >
                 <List
@@ -92,47 +88,10 @@ class Motivators extends React.Component {
                                <AvatarWithName info={person.user} />
                         </List.Item>
                     )}
-                     /></InfiniteScroll></div>
+                     /></InfiniteScroll>
+                </div>
 
-                : <div className="ant-list-empty-text">No Motivators</div>}
 
-            <Modal
-                title="Invite motivators"
-                visible={this.state.visible}
-                onCancel={this.handleCancel}
-                okText="Submit"
-                onOk={this.handleSubmit}
-            >
-                <Form onSubmit={this.handleSubmit} >
-                    <FormItem
-                        {...formItemLayout}
-                        label="Email"
-                    >
-                        {getFieldDecorator('email', {
-                            rules: [{
-                                type: 'email', message:intl.formatMessage(messages.email_rule_type),
-                            }, {
-                                required: true,  message: intl.formatMessage(messages.email_rule_required),
-                            }],
-                        })(
-                            <Input
-                                style={{ width: '100%' }}
-                            />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="Text message"
-                    >
-                        {getFieldDecorator('text')(
-                            <TextArea autosize />
-                        )}
-                    </FormItem>
-                </Form>
-
-            </Modal>
-
-            </Card>
         )
     }
 }

@@ -6,6 +6,7 @@ import {Button ,Row,Col,Avatar,Spin,Select, DatePicker ,Form, Input, InputNumber
 import {
     injectIntl
 } from 'react-intl';
+import {LoadingModal} from 'components/Loading';
 import messages from './messages';
 const FormItem = Form.Item;
 const {Option} = Select;
@@ -38,9 +39,7 @@ class ModalMakeCommitmentsFor extends React.Component {
     render() {
         const  {loading} = this.props;
         if (loading) {
-            return    <Modal>
-                <Spin/>
-            </Modal> ;
+            return    <LoadingModal/> ;
         }
         const {intl}=this.props;
 
@@ -71,8 +70,6 @@ class ModalMakeCommitmentsFor extends React.Component {
             >
                 <div>
                     <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
-
-
                         <Row>
                             <Col span={24}>
                                 <p> {intl.formatMessage(messages.complete)}  {this.props.title}</p>
@@ -83,7 +80,6 @@ class ModalMakeCommitmentsFor extends React.Component {
 
                                         <DatePicker />
                                     )}
-
                                 </FormItem>
                             </Col>
                             <Col offset={1} span={3}>

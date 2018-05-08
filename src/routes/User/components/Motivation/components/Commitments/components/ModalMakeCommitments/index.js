@@ -22,10 +22,8 @@ class ModalMakeCommitments extends React.Component {
     }
     handleCancel = () => {
         this.setState({ visible: true});
-
     }
     onChange = (e) => {
-
         this.setState({ title: e});
         this.setState({ visible: false});
 
@@ -36,7 +34,6 @@ class ModalMakeCommitments extends React.Component {
             return <LoadingModal /> ;
         }
         const {intl}=this.props;
-
 
         let selectItem =[];
         info.forEach(item=>{
