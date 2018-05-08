@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user_careteam_title",
+    "description": "Моя команда",
+    "defaultMessage": "Моя команда"
+  },
+  {
+    "id": "user_careteam_noname",
+    "description": "Без имени",
+    "defaultMessage": "Без имени"
+  }
+]

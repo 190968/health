@@ -1,0 +1,22 @@
+[
+  {
+    "id": "user_verifyphone_verifyphoneConfirm",
+    "description": "Verify Phone",
+    "defaultMessage": "Verify Phone"
+  },
+  {
+    "id": "user_verifyphone_code",
+    "description": "Code",
+    "defaultMessage": "Code"
+  },
+  {
+    "id": "user_verifyphone_rules",
+    "description": "Please input your code",
+    "defaultMessage": "Please input your code"
+  },
+  {
+    "id": "user_verifyphone_message",
+    "description": "must be 4 digits",
+    "defaultMessage": "must be 4 digits"
+  }
+]

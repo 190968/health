@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user.motivsdcation.points",
+    "description": "My Points",
+    "defaultMessage": "My Points"
+  },
+  {
+    "id": "user.mosdtivation.pointsNext",
+    "description": "points to next",
+    "defaultMessage": "points to next"
+  },
+  {
+    "id": "user.motivation.level",
+    "description": "level",
+    "defaultMessage": "level"
+  }
+]

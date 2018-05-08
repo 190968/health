@@ -5,7 +5,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
         "popTitle": {
-            "id": "community.categoryLayout.maincategory",
+            "id": "community.category.maincategory",
             "defaultMessage": "Are you sure leave this community?",
             "description": "Are you sure leave this community?"
         },

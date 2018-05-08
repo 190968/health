@@ -5,7 +5,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
     "modalTitle": {
-        "id": "plan.lesson.add.modalTitle",
+        "id": "planEditModal.lesson.add.modalTitle",
         "defaultMessage": "Add Lesson",
         "description": "Add Lesson"
     },

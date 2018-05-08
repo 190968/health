@@ -7,7 +7,8 @@ import { withApollo } from 'react-apollo'
 import {
     injectIntl
 } from 'react-intl';
-import messages from './mesages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -77,41 +78,41 @@ class PasswordForm extends React.Component{
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label={intl.formatMessage(messages.current_label)}
+                    label={intl.messages.user_currentpassword_label}
                 >
                             {getFieldDecorator('current_password', {
-                                rules: [{ required: true, message:intl.formatMessage(messages.current_label), whitespace: true }],
+                                rules: [{ required: true, message:intl.messages.user_newpassword_label, whitespace: true }],
                             })(
-                                <Input  placeholder={intl.formatMessage(messages.current_label)} type="password" />
+                                <Input  placeholder={intl.messages.user_currentpassword_label} type="password" />
                             )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={intl.formatMessage(messages.newpass_label)}
-                    help={intl.formatMessage(messages.newpass_help)}
+                    label={intl.messages.user_newpassword_label}
+                    help={intl.messages.user_newpassword_help}
                 >
 
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message:intl.formatMessage(messages.newpass_rule) , whitespace: true }],
+                        rules: [{ required: true, message:intl.messages.user_newpassword_rule , whitespace: true }],
                     })(
-                        <Input  placeholder={intl.formatMessage(messages.newpass_label)} type="password" />
+                        <Input  placeholder={intl.messages.user_newpassword_label} type="password" />
 
                     )}
                 </FormItem>
                 <FormItem
                     {...formItemLayout}
-                    label={intl.formatMessage(messages.confirm_newpass_label)}
+                    label={intl.messages.user_confirmnewpassword_label}
                 >
                     {getFieldDecorator('password_repeat', {
-                        rules: [{ required: true, message:intl.formatMessage(messages.confirm_newpass_rule), whitespace: true }],
+                        rules: [{ required: true, message:intl.messages.user_confirmnewpassword_rule, whitespace: true }],
                     })(
-                        <Input  placeholder={intl.formatMessage(messages.confirm_newpass_label)} type="password" />
+                        <Input  placeholder={intl.messages.user_confirmnewpassword_label} type="password" />
                     )}
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout}>
                     <Button loading={this.state.loading} type="primary" htmlType="submit">
-                        {intl.formatMessage(messages.change_password)}
+                        {intl.messages.user_changepassword}
                     </Button>
                 </FormItem>
             </Form>

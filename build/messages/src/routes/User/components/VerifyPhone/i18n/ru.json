@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user_verifyphone_verifyphone",
+    "description": "Провеирть телефон",
+    "defaultMessage": "Провеирть телефон"
+  },
+  {
+    "id": "user_verifyphone_send",
+    "description": "Отправить",
+    "defaultMessage": "Отправить"
+  },
+  {
+    "id": "user_verifyphone_phone",
+    "description": "Телефон",
+    "defaultMessage": "Телефон"
+  }
+]

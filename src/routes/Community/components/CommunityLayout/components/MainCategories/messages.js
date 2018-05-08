@@ -5,7 +5,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
     "title": {
-        "id": "community.categoryLayout.maincategory",
+        "id": "community.categoryyout.maincategory",
         "defaultMessage": "Main Categories",
         "description": "Main Categories"
     }

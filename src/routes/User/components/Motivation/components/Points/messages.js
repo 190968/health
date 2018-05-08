@@ -5,12 +5,12 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
         "points": {
-            "id": "user.motivation.points",
+            "id": "user.motivsdcation.points",
             "defaultMessage": "My Points",
             "description": "My Points"
         },
         "pointsNext": {
-            "id": "user.motivation.pointsNext",
+            "id": "user.mosdtivation.pointsNext",
             "defaultMessage": "points to next",
             "description": "points to next"
         },

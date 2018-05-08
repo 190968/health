@@ -1,0 +1,12 @@
+[
+  {
+    "id": "plan.addlesson.add.modalTitle",
+    "description": "Add Lesson",
+    "defaultMessage": "Add Lesson"
+  },
+  {
+    "id": "send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  }
+]

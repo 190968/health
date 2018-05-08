@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user.motivation.imotivate",
+    "description": "I Motivate",
+    "defaultMessage": "I Motivate"
+  },
+  {
+    "id": "user.motivation.noimotivate",
+    "description": "No IMotivation",
+    "defaultMessage": "No IMotivation"
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "user_inconsistent",
+    "description": "Пароли не совпадают",
+    "defaultMessage": "Пароли не совпадают"
+  },
+  {
+    "id": "user_first_name",
+    "description": "Имя",
+    "defaultMessage": "Имя"
+  },
+  {
+    "id": "user_first_name_rule",
+    "description": "Пожалуйста введите ваше имя!",
+    "defaultMessage": "Пожалуйста введите ваше имя!"
+  },
+  {
+    "id": "user_last_name",
+    "description": "Фамилия",
+    "defaultMessage": "Фамилия"
+  },
+  {
+    "id": "user_last_name_rule",
+    "description": "Пожалуйста введите вашу фамилию!",
+    "defaultMessage": "Пожалуйста введите вашу фамилию!"
+  },
+  {
+    "id": "user_gender",
+    "description": "Пол",
+    "defaultMessage": "Пол"
+  },
+  {
+    "id": "user_gender_rule",
+    "description": "Пожалуйста выберите ваш пол",
+    "defaultMessage": "Пожалуйста выберите ваш пол"
+  },
+  {
+    "id": "user_male",
+    "description": "Мужской",
+    "defaultMessage": "Мужской"
+  },
+  {
+    "id": "user_female",
+    "description": "Женский",
+    "defaultMessage": "Женский"
+  },
+  {
+    "id": "user_birthday",
+    "description": "День рождения",
+    "defaultMessage": "День рождения"
+  },
+  {
+    "id": "user_birthday_rule_type",
+    "description": "Пожалуйста введите действительную дату",
+    "defaultMessage": "Пожалуйста введите действительную дату"
+  },
+  {
+    "id": "user_birthday_rule_required",
+    "description": "Пожалуйста введите дату вашего дня рождения",
+    "defaultMessage": "Пожалуйста введите дату вашего дня рождения"
+  },
+  {
+    "id": "user_email",
+    "description": "Email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "user_email_rule_type",
+    "description": "Пожалуйста введите действительный email",
+    "defaultMessage": "Пожалуйста введите действительный email"
+  },
+  {
+    "id": "user_email_rule_required",
+    "description": "Пожалуйста введите ваш email",
+    "defaultMessage": "Пожалуйста введите ваш email"
+  },
+  {
+    "id": "user_password",
+    "description": "Пароль",
+    "defaultMessage": "Пароль"
+  },
+  {
+    "id": "user_password_rule",
+    "description": "Пожалуйста, введите свой пароль! Пароль должен быть не менее 4 символов, не более 8 символов, и должен содержать по крайней мере одну букву в верхнем регистре, одну строчную букву и одну цифровую цифру.",
+    "defaultMessage": "Пожалуйста, введите свой пароль! Пароль должен быть не менее 4 символов, не более 8 символов, и должен содержать по крайней мере одну букву в верхнем регистре, одну строчную букву и одну цифровую цифру."
+  },
+  {
+    "id": "user_confirmPassword",
+    "description": "Подтвердите пароль",
+    "defaultMessage": "Подтвердите пароль"
+  },
+  {
+    "id": "user_confirmPassword_rule",
+    "description": "Пожалуйста подтвердите пароль",
+    "defaultMessage": "Пожалуйста подтвердите пароль"
+  },
+  {
+    "id": "user_phone_number",
+    "description": "Номер телефона",
+    "defaultMessage": "Номер телефона"
+  },
+  {
+    "id": "user_agreement",
+    "description": "Agreement agree",
+    "defaultMessage": "By signing up I agree to the {terms_of_use} and {privacy_policy}."
+  },
+  {
+    "id": "terms_of_use",
+    "description": "Условия эксплуатации",
+    "defaultMessage": "Условия эксплуатации"
+  },
+  {
+    "id": "privacy_policy",
+    "description": "Политика конфиденциальности",
+    "defaultMessage": "Политика конфиденциальности"
+  },
+  {
+    "id": "user_sign_up",
+    "description": "Зарегистрироваться",
+    "defaultMessage": "Зарегистрироваться"
+  },
+  {
+    "id": "user_or",
+    "description": "или",
+    "defaultMessage": "или"
+  },
+  {
+    "id": "user_login_now",
+    "description": "Вход в систему!",
+    "defaultMessage": "Вход в систему!"
+  }
+]

@@ -13,8 +13,6 @@ import { connect } from 'react-redux'
 import CareTeam from '../components/CareTeam';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
-
 const CARETEAM  = gql`
    query GET_CARETEAM {
         account {
@@ -28,11 +26,6 @@ const CARETEAM  = gql`
                     user {
                       id,
                       firstName,
-                       thumbs {
-                small
-                large
-                medium
-            },
                       email
                     }
                   }
@@ -41,7 +34,6 @@ const CARETEAM  = gql`
          }
      }
 `;
-
 const withMutation = graphql(CARETEAM, {
     props: ({ data }) => {
         if (!data.loading) {
@@ -56,14 +48,4 @@ const withMutation = graphql(CARETEAM, {
     },
 });
 
-const mapStateToProps = (state) => {
-    return {
-
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-
-});
-
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(CareTeam));
+export default withMutation(CareTeam);

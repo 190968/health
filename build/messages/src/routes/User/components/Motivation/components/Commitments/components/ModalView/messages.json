@@ -16,8 +16,8 @@
   },
   {
     "id": "user.motivation.commitedOn",
-    "description": "Committed By",
-    "defaultMessage": "Committed By"
+    "description": "Committed On",
+    "defaultMessage": "Committed On"
   },
   {
     "id": "user.motivation.commited",

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user_family_title",
+    "description": "My Family",
+    "defaultMessage": "My Family"
+  },
+  {
+    "id": "user_family_noname",
+    "description": "No Name",
+    "defaultMessage": "No Name"
+  }
+]

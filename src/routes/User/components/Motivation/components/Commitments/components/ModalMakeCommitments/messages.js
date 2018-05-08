@@ -10,12 +10,12 @@ export default defineMessages({
             "description": "Make a Commitment"
         },
         "cancel": {
-            "id": "user.motivation.cancel",
+            "id": "user.motivation.Commitments.cancel",
             "defaultMessage": "Cancel",
             "description": "Cancel"
         },
         "text": {
-            "id": "user.motivation.text",
+            "id": "user.ModalCommitments.motivation.text",
             "defaultMessage": "Select which Plan you would like to make a commitment to.",
             "description": "Select which Plan you would like to make a commitment to."
         }

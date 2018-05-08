@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user_verifyphone_verifyphone",
+    "description": "Verify Phone",
+    "defaultMessage": "Verify Phone"
+  },
+  {
+    "id": "user_verifyphone_send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "user_verifyphone_phone",
+    "description": "Phone",
+    "defaultMessage": "Phone"
+  }
+]

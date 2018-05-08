@@ -70,6 +70,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             .then(({data}) => {
                 const token = data.register.token;
                 let user = data.register.user;
+                console.log(user)
                 user.token = token;
                 dispatch(loadUser(user));
                 //dispatch(setUserToken({token}));

@@ -16,6 +16,7 @@ import {addLocaleData, IntlProvider} from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ru from 'react-intl/locale-data/ru';
 import es from 'react-intl/locale-data/es';
+import localeData from '../../locales/translations';
 
 
 /**
@@ -73,7 +74,9 @@ const queryOptions = {
     fetchPolicy: 'cache-first'
 }
 
-
+const language = "ru";
+const messages = localeData[language] || localeData.en;
+console.log("-------localeDate------",messages);
 class App extends React.Component {
 
     static propTypes = {
@@ -105,7 +108,7 @@ class App extends React.Component {
         const basename = "/static/myapp";
         return (
             <ApolloProvider client={apolloClient}>
-                <IntlProvider locale={'en'}>
+                <IntlProvider locale={language} messages={messages}>
                     <Provider store={this.props.store}>
                         <BrowserRouter history={history} basename={basename}>
                             <LocaleProvider locale={enUS}>

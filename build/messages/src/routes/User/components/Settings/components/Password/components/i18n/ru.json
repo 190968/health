@@ -1,0 +1,37 @@
+[
+  {
+    "id": "user_currentpassword_label",
+    "description": "Текущий пароль",
+    "defaultMessage": "Текущий пароль"
+  },
+  {
+    "id": "user_newpassword_label",
+    "description": "Новый пароль",
+    "defaultMessage": "Новый пароль"
+  },
+  {
+    "id": "user_newpassword_help",
+    "description": "Пароль должен быть не менее 4 символов, не более 8 символов, и должен содержать по крайней мере одну букву в верхнем регистре, одну строчную букву и одну цифровую цифру.",
+    "defaultMessage": "Пароль должен быть не менее 4 символов, не более 8 символов, и должен содержать по крайней мере одну букву в верхнем регистре, одну строчную букву и одну цифровую цифру."
+  },
+  {
+    "id": "user_newpassword_rule",
+    "description": "Введите новый пароль",
+    "defaultMessage": "Введите новый пароль"
+  },
+  {
+    "id": "user_confirmnewpassword_label",
+    "description": "Подтвердите новый пароль",
+    "defaultMessage": "Подтвердите новый пароль"
+  },
+  {
+    "id": "user_confirmnewpassword_rule",
+    "description": "Пожалуйста подтвердите ваш новый пароль",
+    "defaultMessage": "Пожалуйста подтвердите ваш новый пароль"
+  },
+  {
+    "id": "user_changepassword",
+    "description": "Изменить пароль",
+    "defaultMessage": "Изменить пароль"
+  }
+]

@@ -9,7 +9,8 @@ import {
     injectIntl,
     FormattedMessage
 } from 'react-intl';
-import messages from './messages';
+import en from './i18n/en';
+import ru from './i18n/ru';
 class Family extends React.Component {
 
 
@@ -18,16 +19,16 @@ class Family extends React.Component {
 
         const  {info,loading} = this.props;
 
-
-
         if (loading) {
-            return  <Card loading title={<FormattedMessage id="user.family.family.title" defaultMessage="My Family" description="MY FAMILY" />}>
+                return  <Card loading title="Family">
                 Loading</Card>;
         }
         const  {family} = info;
-        const {intl}=this.props;
+        const { getFieldDecorator } = this.props.form;
+        const { intl } = this.props;
         const  {edges} = family;
-        const title = intl.formatMessage(messages.myFamily);
+        const title = intl.messages.user_family_title;
+
         const count = this.props.info.family.totalCount > 0 ?  " ("+this.props.info.family.totalCount+")":"";
 
 

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "commentsList.reply",
+    "description": "Reply",
+    "defaultMessage": "Reply"
+  },
+  {
+    "id": "commentsList.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  }
+]

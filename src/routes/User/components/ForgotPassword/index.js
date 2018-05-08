@@ -7,7 +7,8 @@ import './index.css'
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 import {Form, Icon, Input, Button, Card } from 'antd';
 const FormItem = Form.Item;
 
@@ -39,38 +40,38 @@ class NormalForgotForm extends React.Component {
             <div style={{padding:'8% 35% 20px'}}>
                 {/*<p>Code: {this.props.match.params.code}</p>*/}
                 <Card
-                    title={intl.formatMessage(messages.resetPassword)}
+                    title={intl.messages.user_forgot_reset}
                 >
                     <Form onSubmit={this.handleSubmit} className="login-form">
 
                         {!code &&
                         <FormItem
-                            help={intl.formatMessage(messages.code_help)}
+                            help={intl.messages.user_forgot_help}
                         >
                             {getFieldDecorator('code', {
-                                rules: [{ required: true, message: intl.formatMessage(messages.code_rules)}],
+                                rules: [{ required: true, message: intl.messages.user_forgot_rules}],
                             })(
-                                <Input placeholder={intl.formatMessage(messages.code)} />
+                                <Input placeholder={intl.messages.user_forgot_code} />
                             )}
                         </FormItem>
                         }
                     <FormItem>
                     {getFieldDecorator('new_password', {
-                        rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message:intl.formatMessage(messages.new_rules)  }],
+                        rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message:intl.messages.user_forgot_newrules  }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={intl.formatMessage(messages.new_password)} />
+                        <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={intl.messages.user_forgot_newpassword} />
                     )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('new_password_repeat', {
-                            rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: intl.formatMessage(messages.new_rules)  }],
+                            rules: [{ required: true, pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: intl.messages.user_forgot_newrules  }],
                         })(
-                            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={intl.formatMessage(messages.new_password_repeat)}/>
+                            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={intl.messages.user_forgot_repeat}/>
                         )}
                     </FormItem>
                         <FormItem>
                             <Button type="primary" htmlType="submit"  loading={this.state.loading} className="login-form-button">
-                                {intl.formatMessage(messages.resetPassword)}
+                                {intl.messages.user_forgot_reset}
                             </Button>
                         </FormItem>
                     </Form>

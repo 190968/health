@@ -1,0 +1,132 @@
+[
+  {
+    "id": "user_inconsistent",
+    "description": "Two passwords that you enter is inconsistent",
+    "defaultMessage": "Two passwords that you enter is inconsistent"
+  },
+  {
+    "id": "user_first_name",
+    "description": "First name",
+    "defaultMessage": "First name"
+  },
+  {
+    "id": "user_first_name_rule",
+    "description": "Please input your First Name!",
+    "defaultMessage": "Please input your First Name!"
+  },
+  {
+    "id": "user_last_name",
+    "description": "Last name",
+    "defaultMessage": "Last name"
+  },
+  {
+    "id": "user_last_name_rule",
+    "description": "Please input your Last Name!",
+    "defaultMessage": "Please input your Last Name!"
+  },
+  {
+    "id": "user_gender",
+    "description": "Gender",
+    "defaultMessage": "Gender"
+  },
+  {
+    "id": "user_gender_rule",
+    "description": "Please Select your gender",
+    "defaultMessage": "Please Select your gender"
+  },
+  {
+    "id": "user_male",
+    "description": "Male",
+    "defaultMessage": "Male"
+  },
+  {
+    "id": "user_female",
+    "description": "Female",
+    "defaultMessage": "Female"
+  },
+  {
+    "id": "user_birthday",
+    "description": "Birthday",
+    "defaultMessage": "Birthday"
+  },
+  {
+    "id": "user_birthday_rule_type",
+    "description": "Please enter a valid date",
+    "defaultMessage": "Please enter a valid date"
+  },
+  {
+    "id": "user_birthday_rule_required",
+    "description": "Please input your birthday",
+    "defaultMessage": "Please input your birthday"
+  },
+  {
+    "id": "user_email",
+    "description": "Email",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "user_email_rule_type",
+    "description": "Please enter a valid email address",
+    "defaultMessage": "Please enter a valid email address"
+  },
+  {
+    "id": "user_email_rule_required",
+    "description": "Please input your email",
+    "defaultMessage": "Please input your email"
+  },
+  {
+    "id": "user_password",
+    "description": "Password",
+    "defaultMessage": "Password"
+  },
+  {
+    "id": "user_password_rule",
+    "description": "Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "defaultMessage": "Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit."
+  },
+  {
+    "id": "user_confirmPassword",
+    "description": "Confirm Password",
+    "defaultMessage": "Confirm Password"
+  },
+  {
+    "id": "user_confirmPassword_rule",
+    "description": "Please confirm your password",
+    "defaultMessage": "Please confirm your password"
+  },
+  {
+    "id": "user_phone_number",
+    "description": "Phone number",
+    "defaultMessage": "Phone number"
+  },
+  {
+    "id": "user_agreement",
+    "description": "Agreement agree",
+    "defaultMessage": "By signing up I agree to the {terms_of_use} and {privacy_policy}."
+  },
+  {
+    "id": "terms_of_use",
+    "description": "Terms of usee",
+    "defaultMessage": "Terms of use"
+  },
+  {
+    "id": "privacy_policy",
+    "description": "Privacy Policy",
+    "defaultMessage": "Privacy Policy"
+  },
+  {
+    "id": "user_sign_up",
+    "description": "Sign Up",
+    "defaultMessage": "Sign Up"
+  },
+  {
+    "id": "user_or",
+    "description": "Or",
+    "defaultMessage": "Or"
+  },
+  {
+    "id": "user_login_now",
+    "description": "Login Now!",
+    "defaultMessage": "Login Now!"
+  }
+]

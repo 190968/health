@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
     "modalTitle": {
-        "id": "calendar.event.title",
+        "id": "change.event.title",
         "defaultMessage": "Change Role",
         "description": "Change Role"
     },

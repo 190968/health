@@ -1,0 +1,12 @@
+[
+  {
+    "id": "commentModal.reply",
+    "description": "Reply",
+    "defaultMessage": "Reply"
+  },
+  {
+    "id": "commentsModal.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  }
+]
