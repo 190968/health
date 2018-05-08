@@ -1,5 +1,5 @@
 import Actionplans from '../components/Actionplans';
-import Plan from '../../Plan/components/Plan';
+import {PlanCardFragment} from '../../Plan/components/Plan/fragments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -14,7 +14,7 @@ export const ActionPlans_QUERY = gql`
                 }
             }
     }
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 
 // 1- add queries:

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "user.motivation.promises",
+    "description": "Promises",
+    "defaultMessage": "Promises"
+  },
+  {
+    "id": "user.motivation.nopromises",
+    "description": "No Promises",
+    "defaultMessage": "No Promises"
+  }
+]

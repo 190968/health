@@ -16,10 +16,10 @@ export class MedicationCoin extends React.Component {
 
         if (this.state.isClicked) {
             //this.setState({isClicked:false});
-            message.success('Untaken');
+            message.success('Medication Untaken');
         } else {
             //this.setState({isClicked:true});
-            message.success('Taken');
+            message.success('Medication Taken');
         }
 
     }

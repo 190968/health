@@ -52,11 +52,11 @@ export class PlanstoreLayout extends React.Component {
         }
 
         return (
-            <Row gutter={15}>
-              <Col md={4} lg={4} xl={4}>
+            <Row gutter={20}>
+              <Col md={6}   xl={4}>
                   <PlanstoreSider loading={loading}  />
               </Col>
-              <Col  md={20} lg={20} xl={20}>
+              <Col  md={18}  xl={20}>
                   <PlanstoreContent loading={loading} />
               </Col>
             </Row>

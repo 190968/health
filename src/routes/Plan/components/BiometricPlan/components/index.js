@@ -11,6 +11,7 @@ import TrackerChartPopup from "../../../components/Tracker/components/TrackerCha
 import {  Modal, Menu, Dropdown, Popover,Table, List,Icon,Button, Card, Tooltip, Popconfirm } from 'antd';
 import moment from "moment/moment";
 import Motivators from '../../../../User/containers/motivatorsContainer';
+import TrackerInfo from '../components/Biometric/components/TrackerInfo';
 
 export class BiometricPlanBody extends React.Component {
     constructor(props) {
@@ -103,14 +104,14 @@ export class BiometricPlanBody extends React.Component {
 
         const {columns, trackers} = info;
         const listColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>}},
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <TrackerInfo item={item} date={date} userId={user_id} editClick={this.editClick} deleteClick={this.deleteClick} />}},
            //
             { title: '', dataIndex: 'input', key: 'input', width: 150  },
             //{ title: '', dataIndex: 'icon', key: 'acts', width: 50}
         ];
 
         const tableColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <div>{text} <TrackerChartPopup item={item.item} userId={user_id} date={date} label={item.label} /> <Icon onClick={(e)=> this.editClick(e, item)} type="edit" /> <Popconfirm title="Are you sure you want to delete this tracker?" onConfirm={(e)=> this.deleteClick(e, item)}  okText="Yes" cancelText="No"><Icon type="delete" /></Popconfirm></div>} },
+            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <TrackerInfo item={item} date={date} userId={user_id} editClick={this.editClick} deleteClick={this.deleteClick} />} },
         ];
         // adding columns
         columns.map(column => {

@@ -3,8 +3,8 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
     "modalTitle": {
         "id": "calendar.event.title",
-        "defaultMessage": "Make an appointment",
-        "description": "Make an appointment"
+        "defaultMessage": "Request an appointment",
+        "description": "Request an appointment"
     },
 
     "send": {

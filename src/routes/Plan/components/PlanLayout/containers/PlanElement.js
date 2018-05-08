@@ -1,10 +1,12 @@
-import PlanElement from '../components/PlanElement'
+import React from 'react';
+import PlanElement from '../components/PlanElement';
+import {List} from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-import Plan from '../../../../Plan/components/Plan';
-
+//import Plan from '../../../../Plan/components/Plan';
+export default PlanElement;
 /*
 const GET_ELEMENT = gql`
     query GET_ELEMENT ($id: UID!, $date: Date) {
@@ -81,64 +83,77 @@ const PlanElementWithQuery = graphql(
         },
     }
 )(PlanElement);*/
+//
+// const reportOnField = gql`
+//     mutation planFieldReport($id: UID!, $date: Date!, $value: [String], $upid: UID!) {
+//         planElementReport(id:$id, upid: $upid, date: $date, value: $value) {
+//                 ...PlanElement
+//         }
+//     }
+//     ${Plan.fragments.element}
+// `;
+//
+//
+//
+//
+// export const PlanElementWithMutation = graphql(reportOnField, {
+//     props: ({ mutate }) => ({
+//         makeReport: (upid, id, date, value) => {
+//             return mutate({
+//                 variables: { upid:upid, id: id, date: date, value:value},
+//                 update: (store, { data: { planElementReport } }) => {
+//
+//                     /*store.writeFragment({
+//                         id: 'PlanBodyElement:'+id,
+//                         fragment: Plan.fragments.element,
+//                         data: {
+//                             reports: planElementReport.reports,
+//                         },
+//                     });*/
+//
+//                     // find ins PlanBodyElement:178368. and replace reports date
+//                     /*// Read the data from our cache for this query.
+//                     const data = store.readQuery({
+//                         query: medication,
+//                         variables: {
+//                             id: id,
+//                             user_id: uid
+//                         }
+//                     });
+//                     if (id) {
+//                         // add new to the list
+//                     }
+//
+//
+//                     // Add our comment from the mutation to the end.
+//                     //data = medicationUpdate;
+//                     // Write our data back to the cache.
+//                     store.writeQuery({
+//                         query: medication,
+//                         data: {medication: medicationUpdate},
+//                         variables: {
+//                             id: id,
+//                             user_id: uid
+//                         }});*/
+//                 },
+//             })
+//         },
+//
+//     }),
+// });
 
-const reportOnField = gql`
-    mutation planFieldReport($id: UID!, $date: Date!, $value: [String], $upid: UID!) {
-        planElementReport(id:$id, upid: $upid, date: $date, value: $value) {
-                ...PlanElement
-        }
-    }
-    ${Plan.fragments.element}
-`;
+
+//export default PlanElementWithMutation(PlanElement);
 
 
 
-
-export const PlanElementWithMutation = graphql(reportOnField, {
-    props: ({ mutate }) => ({
-        makeReport: (upid, id, date, value) => {
-            return mutate({
-                variables: { upid:upid, id: id, date: date, value:value},
-                update: (store, { data: { planElementReport } }) => {
-
-                    /*store.writeFragment({
-                        id: 'PlanBodyElement:'+id,
-                        fragment: Plan.fragments.element,
-                        data: {
-                            reports: planElementReport.reports,
-                        },
-                    });*/
-
-                    // find ins PlanBodyElement:178368. and replace reports date
-                    /*// Read the data from our cache for this query.
-                    const data = store.readQuery({
-                        query: medication,
-                        variables: {
-                            id: id,
-                            user_id: uid
-                        }
-                    });
-                    if (id) {
-                        // add new to the list
-                    }
-
-
-                    // Add our comment from the mutation to the end.
-                    //data = medicationUpdate;
-                    // Write our data back to the cache.
-                    store.writeQuery({
-                        query: medication,
-                        data: {medication: medicationUpdate},
-                        variables: {
-                            id: id,
-                            user_id: uid
-                        }});*/
-                },
-            })
-        },
-
-    }),
-});
-
-
-export default PlanElementWithMutation(PlanElement);
+export const PlanElementListItem = (props) => {
+    const {i, planId, item, isPreviewMode, isBuilderMode, isDraggable, mode, schedule=false, lessonId, sectionId} = props;
+    //console.log(props);
+    return <List.Item
+        key={item.id}
+    >
+        <PlanElement i={i} planId={planId} isDraggable={isDraggable} element={item} mode={mode} isPreviewMode={isPreviewMode}
+                     isBuilderMode={isBuilderMode} schedule={schedule} lessonId={lessonId} sectionId={sectionId}/>
+    </List.Item>;
+}

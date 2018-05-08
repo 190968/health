@@ -1,54 +1,50 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import PlanElementEdit from '../../containers/PlanElementEditModal';
-import {Icon, Modal} from 'antd';
-const confirm = Modal.confirm;
+import {
+    SortableHandle,
+} from 'react-sortable-hoc';
+import PlanElementBuilder from '../../../../containers/PlanElementBuilder';
+import {Icon, Tooltip, Modal} from 'antd';
+import './index.less'
+import PlanElementsSelectbox from '../../../../components/PlanElementsSelectbox';
 
 
+const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler"></span></Tooltip>);
 
 
-export class PlanElement extends React.Component {
-
-    state = {
-        openEditElement:false
+const PlanElementActions = (props) => {
+    //console.log(props);
+    let {order = null, openEditElement, toggleEditElement, deleteElement, addAfterElement, hideOrder, buttons=[]} = props;
+    // let button =
+    console.log(props);
+    if (order !== null ) {
+        return <React.Fragment>
+            <Modal title="Select Element" visible={true} footer={false} onCancel={hideOrder}><PlanElementsSelectbox {...props} id="" type="" onHide={hideOrder} /></Modal>
+            {openEditElement && <PlanElementBuilder {...props} onHide={toggleEditElement} />}
+        </React.Fragment>
+    } else if (openEditElement) {
+        return <PlanElementBuilder {...props} onHide={toggleEditElement} />;
     }
-    static propTypes = {
-        id: PropTypes.integer
-    };
-
-    static defaultProps = {
-        id: '',
-        planId: ''
+    if (buttons.length > 0) {
+        return buttons.map((button, i) => {
+            switch(button) {
+                case 'addBefore':
+                    return <React.Fragment key={i}>
+                        <Tooltip key={i} title="Add First Element" onClick={props.addBeforeElement} ><Icon type="plus" /></Tooltip>
+                    </React.Fragment>
+                    break;
+                case 'addAfter':
+                    return <React.Fragment key={i}>
+                        <Tooltip key={i} title="Add Element Here" onClick={props.addAfterElement} ><Icon type="plus" /></Tooltip>
+                    </React.Fragment>
+                    break;
+            }
+        })
     }
+    return (<div>
+        <DragHandle /> <Tooltip title="Edit"><Icon type="edit" onClick={toggleEditElement} style={{marginRight:5}} /></Tooltip> <Tooltip title="Delete"><Icon type="delete" onClick={deleteElement} /></Tooltip>
+    </div>)
 
-    deleteElement = (id) => {
-        const {deleteElement} = this.props;
-        confirm({
-            title: 'Do you want to delete these element?',
-            //content: 'When clicked the OK button, this dialog will be closed after 1 second',
-            onOk() {
-                deleteElement(id);
-            },
-        });
-    }
-
-    openEditElement = (id) => {
-        this.setState({openEditElement:true});
-    }
-
-    hideElementEditModal = () => {
-        this.setState({openEditElement:false});
-    }
-
-    render() {
-        let {id, planId} = this.props;
-
-        return (<div style={{float:'right'}}>
-            {this.state.openEditElement && <PlanElementEdit {...this.props} onHide={this.hideElementEditModal} />}
-            <Icon type="edit" onClick={() => this.openEditElement(id)} /> <Icon type="delete" onClick={() => this.deleteElement(id)} /></div>)
-    }
 }
 
-
-
-export default PlanElement
+export default PlanElementActions;

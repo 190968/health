@@ -11,7 +11,7 @@ export default class PlanMedia extends React.PureComponent {
 
     render() {
         const {item} = this.props;
-        const {label, type, url, embedHtml} = item;
+        const {label, mediaType:type, url, embedHtml} = item;
         switch(type) {
             case 'image':
                 return <Card
@@ -23,12 +23,25 @@ export default class PlanMedia extends React.PureComponent {
                 /></Card>;
             case 'import':
             case 'audio':
+            case 'video':
+                if (embedHtml === '') {
+                    return <Card
+                        cover={<video width="100%" controls>
+                            <source src={url} />
+                            Your browser does not support HTML5 video.
+                        </video>}
+                    ><Card.Meta
+                        avatar={<Icon type="play-circle-o" />}
+                        title={label}
+                    /></Card>;
+                }
                 return <Card
                              cover={<div dangerouslySetInnerHTML={{__html: embedHtml}}></div>}
                 ><Card.Meta
                     avatar={<Icon type="play-circle-o" />}
                     title={label}
                 /></Card>;
+                break;
             default:
                 let icon = '';
                 if (type === 'presentation') {

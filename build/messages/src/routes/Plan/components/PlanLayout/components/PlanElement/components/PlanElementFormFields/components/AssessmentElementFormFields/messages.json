@@ -1,0 +1,27 @@
+[
+  {
+    "id": "plan.element.edit.modalTitle",
+    "description": "Edit Element",
+    "defaultMessage": "Edit Element"
+  },
+  {
+    "id": "p.el.success",
+    "description": "Success",
+    "defaultMessage": "Success"
+  },
+  {
+    "id": "send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "p.el.option.title",
+    "description": "Title",
+    "defaultMessage": "Title"
+  },
+  {
+    "id": "p.el.option.assessment",
+    "description": "Assessment",
+    "defaultMessage": "Assessment"
+  }
+]

@@ -5,7 +5,8 @@ import {
     asyncHealth,
     asyncCommynity,
     asyncHelp,
-    asyncMotivation
+    asyncMotivation,
+    asyncProfile
 } from '../../../routes';
 
 export const PatientRoutes = ({store}) => {
@@ -16,6 +17,7 @@ export const PatientRoutes = ({store}) => {
             <PrivateRoute path="/health" component={asyncHealth(store)}/>
             <PrivateRoute path="/help" component={asyncHelp(store)}/>
             <PrivateRoute path="/motivation" component={asyncMotivation(store)}/>
+            <PrivateRoute path="/u/:uid" component={asyncProfile(store)}/>
         </React.Fragment>
     )
 }

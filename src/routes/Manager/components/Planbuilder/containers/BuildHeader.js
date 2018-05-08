@@ -1,6 +1,6 @@
 import BuildHeader from '../components/BuildHeader';
-import Plan from '../../../../Plan/components/Plan';
-import { graphql } from 'react-apollo';
+import {PlanCardFragment} from '../../../../Plan/components/Plan/fragments';
+import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const ActionPlans_QUERY = gql`    
@@ -17,7 +17,7 @@ export const ActionPlans_QUERY = gql`
                 }
             }
     }
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 
 // 1- add queries:
@@ -53,22 +53,69 @@ const withQuery = graphql(
 const PlanUpdateMutation = gql`
     mutation PlanUpdate($id: UID!, $input:PlanInput!){
         planUpdate(id:$id, input:$input) {
-            id
+            ...PlanCardInfo
+            schedule {
+              type
+              startDate
+              endDate
+              limitStartDow
+              relativeEndDay
+              dows
+            }
         }
     }
+     ${PlanCardFragment}
 `;
-
-
 
 const withMutation = graphql(PlanUpdateMutation, {
     props: ({ ownProps, mutate }) => ({
-        onSubmit: (input) => {
+        onUpdateSubmit: (input, submitCallback) => {
             return mutate({
                 variables: { id: ownProps.plan.id, input: input}
-            })
+            }).then(({data}) => {
+                submitCallback(data.planUpdate);
+            });
         },
-
     }),
 });
 
-export default withMutation((BuildHeader));//withQuery
+
+const PlanCreateMutation = gql`
+    mutation PlanCreate($input:PlanInput!){
+        planCreate(input:$input) {
+            ...PlanCardInfo
+            schedule {
+              type
+              startDate
+              endDate
+              limitStartDow
+              relativeEndDay
+              dows
+            }
+        }
+    }
+     ${PlanCardFragment}
+`;
+
+
+export const withAddMutation = graphql(PlanCreateMutation, {
+    props: ({ ownProps, mutate }) => ({
+        onCreateSubmit: (input, submitCallback) => {
+            return mutate({
+                variables: {input:input},
+            }).then(({data}) => {
+                submitCallback(data.planCreate);
+            });
+        },
+    }),
+});
+
+export const withMutations = compose(
+    withMutation,
+    withAddMutation,
+);
+
+
+
+
+export default withMutations((BuildHeader));//withQuery

@@ -9,7 +9,7 @@ import {graphql} from 'react-apollo';
 // import extra
 import { Spin, Modal, Icon} from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
-
+import {CustomizedLabelsProvider} from "../components/App/app-context";
 // import main layouts
 import ManagerLayout from './components/ManagerLayout';
 import PatientLayout from './components/PatientLayout';
@@ -113,7 +113,7 @@ class Core extends React.Component {
 
     render() {
 
-        const {loading, user} = this.props;
+        const {loading, user, labels={}} = this.props;
         if (loading) {
             return (
                 <div style={{
@@ -146,7 +146,9 @@ class Core extends React.Component {
                             idleAction={this._onIdle}
                             timeout={1000 * 60 * 15}
                             format="MM-DD-YYYY HH:MM:ss.SSS">
-                            <CoreByModeWithQuery {...this.props} />
+                            <CustomizedLabelsProvider labels={labels}>
+                                <CoreByModeWithQuery {...this.props} />
+                            </CustomizedLabelsProvider>
                         </IdleTimer> : <PatientLayout {...this.props} />)
                 }
             </React.Fragment>)
@@ -155,19 +157,19 @@ class Core extends React.Component {
 
 
 const mapStateToProps = (state) => {
-
+    let {labels=[]} = state.network;
+    let networkLabels = {};
+    labels.map(label => {
+        networkLabels[label['key']] = label['label'];
+        return null;
+    });
     return {
         loading: state.network.loading,
         //token: state.user.token,
         user: state.user,
+        labels: networkLabels,
     }
 };
-
-
-
-
-
-
 
 
 const mapDispatchToProps = () => {

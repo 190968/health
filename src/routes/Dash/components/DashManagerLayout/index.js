@@ -1,8 +1,9 @@
 import React from 'react';
+import {EmptyList} from "../../../../components/Loading/index";
 
 class DashManagerLayout extends React.Component {
     render() {
-         return (<div>Manager dash</div>);
+         return (<EmptyList>Please select item from the left menu for now</EmptyList>);
     }
 }
 

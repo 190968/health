@@ -1,0 +1,32 @@
+[
+  {
+    "id": "user.motivation.earnedPoints",
+    "description": "Earned Points",
+    "defaultMessage": "Earned Points"
+  },
+  {
+    "id": "user.motivation.cancel",
+    "description": "Cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "user.motivation.points",
+    "description": "Points",
+    "defaultMessage": "Points"
+  },
+  {
+    "id": "user.motivation.receivedFor",
+    "description": "Received For",
+    "defaultMessage": "Received For"
+  },
+  {
+    "id": "user.motivation.receivedOn",
+    "description": "Received On",
+    "defaultMessage": "Received On"
+  },
+  {
+    "id": "user.motivation.text",
+    "description": "You are currently on the Newbie level. You need 260 more points to reach the Pioneer level. Stay active on the system to advance!",
+    "defaultMessage": "You are currently on the Newbie level. You need 260 more points to reach the Pioneer level. Stay active on the system to advance!"
+  }
+]

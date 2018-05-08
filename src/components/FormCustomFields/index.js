@@ -34,6 +34,10 @@ export class StartEndFormInit extends React.Component{
 
 
     static propTypes = {
+        names:PropTypes.shape({
+            startDate: PropTypes.string,
+            endDate: PropTypes.string
+        }),
         startDate: PropTypes.string,
         endDate: PropTypes.string,
         dateFormat: PropTypes.string,
@@ -43,8 +47,12 @@ export class StartEndFormInit extends React.Component{
     }
 
     static defaultProps = {
-        startDate: '',
-        endDate: '',
+        names: {
+            startDate: 'startDate',
+            endDate: 'endDate',
+        },
+        startDate: null,
+        endDate: null,
         endDateRequired: false,
         inline: true,
         formItemLayout: {
@@ -64,7 +72,7 @@ export class StartEndFormInit extends React.Component{
         const form = this.props.form;
         //callback();
 
-        const start_date = form.getFieldValue('startDate');
+        const start_date = form.getFieldValue(this.props.names.startDate);
 
 
         if (start_date && value && value < start_date) {
@@ -76,32 +84,40 @@ export class StartEndFormInit extends React.Component{
     }
 
     disabledStartDate = (endValue) => {
-        const form = this.props.form;
-        //callback();
-
-        const startValue = form.getFieldValue('endDate');
-        //const startValue = this.state.startValue;
-        if (!endValue || !startValue) {
-            return false;
+        console.log(endValue);
+        if (endValue) {
+            const form = this.props.form;
+            //callback();
+            const startValue = form.getFieldValue(this.props.names.endDate);
+            //const startValue = this.state.startValue;
+            if (!endValue || !startValue) {
+                return false;
+            }
+            return endValue.valueOf() > startValue.valueOf();
         }
-        return endValue.valueOf() > startValue.valueOf();
+        return false;
     }
     disabledEndDate = (endValue) => {
-        const form = this.props.form;
-        //callback();
+        if (endValue) {
+            const form = this.props.form;
+            //callback();
 
-        const startValue = form.getFieldValue('startDate');
-        //const startValue = this.state.startValue;
-        if (!endValue || !startValue) {
-            return false;
+
+            const startValue = form.getFieldValue(this.props.names.startDate);
+            //console.log(endValue);
+            //console.log(startValue);
+            //const startValue = this.state.startValue;
+            if (!endValue || !startValue) {
+                return false;
+            }
+            return endValue.valueOf() <= startValue.valueOf();
         }
-        return endValue.valueOf() <= startValue.valueOf();
     }
 
 
     render(){
 
-        const {  form, intl, endDateRequired, startDate, endDate, dateFormat, inline } = this.props;
+        const {  form, intl, endDateRequired, startDate, endDate, inline, names } = this.props;
         let {formItemLayout} = this.props;
 
         const {getFieldDecorator} = form;
@@ -109,23 +125,23 @@ export class StartEndFormInit extends React.Component{
         if (inline) {
             formItemLayout = {};
         }
-
+        //console.log(names);
+        //console.log(startDate ? moment(startDate) : moment());
 
         const startField = <FormItem
             {...formItemLayout}
             label={!inline && 'Start Date'}
         >
-            {getFieldDecorator('startDate', {
+            {getFieldDecorator(names.startDate, {
                 initialValue: startDate ? moment(startDate) : moment(),
                 rules: [{
-                    required: true, message: 'Please Select',
+                    type: 'object', required: true, message: 'Please Select',
                 }],
             })(
-                <DatePicker
-                    disabledDate={this.disabledStartDate}
+                <DateField
                     allowClear={false}
-                    format={dateFormat}
                     placeholder="Start date"
+                    disabledDate={this.disabledStartDate}
                 />
             )}
         </FormItem>;
@@ -135,17 +151,17 @@ export class StartEndFormInit extends React.Component{
             {...formItemLayout}
             label={!inline && 'End Date'}
         >
-            {getFieldDecorator('endDate', {
-                initialValue: endDate ? moment(endDate, dateFormat) : undefined,
+            {getFieldDecorator(names.endDate, {
+                initialValue: endDate ? moment(endDate) : undefined,
                 rules: [{
-                    required: endDateRequired, validator: this.checkEndDate, message: 'End date must be after Start Date',
+                    type: 'object', required: endDateRequired, validator: this.checkEndDate, message: 'End date must be after Start Date',
                 }],
             })(
-                <DatePicker
+
+                <DateField
                     placeholder="End date"
-                    format={dateFormat}
-                    disabledDate={this.disabledEndDate}
                     allowClear={!endDateRequired}
+                    disabledDate={this.disabledEndDate}
                 />
             )}
         </FormItem>;
@@ -174,14 +190,13 @@ export class StartEndFormInit extends React.Component{
             // in as separate field
             return (
                 <React.Fragment>
-                        {startField}
+                    {startField}
 
-                        {endfield}
+                    {endfield}
                 </React.Fragment>
             );
         }
     }
-
 }
 
 
@@ -194,12 +209,101 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
+export const StartEndForm = injectIntl(StartEndFormInit);
 
 
 
 
 
-export const StartEndForm = injectIntl(connect(
+class DateFieldInit extends React.Component{
+
+    constructor(props) {
+        super(props);
+
+        const value = this.props.value || undefined;
+        //console.log(props);
+        this.state = {
+            date: value
+        };
+    }
+
+    static propTypes = {
+        disabledDate: PropTypes.func,
+        allowClear: PropTypes.bool,
+        dateFormat: PropTypes.string,
+        placeholder: PropTypes.string,
+    }
+
+    static defaultProps = {
+        allowClear: true,
+        placeholder: 'Select Date',
+        disabledDate: () => {
+            return false;
+        },
+        formItemLayout: {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 6 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 14 },
+            },
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        //console.log(nextProps);
+        // Should be a controlled component.
+        if ('value' in nextProps) {
+            const date = nextProps.value || undefined;
+            this.setState({date});
+        }
+    }
+
+    onChange = (date) => {
+        //console.log(date);
+
+        if (!('value' in this.props)) {
+            this.setState({ date });
+        }
+        this.triggerChange({ date });
+    }
+
+    triggerChange = (changedValue) => {
+        // Should provide an event to pass value to Form.
+        const onChange = this.props.onChange;
+        if (onChange) {
+            //console.log(Object.assign({}, this.state, changedValue.date));
+            const formattedDate = changedValue.date;
+            //const formattedDate = moment(date).format('YYYY-MM-DD');
+            //console.log(this.state);
+            //console.log(Object.assign({}, this.state, changedValue));
+            onChange(formattedDate);
+            //const newValue = Object.assign({}, this.state, changedValue);
+            this.setState(changedValue);
+            //onChange(Object.assign({}, this.state, changedValue));
+        }
+    }
+
+    render(){
+
+        const {disabledDate, placeholder, dateFormat, allowClear } = this.props;
+        //console.log(this.state);
+        return <DatePicker
+             placeholder={placeholder}
+             format={dateFormat}
+             disabledDate={disabledDate}
+             allowClear={allowClear}
+             onChange={this.onChange}
+             value={this.state.date}
+         />
+    }
+}
+
+
+export const DateField = connect(
     mapStateToProps,
     mapDispatchToProps
-)(StartEndFormInit));
+)(DateFieldInit);
+

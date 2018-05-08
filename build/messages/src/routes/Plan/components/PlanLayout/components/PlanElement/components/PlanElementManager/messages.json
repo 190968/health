@@ -1,0 +1,22 @@
+[
+  {
+    "id": "p.el.add.modalTitle",
+    "description": "Add Element",
+    "defaultMessage": "Add {title}"
+  },
+  {
+    "id": "p.el.edit.modalTitle",
+    "description": "Edit Element",
+    "defaultMessage": "Edit {title}"
+  },
+  {
+    "id": "p.el.modal.send",
+    "description": "Send",
+    "defaultMessage": "Save"
+  },
+  {
+    "id": "p.el.modal.success",
+    "description": "Success",
+    "defaultMessage": "Success"
+  }
+]

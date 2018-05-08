@@ -3,7 +3,9 @@ import React from 'react'
 import PlanElement from '../../containers/PlanElement'
 import PlanLesson from '../../containers/PlanLesson';
 import PlanSection from '../../containers/PlanSection';
+import PlanIntroduction from '../../containers/PlanIntroduction';
 import PlanBodyMenu from './components/PlanBodyMenu';
+import './index.less';
 
 // adding filters
 // for modal
@@ -31,6 +33,7 @@ export class PlanBody extends React.Component {
 
     static defaultProps = {
         isBuilderMode: false,
+        isPreviewMode: false,
         planId:''//'NzUyNw'
     }
 
@@ -88,13 +91,18 @@ export class PlanBody extends React.Component {
 
 
     render() {
-        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading, isBuilderMode, planId} = this.props;
+        //console.log(this.props);
+        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading, isBuilderMode, isPreviewMode, planId, plan} = this.props;
+        //const planId = plan.id;
+        //console.log(planId);
         let {currentTab, currentKey} = this.state;
+        console.log(loading);
         if (loading) {
             return (
                 <Card loading>Loading....</Card>
             );
         }
+
         /*const {plan} = client.readQuery({
             query: PLAN_BODY_QUERY,
             variables: {
@@ -134,28 +142,43 @@ export class PlanBody extends React.Component {
             });
         }
 
-        console.log(currentKey);
-        console.log(currentTab);
+        //console.log(currentKey);
+        //console.log(currentTab);
+        let menuStyle = {}
+        if (isBuilderMode) {
+            menuStyle = {
+                height: '100vh',
+                background: '#fff',
+                borderRight: '1px solid #e8e8e8',
+                overflowY: 'auto'
+            }
+        }
 
 
+        const showEmptyBlock = isBuilderMode && currentKey === '';
 
+        //console.log(currentKey);
         return (<Row>
             <BackTop />
-            <Col xs={5} >
+            <Col xs={5} style={menuStyle} className="plan-menu" >
                 <Affix offsetTop={10} >
-                    <PlanBodyMenu isBuilderMode={isBuilderMode}  planId={planId}  lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
+                    <PlanBodyMenu isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} planId={planId}  lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
                 </Affix>
             </Col>
             <Col offset={5}>
 
-
+                {(currentKey === 'introduction' && isBuilderMode) && <Row>
+                    <Col xs={24}>
+                        <PlanIntroduction isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} planId={planId} elements={intro} />
+                    </Col>
+                </Row>}
                 {lessonsNum > 0 && lessons.map((section, i) =>{
 
                     if (currentKey === 'lesson_'+i) {
                         const isLastLesson = i===lessonsNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
-                                <PlanLesson isBuilderMode={isBuilderMode} planId={planId} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
+                                <PlanLesson isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} planId={planId} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
                             </Col>
                         </Row>;
 
@@ -170,7 +193,7 @@ export class PlanBody extends React.Component {
                         const isLastSection = i===activitiesNum-1;
                         const list = <Row key={section.id}>
                             <Col xs={24}>
-                                <PlanSection isBuilderMode={isBuilderMode}  planId={planId}  upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
+                                <PlanSection isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode}  planId={planId}  upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
                             </Col>
                         </Row>;
 
@@ -178,6 +201,8 @@ export class PlanBody extends React.Component {
                     }
                     return null;
                 })}
+
+                {showEmptyBlock && <div className="empty-builder-text">Please add Introduction and Lesson or Activity</div>}
             </Col>
         </Row>)
     }

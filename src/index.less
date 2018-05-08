@@ -1,11 +1,14 @@
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
+.full-width {width:100%;}
+
 .ant-card + .ant-card {
-  margin-top:24px;
+  margin-top:20px;
 }
 
 .ant-card-padding-transition .ant-card-head, .ant-card-padding-transition .ant-card-body {
@@ -18,13 +21,56 @@ body {
 
 }
 
-.ant-card-type-table {
-  .ant-card-body {
-    padding:0 !important;
-    padding-top: 1px !important;
+.ant-card-type {
+  &-table {
+    .ant-card-body {
+      padding: 0 !important;
+      padding-top: 1px !important;
+      .ant-table-thead > tr > th:first-child, .ant-table-tbody > tr > td:first-child {
+        padding-left: 24px;
+      }
+    }
   }
+  &-pure {
+    .ant-card-body {
+      padding: 0 !important;
+    }
+  }
+
+  //&-option {
+  //  .ant-card-head {
+  //    /*background: #f9f9f9;*/
+  //    padding: 0 16px;
+  //  }
+  //  .ant-card-body {
+  //    background: #fffbe6;
+  //    padding: 0 16px !important;
+  //
+  //
+  //    .ant-list-item {
+  //      padding-top:16px;
+  //    }
+  //    .ant-list-item + .ant-list-item {
+  //      padding-top:8px;
+  //    }
+  //    .ant-list-item:last-child {
+  //      padding-bottom:16px;
+  //    }
+  //
+  //    .ant-list-item-content-single:last-child {
+  //      margin-bottom: 0;
+  //    }
+  //  }
+  //}
+
+
+
+  
 }
 
+.ant-list-item-action {
+  align-self: flex-start;
+}
 
 
 .ant-btn-orange {
@@ -49,3 +95,85 @@ body {
   position: relative;
   margin-top: -30px;
 }
+
+.ant-card-extra {
+  padding: 16px 0 !important;
+  .ant-btn-group > .ant-btn {
+    line-height:24px;
+  }
+}
+
+
+
+.ant-list-item {
+  &.full-width {
+    .ant-list-item-content {display:none;}
+  }
+}
+
+.ant-list-vertical {
+
+  .ant-list-item-meta {
+    margin-bottom: 5px !important;
+    &-title {
+      color: rgba(0, 0, 0, 0.65);
+      margin-bottom: 4px;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    &-avatar {
+      display: block !important;
+    }
+    &-title {
+      margin-bottom: 4px !important;
+    }
+  }
+
+  &> .ant-list-item-meta {
+    margin-bottom: 16px;
+    &-title {
+      color: rgba(0, 0, 0, 0.85);
+      margin-bottom: 12px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    &-avatar {
+      display:none !important;
+    }
+    &-title {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+
+
+
+.ant-switch {
+  background: #fff !important;
+  border:1px solid #ccc !important;
+  &-inner {
+    color: #ccc !important;
+  }
+  &.ant-switch-checked {
+    background: #51ade2 !important;
+    border-color: #51ade2 !important;
+
+  }
+  &-checked {
+    .ant-switch-inner {
+      color: #fff !important;
+    }
+  }
+}
+
+
+
+.ant-checkbox-group.checkbox-vertical {
+  .ant-checkbox-group-item {
+    display: block !important;
+  }
+}
+
+
+

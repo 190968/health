@@ -2,14 +2,12 @@ import React from 'react'
 import {NavLink, Route, Switch} from 'react-router-dom';
 import {Layout, Menu, Steps, Icon} from 'antd';
 import BuildHeader from '../../containers/BuildHeader';
+import BuildHeaderPathway from '../../containers/BuildHeaderPathway';
 import BuildBody from '../../containers/BuildBody';
+import Preview from '../../components/Preview';
+import Publish from '../../containers/Publish';
+import BuildBodyPathway from '../../containers/BuildBodyPathway';
 import {Loading} from "../../../../../../components/Loading";
-
-
-
-
-const Preview = () => <h3>Preview</h3>;
-const Publish = () => <h3>Publish</h3>;
 
 const Build = (props) => {
     console.log(props);
@@ -24,7 +22,6 @@ const RouteWithSubRoutes = route => {
     return (
         <Route
             path={route.path}
-
             render={props => {
                 // pass the sub-routes down to keep nesting
                 //console.log(props);
@@ -41,7 +38,7 @@ class PlanbuilderContent extends React.Component{
         console.log(e);
     }
     render() {
-        const {match, location, plan, loading} = this.props;
+        const {match, location, plan={}, loading, routes:routes1, type} = this.props;
 
         if (loading) {
             return <Loading/>
@@ -57,22 +54,25 @@ class PlanbuilderContent extends React.Component{
 
 
         let mainUrl = '/pb';
-        if (id !== '') {
+        if (id) {
             mainUrl += '/' + id;
         }
+        const isPathway = type === 'pathway';
 
-        //console.log(tab);
-        //console.log(subtab);
+        //console.log(mainUrl);
+
 
         const routes = [
 
             {
                 path: mainUrl + "/preview",
-                component: Preview
+                component: Preview,
+                params: {plan, type}
             },
             {
                 path: mainUrl + "/publish",
-                component: Publish
+                component: Publish,
+                params: {plan, type}
             },
             {
                 path: mainUrl,
@@ -80,18 +80,18 @@ class PlanbuilderContent extends React.Component{
                 routes: [
                     {
                         path: mainUrl + "/build/header",
-                        component: BuildHeader,
-                        params: {plan: plan}
+                        component: isPathway ? BuildHeaderPathway : BuildHeader,
+                        params: {plan, type}
                     },
                     {
                         path: mainUrl + "/build/body",
-                        component: BuildBody,
-                        params: {plan: plan}
+                        component: isPathway ? BuildBodyPathway : BuildBody,
+                        params: {plan, type}
                     },
                     {
                         path: mainUrl,
-                        component: BuildHeader,
-                        params: {plan: plan}
+                        component: isPathway ? BuildHeaderPathway : BuildHeader,
+                        params: {plan, type}
                     },
                 ]
             }
@@ -102,11 +102,9 @@ class PlanbuilderContent extends React.Component{
 
 
         return (
-
             <Switch>
                 {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route}  />)}
             </Switch>
-
         )
     }
 }

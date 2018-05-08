@@ -38,12 +38,7 @@ class FixedScheduling extends React.Component{
 
         return(
             <Card type="inner" title={intl.formatMessage(messages.componentTitle)}>
-
-
-
-                    <StartEndForm form={form} inline={false} />
-
-
+                    <StartEndForm names={{startDate:"schedule[startDate]", endDate:"schedule[endDate]"}} form={form} inline={false} />
             </Card>
         );
     }

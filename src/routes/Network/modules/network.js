@@ -30,6 +30,7 @@ const ACTION_HANDLERS = {
             name:network.name,
             logo:network.logo,
             modules:network.modules,
+            labels:network.labels,
             allowSignUp:network.allowSignUp,
             colors:network.colors,
             loading:false,

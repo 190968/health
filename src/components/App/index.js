@@ -1,6 +1,7 @@
 import React from 'react';
 // adding proptypes
 import PropTypes from 'prop-types'
+import {CustomizedLabelsProvider} from "./app-context";
 
 // adding router
 import {BrowserRouter} from 'react-router-dom'
@@ -55,6 +56,10 @@ export const NETWORK_INFO_QUERY = gql`
                 headerText
                 footerBg
                 footerText
+            }
+            labels {
+                key
+                label
             }
         },
         account {

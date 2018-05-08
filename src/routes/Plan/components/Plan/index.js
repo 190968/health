@@ -27,6 +27,7 @@ export class Plan extends React.PureComponent {
             id
             itemId
             itemType
+            type
             reports (date: $date) {
                 id
                 value,
@@ -125,7 +126,7 @@ export class Plan extends React.PureComponent {
                 
                  ... on Assessment {
                     id
-                    label
+                    name
                 }
             }
              

@@ -8,6 +8,7 @@ class NormalLogoutForm extends React.Component{
     }
 
     render(){
+        console.log(111);
         this.props.logout();
 
         /*

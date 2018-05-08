@@ -17,6 +17,16 @@ const radioStyle = {
     lineHeight: '30px',
 };
 
+
+const dows = [
+    {name:'sun', value:'Sun'},
+    {name:'mon', value:'Mon'},
+    {name:'tue', value:'Tue'},
+    {name:'wed', value:'Wed'},
+    {name:'thu', value:'Thu'},
+    {name:'fri', value:'Fri'},
+    {name:'ast', value:'Sat'},
+]
 class FixedLengthScheduling extends React.Component{
 
     render(){
@@ -53,10 +63,7 @@ class FixedLengthScheduling extends React.Component{
                         }],
                     })(
                         <Select  style={{ width: 120 }} >
-                            <Option value="jack">Sun</Option>
-                            <Option value="lucy">Mon</Option>
-                            <Option value="disabled" disabled>Disabled</Option>
-                            <Option value="Yiminghe">yiminghe</Option>
+                            {dows.map(info => <Option key={info.name}>{info.value}</Option>)}
                         </Select>
                     )}
                 </FormItem>}

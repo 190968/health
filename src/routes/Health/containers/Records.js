@@ -12,6 +12,7 @@ const GET_Records_QUERY = gql`
               edges {
                 id
                 type
+                typeText
                 title
                 createdAt
                 isActive
