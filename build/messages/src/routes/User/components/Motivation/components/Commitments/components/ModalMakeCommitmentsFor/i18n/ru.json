@@ -1,0 +1,57 @@
+[
+  {
+    "id": "user_motivation_finish",
+    "description": "Финиш",
+    "defaultMessage": "Финиш"
+  },
+  {
+    "id": "user_motivation_make",
+    "description": "Сделать обязательство",
+    "defaultMessage": "Сделать обязательство"
+  },
+  {
+    "id": "user_motivation_complete",
+    "description": "Если я не завершу свой план",
+    "defaultMessage": "Если я не завершу свой план"
+  },
+  {
+    "id": "user_motivation_will",
+    "description": "Я буду...",
+    "defaultMessage": "Я буду..."
+  },
+  {
+    "id": "user_motivation_pay",
+    "description": "Оплатить мотиватору",
+    "defaultMessage": "Оплатить мотиватору"
+  },
+  {
+    "id": "user_motivation_noname",
+    "description": "Нет имени",
+    "defaultMessage": "Нет имени"
+  },
+  {
+    "id": "user_motivation_donate",
+    "description": "Пожертвуйте благотворительность",
+    "defaultMessage": "Пожертвуйте благотворительность"
+  },
+  {
+    "id": "user_motivation_howmuch",
+    "description": "Сколько?",
+    "defaultMessage": "Сколько?"
+  },
+  {
+    "id": "user_motivation_other",
+    "description": "Другие",
+    "defaultMessage": "Другие"
+  },
+  {
+    "id": "user_motivation_add",
+    "description": "Добавьте URL-адрес, описывающий ваше обещание",
+    "defaultMessage": "Добавьте URL-адрес, описывающий ваше обещание"
+  },
+  {
+    "id": "user_motivation_select",
+    "description": "Пожалуйста выберите",
+    "defaultMessage": "Пожалуйста выберите"
+  }
+]

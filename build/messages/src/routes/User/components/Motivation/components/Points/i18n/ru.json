@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user_motivation_points",
+    "description": "Мои очки",
+    "defaultMessage": "Мои очки"
+  },
+  {
+    "id": "user_motivation_pointsNext",
+    "description": "указывает на следующий",
+    "defaultMessage": "указывает на следующий"
+  },
+  {
+    "id": "user_motivation_level",
+    "description": "уровень",
+    "defaultMessage": "уровень"
+  }
+]

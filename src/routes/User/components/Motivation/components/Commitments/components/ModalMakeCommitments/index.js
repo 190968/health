@@ -9,7 +9,8 @@ import SelectPlans from '../../../../../../../Plan/containers/SelectPlans';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 const {Option} = Select;
 class ModalMakeCommitments extends React.Component {
 
@@ -43,15 +44,15 @@ class ModalMakeCommitments extends React.Component {
             <div>
         {this.state.visible &&
             <Modal
-                title={intl.formatMessage(messages.makeCommitment)}
+                title={intl.messages.user_motivation_makecommitment}
                 visible={true}
                 onCancel={this.props.handleCancel}
                 footer={[
-                    <Button type="primary"  key="back" onClick={this.props.handleCancel}>{intl.formatMessage(messages.makeCommitment)}</Button>
+                    <Button type="primary"  key="back" onClick={this.props.handleCancel}>{intl.messages.user_motivation_Commitments_cancel}</Button>
                 ]}
             >
 
-                <p>{intl.formatMessage(messages.text)}</p>
+                <p>{intl.messages.user_ModalCommitments_motivation_text}</p>
                 <center>
                     <SelectPlans onChange={this.onChange}/>
                 </center>

@@ -7,7 +7,8 @@ import ModalPointsHistory from './containers/ModalPointsHistory'
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class Points extends React.Component {
 
     constructor(props) {
@@ -34,7 +35,7 @@ class Points extends React.Component {
         const {intl}=this.props;
         const percent = Math.round(points/amount*100);
         return  (
-            <Card style={{height:250}} title={intl.formatMessage(messages.points)}>
+            <Card style={{height:250}} title={intl.messages.user_motivation_points}>
 
 
                 { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel}/>}
@@ -46,7 +47,7 @@ class Points extends React.Component {
                     <Progress percent={percent} />
 
                <center><span><h2>{points}</h2></span></center>
-                <center><span>{remainingPoint} {intl.formatMessage(messages.pointsNext)} {title} {intl.formatMessage(messages.level)}</span></center>
+                <center><span>{remainingPoint} {intl.messages.user_motivation_pointsNext} {title} {intl.messages.user_motivation_level}</span></center>
             </Card>
 
         );

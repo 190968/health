@@ -1,0 +1,32 @@
+[
+  {
+    "id": "user_motivation_viewCommitment",
+    "description": "Просмотр обязательств",
+    "defaultMessage": "Просмотр обязательств"
+  },
+  {
+    "id": "user_motivation_close",
+    "description": "Отмена",
+    "defaultMessage": "Отмена"
+  },
+  {
+    "id": "user_motivation_plan",
+    "description": "План Действий",
+    "defaultMessage": "План Действий"
+  },
+  {
+    "id": "user_motivation_commitedOn",
+    "description": "Совершенные",
+    "defaultMessage": "Совершенные"
+  },
+  {
+    "id": "user_motivation_commited",
+    "description": "Совершенные",
+    "defaultMessage": "Совершенные"
+  },
+  {
+    "id": "user_motivation_after",
+    "description": "Зафиксировать после",
+    "defaultMessage": "Зафиксировать после"
+  }
+]

@@ -9,7 +9,8 @@ import moment from 'moment';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class Commitments extends React.Component {
     constructor(props) {
         super(props);
@@ -41,13 +42,13 @@ class Commitments extends React.Component {
         }
         const{edges,totalCount} = info.commitments;
         const {intl}=this.props;
-        const title = intl.formatMessage(messages.myCommitments);
+        const title = intl.messages.user_motivation_mycommitments;
         const count = totalCount > 0 ? " ("+totalCount+")":"";
         return  (
             <Card
 
                 title={title+count}
-                extra={<Tooltip title={intl.formatMessage(messages.addCommitments)}><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
+                extra={<Tooltip title={intl.messages.user_motivation_addcommitments}><Button size={"small"} onClick={this.showModal} ><Icon type="plus"/></Button></Tooltip>}
 
             >
                 { this.state.visible && <ModalMakeCommitment  handleCancel={this.handleCancel} />}
@@ -68,7 +69,7 @@ class Commitments extends React.Component {
                         )}
                     /></div>
                     :
-                    <div className="ant-list-empty-text">{intl.formatMessage(messages.noCommitments)}</div>
+                    <div className="ant-list-empty-text">{intl.messages.user_motivation_noCommitments}</div>
                 }
             </Card>
 
