@@ -1,8 +1,8 @@
 [
   {
     "id": "calendar.event.title",
-    "description": "Make an appointment",
-    "defaultMessage": "Make an appointment"
+    "description": "Request an appointment",
+    "defaultMessage": "Request an appointment"
   },
   {
     "id": "calendar.event.send",

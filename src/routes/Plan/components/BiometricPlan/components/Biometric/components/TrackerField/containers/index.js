@@ -51,30 +51,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onChange: (amid, report, list_id) => {
-        /*if (!is_taken) {
-            report = {};
-        }*/
-        /*let new_report = {};
-
-        new_report.isTaken = is_taken;
-        new_report.date = ownProps.date;
-        if (ownProps.time) {
-            new_report.time = ownProps.time;
-        }*/
-
-        //const input = {value:value,date:date};
         ownProps.trackerReport(report, amid)
             .then(({data}) => {
-
-                message.success('Reported');
-
-                //const token = data.login.token;
-                //const user = data.login.user;
-
-                //ownProps.report.id = 0;
-
-                //toggleCoin();
-
+                console.log(ownProps);
+                const measurementLabel = ownProps.info.measurement.label;
+                message.success(measurementLabel+ ' Reported');
             }).catch((error) => {
             message.error(error.message);
         });

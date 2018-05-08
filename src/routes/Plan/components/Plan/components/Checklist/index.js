@@ -1,13 +1,13 @@
 import React from 'react'
 
-import {Checkbox} from 'antd';
+import {Checkbox, Card} from 'antd';
 const CheckboxGroup = Checkbox.Group;
 
 
 const vertStyle = {
     display: 'block',
-    height: '30px',
-    lineHeight: '30px',
+    /*height: '30px',*/
+    //lineHeight: '30px',
     marginLeft: 0,
 };
 export default class PlanChecklist extends React.Component {
@@ -22,6 +22,10 @@ export default class PlanChecklist extends React.Component {
         //reportValue: PropTypes.array
     };
 
+    static defaultProps = {
+        isPreview:false
+    }
+
     componentWillReceiveProps(nextProps) {
 
         if (nextProps.reports !== this.props.reports) {
@@ -30,14 +34,19 @@ export default class PlanChecklist extends React.Component {
     }
 
     onChange(value) {
+        if (this.props.isPreview || this.props.isBuilderMode) {
+            return true;
+        }
         // checklist values
         this.setState({value:value});
-        this.props.onChange(value, 'checklist');
+        if (this.props.onChange) {
+            this.props.onChange(value, 'checklist');
+        }
     }
 
     render() {
 
-        const {item} = this.props;
+        const {item, isBuilderMode} = this.props;
         const {value} = this.state;
         //const {label} = item;
 
@@ -54,8 +63,6 @@ export default class PlanChecklist extends React.Component {
             plainOptions.push(<Checkbox key={coid} value={coid} style={radioStyle} >{name}</Checkbox>);
             return option;
         });
-
-
 
 
         return <CheckboxGroup value={value} onChange={this.onChange} >{plainOptions}</CheckboxGroup>

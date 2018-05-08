@@ -1,5 +1,5 @@
-import PlanBody from '../../../../Plan/components/PlanLayout/components/PlanBody';
-import Plan from '../../../../Plan/components/Plan';
+import BuildBody from '../components/BuildBody';
+import {PlanElementPureFragment, PlanCardFragment} from "../../../../Plan/components/Plan/fragments";
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -7,14 +7,12 @@ import gql from 'graphql-tag';
 
 
 const PB_PLAN_BODY_QUERY = gql`
-    query PB_PLAN_BODY ($id: UID!, $date: Date!) {
+    query PB_PLAN_BODY ($id: UID!) {
         plan (id: $id) {
             ...PlanCardInfo,
-            upid,
             lessons {
                 id
                 title
-                completed
                 elements {
                     ...PlanElement,
                 }
@@ -32,24 +30,21 @@ const PB_PLAN_BODY_QUERY = gql`
 
         }
     }
-    ${Plan.fragments.plan}
-    ${Plan.fragments.element}
+    ${PlanCardFragment}
+    ${PlanElementPureFragment}
 `;
 
 
 // 1- add queries:
-const PlanBodyWithQuery = graphql(
+const BuildBodyWithQuery = graphql(
     PB_PLAN_BODY_QUERY,
     {
         options: (ownProps) => {
-            console.log(ownProps);
+            //console.log(ownProps);
             return {
-
             variables: {
                 id: ownProps.plan.id,
-                date: ''
             }}
-
         },
         props: ({ ownProps, data }) => {
             console.log(ownProps);
@@ -75,6 +70,6 @@ const PlanBodyWithQuery = graphql(
             }
         },
     }
-)(PlanBody);
+)(BuildBody);
 
-export default PlanBodyWithQuery;
+export default BuildBodyWithQuery;

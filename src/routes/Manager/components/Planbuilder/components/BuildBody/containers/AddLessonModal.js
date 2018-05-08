@@ -2,7 +2,7 @@ import AddLessonModal from '../components/AddLessonModal'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from 'antd';
-import Plan from '../../../../../../Plan/components/Plan';
+import {PlanElementPureFragment} from "../../../../../../Plan/components/Plan/fragments";
 
 const AddPlanLessonMutation=gql`
  mutation addPlanLesson($planId: UID!, $title: String!) {
@@ -14,20 +14,19 @@ const AddPlanLessonMutation=gql`
 `;
 
 const PLAN_BODY_LESSONS_QUERY = gql`
-    query PB_PLAN_BODY ($id: UID!, $date: Date) {
+    query PB_PLAN_BODY ($id: UID!) {
         plan (id: $id) {
             id
             lessons {
                 id
                 title
-                completed
                 elements {
                     ...PlanElement,
                 }
             }
         }
     }
-    ${Plan.fragments.element}
+    ${PlanElementPureFragment}
 `;
 
 

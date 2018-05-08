@@ -49,7 +49,7 @@ class DowScheduling extends React.Component{
                 <FormItem
                     {...formItemLayout}
                 >
-                    {getFieldDecorator('schedule[dow]', {
+                    {getFieldDecorator('schedule[dows]', {
                         rules: [{
                             required: true, message: 'Please Select',
                         }],

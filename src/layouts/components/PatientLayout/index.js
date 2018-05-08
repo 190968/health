@@ -21,7 +21,7 @@ const PatientLayout = ({loading, token, store, location}) =>  {
                     <PatientRoutes store={store} />
             </Content>
             <Footer>
-                Copyright © 2010-2017 Fitango Inc. All rights reserved
+                Copyright © 2010-2018 Fitango Inc. All rights reserved
             </Footer>
 
         </div>

@@ -1,26 +1,13 @@
 import React from 'react';
-import { Cascader,Row, Col, Select, Form, Radio} from 'antd';
-import {
-    injectIntl,
-} from 'react-intl';
-import moment from 'moment';
-//import messages from './messages';
+import PropTypes from 'prop-types';
+import { Cascader, Form} from 'antd';
+import {injectIntl} from 'react-intl';
 
-const Option = Select.Option;
-const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 
-const radioStyle = {
-    display: 'block',
-    height: '30px',
-    lineHeight: '30px',
-};
-
 const options = [];
-const days = [];
 let targetChildren = [];
 for (let i = 1; i <= 7; i++) {
-    //days.push(<Option key={i}>Day {i}</Option>);
     targetChildren.push({
         label: 'Day '+i,
         value: i
@@ -34,72 +21,63 @@ for (let i = 1; i <= 53; i++) {
         children: targetChildren
     });
 }
-for (let i = 1; i <= 7; i++) {
-    days.push(<Option key={i}>Day {i}</Option>);
-}
-class RelativeDay extends React.Component{
+
+export class RelativeDay extends React.Component{
     state = {
         options,
     };
-    loadData = (selectedOptions) => {
-        const targetOption = selectedOptions[selectedOptions.length - 1];
-        targetOption.loading = true;
 
-        // load options lazily
-        setTimeout(() => {
-            targetOption.loading = false;
 
-            let targetChildren = [];
-            for (let i = 1; i <= 7; i++) {
-                //days.push(<Option key={i}>Day {i}</Option>);
-                targetChildren.push({
-                    label: 'Day '+i,
-                    value: i
-                });
-            }
+    static propTypes = {
+        label: PropTypes.string,
+        fieldName: PropTypes.string,
+    }
 
-            targetOption.children = targetChildren;
-            this.setState({
-                options: [...this.state.options],
-            });
-        }, 100);
+    static defaultProps = {
+        label: 'ActionPlan Ends on',
+        fieldName: 'schedule[relativeEndDay]',
+        postHtml:''
     }
 
     onChange = (value, selectedOptions) => {
-        console.log(value, selectedOptions);
+        //console.log(value, selectedOptions);
+        //console.log(this.props.fieldName);
+        //const {fieldName} = this.props;
+        //this.props.form.setFieldsValue({[fieldName]: value});
     }
 
     componentWillReceiveProps(nextProps) {
-        const { intl, form, formItemLayout } = nextProps;
-        const { getFieldDecorator, getFieldValue } = form;
-        const relativeEndDay = getFieldValue('schedule[relativeEndDay]');
-        console.log(relativeEndDay);
+        //const { intl, form, formItemLayout, fieldName } = nextProps;
+        //const { getFieldDecorator, getFieldValue } = form;
+        //const relativeEndDay = getFieldValue(fieldName);
+        //console.log(relativeEndDay);
 
     }
 
     render(){
 
-        const { intl, form, formItemLayout } = this.props;
+        const { intl, form, formItemLayout, label, fieldName, postHtml } = this.props;
         const { getFieldDecorator, getFieldValue } = form;
-        const relativeEndDay = getFieldValue('schedule[relativeEndDay]');
-
+        //const relativeEndDay = getFieldValue(fieldName);
+        //console.log(relativeEndDay);
 
         return(
             <FormItem
-                label="ActionPlan Ends on"
+                label={label}
+                {...formItemLayout}
             >
-                {getFieldDecorator('schedule[relativeEndDay]', {
+                {getFieldDecorator(fieldName, {
+                    //initialValue:[1,2],
                     rules: [{
-                        required: true, message: 'Please Select',
+                        type: 'array', required: true, message: 'Please Select',
                     }],
                 })(
-                    <Cascader
-                        options={this.state.options}
-                        /*loadData={this.loadData}*/
-                        changeOnSelect
-                        onChange={this.onChange}
-                    />
+                        <Cascader style={{width:'60%'}}
+                            options={this.state.options}
+                            onChange={this.onChange}
+                        />
                 )}
+                {postHtml}
             </FormItem>
 
         );

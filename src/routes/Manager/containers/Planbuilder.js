@@ -1,5 +1,5 @@
 import Planbuilder from '../components/Planbuilder';
-import Plan from '../../Plan/components/Plan';
+import {PlanCardFragment} from '../../Plan/components/Plan/fragments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -7,6 +7,7 @@ export const ActionPlans_QUERY = gql`
     query GET_PLANBUILDER_PLAN ($id: UID) {
             plan (id:$id) {
                 ...PlanCardInfo
+                type
                 schedule {
                   type
                   startDate
@@ -17,7 +18,7 @@ export const ActionPlans_QUERY = gql`
                 }
             }
     }
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 
 // 1- add queries:
@@ -27,7 +28,7 @@ const withQuery = graphql(
         //name: 'PlanstorePlans',
         options: (ownProps) => {
             return {
-                //skip: !ownProps.ready,
+                skip: !ownProps.match.params.id,
                 variables: {
                     id: ownProps.match.params.id,
                 },
@@ -39,6 +40,7 @@ const withQuery = graphql(
             if (!data.loading) {
                 return {
                     plan: data.plan,
+                    type:data.plan.type,
                     loading: data.loading,
                 }
             } else {

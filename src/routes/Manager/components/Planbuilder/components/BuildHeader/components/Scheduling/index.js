@@ -58,7 +58,11 @@ class Scheduling extends React.Component{
                         </RadioGroup>
                     )}
                 </FormItem>
+                <FormItem
+                    {...tailFormItemLayout}
+                >
                 {scheduleBox}
+                </FormItem>
             </Card>
         );
     }

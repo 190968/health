@@ -1,9 +1,7 @@
 import React from 'react';
 import { Card, Input,Layout,Select,Form, DatePicker, Radio, Button, message } from 'antd';
 import { withApollo } from 'react-apollo'
-import {
-    injectIntl,
-} from 'react-intl';
+import {injectIntl} from 'react-intl';
 import moment from 'moment';
 import messages from './messages';
 import Scheduling from './components/Scheduling';
@@ -44,23 +42,39 @@ class BuildHeader extends React.Component{
         this.stopLoading = this.stopLoading.bind(this);
     }
 
+    static defaultProps = {
+        type: 'ap'
+    }
+
+    submitCallback = (plan) => {
+        const{ history } = this.props;
+        message.success('Updated');
+
+        this.stopLoading();
+
+        let mainUrl = '/pb/'+plan.id+'/build/body';
+        history.push(mainUrl);
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
-        const { onSubmit, history, plan } = this.props;
+        const { onUpdateSubmit, onCreateSubmit, plan } = this.props;
         this.props.form.validateFields((err, values) => {
             //console.log(err);
+
             //console.log(values);
+            //return;
             if (!err) {
                 this.setState({loading:true});
-                return onSubmit(values).then(data => {
-                    const {planUpdate} = data;
-                    message.success('Updated');
-
-                    this.stopLoading();
-
-                    let mainUrl = '/pb/'+planUpdate.id+'/build/body';
-                    history.push(mainUrl);
-                });
+                if (plan && plan.id) {
+                    return onUpdateSubmit(values, this.submitCallback);/*.then(({data}) => {
+                        this.submitCallback(data.planUpdate);
+                    });*/
+                } else {
+                    return onCreateSubmit(values, this.submitCallback);/*(.then(({data}) => {
+                        this.submitCallback(data.planCreate);
+                    });*/
+                }
             }
         });
     }
@@ -76,23 +90,15 @@ class BuildHeader extends React.Component{
 
 
     render(){
-        const { intl,form, plan } = this.props;
+        const { intl,form, plan, type } = this.props;
         const { getFieldDecorator, setFieldsValue } = form;
+        console.log(this.props);
 
+        const needScheduling = type === 'ap';
 
         return(
             <React.Fragment>
-                <Header style={{background: '#fff', padding: 0}}>
-                    <div style={{
-                        height: 64,
-                        padding: ' 8px 12px',
-                        background: '#fff',
-                        position: 'relative'
-                    }}>
 
-                    </div>
-                </Header>
-                <Content style={{margin: '16px'}}>
             <Form onSubmit={this.handleSubmit}>
             <Card title={intl.formatMessage(messages.pageTitle)}>
 
@@ -101,10 +107,9 @@ class BuildHeader extends React.Component{
                     label={intl.formatMessage(messages.title)}
                 >
                     {getFieldDecorator('title', {
-                        initialValue: ''
-
+                        rules: [{ required: true, message:"Input title Please" , whitespace: true }],
                     })(
-                       <Input placeholder="ActionPlan Title" />
+                       <Input placeholder="Title" />
                     )}
                 </FormItem>
 
@@ -112,11 +117,8 @@ class BuildHeader extends React.Component{
                     {...formItemLayout}
                     label={intl.formatMessage(messages.description)}
                 >
-                    {getFieldDecorator('description', {
-                        initialValue: ''
-
-                    })(
-                        <TextArea placeholder="ActionPlan Description" autosize={{ minRows: 2}} />
+                    {getFieldDecorator('description')(
+                        <TextArea placeholder="Description" autosize={{ minRows: 2}} />
                     )}
                 </FormItem>
 
@@ -125,16 +127,15 @@ class BuildHeader extends React.Component{
 
             </Card>
 
-                <Scheduling form={form} formItemLayout={formItemLayout} tailFormItemLayout={tailFormItemLayout} />
+                {needScheduling && <Scheduling form={form} formItemLayout={formItemLayout} tailFormItemLayout={tailFormItemLayout} />}
 
 
-                <FormItem style={{textAlign:'center'}}>
+                <FormItem style={{textAlign:'center', 'marginTop':24}}>
                     <Button loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                         {intl.formatMessage(messages.continue)}
                     </Button>
                 </FormItem>
             </Form>
-                </Content>
             </React.Fragment>
         );
     }
@@ -147,9 +148,9 @@ const BuildHeaderForm = Form.create({
         if (!plan) {
             return;
         }
-        console.log('mapPropsToFields', props);
-        console.log(plan.schedule);
-        console.log(typeof plan.schedule.limitStartDow);
+        //console.log('mapPropsToFields', props);
+        //console.log(plan.schedule);
+        //console.log(typeof plan.schedule.limitStartDow);
         //const {type} =  plan.schedule;
         return {
             title: createFormField({
@@ -168,18 +169,18 @@ const BuildHeaderForm = Form.create({
             'schedule[limitDow]': createFormField({
                 value: !!plan.schedule.limitStartDow,
             }),
-            'schedule[dow]': createFormField({
+            'schedule[dows]': createFormField({
                 value: plan.schedule.dows,
             }),
             'schedule[relativeEndDay]': createFormField({
                 value: plan.schedule.relativeEndDay,
             }),
 
-            'startDate': createFormField({
-                value: plan.schedule.startDate ? moment(plan.schedule.startDate) : null,
+            'schedule[startDate]': createFormField({
+                value: plan.schedule.startDate ? moment(plan.schedule.startDate) : moment(),
             }),
-            'endDate': createFormField({
-                value: plan.schedule.endDate ? moment(plan.schedule.endDate) : null,
+            'schedule[endDate]': createFormField({
+                value: plan.schedule.endDate ? moment(plan.schedule.endDate) : undefined,
             }),
         };
     }

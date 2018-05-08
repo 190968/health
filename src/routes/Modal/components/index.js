@@ -1,4 +1,4 @@
-
+import {compose, branch, renderComponent} from 'recompose';
 /**
  * Created by Pavel on 21.12.2017.
  */
@@ -70,3 +70,18 @@ class ModalForm extends React.Component {
 
 const WrappedModalForm = Form.create()(ModalForm);
 export default WrappedModalForm;
+
+
+
+
+
+export const Spinner = () =>
+    <div className="Spinner">
+        <div className="loader">Loading...</div>
+    </div>;
+const isLoading = ({ loading }) => loading;
+
+export const withSpinnerWhileLoading = branch(
+    isLoading,
+    renderComponent(Spinner)
+);

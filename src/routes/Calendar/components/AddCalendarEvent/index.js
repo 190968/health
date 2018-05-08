@@ -7,6 +7,8 @@ import {
 import messages from './messages';
 import AddressForm from '../../../../components/AddressForm';
 import PhoneForm from '../../../../components/PhoneForm';
+import {DateField} from "../../../../components/FormCustomFields/index";
+
 const { TextArea } = Input;
 const FormItem = Form.Item;
 
@@ -113,7 +115,7 @@ class AddCalendarEvent extends React.Component{
                                 rules: [{ required: true, message:"Select date" }],
                             }
                         )(
-                            <DatePicker />
+                            <DateField />
                         )}
                     </FormItem>
 

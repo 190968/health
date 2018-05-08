@@ -16,6 +16,10 @@ export const Empty = ({text}) => {
    return <div className="ant-list-empty-text">{text}</div>
 }
 
+export const EmptyList = ({children}) => {
+    return <div className="ant-list-empty-text">{children}</div>
+}
+
 
 export const LoadingModal = () => {
     return <Modal

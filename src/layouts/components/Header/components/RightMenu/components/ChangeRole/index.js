@@ -37,6 +37,7 @@ class ChangeRole extends React.Component{
                     return changeRole(role).then(() => {
                         message.success(this.props.intl.formatMessage(messages.updated));
                         onHide();
+                        this.props.history.push('/');
                         // redirect to main page
                     }).catch(() => {
 

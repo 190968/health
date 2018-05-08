@@ -7,6 +7,7 @@ export class TrackerField extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
         const {report} = this.props;
         this.state = {
             isReported: false,

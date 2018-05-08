@@ -1,0 +1,17 @@
+[
+  {
+    "id": "p.el.url.title",
+    "description": "Text",
+    "defaultMessage": "Text"
+  },
+  {
+    "id": "p.el.url.url",
+    "description": "Url",
+    "defaultMessage": "Url"
+  },
+  {
+    "id": "p.el.url.description",
+    "description": "Description",
+    "defaultMessage": "Description"
+  }
+]

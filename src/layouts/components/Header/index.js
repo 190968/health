@@ -4,6 +4,8 @@ import { Link, NavLink } from 'react-router-dom';
 import ReactPlaceholder from 'react-placeholder';
 import RightMenu from './containers/RightMenu';
 import { Row, Col, Menu} from 'antd';
+import {GetGlobalLabel} from "../../../components/App/app-context";
+
 
 
 
@@ -35,8 +37,8 @@ class LHeader extends React.Component {
         const location = this.props.location;
 
         const menu_items = [
-            ['Dashboard', '/'],
-            ['Planstore', '/planstore', 'aps'],
+            ['Dashboard', '/', 'dashboard'],
+            ['Planstore', '/planstore', 'planstore'],
             ['Community', '/community', 'community'],
         ];
 
@@ -47,7 +49,7 @@ class LHeader extends React.Component {
 
                 return (
                     <Menu.Item as={NavLink} to={item[1]} key={item[1]}>
-                        <NavLink to={item[1]}>{item[0]}</NavLink>
+                        <NavLink to={item[1]}><GetGlobalLabel type={item[2]} defaultValue={item[0]} /></NavLink>
                     </Menu.Item>
                 )
             }
@@ -122,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
 export default  connect(
     mapStateToProps,
     mapDispatchToProps
-)(LHeader);
+)((LHeader));

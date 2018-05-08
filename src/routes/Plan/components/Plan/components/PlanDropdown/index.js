@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {Select} from 'antd';
 const Option = Select.Option;
 
@@ -10,7 +9,6 @@ export default class PlanDropdown extends React.PureComponent {
         this.state = {
             value:this.props.reports
         };
-        this.onChange = this.onChange.bind(this);
     };
     static propTypes = {
         reportValue: PropTypes.number
@@ -23,19 +21,28 @@ export default class PlanDropdown extends React.PureComponent {
         }
     }
 
-    onChange(value) {
+    onChange = (value) => {
         this.setState({value:value});
         this.props.onChange(value, 'dropdown');
+        if (1===1 || this.props.hasChildren) {
+            // if we have children, then load according to value
+            this.loadChildren(value);
+        }
+    }
+
+    loadChildren = (value) => {
+        this.props.showChildren(value);
     }
 
     render() {
-        const {item} = this.props;
+        const {item, hasChildren} = this.props;
         let {value} = this.state;
         value = value !== '' ? value : null;
         const options = item.options;
         return <Select
             showSearch
-            style={{ width: 200 }}
+            allowClear={true}
+            style={{ width: '100%' }}
             placeholder={'Select '+item.label}
             optionFilterProp="name"
             value={value}

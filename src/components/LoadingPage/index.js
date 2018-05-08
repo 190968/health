@@ -1,4 +1,5 @@
 import React from 'react'
+import {Spin, Icon} from 'antd';
 
 export default function LoadingPage(props) {
     if (props.isLoading) {
@@ -8,7 +9,13 @@ export default function LoadingPage(props) {
             return <div>Loader timed out!</div>;
         } else if (props.pastDelay) {
             // Display a loading screen after a set delay.
-            return <div>Loading...</div>;
+            return <div style={{
+                height: '100%', width: '100%', overflow: 'auto', display: 'flex', top: '50%', position: 'absolute',
+                'minHeight': '100vh',
+                'flexDirection': 'column'
+            }}>
+                <Spin indicator={<Icon type="loading" style={{fontSize: 24}} spin/>}/>
+            </div>;
         } else {
             // Don't flash "Loading..." when we don't need to.
             return null;

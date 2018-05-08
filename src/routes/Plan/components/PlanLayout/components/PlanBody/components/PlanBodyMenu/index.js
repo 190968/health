@@ -3,7 +3,10 @@ import React from 'react'
 import { Menu, Icon } from 'antd';
 import { withApollo } from 'react-apollo';
 import AddLessonModal from '../../../../../../../Manager/components/Planbuilder/components/BuildBody/containers/AddLessonModal';
+import AddSectionModal from '../../../../../../../Manager/components/Planbuilder/components/BuildBody/containers/AddSectionModal';
 import gql from 'graphql-tag';
+import {GetGlobalLabel} from "../../../../../../../../components/App/app-context";
+
 const SubMenu = Menu.SubMenu;
 
 export class PlanBodyMenu extends React.Component {
@@ -13,6 +16,7 @@ export class PlanBodyMenu extends React.Component {
             currentTab: [props.currentTab],
             currentKey: props.currentKey,
             openAddLesson:false,// if to open add lesson modal
+            openAddSection:false,// if to open add lesson modal
         };
     };
 
@@ -30,11 +34,13 @@ export class PlanBodyMenu extends React.Component {
     }
 
     hideAddLesson = () => {
-       const newKey = this.props.lessons.length+1;
-        // show last Lesson
-
-
+        const newKey = this.props.lessons.length+1;
         this.setState({openAddLesson:!this.state.openAddLesson, currentKey:newKey});
+    }
+
+    hideAddSection = () => {
+        const newKey = this.props.activities.length+1;
+        this.setState({openAddSection:!this.state.openAddSection, currentKey:newKey});
     }
 
     /**
@@ -42,7 +48,7 @@ export class PlanBodyMenu extends React.Component {
      */
     appendLesson = () => {
         const {client} = this.props;
-        console.log(this.props);
+        //console.log(this.props);
 
 
         this.setState({openAddLesson:true});
@@ -123,6 +129,10 @@ export class PlanBodyMenu extends React.Component {
 
     }
 
+    appendSection = () => {
+        this.setState({openAddSection:true});
+    }
+
     onClick = (e) => {
 
 
@@ -130,10 +140,12 @@ export class PlanBodyMenu extends React.Component {
             case 'addLesson':
                 // append lesson
                 this.appendLesson();
+                return;
                 break;
             case 'addSection':
                 //append section
-
+                this.appendSection();
+                return;
                 break;
         }
         const{onClick} = this.props;
@@ -148,6 +160,11 @@ export class PlanBodyMenu extends React.Component {
             let currentTab = '';
             let currentKey = '';
             let currentKeyI = 0;
+        if (this.props.isBuilderMode) {
+            currentTab = 'introduction';
+            currentKey = 'introduction';
+        }
+
             // check what should we open
             const{onClick, activities, lessons} = this.props;
             let foundMatch = false;
@@ -185,7 +202,7 @@ export class PlanBodyMenu extends React.Component {
                     return section;
                 })
             }
-
+            //console.log(currentTab);
             if (currentTab !== '') {
                 this.setState({
                     currentTab: [currentTab],
@@ -215,7 +232,7 @@ export class PlanBodyMenu extends React.Component {
 
     render() {
 
-        const {lessons, activities, isBuilderMode, planId} = this.props;
+        const {lessons, activities, isBuilderMode, isPreviewMode, planId} = this.props;
         let {currentTab, currentKey} = this.state;
 
         return (
@@ -227,15 +244,17 @@ export class PlanBodyMenu extends React.Component {
             mode="inline"
         >
             {isBuilderMode && <Menu.Item key='introduction' style={{marginBottom:0}} > <Icon type="exclamation-circle-o" />Introduction</Menu.Item>}
-            {(isBuilderMode || lessons.length > 0) && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" />Lessons</span>}>
+            {(isBuilderMode || lessons.length > 0) && <SubMenu key="lessons" title={<span><Icon type="info-circle-o" /><GetGlobalLabel  type="lessons" /></span>}>
                 {lessons.map((lesson, i) => (<Menu.Item key={'lesson_'+i} i={i}>{lesson.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{lesson.title}</Menu.Item>))}
-                {isBuilderMode && <Menu.Item key='addLesson' style={{marginBottom:0}} > <Icon type="plus" />Add Lesson</Menu.Item>}
+                {isBuilderMode && !isPreviewMode && <Menu.Item key='addLesson' style={{marginBottom:0}} > <Icon type="plus" />Add <GetGlobalLabel type="lesson" /></Menu.Item>}
             </SubMenu>}
-            {(isBuilderMode || activities.length > 0) && <SubMenu key="activities" title={<span><Icon type="form" />Actions</span>}>
+            {(isBuilderMode || activities.length > 0) && <SubMenu key="activities" title={<span><Icon type="form" /><GetGlobalLabel  type="activities" /></span>}>
                 {activities.map((section, i) => (<Menu.Item key={'section_'+i}>{section.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{section.title}</Menu.Item>))}
-            </SubMenu>}
+                {isBuilderMode && !isPreviewMode && <Menu.Item key='addSection' style={{marginBottom:0}} > <Icon type="plus" />Add <GetGlobalLabel type="activity" /></Menu.Item>}
+                </SubMenu>}
         </Menu>
                 {this.state.openAddLesson && <AddLessonModal planId={planId} onHide={this.hideAddLesson} />}
+                {this.state.openAddSection && <AddSectionModal planId={planId} onHide={this.hideAddSection} />}
             </React.Fragment>)
     }
 }
