@@ -11,9 +11,9 @@ export const prepareInput = (values) => {
         cycles:parseInt(values.cycles),
         days:parseInt(values.days),
         timesPerDay:parseInt(values.timesPerDay),
-        //chemotherapy: undefined
+        chemotherapy: undefined
     }
-    console.log(values);
+    //console.log(values);
     return {
         chemotherapyElement:element
     }

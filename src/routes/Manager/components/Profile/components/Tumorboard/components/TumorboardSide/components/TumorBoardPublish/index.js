@@ -46,7 +46,7 @@ const TumorBoardPublish = props => {
                 })(
                     <RadioGroup style={{marginTop:5}}>
                         <Radio style={radioStyle} value={false}>Open</Radio>
-                        <Radio style={radioStyle} value={true}>By Inviation</Radio>
+                        <Radio style={radioStyle} value={true}>By Invitation</Radio>
                     </RadioGroup>
                 )}
             </FormItem>
@@ -70,7 +70,7 @@ const TumorBoardPublish = props => {
             {isOpen &&
             <FormItem
                 {...formItemLayout}
-                label="Custom Message"
+                label="Message"
             >
                 {getFieldDecorator('message', {
                     //initialValue: participants,
@@ -100,7 +100,7 @@ const enhance = compose(
 
                     props.onSubmit(props.tumorboard.id, {...input}).then(({data})=> {
                         // set
-                        //props.setStep(1);
+                        props.setStep(3);
                         //props.onHide();
                     });
                 }

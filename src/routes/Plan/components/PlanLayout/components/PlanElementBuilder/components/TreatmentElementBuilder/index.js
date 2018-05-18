@@ -166,8 +166,8 @@ const enhance = compose(
                     return el;
                 }
             });
-            //console.log(props);
-            //console.log(elements);
+            console.log(props);
+            console.log(elements);
             props.setElements(elements);
             callback();
         },

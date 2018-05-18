@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const TumorboardPure = props => {
+export const Tumorboard = props => {
     return <div>Tumor</div>;
 }

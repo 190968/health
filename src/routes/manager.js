@@ -112,5 +112,17 @@ export const asyncChemotherapies = () => {
     );
 }
 
+export const asyncTumorboards = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/components/Tumorboard/containers/TumorboardsList'),
+            modules: ['../routes/Manager/components/Tumorboard/containers/TumorboardsList'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Tumorboard/containers/TumorboardsList')],
+        })
+    );
+}
+
+
 
 

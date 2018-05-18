@@ -33,7 +33,7 @@ const withQuery = graphql(GET_PATIENT_TUMORBOARD_QUERY, {
 });
 
 const TUMORBOARD_PUBLISH_MUTATION = gql`
-    mutation TumorboardPublish($id: UID!, $userId: UID!, $participants:[UID]!, $isOpen: Boolean!, $message: String){
+    mutation TumorboardPublish($id: UID!, $userId: UID!, $participants:[UID], $isOpen: Boolean!, $message: String){
         tumorboardInvite(id:$id, userId:$userId, participants:$participants, isOpen:$isOpen, message:$message)
     }
 `;

@@ -215,7 +215,7 @@ export const ElementAliasFragment = gql`
         id
         label
         btnLabel
-        
+        hasElement
     }
    ${TreatmentElementFragment}
    ${ElementApFragment}

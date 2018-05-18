@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "../../Tumorboard/containers/TumorboardManager";
 
-const GET_PATIENT_TUMORBOARD_QUERY  = gql`
+export const GET_PATIENT_TUMORBOARD_QUERY  = gql`
     query GET_PATIENT_TUMORBOARD ($userId: UID!) {
         getPatientTumorboard (userId:$userId) {
             ...TumorboardInfo

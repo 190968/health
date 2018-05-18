@@ -1,31 +1,34 @@
 import React from 'react';
 import {Card, Button, Icon, Tooltip, Row, Col} from 'antd';
-import {compose, withState, withHandlers} from 'recompose';
+import {branch, compose, withState, withHandlers} from 'recompose';
 import Upload from '../../upload';
 import ReactPhotoGrid from 'react-photo-grid';
-
+import Gallery from "../../../Gallery";
 
 
 const AttachmentsPure = props => {
-    const {showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false} = props;
-    //console.log(attachments);
+    const {openUpload=false, hideButton=false, showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false} = props;
+    console.log(attachments);
     return <React.Fragment>
 
         <AttachmentsList attachments={attachments} showPreview={limit === 1 || showPreview} limit={limit} />
-        <Button onClick={toggleLoader}>{attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload'}</Button>
+        {!hideButton && <Button onClick={toggleLoader}>{attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload'}</Button>}
 
         <Upload {...uploadOpts} maxNumberOfFiles={limit}  template={template} /*allowedFileTypes={allowedFileTypes}*/ open={showLoader} onClose={toggleLoader} onComplete={props.onRequestCloseModal} />
     </React.Fragment>
 }
 
 const enhance = compose(
-    withState('showLoader', 'setShowLoader', false),
+    branch(props => !props.showLoader, withState('showLoader', 'setShowLoader', props => props.showLoader || false)),
     withHandlers({
         toggleLoader: props => () => {
             props.setShowLoader(!props.showLoader);
         },
         onRequestCloseModal: props => (values) => {
-            props.onClose(values);
+            console.log(values);
+            if (props.onClose) {
+                props.onClose(values);
+            }
             props.setShowLoader(false);
         }
     })
@@ -37,9 +40,13 @@ export const Attachments = enhance(AttachmentsPure);
 export const AttachmentsList = ({attachments, isEditable=true, showPreview=true, limit = false}) => {
     // filter attachments
     const images = attachments.filter(attachment => {
-        console.log(attachment);
         return attachment.type === "image";
     });
+    const files = attachments.filter(attachment => {
+        return attachment.type !== "image";
+    });
+
+
     let imageData2 = images.map(image => image.url);
     // console.log(imageData2);
     // imageData2 = [
@@ -60,7 +67,11 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
             {/*//onImageClick={this.handleImageClick}*/}
             {/*data={imageData2} />*/}
         {/*</div>*/}
-        <Row gutter={16}>{attachments.map((attachment, i) => {
+
+        <Gallery
+            images={images.map(image => ({src:image.url, thumbnail:image.url, orientation: 'landscape'}))}
+/>
+        <Row gutter={16}>{files.map((attachment, i) => {
         //console.log(attachment);
         let element = '';
         const {type='', label=''} = attachment;

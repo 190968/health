@@ -2,11 +2,11 @@
  * Created by Pavel on 09.12.2017.
  */
 import React from 'react';
-import {Avatar as AvatarAntd} from 'antd';
+import {Avatar as AvatarAntd, Tooltip} from 'antd';
 import {Link} from 'react-router-dom';
 import './index.less';
 
-class Avatar extends React.PureComponent {
+export class Avatar extends React.PureComponent {
 
     static defaultProps = {
         size: 'small',
@@ -16,7 +16,7 @@ class Avatar extends React.PureComponent {
     }
     render() {
 
-        const {src, info, size, useLink} = this.props;
+        const {src, info, size, useLink, tooltip=false} = this.props;
 
         // if we need a realy big avatar(profile page)
         const extraClass = size === 'huge' ? 'ant-avatar-huge' : '';
@@ -24,6 +24,7 @@ class Avatar extends React.PureComponent {
         if (src !== '') {
             return <AvatarAntd src={src} className={extraClass} size={size} style={{verticalAlign: 'middle'}} />
         }
+
 
         const {thumbs={}} = info;
         const {small='', large='', medium=''} = thumbs;
@@ -45,6 +46,9 @@ class Avatar extends React.PureComponent {
                         (info.email ? info.email[0] : 'N/A' )}
                 </AvatarAntd>;
 
+                if (tooltip) {
+                    avatar = <Tooltip title={name}>{avatar}</Tooltip>;
+                }
         if (useLink) {
             avatar = <Link to={'/u/'+info.id}>{avatar}</Link>;
         }

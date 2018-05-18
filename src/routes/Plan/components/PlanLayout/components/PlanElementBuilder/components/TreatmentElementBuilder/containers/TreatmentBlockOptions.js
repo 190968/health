@@ -39,16 +39,16 @@ const enhance = compose(
             }
         }
     }),
-    withHandlers({
-        onElementUpdate: props => (changedValue) => {
-            //console.log(props);
-            // Should provide an event to pass value to Form.
-            // const onChange = props.onChange;
-            // if (onChange) {
-            //     onChange(Object.assign({}, this.state, changedValue));
-            // }
-        }
-    }),
+    // withHandlers({
+    //     onElementUpdate: props => (changedValue) => {
+    //         //console.log(props);
+    //         // Should provide an event to pass value to Form.
+    //         // const onChange = props.onChange;
+    //         // if (onChange) {
+    //         //     onChange(Object.assign({}, this.state, changedValue));
+    //         // }
+    //     }
+    // }),
 
 )
 

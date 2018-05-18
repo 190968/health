@@ -15,6 +15,9 @@ const GET_PROFILE  = gql`
       medium
       wide
     }
+    age
+    gender
+    genderText
   }
 }
 

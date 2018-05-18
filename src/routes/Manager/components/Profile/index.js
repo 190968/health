@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Divider } from 'antd';
 import {NavLink} from 'react-router-dom';
 import Avatar from '../../../User/components/Avatar/index';
 import ProfileContent from './components/ProfileContent';
@@ -40,8 +40,21 @@ export default class Profile extends React.Component {
                     <div style={{padding:5}}>
                     <center><Avatar info={user} size="huge" /></center>
                     <center style={{marginTop:10}}><h2>{user.fullName}</h2></center>
+                        <div style={{textAlign:'center'}}>
+                            <span style={{fontSize:'1.2em'}}>{user.genderText}</span>
+                            <Divider type="vertical" />
+                            <span style={{fontSize:'1.2em'}}>{user.age} y.o.</span>
+                        </div>
                     </div>
-                    <Menu theme="grey" mode="inline" defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} >
+                    <Divider dashed style={{marginBottom:0}} />
+                    <Menu theme="grey" mode="inline" style={{borderRight:0}} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} >
+                        <Menu.Item key="timeline">
+                            <NavLink to={mainUrl+'/timeline'}>Timeline</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="tumorboard">
+                            <NavLink to={mainUrl+'/tumorboard'}>Tumorboard</NavLink>
+                        </Menu.Item>
+                        <Menu.Divider />
                         <SubMenu
                             key="details"
                             title={<span><span>Patient Details</span></span>}
@@ -88,12 +101,7 @@ export default class Profile extends React.Component {
                                 <NavLink to={mainUrl+'/adherence/7days'}>Past 7 Days</NavLink>
                             </Menu.Item>
                         </SubMenu>
-                        <Menu.Item key="timeline">
-                            <NavLink to={mainUrl+'/timeline'}>Timeline</NavLink>
-                        </Menu.Item>
-                        <Menu.Item key="tumorboard">
-                            <NavLink to={mainUrl+'/tumorboard'}>Tumorboard</NavLink>
-                        </Menu.Item>
+
 
                         <SubMenu
                             key="stakeholders"

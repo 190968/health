@@ -11,5 +11,8 @@ export const UserInfoFragment = gql`
                 },
                 lastName
                 fullName
+                gender
+                genderText
+                age
         }
 `;
