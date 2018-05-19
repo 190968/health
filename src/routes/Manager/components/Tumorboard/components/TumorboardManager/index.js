@@ -74,7 +74,7 @@ export const TumorboardManager = (props) => {
             required
         >
             {getFieldDecorator('startDate', {
-                    initialValue: startDate,
+                    initialValue:  startDate ? moment(startDate) : moment(),
                     rules: [{required: true, message: "Select Admin"}],
                 }
             )(
@@ -94,7 +94,7 @@ export const TumorboardManager = (props) => {
             label='Time'
             required
         >
-            <StartEndTime startTime={startTime} endTime={endTime} form={form} />
+            <StartEndTime startTime={startTime} endTime={endTime} startDate={startDate} form={form} />
             {/*{getFieldDecorator('date', {*/}
             {/*initialValue: date ? moment(date) : undefined,*/}
             {/*rules: [{required: true, message: "Select Date"}],*/}

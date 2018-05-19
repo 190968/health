@@ -30,6 +30,8 @@ export const withModal = (WrappedComponent) => {
         onCancel = () => {
             if (this.props.onHide) {
                 this.props.onHide();
+            } else if (this.props.onCancel) {
+                this.props.onCancel();
             } else {
                 this.props.setModalVisible(false);
             }

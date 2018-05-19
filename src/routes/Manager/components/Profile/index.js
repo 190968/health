@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Icon, Divider } from 'antd';
+import { Layout, Menu, Icon, Divider, Alert } from 'antd';
 import {NavLink} from 'react-router-dom';
 import Avatar from '../../../User/components/Avatar/index';
 import ProfileContent from './components/ProfileContent';
@@ -31,6 +31,8 @@ export default class Profile extends React.Component {
         if (id !== '') {
             mainUrl += '/'+id;
         }
+        let cancerName = 'Lung cancer';
+        let stageName = 'Stage 1';
 
         return (
             <Layout style={{minHeight:'100vh'}}>
@@ -38,15 +40,21 @@ export default class Profile extends React.Component {
                     trigger={null} style={{background:'#fff'}}
                 >
                     <div style={{padding:5}}>
-                    <center><Avatar info={user} size="huge" /></center>
-                    <center style={{marginTop:10}}><h2>{user.fullName}</h2></center>
-                        <div style={{textAlign:'center'}}>
+                        <center><Avatar info={user} size="huge" /></center>
+                        <center style={{marginTop:10}}><h2>{user.fullName}</h2></center>
+                        <div style={{textAlign:'center', marginBottom:10}}>
                             <span style={{fontSize:'1.2em'}}>{user.genderText}</span>
                             <Divider type="vertical" />
-                            <span style={{fontSize:'1.2em'}}>{user.age} y.o.</span>
+                            <span style={{fontSize:'1.2em'}}>{user.age}</span>
                         </div>
+                        <Alert
+                            message={cancerName}
+                            description={stageName}
+                            type="success"
+                            style={{textAlign:'center'}}
+                        />
                     </div>
-                    <Divider dashed style={{marginBottom:0}} />
+                    <Divider dashed style={{marginBottom:0, marginTop:10}} />
                     <Menu theme="grey" mode="inline" style={{borderRight:0}} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} >
                         <Menu.Item key="timeline">
                             <NavLink to={mainUrl+'/timeline'}>Timeline</NavLink>

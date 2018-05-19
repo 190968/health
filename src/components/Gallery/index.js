@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { css, StyleSheet } from 'aphrodite/no-important';
+import {compose, withHandlers, withState} from 'recompose';
 import Lightbox from 'react-images';
 
 export class Gallery extends Component {
@@ -166,3 +167,65 @@ const classes = StyleSheet.create({
 });
 
 export default Gallery;
+
+
+const renderGallery = props => {
+    const {images} = props;
+    return images.map((obj, i) => {
+        return (
+            <a
+                href={obj.src}
+                key={i}
+                onClick={(e) => props.openLightbox(i, e)}
+            >
+                <img src={obj.thumbnail} style={{width:'100%', height:'auto', marginBottom:5}} />
+            </a>
+        );
+    });
+}
+const GalleryWidePure = props => {
+    const {currentImage=0, images=[], lightboxIsOpen=false} = props;
+    return (
+        <div className="section">
+            {renderGallery(props)}
+            <Lightbox
+                currentImage={currentImage}
+                images={images}
+                isOpen={lightboxIsOpen}
+                onClickImage={props.handleClickImage}
+                onClickNext={props.gotoNext}
+                onClickPrev={props.gotoPrevious}
+                onClose={props.closeLightbox}
+            />
+        </div>
+    );
+}
+
+const enhance = compose(
+    withState('currentImage', 'setCurrentImage', 0),
+    withState('lightboxIsOpen', 'setLightboxOpen', false),
+    withHandlers({
+        openLightbox: props => (i, e) => {
+            e.preventDefault();
+            props.setCurrentImage(i);
+            props.setLightboxOpen(true);
+        },
+        closeLightbox: props => () => {
+            props.setCurrentImage(0);
+            props.setLightboxOpen(false);
+        },
+        gotoPrevious: props => () => {
+            props.setCurrentImage(props.currentImage-1);
+        },
+        gotoNext: props => () => {
+            props.setCurrentImage(props.currentImage+1);
+        },
+        handleClickImage: props => VALUE => {
+            if (props.currentImage === props.images.length - 1) return;
+
+            // go next
+            props.setCurrentImage(props.currentImage+1);
+        }
+    })
+);
+export const GalleryWide = enhance(GalleryWidePure);

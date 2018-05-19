@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {compose, withHandlers, withStateHandlers, defaultProps} from 'recompose';
+import {compose, withHandlers, withState, defaultProps} from 'recompose';
 import { DatePicker, Input,Col,Select,Form, TimePicker } from 'antd';
 import {
     injectIntl,
@@ -309,31 +309,32 @@ export const DateField = connect(
 
 
 export const TimeFieldPure = props => {
-    const {allowClear=true, disabled=false, placeholder=''} = props
-    return <TimePicker use12Hours format="h:mm a" allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} />;
+    const {time=undefined,allowClear=true, disabled=false, placeholder='', onChange} = props;
+    console.log(props);
+    return <TimePicker use12Hours value={time} format="h:mm a" onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} />;
 }
 
 export const TimeField = compose(
-    withStateHandlers(({ value }) => ({
-            time: value,
-        }),
-        {
-            onChange: props => (time) => {
-                // if (!('value' in this.props)) {
-                //     this.setState({ time });
-                // }
-                props.onChange({ time });
+    withState('time', 'setTime', props => props.value),
+    withHandlers({
+        onChange: props => (time) => {
+            // if (!('value' in this.props)) {
+            //     this.setState({ time });
+            // }
+            //console.log(props);
+            //console.log(time);
+            props.onChange(time);
+            //console.log(time);
+            props.setTime(time);
 
-                return {time};
-
-            }
-        }),
+        }
+    }),
 )(TimeFieldPure);
 
 
      const StartEndTimePure = props => {
 
-        const {  form, intl, endTimeRequired=false, startTime, endTime, inline, names } = props;
+        const {  form, intl, endTimeRequired=false, startDate, endDate, startTime, endTime, inline, names } = props;
         let {formItemLayout} = props;
 
         const {getFieldDecorator} = form;
@@ -343,7 +344,10 @@ export const TimeField = compose(
         }
         //console.log(names);
         //console.log(startDate ? moment(startDate) : moment());
-
+        // console.log(startTime);
+        // console.log(endTime);
+        // console.log(startDate);
+        // console.log(moment(startDate+' '+startTime));
         const startField = <FormItem
             {...formItemLayout}
             label={!inline && 'Start Time'}

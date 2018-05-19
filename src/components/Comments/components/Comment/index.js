@@ -24,11 +24,9 @@ const Comment = props => {
 
         </span>
 
-        {attachments.map((attachment, i) => {
-            return  <div key={i} className={'bubble'}>
-                <AttachmentsList attachments={attachments} />
-            </div>
-        })}
+        <div>
+            <AttachmentsList attachments={attachments} />
+        </div>
 
         <div className={'bubble'}>
             <span dangerouslySetInnerHTML={{ __html: message.message }} />

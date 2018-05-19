@@ -1,0 +1,12 @@
+[
+  {
+    "id": "reply",
+    "description": "Reply",
+    "defaultMessage": "Reply"
+  },
+  {
+    "id": "send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  }
+]

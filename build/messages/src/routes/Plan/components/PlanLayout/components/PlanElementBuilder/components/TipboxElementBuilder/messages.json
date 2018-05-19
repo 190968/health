@@ -1,0 +1,12 @@
+[
+  {
+    "id": "p.el.tipbox.title",
+    "description": "Text",
+    "defaultMessage": "Text"
+  },
+  {
+    "id": "p.el.tipbox.toolpic",
+    "description": "Icon",
+    "defaultMessage": "Icon"
+  }
+]

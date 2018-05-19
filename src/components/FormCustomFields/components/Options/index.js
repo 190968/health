@@ -87,13 +87,14 @@ const OptionsList = SortableContainer(({keys=[], options=[], form, remove,  minO
 });
 
 const OptionsPure = (props) => {
+    const {required=true} = props;
     //console.log(props);
         return <React.Fragment>
             <FormItem
                 //optionsErrors
             {...formItemLayout}
             label={props.title}
-            required={true}
+            required={required}
             >
                 <OptionsList {...props} />
             </FormItem>

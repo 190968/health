@@ -58,6 +58,7 @@ export const ElementClinicalNoteFragment = gql`
             type
             label
             url
+            size
         }
     }
 `;

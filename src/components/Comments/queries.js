@@ -19,6 +19,7 @@ export const GET_COMMENTS_LIST = gql`
                     type
                     label
                     url
+                    size
                 }
                 replies {
                       totalCount
@@ -36,6 +37,7 @@ export const GET_COMMENTS_LIST = gql`
                                 type
                                 label
                                 url
+                                size
                             }
                             replies {
                                 totalCount
@@ -53,6 +55,7 @@ export const GET_COMMENTS_LIST = gql`
                                         type
                                         label
                                         url
+                                        size
                                     }
                                 }
                             }

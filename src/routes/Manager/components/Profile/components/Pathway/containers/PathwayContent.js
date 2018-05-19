@@ -9,6 +9,7 @@ const GET_USER_PATHWAY_QUERY  = gql`
         pathway {
             id
             title
+            version
         }
   }
 }

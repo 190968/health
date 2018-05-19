@@ -40,6 +40,7 @@ export const TumorboardElementFragment  = gql`
          }
          type 
          typeText  
+         notes
          __typename
     }
      ${ElementLinkFragment}
@@ -65,6 +66,8 @@ export const TumorboardSimpleFragment = gql`
             notes
             startDate
             endDate
+            startTime
+            endTime
             isOpen
         }
         ${UserInfoFragment}
