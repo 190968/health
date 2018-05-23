@@ -5,6 +5,7 @@ import React from 'react';
 import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/Communities';
 import Plan from  './components/PlansList';
+import News from  '../CategoryNews/components';
  import Search from  './containers/Search.js';
 import { Card,Popconfirm,Button,Row,Col  } from 'antd';
 import { withApollo} from 'react-apollo'
@@ -61,8 +62,8 @@ class Category extends React.Component{
             );
         }
         const { intl } = this.props;
-        const {name,canJoin, isJoined,articles,discussions,categories,plans} = info;
-
+        const {name,canJoin,news, isJoined,articles,discussions,categories,plans} = info;
+console.log("pasha---------------",news);
         let categoriesKV = [];
         categories.forEach((item)=>{
             categoriesKV.push({value:item.id, text:item.name});
@@ -118,6 +119,7 @@ class Category extends React.Component{
 
 
                 {categories.length > 0 && <ListCommunityForm name={name}  categories={categories} />}
+                {news.totalCount > 0 && <News info={news}  />}
 
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
                 {plans.length > 0 && <Plan  plans={plans}/>}

@@ -35,7 +35,7 @@ class Points extends React.Component {
         const {intl}=this.props;
         const percent = Math.round(points/amount*100);
         return  (
-            <Card style={{height:250}} title={intl.messages.user_motivation_points}>
+            <Card style={{height:250}} title={intl.messages.user_motivation_mypoints}>
 
 
                 { this.state.visible && <ModalPointsHistory handleCancel={this.handleCancel}/>}

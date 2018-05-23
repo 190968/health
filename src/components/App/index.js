@@ -79,9 +79,8 @@ const queryOptions = {
     fetchPolicy: 'cache-first'
 }
 
-const language = "ru";
+const language = "en";
 const messages = localeData[language] || localeData.en;
-console.log("-------localeDate------",messages);
 class App extends React.Component {
 
     static propTypes = {

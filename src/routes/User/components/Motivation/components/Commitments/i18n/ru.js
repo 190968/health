@@ -6,18 +6,18 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
         "myCommitments": {
             "id": "user_motivation_mycommitments",
-            "defaultMessage": "My Commitments",
-            "description": "My Commitments"
+            "defaultMessage": "Мои обязательства",
+            "description": "Мои обязательства"
         },
         "addCommitments": {
             "id": "user_motivation_addcommitments",
-            "defaultMessage": "Add Commitments",
-            "description": "Add Commitments"
+            "defaultMessage": "Добавить обязательства",
+            "description": "Добавить обязательства"
         },
         "noCommitments": {
             "id": "user_motivation_noCommitments",
-            "defaultMessage": "No Commitments",
-            "description": "No Commitments"
+            "defaultMessage": "Нет обязательств",
+            "description": "Нет обязательств"
         }
     }
 );

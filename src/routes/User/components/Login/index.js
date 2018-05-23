@@ -48,12 +48,12 @@ export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // email: {
-            //     value: 'demo2patient@fitango.com',
-            // },
-            // password: {
-            //     value: 'Fitango2',
-            // },
+            email: {
+                value: 'demo2patient@fitango.com',
+            },
+            password: {
+                value: 'Fitango2',
+            },
             //loading: false,
             visible: false,
         };

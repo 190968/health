@@ -5,8 +5,6 @@ import React from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import './register.css'
 import PhoneForm from '../../../../components/PhoneForm';
-//import {Route } from 'react-router'
-//import { intl, FormattedMessage, defineMessages } from 'react-intl';
 
 import { Modal,Card, Form,  DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 import { withApollo } from 'react-apollo'
@@ -17,12 +15,9 @@ import {
 import ru from './i18n/ru';
 import en from './i18n/en';
 import moment from 'moment';
-
-
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const FormItem = Form.Item;
-
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -45,12 +40,8 @@ const tailFormItemLayout = {
         },
     },
 };
-
 const dateFormat = 'MM/DD/YYYY';
-
-
 class NormalRegisterForm extends React.Component {
-
     constructor() {
         super();
         this.state = {checked:true, loading:false};
@@ -58,17 +49,14 @@ class NormalRegisterForm extends React.Component {
         this.showTerms = this.showTerms.bind(this);
         this.showPolicy = this.showPolicy.bind(this);
     }
-
     componentWillMount() {
         // Run query here(check Request api). You can check how it's done in App components.
         // and update the state with the info.
         // If in the query result it says, userIsRegistered, then show confirmRegistration components(need to create) with the following fields: Enter email(need to check if this request has the same email as we will enter), enter new password, confirm password.
     }
-
     handleCheckboxChange =()=> {
         this.setState({checked: !this.state.checked});
     }
-
     handleSubmit = (e) => {
 
         e.preventDefault();
@@ -83,7 +71,6 @@ class NormalRegisterForm extends React.Component {
             }
         });
     };
-
     showTerms(e) {
         e.preventDefault();
         Modal.info({
@@ -126,28 +113,22 @@ class NormalRegisterForm extends React.Component {
     stopLoading(){
         this.setState({ loading: false });
     }
-
     disabledDate = (current) => {
         // Can not select future
         return current && current > moment().endOf('day');
 
     }
     render() {
-
         const token = this.props.token;
         const form = this.props.form;
-
         if (token !== '') {
             return  <Redirect to={{
                 pathname: '/'
             }} />;
         }
-
-
         const phoneNumberError = form.getFieldError('phone[number]');
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
-
         const termsOfUseLink = <a onClick={this.showTerms}>{intl.messages.terms_of_use}</a>;
         const policyLink = <a onClick={this.showPolicy}>{intl.messages.privacy_policy}</a>;
         return (
@@ -155,7 +136,6 @@ class NormalRegisterForm extends React.Component {
                 <Card
                     title={intl.messages.user_sign_up}
                 >
-
             <Form onSubmit={this.handleSubmit} >
 
                 <FormItem
@@ -272,17 +252,14 @@ class NormalRegisterForm extends React.Component {
 
                 </FormItem>
 
-                {/*<FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>*/}
-                    {/*{getFieldDecorator('agreement', {*/}
-                        {/*valuePropName: 'checked',*/}
+                <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+                    {getFieldDecorator('agreement', {
+                        valuePropName: 'checked',
 
-                    {/*})(*/}
-                        {/*<Checkbox onChange={this.handleCheckboxChange.bind(this)} ><FormattedMessage {intl.messages.user_agreement} values={{*/}
-                            {/*terms_of_use: termsOfUseLink,*/}
-                            {/*privacy_policy: policyLink*/}
-                        {/*}} /></Checkbox>*/}
-                    {/*)}*/}
-                {/*</FormItem>*/}
+                     })(
+                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} >agreement</Checkbox>
+                    )}
+                </FormItem>
                 <FormItem {...tailFormItemLayout}>
                     <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
                         {intl.messages.user_sign_up}
@@ -295,6 +272,5 @@ class NormalRegisterForm extends React.Component {
         );
     }
 }
-
 const WrappedNormalRegisterForm = Form.create()(NormalRegisterForm);
 export default withApollo(injectIntl(WrappedNormalRegisterForm));

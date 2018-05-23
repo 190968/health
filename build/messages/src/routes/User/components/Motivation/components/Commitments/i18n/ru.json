@@ -1,17 +1,17 @@
 [
   {
     "id": "user_motivation_mycommitments",
-    "description": "My Commitments",
-    "defaultMessage": "My Commitments"
+    "description": "Мои обязательства",
+    "defaultMessage": "Мои обязательства"
   },
   {
     "id": "user_motivation_addcommitments",
-    "description": "Add Commitments",
-    "defaultMessage": "Add Commitments"
+    "description": "Добавить обязательства",
+    "defaultMessage": "Добавить обязательства"
   },
   {
     "id": "user_motivation_noCommitments",
-    "description": "No Commitments",
-    "defaultMessage": "No Commitments"
+    "description": "Нет обязательств",
+    "defaultMessage": "Нет обязательств"
   }
 ]

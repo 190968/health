@@ -24,6 +24,15 @@ query GET_CATEGORY($id:UID) {
            medium
            wide
          }
+          news{
+          totalCount
+          edges{
+            id
+            title
+            text
+            thumb
+          }
+        }
          canJoin
          isJoined
          articles {

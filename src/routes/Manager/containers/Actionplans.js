@@ -36,7 +36,7 @@ const withQuery = graphql(
         },
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-
+console.log(data.planstore.plans);
                 return {
                     plans: data.planstore.plans.edges,
                     plansTotal: data.planstore.plans.totalCount,

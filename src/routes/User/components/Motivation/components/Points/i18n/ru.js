@@ -5,7 +5,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
         "points": {
-            "id": "user_motivation_points",
+            "id": "user_motivation_mypoints",
             "defaultMessage": "Мои очки",
             "description": "Мои очки"
         },
