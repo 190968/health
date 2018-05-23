@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import {Form, Input, Select} from 'antd';
-import {DateField} from "../../../../../../components/FormCustomFields/index";
+import {DateField, StartEndTime} from "../../../../../../components/FormCustomFields/index";
 import {PeopleSelect} from "../../../../../../components/Autosuggest/containers/PeopleSelect";
 
 const FormItem = Form.Item;
@@ -21,7 +21,7 @@ export const TumorboardManager = (props) => {
     const {tumorboard={}, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator} = form;
     console.log(tumorboard);
-    const {title='', date, notes='', location='', video='', lead={}, admin={}} = tumorboard;
+    const {title='', startDate, endDate, startTime, endTime, notes='', location='', video='', lead={}, admin={}} = tumorboard;
     const {id:leadUid=''} = lead;
     const {id:adminUid=''} = admin;
     return <Form>
@@ -71,14 +71,37 @@ export const TumorboardManager = (props) => {
         <FormItem
             {...formItemLayout}
             label='Date'
+            required
         >
-            {getFieldDecorator('date', {
-                    initialValue: date ? moment(date) : undefined,
-                    rules: [{required: true, message: "Select Date"}],
+            {getFieldDecorator('startDate', {
+                    initialValue:  startDate ? moment(startDate) : moment(),
+                    rules: [{required: true, message: "Select Admin"}],
                 }
             )(
-                <DateField  />
+                <DateField />
             )}
+            {/*{getFieldDecorator('date', {*/}
+                    {/*initialValue: date ? moment(date) : undefined,*/}
+                    {/*rules: [{required: true, message: "Select Date"}],*/}
+                {/*}*/}
+            {/*)(*/}
+                {/*<DateField  />*/}
+            {/*)}*/}
+        </FormItem>
+
+        <FormItem
+            {...formItemLayout}
+            label='Time'
+            required
+        >
+            <StartEndTime startTime={startTime} endTime={endTime} startDate={startDate} form={form} />
+            {/*{getFieldDecorator('date', {*/}
+            {/*initialValue: date ? moment(date) : undefined,*/}
+            {/*rules: [{required: true, message: "Select Date"}],*/}
+            {/*}*/}
+            {/*)(*/}
+            {/*<DateField  />*/}
+            {/*)}*/}
         </FormItem>
 
 

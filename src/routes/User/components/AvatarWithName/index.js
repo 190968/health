@@ -7,7 +7,7 @@ import Avatar from '../Avatar'
 import Truncate from 'react-truncate';
 import {Link} from 'react-router-dom';
 
-class AvatarWithName extends React.PureComponent {
+export class AvatarWithName extends React.PureComponent {
 
     static defaultProps = {
         info: {},

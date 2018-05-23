@@ -58,6 +58,7 @@ export const ElementClinicalNoteFragment = gql`
             type
             label
             url
+            size
         }
     }
 `;
@@ -215,7 +216,7 @@ export const ElementAliasFragment = gql`
         id
         label
         btnLabel
-        
+        hasElement
     }
    ${TreatmentElementFragment}
    ${ElementApFragment}

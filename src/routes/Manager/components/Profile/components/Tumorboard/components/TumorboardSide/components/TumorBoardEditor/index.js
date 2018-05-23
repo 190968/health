@@ -26,10 +26,14 @@ const enhance = compose(
                     let input = values;
 
                     props.onSubmit(input).then(({data})=> {
-                        console.log(data);
+                        //console.log(data);
                         //const {}
                         // set
                         props.setStep(1);
+
+                        // if (data.tumorboardCreate) {
+                        //     props.setTumorboard(data.tumorboardCreate);
+                        // }
                         //props.setTumorboard();
                         //props.onHide();
                     });

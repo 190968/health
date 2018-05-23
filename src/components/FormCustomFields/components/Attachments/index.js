@@ -1,31 +1,34 @@
 import React from 'react';
-import {Card, Button, Icon, Tooltip, Row, Col} from 'antd';
-import {compose, withState, withHandlers} from 'recompose';
+import {Card, Button, Icon, Tooltip, Row, Col, List, Avatar} from 'antd';
+import {branch, compose, withState, withHandlers} from 'recompose';
 import Upload from '../../upload';
 import ReactPhotoGrid from 'react-photo-grid';
-
+import {GalleryWide} from "../../../Gallery";
 
 
 const AttachmentsPure = props => {
-    const {showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false} = props;
-    //console.log(attachments);
+    const {openUpload=false, hideButton=false, showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false} = props;
+    console.log(attachments);
     return <React.Fragment>
 
         <AttachmentsList attachments={attachments} showPreview={limit === 1 || showPreview} limit={limit} />
-        <Button onClick={toggleLoader}>{attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload'}</Button>
+        {!hideButton && <Button onClick={toggleLoader}>{attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload'}</Button>}
 
         <Upload {...uploadOpts} maxNumberOfFiles={limit}  template={template} /*allowedFileTypes={allowedFileTypes}*/ open={showLoader} onClose={toggleLoader} onComplete={props.onRequestCloseModal} />
     </React.Fragment>
 }
 
 const enhance = compose(
-    withState('showLoader', 'setShowLoader', false),
+    branch(props => !props.showLoader, withState('showLoader', 'setShowLoader', props => props.showLoader || false)),
     withHandlers({
         toggleLoader: props => () => {
             props.setShowLoader(!props.showLoader);
         },
         onRequestCloseModal: props => (values) => {
-            props.onClose(values);
+            console.log(values);
+            if (props.onClose) {
+                props.onClose(values);
+            }
             props.setShowLoader(false);
         }
     })
@@ -34,12 +37,22 @@ const enhance = compose(
 export const Attachments = enhance(AttachmentsPure);
 
 
+
+const getExtention = filename => {
+    return filename.substring(filename.lastIndexOf('.')+1, filename.length) || filename;
+}
+const formatBytes = (a,b) => {if(0==a)return"0 Bytes";var c=1024,d=b||2,e=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],f=Math.floor(Math.log(a)/Math.log(c));return parseFloat((a/Math.pow(c,f)).toFixed(d))+" "+e[f]}
+
 export const AttachmentsList = ({attachments, isEditable=true, showPreview=true, limit = false}) => {
     // filter attachments
     const images = attachments.filter(attachment => {
-        console.log(attachment);
         return attachment.type === "image";
     });
+    const files = attachments.filter(attachment => {
+        return attachment.type !== "image";
+    });
+
+
     let imageData2 = images.map(image => image.url);
     // console.log(imageData2);
     // imageData2 = [
@@ -60,61 +73,109 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
             {/*//onImageClick={this.handleImageClick}*/}
             {/*data={imageData2} />*/}
         {/*</div>*/}
-        <Row gutter={16}>{attachments.map((attachment, i) => {
-        //console.log(attachment);
-        let element = '';
-        const {type='', label=''} = attachment;
 
-        let image = '';
-        let icon = '';
-        const actions = false;//isEditable && <Tooltip title="Delete"><Icon type="delete" style={{marginLeft:5}} /></Tooltip>;
-        switch(type) {
-            case 'image':
-                //return null;
-                icon = <Icon type="picture" />;
-                break;
-            case 'video':
-                icon = <Icon type="video-camera" />;
-                break;
-        }
+        <GalleryWide
+            images={images.map(image => ({src:image.url, thumbnail:image.url, orientation: 'landscape', caption: <a href={image.url} target="_blank"><Icon type="download" /> View Original</a> }))}
+        />
 
-        if (showPreview) {
-            switch(type) {
-                case 'video':
-                element = <video width="100%" controls>
-                        <source src={attachment.url} /*type="video/mp4"*/ />
-                            Your browser does not support HTML5 video.
-                    </video>;
-                    break;
-                case 'image':
-                    element = <img src={attachment.url} alt={label} style={{width:'100%'}} />;
-                    break;
-                default:
-                    element =  <a href={attachment.url} target="_blank">{i + 1}. {image} {label}</a>
-                    break;
-            }
-            if (limit === 1) {
-                element = <Col key={i} >{element}</Col>
-            } else {
-                element = <Col sm={8} md={12} lg={8}  key={i}><Card key={i} type="inner" style={{marginBottom:16}} cover={image}
-                                                                     title={<span>{icon} {label}</span>} extra = {actions}>
-                    {element}
-                </Card></Col>
-            }
+        {files.length > 0 && <List
+            size="small"
+            // header={<div>Header</div>}
+            // footer={<div>Footer</div>}
+            //bordered
+            dataSource={files}
+            renderItem={(attachment, i) => {
+                //console.log(attachment);
+                let element = '';
+                let {type='', label='', size=0} = attachment;
 
-        } else {
-            element = <Col sm={8} md={12}  key={i}>
-                <span style={{float:'right'}}>{actions}</span>
-                <div>{attachment.url && attachment.url !== '' ?
-                <a href={attachment.url} target="_blank">{i + 1}. {image} {label}</a>
-                :
-                    <Tooltip title="Broken Link. Please reupload the file"><span>{i + 1}. {image} {label}</span></Tooltip>}
-            </div>
+                let image = '';
+                let icon = '';
+                const actions = false;//isEditable && <Tooltip title="Delete"><Icon type="delete" style={{marginLeft:5}} /></Tooltip>;
+                switch(type) {
+                    case 'image':
+                        //return null;
+                        icon = <Avatar icon="picture" />;
+                        break;
+                    case 'video':
+                        icon = <Avatar icon="video-camera" />;
+                        break;
+                    default:
+                        const ext = getExtention(label);
+                        console.log(ext);
+                        switch(ext) {
+                            default:
+                                icon = <Avatar icon="file" />;
+                                break;
+                            case 'pdf':
+                                icon = <Avatar icon="file-pdf" />;
+                                break;
+                            case 'ppt':
+                            case 'pptx':
+                                icon = <Avatar icon="file-ppt" />;
+                                break;
+                            case 'doc':
+                            case 'docx':
+                                icon = <Avatar icon="file-word" />;
+                                break;
+                            case 'xls':
+                            case 'xlsx':
+                                icon = <Avatar icon="file-excel" />;
+                                break;
+                            case 'rar':
+                            case 'zip':
+                                icon = <Avatar icon="hdd" />;
+                                break;
 
-            </Col>;
-        }
+                        }
 
-        return element;
-    })}</Row>
+                        break;
+                }
+
+                if (showPreview) {
+                    switch(type) {
+                        case 'video':
+                            element = <video width="100%" controls>
+                                <source src={attachment.url} /*type="video/mp4"*/ />
+                                Your browser does not support HTML5 video.
+                            </video>;
+                            break;
+                        // case 'image':
+                        //     element = <img src={attachment.url} alt={label} style={{width:'100%'}} />;
+                        //     break;
+                        default:
+                            label =  <a href={attachment.url} target="_blank">{label}</a>
+                            break;
+                    }
+                    // if (limit === 1) {
+                    //     element = {element};
+                    // } else {
+                        element = <List.Item>
+                            <List.Item.Meta
+                                avatar={<div>{icon}</div>}
+                                title={label}
+                                description={formatBytes(size,2)}
+                            />
+                             {element}</List.Item>;
+                        // element = <Col /*sm={8} md={12} lg={8}*/  key={i}><Card key={i} type="inner" style={{marginBottom:16}} cover={image}
+                        //                                                         title={} extra = {actions}>
+                           // {}
+                    //}
+
+                } else {
+                    element = <Col sm={8} md={12}  key={i}>
+                        <span style={{float:'right'}}>{actions}</span>
+                        <div>{attachment.url && attachment.url !== '' ?
+                            <a href={attachment.url} target="_blank">{i + 1}. {image} {label}</a>
+                            :
+                            <Tooltip title="Broken Link. Please reupload the file"><span>{i + 1}. {image} {label}</span></Tooltip>}
+                        </div>
+
+                    </Col>;
+                }
+
+                return element;
+            }}
+        />}
     </React.Fragment>;
 }

@@ -1,11 +1,11 @@
 import Profile from '../components/Profile';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import {CancerFragment} from "../components/Cancers/containers/CancerManager";
 
 const GET_PROFILE  = gql`
  query GET_PROFILE($user_id:UID) {
-  user(id: $user_id) {
+  patient(id: $user_id) {
     id
     fullName
     thumbs {
@@ -15,11 +15,25 @@ const GET_PROFILE  = gql`
       medium
       wide
     }
+    age
+    gender
+    genderText
+    
   }
 }
 
 
 `;
+// health {
+//     getCurrentCancers {
+//         id,
+//             title,
+//             code
+//     }
+//     getCurrentStage {
+//
+//     }
+// }
 
 const withQuery = graphql(GET_PROFILE, {
     options: (ownProps) => {
@@ -32,7 +46,7 @@ const withQuery = graphql(GET_PROFILE, {
     props: ({ data }) => {
         if (!data.loading) {
             return {
-                user: data.user,
+                user: data.patient,
                 loading: data.loading
             }
         }

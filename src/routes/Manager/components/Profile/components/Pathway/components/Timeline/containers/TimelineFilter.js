@@ -6,14 +6,15 @@ import {getTimelineElementsConst} from "../components/TimelineElementSelect/inde
 
 const enhance = compose(
     withProps(props => {
+        const {filters=[]} = props;
         const tags = getTimelineElementsConst(true);
-
+        let selected = filters.length > 0 ? filters : tags.map(tag => tag.type);
         return {
             tags:tags,
-            selected: tags.map(tag => tag.type)
+            selected
         }
     }),
-    withState('filters', 'setFilters', []),
+    withState('filters', 'setFilters', props => props.filters),
     withState('selectedTags', 'setSelected', props => props.selected),
     withHandlers({
         handleChangeOld: (props) => (tag, checked) => {

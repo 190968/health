@@ -12,6 +12,8 @@ const enhance = compose(
     }),
     withHandlers({
         prepareInput: props => values => {
+
+            //console.log(values);
             return prepareInput(values);
         }
     }),

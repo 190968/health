@@ -20,6 +20,7 @@ export const withModal = (WrappedComponent) => {
             modalTitle: 'Modal',
             modalVisible:true,
             modalFooter:null,
+            //destroyOnClose:true,
         }
 
         onOk = () => {
@@ -29,6 +30,8 @@ export const withModal = (WrappedComponent) => {
         onCancel = () => {
             if (this.props.onHide) {
                 this.props.onHide();
+            } else if (this.props.onCancel) {
+                this.props.onCancel();
             } else {
                 this.props.setModalVisible(false);
             }
@@ -46,7 +49,7 @@ export const withModal = (WrappedComponent) => {
             const modalOpts = {};
              if (this.props.modalFooter) {
                  if (this.props.modalFooter == 'close') {
-                     modalOpts.footer = <Button onClick={this.props.onCancel}>Close</Button>;
+                     modalOpts.footer = <Button type="primary" onClick={this.onCancel}>Close</Button>;
                  } else {
                      modalOpts.footer = this.props.modalFooter;
                  }
@@ -68,7 +71,6 @@ export const withModal = (WrappedComponent) => {
                     onCancel={this.onCancel}
                     okText="Save"
                     maskClosable={false}
-                    destroyOnClose={destroyOnClose}
                     confirmLoading={loading}
                     {...modalOpts}
                 >
@@ -92,7 +94,7 @@ export const withModal = (WrappedComponent) => {
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-const Spinner = () =>
+export const Spinner = () =>
     //<Modal visible={true} footer={false} closable={false} width={50}>
     <center style={{lineHeight:'10em'}}><Spin indicator={antIcon} /></center>
     //</Modal>;

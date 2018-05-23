@@ -4,6 +4,8 @@ import {
     ElementClinicalNoteFragment
 } from "../../../../../../../Plan/components/Plan/fragments";
 import {HealthElementFragment} from "../../../../../../../Health/components/fragments";
+import {TumorboardSimpleFragment} from "../../../../../Tumorboard/containers/TumorboardManager";
+
 export const TimelineElementActivityFragment  = gql`
     fragment TimelineElementActivity on TimelineElement {
         activity {
@@ -31,6 +33,9 @@ export const TimelineElementActivityFragment  = gql`
                   ...HealthElement
                   
             }
+            ... on Tumorboard {
+                ...TumorboardSimpleInfo
+            }
             
             __typename
         }
@@ -41,6 +46,7 @@ export const TimelineElementActivityFragment  = gql`
      ${ElementTreatmentFragment}
      ${ElementOptionsFragment}
      ${HealthElementFragment}
+     ${TumorboardSimpleFragment}
 `;
 
 export const TimelineElementFragment = gql`

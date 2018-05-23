@@ -14,6 +14,7 @@ import './styles.less';
 import TreatmentElement from "../../../../../../../../../Plan/components/Plan/components/TreatmentElement/index";
 import { DragSource } from 'react-dnd'
 import {branch, compose, renderComponent} from 'recompose';
+import TumorboardView from "../../../../../../../Tumorboard/containers/TumorboardView";
 
 
 export const getTimelineElementCardTitle = (item) => {
@@ -47,6 +48,117 @@ export const getTimelineElementCardTitle = (item) => {
     return typeText+(elTitle !== '' ? ' - '+elTitle : '');
 
 }
+
+const colorsByType = {
+    updates: '#4285F6',
+    todo: '#fed835',
+    plan: '#f5511e',
+    treatment: '#34A853',
+    health: '#ee685c',
+    media: '#2a2a2a',
+    visit: '#7baf41',
+    cancer_stage: '#8c25a8',
+    tumorboard: '#3f51b5',
+    team: '#ed6d01'
+}
+
+const getColor = type => {
+    return colorsByType[type] || '#f2f2f2';
+}
+
+
+
+export const TimelineElementView = item => {
+
+    const {activity, type} = item;
+    //const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}} = props;
+    //const {activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
+    //const {id, fullName} = creator;
+    //const {id:activeElementId} = activeElement;
+    //console.log(item);
+    //console.log(activity);
+    let activityText = '';//'Unknown Activity';
+    //let extra = {};
+    let body = [];
+    let image = '';
+    let group = 'updates';
+    //let color = '';
+    let progress = '';
+    //let description = notes;
+    let icon = 'api';
+    switch (type) {
+        case 'basic':
+            activityText = activity.text;
+            body.push(activity.text);
+            break;
+        case 'link':
+            activityText = <LinkElement item={activity} />;
+            icon = 'link';
+            body.push( activity.description || '');
+            break;
+        case 'clinical_note':
+            icon = 'file-text';
+            activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
+            if (activity.note !== '') {
+                body.push(activity.note);
+            }
+
+            const {attachments = []} = activity;
+            let imageData2 = attachments.filter(item => item.type === 'image');
+            imageData2 = imageData2.map(image => image.url);
+            //console.log(imageData2);
+
+            if (imageData2.length > 4) {
+                imageData2 = imageData2.slice(0, 4);
+            }
+            //console.log(imageData2);
+            //ReactPhotoGrid
+            // if (imageData2.length > 0) {
+            //     image = <div style={{width: 200, height: 200, overflow: 'hidden'}}><ReactPhotoGrid
+            //         gridSize="200x200"
+            //         data={imageData2}/>
+            //
+            //     </div>;
+            // }
+            break;
+        case 'treatment':
+            group = 'treatment';
+            icon = 'appstore-o';
+            progress = <Progress percent={0} />;
+            activityText = <TreatmentElement item={activity}  />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
+            break;
+        case 'checklist':
+            activityText = <Checklist item={activity}  />;
+            progress = <Progress percent={0} />;
+            group = 'todo';
+            break;
+        case 'cancer_stage':
+            group = 'cancer_stage'
+            activityText = <CancerStage item={activity}  />;
+            break;
+        case 'health_record':
+            activityText = activity.title;
+            group = 'health';
+            icon = 'medicine-box';
+            break;
+        case 'tumorboard':
+            //activityText = activity.title;
+            activityText = <TumorboardView tumorboard={activity}  />;
+            group = 'tumorboard';
+            icon = 'medicine-box';
+            body.push(activity.notes);
+            break;
+        default:
+            activityText = activity.text;
+            body.push(activity.text);
+            break;
+    }
+    const color = getColor(group);
+
+    const title = getTimelineElementCardTitle(item);
+
+    return {body, color, activityText, image, icon, progress, title};
+}
 class TimelineElement extends React.PureComponent {
 
     render() {
@@ -54,87 +166,81 @@ class TimelineElement extends React.PureComponent {
         const {activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
         const {id, fullName} = creator;
         const {id:activeElementId} = activeElement;
-        console.log(item);
+        //console.log(item);
         //console.log(activity);
-        let activityText = '';//'Unknown Activity';
-        let extra = {};
-        let body = [];
-        let image = '';
-        let color = '';
-        let progress = '';
+        //let activityText = '';//'Unknown Activity';
+       // let extra = {};
+        //let body = [];
+        //let image = '';
+        //let color = '';
+        //let progress = '';
         //let description = notes;
-        let icon = 'api';
+        //let icon = 'api';
 
-        // if active user
-        // if (1===1) {
-        //     extra = [
-        //         <TimelineElementEdit item={item} userId={userId} />,
-        //         <TimelineElementDelete item={item} userId={userId} />
-        //    ];
+        // switch (type) {
+        //     case 'basic':
+        //         activityText = activity.text;
+        //         body.push(activity.text);
+        //         break;
+        //     case 'link':
+        //         activityText = <LinkElement item={activity} />;
+        //         icon = 'link';
+        //         color = 'red';
+        //         body.push( activity.description || '');
+        //         break;
+        //     case 'clinical_note':
+        //         color = '#orange';
+        //         icon = 'file-text';
+        //         activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
+        //         if (activity.note !== '') {
+        //             body.push(activity.note);
+        //         }
+        //
+        //         const {attachments = []} = activity;
+        //         let imageData2 = attachments.filter(item => item.type === 'image');
+        //          imageData2 = imageData2.map(image => image.url);
+        //         //console.log(imageData2);
+        //
+        //         if (imageData2.length > 4) {
+        //             imageData2 = imageData2.slice(0, 4);
+        //         }
+        //         console.log(imageData2);
+        //         //ReactPhotoGrid
+        //         if (imageData2.length > 0) {
+        //             image = <div style={{width: 200, height: 200, overflow: 'hidden'}}><ReactPhotoGrid
+        //                 gridSize="200x200"
+        //                 data={imageData2}/>
+        //
+        //             </div>;
+        //         }
+        //         break;
+        //     case 'treatment':
+        //         color = '2db7f5';
+        //         icon = 'appstore-o';
+        //         progress = <Progress percent={0} />;
+        //         activityText = <TreatmentElement item={activity}  />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
+        //         break;
+        //     case 'checklist':
+        //         activityText = <Checklist item={activity}  />;
+        //         progress = <Progress percent={0} />;
+        //         color = '#f56a00';
+        //         break;
+        //     case 'cancer_stage':
+        //         color = '#87d068';
+        //         activityText = <CancerStage item={activity}  />;
+        //         break;
+        //     case 'health_record':
+        //         activityText = activity.title;
+        //         color = '#f56a00';
+        //         icon = 'medicine-box';
+        //         break;
+        //     default:
+        //         activityText = activity.text;
+        //         color = '#108ee9';
+        //         body.push(activity.text);
+        //         break;
         // }
-        switch (type) {
-            case 'basic':
-                activityText = activity.text;
-                body.push(activity.text);
-                break;
-            case 'link':
-                activityText = <LinkElement item={activity} />;
-                icon = 'link';
-                color = 'red';
-                body.push( activity.description || '');
-                break;
-            case 'clinical_note':
-                color = '#orange';
-                icon = 'file-text';
-                activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
-                if (activity.note !== '') {
-                    body.push(activity.note);
-                }
-
-                const {attachments = []} = activity;
-                let imageData2 = attachments.filter(item => item.type === 'image');
-                 imageData2 = imageData2.map(image => image.url);
-                //console.log(imageData2);
-
-                if (imageData2.length > 4) {
-                    imageData2 = imageData2.slice(0, 4);
-                }
-                console.log(imageData2);
-                //ReactPhotoGrid
-                if (imageData2.length > 0) {
-                    image = <div style={{width: 200, height: 200, overflow: 'hidden'}}><ReactPhotoGrid
-                        gridSize="200x200"
-                        data={imageData2}/>
-
-                    </div>;
-                }
-                break;
-            case 'treatment':
-                color = '2db7f5';
-                icon = 'appstore-o';
-                progress = <Progress percent={0} />;
-                activityText = <TreatmentElement item={activity}  />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
-                break;
-            case 'checklist':
-                activityText = <Checklist item={activity}  />;
-                progress = <Progress percent={0} />;
-                color = '#f56a00';
-                break;
-            case 'cancer_stage':
-                color = '#87d068';
-                activityText = <CancerStage item={activity}  />;
-                break;
-            case 'health_record':
-                activityText = activity.title;
-                color = '#f56a00';
-                icon = 'medicine-box';
-                break;
-            default:
-                activityText = activity.text;
-                color = '#108ee9';
-                body.push(activity.text);
-                break;
-        }
+        const {body, color, activityText, image, icon, progress, title} = TimelineElementView(item);
 
         //activityText = <Card type="timeline" title={} extra={extra} >{activityText}</Card>;
         if (notes !== '') {
@@ -148,7 +254,7 @@ class TimelineElement extends React.PureComponent {
             //
             //    ];
             // }
-            return <Card title={getTimelineElementCardTitle(item)}
+            return <Card title={title}
                          extra={[<TimelineElementEdit item={item} userId={userId} />, <TimelineElementDelete item={item} userId={userId} />]}
             >
                 {activityText}
@@ -189,7 +295,7 @@ class TimelineElement extends React.PureComponent {
             <div className="timeline-text">
                 {image && <div className="timeline-image">{image}</div>}
 
-                <h4 style={{margin:0}}>{getTimelineElementCardTitle(item)}</h4>
+                <h4 style={{margin:0}}>{title}</h4>
                 <div style={{color:'#ccc', marginBottom:5, 'fontSize': '0.8em'}}><Icon type="clock-circle-o" style={{marginRight:5, display:'none'}} />{moment(createdAt).format('LLL')}</div>
                 {progress}
                 <Truncate lines={4}>{body}</Truncate>
@@ -215,8 +321,9 @@ class TimelineElement extends React.PureComponent {
 
 
 export const canBeDraggable = (element) => {
+    console.log(element);
     return true;
-    return element.type !== 'decision' && element.type !== 'condition';
+    return element.type !== 'tumorboard';// && element.type !== 'condition';
 }
 const boxSource = {
     beginDrag(props) {
@@ -236,7 +343,7 @@ const boxSource = {
         }
     },
     canDrag(props, monitor) {
-        //console.log(props);
+        console.log(props);
         return canBeDraggable(props.element);
     }
 }

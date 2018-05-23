@@ -81,7 +81,7 @@ const AliasElementBuilder = (props) => {
         <div id="cascader" style={{position: 'relative' }}>
                 {getFieldDecorator('elementId', {
                         initialValue: elementRoute,
-                        rules: [{required: true, message: "Select Element"}],
+                        //rules: [{message: "Select Element"}],
                     }
                 )(
                     <Cascader options={options} getPopupContainer={() => document.getElementById('cascader')} loadData={loadData} placeholder="Please Select Element" changeOnSelect

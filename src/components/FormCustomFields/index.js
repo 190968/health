@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { DatePicker, Input,Col,Select,Form } from 'antd';
+import {compose, withHandlers, withState, defaultProps} from 'recompose';
+import { DatePicker, Input,Col,Select,Form, TimePicker } from 'antd';
 import {
     injectIntl,
     defineMessages,
@@ -307,3 +307,156 @@ export const DateField = connect(
     mapDispatchToProps
 )(DateFieldInit);
 
+
+export const TimeFieldPure = props => {
+    const {time=undefined,allowClear=true, disabled=false, placeholder='', onChange} = props;
+    console.log(props);
+    return <TimePicker use12Hours value={time} format="h:mm a" onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} />;
+}
+
+export const TimeField = compose(
+    withState('time', 'setTime', props => props.value),
+    withHandlers({
+        onChange: props => (time) => {
+            // if (!('value' in this.props)) {
+            //     this.setState({ time });
+            // }
+            //console.log(props);
+            //console.log(time);
+            props.onChange(time);
+            //console.log(time);
+            props.setTime(time);
+
+        }
+    }),
+)(TimeFieldPure);
+
+
+     const StartEndTimePure = props => {
+
+        const {  form, intl, endTimeRequired=false, startDate, endDate, startTime, endTime, inline, names } = props;
+        let {formItemLayout} = props;
+
+        const {getFieldDecorator} = form;
+
+        if (inline) {
+            formItemLayout = {};
+        }
+        //console.log(names);
+        //console.log(startDate ? moment(startDate) : moment());
+        // console.log(startTime);
+        // console.log(endTime);
+        // console.log(startDate);
+        // console.log(moment(startDate+' '+startTime));
+        const startField = <FormItem
+            {...formItemLayout}
+            label={!inline && 'Start Time'}
+        >
+            {getFieldDecorator(names.startTime, {
+                initialValue: startTime ? moment(startTime) : moment(),
+                rules: [{
+                    type: 'object', required: true, message: 'Please Select',
+                }],
+            })(
+                <TimeField
+                    allowClear={false}
+                    placeholder="Start Time"
+                />
+            )}
+        </FormItem>;
+
+
+        const endfield =  <FormItem
+            {...formItemLayout}
+            label={!inline && 'End Time'}
+        >
+            {getFieldDecorator(names.endTime, {
+                initialValue: endTime ? moment(endTime) : undefined,
+                rules: [{
+                    type: 'object', required: endTimeRequired, validator: props.checkEndTime, message: 'End time must be later Start time',
+                }],
+            })(
+
+                <TimeField
+                    placeholder="End Time"
+                    allowClear={!endTimeRequired}
+                />
+            )}
+        </FormItem>;
+
+
+        if (inline) {
+            // if it's inline
+            return (
+                <React.Fragment>
+                    <Col span={11}>
+                        {startField}
+
+                    </Col>
+                    <Col span={2}>
+                    <span style={{display: 'inline-block', width: '100%', textAlign: 'center'}}>
+                      -
+                    </span>
+                    </Col>
+                    <Col span={11}>
+                        {endfield}
+
+                    </Col>
+                </React.Fragment>
+            );
+        } else {
+            // in as separate field
+            return (
+                <React.Fragment>
+                    {startField}
+
+                    {endfield}
+                </React.Fragment>
+            );
+        }
+    }
+
+    const enhance = compose(
+        defaultProps({
+            names: {
+                startTime: 'startTime',
+                endTime: 'endTime',
+            },
+            startTime: null,
+            endTime: null,
+            endTimeRequired: false,
+            inline: true,
+            formItemLayout: {
+                labelCol: {
+                    xs: { span: 24 },
+                    sm: { span: 6 },
+                },
+                wrapperCol: {
+                    xs: { span: 24 },
+                    sm: { span: 14 },
+                },
+            }
+        }),
+        injectIntl,
+        withHandlers({
+            checkEndTime: props => (rule, value, callback) => {
+                    const form = props.form;
+                    //callback();
+
+                    const start_time = form.getFieldValue(props.names.startTime);
+
+                    // console.log(start_time);
+                    // console.log(value);
+                    // console.log(rule);
+                    if (start_time && value && value < start_time) {
+                        callback('End time is wrong');
+                    } else {
+                        callback();
+                    }
+
+                // console.log(props);
+                // console.log(value);
+            }
+        })
+    )
+export const StartEndTime = enhance(StartEndTimePure);

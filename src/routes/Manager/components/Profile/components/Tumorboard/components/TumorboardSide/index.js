@@ -6,8 +6,9 @@ import {withSpinnerWhileLoading} from "../../../../../../../../components/Modal/
 
 export const TumorboardSide = props => {
     const {tumorboard={}, us} = props;
-    //const {id=''} = tumorboard;
-    return <Card title="Tumorboard">
+    const {id=''} = tumorboard;
+    let title = id !== '' ? 'Tumorboard' : 'New Tumorboard';
+    return <Card title={title}>
         <TumorboardSideContent {...props} />
     </Card>;
 }
@@ -15,7 +16,6 @@ export const TumorboardSide = props => {
 const enhance = compose(
     withSpinnerWhileLoading,
     withState('step', 'setStep', 0),// 0 - means the first item
-    withState('tumorboard', 'setTumorboard', props => props.tumorboard),// 0 - means the first item
     // withHandlers({
     //     saveTumorboard: props => value => {
     //

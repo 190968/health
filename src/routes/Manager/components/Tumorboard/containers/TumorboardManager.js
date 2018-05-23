@@ -8,6 +8,7 @@ import { ElementLinkFragment, ElementTextFragment, ElementTreatmentFragment, Ele
     ElementClinicalNoteFragment} from "../../../../Plan/components/Plan/fragments";
 import {HealthElementFragment} from "../../../../Health/components/fragments";
 
+
 export const TumorboardElementFragment  = gql`
     fragment TumorboardElementInfo on TumorboardElement {
         id
@@ -36,7 +37,10 @@ export const TumorboardElementFragment  = gql`
                   ...HealthElement
                   
             }
-         }   
+         }
+         type 
+         typeText  
+         notes
          __typename
     }
      ${ElementLinkFragment}
@@ -47,13 +51,10 @@ export const TumorboardElementFragment  = gql`
      ${HealthElementFragment}
 `;
 
-export const TumorboardFragment = gql`
-        fragment TumorboardInfo on Tumorboard {
+export const TumorboardSimpleFragment = gql`
+        fragment TumorboardSimpleInfo on Tumorboard {
             id,
             title,
-            patient {
-                ...UserInfo
-            }
             lead {
                 ...UserInfo
             }
@@ -63,13 +64,26 @@ export const TumorboardFragment = gql`
             location
             video
             notes
-            date
-            elements {
-                ...TumorboardElementInfo
-            }
+            startDate
+            endDate
+            startTime
+            endTime
             isOpen
         }
         ${UserInfoFragment}
+`;
+export const TumorboardFragment = gql`
+        fragment TumorboardInfo on Tumorboard {
+            ...TumorboardSimpleInfo
+            patient {
+                ...UserInfo
+            }
+            elements {
+                ...TumorboardElementInfo
+            }
+        }
+        ${UserInfoFragment}
+        ${TumorboardSimpleFragment}
         ${TumorboardElementFragment}
 `;
 
@@ -129,6 +143,15 @@ const withQueryMutation = compose(withMutationEdit/*, withQuery*/);
 
 
 
+export const GET_PATIENT_TUMORBOARD_QUERY  = gql`
+    query GET_PATIENT_TUMORBOARD ($userId: UID!) {
+        getPatientTumorboard (userId:$userId) {
+            ...TumorboardInfo
+        }
+    }
+    ${TumorboardFragment}
+`;
+
 // ADD tumorboard
 const TUMORBOARD_CREATE_MUTATION = gql`
     mutation CancerTumorboard($input:TumorboardInput!, $userId: UID!){
@@ -143,15 +166,16 @@ export const withAddMutation = graphql(TUMORBOARD_CREATE_MUTATION, {
         onSubmit: (input) => {
             return mutate({
                 variables: {input:input, userId:ownProps.userId},
-                // refetchQueries: [{
-                //     query: GET_CANCERS_QUERY,// should refresh the timeline
-                // }],
+                refetchQueries: [{
+                    query: GET_PATIENT_TUMORBOARD_QUERY,
+                    variables: {userId:ownProps.userId},
+                }],
             });
         }
     })
 });
 
-export const tumorboardMutation = branch(props => props.tumorboard, withQueryMutation, withAddMutation);
+export const tumorboardMutation = branch(props => props.tumorboard.id, withQueryMutation, withAddMutation);
 
 
 const enhance = compose(

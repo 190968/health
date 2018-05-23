@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "../../Tumorboard/containers/TumorboardManager";
 
-const GET_PATIENT_TUMORBOARD_QUERY  = gql`
+export const GET_PATIENT_TUMORBOARD_QUERY  = gql`
     query GET_PATIENT_TUMORBOARD ($userId: UID!) {
         getPatientTumorboard (userId:$userId) {
             ...TumorboardInfo
@@ -31,8 +31,8 @@ export const withQuery = graphql(GET_PATIENT_TUMORBOARD_QUERY, {
 
 // ADD TUMORBOARD ELEMENT
 const TUMORBOARD_ADD_ELEMENT_MUTATION = gql`
-    mutation TumorboardAddElement($id: UID!, $userId: UID!, $elementId:UID!){
-        tumorboardAddElement(id:$id, userId:$userId, elementId:$elementId) {
+    mutation TumorboardAddElement($id: UID!, $userId: UID!, $elementId:UID!, $notes: String){
+        tumorboardAddElement(id:$id, userId:$userId, elementId:$elementId, notes:$notes) {
             ...TumorboardInfo
         }
     }
@@ -42,12 +42,13 @@ const TUMORBOARD_ADD_ELEMENT_MUTATION = gql`
 
 const withMutation = graphql(TUMORBOARD_ADD_ELEMENT_MUTATION, {
     props: ({ownProps, mutate }) => ({
-        onAndElement: (id, elementId) => {
+        onAndElement: (id, elementId, notes) => {
             return mutate({
-                variables: {id: id, userId:ownProps.user.id, elementId},
-                // refetchQueries: [{
-                //     query: GET_PATIENT_TUMORBOARD_QUERY,
-                // }],
+                variables: {id: id, userId:ownProps.user.id, elementId, notes},
+                refetchQueries: [{
+                    query: GET_PATIENT_TUMORBOARD_QUERY,
+                    variables: {userId:ownProps.user.id},
+                }],
             });
         },
     }),
