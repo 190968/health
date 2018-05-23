@@ -118,7 +118,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                                 <Menu.Item key="dme/worklist"><NavLink to="/dme/worklist">Worklist</NavLink></Menu.Item>
                             </SubMenu>
                             <Menu.Item key="claims"><NavLink to="/claims">Claims</NavLink></Menu.Item>
-
+                            <Menu.Item key="clinicaltrials"><NavLink to="/clinicaltrials">Clinical Trials</NavLink></Menu.Item>
 
                         </SubMenu>
                     </Menu>

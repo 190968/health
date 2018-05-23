@@ -123,6 +123,18 @@ export const asyncTumorboards = () => {
     );
 }
 
+export const asyncClinicalTrials = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList'),
+            modules: ['../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList')],
+        })
+    );
+}
+
+
 
 
 
