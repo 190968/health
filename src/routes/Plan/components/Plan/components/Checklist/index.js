@@ -41,7 +41,11 @@ export default class PlanChecklist extends React.Component {
         this.setState({value:value});
         if (this.props.onChange) {
             this.props.onChange(value, 'checklist');
+        } else if (this.props.handleReport) {
+            this.props.handleReport(value, 'checklist');
         }
+
+
     }
 
     render() {
@@ -49,6 +53,7 @@ export default class PlanChecklist extends React.Component {
         const {item, isBuilderMode} = this.props;
         const {value} = this.state;
         //const {label} = item;
+
 
         let radioStyle = {};
         if (item.isVertical) {

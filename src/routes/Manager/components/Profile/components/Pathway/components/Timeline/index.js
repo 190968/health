@@ -3,11 +3,11 @@ import { Timeline as TimelineAnt, Tag, Card, Button, Tooltip, Icon, Popover, Aff
 import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 import {compose, branch, renderComponent, withStateHandlers, defaultProps} from 'recompose';
-import TimelineElementSelect from './components/TimelineElementSelect';
 import TimelineElementModal from './containers/TimelineElementModal';
 import TimelineElement from './components/TimelineElement';
 import TimelineFilter from './containers/TimelineFilter';
 import {EmptyList} from "../../../../../../../../components/Loading/index";
+import TimelineElementSelectAdd from "./components/TimelineElementSelectAdd/index";
 
 
 
@@ -16,20 +16,16 @@ const TimelinePure = props => {
     const isActive = canDrop && isOver;
     const {filters=null, showFilters=false} = props;
     const {togglePathway, showPathway, onDrop} = props;
+    console.log(props, 'TimelinePure');
     let extra = '';
     if (onlyFilters) {
         extra = <React.Fragment>
             <Tooltip title={"Filter"} >
                 <Button icon="filter" size={'small'} type={showFilters ? "primary": '' } ghost={showFilters} onClick={props.toggleFilter} shape="circle" /></Tooltip></React.Fragment>
     } else {
-        const content = (
-            <div>
-                <TimelineElementSelect onSelect={props.onSelectElement} />
-            </div>
-        );
         extra = <React.Fragment>
             <Tooltip title={"Filter"} >
-                <Button icon="filter" size={'small'} type={showFilters ? "primary": '' } ghost={showFilters} onClick={props.toggleFilter} shape="circle" /></Tooltip> <Popover content={content} placement="bottom" title="Select Element to Add" trigger="hover"><Tooltip title="Add Element"><Button icon="plus" size={'small'} shape="circle" onClick={props.addTimelineElement} /></Tooltip></Popover> <Tooltip title={showPathway ? "Hide Pathway": "Show Pathway" }><Button size={'small'} type={showPathway ? "primary": '' } ghost={showPathway} onClick={togglePathway} shape="circle" >P</Button></Tooltip></React.Fragment>;
+                <Button icon="filter" size={'small'} type={showFilters ? "primary": '' } ghost={showFilters} onClick={props.toggleFilter} shape="circle" /></Tooltip> <TimelineElementSelectAdd onSelect={props.onSelectElement} /> <Tooltip title={showPathway ? "Hide Pathway": "Show Pathway" }><Button size={'small'} type={showPathway ? "primary": '' } ghost={showPathway} onClick={togglePathway} shape="circle" >P</Button></Tooltip></React.Fragment>;
     }
 
     return <div>

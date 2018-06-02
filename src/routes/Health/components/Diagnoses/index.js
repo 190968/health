@@ -22,7 +22,7 @@ class Diagnoses extends React.Component{
     }
 
     render() {
-        const {loading, userId} = this.props;
+        const {loading, userId, size=''} = this.props;
 
         if (loading) {
             return <Loading />;
@@ -96,7 +96,7 @@ class Diagnoses extends React.Component{
                     <Button size="small" icon="plus" onClick={toggleAdd}>Add</Button>
                 </div>}
                 {dataSource.length > 0 ?
-            <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange} ref={(input) => { this.table = input; }} />
+            <Table dataSource={dataSource} size={size} columns={columns} pagination={false} onChange={this.handleChange} ref={(input) => { this.table = input; }} />
                     :
                     <div className="ant-list-empty-text">No Diagnoses</div>}
             </div>

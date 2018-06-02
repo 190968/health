@@ -90,13 +90,14 @@ class PathwayContent extends React.Component {
 
         const {loading, userId} = this.props;
         let {pathway, current} = this.state;
-        const {id:pathwayId='', title="Pathway", version=''} = pathway;
+        const {id:pathwayId='', title="Pathway", version='', cancer={}} = pathway;
         //console.log(pathwayId);
 
-
+        console.log(cancer);
         if (pathwayId) {
+            const {title:cancerTitle=''} = cancer;
             return (<PathwayBodyCardEnhanced
-                title={title+(version !== '' ? ' - v'+version : '')} loading={loading} pathwayId={pathwayId} userId={userId} onAdd={this.props.onAdd} setCurrent={this.setCurrent} current={current} handleMenuClick={this.handleMenuClick}
+                title={title+' - '+cancerTitle+(version !== '' ? ' - v'+version : '')} loading={loading} pathwayId={pathwayId} userId={userId} onAdd={this.props.onAdd} setCurrent={this.setCurrent} current={current} handleMenuClick={this.handleMenuClick}
             />);
                 // <Card title={title} loading={loading} extra={pathwayId ? <React.Fragment><Tooltip title="Previous Element (Shift+Up)"><Icon type="left-circle-o" onClick={() => this.setCurrent('prev')} /></Tooltip> <Tooltip title="Next Element (Shift+Down)"><Icon type="right-circle-o" onClick={() => this.setCurrent('next')} /></Tooltip> <Dropdown overlay={menu} trigger={['click']}><Icon type="setting" /></Dropdown></React.Fragment> : <Icon type="setting" />} bodyStyle={{overflowY:'auto', height:'100vh'}}>
                 //      <PathwayBody  userId={userId} onAdd={this.props.onAdd} id={pathwayId} currentInOrder={current} setCurrentInOrder={this.setCurrent} />

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "p.el.success",
+    "description": "Success",
+    "defaultMessage": "Success"
+  },
+  {
+    "id": "p.el.send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "p.el.option.title",
+    "description": "Title",
+    "defaultMessage": "Title"
+  }
+]

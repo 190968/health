@@ -1,4 +1,4 @@
-import Diagnoses from '../components/Diagnoses';
+import DiagnosesPure from '../components/Diagnoses';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import {HealthElementFragment} from "../components/fragments";
@@ -6,6 +6,7 @@ import {HealthElementFragment} from "../components/fragments";
 export const GET_USER_DIAGNOSES_QUERY = gql`
     query GET_USER_DIAGNOSES ($userId: UID!) {
         patient (id: $userId) {
+            id
             healthRecords (type: "diagnosis") {
                 totalCount
                 edges {
@@ -28,7 +29,7 @@ const DiagnosesWithQuery = graphql(
         }),
         props: ({data}) => {
             if (!data.loading) {
-
+                console.log(data);
                 return {
                     diagnoses: data.patient.healthRecords.edges,
                     loading: data.loading,
@@ -38,7 +39,7 @@ const DiagnosesWithQuery = graphql(
             }
         },
     }
-)(Diagnoses);
+)(DiagnosesPure);
 
-
-export default DiagnosesWithQuery;
+export const DiagnosesList = DiagnosesWithQuery;
+export default DiagnosesList;

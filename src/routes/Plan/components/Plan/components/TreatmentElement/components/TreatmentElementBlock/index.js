@@ -5,7 +5,7 @@ import TreatmentElementBlockItem from '../TreatmentElementBlockItem';
 import TreatmentBlockManageOptionModal from '../../../../../PlanLayout/components/PlanElementBuilder/components/TreatmentElementBuilder/containers/TreatmentBlockManageOptionModal';
 import {getTreatmentElementLabel} from "../../../../../PlanLayout/components/PlanElementBuilder/components/TreatmentElementBuilder/components/TreatmentBlockOptionSelect/index";
 
-const TreatmentElementBlock = ({i, planId, option, isPreviewMode, mode, treatmentId, isBuilderMode=false, onEdit, onDelete, onHide, showEditModal=false, onElementUpdate}) => {
+const TreatmentElementBlock = ({i, planId, option, isPreviewMode, mode, treatmentId, isBuilderMode=false, onEdit, onDelete, onHide, showEditModal=false, onElementUpdate, handleReport=false}) => {
     const haveNote = option.notes || false;
     //console.log(option);
     const content = (

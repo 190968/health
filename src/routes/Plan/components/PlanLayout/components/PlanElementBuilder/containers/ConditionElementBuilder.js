@@ -90,7 +90,7 @@ const enhance = compose(
         modalTitle: props => values => {
             const {step} = props;
             if (step === 0) {
-                const typeFormatted = props.type === 'condition' ? 'Conditional Block' : 'Decision Block';
+                const typeFormatted = props.type === 'condition' ? 'Conditional' : 'Decision';
                 return props.id ? 'Edit ' + typeFormatted : 'Add ' + typeFormatted;
             } else {
                 return props.element.itemInfo.label;

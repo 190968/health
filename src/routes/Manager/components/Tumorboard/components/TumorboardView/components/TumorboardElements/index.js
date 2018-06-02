@@ -10,11 +10,11 @@ const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="s
 
 
 const TumorboardElementCardPure = props => {
-    const {element, i, userId, editable} = props;
+    const {element, i=0, userId, editable} = props;
     const {id, notes=''} = element;
     const showComments = !editable && typeof i === 'number';
     const {body, color, activityText, image, icon, progress, title} = TimelineElementView(element);
-    return <Card title={<React.Fragment><Badge count={i >= 0 && (i+1)} style={{ backgroundColor: '#52c41a' }}  /> {title}</React.Fragment>}
+    return <Card title={<React.Fragment>{i >= 0 && <Badge count={i >= 0 && (i+1)} style={{ backgroundColor: '#52c41a' }}  />} {title}</React.Fragment>}
                  key={i}
     extra={(editable ? <DragHandle /> : undefined)}
     >

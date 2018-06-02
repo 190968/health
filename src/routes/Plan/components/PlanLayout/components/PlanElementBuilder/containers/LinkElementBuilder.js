@@ -24,7 +24,7 @@ const enhanceWithModal = compose(
     enhance,
     withHandlers({
         modalTitle: props => values => {
-            return props.id ? 'Edit Link Block' : 'Add Link Block';
+            return props.id ? 'Edit Link' : 'Add Link';
         },
     }),
     modalHOC,

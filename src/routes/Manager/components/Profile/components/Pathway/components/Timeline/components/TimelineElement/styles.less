@@ -43,7 +43,7 @@
   .ant-card-body {
     padding: 6px 14px 10px !important;
     border:none;
-    min-height: 80px;
+    min-height: 60px;
   }
 
   &.transparent {
@@ -81,4 +81,21 @@
 
   .timeline-text {margin-left:50px;}
   .timeline-image {float:right;}
+  .timeline-actions {
+    float:right;
+    z-index: 1;
+    color: #ccc;
+    font-size: 0.8em;
+  }
+  .timeline-date {
+    float:right;
+    z-index: 1;
+    color: #ccc;
+    margin-right:5px;
+    font-size: 0.8em;
+  }
+}
+
+.ant-card.ant-card-type-timeline + .ant-card.ant-card-type-timeline {
+  margin-top:5px;
 }

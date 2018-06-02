@@ -25,7 +25,14 @@ export const PathwayCardFragment = gql`
 `;
 
 
-
+export const FieldReportFragment = gql`
+    fragment FieldReportInfo on FieldReport {
+        id
+        fieldId
+        fieldType
+        value
+    }
+`;
 
 
 

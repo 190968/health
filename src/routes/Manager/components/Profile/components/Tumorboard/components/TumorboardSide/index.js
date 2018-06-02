@@ -7,7 +7,7 @@ import {withSpinnerWhileLoading} from "../../../../../../../../components/Modal/
 export const TumorboardSide = props => {
     const {tumorboard={}, us} = props;
     const {id=''} = tumorboard;
-    let title = id !== '' ? 'Tumorboard' : 'New Tumorboard';
+    let title = id !== '' ? 'Tumor Board' : 'New Tumor Board';
     return <Card title={title}>
         <TumorboardSideContent {...props} />
     </Card>;

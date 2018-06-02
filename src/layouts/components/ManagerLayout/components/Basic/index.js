@@ -6,7 +6,7 @@ import {ManagerRoutes} from '../../routes';
 import RightMenu from '../../../../components/Header/containers/RightMenu';
 import PrivateRoute from '../../../../../routes/privateRoute';
 import {asyncPlanbuilder} from '../../../../../routes/manager';
-
+import Logo from './logo';
 const {Sider, Header, Content, Footer} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -36,9 +36,10 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                     background: '#fff',
                     position: 'relative'
                 }}>
-                    <div className="logo" style={{margin: 16, float:'left'}}><a href="/static/myapp/"><img className="logo"
-                                                                                             style={{width: '100%'}}
-                                                                                             src=""/></a></div>
+
+                    <div className="logo" style={{marginTop: '-8px', marginLeft:5, float:'left'}}>
+
+                        <Logo /></div>
                     <RightMenu/>
                 </div>
             </Header>

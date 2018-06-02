@@ -68,7 +68,7 @@ const PlanElementDraggable = (props) => {
     const { isDraggable, isDragging, connectDragSource, element, preventCardDraggable } = props
     const opacity = isDragging ? 0.4 : 1
 
-    if (isDraggable && preventCardDraggable && canBeDraggable(element)) {
+    if (isDraggable && connectDragSource && preventCardDraggable && canBeDraggable(element)) {
         return connectDragSource(<div className="pathway-el-dnd" style={{opacity}} ><PlanElement {...props} element={element}/></div>);
     } else {
         return <PlanElement {...props} showAdd={true} element={element} />;

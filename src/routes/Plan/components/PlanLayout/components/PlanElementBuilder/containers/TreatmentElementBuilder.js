@@ -62,7 +62,7 @@ const enhanceWithModal = compose(
     enhance,
     withHandlers({
         modalTitle: props => values => {
-            return props.id ? 'Edit Treatment Block' : 'Add Treatment Block';
+            return props.id ? 'Edit Treatment' : 'Add Treatment';
         },
     }),
     modalHOC,

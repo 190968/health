@@ -34,7 +34,7 @@ const enhance = compose(
             props.saveElement(props.onHide);
         },
         modalTitle: props => () => {
-            return props.id ? 'Edit Options Block' : 'Add Options Block';
+            return props.id ? 'Edit Options' : 'Add Options';
         }
     }),
     modalHOC,

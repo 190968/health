@@ -72,7 +72,7 @@ const boxSource = {
     endDrag(props, monitor) {
         const item = monitor.getItem()
         const dropResult = monitor.getDropResult();
-        console.log(item);
+        //console.log(item);
         if (dropResult) {
             props.onDrop(item);
         }
@@ -91,7 +91,8 @@ const enhance = compose(
     withProps(props => {
         const {elements=[]} = props;
         const preventDraggable = elements.filter(element => element.type==='decision' || element.type==='condition');
-        const preventCardDraggable = preventDraggable.length > 0;
+        //console.log(elements);
+        const preventCardDraggable = elements.length === 0 || preventDraggable.length > 0;
         return {preventCardDraggable};
     }),
     withHandlers({

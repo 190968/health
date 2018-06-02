@@ -33,7 +33,7 @@ const enhance = compose(
         },
         modalTitle: props => values => {
             const type = props.type;
-            return props.id ? 'Edit '+type+' Block' : 'Add '+type+' Block';
+            return props.id ? 'Edit '+type : 'Add '+type;
         },
     }),
     modalHOC,

@@ -10,6 +10,10 @@ const GET_USER_PATHWAY_QUERY  = gql`
             id
             title
             version
+            cancer {
+                id
+                title
+            }
         }
   }
 }

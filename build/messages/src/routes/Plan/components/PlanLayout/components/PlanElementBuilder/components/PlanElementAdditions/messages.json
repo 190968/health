@@ -1,0 +1,12 @@
+[
+  {
+    "id": "p.el.footnote",
+    "description": "Footnote",
+    "defaultMessage": "Footnote"
+  },
+  {
+    "id": "p.el.reference",
+    "description": "Reference",
+    "defaultMessage": "Reference"
+  }
+]

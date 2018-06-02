@@ -8,7 +8,7 @@ const enhance = compose(
     withProps(props => {
         const {filters=[]} = props;
         const tags = getTimelineElementsConst(true);
-        let selected = filters.length > 0 ? filters : tags.map(tag => tag.type);
+        let selected = filters && filters.length > 0 ? filters : tags.map(tag => tag.type);
         return {
             tags:tags,
             selected
@@ -35,30 +35,37 @@ const enhance = compose(
             props.updateFilters(nextSelectedTags);
         },
         handleChange: (props) => (nextSelectedTags) => {
-            const {selectedTags} = props;
+            const {selectedTags, tags} = props;
             // if (!checked && selectedTags.length < 2) {
             //     message.error('At least one type should be selected');
             //     return false;
             // }
-
+            //console.log(tags, 'tags');
+            //console.log(nextSelectedTags);
             props.setSelected(nextSelectedTags);
             props.loadFiltered(nextSelectedTags);
-            props.updateFilters(nextSelectedTags);
+            if (tags.length === nextSelectedTags.length) {
+                props.loadFiltered([]);
+            } else {
+                props.updateFilters(nextSelectedTags);
+            }
+
         },
         resetTags: props => () => {
+            //console.log('reset');
             props.setSelected([]);
             props.updateFilters([]);
-            //props.loadFiltered([]);
+            props.loadFiltered([]);
         },
         selectAllTags: props => () => {
-            console.log(props);
+            //console.log(props, 'select');
             const tags = props.tags.map(tag => {
                 return tag.type;
             });
 
             props.setSelected(tags);
-            props.updateFilters(tags);
-            props.loadFiltered(tags);
+            props.updateFilters(null);
+            props.loadFiltered(null);
             //props.loadFiltered([]);
         },
     })

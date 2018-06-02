@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+import {ClinicalTrialFragment} from "../../Manager/components/ClinicalTrials/fragments";
+import {ElementTreatmentFragment} from "../../Plan/components/Plan/fragments";
 
 export const HealthElementFragment  = gql`
     fragment HealthElement on HealthRecord {
@@ -22,9 +24,16 @@ export const HealthElementFragment  = gql`
               notes
               __typename
             }
-        }
-        }
-    
+            ... on ClinicalTrial {
+              ...ClinicalTrialInfo
+            }
+            ... on Treatment {
+              ...TreatmentPlanElement
+            }
+       }
+    }
+    ${ClinicalTrialFragment}
+    ${ElementTreatmentFragment}
 `;
 
 

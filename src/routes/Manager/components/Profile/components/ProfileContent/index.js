@@ -5,11 +5,13 @@ import {Loading} from "../../../../../../components/Loading";
 
 import Pathway from '../../containers/Pathway';
 import Tumorboard from '../../containers/Tumorboard';
+import Dashboard from '../../components/Overview';
 
 
 
 
 const RouteWithSubRoutes = route => {
+    //console.log(route);
     return (
         <Route
             path={route.path}
@@ -34,7 +36,7 @@ class ProfileContent extends React.Component{
             return <Loading/>
         }
 
-        const {id, tab = 'build', subtab = 'header'} = match.params;
+        const {id, tab = '', subtab = ''} = match.params;
 
         let mainUrl = '/u';
         if (id !== '') {
@@ -54,7 +56,7 @@ class ProfileContent extends React.Component{
             },
             {
                 path: mainUrl,
-                component: Pathway,
+                component: Dashboard,
                 params: {user: user}
             },
             /*{
