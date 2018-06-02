@@ -6,7 +6,8 @@ import {Avatar,Button,Tooltip,Col,List, Modal } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class BadgesListItem extends React.Component {
 
     constructor(props) {
@@ -32,7 +33,7 @@ class BadgesListItem extends React.Component {
                                   title={item.badge.title}
                                 onCancel={this.handleCancel}
                                 footer={[
-                                    <Button key="back" onClick={this.handleCancel}>{intl.formatMessage(messages.cancel)}</Button>
+                                    <Button key="back" onClick={this.handleCancel}>{intl.messages.user_motivation_badges_cancel}</Button>
                                 ]}
                             >
                                <center>

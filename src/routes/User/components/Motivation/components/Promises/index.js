@@ -8,7 +8,8 @@ import {
 } from 'react-intl';
 import Avatar from '../../../Avatar';
 
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class Promises extends React.Component {
 
 
@@ -21,7 +22,7 @@ class Promises extends React.Component {
             </Card>;
         }
         return  (
-            <Card  title={intl.formatMessage(messages.promises)}>
+            <Card  title={intl.messages.user_motivation_promises}>
 
                 {info.promises.edges > 0 ?
                     <List
@@ -39,7 +40,7 @@ class Promises extends React.Component {
                             </List.Item>
                         )}
                     /> :
-                    <div className="ant-list-empty-text">{intl.formatMessage(messages.noPromises)}</div>
+                    <div className="ant-list-empty-text">{intl.messages.user_motivation_nopromises}</div>
                 }
             </Card>
 

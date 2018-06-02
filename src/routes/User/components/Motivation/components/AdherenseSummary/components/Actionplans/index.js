@@ -6,7 +6,9 @@ import {Progress , Card } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+
+import ru from './i18n/ru';
+import en from './i18n/en';
 class Actionplans extends React.Component {
 
 
@@ -14,7 +16,7 @@ class Actionplans extends React.Component {
         const{level} = this.props.plans;
         const {intl}=this.props;
         return  (
-            <Card style={{height:250}} title={intl.formatMessage(messages.actionPlans)}>
+            <Card style={{height:250}} title={intl.messages.user_motivation_actionplan}>
                 <center>
                     <Progress type="dashboard" percent={level} />
                 </center>

@@ -9,7 +9,8 @@ import {
 } from 'react-intl';
 import {LoadingModal} from 'components/Loading';
 import { Link } from 'react-router-dom'
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class ModalView extends React.Component {
 
     constructor(props) {
@@ -34,11 +35,11 @@ class ModalView extends React.Component {
 
             <Modal
                 style={{height:800, width: 800 }}
-                title={intl.formatMessage(messages.viewCommitment)}
+                title={intl.messages.user_motivation_viewCommitment}
                 visible={true}
                 onCancel={this.props.handleCancel}
                 footer={[
-                    <center> <Button type="primary"  onClick={this.props.handleCancel}>{intl.formatMessage(messages.close)}</Button></center>
+                    <center> <Button type="primary"  onClick={this.props.handleCancel}>{intl.messages.user_motivation_close}</Button></center>
                 ]}
             >
                 <List.Item>
@@ -47,15 +48,15 @@ class ModalView extends React.Component {
                         description={
                             <div>
                             <Row>
-                                <Col span={7}><h4>{intl.formatMessage(messages.plan)}</h4></Col>
+                                <Col span={7}><h4>{intl.messages.user_motivation_plan}</h4></Col>
                                 <Col offset={1} span={16}><Link to={url}>{title}</Link></Col>
                             </Row>
                             <Row>
-                                <Col span={7}><h4>{intl.formatMessage(messages.commitedOn)}</h4></Col>
+                                <Col span={7}><h4>{intl.messages.user_motivation_commitedOn}</h4></Col>
                                 <Col offset={1} span={16}>{moment(commitedBy).format("LLL")}</Col>
                             </Row>
                             <Row>
-                                <Col span={7}><h4>{intl.formatMessage(messages.commited)}</h4></Col>
+                                <Col span={7}><h4>{intl.messages.user_motivation_commited}</h4></Col>
                                 <Col offset={1} span={16}>{commited}</Col>
                             </Row>
                                 </div>

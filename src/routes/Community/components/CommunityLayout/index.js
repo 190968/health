@@ -7,6 +7,7 @@ import { withApollo} from 'react-apollo'
 import {withRouter} from "react-router-dom";
 import MyCommutinies from '../CommunityLayout/containers/MyCategories.js'
 import MainCategories from './components/MainCategories'
+ import CategoryNews from './components/CategoryNews/containers/CategoryNews'
 import '../../style.css';
 import Motivators from '../../../User/containers/motivatorsContainer';
 import CareTeam from '../../../User/containers/careTeamContainer';
@@ -27,7 +28,9 @@ class CommunityLayout extends React.Component{
 
                 <Col xs={24} md={14} lg={15} xl={17}>
                     <MyCommutinies />
+                    <CategoryNews />
                     <MainCategories info={info} />
+
                 </Col>
                 <Col xs={24} md={10} lg={9} xl={7}>
                     <Family user_id={user_id} />

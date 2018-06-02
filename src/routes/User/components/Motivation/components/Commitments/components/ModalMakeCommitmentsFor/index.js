@@ -7,7 +7,9 @@ import {
     injectIntl
 } from 'react-intl';
 import {LoadingModal} from 'components/Loading';
-import messages from './messages';
+
+import ru from './i18n/ru';
+import en from './i18n/en';
 const FormItem = Form.Item;
 const {Option} = Select;
 class ModalMakeCommitmentsFor extends React.Component {
@@ -61,18 +63,18 @@ class ModalMakeCommitmentsFor extends React.Component {
 
             <Modal
                 style={{height:800, width: 800 }}
-                title={intl.formatMessage(messages.make)+this.props.title}
+                title={intl.messages.user_motivation_make+this.props.title}
                 visible={true}
                 onCancel={this.props.cancelParent}
                 footer={[
-                    <center> <Button type="primary" onClick={this.handleSubmit} htmlType="submit"  >{intl.formatMessage(messages.finish)}</Button></center>
+                    <center> <Button type="primary" onClick={this.handleSubmit} htmlType="submit"  >{intl.messages.user_motivation_finish}</Button></center>
                 ]}
             >
                 <div>
                     <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
                         <Row>
                             <Col span={24}>
-                                <p> {intl.formatMessage(messages.complete)}  {this.props.title}</p>
+                                <p> {intl.messages.user_motivation_complete}  {this.props.title}</p>
                             </Col>
                             <Col  span={6}>
                                 <FormItem>
@@ -83,7 +85,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col offset={1} span={3}>
-                                {intl.formatMessage(messages.will)}
+                                {intl.messages.user_motivation_will}
 
                             </Col>
                         </Row>
@@ -97,14 +99,14 @@ class ModalMakeCommitmentsFor extends React.Component {
                                     }} size="large"  />
 
                                     <span
-                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{intl.formatMessage(messages.pay)}</p>
+                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{intl.messages.user_motivation_pay}</p>
                                             </span>
                                     <FormItem>
                                         {getFieldDecorator('motivators')(
 
                                             <Select
                                                 mode="multiple"
-                                                placeholder={intl.formatMessage(messages.select)}
+                                                placeholder={intl.messages.user_motivation_select}
                                                 onChange={this.handleChange}
                                             >
                                                 {children}
@@ -113,7 +115,7 @@ class ModalMakeCommitmentsFor extends React.Component {
 
                                     </FormItem>
                                     <Col style={{marginBottom: 10}} span={13}>
-                                        <span>{intl.formatMessage(messages.howmuch)}</span>
+                                        <span>{intl.messages.user_motivation_howmuch}</span>
                                     </Col>
                                     <Col style={{marginBottom: 10}} offset={1} span={10}>
                                         <FormItem>
@@ -136,12 +138,12 @@ class ModalMakeCommitmentsFor extends React.Component {
                                         verticalAlign: 'middle'
                                     }} size="large"  />
                                     <span
-                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{intl.formatMessage(messages.donate)}</p>
+                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{intl.messages.user_motivation_donate}</p>
                                             </span>
                                     <FormItem>
                                         {getFieldDecorator('organization')(
 
-                                            <Select placeholder={intl.formatMessage(messages.select)} >
+                                            <Select placeholder={intl.messages.user_motivation_select} >
                                                 {enumChildren}
                                             </Select>
                                         )}
@@ -149,7 +151,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                                     </FormItem>
 
                                     <Col style={{marginBottom: 10}} span={13}>
-                                        <span>{intl.formatMessage(messages.howmuch)}</span>
+                                        <span>{intl.messages.user_motivation_howmuch}</span>
                                     </Col>
                                     <Col style={{marginBottom: 10}} offset={1} span={10}>
                                         <FormItem>
@@ -170,7 +172,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                                         verticalAlign: 'middle'
                                     }} size="large"  />
                                     <span
-                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{intl.formatMessage(messages.other)}</p>
+                                        style={{textAlign: 'center', 'marginLeft': 10}}><p>{intl.messages.user_motivation_other}</p>
                                             </span>
 
                                      <FormItem>
@@ -188,7 +190,7 @@ class ModalMakeCommitmentsFor extends React.Component {
                         </Row>
                         <Row>
                             <Col  span={12}>
-                                {intl.formatMessage(messages.add)}
+                                {intl.messages.user_motivation_add}
                             </Col>
                             <Col    span={12}>
                                 <FormItem>

@@ -53,9 +53,10 @@ const PlanBodyWithQuery = graphql(
 
         }),
         props: ({  data }) => {
-
+            console.log(data);
             if (!data.loading) {
                 const plan = data.plan;
+
                 //const body = plan.body;
                 const lessons = plan.lessons || [];
                 const activities = plan.activities || [];

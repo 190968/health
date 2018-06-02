@@ -6,7 +6,8 @@ import {Progress , Card } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class Trackers extends React.Component {
 
 
@@ -14,7 +15,7 @@ class Trackers extends React.Component {
         const{level} = this.props.trackers;
         const {intl}=this.props;
         return  (
-            <Card style={{height:250}} title={intl.formatMessage(messages.trackers)}>
+            <Card style={{height:250}} title={intl.messages.user_motivation_trackers}>
                 <center>
                     <Progress type="dashboard" percent={level} />
                 </center>

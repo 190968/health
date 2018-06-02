@@ -8,7 +8,8 @@ import {
     injectIntl,
     FormattedMessage
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Form,  List, Card,Modal,Input,Button, Tooltip, Icon } from 'antd';
 import AvatarWithName from '../AvatarWithName';
@@ -51,7 +52,6 @@ class Motivators extends React.Component {
         this.setState({
             loading: true,
         });
-        console.log("asvw=v-wv-w-evw-evw-eb-erberb");
         this.props.loadMore(this.props.endCursor, this.stopLoading);
     }
 
@@ -60,24 +60,17 @@ class Motivators extends React.Component {
         const  {info,loading,hasMore} = this.props;
 
         if (loading) {
-            return  <Card loading title={<FormattedMessage id="user.motivators.motivators.title" defaultMessage="My Motivators" description="MY MOTIVATORS" />}>
+            return  <Card loading title="Motivators">
                                  Loading</Card>;
         }
         const  {motivators} = info;
         const  {edges,totalCount} = motivators;
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
-        const title = "My Motivators";
+        const title = intl.messages.user_motivators_title;
         const count = totalCount > 0 ?  " ("+totalCount+")":"";
     return(
-                <div style={{height:100}} className="demo-infinite-container">
-                    <InfiniteScroll
-                        initialLoad={false}
-                        pageStart={0}
-                        loadMore={this.handleInfiniteOnLoad}
-                        hasMore={!this.state.loading && hasMore}
-                        useWindow={false}
-                    >
+        <Card title={title+count}>
                 <List
                     split={false}
                     loading={loading}
@@ -88,8 +81,8 @@ class Motivators extends React.Component {
                                <AvatarWithName info={person.user} />
                         </List.Item>
                     )}
-                     /></InfiniteScroll>
-                </div>
+                     />
+                </Card>
 
 
         )

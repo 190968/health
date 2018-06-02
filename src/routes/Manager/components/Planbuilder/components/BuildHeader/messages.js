@@ -28,7 +28,7 @@ export default defineMessages({
             "description": "Description"
         },
     'schedulingTitle': {
-            "id": "pb.schedulingTitle",
+            "id": "pb.buildHeaderTitle",
             "defaultMessage": "Scheduling",
             "description": "Scheduling"
         },

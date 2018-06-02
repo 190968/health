@@ -5,12 +5,12 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
     "reply": {
-        "id": "reply",
+        "id": "commentsList.reply",
         "defaultMessage": "Reply",
         "description": "Reply"
     },
     "send": {
-        "id": "send",
+        "id": "commentsList.send",
         "defaultMessage": "Send",
         "description": "Send"
     }

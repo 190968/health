@@ -6,7 +6,9 @@ import {Avatar,List, Card } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+
+import ru from './i18n/ru';
+import en from './i18n/en';
 class iMotivate extends React.Component {
 
     render()
@@ -19,7 +21,7 @@ class iMotivate extends React.Component {
         }
         const {edges,totalCount} = info;
         const {intl}=this.props;
-        const title = intl.formatMessage(messages.imotivate);
+        const title = intl.messages.user_motivation_imotivate;
         const count = totalCount > 0 ? " ("+totalCount+")":"";
         return (
 
@@ -40,7 +42,7 @@ class iMotivate extends React.Component {
                                     </span>
                         </List.Item>
                     )}
-                />:   <div className="ant-list-empty-text">{intl.formatMessage(messages.noImotivate)}</div>
+                />:   <div className="ant-list-empty-text">{intl.messages.user_motivation_noimotivate}</div>
                 }
             </Card>
 

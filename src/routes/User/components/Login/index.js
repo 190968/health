@@ -8,6 +8,8 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import gql from 'graphql-tag';
 import {Form, Icon, Input, Button, Card } from 'antd';
+import ru from './i18n/ru';
+import en from './i18n/en';
 const FormItem = Form.Item;
 configure({ adapter: new Adapter() });
 export class LoginForm extends React.Component {
@@ -46,12 +48,12 @@ export class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // email: {
-            //     value: 'demo2patient@fitango.com',
-            // },
-            // password: {
-            //     value: 'Fitango2',
-            // },
+            email: {
+                value: 'demo2patient@fitango.com',
+            },
+            password: {
+                value: 'Fitango2',
+            },
             //loading: false,
             visible: false,
         };

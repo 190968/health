@@ -8,7 +8,8 @@ import {
     injectIntl
 } from 'react-intl';
 import {LoadingModal} from 'components/Loading';
-import messages from './messages';
+import en from './i18n/en';
+import ru from './i18n/ru';
 class ModalPointsHistory extends React.Component {
 
     constructor(props) {
@@ -36,15 +37,15 @@ class ModalPointsHistory extends React.Component {
         })
 
         const columns = [{
-            title: intl.formatMessage(messages.points),
+            title: intl.messages.user_motivation_points,
             dataIndex: 'points',
             key: 'points'
         }, {
-            title: intl.formatMessage(messages.receivedFor),
+            title: intl.messages.user_motivation_receivedFor,
             dataIndex: 'receivedFor',
             key: 'receivedFor',
         }, {
-            title: intl.formatMessage(messages.receivedOn),
+            title: intl.messages.user_motivation_receivedOn,
             dataIndex: 'receivedOn',
             key: 'receivedOn',
             render: (date) => moment(date).format('LLL')
@@ -54,15 +55,15 @@ class ModalPointsHistory extends React.Component {
         return  (
 
             <Modal
-                title={intl.formatMessage(messages.earnedPoints)}
+                title={intl.messages.user_motivation_earnedPoints}
                 visible={true}
                 onCancel={this.props.handleCancel}
                 footer={[
-                    <Button key="back" onClick={this.props.handleCancel}>{intl.formatMessage(messages.cancel)}</Button>
+                    <Button key="back" onClick={this.props.handleCancel}>{intl.messages.user_motivation_ModalPoints_cancel}</Button>
                 ]}
             >
 
-           <p>{intl.formatMessage(messages.text)}</p><hr/>
+           <p>{intl.messages.user_ModalPoints_motivation_text}</p><hr/>
                 <Table columns={columns} dataSource={data} />
             </Modal>
         );

@@ -7,7 +7,8 @@ import BadgesListItem from './components/BadgesListItem';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 class Badges extends React.Component {
 
 
@@ -22,7 +23,7 @@ class Badges extends React.Component {
             const {badges} = info;
             const {intl}=this.props;
             const {edges} = badges;
-            const title = intl.formatMessage(messages.myBadges);
+            const title = intl.messages.user_motivation_badges;
             const count = this.props.info.badges.totalCount > 0 ? " ("+this.props.info.badges.totalCount+")":"";
             return (
                 <Card style={{height:250}} title={title+count}>

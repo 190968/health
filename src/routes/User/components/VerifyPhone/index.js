@@ -7,7 +7,8 @@ import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './verifyPhone.json';
+import ru from './i18n/ru';
+import en from './i18n/en';
 import PhoneForm from '../../../../components/PhoneForm';
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -72,15 +73,15 @@ class VerifyPhoneForm extends React.Component {
             <div className="register-form"  style={{padding:'8% 30% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
-                    title={intl.formatMessage(messages.verifyPhone)}
+                    title={intl.messages.user_verifyphone_verifyphone}
                     actions={[ <Button  loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
-                        {intl.formatMessage(messages.send)}
+                        {intl.messages.user_verifyphone_send}
                     </Button>]}
                 >
 
                         <FormItem
                             {...formItemLayout}
-                            label={intl.formatMessage(messages.phone)}
+                            label={intl.messages.user_verifyphone_phone}
                             hasFeedback
                             validateStatus={phoneNumberError ? 'error' : ''}
                             help={phoneNumberError || ''}

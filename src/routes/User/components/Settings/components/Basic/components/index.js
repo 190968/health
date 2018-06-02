@@ -11,7 +11,8 @@ import {
     injectIntl
 } from 'react-intl';
 import moment from 'moment';
-import messages from './messages';
+import ru from './i18n/ru';
+import en from './i18n/en';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -41,7 +42,7 @@ const tailFormItemLayout = {
 
 // const messages = defineMessages({
 //     first_name: {
-//         id: 'user.first_name',
+//         id: 'user.firsht_name',
 //         defaultMessage: 'First name',
 //         description: 'First name',
 //     },
@@ -109,7 +110,7 @@ const tailFormItemLayout = {
         <Form onSubmit={this.handleSubmit}>
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.title)}
+                label={intl.messages.user_basic_title}
             >
                 {getFieldDecorator('title', {
                     initialValue: user.title
@@ -125,46 +126,46 @@ const tailFormItemLayout = {
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.name)}
+                label={intl.messages.user_name}
                 required
             >
                 <InputGroup >
                     <Col span={8}>
                         {getFieldDecorator('firstName', {
                             initialValue: user.firstName ,
-                            rules: [{ required: true, message: intl.formatMessage(messages.first_name), whitespace: true }],
+                            rules: [{ required: true, message: intl.messages.user_first_name_rule, whitespace: true }],
                         })(
-                        <Input placeholder={intl.formatMessage(messages.first_name)} />
+                        <Input placeholder={intl.messages.user_first_name} />
                         )}
                     </Col>
                     <Col span={8}>
                         {getFieldDecorator('middleName', {
                             initialValue:user.middleName
                         })(
-                        <Input  placeholder={intl.formatMessage(messages.middle_name)} />
+                        <Input  placeholder={intl.messages.user_middle_name} />
                         )}
                     </Col>
                     <Col span={8}>
                         {getFieldDecorator('lastName', {
                             initialValue: user.lastName,
-                            rules: [{ required: true, message:intl.formatMessage(messages.last_name_rule)}],
+                            rules: [{ required: true, message:intl.messages.user_last_name_rule}],
                         })(
-                        <Input placeholder={intl.formatMessage(messages.last_name)} />
+                        <Input placeholder={intl.messages.user_last_name} />
                         )}
                     </Col>
                 </InputGroup>
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.birthday)}
+                label={intl.messages.user_birthday}
 
             >
                 {getFieldDecorator('birthday', {
                     initialValue: moment(user.birthday),
                     rules: [{
-                        type: 'object', message:intl.formatMessage(messages.novalid),
+                        type: 'object', message:intl.messages.user_birthday_novalid,
                     }, {
-                        required: true, message:intl.formatMessage(messages.rule),
+                        required: true, message:intl.messages.user_birthday_rule,
                     }],
                 })(
                     <DatePicker format={dateFormat} allowClear={false} disabledDate={this.disabledDate} />
@@ -173,16 +174,16 @@ const tailFormItemLayout = {
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.gender)}
+                label={intl.messages.user_gender}
 
             >
                 {getFieldDecorator('gender', {
                 initialValue: user.gender,
-                rules: [{ required: true, message:intl.formatMessage(messages.gender_rule), whitespace: true }],
+                rules: [{ required: true, message:intl.messages.user_gender_rule, whitespace: true }],
             })(
                 <Select style={{ width: 120 }} >
-                    <Option value="female">{intl.formatMessage(messages.female)}</Option>
-                    <Option value="male">{intl.formatMessage(messages.male)}</Option>
+                    <Option value="female">{intl.messages.user_female}</Option>
+                    <Option value="male">{intl.messages.user_male}</Option>
                 </Select>
             )}
             </FormItem>
@@ -190,19 +191,19 @@ const tailFormItemLayout = {
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.email)}
+                label={intl.messages.user_email}
 
             >{getFieldDecorator('email', {
                 initialValue: user.email,
-                rules: [{ required: true, type: 'email', message:intl.formatMessage(messages.email_rule),}],
+                rules: [{ required: true, type: 'email', message:intl.messages.user_email_rule,}],
             })(
-                <Input  placeholder={intl.formatMessage(messages.email)} />
+                <Input  placeholder={intl.messages.user_email} />
             )}
             </FormItem>
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.phone_number)}
+                label={intl.messages.user_phone_number}
                 required
                 validateStatus={phoneNumberError ? 'error' : ''}
                 help={phoneNumberError || ''}
@@ -212,20 +213,20 @@ const tailFormItemLayout = {
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.address)}
+                label={intl.messages.user_address}
             >
                 <AddressForm getFieldDecorator={getFieldDecorator} countries={countries} states={states} address={user.address} />
             </FormItem>
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.language)}
+                label={intl.messages.user_language}
 
             > {getFieldDecorator('language', {
                 initialValue: user.language,
 
             })(
-                <Select placeholder={intl.formatMessage(messages.language_rule)}  >
+                <Select placeholder={intl.messages.user_language_rule}  >
                     {languages.map(language => <Option key={language.value} value={language.value}>{language.label}</Option>)}
                 </Select>
             )}
@@ -233,12 +234,12 @@ const tailFormItemLayout = {
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.timezone)}
+                label={intl.messages.user_timezone}
 
             > {getFieldDecorator('timezone', {
                 initialValue: user.timezone,
             })(
-                <Select placeholder={intl.formatMessage(messages.timezone_rule)}>
+                <Select placeholder={intl.messages.user_timezone_rule}>
                     {timezones.map(timezone => <Option key={timezone.id} value={timezone.id}>{timezone.name}</Option>)}
                 </Select>
             )}
@@ -247,7 +248,7 @@ const tailFormItemLayout = {
 
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.dateformat)}
+                label={intl.messages.user_dateformat}
 
             > {getFieldDecorator('dateFormat', {
                 initialValue: user.dateFormat
@@ -261,7 +262,7 @@ const tailFormItemLayout = {
 
             <FormItem {...tailFormItemLayout}>
                 <Button loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
-                    {intl.formatMessage(messages.submit)}
+                    {intl.messages.user_submit}
                 </Button>
             </FormItem>
         </Form>

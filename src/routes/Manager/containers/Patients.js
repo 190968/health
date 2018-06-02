@@ -3,17 +3,21 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const GET_PATIENTS_QUERY = gql`    
-    query GET_PATIENTS {
-        management {
-            getPatients {
-                edges {
-                    id
-                    fullName
-                }
-                totalCount
-            }
-        }
+  query GET_PATIENTS {
+  management {
+    getPatients {
+      edges {
+        id
+        fullName
+        gender
+        age
+        memberId
+      }
+      totalCount
     }
+  }
+}
+
 `;
 
 const withQuery = graphql(
@@ -32,7 +36,6 @@ const withQuery = graphql(
         },
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-
                 return {
                     patients: data.management.getPatients.edges,
                     total: data.management.getPatients.totalCount,

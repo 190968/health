@@ -6,7 +6,8 @@ import { Card, Form, Input,Button } from 'antd';
 import {
     injectIntl
 } from 'react-intl';
-import messages from './verifyPhoneConfirm.json';
+import ru from './i18n/ru';
+import en from './i18n/en';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -48,20 +49,20 @@ class VerifyPhoneConfirmForm extends React.Component {
             <div className="register-form" style={{padding:'8% 35% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
-                    title={intl.formatMessage(messages.verifyPhoneConfirm)}
+                    title={intl.messages.user_verifyphone_verifyphoneConfirm}
                     actions={[ <Button  loading={this.state.loading}  type="primary" htmlType="submit" className="register-form-button">
-                        {intl.formatMessage(messages.send)}
+                        {intl.messages.user_verifyphone_send}
                     </Button>]}
                 >
 
                         <FormItem
                             {...formItemLayout}
-                            label={intl.formatMessage(messages.code)}
+                            label={intl.messages.user_verifyphone_code}
                             hasFeedback
                         >
                             {getFieldDecorator('code', {
-                                rules: [{ required: true, message:intl.formatMessage(messages.rules) },
-                                    {len:4, message:intl.formatMessage(messages.message)}
+                                rules: [{ required: true, message:intl.messages.user_verifyphone_rules },
+                                    {len:4, message:intl.messages.user_verifyphone_message}
                                 ],
                             })(
                                 <Input size="large" />
