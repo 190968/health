@@ -11,8 +11,13 @@ import renderer from 'react-test-renderer';
 import { IntlProvider } from 'react-intl';
 import { expect } from 'chai';
 import  CareTeam from '../../containers/careTeamContainer';
-
 describe('CareTeam', () => {
+    it('renders without crashing', () => {
+        const div = document.createElement('div');
+        let component = withRouter(div);
+        ReactDOM.render(<CareTeam />,component);
+        ReactDOM.unmountComponentAtNode(div);
+    });
     it('works',      (date) => {
         renderer.create(
             <ApolloProvider client={apolloClient}>

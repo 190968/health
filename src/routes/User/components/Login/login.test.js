@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // /**
 //  * Created by Павел on 05.02.2018.
 //  */
@@ -19,7 +19,7 @@
 //     // wrapper.dive().instance().handleSubmit();
 // });
 // });
-=======
+
 /**
  * Created by Павел on 05.02.2018.
  */
@@ -37,13 +37,11 @@ describe('<Login>', () => {
             email: 'demo2patient@fitango.com',
             password: '!fdsd@_sdfo2'
         };
-
         const incorrectLogin =
             {
                 email: 'incorrect@fitango.com',
                 password: 'incoor'
             };
-
         const LoginForm = wrapperFunc(correctLogin);
         const LoginFormIncorrect = wrapperFunc(incorrectLogin);
         return {
@@ -51,39 +49,23 @@ describe('<Login>', () => {
             LoginFormIncorrect,
         };
     };
-
     it('renders without crashing', () => {
-
         const div = document.createElement('div');
         let component = withRouter(div);
         ReactDOM.render(<Login />,component);
         ReactDOM.unmountComponentAtNode(div);
     });
-
     it('correct data input', () => {
-        const {
-             LoginForm
-        } = setup();
-
-
+        const {LoginForm} = setup();
         let loginForm = LoginForm.find("#submitForm");
         loginForm.props().onSubmit();
-
         expect(LoginForm.state('success')).toBe(true);
-
     });
-
     it('incorrect data input', () => {
-        const {
-             LoginFormIncorrect
-        } = setup();
-
-
+        const {LoginFormIncorrect} = setup();
         let loginForm = LoginFormIncorrect.find("#submitForm");
         loginForm.props().onSubmit();
-
         expect(LoginForm.state('success')).toBe(false);
-
     });
 })
->>>>>>> 44e5ea25a715937cb7d62175f245e04390b23e10
+

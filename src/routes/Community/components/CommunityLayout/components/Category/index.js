@@ -29,8 +29,6 @@ class Category extends React.Component{
     }
 
     handleChange(value) {
-
-
         this.props.handleBreadcrumbChange(value);
     }
     clickJoin = () => {
@@ -100,8 +98,13 @@ console.log("pasha---------------",news);
             <div>
                     <Card title={name}  extra={<Row style={{width:300}}>
                         <Col span={7}>
-                            {canJoin ? isJoined ?  <Popconfirm title={intl.formatMessage(messages.popTitle)} onConfirm={this.clickUNJoin} okText={intl.formatMessage(messages.okText)} cancelText={intl.formatMessage(messages.cancelText)}>
-                            <Button  type="danger">{intl.formatMessage(messages.leave)}</Button></Popconfirm>:<Button onClick={this.clickJoin}  type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
+                            {canJoin ? isJoined ?  <Popconfirm title={intl.formatMessage(messages.popTitle)}
+                                                               onConfirm={this.clickUNJoin}
+                                                               okText={intl.formatMessage(messages.okText)}
+                                                               cancelText={intl.formatMessage(messages.cancelText)}>
+                            <Button  type="danger">{intl.formatMessage(messages.leave)}</Button></Popconfirm>:<Button
+                                onClick={this.clickJoin}
+                                type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
                         <Col offset={1}  span={16}>
                             <Search categories={categoriesKV} />
                         </Col>
@@ -114,13 +117,8 @@ console.log("pasha---------------",news);
                             articles.length !== 0 && contentListNoTitle[this.state.noTitleKey]
                         }
                     </Card>
-
-
-
-
                 {categories.length > 0 && <ListCommunityForm name={name}  categories={categories} />}
                 {news.totalCount > 0 && <News info={news}  />}
-
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
                 {plans.length > 0 && <Plan  plans={plans}/>}
             </div>

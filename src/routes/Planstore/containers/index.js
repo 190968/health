@@ -19,10 +19,7 @@ const QUERY = gql`
                 code
                 name
                 fields {
-                    type
-                    label
-                    value
-                    range {
+                   range {
                         min
                         max
                     }

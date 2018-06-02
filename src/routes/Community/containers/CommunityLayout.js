@@ -9,8 +9,6 @@ import { connect } from 'react-redux'
 import CommunityLayout from '../components/CommunityLayout';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
-
 const CATEGORIES  = gql`
    query GET_MAIN_CATEGORIES {
        getMainCategories {
@@ -28,10 +26,8 @@ const CATEGORIES  = gql`
        }
 }
 `;
-
 const withMutation = graphql(CATEGORIES, {
     props: ({ ownProps, data }) => {
-
         if (!data.loading) {
             return {
                 info: data.getMainCategories,
@@ -43,15 +39,10 @@ const withMutation = graphql(CATEGORIES, {
         }
     },
 });
-
 const mapStateToProps = (state) => {
     return {
         user_id: state.user.info.id
     };
 };
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-
-});
-
+const mapDispatchToProps = (dispatch, ownProps) => ({});
 export default withMutation(connect(mapStateToProps, mapDispatchToProps)(CommunityLayout));

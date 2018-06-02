@@ -82,15 +82,12 @@ const discussionReply = gql`
     isImportant
     unread
        }
-}
-
-`;
+}`;
 const discussionDelete = gql`
   mutation discussionDelete($id:UID!) {
 
   discussionDelete(id:$id) 
-}
-`;
+}`;
 const withQuery = graphql(DISCUSSION, {
     options: (ownProps) => {
 
@@ -114,7 +111,6 @@ const withQuery = graphql(DISCUSSION, {
         }
     },
 })(Discussion);
-
 const withMutation = graphql(discussionReply, {
     props: ({ mutate, ownProps }) => ({
         discussionReply: (text,id,parentMessageId) => {
@@ -152,11 +148,9 @@ const mapStateToProps = (state) => {
 
     };
 };
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
         return ownProps.discussionReply(value.text,ownProps.match.params.id);
     }
 });
-
 export default WithMutations(connect(mapStateToProps, mapDispatchToProps)(withQuery));

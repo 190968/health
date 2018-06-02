@@ -81,6 +81,15 @@ export const asyncForgotPassword = (store) => {
         })
     );
 }
+export const asyncRepository = (store) => {
+    return (
+        Loadable({
+            loader: () => import('../components/Autosuggest/containers/CategorySelect'),
+            modules: ['../components/Autosuggest/containers/CategorySelect'],
+            webpack: () => [require.resolveWeak('../components/Autosuggest/containers/CategorySelect')],
+        })
+    );
+}
 
 
 export const asyncSettings = (store) => {

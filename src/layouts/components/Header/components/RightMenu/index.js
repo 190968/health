@@ -1,9 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import {Redirect, Link } from 'react-router-dom';
 import MenuBadges from './containers/MenuBadges';
 import ChangeRoleModal from './containers/ChangeRole';
 import {Menu, Row, Col } from 'antd';
 import UserWidget from '../../../../../routes/User/components/UserWidget';
+import CategorySelect from '../../../../../components/Autosuggest/containers/CategorySelect.js';
+import Community from '../../../../../routes/Community/components/CommunityLayout/containers/Category';
 const SubMenu = Menu.SubMenu;
 
 
@@ -17,6 +19,8 @@ export default class RightMenu extends React.Component {
             isOpen: false,
             isOpenUser: false,
             openChangeRole:false,
+            openMedicalRepository:false,
+            openCommunity:false,
             loading: false,
             notificationsLastCursor: props.lastCursor
         };
@@ -40,10 +44,13 @@ export default class RightMenu extends React.Component {
     toggleRole = () => {
         this.setState({openChangeRole: !this.state.openChangeRole})
     };
+    toggleMedicalRepository = () => {
+        this.setState({openMedicalRepository: !this.state.openMedicalRepository})
+    };
 
-    handleClick = ({key}) => {
-       // if (key == 'onclick')
-
+    handleClick = (data) => {
+        // this.setState({openCommunity: !this.state.openCommunity})
+        <Redirect to={{pathname: '/community/a485'}} />
     }
 
     render() {
@@ -59,7 +66,7 @@ export default class RightMenu extends React.Component {
         if (haveOtherRoles) {
             user_menu_items.push(['Change Role', 'onclick',this.toggleRole]);
         }
-
+        user_menu_items.push(['Medical Repository', 'onclick',this.toggleMedicalRepository]);
         if (currentRole === 'patient') {
             defaultMenu = [
                 ['Settings', '/settings'],
@@ -103,6 +110,8 @@ export default class RightMenu extends React.Component {
                     </Menu>
                     <MenuBadges lastNotificationCursor={this.state.notificationsLastCursor} updateLastNotification={this.updateLastNotification} />
                     {this.state.openChangeRole && <ChangeRoleModal roles={roles} currentRole={currentRole} onHide={this.toggleRole} />}
+                    {this.state.openMedicalRepository && <CategorySelect onHide={this.toggleMedicalRepository} handleOk={this.handleClick.bind(this,"a485")} />}
+                    {/*{this.state.openCommunity && <Redirect to={{pathname: '/community/a485'}} />}*/}
 
                 </Col>
             </Row>

@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import CancerManager from './containers/CancerManager';

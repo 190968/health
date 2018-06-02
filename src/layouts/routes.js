@@ -10,6 +10,7 @@ import {
     asyncRegister,
     asyncLogout,
     asyncSettings,
+    asyncRepository,
     asyncForgotPassword,
     asyncCalendar,
     asyncMessages
@@ -34,6 +35,7 @@ export const BasicRoutes = ({store}) => {
             <Route exact path="/register/:code?" component={asyncRegister(store)}/>
             <Route exact path="/password/reset" component={asyncForgotPassword(store)}/>
             <PrivateRoute path="/settings" component={asyncSettings(store)}/>
+            {/*<PrivateRoute path="/repository" component={asyncRepository(store)}/>*/}
             <PrivateRoute path="/messages/:id?" component={asyncMessages(store)}/>
             <PrivateRoute path="/calendar" component={asyncCalendar(store)}/>
             <PrivateRoute path="/plan/:upid" component={asyncPlan(store)}/>

@@ -8,8 +8,6 @@ import {loadUser, loadUserFAIL, loadUserPrepare} from '../modules/user'
 import LoginForm from '../components/Login'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
-
 const UserMainInfo_QUERY = gql`
     query ACCOUNT_INFO {
         account {
@@ -21,7 +19,6 @@ const UserMainInfo_QUERY = gql`
     }
     ${LoginForm.fragments.user}
 `;
-
 const loginUser = gql`
     mutation loginUser($input: LoginInput!) {
         login(input: $input) {
@@ -51,8 +48,6 @@ const withMutationForgot = graphql(forgotPassword,
         }),
     }
 );
-
-
 const withMutation = graphql(loginUser, {
     props: ({ mutate }) => ({
         loginUser: input => {
@@ -78,8 +73,6 @@ const withMutation = graphql(loginUser, {
         },
     }),
 });
-
-
 const mapStateToProps = (state) => {
     return {
         allowSignUp: state.network.allowSignUp,
@@ -87,7 +80,6 @@ const mapStateToProps = (state) => {
         loading: state.user.loading
     };
 };
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
         const{email, password} = props;

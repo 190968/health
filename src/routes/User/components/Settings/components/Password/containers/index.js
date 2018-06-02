@@ -18,7 +18,6 @@ mutation updatePassword($current_password:String,$password:String,$password_repe
 
     }
 `;
-
 const withMutation = graphql(updatePassword, {
     props: ({ mutate }) => ({
         updatePassword: input => {
@@ -28,7 +27,6 @@ const withMutation = graphql(updatePassword, {
         },
     }),
 });
-
 const mapStateToProps = (state) => {
 
 
@@ -39,7 +37,6 @@ const mapStateToProps = (state) => {
        // token: state.user.token
     };
 };
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props, resetForm) => {
         const{current_password, password, password_repeat} = props;
@@ -51,5 +48,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         });
     },
 });
-
 export default withMutation(connect(mapStateToProps, mapDispatchToProps)(PasswordForm));
