@@ -1,0 +1,7 @@
+[
+  {
+    "id": "pb.schedule.fixed.title",
+    "description": "When would you like this ActionPlan to start and end?",
+    "defaultMessage": "When would you like this ActionPlan to start and end?"
+  }
+]

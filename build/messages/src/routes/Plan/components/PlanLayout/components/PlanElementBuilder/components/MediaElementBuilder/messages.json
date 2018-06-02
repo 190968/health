@@ -1,0 +1,17 @@
+[
+  {
+    "id": "p.el.url.title",
+    "description": "Caption",
+    "defaultMessage": "Caption"
+  },
+  {
+    "id": "p.el.media.upload",
+    "description": "Upload",
+    "defaultMessage": "Upload"
+  },
+  {
+    "id": "p.el.url.description",
+    "description": "Description",
+    "defaultMessage": "Description"
+  }
+]

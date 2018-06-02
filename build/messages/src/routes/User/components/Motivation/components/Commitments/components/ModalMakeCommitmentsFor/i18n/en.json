@@ -1,0 +1,57 @@
+[
+  {
+    "id": "user_motivation_finish",
+    "description": "Finish",
+    "defaultMessage": "Finish"
+  },
+  {
+    "id": "user_motivation_make",
+    "description": "Make a Commitment for",
+    "defaultMessage": "Make a Commitment for"
+  },
+  {
+    "id": "user_motivation_complete",
+    "description": "If I do not complete my plan",
+    "defaultMessage": "If I do not complete my plan"
+  },
+  {
+    "id": "user_motivation_will",
+    "description": "I will...",
+    "defaultMessage": "I will..."
+  },
+  {
+    "id": "user_motivation_pay",
+    "description": "Pay a motivator",
+    "defaultMessage": "Pay a motivator"
+  },
+  {
+    "id": "user_motivation_noname",
+    "description": "No name",
+    "defaultMessage": "No name"
+  },
+  {
+    "id": "user_motivation_donate",
+    "description": "Donate to a charity",
+    "defaultMessage": "Donate to a charity"
+  },
+  {
+    "id": "user_motivation_howmuch",
+    "description": "How much?",
+    "defaultMessage": "How much?"
+  },
+  {
+    "id": "user_motivation_other",
+    "description": "Other",
+    "defaultMessage": "Other"
+  },
+  {
+    "id": "user_motivation_add",
+    "description": "Add a URL describing your promise",
+    "defaultMessage": "Add a URL describing your promise"
+  },
+  {
+    "id": "user_motivation_select",
+    "description": "Please select",
+    "defaultMessage": "Please select"
+  }
+]

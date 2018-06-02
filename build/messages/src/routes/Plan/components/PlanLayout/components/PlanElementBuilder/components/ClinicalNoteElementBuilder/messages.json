@@ -1,0 +1,17 @@
+[
+  {
+    "id": "p.el.cnote.title",
+    "description": "Title",
+    "defaultMessage": "Title"
+  },
+  {
+    "id": "p.el.cnote.note",
+    "description": "Note",
+    "defaultMessage": "Note"
+  },
+  {
+    "id": "p.el.cnote.attachments",
+    "description": "Attachments",
+    "defaultMessage": "Attachments"
+  }
+]

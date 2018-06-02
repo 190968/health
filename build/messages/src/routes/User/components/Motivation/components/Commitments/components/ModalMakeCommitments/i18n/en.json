@@ -1,0 +1,17 @@
+[
+  {
+    "id": "user_motivation_makecommitment",
+    "description": "Make a Commitment",
+    "defaultMessage": "Make a Commitment"
+  },
+  {
+    "id": "user_motivation_Commitments_cancel",
+    "description": "Cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "user_ModalCommitments_motivation_text",
+    "description": "Select which Plan you would like to make a commitment to.",
+    "defaultMessage": "Select which Plan you would like to make a commitment to."
+  }
+]

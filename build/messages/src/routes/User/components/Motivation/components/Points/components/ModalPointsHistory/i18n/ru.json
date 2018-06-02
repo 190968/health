@@ -1,0 +1,32 @@
+[
+  {
+    "id": "user_motivation_earnedPoints",
+    "description": "Заработанные очки",
+    "defaultMessage": "Заработанные очки"
+  },
+  {
+    "id": "user_motivation_ModalPoints_cancel",
+    "description": "Отмена",
+    "defaultMessage": "Отмена"
+  },
+  {
+    "id": "user_motisdcvation_points",
+    "description": "Очки",
+    "defaultMessage": "Очки"
+  },
+  {
+    "id": "user_motivation_receivedFor",
+    "description": "Получено для",
+    "defaultMessage": "Получено для"
+  },
+  {
+    "id": "user_motivation_receivedOn",
+    "description": "Получено",
+    "defaultMessage": "Получено"
+  },
+  {
+    "id": "user_ModalPoints_motivation_text",
+    "description": "Вы сейчас находитесь на уровне Новичок. Для достижения уровня Pioneer вам нужно еще 260 очков. Оставайтесь активными в системе, чтобы продвигаться!",
+    "defaultMessage": "Вы сейчас находитесь на уровне Новичок. Для достижения уровня Pioneer вам нужно еще 260 очков. Оставайтесь активными в системе, чтобы продвигаться!"
+  }
+]

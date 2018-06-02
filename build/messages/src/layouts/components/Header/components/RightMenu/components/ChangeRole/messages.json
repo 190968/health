@@ -1,0 +1,22 @@
+[
+  {
+    "id": "change.event.title",
+    "description": "Change Role",
+    "defaultMessage": "Change Role"
+  },
+  {
+    "id": "account.selectRole",
+    "description": "Select Role",
+    "defaultMessage": "Select Role"
+  },
+  {
+    "id": "account.role.update",
+    "description": "Change Role",
+    "defaultMessage": "Change"
+  },
+  {
+    "id": "account.role.updated",
+    "description": "Role has been changed",
+    "defaultMessage": "Role has been changed"
+  }
+]
