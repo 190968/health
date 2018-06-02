@@ -7,7 +7,7 @@ import Plan from '../components/Plan';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-export const PLANS_LIST_QUERY = gql`    
+export const USER_PLANS_LIST_QUERY = gql`    
     query GET_USER_PLANS ($user_id:UID, $status:UserPlanStatusEnum)  {
             user (id:$user_id) {
               id
@@ -27,7 +27,7 @@ export const PLANS_LIST_QUERY = gql`
 
 // 1- add queries:
 const PlansListWithQuery = graphql(
-    PLANS_LIST_QUERY,
+    USER_PLANS_LIST_QUERY,
   {
     //name: 'PlanstorePlans',
     options: (ownProps) => {

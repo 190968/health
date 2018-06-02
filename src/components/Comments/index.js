@@ -1,11 +1,12 @@
 import React from 'react';
-import {Card, Icon} from 'antd';
+import {Card, Icon, Tooltip} from 'antd';
 import CommentAdd from './containers/CommentAdd';
 import CommentsList from './components/CommentsList';
-import {compose, withState, withHandlers} from'recompose';
+import {compose, withState, withHandlers,defaultProps} from'recompose';
 import {GET_COMMENTS_LIST} from "./queries";
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux'
+import {withModal, withSpinnerWhileLoading} from "../Modal/index";
 
 export const CommentsPure = props => {
     const {id='', type='', userId='', title="Discussion", openSelect, viewList, messages=[], total=0} = props;
@@ -79,3 +80,34 @@ const enhance = compose(
 
 export const Comments = enhance(CommentsPure);
 export default Comments;
+
+
+
+const CommentsModal = compose(
+    defaultProps({
+        modalFooter:'close',
+        modalTitle: 'Timeline Element Notes'
+    }),
+    withModal,
+    withSpinnerWhileLoading
+)(Comments);
+
+const CommentsFromIcon = props => {
+    const {viewModal=false, toggleModal, id, type} = props;
+    return <React.Fragment>
+        {viewModal && <CommentsModal id={id} type={type} onHide={toggleModal} title='Notes' />}
+        <Tooltip title="Notes"><Icon type="message" onClick={toggleModal} /></Tooltip>
+    </React.Fragment>;
+}
+
+const enhancedFromIcon = compose(
+    withState('viewModal', 'setViewModal', false),
+    withHandlers({
+        toggleModal: props => (e) => {
+            e.stopPropagation();
+            props.setViewModal(!props.viewModal);
+        }
+    })
+);
+
+export const CommentsModalFromIcon = enhancedFromIcon(CommentsFromIcon);

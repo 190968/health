@@ -150,7 +150,7 @@ const enhance = compose(
         },
 
         modalTitle: props => values => {
-            return props.id ? 'Edit Go To Block' : 'Add Go To Block';
+            return props.id ? 'Edit Go To' : 'Add Go To';
         },
     }),
     lifecycle({

@@ -58,7 +58,7 @@ const prepareElementForMutation = option => {
             // const {cycles, days, notes, timesPerDay} = chemotherapyElement;
             break;
         default:
-            details = option;
+            details = {...option, element:undefined};
             break;
     }
     return details;

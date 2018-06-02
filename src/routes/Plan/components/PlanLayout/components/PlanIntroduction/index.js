@@ -47,7 +47,7 @@ const PlanElementEnhanced = compose(
 )(PlanElementListItem);
 
 const EmptyResultsPure = (props) => {
-    return <EmptyList>No Elements has been added yet.</EmptyList>;
+    return <EmptyList>No elements have been added yet</EmptyList>;
 }
 
 const PlanElementAddLinePure = (props) => {

@@ -55,7 +55,7 @@ const enhance = compose(
             props.saveElement(props.onHide);
         },
         modalTitle: props => values => {
-            return props.id ? 'Edit Assessment Block' : 'Add Assessment Block';
+            return props.id ? 'Edit Assessment' : 'Add Assessment';
         },
     }),
     modalHOC,

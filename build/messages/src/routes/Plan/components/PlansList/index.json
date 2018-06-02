@@ -1,0 +1,15 @@
+[
+  {
+    "id": "plan.settings",
+    "defaultMessage": "Settings"
+  },
+  {
+    "id": "plan.add",
+    "defaultMessage": "Add ActionPlan"
+  },
+  {
+    "id": "plan.title",
+    "description": "ActionPlans for Today",
+    "defaultMessage": "Today's ActionPlans"
+  }
+]

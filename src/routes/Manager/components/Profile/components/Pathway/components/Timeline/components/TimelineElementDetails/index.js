@@ -3,7 +3,7 @@ import { Tabs, Card } from 'antd';
 import EllipsisText  from 'react-ellipsis-text';
 import {withState,withProps, compose, withHandlers} from 'recompose';
 import {getTimelineElementCardTitle} from "../TimelineElement/index";
-import TimelineElement from '../../components/TimelineElement';
+import TimelineElement from '../../containers/TimelineElement';
 import PathwayContent from '../../../../containers/PathwayContent';
 
 const TabPane = Tabs.TabPane;

@@ -15,15 +15,18 @@ import TreatmentElement from "../../../../../../../../../Plan/components/Plan/co
 import { DragSource } from 'react-dnd'
 import {branch, compose, renderComponent} from 'recompose';
 import TumorboardView from "../../../../../../../Tumorboard/containers/TumorboardView";
+import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
+import {CommentsModalFromIcon, Comments} from "../../../../../../../../../../components/Comments/index";
 
 
 export const getTimelineElementCardTitle = (item) => {
+    console.log(item, 'item');
     const {activity={}} = item;
     let {type, typeText} = item;
     let elTitle = '';
-    let {title='', label='', text=''} = activity;
-    console.log(activity, 'item');
-    console.log(title, 'item');
+    let {title='', label='', text=''} = activity || {};
+
+    //console.log(title, 'item');
     switch (type) {
         case 'clinical_note':
             elTitle = title;
@@ -68,24 +71,26 @@ const getColor = type => {
 
 
 
-export const TimelineElementView = item => {
+export const TimelineElementView = (item, props={}) => {
+    const {handleReport=false} = props;
 
-    const {activity, type} = item;
+    const {activity, type, getReport={}} = item;
     //const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}} = props;
     //const {activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
     //const {id, fullName} = creator;
     //const {id:activeElementId} = activeElement;
     //console.log(item);
     //console.log(activity);
-    let activityText = '';//'Unknown Activity';
+    let activityText = '';//'Unknown Activity'; 5 03 13. +375259420637 прописка и первая. и копия удостоверение.
     //let extra = {};
     let body = [];
     let image = '';
     let group = 'updates';
     //let color = '';
+    let percent = 0;
     let progress = '';
     //let description = notes;
-    let icon = 'api';
+    let icon = <Icon type='api' />;
     switch (type) {
         case 'basic':
             activityText = activity.text;
@@ -93,11 +98,11 @@ export const TimelineElementView = item => {
             break;
         case 'link':
             activityText = <LinkElement item={activity} />;
-            icon = 'link';
+            icon = <Icon type='link' />;
             body.push( activity.description || '');
             break;
         case 'clinical_note':
-            icon = 'file-text';
+            icon = <FitIcon icon='clinical-note' />;
             activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
             if (activity.note !== '') {
                 body.push(activity.note);
@@ -123,30 +128,68 @@ export const TimelineElementView = item => {
             break;
         case 'treatment':
             group = 'treatment';
-            icon = 'appstore-o';
+            icon = <FitIcon icon='treatment' />;
             progress = <Progress percent={0} />;
-            activityText = <TreatmentElement item={activity}  />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
+            const {details:treatmentDetails} = activity || {};
+            activityText = <TreatmentElement item={treatmentDetails} handleReport={handleReport} />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
             break;
         case 'checklist':
-            activityText = <Checklist item={activity}  />;
-            progress = <Progress percent={0} />;
+            const {value:reportValues=[]} = getReport || {};
+            activityText = <Checklist item={activity} handleReport={handleReport} reports={reportValues}  />;
+            const total = activity.options.length || 0;
+            if (reportValues.length > 0) {
+                // let reported = 0;
+                // reports.map(report => {
+                //     console.log(report.value, 'reportValue');
+                //     reported += report.value.length;
+                //     return null;
+                // });
+
+                percent = reportValues.length/total*100;
+                if (percent > 0) {
+                    percent = Math.floor(percent);
+                }
+            }
+            progress = <Progress percent={percent} />;
             group = 'todo';
+            icon = <FitIcon icon="to-do"/>
             break;
         case 'cancer_stage':
             group = 'cancer_stage'
             activityText = <CancerStage item={activity}  />;
+            icon = <FitIcon icon="stage"/>
             break;
         case 'health_record':
             activityText = activity.title;
             group = 'health';
-            icon = 'medicine-box';
+            icon = <Icon type='medicine-box' />;
+            break;
+        case 'clinical_trial':
+            activityText = activity.title;
+            body.push(activityText);
+            //console.log(activityText, 'CLTRIAL');
+            //body.push(activity.notes);
+            group = 'health';
+            icon = <FitIcon type='evaluation' />;
             break;
         case 'tumorboard':
             //activityText = activity.title;
-            activityText = <TumorboardView tumorboard={activity}  />;
+            activityText = <TumorboardView tumorboard={activity}   />;
             group = 'tumorboard';
-            icon = 'medicine-box';
+            icon = <FitIcon icon="tumorboard"/>
             body.push(activity.notes);
+            break;
+        case 'request_join_user_manager':
+            icon = <FitIcon icon="actionplan"/>;
+            group = 'team';
+            break;
+        case 'plan_created':
+        case 'plan_approved':
+        case 'plan_assigned':
+        case 'plan_share_hp_approved':
+            icon = <FitIcon icon="actionplan"/>;
+            group = 'plan';
+            body.push(activity.text);
             break;
         default:
             activityText = activity.text;
@@ -162,8 +205,10 @@ export const TimelineElementView = item => {
 class TimelineElement extends React.PureComponent {
 
     render() {
-        const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}} = this.props;
-        const {activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
+
+        console.log(this.props,' Element props');
+        const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false} = this.props;
+        const {id: telid, activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
         const {id, fullName} = creator;
         const {id:activeElementId} = activeElement;
         //console.log(item);
@@ -240,7 +285,7 @@ class TimelineElement extends React.PureComponent {
         //         body.push(activity.text);
         //         break;
         // }
-        const {body, color, activityText, image, icon, progress, title} = TimelineElementView(item);
+        const {body, color, activityText, image, icon, progress, title} = TimelineElementView(item, {handleReport});
 
         //activityText = <Card type="timeline" title={} extra={extra} >{activityText}</Card>;
         if (notes !== '') {
@@ -254,11 +299,21 @@ class TimelineElement extends React.PureComponent {
             //
             //    ];
             // }
-            return <Card title={title}
+            return <React.Fragment>
+                <Card title={title}
                          extra={[<TimelineElementEdit item={item} userId={userId} />, <TimelineElementDelete item={item} userId={userId} />]}
             >
                 {activityText}
-            </Card>;
+                    {body && <div>{body}</div>}
+
+                <div className="ant-card-comments">
+                    <Comments type="timeline" id={telid} title="Notes" />
+                </div>
+            </Card>
+
+
+
+            </React.Fragment>;
         }
 
         let infoContent = [
@@ -282,25 +337,26 @@ class TimelineElement extends React.PureComponent {
                     {source}</div>
             </Tooltip>);
         }
-        infoContent.push(<div><Icon type="message" style={{marginRight:5}} />Add Note</div>);
+        //infoContent.push(<div><Icon type="message" style={{marginRight:5}} />Add Note</div>);
 
 
         const html =  <Card type={"timeline"+ (activeElementId === item.id ? ' active-element' : '')} hoverable onClick={() => showElement(item)}  >
             {isCritical && <span style={{position:'absolute', top:0, right:2, lineHeight:'1em'}} ><Tooltip title="Critical"><Badge dot /></Tooltip></span>}
             <div className={"timeline-icon"} style={{backgroundColor: color}}>
-                <Icon type={icon} />
-                <div style={{marginBottom:-20, lineHeight:'1.7em', color: '#ccc', fontSize: '0.8em'}}><Popover key="1" title={[<Icon type="user"  style={{marginRight:5}}  />, fullName]} content={infoContent} trigger="hover"><Icon type="info-circle-o" /></Popover>
-                </div>
+                {icon}
             </div>
             <div className="timeline-text">
+                <div className="timeline-actions"  >
+
+                        <CommentsModalFromIcon type="timeline" id={telid} />
+                   <Popover key="1" title={[<Icon type="user" key="user" style={{marginRight:5}}  />, <span key="fullname">{fullName}</span>]} content={infoContent} trigger="hover"><Icon type="info-circle-o" style={{marginLeft:5}} /></Popover>
+                </div>
+                <div className="timeline-date"><Icon type="clock-circle-o" style={{marginRight:5, display:'none'}} />{moment(createdAt).format('L')}</div>
+
                 {image && <div className="timeline-image">{image}</div>}
-
                 <h4 style={{margin:0}}>{title}</h4>
-                <div style={{color:'#ccc', marginBottom:5, 'fontSize': '0.8em'}}><Icon type="clock-circle-o" style={{marginRight:5, display:'none'}} />{moment(createdAt).format('LLL')}</div>
                 {progress}
-                <Truncate lines={4}>{body}</Truncate>
-
-
+                <Truncate lines={1}>{body}</Truncate>
             </div>
         </Card>;
         return html;

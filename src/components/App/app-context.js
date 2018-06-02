@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const CustomizedLabelsContext = React.createContext();
+export const NetworkContext = React.createContext();
 
 
 export const CustomizedLabelsProvider = (props) => {
@@ -33,3 +34,5 @@ export const GetGlobalLabel = (props) => {
         </CustomizedLabelsContext.Consumer>
     );
 }
+
+

@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 
 import {ClinicalTrialFragment} from "../fragments";
 
-export const GET_CLINICAL_TRIAL_QUERY = gql`    
-    query GET_CLINICAL_TRIALS_LIST {
-        getClinicalTrialsList {
+export const GET_CLINICAL_TRIALS_LIST_QUERY = gql`    
+    query GET_CLINICAL_TRIALS_LIST ($search: String) {
+        getClinicalTrialsList (search: $search) {
             totalCount
             edges {
                 ...ClinicalTrialInfo
@@ -22,7 +22,7 @@ export const GET_CLINICAL_TRIAL_QUERY = gql`
 
 // 1- add queries:
 const withQuery = graphql(
-    GET_CLINICAL_TRIAL_QUERY,
+    GET_CLINICAL_TRIALS_LIST_QUERY,
     {
         options: (ownProps) => {
             return {

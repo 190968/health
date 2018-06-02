@@ -1,10 +1,10 @@
 import TodoPlansList from '../components/TodoPlansList'
 import { graphql } from 'react-apollo';
 
-import {PLANS_LIST_QUERY} from '../../../../../../Plan/containers/PlansList';
+import {USER_PLANS_LIST_QUERY} from '../../../../../../Plan/containers/PlansList';
 
 const TodoPlansListWithQuery = graphql(
-    PLANS_LIST_QUERY,
+    USER_PLANS_LIST_QUERY,
     {
         //skip: (ownProps) => ownProps.loading,
         props: ({  data }) => {

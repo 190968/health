@@ -1,0 +1,27 @@
+[
+  {
+    "id": "plan.element.edit.modalTitle",
+    "description": "Edit Element",
+    "defaultMessage": "Edit Element"
+  },
+  {
+    "id": "send",
+    "description": "Send",
+    "defaultMessage": "Send"
+  },
+  {
+    "id": "p.el.text.title",
+    "description": "Text",
+    "defaultMessage": "Text"
+  },
+  {
+    "id": "p.el.text.embed",
+    "description": "Embed html code",
+    "defaultMessage": "Embed"
+  },
+  {
+    "id": "p.el.text.toolpic",
+    "description": "Icon",
+    "defaultMessage": "Icon"
+  }
+]

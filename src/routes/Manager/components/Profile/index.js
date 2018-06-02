@@ -21,7 +21,7 @@ export default class Profile extends React.Component {
         const {match, loading, user={}, fullName} = this.props;
 
 
-        const {id, tab = 'timeline', subtab = ''} = match.params;
+        const {id, tab = 'overview', subtab = ''} = match.params;
 
         const selectedItem = subtab || tab;
         const openItem = tab;
@@ -31,8 +31,8 @@ export default class Profile extends React.Component {
         if (id !== '') {
             mainUrl += '/'+id;
         }
-        let cancerName = 'Lung cancer';
-        let stageName = 'Stage 1';
+        let cancerName = 'Small Cell Lung Cancer';
+        let stageName = 'T1 N2 M0 Stage 1';
 
         return (
             <Layout style={{minHeight:'100vh'}}>
@@ -47,20 +47,21 @@ export default class Profile extends React.Component {
                             <Divider type="vertical" />
                             <span style={{fontSize:'1.2em'}}>{user.age}</span>
                         </div>
-                        <Alert
-                            message={cancerName}
-                            description={stageName}
-                            type="success"
-                            style={{textAlign:'center'}}
-                        />
+                        <div style={{background:'#dedede', margin: '-5px', padding: '10px 10px', textAlign:'center'}}>
+                            <h4>{cancerName}</h4>
+                            <div>{stageName}</div>
+                        </div>
                     </div>
                     <Divider dashed style={{marginBottom:0, marginTop:10}} />
                     <Menu theme="grey" mode="inline" style={{borderRight:0}} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} >
+                        <Menu.Item key="overview">
+                            <NavLink to={mainUrl+'/overview'}>Overview</NavLink>
+                        </Menu.Item>
                         <Menu.Item key="timeline">
                             <NavLink to={mainUrl+'/timeline'}>Timeline</NavLink>
                         </Menu.Item>
                         <Menu.Item key="tumorboard">
-                            <NavLink to={mainUrl+'/tumorboard'}>Tumorboard</NavLink>
+                            <NavLink to={mainUrl+'/tumorboard'}>Tumor Board</NavLink>
                         </Menu.Item>
                         <Menu.Divider />
                         <SubMenu

@@ -23,7 +23,7 @@ const enhanceWithModal = compose(
     enhance,
     withHandlers({
         modalTitle: props => values => {
-            return props.id ? 'Edit Embed Block' : 'Add Embed Block';
+            return props.id ? 'Edit Embed' : 'Add Embed';
         },
     }),
     modalHOC,

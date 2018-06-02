@@ -56,7 +56,7 @@ const enhance = compose(
             props.saveElement(props.onHide);
         },
         modalTitle: props => values => {
-            return props.id ? 'Edit Scale Block' : 'Add Scale Block';
+            return props.id ? 'Edit Scale' : 'Add Scale';
         },
     }),
     modalHOC,

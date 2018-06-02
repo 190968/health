@@ -1,10 +1,13 @@
 import React from 'react';
 import {EmptyList} from "../../../../components/Loading/index";
+import PopulationShapshot from './containers/PopulationShapshot';
+import Patients from "../../../Manager/containers/Patients";
 
-class DashManagerLayout extends React.Component {
-    render() {
-         return (<EmptyList>Please select item from the left menu for now</EmptyList>);
-    }
+const DashManagerLayout  = props => {
+    return <React.Fragment>
+        <PopulationShapshot />
+        <div style={{marginTop:16}}><Patients limit={10} /></div>
+    </React.Fragment>;
 }
 
 export default DashManagerLayout

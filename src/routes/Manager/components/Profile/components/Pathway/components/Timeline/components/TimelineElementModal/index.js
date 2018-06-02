@@ -9,6 +9,7 @@ import {getTimelineElementTitle} from "../TimelineElementSelect/index";
 //import {withMutation, withAddMutation } from '../../components/PlanElementBuilder/mutations';
 import TreatmentElement from './containers/TreatmentElement';
 import ClinicalNoteElement from './containers/ClinicalNoteElement';
+import ClinicalTrialElement from './containers/ClinicalTrialElement';
 import LinkElement from './containers/LinkElement';
 import ChecklistElement from './containers/ChecklistElement';
 import CancerStageElement from './containers/CancerStageElement';
@@ -135,6 +136,7 @@ const enhance = compose(
         {when: ({type}) => type === 'cancer_stage', then: CancerStageElement},
         {when: ({type}) => type === 'link', then: LinkElement},
         {when: ({type}) => type === 'clinical_note', then: ClinicalNoteElement},
+        {when: ({type}) => type === 'clinical_trial', then: ClinicalTrialElement},
         {when: ({type}) => type === 'ap', then: ApElementBuilder},
     ]),
 

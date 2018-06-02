@@ -55,7 +55,7 @@ const enhance = compose(
             props.setShow(!props.show);
         },
         handleChange: props => (e) => {
-            //console.log(e);
+            console.log(e);
             props.handleChange(e);
         },
         onHide: props => () => {

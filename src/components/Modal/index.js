@@ -17,7 +17,7 @@ export const withModal = (WrappedComponent) => {
     class ModalWrappeer extends React.Component {
 
         static defaultProps = {
-            modalTitle: 'Modal',
+            modalTitle: 'View',
             modalVisible:true,
             modalFooter:null,
             //destroyOnClose:true,
@@ -27,11 +27,12 @@ export const withModal = (WrappedComponent) => {
             this.props.onSubmit();
         }
 
-        onCancel = () => {
+        onCancel = (e) => {
+            e.stopPropagation();
             if (this.props.onHide) {
-                this.props.onHide();
+                this.props.onHide(e);
             } else if (this.props.onCancel) {
-                this.props.onCancel();
+                this.props.onCancel(e);
             } else {
                 this.props.setModalVisible(false);
             }
@@ -104,9 +105,9 @@ export const withSpinnerWhileLoading = branch(
     isLoading,
     renderComponent(Spinner)
 );
-const enhance = compose(
-    withSpinnerWhileLoading
-);
+// const enhance = compose(
+//     withSpinnerWhileLoading
+// );
 
 
 

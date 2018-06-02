@@ -44,7 +44,7 @@ const enhanceWithModal = compose(
     enhance,
     withHandlers({
         modalTitle: props => values => {
-            const typeFormatted = props.type === 'condition' ? 'To Do Block' : 'To Do Block';
+            const typeFormatted = props.type === 'condition' ? 'To Do' : 'To Do';
             return props.id ? 'Edit ' + typeFormatted : 'Add ' + typeFormatted;
         },
 

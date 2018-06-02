@@ -36,8 +36,8 @@ class TimelineElement extends React.Component {
             formItemLayout,
             userId
         }
-        console.log(this.props);
-        console.log(this.getType());
+        // console.log(this.props);
+        // console.log(this.getType());
         switch(this.getType()) {
             case 'link':
                 block = <LinkElementFormFields {...defaultProps}  />;

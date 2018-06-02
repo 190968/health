@@ -32,7 +32,8 @@ const withQuery = graphql(GET_TIMELINE_QUERY, {
     },
     props: ({ ownProps, data }) => {
         if (!data.loading) {
-            const {edges, totalCount, pageInfo: {endCursor}} = data.getTimeline;
+            const {edges=[], totalCount=0, pageInfo={}} = data.getTimeline || {};
+            const {endCursor=''} = pageInfo;
 
             return {
                 items: edges,
