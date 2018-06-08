@@ -7,10 +7,12 @@ import gql from "graphql-tag";
 import { withApollo } from 'react-apollo'
 class CustomCascader extends React.Component {
     state = {
-        options:this.props.items,
+        options:this.props.items
     };
     onChange = (value) => {
-        console.log(value);
+        if(value[2]){
+            this.props.callback(value[2]);
+        }
     }
     loadData = (selectedOptions) => {
         const targetOption = selectedOptions[selectedOptions.length - 1];
@@ -32,6 +34,7 @@ class CustomCascader extends React.Component {
             }
         }).then((data)=>{
             targetOption.loading = false;
+
             const items = data.data.category.getChildrenCategories;
             const newKeys = { name: "label", id: "value" };
             let childrenObject =[];

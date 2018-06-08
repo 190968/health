@@ -6,6 +6,7 @@ import DiscussionsForm from  './containers/discussions';
 import ListCommunityForm from  './components/Communities';
 import Plan from  './components/PlansList';
 import News from  '../CategoryNews/components';
+import CategoryTmp from './components/CategoryInfo';
  import Search from  './containers/Search.js';
 import { Card,Popconfirm,Button,Row,Col  } from 'antd';
 import { withApollo} from 'react-apollo'
@@ -51,9 +52,6 @@ class Category extends React.Component{
     render(){
          const {info,loading} = this.props;
 
-
-
-
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
@@ -84,8 +82,6 @@ console.log("pasha---------------",news);
         })
         for(let i=0;i<articles.length;i++)
         {
-
-
             tabListNoTitle.push(
             {
                 key: articles[i].title,
@@ -96,27 +92,7 @@ console.log("pasha---------------",news);
         return(
 
             <div>
-                    <Card title={name}  extra={<Row style={{width:300}}>
-                        <Col span={7}>
-                            {canJoin ? isJoined ?  <Popconfirm title={intl.formatMessage(messages.popTitle)}
-                                                               onConfirm={this.clickUNJoin}
-                                                               okText={intl.formatMessage(messages.okText)}
-                                                               cancelText={intl.formatMessage(messages.cancelText)}>
-                            <Button  type="danger">{intl.formatMessage(messages.leave)}</Button></Popconfirm>:<Button
-                                onClick={this.clickJoin}
-                                type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
-                        <Col offset={1}  span={16}>
-                            <Search categories={categoriesKV} />
-                        </Col>
-                    </Row>
-                    }
-                          tabList={tabListNoTitle}
-                          onTabChange={(key) => { this.onTabChange(key, 'noTitleKey'); }}
-                    >
-                        {
-                            articles.length !== 0 && contentListNoTitle[this.state.noTitleKey]
-                        }
-                    </Card>
+                  <CategoryTmp info={info}/>
                 {categories.length > 0 && <ListCommunityForm name={name}  categories={categories} />}
                 {news.totalCount > 0 && <News info={news}  />}
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />

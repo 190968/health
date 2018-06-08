@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import { sync as globSync } from 'glob';
 import { sync as mkdirpSync } from 'mkdirp';
 
-const filePatternRu = './build/messages/src/routes/User/**/ru.json';
-const filePatternEn = './build/messages/src/routes/User/**/en.json';
+const filePatternRu = './build/messages/src/**/ru.json';
+const filePatternEn = './build/messages/src/**/en.json';
 const outputLanguageDataDir = './src/locales/';
 
 // Aggregates the default messages that were extracted from the example app's

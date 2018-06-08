@@ -13,7 +13,6 @@ import gql from 'graphql-tag';
 
 const CATEGORY = gql`
 query GET_CATEGORY($id:UID) {
-
        category(id:$id) {
          id
          name
@@ -121,6 +120,7 @@ mutation CATEGORY_UNJOIN ($id:UID!,$uid:UID){
 const withQuery = graphql(CATEGORY, {
 
     options: (ownProps) => {
+        console.log(ownProps);
         return {
             variables: {
                 id: ownProps.match.params.id,
