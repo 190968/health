@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
 
 const GET_PATIENT_TASKS_QUERY  = gql`
- query GET_USER_QUAL_MEASURES($user_id:UID) {
+ query GET_USER_TASKS($user_id:UID) {
   patient(id: $user_id) {
      id
      getTasks {

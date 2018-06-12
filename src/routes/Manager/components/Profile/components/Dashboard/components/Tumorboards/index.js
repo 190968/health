@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card, Table} from 'antd';
+import moment from 'moment';
 
 const Tumorboards = props => {
 
@@ -13,6 +14,14 @@ const Tumorboards = props => {
             return title;
         },
     },
+        {
+            title: 'Date',
+            dataIndex: 'startDate',
+            key: 'startDate',
+            render: (createdDate) => {
+                return moment(createdDate).format('L')
+            },
+        }
 
     ];
     const dataSource = items.map((info, i) => {
@@ -26,7 +35,7 @@ const Tumorboards = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic  ant-card-type-table" title={'Tumor Boards '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic1  ant-card-type-table" title={'Tumor Boards '+ (total > 0 ? ' ('+total+')' : '')} >
             <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
         </Card>)
 }

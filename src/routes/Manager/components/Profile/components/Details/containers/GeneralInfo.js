@@ -12,6 +12,8 @@ const GET_USER_DETAILS_QUERY  = gql`
      age
      addressText
      phoneFormatted
+     birthday
+     email
      getUserNetwork {
         id
         joinedDate
@@ -57,11 +59,8 @@ const withQuery = graphql(GET_USER_DETAILS_QUERY, {
     props: ({ data }) => {
 
         const {patient={}} = data;
-        const {motivation={}} = patient;
-        const {family={}} = motivation;
-        const {edges=[]} = family;
 
-        return {loading: data.loading, members:edges }
+        return {loading: data.loading, user:patient }
     },
 });
 

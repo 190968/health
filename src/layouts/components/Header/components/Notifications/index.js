@@ -28,6 +28,7 @@ class Notifications extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (!nextProps.loading && nextProps.totalCount !== this.props.totalCount) {
+            if (this.props.handleTotalNewNotifications)
             this.props.handleTotalNewNotifications(nextProps.totalCount);
         }
     }

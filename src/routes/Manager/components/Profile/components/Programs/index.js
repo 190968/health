@@ -6,8 +6,8 @@ import {AvatarWithName} from "../../../../../User/components/AvatarWithName/inde
 
 export const UserProvidersTable = props => {
 
-    const {providers=[], loading=false} = props;
-    const total = providers.length;
+    const {programs=[], loading=false} = props;
+    const total = programs.length;
     const columns = [{
         title: 'Name',
         key: 'title',
@@ -15,15 +15,15 @@ export const UserProvidersTable = props => {
             return <Truncate lines={1} >{info.provider.name}</Truncate>
         },
     },
+        // {
+        //     title: 'Category',
+        //     key: 'category',
+        //     render: (info) => {
+        //         return 1
+        //     },
+        // },
         {
-            title: 'Added',
-            key: 'sender',
-            render: (info) => {
-                return <AvatarWithName user={info.sender} />
-            },
-        },
-        {
-            title: 'On',
+            title: 'Accepted',
             dataIndex: 'joinedDate',
             key: 'joinedDate',
             render: (date) => {
@@ -31,15 +31,24 @@ export const UserProvidersTable = props => {
             },
         },
 
+        {
+            title: 'By',
+            dataIndex: 'sender',
+            key: 'sender',
+            render: (user) => {
+                return <AvatarWithName user={user}/>
+            },
+        },
+
     ];
-    const dataSource = providers;
+    const dataSource = programs;
     const pageOpts = {
         //onChange: changePage,
         pageSize:5,
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic1  ant-card-type-table" title={'Providers '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic  ant-card-type-table" title={'Referrals '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

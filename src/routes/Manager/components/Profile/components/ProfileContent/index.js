@@ -13,8 +13,11 @@ import Team from '../../containers/Team';
 import QualMeasures from '../../containers/QualMeasures';
 import Cohorts from '../../containers/Cohorts';
 import Details from '../../containers/Details';
-
-
+import Alerts from '../../containers/Alerts';
+import Health from '../../components/Health';
+import ActionPlans from '../../components/Dashboard/containers/ActionPlans';
+import {Stakeholders} from "./components/Stakeholders/index";
+import Plans from "./components/Plans";
 
 
 const RouteWithSubRoutes = route => {
@@ -54,52 +57,27 @@ class ProfileContent extends React.Component{
             {
                 path: mainUrl + "/timeline",
                 component: Pathway,
-                params: {user: user}
-            },
-            {
-                path: mainUrl + "/tumorboard",
-                component: Tumorboard,
-                params: {user: user}
-            },
-            {
-                path: mainUrl + "/overview",
-                component: Overview,
-                params: {user: user}
+                params: {user: user, mainUrl}
             },
             {
                 path: mainUrl + "/details",
                 component: Details,
-                params: {user: user}
+                params: {user: user, mainUrl}
             },
             {
-                path: mainUrl + "/qms",
-                component: QualMeasures,
-                params: {user: user}
+                path: mainUrl + "/plans",
+                component: Plans,
+                params: {user: user, mainUrl}
             },
             {
-                path: mainUrl + "/cohorts",
-                component: Cohorts,
-                params: {user: user}
-            },
-            {
-                path: mainUrl + "/stakeholders/providers",
-                component: Providers,
-                params: {user: user}
-            },
-            {
-                path: mainUrl + "/stakeholders/family",
-                component: Family,
-                params: {user: user}
-            },
-            {
-                path: mainUrl + "/stakeholders/team",
-                component: Team,
-                params: {user: user}
+                path: mainUrl + "/stakeholders",
+                component: Stakeholders,
+                params: {user: user, mainUrl}
             },
             {
                 path: mainUrl,
                 component: Dashboard,
-                params: {user: user}
+                params: {user: user, mainUrl}
             },
             /*{
                 path: mainUrl,

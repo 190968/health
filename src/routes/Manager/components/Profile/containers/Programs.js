@@ -1,33 +1,33 @@
-import Providers from '../components/Providers';
-import {compose, withState, withStateHandlers} from 'recompose';
+import Programs from "../components/Programs";
+import {compose} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
 
-const GET_PROVIDERS_QUERY  = gql`
- query GET_USER_PROVIDERS($user_id:UID) {
+const GET_PATIENT_Programs_QUERY  = gql`
+ query GET_USER_Programs($user_id:UID) {
   patient(id: $user_id) {
      id
-     getProviders {
+     getPrograms {
          edges {
             id
             provider {
                 id
                 name
             }
+            joinedDate
             sender {
                 ...UserInfo
             }
-            joinedDate
         }
+        totalCount
      }
   }
 }
-
 ${UserInfoFragment}
 `;
 
-const withQuery = graphql(GET_PROVIDERS_QUERY, {
+const withQuery = graphql(GET_PATIENT_Programs_QUERY, {
     options: (ownProps) => {
         return{
             variables: {
@@ -38,17 +38,17 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
     props: ({ data }) => {
 
         const {patient={}} = data;
-        const {getProviders={}} = patient;
-        const {edges=[]} = getProviders;
+        const {getPrograms={}} = patient;
+        const {edges=[], totalCount=0} = getPrograms;
 
-        return {loading: data.loading, providers:edges }
+        return {loading: data.loading, programs:edges, total: totalCount }
     },
 });
 
 
 
 const enhance = compose(
-    withQuery,
+    withQuery
 );
 
-export default enhance(Providers);
+export default enhance(Programs);
