@@ -6,7 +6,7 @@ import {TimelineElementView} from "../../../Pathway/components/Timeline/componen
 const News = props => {
     const {items=[]} = props;
 
-    return <Card title="Timeline" type="basic">
+    return <Card title="Timeline" type="basic1">
         <List
             size="small"
             dataSource={items}

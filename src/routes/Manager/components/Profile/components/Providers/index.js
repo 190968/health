@@ -86,7 +86,7 @@ export const UserProvidersTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic  ant-card-type-table" title={'Providers '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic1  ant-card-type-table" title={'Providers '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

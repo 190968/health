@@ -1,29 +1,25 @@
 import React from 'react';
 import {Row, Col, Card} from 'antd';
-import {EmptyList} from "../../../../../../components/Loading/index";
-import {DiagnosesList} from "../../../../../Health/containers/Diagnoses";
-import Vitals from "./containers/Vitals";
-import ActionPlans from "./containers/ActionPlans";
-import HealthItems from "./containers/HealthItems";
-import Tumorboards from "./containers/Tumorboards";
-import News from "./containers/News";
-import Timeline from "./containers/Timeline";
-import Genomics from "./components/Genomics";
-import FamilyHistory from "./components/FamilyHistory";
+import HealthItems from "../Dashboard/containers/HealthItems";
+import Tumorboards from "../Dashboard/containers/Tumorboards";
+import Genomics from "../Dashboard/components/Genomics";
+import LabTestResults from './containers/LabTestResults';
 
 const Overview = props => {
-    console.log(props);
     const {user={}} = props;
     const {id:userId} = user;
     return <React.Fragment>
-        <Row gutter={16}>
-            <Col xl={17}>
-                <Row  style={{marginBottom:16}}>
-                    <Col>
-                        <Vitals userId={userId} />
+        <Row gutter={16} style={{marginLeft:8}}>
+            <Col>
+                <Row  gutter={16} style={{marginBottom:16}}>
+                    <Col lg={12}>
+                        <HealthItems userId={userId} title="Allergies" type="allergy" />
+                    </Col>
+                    <Col lg={12}>
+                        <HealthItems userId={userId} title="Med Allergies" type="med_allergy" />
                     </Col>
                 </Row>
-                <Row gutter={16} style={{marginBottom:16}}>
+                <Row  gutter={16} style={{marginBottom:16}}>
                     <Col lg={12}>
                         <HealthItems userId={userId} title="Diagnosis" type="diagnosis" />
                     </Col>
@@ -31,7 +27,7 @@ const Overview = props => {
                         <HealthItems userId={userId} title="Treatments" type="treatment" />
                     </Col>
                 </Row>
-                <Row gutter={16} style={{marginBottom:16}}>
+                <Row  gutter={16} style={{marginBottom:16}}>
                     <Col lg={12}>
                         <Genomics userId={userId} />
                     </Col>
@@ -45,18 +41,14 @@ const Overview = props => {
                         <HealthItems userId={userId}  title="Medications" type="medication" />
                     </Col>
                 </Row>
-                <Row  gutter={16} style={{marginBottom:16}}>
+                <Row  gutter={16}>
                     <Col lg={12}>
-                        <ActionPlans userId={userId} />
+                        <HealthItems userId={userId} title="Documents Trials" type="document" />
                     </Col>
                     <Col lg={12}>
-                        <FamilyHistory userId={userId} />
+                        <LabTestResults userId={userId} />
                     </Col>
                 </Row>
-            </Col>
-            <Col xl={7}>
-                <Timeline userId={userId} />
-                <News userId={userId} />
             </Col>
         </Row>
     </React.Fragment>

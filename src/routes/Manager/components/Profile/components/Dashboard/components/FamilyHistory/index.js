@@ -6,10 +6,10 @@ import moment from 'moment';
 export const UserActionPlansTable = props => {
 
 
-    const {items=[{id:1, title:'EHFR', createdDate: '2018-01-01'}, {id:1, title:'ALK', createdDate: '2018-02-01'}], loading=false} = props;
+    const {items=[], loading=false} = props;
     const total = items.length;
     const columns = [{
-        title: 'Genome',
+        title: 'Title',
         dataIndex: 'title',
         key: 'title',
         render: (title, info) => {
@@ -38,7 +38,7 @@ export const UserActionPlansTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic1  ant-card-type-table" title={'Genomics '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic  ant-card-type-table" title={'Family History '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

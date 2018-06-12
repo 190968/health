@@ -102,6 +102,8 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
     },
 });
 
+export const withNotificationsQuery  = withQuery;
+
 
 const handleNotification_Mutation = gql`
 mutation HandleNotification($id: UID!, $approved: Boolean!) {

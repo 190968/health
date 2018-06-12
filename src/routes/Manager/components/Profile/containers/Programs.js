@@ -1,22 +1,24 @@
-import {TasksList} from "../../Tasks/index";
+import Programs from "../components/Programs";
 import {compose} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
 
-const GET_PATIENT_TASKS_QUERY  = gql`
- query GET_USER_TASKS($user_id:UID) {
+const GET_PATIENT_Programs_QUERY  = gql`
+ query GET_USER_Programs($user_id:UID) {
   patient(id: $user_id) {
      id
-     getTasks {
+     getPrograms {
          edges {
             id
+            provider {
+                id
+                name
+            }
+            joinedDate
             sender {
                 ...UserInfo
             }
-            title
-            endDate
-            priority
         }
         totalCount
      }
@@ -25,21 +27,21 @@ const GET_PATIENT_TASKS_QUERY  = gql`
 ${UserInfoFragment}
 `;
 
-const withQuery = graphql(GET_PATIENT_TASKS_QUERY, {
+const withQuery = graphql(GET_PATIENT_Programs_QUERY, {
     options: (ownProps) => {
         return{
             variables: {
-                user_id:ownProps.userId
+                user_id:ownProps.user.id
             }
         }
     },
     props: ({ data }) => {
 
         const {patient={}} = data;
-        const {getTasks={}} = patient;
-        const {edges=[], totalCount=0} = getTasks;
+        const {getPrograms={}} = patient;
+        const {edges=[], totalCount=0} = getPrograms;
 
-        return {loading: data.loading, tasks:edges, total: totalCount }
+        return {loading: data.loading, programs:edges, total: totalCount }
     },
 });
 
@@ -49,4 +51,4 @@ const enhance = compose(
     withQuery
 );
 
-export default enhance(TasksList);
+export default enhance(Programs);

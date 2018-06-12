@@ -5,7 +5,7 @@ import EllipsisText from 'react-ellipsis-text';
 const News = props => {
     const {items=[]} = props;
 
-    return <Card title="News" type="basic">
+    return <Card title="News" type="basic1">
         <List
             size="small"
             dataSource={items}

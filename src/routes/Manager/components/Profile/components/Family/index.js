@@ -57,7 +57,7 @@ export const UserFamilyTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic  ant-card-type-table" title={'Family Members '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic1  ant-card-type-table" title={'Family Members '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

@@ -1,7 +1,12 @@
 import Providers from '../components/Providers';
+<<<<<<< HEAD
 import React from 'react';
 import {compose,withStateHandlers} from 'recompose';
 import {graphql} from 'react-apollo';
+=======
+import {compose, withState, withStateHandlers} from 'recompose';
+import { graphql } from 'react-apollo';
+>>>>>>> 5794a11e23dfbd149fdb9de9948e32ee39a4ef84
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
 const faceData = [{id:1,provider:{id:1,"name":"bbqbbb"},sender:{},joinedDate:"2016-01-01"},
@@ -49,6 +54,7 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
 
 const enhance = compose(
     withQuery,
+<<<<<<< HEAD
     withStateHandlers(
         (props) => ({
             searchText: '',
@@ -81,6 +87,8 @@ const enhance = compose(
                     }).filter(record => !!record),
             })
             })        
+=======
+>>>>>>> 5794a11e23dfbd149fdb9de9948e32ee39a4ef84
 );
 
 export default enhance(Providers);

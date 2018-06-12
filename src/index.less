@@ -213,6 +213,17 @@ body {
 .ant-card-type-basic {
   border: none !important;
 
+  &.pure {
+    &> .ant-card-body {
+      border:none;
+      padding:0;
+      padding-top: 10px;
+
+      .ant-card {
+        margin-bottom:8px;
+      }
+    }
+  }
   .ant-card-head {
     padding: 0 12px;
 

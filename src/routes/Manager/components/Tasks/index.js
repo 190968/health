@@ -1,30 +1,42 @@
 import React from 'react';
-import {Card, Table} from 'antd';
+import {Card, Row, Col} from 'antd';
 import EllipsisText from 'react-ellipsis-text';
+import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
+import  moment from 'moment';
+const gridStyle = {
+    width: '33%',
+};
 
 export const TasksList = props => {
 
     const {tasks=[], loading=false} = props;
     const total = tasks.length;
-    const columns = [{
-        title: 'Title',
-        dataIndex: 'title',
-        key: 'title',
-        render: (title, info) => {
-            return <EllipsisText text={title} length={45}  />
-        },
-    },
 
-    ];
-    const dataSource = tasks;
-    const pageOpts = {
-        //onChange: changePage,
-        pageSize:5,
-        total: total,
-        hideOnSinglePage: true
-    };
-    return (<Card type="basic  ant-card-type-table" title={'Tasks '+ (total > 0 ? ' ('+total+')' : '')} >
-        <Table size="middle" dataSource={dataSource}  rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+    return (<Card type="basic pure" title={'Tasks '+ (total > 0 ? ' ('+total+')' : '')} >
+            <Row gutter={8}>
+            {tasks.map((task, i) => {
+
+                let color = '#11B76B';
+                switch(task.priority) {
+                    case 2:
+                        color = '#ff5a5f';
+                        break;
+                    case 1:
+                        color = '#FF8805';
+                        break;
+                }
+                return <Col  key={i} md={8}>
+                    <Card bordered={false} bodyStyle={{borderLeft: '3px solid '+color, padding:10}}>
+                    <h4>{task.title}</h4>
+                    <AvatarWithName user={task.sender} size={'small'}/>
+
+                    <div style={{fontSize:'0.9em', color : '#ccc', position:'absolute', top:10, right:10}}>
+                        {moment(task.endDate).format('L')}
+                    </div>
+                    </Card>
+                    </Col>;
+            })}
+            </Row>
     </Card>)
 }
 

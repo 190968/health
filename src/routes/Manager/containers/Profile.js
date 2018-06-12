@@ -15,9 +15,41 @@ const GET_PROFILE  = gql`
       medium
       wide
     }
-    age
     gender
     genderText
+     age
+     addressText
+     phoneFormatted
+     birthday
+     email
+     getUserNetwork {
+        id
+        joinedDate
+        lastLoginDate
+     }
+     
+     getAdherence {
+        medications {
+            level
+            color
+            description
+        }
+        total {
+            level
+            color
+            description
+        }
+     }
+     
+     
+     getInsurance {
+        memberId
+        groupNumber
+        payer {
+            id
+            name
+        }
+     }
     
   }
 }

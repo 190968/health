@@ -15,14 +15,14 @@ export class AvatarWithName extends React.PureComponent {
     }
 
     render() {
-        const {user={}} = this.props;
+        const {user={}, size} = this.props;
         const {info=user, align, useLink} = this.props;
 
 
         const name = info.fullName ? info.fullName : ((info.firstName && info.firstName !== ' ') ? info.fullName : (info.email ? info.email : 'N/A'));
 
 
-        let avatarWithName = <span><Avatar info={info}/> <span style={{verticalAlign: 'middle', marginLeft:5}}>{name}</span></span>;
+        let avatarWithName = <span><Avatar info={info} size={size}/> <span style={{verticalAlign: 'middle', marginLeft:5}}>{name}</span></span>;
         if (useLink) {
             avatarWithName = <Link to={'/u/' + info.id} style={{color: 'inherit'}}>{avatarWithName}</Link>;
         }

@@ -31,6 +31,7 @@ export const HealthElementFragment  = gql`
               ...TreatmentPlanElement
             }
        }
+       createdDate
     }
     ${ClinicalTrialFragment}
     ${ElementTreatmentFragment}
