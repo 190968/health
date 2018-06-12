@@ -21,18 +21,19 @@ class CommunityLayout extends React.Component{
             );
         }
         return(
-            <Row gutter={15}>
-                <Col >
-                {/*<Col xs={24} md={14} lg={15} xl={17}>*/}
+            <Row >
+                {/*<Col >*/}
+			<Col offset={4} xs={24} md={14} lg={15} xl={17}>
                     <MyCommutinies />
                     <CategoryNews />
                     <MainCategories info={info} />
                 </Col>
-                <Col xs={24} md={10} lg={9} xl={7}>
+
+                {/*<Col xs={24} md={10} lg={9} xl={7}>
                     <Family user_id={user_id} />
                     <CareTeam user_id={user_id} />
                     <Motivators user_id={user_id} />
-                </Col>
+                </Col>*/}
             </Row>
         )
     }

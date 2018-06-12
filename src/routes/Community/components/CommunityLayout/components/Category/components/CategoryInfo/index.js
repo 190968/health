@@ -26,6 +26,17 @@ class Category extends React.Component{
         super(props);
     }
 
+    clickJoin = () => {
+        const { onSubmit, info} = this.props;
+        return onSubmit(info.id);
+    }
+
+    clickUNJoin = () => {
+        const { onClick,info} = this.props;
+        return onClick(info.id);
+    }
+
+
     onTabChange = (key, type) => {
         this.setState({ [type]: key });
     }
@@ -41,10 +52,14 @@ class Category extends React.Component{
         }
         const { intl } = this.props;
         console.log(info);
-        const {name,canJoin,news, isJoined,articles,discussions,plans} = info;
+        const {name,canJoin,news, isJoined,articles,categories,discussions,plans} = info;
 
 
 
+        let categoriesKV = [];
+        categories.forEach((item)=>{
+            categoriesKV.push({value:item.id, text:item.name});
+        });
 
         const tabListNoTitle = [];
         let contentListNoTitle={};
@@ -70,6 +85,16 @@ class Category extends React.Component{
         }
         return(
             <Card title={name}
+                  extra={<Row style={{width:300}}>
+                      <Col span={7}>
+                          {canJoin ? isJoined ?  <Popconfirm title={intl.formatMessage(messages.popTitle)} onConfirm={this.clickUNJoin} okText={intl.formatMessage(messages.okText)} cancelText={intl.formatMessage(messages.cancelText)}>
+                              <Button  type="danger" onClick={this.props.clickUNJoin}>{intl.formatMessage(messages.leave)}</Button></Popconfirm>:<Button onClick={this.props.clickJoin}  type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
+                      <Col offset={1}  span={16}>
+                          <Search categories={categoriesKV} />
+                      </Col>
+                  </Row>
+                  }
+
                   tabList={tabListNoTitle}
                   onTabChange={(key) => { this.onTabChange(key, 'noTitleKey'); }}
             >

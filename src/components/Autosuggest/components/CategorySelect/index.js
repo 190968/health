@@ -9,7 +9,7 @@ import CustomCascader from './components/Cascader';
 
   class CategorySelect extends React.Component {
       state={
-          open:false ,
+          open:false,
           children:false
       }
       renameKeys =(obj, newKeys)=> {

@@ -92,7 +92,7 @@ console.log("pasha---------------",news);
         return(
 
             <div>
-                  <CategoryTmp info={info}/>
+                  <CategoryTmp clickJoin={this.clickJoin} clickUNJoin={this.clickUNJoin} info={info}/>
                 {categories.length > 0 && <ListCommunityForm name={name}  categories={categories} />}
                 {news.totalCount > 0 && <News info={news}  />}
                 <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
