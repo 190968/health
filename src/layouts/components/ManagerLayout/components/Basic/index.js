@@ -29,12 +29,13 @@ const BasicLayout = ({loading, user, store, location, match}) => {
     return (
         <Layout style={{minHeight: '100vh'}}>
             <PrivateRoute path="/pb" component={asyncPlanbuilder(store)}/>
-            <Header style={{background: '#fff', padding: 0}}>
+            <Header style={{background: '#fff', padding: 0, zIndex:1}}>
                 <div style={{
                     height: 64,
-                    padding: ' 8px 12px 0 0',
+                    padding: '8px 12px 0 0',
                     background: '#fff',
-                    position: 'relative'
+                    position: 'relative',
+                    boxShadow:' 0 1px 4px rgba(0,21,41,.08)'
                 }}>
 
                     <div className="logo" style={{marginTop: '-8px', marginLeft:5, float:'left'}}>
@@ -99,7 +100,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                             <Menu.Item key="workflow"><NavLink to="/workflow">Workflow</NavLink></Menu.Item>
                             <Menu.Item key="actionplans"><NavLink to="/actionplans">ActionPlans</NavLink></Menu.Item>
                             <Menu.Item key="pathways"><NavLink to="/pathways">Pathways</NavLink></Menu.Item>
-                            <Menu.Item key="tumorboards"><NavLink to="/tumorboards">Tumorboards</NavLink></Menu.Item>
+                            <Menu.Item key="tumorboards"><NavLink to="/tumorboards">Tumor Boards</NavLink></Menu.Item>
                             <SubMenu key="manage" title="Manage">
                                 <Menu.Item key="stages"><NavLink to="/stages">Stages</NavLink></Menu.Item>
                                 <Menu.Item key="cancers"><NavLink to="/cancers">Cancers</NavLink></Menu.Item>
@@ -126,7 +127,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                 </Sider>
 
 
-                <Content style={{margin: '16px', minHeight: '100vh'}}>
+                <Content style={{minHeight: '100vh'}}>
                         <BasicRoutes store={store}/>
                         <ManagerRoutes store={store}/>
                     <Footer style={{textAlign: 'center', background: 'transparent'}}>

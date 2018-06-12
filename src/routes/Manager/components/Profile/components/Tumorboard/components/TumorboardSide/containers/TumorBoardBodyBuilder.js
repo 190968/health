@@ -1,4 +1,4 @@
-import TumorBoardBodyBuilder from '../components/TumorBoardBodyBuilder';
+import TumorBoardBodyBuilderPure from '../components/TumorBoardBodyBuilder';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "../../../../../../Tumorboard/containers/TumorboardManager";
@@ -27,4 +27,6 @@ const withQuery = graphql(GET_PATIENT_TUMORBOARD_QUERY, {
     },
 });
 
-export default withQuery(TumorBoardBodyBuilder);
+
+export const TumorBoardBodyBuilder = withQuery(TumorBoardBodyBuilderPure);
+export default TumorBoardBodyBuilder;

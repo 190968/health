@@ -21,7 +21,7 @@ export default class Profile extends React.Component {
         const {match, loading, user={}, fullName} = this.props;
 
 
-        const {id, tab = 'overview', subtab = ''} = match.params;
+        const {id, tab = 'dashboard', subtab = ''} = match.params;
 
         const selectedItem = subtab || tab;
         const openItem = tab;
@@ -54,25 +54,22 @@ export default class Profile extends React.Component {
                     </div>
                     <Divider dashed style={{marginBottom:0, marginTop:10}} />
                     <Menu theme="grey" mode="inline" style={{borderRight:0}} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} >
-                        <Menu.Item key="overview">
-                            <NavLink to={mainUrl+'/overview'}>Overview</NavLink>
+                        <Menu.Item key="dashboard">
+                            <NavLink to={mainUrl+'/dashboard'}>Dashboard</NavLink>
                         </Menu.Item>
                         <Menu.Item key="timeline">
                             <NavLink to={mainUrl+'/timeline'}>Timeline</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="tumorboard">
-                            <NavLink to={mainUrl+'/tumorboard'}>Tumor Board</NavLink>
-                        </Menu.Item>
                         <Menu.Divider />
                         <SubMenu
-                            key="details"
+                            key="pat_details"
                             title={<span><span>Patient Details</span></span>}
                         >
                         <Menu.Item key="dash">
-                            <NavLink to={mainUrl+'/dash'}>Overview</NavLink>
+                            <NavLink to={mainUrl+'/overview'}>Overview</NavLink>
                         </Menu.Item>
                         <Menu.Item key="info">
-                            <NavLink to={mainUrl+'/info'}>General Information</NavLink>
+                            <NavLink to={mainUrl+'/details'}>General Information</NavLink>
                         </Menu.Item>
                         <Menu.Item key="health">
                             <NavLink to={mainUrl+'/health'}>Health Information</NavLink>
@@ -89,8 +86,8 @@ export default class Profile extends React.Component {
                         <Menu.Item key="alert">
                             <NavLink to={mainUrl+'/alerts'}>Alert History</NavLink>
                         </Menu.Item>
-                            <Menu.Item key="qmeasures">
-                                <NavLink to={mainUrl+'/qmeasures'}>Quality Measures</NavLink>
+                            <Menu.Item key="qms">
+                                <NavLink to={mainUrl+'/qms'}>Quality Measures</NavLink>
                             </Menu.Item>
                         </SubMenu>
                         <SubMenu

@@ -16,3 +16,21 @@ export const UserInfoFragment = gql`
                 age
         }
 `;
+
+
+export const PatientInfoFragment = gql`
+       fragment UserInfo on Patient {
+                id,
+                firstName
+                thumbs {
+                    small
+                    large
+                    medium
+                },
+                lastName
+                fullName
+                gender
+                genderText
+                age
+        }
+`;

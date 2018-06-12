@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal, Spin, Icon, Card, Button } from 'antd';
 import {compose, branch, renderComponent} from  'recompose';
-
+import './index.less';
 
 const formItemLayout = {
     labelCol: {span: 8},
@@ -38,7 +38,7 @@ export const withModal = (WrappedComponent) => {
             }
         }
         render() {
-            //console.log(this.props);
+            console.log(this.props);
             //console.log(this.state);
             const {loading=false, modalVisible=true, destroyOnClose=true} = this.props;
             let modalTitle = this.props.modalTitle;//type === '' ? 'Select Element' : this.props.getTypeName(type);
@@ -46,20 +46,23 @@ export const withModal = (WrappedComponent) => {
             //     modalTitle = ;
             // }
             //console.log(modalVisible);
-
+            //console.log(typeof this.props.modalFooter);
             const modalOpts = {};
-             if (this.props.modalFooter) {
-                 if (this.props.modalFooter == 'close') {
+             if (this.props.modalFooter !== null) {
+                 if (this.props.modalFooter === 'close') {
                      modalOpts.footer = <Button type="primary" onClick={this.onCancel}>Close</Button>;
+                 } else if (this.props.modalFooter === false) {
+                     modalOpts.footer = null
                  } else {
                      modalOpts.footer = this.props.modalFooter;
                  }
              }
-            // if (this.props.modalWidth) {
-            //     modalOpts.footer = this.props.modalWidth();
-            // }
+             //console.log(modalOpts);
+            if (this.props.modalWidth) {
+                modalOpts.width = this.props.modalWidth;
+            }
             if (loading) {
-                modalOpts.footer = <div style={{clear:'both', height:22}}><div style={{float:'right',backgroundColor:'#cfd8dc9e', width:'30%', height:22}}></div></div>;
+                modalOpts.footer = <div style={{clear:'both', height:32}}><div style={{float:'right',backgroundColor:'#cfd8dc9e', width:'30%', height:32}}></div></div>;
                 modalOpts.closable = false;
                 modalOpts.title = <div style={{backgroundColor:'#cfd8dc9e', width:'50%', height:22}}></div>;
             }
@@ -109,6 +112,10 @@ export const withSpinnerWhileLoading = branch(
 //     withSpinnerWhileLoading
 // );
 
+
+export const ModalBodyFooter = props => {
+    return <div className="ant-modal-body-footer">{props.children}</div>
+}
 
 
 

@@ -5,7 +5,14 @@ import {Loading} from "../../../../../../components/Loading";
 
 import Pathway from '../../containers/Pathway';
 import Tumorboard from '../../containers/Tumorboard';
-import Dashboard from '../../components/Overview';
+import Dashboard from '../../components/Dashboard';
+import Overview from '../../components/Overview';
+import Providers from '../../containers/Providers';
+import Family from '../../containers/Family';
+import Team from '../../containers/Team';
+import QualMeasures from '../../containers/QualMeasures';
+import Cohorts from '../../containers/Cohorts';
+import Details from '../../containers/Details';
 
 
 
@@ -52,6 +59,41 @@ class ProfileContent extends React.Component{
             {
                 path: mainUrl + "/tumorboard",
                 component: Tumorboard,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/overview",
+                component: Overview,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/details",
+                component: Details,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/qms",
+                component: QualMeasures,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/cohorts",
+                component: Cohorts,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/stakeholders/providers",
+                component: Providers,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/stakeholders/family",
+                component: Family,
+                params: {user: user}
+            },
+            {
+                path: mainUrl + "/stakeholders/team",
+                component: Team,
                 params: {user: user}
             },
             {

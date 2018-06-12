@@ -37,6 +37,12 @@ const enhance = compose(
                                 callback(data.updateTreatmentBlockElement);
                             }*/
                         });
+                    // } else if (props.addElement) {
+                    //     // add element
+                    //     console.log(input);
+                    //     props.addElement({input}).then(({data}) => {
+                    //         props.onHide();
+                    //     });
                     } else {
                         if (props.onElementUpdate) {
                             // if we are editing tmp item, then just replace with the info

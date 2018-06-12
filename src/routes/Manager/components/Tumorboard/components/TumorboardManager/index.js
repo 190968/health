@@ -20,7 +20,6 @@ const formItemLayoutDefault = {
 export const TumorboardManager = (props) => {
     const {tumorboard={}, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator} = form;
-    console.log(tumorboard);
     const {title='', startDate, endDate, startTime, endTime, notes='', location='', video='', lead={}, admin={}} = tumorboard;
     const {id:leadUid=''} = lead;
     const {id:adminUid=''} = admin;
@@ -111,6 +110,7 @@ export const TumorboardManager = (props) => {
         >
             {getFieldDecorator('location', {
                     initialValue: location,
+                rules: [{required: true, message: "Enter Location"}],
                 }
             )(
                 <Input />

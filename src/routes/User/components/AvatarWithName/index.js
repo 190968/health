@@ -10,17 +10,16 @@ import {Link} from 'react-router-dom';
 export class AvatarWithName extends React.PureComponent {
 
     static defaultProps = {
-        info: {},
         align: 'h',
         useLink: true,
     }
 
     render() {
+        const {user={}} = this.props;
+        const {info=user, align, useLink} = this.props;
 
-        const {info, align, useLink} = this.props;
 
-
-        const name = info.firstName ? info.firstName : ((info.fullName && info.fullName !== ' ') ? info.fullName : (info.email ? info.email : 'N/A'));
+        const name = info.fullName ? info.fullName : ((info.firstName && info.firstName !== ' ') ? info.fullName : (info.email ? info.email : 'N/A'));
 
 
         let avatarWithName = <span><Avatar info={info}/> <span style={{verticalAlign: 'middle', marginLeft:5}}>{name}</span></span>;

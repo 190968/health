@@ -11,7 +11,7 @@ const enhance = compose(
     withDeleteMutation,
     withHandlers({
         onEdit: props => callback => {
-            console.log(props);
+            //console.log(props);
             props.toggleEditModal(true);
         },
         onHide: props =>callback => {

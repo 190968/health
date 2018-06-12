@@ -42,7 +42,7 @@ export const prepareInput = (values) => {
 
 const prepareElementForMutation = option => {
     let details = [];
-    console.log(option);
+    console.log(option, 'Prepare for mutation');
     const {id, notes, type} = option;
     switch (type) {
         case 'chemotherapy':
@@ -58,7 +58,7 @@ const prepareElementForMutation = option => {
             // const {cycles, days, notes, timesPerDay} = chemotherapyElement;
             break;
         default:
-            details = {...option, element:undefined};
+            details = {...option, element:undefined, __typename: undefined};
             break;
     }
     return details;
@@ -73,7 +73,7 @@ const TreatmentElementBuilder = (props) => {
     const {title } = itemInfo;
     //console.log(elements);
     //const keys =  [];//getFieldValue('keys', {initialValue:[]});
-
+    console.log(elements.map(option => prepareElementForMutation(option)));
 
     return (
 

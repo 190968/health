@@ -310,8 +310,7 @@ export const DateField = connect(
 
 export const TimeFieldPure = props => {
     const {time=undefined,allowClear=true, disabled=false, placeholder='', onChange} = props;
-    console.log(props);
-    return <TimePicker use12Hours value={time} format="h:mm a" onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} />;
+    return <TimePicker use12Hours value={time}  format="h:mm a" onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} />;
 }
 
 export const TimeField = compose(
@@ -389,16 +388,15 @@ export const TimeField = compose(
             // if it's inline
             return (
                 <React.Fragment>
-                    <Col span={11}>
+                    <Col span={10}>
                         {startField}
-
                     </Col>
                     <Col span={2}>
                     <span style={{display: 'inline-block', width: '100%', textAlign: 'center'}}>
                       -
                     </span>
                     </Col>
-                    <Col span={11}>
+                    <Col span={10}>
                         {endfield}
 
                     </Col>

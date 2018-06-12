@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 
 // UPDATE TUMORBOARD
 const TUMORBOARD_ELEMENT_UPDATE_ORDER_MUTATION = gql`
-    mutation TumorboardUpdateElementsOrder($id: UID!, $userId: UID!, $elementIds:[UID]!){
-        tumorboardUpdateElementsOrder(id:$id, userId: $userId, elementIds:$elementIds)
+    mutation TumorboardUpdateElementsOrder($id: UID!,  $elementIds:[UID]!){
+        tumorboardUpdateElementsOrder(id:$id, elementIds:$elementIds)
     }
 `;
 
@@ -14,7 +14,7 @@ export const withUpdateOrderMutation = graphql(TUMORBOARD_ELEMENT_UPDATE_ORDER_M
     props: ({ownProps:{tumorboard, userId}, mutate }) => ({
         updateOrder: (elementIds) => {
             return mutate({
-                variables: { id: tumorboard.id, userId, elementIds},
+                variables: { id: tumorboard.id, elementIds},
                 // refetchQueries: [{
                 //     query: GET_CANCER_STAGES_QUERY,
                 // }],

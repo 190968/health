@@ -15,7 +15,7 @@ const formTailLayout = {
     wrapperCol: {span: 20, offset: 4},
 };
 
-const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler" style={{verticalAlign:'middle'}}></span></Tooltip>);
+export const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler" style={{verticalAlign:'baseline'}}></span></Tooltip>);
 
 const OptionItem = SortableElement(({form, k, i:index, options=[], keys=[], remove, minOptions}) => {
     const {getFieldDecorator} = form;

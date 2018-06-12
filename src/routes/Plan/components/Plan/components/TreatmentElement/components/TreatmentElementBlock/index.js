@@ -27,7 +27,6 @@ const TreatmentElementBlock = ({i, planId, option, isPreviewMode, mode, treatmen
                 {haveNote && <div>{option.notes}</div>/*<div><Popover content={content} title="Notes" trigger="hover"><Icon type="file" style={{marginLeft:5}} /></Popover></div>*/}
             </React.Fragment>
             }
-
         />
         {showEditModal && <TreatmentBlockManageOptionModal i={i} onElementUpdate={onElementUpdate} treatmentId={treatmentId} details={option} id={option.id} planId={planId} type={option.type} mode={mode} onHide={onHide}  />}
 

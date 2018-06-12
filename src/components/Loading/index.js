@@ -21,6 +21,8 @@ export const EmptyList = ({children}) => {
 }
 
 
+export const SpinIndicator = () => <Icon type="loading" style={{ fontSize: 24 }} spin />;
+
 export const LoadingModal = () => {
     return <Modal
         visible={true}
@@ -29,7 +31,7 @@ export const LoadingModal = () => {
         footer={false}
         bodyStyle={{height: 160, textAlign: 'center', lineHeight: 8}}
     >
-        <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
+        <Spin indicator={<SpinIndicator />} />
     </Modal>
 }
 

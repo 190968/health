@@ -26,7 +26,7 @@ class CustomCascader extends React.Component {
                         }
                         }
                 }
-`,
+`, fetchPolicy: 'network_only',
             variables: {
                 id: targetOption.value
             }

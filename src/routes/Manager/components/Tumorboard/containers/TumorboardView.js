@@ -4,20 +4,12 @@ import {withModal, withSpinnerWhileLoading} from "../../../../../components/Moda
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "./TumorboardManager";
+import {GET_TUMORBOARD_QUERY} from "../queries";
 
-export const GET_TUMORBARD_QUERY = gql`    
-    query GET_TUMORBOARD ($id: UID!) {
-        getTumorboard (id:$id) {
-            ...TumorboardInfo
-            getNewCommentsNumber
-        }
-    }
-    ${TumorboardFragment}
-`;
 
 // 1- add queries:
 const withQuery = graphql(
-    GET_TUMORBARD_QUERY,
+    GET_TUMORBOARD_QUERY,
     {
         options: (ownProps) => {
             //console.log(ownProps);

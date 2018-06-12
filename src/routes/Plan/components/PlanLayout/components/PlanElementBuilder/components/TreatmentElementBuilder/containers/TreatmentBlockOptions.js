@@ -15,15 +15,6 @@ const TreatmentBlockOptions = ({elements, planId, itemInfo, deleteTmpElement, mo
         itemLayout="horizontal"
         dataSource={elements}
         renderItem={(option, k) => {
-            // const {element={}} = option;
-            // const {info:optionElement} = element;
-            // prepare element for mutation
-            //const optionPrepared = prepareElementForMutation(option);
-            //console.log(optionPrepared);
-
-
-            // //form.getFieldDecorator(`types[${k}]`, {initialValue: block.type});
-            //form.getFieldDecorator(`keys[${index}]`, {initialValue: k});
             return <TreatmentElementBlock key={k} i={k} planId={planId} treatmentId={itemInfo.id} deleteTmpElement={deleteTmpElement} isBuilderMode mode={mode} option={option} onElementUpdate={onElementUpdate} />;
         }}
     />;

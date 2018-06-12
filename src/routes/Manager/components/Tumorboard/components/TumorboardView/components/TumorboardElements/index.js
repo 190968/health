@@ -12,7 +12,7 @@ const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="s
 const TumorboardElementCardPure = props => {
     const {element, i=0, userId, editable} = props;
     const {id, notes=''} = element;
-    const showComments = !editable && typeof i === 'number';
+    const showComments = false;// !editable && typeof i === 'number';
     const {body, color, activityText, image, icon, progress, title} = TimelineElementView(element);
     return <Card title={<React.Fragment>{i >= 0 && <Badge count={i >= 0 && (i+1)} style={{ backgroundColor: '#52c41a' }}  />} {title}</React.Fragment>}
                  key={i}
@@ -61,17 +61,17 @@ const enhance = compose(
     defaultProps({
         useDragHandle:true
     }),
-    branch(props => props.editable, withUpdateOrderMutation),
-    withState('elements_sortable', 'setElements', props => props.elements),
+    //branch(props => props.editable, withUpdateOrderMutation),
+    //withState('elements_sortable', 'setElements', props => props.elements),
     withHandlers({
         onSortEnd: props => ({oldIndex, newIndex}) => {
             //console.log(props);
             const newOrder = arrayMove(props.elements, oldIndex, newIndex);
-            props.setElements(newOrder);
+            props.updateElements(newOrder);
             // save elements order
-            props.updateOrder(newOrder.map(element => element.id)).then(() => {
-                message.success('Updated');
-            });
+            // props.updateOrder(newOrder.map(element => element.id)).then(() => {
+            //     message.success('Updated');
+            // });
         }
     }),
     lifecycle({
@@ -86,18 +86,20 @@ const enhance = compose(
         //     };
         // },
 
-        componentWillReceiveProps(nextProps) {
-            //console.log(nextProps.elements,'ELEMENTS');
-            //console.log(this.props.elements);
-            if (this.props.elements !== nextProps.elements)
-                this.props.setElements(nextProps.elements);
-        }
+        // componentWillReceiveProps(nextProps) {
+        //     //console.log(nextProps.elements,'ELEMENTS');
+        //     //console.log(this.props.elements);
+        //     if (this.props.elements !== nextProps.elements)
+        //         this.props.updateElements(nextProps.elements);
+        // }
     }),
     withProps(props => {
         const {elements_sortable=[]} = props;
         return {
-            elements:elements_sortable,
-            lockAxis:'y'
+            //elements:elements_sortable,
+            lockAxis:'y',
+            lockToContainerEdges:true,
+            hideSortableGhost:false
         }
     }),
     SortableContainer,

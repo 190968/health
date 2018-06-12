@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 import {TreatmentElementFragment} from "../../../../../../Plan/components/TreatmentElement/components/fragments";
 // Add
 export const AddElementMutation = gql`
-    mutation addTreatmentBlockElement($blockId: UID!, $type:String!, $input:TreatmentBlockElementInput!) {
-        addTreatmentBlockElement(blockId: $blockId, type:$type, input: $input) {
+    mutation addTreatmentElement($blockId: UID,  $input:TreatmentElementInput!) {
+        addTreatmentElement(treatmentId: $blockId, input: $input) {
             ...TreatmentElement
         }
     }
@@ -21,12 +21,12 @@ const fragment =  gql`
 `;
 export const withAddMutation = graphql(AddElementMutation, {
     props: ({ ownProps, mutate }) => ({
-        addElement: ({input, type}) => {
+        addElement: ({input}) => {
             return mutate({
-                variables: {blockId:ownProps.blockId, type, input:input},
+                variables: {blockId:ownProps.treatmentId, input:input},
 
                 update: (client, { data: { addTreatmentBlockElement } }) => {
-                    const blockId = ownProps.blockId;
+                    const blockId = ownProps.treatmentId;
 
                     //console.log(1111);
                     let treatmentBlock = client.readFragment({

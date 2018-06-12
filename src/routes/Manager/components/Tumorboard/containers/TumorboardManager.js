@@ -75,16 +75,8 @@ export const TumorboardSimpleFragment = gql`
 export const TumorboardFragment = gql`
         fragment TumorboardInfo on Tumorboard {
             ...TumorboardSimpleInfo
-            patient {
-                ...UserInfo
-            }
-            elements {
-                ...TumorboardElementInfo
-            }
         }
-        ${UserInfoFragment}
         ${TumorboardSimpleFragment}
-        ${TumorboardElementFragment}
 `;
 
 export const TUMORBOARD_QUERY = gql`

@@ -15,7 +15,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const FAMILY  = gql`
+export const GET_FAMILY_QUERY  = gql`
    query GET_FAMILY {
         account {
             user {
@@ -43,7 +43,7 @@ const FAMILY  = gql`
      }
 `;
 
-const withMutation = graphql(FAMILY, {
+const withMutation = graphql(GET_FAMILY_QUERY, {
     props: ({  data }) => {
         if (!data.loading) {
             return {
