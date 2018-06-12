@@ -26,7 +26,6 @@ export default class TableCustom extends React.Component {
     onSearch = () => {
         const { searchText } = this.state;
         const reg = new RegExp(searchText, 'gi');
-
         this.setState({
             filterDropdownVisible: false,
             filtered: !!searchText,
