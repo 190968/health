@@ -58,11 +58,9 @@ class NormalRegisterForm extends React.Component {
         this.setState({checked: !this.state.checked});
     }
     handleSubmit = (e) => {
-
         e.preventDefault();
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
-
             if (!err) {
                 this.setState({
                     loading: true

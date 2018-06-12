@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const trackersList = gql`
-    query GET_TRACKERS_LIST ($userId: UID!, $search: String)  {
+   query GET_TRACKERS_LIST ($userId: UID, $search: String)  {
             trackersList (userId: $userId, search: $search) {
                 id
                 label
@@ -13,8 +13,7 @@ export const trackersList = gql`
                     id
                     name
                 }
-                        
-        }
+                 }
     }
 `;
 const trackersMutate=gql`
@@ -29,12 +28,9 @@ const trackersMutate=gql`
 
 const withQuery = graphql(trackersList,
     {
-        options: (ownProps) => {
-            return {
-                fetchPolicy: 'network-only'
-            }},
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                console.log(data);
                 return {
                     trackers: data.trackersList,
                     loading: data.loading,
@@ -51,7 +47,6 @@ const withQuery = graphql(trackersList,
                             },
                         });
                     }
-
                 }
 
             } else {

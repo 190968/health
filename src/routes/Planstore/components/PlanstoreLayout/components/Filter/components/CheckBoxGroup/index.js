@@ -18,7 +18,7 @@ export default  class CheckBoxGroup extends React.PureComponent {
     handleChange(value) {
 
 
-        //onsole.log(value);
+        console.log(value);
 
         //const checked = e.target.checked ? 1 : 0;
         const {code} = this.props;
@@ -47,7 +47,7 @@ export default  class CheckBoxGroup extends React.PureComponent {
         item.items.map((option) => {
             const coid = option.value;
             const name = option.label;
-
+        console.log(option);
             plainOptions.push(<Checkbox key={coid} value={coid} style={vertStyle} >{name}</Checkbox>);
             return option;
         });

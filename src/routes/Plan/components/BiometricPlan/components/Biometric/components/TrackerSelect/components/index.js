@@ -9,7 +9,7 @@ export class TrackerSelect extends React.Component {
         this.state = {
             amid: 0,
             addModal: false,
-            fetching: true,
+            fetching: false,
         }
 
     };
@@ -53,7 +53,7 @@ export class TrackerSelect extends React.Component {
     render() {
         const { fetching } = this.state;
         const options = this.props.trackers.map(d => <Select.Option key={d.id}>{d.label} <div style={{fontSize:'0.8em',color:'grey'}}>{d.units.name}</div></Select.Option>);
-
+console.log(this.props.trackers,options);
         return (<Select showSearch
                         allowClear
                         optionFilterProp="name"
