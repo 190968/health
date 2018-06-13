@@ -15,6 +15,17 @@ export const PlanCardFragment = gql`
         }
 `;
 
+export const UserPlanFragment = gql`
+    fragment UserPlanInfo on UserPlan {
+            id
+            plan {
+                ...PlanCardInfo
+            }
+    }
+        
+    ${PlanCardFragment}
+`;
+
 export const PathwayCardFragment = gql`
         fragment PathwayCardInfo on Pathway {
             id,
@@ -99,6 +110,7 @@ export const ElementMediaFragment = gql`
         id
         label
         description
+        mediaType:type
         mediaType:type
         source
         url

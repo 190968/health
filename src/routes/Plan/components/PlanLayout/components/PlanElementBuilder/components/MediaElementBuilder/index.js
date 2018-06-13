@@ -5,7 +5,7 @@ import {Form, Input, Button} from 'antd';
 import messages from './messages';
 import Upload from '../../../../../../../../components/FormCustomFields/upload';
 import MediaPreview from './components/MediaPreview';
-import {Attachments} from "../../../../../../../../components/FormCustomFields/components/Attachments/index";
+import {Attachments, prepareAttachmentsForForm} from "../../../../../../../../components/FormCustomFields/components/Attachments/index";
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -103,7 +103,7 @@ const MediaElementBuilder = (props) => {
     // }
     let {note, template, allowedFileTypes} = getMediaTypeInfo(type);
 
-    getFieldDecorator('attachment', {initialValue: null});
+    getFieldDecorator('attachment', {initialValue: prepareAttachmentsForForm(attachments, true)});
     return (
         <React.Fragment>
 
@@ -150,11 +150,11 @@ const enhance = compose(
     withState('attachments', 'setAttachments', props => {
         const {details={}} = props;
 
-        const {id='', filename='', mediaType:type='', url=''} =details;
+        const {id='', filename='', mediaType:type='', url='', filesize=0} =details;
         if (id === '') {
             return [];
         }
-        return [{id:id, label: filename, type: type, url:url}];
+        return [{id:id, label: filename, type: type, url:url, size: filesize}];
     }),
     withHandlers({
         showUploadModal: props => () => {

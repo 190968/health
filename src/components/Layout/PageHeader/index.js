@@ -1,5 +1,7 @@
 import React from 'react';
 import {Row, Col, Tabs, Card, Affix} from 'antd';
+import {compose, withState, withHandlers} from 'recompose';
+import classNames from 'classnames';
 import './index.less';
 
 const { TabPane } = Tabs;
@@ -33,20 +35,37 @@ export const PageHeader = props => {
                 {extraContent !== '' && <div className="pageHeaderExtra">{extraContent}</div>}
             </Col>}
         </Row>
-        {tabList &&
-        tabList.length > 0 && (
-            <Affix><Tabs
-                className={'tabs'}
-                {...activeKeyProps}
-                onChange={onTabChange}
-                activeKey={activeTab}
-                //tabBarExtraContent={tabBarExtraContent}
-            >
-                {tabList.map(item => <TabPane tab={item.tab} key={item.key} />)}
-            </Tabs></Affix>
-        )}
-
-
-
+        {tabList && tabList.length > 0 && <PageHeaderTabs tabList={tabList} activeTab={activeTab} activeKeyProps={activeKeyProps} onTabChange={onTabChange} />}
     </div>
 }
+
+
+const PageHeaderTabsPure = ({isCollapsed, onChange, onTabChange, activeTab, tabList, activeKeyProps}) => {
+
+    const className = isCollapsed ? 'collapsed' : '';
+    const clsString = classNames('tabs',  className);
+
+    return <Affix onChange={onChange}><Tabs
+        className={clsString}
+        {...activeKeyProps}
+        onChange={onTabChange}
+        activeKey={activeTab}
+    >
+        {tabList.map(item => <TabPane tab={item.tab} key={item.key} />)}
+    </Tabs></Affix>
+}
+
+const enhance = compose(
+    withState('isCollapsed', 'setSimple', false),
+    withHandlers({
+        onChange: props => (affixed) => {
+            if (affixed) {
+                props.setSimple(true);
+            } else {
+                props.setSimple(false);
+            }
+        }
+    })
+);
+
+const PageHeaderTabs = enhance(PageHeaderTabsPure);

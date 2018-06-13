@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactPhotoGrid from 'react-photo-grid';
-import {Timeline, Tag, Tooltip, Card, Popover, Icon, Row, Col, Progress, Badge} from 'antd';
+import {Timeline, Tag, Tooltip, Card, Popover, Icon, Row, Col, Progress, Badge, Avatar} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import TimelineElementDelete from './containers/TimelineElementDelete';
 import TimelineElementEdit from './containers/TimelineElementEdit';
 import {injectIntl} from 'react-intl';
 import LinkElement from '../../../../../../../../../Plan/components/Plan/components/LinkElement';
+import MediaElement from '../../../../../../../../../Plan/components/Plan/components/PlanMedia';
 import ClinicalNoteElement from '../../../../../../../../../Plan/components/Plan/components/ClinicalNoteElement';
 import Checklist from '../../../../../../../../../Plan/components/Plan/components/Checklist';
 import CancerStage from '../../../../../../../../../Plan/components/Plan/components/CancerStage/view';
@@ -17,7 +18,8 @@ import {branch, compose, renderComponent} from 'recompose';
 import TumorboardView from "../../../../../../../Tumorboard/containers/TumorboardView";
 import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
 import {CommentsModalFromIcon, Comments} from "../../../../../../../../../../components/Comments/index";
-
+import {PlanAvatar} from "../../../../../../../../../../components/Avatars/components/PlanAvatar/index";
+import {getIconByFileType, formatFileName} from "../../../../../../../../../../components/FormCustomFields/components/Attachments/index";
 
 export const getTimelineElementCardTitle = (item) => {
     console.log(item, 'item');
@@ -35,6 +37,11 @@ export const getTimelineElementCardTitle = (item) => {
             let {url=''} = activity;
             elTitle = label+(url ? ' '+url : '');
             break;
+        case 'media':
+            const {mediaType} = activity;
+            typeText = mediaType;
+            elTitle = label;
+            break;
         case 'treatment':
             elTitle = title;
             console.log(elTitle);
@@ -43,8 +50,9 @@ export const getTimelineElementCardTitle = (item) => {
             elTitle = label;
             break;
         case 'health_record':
+        case 'add_health':
             let {typeText} = activity;
-            elTitle = title;
+            elTitle = typeText;//+' - '+title;
             break;
     }
 
@@ -101,6 +109,14 @@ export const TimelineElementView = (item, props={}) => {
             icon = <Icon type='link' />;
             body.push( activity.description || '');
             break;
+        case 'media':
+            const {mediaType:activityType='', filename:label=''} = activity;
+            activityText = <MediaElement item={activity} />;
+            icon = getIconByFileType({type:activityType, label});
+            console.log(icon);
+            progress = formatFileName(activity);
+            //body.push( activity.description || '');
+            break;
         case 'clinical_note':
             icon = <FitIcon icon='clinical-note' />;
             activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
@@ -150,7 +166,7 @@ export const TimelineElementView = (item, props={}) => {
                     percent = Math.floor(percent);
                 }
             }
-            progress = <Progress percent={percent} />;
+            progress = <Checklist item={activity} handleReport={handleReport} reports={reportValues} simple  />;
             group = 'todo';
             icon = <FitIcon icon="to-do"/>
             break;
@@ -160,9 +176,11 @@ export const TimelineElementView = (item, props={}) => {
             icon = <FitIcon icon="stage"/>
             break;
         case 'health_record':
-            activityText = activity.title;
+        case 'add_health':
+            //activityText = activity.title;
             group = 'health';
             icon = <Icon type='medicine-box' />;
+            body.push(activity.title);
             break;
         case 'clinical_trial':
             activityText = activity.title;
@@ -183,16 +201,25 @@ export const TimelineElementView = (item, props={}) => {
             icon = <FitIcon icon="actionplan"/>;
             group = 'team';
             break;
-        case 'plan_created':
-        case 'plan_approved':
         case 'plan_assigned':
+            const {plan = {}} = activity;
+            icon = <FitIcon icon="actionplan"/>;
+            activityText = <PlanAvatar plan={plan} />;
+            progress = plan.title;
+            break;
+        case 'plan_created':
+            icon = <FitIcon icon="actionplan"/>;
+            activityText = <PlanAvatar plan={activity} />;
+            progress = activity.title;
+            break;
+        case 'plan_approved':
         case 'plan_share_hp_approved':
             icon = <FitIcon icon="actionplan"/>;
             group = 'plan';
             body.push(activity.text);
             break;
         default:
-            activityText = activity.text;
+            //activityText = activity.text;
             body.push(activity.text);
             break;
     }
@@ -287,6 +314,7 @@ class TimelineElement extends React.PureComponent {
         // }
         const {body, color, activityText, image, icon, progress, title} = TimelineElementView(item, {handleReport});
 
+        let boxTitle = title;
         //activityText = <Card type="timeline" title={} extra={extra} >{activityText}</Card>;
         if (notes !== '') {
             body.push(<div style={{fontSize:'0.9em',color:'#ccc'}}>{notes}</div>);
@@ -321,21 +349,40 @@ class TimelineElement extends React.PureComponent {
             ];
 
         if (source) {
-            infoContent.push(<Tooltip title="Source">
-                <div>
-                    <div style={{
-                        marginRight:5,
-                        border: '1px solid rgba(0, 0, 0, 0.85)',
-                        borderRadius: '50% 50%',
-                        lineHeight: '1.12em',
-                        fontSize: '0.8em',
-                        'textAlign': 'center',
-                        height: 14,
-                        width: 14,
-                        display: 'inline-block'
-                    }}>P</div>
-                    {source}</div>
-            </Tooltip>);
+            // infoContent.push(<Tooltip title="Source">
+            //     <div>
+            //         <div style={{
+            //             marginRight:5,
+            //             border: '1px solid rgba(0, 0, 0, 0.85)',
+            //             borderRadius: '50% 50%',
+            //             lineHeight: '1.12em',
+            //             fontSize: '0.8em',
+            //             'textAlign': 'center',
+            //             height: 14,
+            //             width: 14,
+            //             display: 'inline-block'
+            //         }}>P</div>
+            //         {source}</div>
+            // </Tooltip>);
+
+
+            boxTitle = <React.Fragment>
+                {boxTitle} <Tooltip title={source}>
+                <div style={{
+                    marginRight:5,
+                    border: '1px solid #51ade2',
+                    borderRadius: '50% 50%',
+                    lineHeight: '1.3em',
+                    'textAlign': 'center',
+                    height: 20,
+                    width: 20,
+                    fontWeight: 'normal',
+                    display: 'inline-block',
+                    color:'#51ade2'
+                }}>P</div>
+            </Tooltip>
+
+            </React.Fragment>
         }
         //infoContent.push(<div><Icon type="message" style={{marginRight:5}} />Add Note</div>);
 
@@ -354,7 +401,7 @@ class TimelineElement extends React.PureComponent {
                 <div className="timeline-date"><Icon type="clock-circle-o" style={{marginRight:5, display:'none'}} />{moment(createdAt).format('L')}</div>
 
                 {image && <div className="timeline-image">{image}</div>}
-                <h4 style={{margin:0}}>{title}</h4>
+                <h4 style={{margin:0}}>{boxTitle}</h4>
                 {progress}
                 <Truncate lines={1}>{body}</Truncate>
             </div>
