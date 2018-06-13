@@ -1,17 +1,14 @@
-import Providers from '../components/Providers';
-<<<<<<< HEAD
 import React from 'react';
-import {compose,withStateHandlers} from 'recompose';
-import {graphql} from 'react-apollo';
-=======
+import Providers from '../components/Providers';
 import {compose, withState, withStateHandlers} from 'recompose';
 import { graphql } from 'react-apollo';
->>>>>>> 5794a11e23dfbd149fdb9de9948e32ee39a4ef84
+import moment from 'moment';
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
-const faceData = [{id:1,provider:{id:1,"name":"bbqbbb"},sender:{},joinedDate:"2016-01-01"},
-{id:2,provider:{id:2,"name":"aaafaa"},sender:{},joinedDate:"2016-02-01"},
-{id:3,provider:{id:3,"name":"ccgccc"},sender:{},joinedDate:"2016-02-01"}];
+const dateFormat = 'YYYY/MM/DD';
+const fakeData = [{id:1,provider:{id:1,"name":"bbqbbb"},sender:{},joinedDate:moment("2018/06/01", dateFormat)},
+{id:2,provider:{id:2,"name":"aaafaa"},sender:{},joinedDate:moment("2018/06/05", dateFormat)},
+{id:3,provider:{id:3,"name":"ccgccc"},sender:{},joinedDate:moment("2018/06/15", dateFormat)}];
 
 const GET_PROVIDERS_QUERY  = gql`
  query GET_USER_PROVIDERS($user_id:UID) {
@@ -48,29 +45,25 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
         const {patient={}} = data;
         const {getProviders={}} = patient;
         const {edges=[]} = getProviders;
-        return {loading: data.loading, providers:faceData }
+        return {loading: data.loading, providers:fakeData }
     },
 });
 
 const enhance = compose(
     withQuery,
-<<<<<<< HEAD
     withStateHandlers(
         (props) => ({
-            searchText: '',
-            data:faceData
+            searchText: ''
         }),
         {
             onInputChange: ({searchText})=>(value) => ({ 
                 searchText: value.target.value 
             }),
             onSearch: ({searchText}) =>(value) => ({
-        
                     filterDropdownVisible: false,
                     filtered: !!searchText,
-                    data: faceData.map((record) => {
+                    providers: fakeData.map((record) => {
                         const match = record.provider.name.match(new RegExp(searchText, 'gi'));
-                        console.log(match,new RegExp(searchText, 'gi'));
                         if (!match) {
                             return null;
                         }
@@ -85,10 +78,19 @@ const enhance = compose(
                             ),
                         };
                     }).filter(record => !!record),
-            })
+            }),
+            onChange: ({searchText}) =>(date, dateString)=> ({
+                providers: fakeData.map((record) => {
+                        return {
+                            ...record,
+                            joinedDate:(
+                                (record.joinedDate > dateString[0] && record.joinedDate < dateString[1])? record.date : null
+                            ),
+                        };
+                    }).filter((data)=>{return data.date != null}),
+           })
             })        
-=======
->>>>>>> 5794a11e23dfbd149fdb9de9948e32ee39a4ef84
+
 );
 
 export default enhance(Providers);

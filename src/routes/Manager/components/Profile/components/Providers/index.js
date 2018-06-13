@@ -1,15 +1,17 @@
 import React from 'react';
-import {Card,Input,Button,Icon, Table} from 'antd';
+import {Card,Input,DatePicker,Button,Icon, Table} from 'antd';
+
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
 import './index.css'
-
-
+const {  RangePicker } = DatePicker;
+const dateFormat = 'YYYY/MM/DD';
 export const UserProvidersTable = props => {
 
-    const {providers=[], loading=false,searchText,onInputChange,onSearch} = props;
+    const {providers=[], loading=false,searchText,filterDropdownVisible=true,onInputChange,onSearch,onChange} = props;
     const total = providers.length;
+    console.log(props);
     const columns = [{
         title: 'Name',
         key: 'title',
@@ -31,7 +33,7 @@ export const UserProvidersTable = props => {
             <div className="custom-filter-dropdown">
                 <Input
                      ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
+                     placeholder="Search name"
                      value={searchText}
                       onChange={onInputChange}
                      onPressEnter={onSearch}
@@ -39,13 +41,7 @@ export const UserProvidersTable = props => {
                 <Button type="primary" onClick={onSearch} >Search</Button>
             </div>
         ),
-        filterIcon: <Icon type="search"  />,
-        // filterDropdownVisible: this.state.filterDropdownVisible,
-        // onFilterDropdownVisibleChange: (visible) => {
-        //     this.setState({
-        //         filterDropdownVisible: visible,
-        //     }, () => this.searchInput && this.searchInput.focus());
-        // },
+        filterIcon: <Icon type="search"  />
     },
         {
             title: 'Added',
@@ -72,14 +68,22 @@ export const UserProvidersTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
+            sorter: (a, b) => a.joinedDate - b.joinedDate,
+            filterDropdown: (
+                <div  className="custom-filter-dropdown">
+                    <RangePicker
+                        onChange={onChange}
+                        defaultValue={[moment(new Date(), dateFormat), moment(new Date(), dateFormat)]}
+                        format={dateFormat}
+                    />
+                </div>
+            ),
+            filterIcon: <Icon type="filter" />,
         },
 
     ];
-    // const faceData = [{id:1,provider:{id:1,"name":"bbbbb"},sender:{},joinedDate:"2016-01-01"},
-    //                   {id:2,provider:{id:1,"name":"aaaaa"},sender:{},joinedDate:"2016-02-01"},
-    //                   {id:3,provider:{id:1,"name":"ccccc"},sender:{},joinedDate:"2016-02-01"}];
+ 
      const dataSource = providers;
-    // const dataSource = faceData;
     const pageOpts = {
         //onChange: changePage,
         pageSize:5,

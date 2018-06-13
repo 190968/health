@@ -64,6 +64,7 @@ export default class TableCustom extends React.Component {
 
          this.setState({
              data: this.props.plans.map((record) => {
+                 console.log(record,dateString)
                  return {
                      ...record,
                      date:(
