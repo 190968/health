@@ -3,6 +3,7 @@ import {Card, Row, Col} from 'antd';
 import EllipsisText from 'react-ellipsis-text';
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import  moment from 'moment';
+
 const gridStyle = {
     width: '33%',
 };

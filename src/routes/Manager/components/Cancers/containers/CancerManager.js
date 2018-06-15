@@ -144,6 +144,9 @@ const enhance = compose(
             });
         }
     }),
+    withProps(props => {
+        return {modalTitle: props.cancer ? 'Edit Cancer' : 'Add Cancer'}
+    }),
     withModal
 );
 

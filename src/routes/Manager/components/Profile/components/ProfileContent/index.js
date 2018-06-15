@@ -18,7 +18,7 @@ import Health from '../../components/Health';
 import ActionPlans from '../../components/Dashboard/containers/ActionPlans';
 import {Stakeholders} from "./components/Stakeholders/index";
 import Plans from "./components/Plans";
-
+import {compose, withHandlers} from 'recompose';
 
 const RouteWithSubRoutes = route => {
     //console.log(route);
@@ -34,13 +34,9 @@ const RouteWithSubRoutes = route => {
         />)
 };
 
-class ProfileContent extends React.Component{
+const ProfileContentPure = props => {
 
-    onMenuSelect = (e) => {
-        console.log(e);
-    }
-    render() {
-        const {match,loading, user} = this.props;
+        const {match,loading, user, handleSubTab} = props;
 
         if (loading) {
             return <Loading/>
@@ -52,32 +48,38 @@ class ProfileContent extends React.Component{
         if (id !== '') {
             mainUrl += '/' + id;
         }
+        const defaultParams = {user, mainUrl, handleSubTab, match};
 
         const routes = [
             {
                 path: mainUrl + "/timeline",
                 component: Pathway,
-                params: {user: user, mainUrl}
+                params: defaultParams
             },
             {
                 path: mainUrl + "/details",
                 component: Details,
-                params: {user: user, mainUrl}
+                params: defaultParams
             },
             {
                 path: mainUrl + "/plans",
                 component: Plans,
-                params: {user: user, mainUrl}
+                params: defaultParams
+            },
+            {
+                path: mainUrl + "/alerts",
+                component: Alerts,
+                params: defaultParams
             },
             {
                 path: mainUrl + "/stakeholders",
                 component: Stakeholders,
-                params: {user: user, mainUrl}
+                params: defaultParams
             },
             {
                 path: mainUrl,
                 component: Dashboard,
-                params: {user: user, mainUrl}
+                params: defaultParams
             },
             /*{
                 path: mainUrl,
@@ -110,7 +112,19 @@ class ProfileContent extends React.Component{
             </Switch>
 
         )
-    }
 }
 
-export default ProfileContent;
+const enhance = withHandlers({
+    handleSubTab: props => subtab => {
+        const {id, tab} = props.match.params;
+
+        let mainUrl = '/u';
+        if (id !== '') {
+            mainUrl += '/'+id;
+        }
+
+        props.history.replace(mainUrl+'/'+tab+'/'+subtab);
+
+    }
+});
+export default enhance(ProfileContentPure);

@@ -72,9 +72,14 @@ export default class Profile extends React.Component {
                 tab: 'Timeline',
             },
             {
+                key: 'alerts',
+                tab: 'Alerts',
+            },
+            {
                 key: 'plans',
                 tab: 'Plans',
             },
+
             {
                 key: 'details',
                 tab: 'Details',

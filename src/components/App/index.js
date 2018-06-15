@@ -2,7 +2,7 @@ import React from 'react';
 // adding proptypes
 import PropTypes from 'prop-types'
 import {CustomizedLabelsProvider} from "./app-context";
-
+import {compose} from 'recompose';
 // adding router
 import {BrowserRouter} from 'react-router-dom'
 

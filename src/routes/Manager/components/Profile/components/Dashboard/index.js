@@ -3,6 +3,7 @@ import {Row, Col, Card} from 'antd';
 import {EmptyList} from "../../../../../../components/Loading/index";
 import {DiagnosesList} from "../../../../../Health/containers/Diagnoses";
 import Vitals from "./containers/Vitals";
+import Stages from "./containers/Stages";
 import ActionPlans from "./containers/ActionPlans";
 import HealthItems from "./containers/HealthItems";
 import Tumorboards from "./containers/Tumorboards";
@@ -11,6 +12,7 @@ import Timeline from "./containers/Timeline";
 import Genomics from "./components/Genomics";
 import FamilyHistory from "./components/FamilyHistory";
 
+
 const Overview = props => {
     console.log(props);
     const {user={}} = props;
@@ -18,11 +20,14 @@ const Overview = props => {
     return <React.Fragment>
         <Row gutter={16}>
             <Col xl={17}>
+
+                        <Stages userId={userId} />
                 <Row  style={{marginBottom:16}}>
                     <Col>
                         <Vitals userId={userId} />
                     </Col>
                 </Row>
+
                 <Row gutter={16} style={{marginBottom:16}}>
                     <Col lg={12}>
                         <HealthItems userId={userId} title="Diagnosis" type="diagnosis" />

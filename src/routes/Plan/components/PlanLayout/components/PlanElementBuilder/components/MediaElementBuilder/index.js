@@ -183,8 +183,8 @@ const enhance = compose(
             //console.log();
             const {uploads = []} = attachment;
             const fields = uploads.map(upload => {
-                const {type, url, name=''} = upload;
-                return {id:'', label: name, type: type, url:url};
+                const {type, url, name='', size=0} = upload;
+                return {id:'', label: name, type, url, size};
             });
 
             console.log(attachment);
@@ -192,7 +192,7 @@ const enhance = compose(
             //attachmentsView = [...attachmentsView],
             //console.log(attachmentsPure);
             form.setFieldsValue({
-                attachment
+                attachment: {transloadit:attachment}
             });
             props.setAttachments(fields);
         },

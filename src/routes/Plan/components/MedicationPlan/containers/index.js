@@ -60,15 +60,18 @@ const MedicationPlanBodyWithQuery = graphql(
                 return {loading: data.loading}
             }
         },
-        options: (ownProps) => ({
-            skip: !ownProps.ready,
-            variables: {
-                user_id:ownProps.user_id,
-                date:ownProps.date,
-            },
-            notifyOnNetworkStatusChange: true// adding loading placeholder
-            //fetchPolicy: 'cache-and-network'//'cache-only'//'cache-and-network'
-        }),
+        options: (ownProps) => {
+            const userId = ownProps.user ? ownProps.user.id : ownProps.user_id;
+            return {
+                skip: !ownProps.ready,
+                variables: {
+                    user_id: userId,
+                    date: ownProps.date,
+                },
+                notifyOnNetworkStatusChange: true// adding loading placeholder
+                //fetchPolicy: 'cache-and-network'//'cache-only'//'cache-and-network'
+            }
+        },
     }
 )(MedicationPlanBody);
 

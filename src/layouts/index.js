@@ -9,7 +9,7 @@ import {graphql} from 'react-apollo';
 // import extra
 import { Spin, Modal, Icon} from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
-import {CustomizedLabelsProvider} from "../components/App/app-context";
+import {CustomizedLabelsProvider, ActiveUserProvider} from "../components/App/app-context";
 // import main layouts
 import ManagerLayout from './components/ManagerLayout';
 import PatientLayout from './components/PatientLayout';
@@ -147,7 +147,9 @@ class Core extends React.Component {
                             timeout={1000 * 60 * 15}
                             format="MM-DD-YYYY HH:MM:ss.SSS">
                             <CustomizedLabelsProvider labels={labels}>
-                                <CoreByModeWithQuery {...this.props} />
+                                <ActiveUserProvider user={user} >
+                                    <CoreByModeWithQuery {...this.props} />
+                                </ActiveUserProvider>
                             </CustomizedLabelsProvider>
                         </IdleTimer> : <PatientLayout {...this.props} />)
                 }

@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 
 
 export const NOTIFICATIONS_QUERY  = gql`
-  query GET_NOTIFICATIONS ($cursors: CursorInput!) {
+  query GET_NOTIFICATIONS ($cursors: CursorInput) {
   account {
     user {
       id
