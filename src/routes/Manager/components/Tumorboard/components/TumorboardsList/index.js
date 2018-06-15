@@ -4,6 +4,7 @@ import {withApollo} from 'react-apollo';
 import {Input, Card,Table,  Button, Icon, Tooltip, Radio} from 'antd';
 import {TumorobardQueryOptions} from "../../queries";
 import {compose, withState, withHandlers, withStateHandlers, withProps} from 'recompose';
+import sort from '../../../../../../components/Tables/sort'
 ////import ChemotherapyManager from './containers/ChemotherapyManager';
 import TumorboardView from '../../containers/TumorboardView';
 import TumorboardAdd from './components/TumorboardAdd';
@@ -45,7 +46,7 @@ const TumorobardsListPure = props => {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-             sorter: (a, b) => a.title.length - b.title.length,
+            sorter:(a, b) => sort(a,b,"title"),
              render: (title, info) => {
                  return <Title tumorboard={info}/>;
              },
@@ -79,6 +80,7 @@ const TumorobardsListPure = props => {
             render: (title, info) => {
                 return <AvatarWithName user={info.lead} />
             },
+            sorter:(a, b) => sort(a,b,"lead"),
 
         },
         {
@@ -88,7 +90,7 @@ const TumorobardsListPure = props => {
             render: (title, info) => {
                 return moment(title).format('L');
             },
-            sorter: (a, b) => a.startDate.length - b.startDate.length,
+            sorter: (a, b) => a.startDate - b.startDate,
             width: 110,
 
         },
@@ -99,6 +101,7 @@ const TumorobardsListPure = props => {
             render: (title, info) => {
                 return moment(title).format('LT');
             },
+            sorter: (a, b) => a.startTime - b.startTime,
             width:100,
 
         },

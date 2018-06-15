@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 import {Input,Menu,Dropdown, DatePicker,Table,  Button, Icon, Tooltip} from 'antd';
-
+import sort from '../../../../../../components/Tables/sort'
 import './index.css'
 const {  RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -86,19 +86,7 @@ export default class TableCustom extends React.Component {
             render: (title, info) => {
                 return <Link to={'/pb/'+info.id}>{title}</Link>
             },
-            sorter: (a, b) => {
-                var titleA = a.title.toUpperCase(); // ignore upper and lowercase
-                var titleB = b.title.toUpperCase(); // ignore upper and lowercase
-                if (titleA < titleB) {
-                    return -1;
-                }
-                if (titleA > titleB) {
-                    return 1;
-                }
-
-                // names must be equal
-                return 0;
-            },
+            sorter:(a, b) => sort(a,b,"title"),
             // search
             filterDropdown: (
                 <div className="custom-filter-dropdown">

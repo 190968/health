@@ -1,8 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
-import {Input, Menu,Dropdown,Card,Table,DatePicker,  Button, Icon, Tooltip} from 'antd';
+import {Input, Menu,Dropdown,Card,Table,DatePicker, Button, Icon, Tooltip} from 'antd';
 import './index.css'
+import sort from '../../../../../../components/Tables/sort'
 const {  RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 export default class TableCustom extends React.Component {
@@ -31,17 +32,6 @@ export default class TableCustom extends React.Component {
     }
 
     onChange=(date, dateString)=> {
-
-        // console.log(this.props.pathways.map((record) => {
-        //    // console.log(dateString[0],moment(record.createdOn, dateFormat));
-        //     return {
-        //         ...record,
-        //         createdOn:(
-        //             (moment(record.createdOn, dateFormat) > date[0] && moment(record.createdOn, dateFormat) < date[1])? moment(record.createdOn, dateFormat) : null
-        //
-        //         ),
-        //     };
-        // }))
         this.setState({
             data: this.props.pathways.map((record) => {
                 return {
@@ -61,22 +51,10 @@ export default class TableCustom extends React.Component {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            sorter: (a, b) => {
-                var nameA = a.title.toUpperCase(); // ignore upper and lowercase
-                var nameB = b.title.toUpperCase(); // ignore upper and lowercase
-                if (nameA < nameB) {
-                    return -1;
-                }
-                if (nameA > nameB) {
-                    return 1;
-                }
-
-                // names must be equal
-                return 0;
-            },
             render: (title, info) => {
                 return <Link to={'/pb/'+info.id}>{title}</Link>
             },
+             sorter: (a, b) => sort(a,b,"title"),
             // // search
             filterDropdown: (
                 <div className="custom-filter-dropdown">
@@ -110,26 +88,13 @@ export default class TableCustom extends React.Component {
                     {text: 'InActive', value: false},
                 ],
                 //     onFilter: (value, record) => record.cancer.indexOf(value) === 0,
-                sorter: (a, b) => {
-                    let cancerA = a.cancer.toUpperCase(); // ignore upper and lowercase
-                    let cancerB = b.cancer.toUpperCase(); // ignore upper and lowercase
-                    if (cancerA < cancerB) {
-                        return -1;
-                    }
-                    if (cancerA > cancerB) {
-                        return 1;
-                    }
-
-                    // names must be equal
-                    return 0;
-                },
+                sorter: (a, b) => sort(a,b,"cancer"),
             },
             {
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'statusText',
                 render: (text, info) => {
-                    console.log(info)
                     return info.status === '1' ? 'Published' : 'Draft';
                 },
                 filters: [
@@ -137,19 +102,7 @@ export default class TableCustom extends React.Component {
                     {text: 'InActive', value: false},
                 ],
                 onFilter: (value, record) => record.isActive.includes(value),
-                sorter: (a, b) => {
-                    let statusA = a.status.toUpperCase(); // ignore upper and lowercase
-                    let statusB = b.status.toUpperCase(); // ignore upper and lowercase
-                    if (statusA < statusB) {
-                        return -1;
-                    }
-                    if (statusA > statusB) {
-                        return 1;
-                    }
-
-                    // names must be equal
-                    return 0;
-                },
+                sorter: (a, b) => sort(a,b,"status"),
             },
             {
                 title: 'Created',
@@ -180,19 +133,7 @@ export default class TableCustom extends React.Component {
                 ],
                 // filteredValue: filteredInfo.isActive || null,
                 onFilter: (value, record) => record.isActive.includes(value),
-                sorter: (a, b) => {
-                    let creatorA = a.creator.toUpperCase(); // ignore upper and lowercase
-                    let creatorB = b.creator.toUpperCase(); // ignore upper and lowercase
-                    if (creatorA < creatorB) {
-                        return -1;
-                    }
-                    if (creatorA > creatorB) {
-                        return 1;
-                    }
-
-                    // names must be equal
-                    return 0;
-                },
+                sorter: (a, b) => sort(a,b,"creator"),
             },{
                 title: 'Actions',
 

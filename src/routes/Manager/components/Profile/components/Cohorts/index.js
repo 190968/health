@@ -3,7 +3,7 @@ import {Card, Table} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
-
+import sort from '../../../../../../components/Tables/sort';
 export const CohortsTable = props => {
 
     const {cohorts=[], loading=false} = props;
@@ -15,6 +15,7 @@ export const CohortsTable = props => {
             render: (info) => {
                 return <Truncate lines={1} >{info.cohort.title}</Truncate>
             },
+            sorter: (a, b) => sort(a,b,"cohort","title"),
         },
         {
             title: 'Code(s)',
@@ -33,6 +34,7 @@ export const CohortsTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
+            sorter: (a, b) => a.startDate-b.startDate,
         },
 
     ];

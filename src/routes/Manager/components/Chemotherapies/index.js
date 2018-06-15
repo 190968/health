@@ -2,7 +2,7 @@ import React from 'react';
 import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import ChemotherapyManager from './containers/ChemotherapyManager';
-
+import sort from '../../../../components/Tables/sort'
 const CancerTitlePure = ({chemotherapy, openEditorModal, hideEditorModal, openEditor}) => {
     return <React.Fragment>
         <a onClick={openEditorModal}>{chemotherapy.title}</a>
@@ -32,7 +32,7 @@ const ChemotherapiesPure = props => {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            // sorter: (a, b) => a.title.length - b.title.length,
+            sorter:(a, b) => sort(a,b,"title"),
              render: (title, info) => {
                  return <CancerTitle chemotherapy={info}/>;
              },

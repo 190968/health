@@ -3,7 +3,7 @@ import {Card, Table} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
-
+import sort from '../../../../../../components/Tables/sort';
 export const QualMeasuresTable = props => {
 
     const {qms=[], loading=false} = props;
@@ -15,6 +15,8 @@ export const QualMeasuresTable = props => {
             render: (info) => {
                 return <Truncate lines={1} >{info.qualityMeasure.title}</Truncate>
             },
+            sorter: (a, b) => sort(a,b,"qualityMeasure","title"),
+
         },
         {
             title: 'Status',
@@ -28,6 +30,7 @@ export const QualMeasuresTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
+            sorter: (a, b) => a.date - b.date,
         },
 
     ];

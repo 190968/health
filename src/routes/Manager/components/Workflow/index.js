@@ -33,6 +33,7 @@ export default class Actionplans extends React.Component {
             title: 'Created',
             dataIndex: 'createdAt',
             key: 'createdAt',
+            sorter: (a, b) => a.createdAt - b.createdAt,
             /*render: (text, info) => {
                 return info.isActive ? 'Active' : 'Inactive'
             },
@@ -47,6 +48,7 @@ export default class Actionplans extends React.Component {
             title: 'By',
             dataIndex: 'createdBy',
             key: 'createdBy',
+            sorter: (a, b) => a.createdBy - b.createdBy,
             //render: (info) => moment(info).format('L'),
         }, {
             title: 'Downloads',

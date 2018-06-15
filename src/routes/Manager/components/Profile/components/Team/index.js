@@ -3,7 +3,7 @@ import {Card, Table} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
-
+import sort from '../../../../../../components/Tables/sort';
 export const UserTeamTable = props => {
 
     const {members:providers=[], loading=false} = props;
@@ -15,6 +15,7 @@ export const UserTeamTable = props => {
         render: (user) => {
             return <AvatarWithName user={user} />
         },
+        sorter: (a, b) => sort(a,b,"name"),
     },
         {
             title: 'Role',
@@ -31,6 +32,7 @@ export const UserTeamTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
+            sorter: (a, b) => a.joinedDate - b.joinedDate,
         },
         {
             title: 'Phone',

@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, Table} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
+import sort from '../../../../../../components/Tables/sort'
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
 
 export const AssessmentsTable = props => {
@@ -15,6 +16,7 @@ export const AssessmentsTable = props => {
             render: (info) => {
                 return <Truncate lines={1} >{info.assessment.name}</Truncate>
             },
+            sorter: (a, b) => sort(a,b,"assessment","name"),
         },
 
         {
@@ -24,6 +26,7 @@ export const AssessmentsTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
+            sorter: (a, b) => a.createdOn - b.createdOn,
         },
         {
             title: 'Progress',

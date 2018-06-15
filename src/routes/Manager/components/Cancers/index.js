@@ -2,7 +2,7 @@
 import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import CancerManager from './containers/CancerManager';
-
+import sort from '../../../../components/Tables/sort'
 const CancerTitlePure = ({cancer, openEditorModal, hideEditorModal, openEditor}) => {
     return <React.Fragment>
         <a onClick={openEditorModal}>{cancer.title}</a>
@@ -33,7 +33,7 @@ const CancersPure = props => {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            // sorter: (a, b) => a.title.length - b.title.length,
+            sorter:(a, b) => sort(a,b,"title"),
              render: (title, info) => {
                  return <CancerTitle cancer={info}/>;
              },

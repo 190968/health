@@ -2,6 +2,7 @@ import React from 'react';
 import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers, withProps} from 'recompose';
 ////import ChemotherapyManager from './containers/ChemotherapyManager';
+import sort from '../../../../../../components/Tables/sort'
 import ClinicalTrialView from '../../containers/ClinicalTrialView';
 
 const CancerTitlePure = ({clinicalTrial, openView, openViewModal, hideViewModal}) => {
@@ -34,12 +35,13 @@ const ClinicalTrialsListPure = props => {
         dataIndex: 'nctId',
         key: 'nctId',
         width: 140,
+        sorter:(a, b) => a.nctId - b.nctId,
     },{
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
             //width: '60%',
-            // sorter: (a, b) => a.title.length - b.title.length,
+            sorter:(a, b) => sort(a,b,"title"),
              render: (title, info) => {
                  return <Title clinicalTrial={info}/>;
              },

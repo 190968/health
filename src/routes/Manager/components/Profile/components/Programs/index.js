@@ -3,6 +3,7 @@ import {Card, Table} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
+import sort from '../../../../../../components/Tables/sort'
 
 export const UserProvidersTable = props => {
 
@@ -29,6 +30,8 @@ export const UserProvidersTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
+            sorter: (a, b) => a.joinedDate-b.joinedDate,
+
         },
 
         {
@@ -38,6 +41,7 @@ export const UserProvidersTable = props => {
             render: (user) => {
                 return <AvatarWithName user={user}/>
             },
+            sorter: (a, b) => sort(a,b,"sender"),
         },
 
     ];

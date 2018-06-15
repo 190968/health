@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {Table,Dropdown,Menu,Slider, Input, Button, Icon,Modal} from 'antd';
 import CustomModal from '../../containers/Modal'
+import sort from '../../../../../../components/Tables/sort'
 import './index.css'
 export default class TableCustom extends React.Component {
 
@@ -97,19 +98,7 @@ export default class TableCustom extends React.Component {
                 render: (title, info) => {
                     return <Link to={'/u/'+info.id}>{title}</Link>;
                 },
-                sorter: (a, b) => {
-                    let nameA = a.fullName.toUpperCase(); // ignore upper and lowercase
-                    let nameB = b.fullName.toUpperCase(); // ignore upper and lowercase
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-
-                    // names must be equal
-                    return 0;
-                },
+                sorter:(a, b) => sort(a,b,"fullName"),
                 filterDropdown: (
                     <div className="custom-filter-dropdown">
                         <Input
