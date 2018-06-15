@@ -65,16 +65,21 @@ export default class Profile extends React.Component {
         const tabList = [
             {
                 key: 'dashboard',
-                tab: 'Dashboard',
+                tab: 'Overview',
             },
             {
                 key: 'timeline',
                 tab: 'Timeline',
             },
             {
+                key: 'alerts',
+                tab: 'Alerts',
+            },
+            {
                 key: 'plans',
                 tab: 'Plans',
             },
+
             {
                 key: 'details',
                 tab: 'Details',
@@ -96,7 +101,7 @@ export default class Profile extends React.Component {
 
         const descriptionDetails = [
             //['Name', user.fullName],
-            ['Membed ID', memberId],
+            ['Member ID', memberId],
             ['Gender', genderText],
             ['Age', age],
             //['Birthday', birthday],
@@ -105,7 +110,6 @@ export default class Profile extends React.Component {
             ['Cancer', cancerName],
             ['Stage', stageName],
             ['Last Login', lastLogin],
-            ['Membed ID', memberId],
             //['Group', groupNumber],
             ['Insurance', payerName]
         ];

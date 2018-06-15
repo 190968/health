@@ -43,7 +43,7 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
         const {patient={}} = data;
         const {getProviders={}} = patient;
         const {edges=[]} = getProviders;
-        return {loading: data.loading, providers:fakeData }
+        return {loading: data.loading, providers:edges }
     },
 });
 

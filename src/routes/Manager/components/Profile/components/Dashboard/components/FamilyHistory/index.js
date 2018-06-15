@@ -38,7 +38,7 @@ export const UserActionPlansTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic  ant-card-type-table" title={'Family History '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic1  ant-card-type-table" title={'Family History '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

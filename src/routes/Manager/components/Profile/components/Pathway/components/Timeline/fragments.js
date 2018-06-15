@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 import {
     ElementLinkFragment, ElementTextFragment, ElementTreatmentFragment, ElementOptionsFragment,
-    ElementClinicalNoteFragment, FieldReportFragment
+    ElementClinicalNoteFragment, FieldReportFragment, ElementMediaFragment
 } from "../../../../../../../Plan/components/Plan/fragments";
 import {HealthElementFragment} from "../../../../../../../Health/components/fragments";
 import {TumorboardSimpleFragment} from "../../../../../Tumorboard/containers/TumorboardManager";
 import {ClinicalTrialFragment} from "../../../../../ClinicalTrials/fragments";
-
+import {PlanCardFragment, UserPlanFragment} from "../../../../../../../Plan/components/Plan/fragments";
 export const TimelineElementActivityFragment  = gql`
     fragment TimelineElementActivity on TimelineElement {
         activity {
@@ -37,6 +37,16 @@ export const TimelineElementActivityFragment  = gql`
             ... on Tumorboard {
                 ...TumorboardSimpleInfo
             }
+            ... on Plan {
+                ...PlanCardInfo
+            }
+             ... on UserPlan {
+                ...UserPlanInfo
+            }
+            
+            ... on PlanElementMedia {
+                ...MediaElement
+            }
             __typename
         }
     }
@@ -47,6 +57,9 @@ export const TimelineElementActivityFragment  = gql`
      ${ElementOptionsFragment}
      ${HealthElementFragment}
      ${TumorboardSimpleFragment}
+     ${PlanCardFragment}
+     ${UserPlanFragment}
+     ${ElementMediaFragment}
      
 `;
 

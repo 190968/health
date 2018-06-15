@@ -41,7 +41,7 @@ export const Attachments = enhance(AttachmentsPure);
 const getExtention = filename => {
     return filename.substring(filename.lastIndexOf('.')+1, filename.length) || filename;
 }
-const formatBytes = (a,b) => {if(0==a)return"0 Bytes";var c=1024,d=b||2,e=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],f=Math.floor(Math.log(a)/Math.log(c));return parseFloat((a/Math.pow(c,f)).toFixed(d))+" "+e[f]}
+export const formatBytes = (a,b) => {if(0==a)return"0 Bytes";var c=1024,d=b||2,e=["Bytes","KB","MB","GB","TB","PB","EB","ZB","YB"],f=Math.floor(Math.log(a)/Math.log(c));return parseFloat((a/Math.pow(c,f)).toFixed(d))+" "+e[f]}
 
 export const AttachmentsList = ({attachments, isEditable=true, showPreview=true, limit = false}) => {
     // filter attachments
@@ -90,47 +90,9 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
                 let {type='', label='', size=0} = attachment;
 
                 let image = '';
-                let icon = '';
-                const actions = false;//isEditable && <Tooltip title="Delete"><Icon type="delete" style={{marginLeft:5}} /></Tooltip>;
-                switch(type) {
-                    case 'image':
-                        //return null;
-                        icon = <Avatar icon="picture" />;
-                        break;
-                    case 'video':
-                        icon = <Avatar icon="video-camera" />;
-                        break;
-                    default:
-                        const ext = getExtention(label);
-                        console.log(ext);
-                        switch(ext) {
-                            default:
-                                icon = <Avatar icon="file" />;
-                                break;
-                            case 'pdf':
-                                icon = <Avatar icon="file-pdf" />;
-                                break;
-                            case 'ppt':
-                            case 'pptx':
-                                icon = <Avatar icon="file-ppt" />;
-                                break;
-                            case 'doc':
-                            case 'docx':
-                                icon = <Avatar icon="file-word" />;
-                                break;
-                            case 'xls':
-                            case 'xlsx':
-                                icon = <Avatar icon="file-excel" />;
-                                break;
-                            case 'rar':
-                            case 'zip':
-                                icon = <Avatar icon="hdd" />;
-                                break;
-
-                        }
-
-                        break;
-                }
+                const actions = false;//isEditable && <Tooltip title="Dlete"><Icon type="delete" style={{marginLeft:5}} /></Tooltip>;
+                let icon = getIconByFileType({type, label});
+                icon = <Avatar>{icon}</Avatar>;
 
                 if (showPreview) {
                     switch(type) {
@@ -178,4 +140,65 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
             }}
         />}
     </React.Fragment>;
+}
+
+
+export const prepareAttachmentsForForm = (attachments, single) => {
+    const existedAttachments = attachments.map(attachment => {
+        return {existedId:attachment.id};
+    });
+    //console.log(attachments);
+    if (single) {
+        return existedAttachments.shift();
+    }
+    return existedAttachments;
+}
+
+export const formatFileName = item => {
+    const {filename='', filesize=0} = item;
+
+    return filename +' '+formatBytes(filesize, 2);
+}
+export const getIconByFileType = ({type, label='', asString=false}) => {
+    let icon = '';
+    switch(type) {
+        case 'image':
+            //return null;
+            icon = <Icon type="picture" />;
+            break;
+        case 'video':
+            icon = <Icon type="video-camera" />;
+            break;
+        default:
+            const ext = getExtention(label);
+            switch(ext) {
+                default:
+                    icon = <Icon type="file" />;
+                    break;
+                case 'pdf':
+                    icon = <Icon type="file-pdf" />;
+                    break;
+                case 'ppt':
+                case 'pptx':
+                    icon = <Icon type="file-ppt" />;
+                    break;
+                case 'doc':
+                case 'docx':
+                    icon = <Icon type="file-word" />;
+                    break;
+                case 'xls':
+                case 'xlsx':
+                    icon = <Icon type="file-excel" />;
+                    break;
+                case 'rar':
+                case 'zip':
+                    icon = <Icon type="hdd" />;
+                    break;
+
+            }
+
+            break;
+    }
+
+    return icon;
 }

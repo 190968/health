@@ -20,6 +20,7 @@ export const getTimelineElementsConst = (includeViewOnly=false) => {
         //{name:'Procedure order', type:'procedureOrder'},
         {name:'ActionPlan', type:'ap', icon:<FitIcon icon='actionplan' />},
         {name:'Clinical Trial', type:'clinical_trial', icon:<FitIcon icon='regimen' />},
+        {name:'Media', type:'media', icon:<Icon type='file' />},
         //{name:'Care Plan', type:'discharge'},
     ];
     if (includeViewOnly) {

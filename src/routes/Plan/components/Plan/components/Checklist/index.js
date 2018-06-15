@@ -50,13 +50,13 @@ export default class PlanChecklist extends React.Component {
 
     render() {
 
-        const {item, isBuilderMode} = this.props;
+        const {item, isBuilderMode, simple=false} = this.props;
         const {value} = this.state;
         //const {label} = item;
 
 
         let radioStyle = {};
-        if (item.isVertical) {
+        if (!simple && item.isVertical) {
             radioStyle = vertStyle;
         }
         var options = item.options;

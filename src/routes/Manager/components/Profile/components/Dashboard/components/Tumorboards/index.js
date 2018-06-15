@@ -18,6 +18,7 @@ const Tumorboards = props => {
             title: 'Date',
             dataIndex: 'startDate',
             key: 'startDate',
+            width:100,
             render: (createdDate) => {
                 return moment(createdDate).format('L')
             },

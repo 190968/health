@@ -16,6 +16,7 @@ import CancerStageElement from './containers/CancerStageElement';
 import DiagnosisElement from './containers/DiagnosisElement';
 import BlankElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/BlankElementBuilder";
 import ApElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder";
+import MediaElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
 
 
 
@@ -45,7 +46,6 @@ const enhance = compose(
     //branch(props => props.id !== '', PlanElementWithQuery),
     //branch(props => props.id !== '', withMutation, withAddMutation),
     mapProps(props => {
-        //console.log(props);
 
         if (props.element) {
             const details = props.element.itemInfo;
@@ -138,6 +138,7 @@ const enhance = compose(
         {when: ({type}) => type === 'clinical_note', then: ClinicalNoteElement},
         {when: ({type}) => type === 'clinical_trial', then: ClinicalTrialElement},
         {when: ({type}) => type === 'ap', then: ApElementBuilder},
+        { when: ({type}) => type === 'media', then: MediaElementBuilder },
     ]),
 
 );

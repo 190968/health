@@ -4,6 +4,7 @@ export const CustomizedLabelsContext = React.createContext();
 export const NetworkContext = React.createContext();
 
 
+
 export const CustomizedLabelsProvider = (props) => {
     /*const labels =  {
             lessons: 'Regimens',
@@ -22,7 +23,6 @@ export const CustomizedLabelsProvider = (props) => {
 
 
 export const GetGlobalLabel = (props) => {
-    console.log(props);
     const {type} = props;
     const {defaultValue = type} = props;
     return (
@@ -35,4 +35,46 @@ export const GetGlobalLabel = (props) => {
     );
 }
 
+
+
+export const ActiveUserContext = React.createContext();
+
+
+export const ActiveUserProvider = (props) => {
+    const {user} = props;
+    //console.log(props, 'ActiveUserProvider');
+    return (
+        <ActiveUserContext.Provider user={user} >
+            {props.children}
+        </ActiveUserContext.Provider>
+    );
+}
+
+export const GetActiveUser = props => {
+    return (
+        <ActiveUserContext.Consumer>
+            {(context) => {
+                return context.user;
+            }}
+        </ActiveUserContext.Consumer>
+    );
+}
+
+export const withActiveUser = Component => {
+    const ActiveUserHOC = props => {
+        return (
+            <ActiveUserContext.Consumer>
+                {context => {
+                    console.log(context, 'activeUserContext');
+                    const {user={}} = context || {};
+                    return <Component
+                        {...props}
+                         activeUser={user}
+                    />
+                }}
+            </ActiveUserContext.Consumer>
+        );
+    }
+    return ActiveUserHOC;
+}
 
