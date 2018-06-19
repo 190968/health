@@ -25,8 +25,12 @@ const TreatmentBlockOptionSelectPure = ({getProperElements, onSelectType}) => {
 export const getProperElementsConst = () => {
      const mainElements = [
         {type:'chemotherapy', label:'Chemotherapy'},
+        {type:'clinical_trial', label:'Clinical Trial'},
         {type:'medication', label:'Generic drug'},
-        {type:'radiationtherapy', label:'Radiation therapy'},
+        {type:'oncology', label:'Oncology'},
+        {type:'radiation', label:'Radiation therapy'},
+        {type:'radiology', label:'Imaging/Radiology'},
+        {type:'pathology', label:'Pathology'},
         {type:'radiotherapy', label:'Radiotherapy'},
         {type:'surgery_reconstruction', label:'Surgery: reconstruction'},
         {type:'surgical_excision', label:'Surgical excision'},

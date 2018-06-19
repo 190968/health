@@ -3,11 +3,6 @@ import TreatmentElementBlock from './TreatmentBlockOption';
 import {List} from 'antd';
 import {compose, withHandlers} from 'recompose';
 
-
-
-
-
-
 const TreatmentBlockOptions = ({elements, planId, itemInfo, deleteTmpElement, mode, onElementUpdate}) => {
     return <List
         style={{marginTop:3}}
@@ -30,17 +25,6 @@ const enhance = compose(
             }
         }
     }),
-    // withHandlers({
-    //     onElementUpdate: props => (changedValue) => {
-    //         //console.log(props);
-    //         // Should provide an event to pass value to Form.
-    //         // const onChange = props.onChange;
-    //         // if (onChange) {
-    //         //     onChange(Object.assign({}, this.state, changedValue));
-    //         // }
-    //     }
-    // }),
-
 )
 
 export default enhance(TreatmentBlockOptions);
