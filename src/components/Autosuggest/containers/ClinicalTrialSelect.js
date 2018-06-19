@@ -1,4 +1,4 @@
-import ClinicalTrialSelect from '../components/ClinicalTrialSelect';
+import ClinicalTrialSelectPure from '../components/ClinicalTrialSelect';
 import { graphql } from 'react-apollo';
 import {GET_CLINICAL_TRIALS_LIST_QUERY} from "../../../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList";
 
@@ -39,4 +39,5 @@ const withQuery = graphql(GET_CLINICAL_TRIALS_LIST_QUERY,
 
     });
 
-export default withQuery(ClinicalTrialSelect);
+export const ClinicalTrialSelect = withQuery(ClinicalTrialSelectPure);
+export default ClinicalTrialSelect;

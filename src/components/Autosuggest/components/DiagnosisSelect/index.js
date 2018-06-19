@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from '../Select';
 
-const DiagnosisSelect = ({loading, items=[], doSearch, onChange, value=undefined, codeAsId=false}) => {
+const DiagnosisSelectPure = ({loading, items=[], doSearch, onChange, value=undefined, codeAsId=false}) => {
     //console.log(value);
     const diagnosis = items.map(item => {
         const id = codeAsId ? item.code : item.id;
@@ -13,4 +13,4 @@ const DiagnosisSelect = ({loading, items=[], doSearch, onChange, value=undefined
     return <Select value={value} i18n={{placeholder:"Select Diagnosis"}} loading={loading} items={diagnosis} doSearch={doSearch} onChange={onChange} />;
 };
 
-export default DiagnosisSelect;
+export default DiagnosisSelectPure;

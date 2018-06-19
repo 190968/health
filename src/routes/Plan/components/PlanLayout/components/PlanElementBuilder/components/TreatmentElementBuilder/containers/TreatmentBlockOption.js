@@ -6,7 +6,6 @@ import TreatmentElementBlock from '../../../../../../../components/Plan/componen
 import {withDeleteMutation} from './mutations';
 
 const enhance = compose(
-
     withState('showEditModal', 'toggleEditModal', false),
     withDeleteMutation,
     withHandlers({

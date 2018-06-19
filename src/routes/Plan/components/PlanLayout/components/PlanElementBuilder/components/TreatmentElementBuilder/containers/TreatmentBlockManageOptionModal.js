@@ -9,7 +9,7 @@ import {withAddMutation, withEditMutation, withQuery} from './mutations.js';
 
 
 const enhance = compose(
-
+    Form.create(),
     withHandlers({
         // submit the element
         onSubmit: props => ({prepareInput, callback}) => {
@@ -59,15 +59,11 @@ const enhance = compose(
 
             });
         },
-        modalWidth: props => value => {
-            return 600;
-        }
-
     })
 );
 
 
-const TreatmentBlockManageOptionModal = Form.create()(enhance((TreatmentBlockOptionElementEditor)));
+const TreatmentBlockManageOptionModal = enhance((TreatmentBlockOptionElementEditor));
 
 
 const showSelectOptionModal = (showSelect) =>
@@ -99,11 +95,12 @@ const enhanceModal = compose(
     }),
     showSelectOptionModal(
         props => {
-            //console.log(props, 'showSelectOptionModal');
             return !(props.type && props.type !== '');
         }
     ),
 );
+
+
 const TreatmentBlockManageOptionModalWithMutation = enhanceModal(TreatmentBlockManageOptionModal)
 
 export default TreatmentBlockManageOptionModalWithMutation;
