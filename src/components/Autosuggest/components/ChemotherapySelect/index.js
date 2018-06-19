@@ -19,7 +19,7 @@ const fullValue = compose(
             if(option.length > 0) {
                 option = option[0];
             }
-            console.log(option);
+            // console.log(option);
             props.onChange(option);
         }
     })

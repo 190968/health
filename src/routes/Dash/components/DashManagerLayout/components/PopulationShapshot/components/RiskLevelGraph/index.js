@@ -18,7 +18,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 
 export const RiskLevelGraph = props => {
     const {items=[], handleClick} = props
-    console.log(items);
+    // console.log(items);
     return <ResponsiveContainer height={300}  ><PieChart  >
         <Pie
             data={items}

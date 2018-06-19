@@ -1,16 +1,21 @@
 import React from 'react';
-import {Card,Input,DatePicker,Button,Icon, Table} from 'antd';
+import {Card,Input,Radio,Tooltip,DatePicker,Button,Icon, Table} from 'antd';
 import Truncate from 'react-truncate';
+import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
 import './index.css'
-import sort from '../../../../../../components/Tables/sort'
+import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
+import sort from '../../../../../../components/Tables/sort';
+import ProvirdersManager from './containers/ProvidersManager';
 import Search from '../../../../../../components/Tables/search/functions'
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 const {  RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 export const UserProvidersTable = props => {
 
-    const {providers=[], loading=false,searchText,filterDropdownVisible=true,onChange} = props;
+    const {providers=[], loading=false,searchText, openModal, visibleModal,hideModal,filterDropdownVisible=true,onChange} = props;
     const total = providers.length;
     const columns = [{
         title: 'Name',
@@ -60,9 +65,37 @@ export const UserProvidersTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic1  ant-card-type-table" title={'Providers '+ (total > 0 ? ' ('+total+')' : '')} >
-        <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
-    </Card>)
-}
+    const actions = <React.Fragment>
+    <RadioGroup defaultValue="all" style={{marginRight:10}} >
+        <RadioButton value="all">All</RadioButton>
+        <RadioButton value="open">Open</RadioButton>
+        <RadioButton value="past">Past</RadioButton>
+    </RadioGroup>
+                <Tooltip title="Add New Providers"><Button onClick={openModal}><Icon type="plus" /></Button></Tooltip>
+            
+</React.Fragment>;
 
-export default UserProvidersTable;
+
+    return ( <PageHeaderLayout title={'Providers '+ (total > 0 ? ' ('+total+')' : '')}
+        content="You can view and manage tumor boards here"
+        action={actions}
+        >
+
+    <Card type="basic1  ant-card-type-table" >
+        <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+    </Card>
+    {visibleModal && <ProvirdersManager onHide={hideModal} />}
+    </PageHeaderLayout>)
+}
+const enhance = compose(
+    withState('visibleModal', 'setOpenManager', false),
+    withHandlers({
+        openModal: props => () => {
+            props.setOpenManager(true);
+        },
+        hideModal: props => () => {
+            props.setOpenManager(false);
+        }
+    })
+);
+export default enhance(UserProvidersTable);

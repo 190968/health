@@ -25,7 +25,7 @@ const enhance = compose(
             props.setShowLoader(!props.showLoader);
         },
         onRequestCloseModal: props => (values) => {
-            console.log(values);
+            // console.log(values);
             if (props.onClose) {
                 props.onClose(values);
             }

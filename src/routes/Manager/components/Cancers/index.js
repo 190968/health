@@ -1,8 +1,12 @@
  import React from 'react';
-import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
+import {Input, Card,Table, Radio, Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import CancerManager from './containers/CancerManager';
 import sort from '../../../../components/Tables/sort'
+import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
+
 const CancerTitlePure = ({cancer, openEditorModal, hideEditorModal, openEditor}) => {
     return <React.Fragment>
         <a onClick={openEditorModal}>{cancer.title}</a>
@@ -59,10 +63,26 @@ const CancersPure = props => {
             // },
         }];
     const dataSource = cancers.map((cancer, i) => ({...cancer, key:i}))
+    const actions = <React.Fragment>
+        <RadioGroup defaultValue="all" style={{marginRight:10}} >
+            <RadioButton value="all">All</RadioButton>
+            <RadioButton value="open">Open</RadioButton>
+            <RadioButton value="past">Past</RadioButton>
+        </RadioGroup>
+        <Tooltip title="Add New Cancer"><Button size="small" onClick={addCancer}><Icon type="plus"  /></Button></Tooltip>
+    </React.Fragment>;
+
     return (<React.Fragment>
-        <Card type="table" title={'Cancers'+ (total > 0 ? ' ('+total+')' : '')} extra={<Tooltip title="Add New Cancer"><Button size="small" onClick={addCancer}><Icon type="plus"  /></Button></Tooltip>}>
+        <PageHeaderLayout title={'Cancers'+ (total > 0 ? ' ('+total+')' : '')}
+                          content="You can view and manage tumor boards here"
+                          // extraContent={<Input.Search style={{width:200}} />}
+                          action={actions}
+                          >
+
+        <Card type="table" >
             <Table dataSource={dataSource} columns={columns} pagination={false} />
         </Card>
+        </PageHeaderLayout>
         {openManage && <CancerManager onHide={hideManager} />}
     </React.Fragment>);
 }

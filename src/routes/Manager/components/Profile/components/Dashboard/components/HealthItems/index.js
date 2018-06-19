@@ -6,7 +6,7 @@ import Truncate from 'react-truncate';
 const getTitleByType = type => {
 
     let title = 'Title';
-    console.log(type);
+   // console.log(type);
     switch(type) {
         case 'diagnosis':
             title = 'Diagnosis';

@@ -1,53 +1,55 @@
 import React from 'react';
 import { Row, Col,Layout, Menu, Icon, Divider, Alert, Button, Dropdown } from 'antd';
 import {NavLink} from 'react-router-dom';
+import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import Avatar from '../../../User/components/Avatar/index';
 import ProfileContent from './components/ProfileContent';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
-
+import {withModal} from "../../../../components/Modal/index"
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import DescriptionList from "../../../../components/Layout/DescriptionList/DescriptionList";
+import ProfileManager from './containers/ProfileManager';
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 const Description = DescriptionList.Description;
 const ButtonGroup = Button.Group;
 
-export default class Profile extends React.Component {
-
-
-    static defaultProps = {
-        plans:[],
-        plansTotal:0
-    }
-
-    handleTabChange = (key) => {
-        //console.log(key);
-        //console.log(this.props);\
-        const {id, tab = 'dashboard', subtab = ''} = this.props.match.params;
-
-        const selectedItem = subtab || tab;
-        const openItem = tab;
-
-        console.log(tab, subtab);
-        let mainUrl = '/u';
-        if (id !== '') {
-            mainUrl += '/'+id;
+const CancerTitlePure = ({cancer, openEditorModal, hideEditorModal, openEditor}) => {
+    return <React.Fragment>
+        <a onClick={openEditorModal}>{cancer.title}</a>
+        {openEditor &&  <ProfileManager onHide={hideEditorModal} cancer={cancer} />}
+    </React.Fragment>
+}
+const enhanceTitle = compose(
+    withStateHandlers(
+        (props) => ({
+        openEditor: false,
+        }),
+        {
+            openEditorModal: ({ counter }) => (value) => ({
+                openEditor: true
+            }),
+            hideEditorModal: ({ counter }) => (value) => ({
+                openEditor: false
+            }),
         }
+        )
+);
 
-        this.props.history.push(mainUrl+'/'+key);
-    }
+const CancerTitle = enhanceTitle(CancerTitlePure);
 
+const Profile = props => {
 
-    render() {
-        const {match, loading, user={}, fullName} = this.props;
+   
 
+        const {match, loading, user={},addCancer,hideManager,openManage,handleTabChange, fullName} = props;
+console.log(props);
 
         const {id, tab = 'dashboard', subtab = ''} = match.params;
 
         const selectedItem = subtab || tab;
         const openItem = tab;
 
-        console.log(tab, subtab);
         let mainUrl = '/u';
         if (id !== '') {
             mainUrl += '/'+id;
@@ -122,7 +124,6 @@ export default class Profile extends React.Component {
                     <Col md={6}><Avatar info={user} size="huge" /></Col>
                     <Col md={18}>
                         <DescriptionList col={3}>
-
                             {descriptionDetails.map((details, i) => {
                                 return  <Description term={details[0]}  >
                                     {details[1]}
@@ -133,24 +134,36 @@ export default class Profile extends React.Component {
                 </Row>}
                 action={<React.Fragment>
                     <ButtonGroup>
-                        <Button icon={'edit'} >Edit Profile</Button>
+                        <Button icon={'edit'} onClick={addCancer}  >Edit Profile</Button>
                         <Dropdown overlay={menu} placement="bottomRight">
                             <Button>
                                 <Icon type="ellipsis" />
                             </Button>
                         </Dropdown>
                     </ButtonGroup>
-                    <Button type="primary" icon={'mail'} style={{    marginLeft: 8}}>Send Message</Button>
+                    <Button type="primary" icon={'mail'} style={{ marginLeft: 8}}>Send Message</Button>
                 </React.Fragment>}
-
                 tabList={tabList}
                 activeTab={tab}
-                onTabChange={this.handleTabChange}
+                onTabChange={handleTabChange}
             >
-
-                <ProfileContent {...this.props} />
-
+                <ProfileContent {...props} />
+                {openManage && <ProfileManager patient={user} onHide={hideManager} />}
             </PageHeaderLayout>
+            
             );
     }
-}
+
+    const enhance = compose(
+        withState('openManage', 'setOpenManager', false),
+        withHandlers({
+            addCancer: props => () => {
+                props.setOpenManager(true);
+            },
+            hideManager: props => () => {
+                props.setOpenManager(false);
+            }
+        })
+    );
+    
+export default enhance(Profile);

@@ -1,8 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
-import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
+import {Input, Card,Table,Radio,  Button, Icon, Tooltip} from 'antd';
 import StageManager from './containers/StageManager';
+import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 export default class Stages extends React.Component {
     state = {
@@ -96,13 +99,29 @@ export default class Stages extends React.Component {
         }*/];
 
         const {stages, total} = this.props;
+        const actions = <React.Fragment>
+        <RadioGroup defaultValue="all" style={{marginRight:10}} >
+            <RadioButton value="all">All</RadioButton>
+            <RadioButton value="open">Open</RadioButton>
+            <RadioButton value="past">Past</RadioButton>
+        </RadioGroup>
+        <Tooltip title="Add New Cancer"><Button size="small" onClick={this.addStage}><Icon type="plus"  /></Button></Tooltip>
+    </React.Fragment>;
+
+      
         return (
-            <Card type="table" title={'Cancer Stages'+ (total > 0 ? ' ('+total+')' : '')} extra={<Tooltip title="Add New Pathway"><Button size="small" onClick={this.addStage}><Icon type="plus"  /></Button></Tooltip>}>
+            <PageHeaderLayout title={'Cancer Boards '+ (total > 0 ? ' ('+total+')' : '')}
+                          content="You can view and manage tumor boards here"
+                          // extraContent={<Input.Search style={{width:200}} />}
+                          action={actions}
+                          >
+            <Card type="table" >
                 {this.state.addStage && <StageManager id={this.state.editStageId} onCancel={this.hideManager}/>}
                 <Table dataSource={stages} columns={columns} pagination={false} onChange={this.handleChange}
                        ref={(input) => {
                            this.table = input;
                        }}/>
-            </Card>);
+            </Card>
+            </PageHeaderLayout>);
     }
 }

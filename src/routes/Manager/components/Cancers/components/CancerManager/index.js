@@ -9,7 +9,7 @@ const FormItem = Form.Item;
 const CancerManager = ({cancer={}, form, formItemLayout}) => {
     const {getFieldDecorator} = form;
     const {title='', code='', stage={}, chemotherapies=[]} = cancer;
-    console.log(cancer);
+    // console.log(cancer);
     return <Form>
         <FormItem
             {...formItemLayout}

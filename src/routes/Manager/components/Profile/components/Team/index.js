@@ -1,12 +1,18 @@
 import React from 'react';
-import {Card, Table} from 'antd';
+import {Card,Tooltip,Button,Icon, Radio,Table} from 'antd';
+import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
+
 import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
+import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
 import sort from '../../../../../../components/Tables/sort';
+import TeamManager from './containers/TeamManager';
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 export const UserTeamTable = props => {
 
-    const {members:providers=[], loading=false} = props;
+    const {members:providers=[],openModal, visibleModal,hideModal,loading=false} = props;
     const total = providers.length;
     const columns = [{
         title: 'Name',
@@ -51,9 +57,40 @@ export const UserTeamTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="j  ant-card-type-table" title={'Care Team '+ (total > 0 ? ' ('+total+')' : '')} >
-        <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
-    </Card>)
-}
+    const actions = <React.Fragment>
+        <RadioGroup defaultValue="all" style={{marginRight:10}} >
+            <RadioButton value="all">All</RadioButton>
+            <RadioButton value="open">Open</RadioButton>
+            <RadioButton value="past">Past</RadioButton>
+        </RadioGroup>
+                    <Tooltip title="Add New CareTeam"><Button  onClick={openModal} ><Icon type="plus" /></Button></Tooltip>
+              
+    </React.Fragment>;
 
-export default UserTeamTable;
+
+
+
+    return (<PageHeaderLayout title={'CareTeam'+ (total > 0 ? ' ('+total+')' : '')}
+    content="You can view and manage tumor boards here"
+    // extraContent={<Input.Search style={{width:200}} />}
+    action={actions}
+    >
+    <Card type="j  ant-card-type-table" >
+        <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+    </Card>
+    {visibleModal && <TeamManager onHide={hideModal} />}
+    </PageHeaderLayout>)
+}
+const enhance = compose(
+    withState('visibleModal', 'setOpenManager', false),
+    withHandlers({
+        openModal: props => () => {
+            props.setOpenManager(true);
+        },
+        hideModal: props => () => {
+            props.setOpenManager(false);
+        }
+    })
+);
+
+export default enhance(UserTeamTable);

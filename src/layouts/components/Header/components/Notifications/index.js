@@ -23,7 +23,7 @@ const Notifications = props => {
         if (notifications.length === 0) {
             return <div className="ant-list-empty-text">No notifications</div>
         }
-        console.log(props.activeUser, 'ActiveUser');
+        // console.log(props.activeUser, 'ActiveUser');
         const canReport = false;
         return (
             <div className="infinite-container">

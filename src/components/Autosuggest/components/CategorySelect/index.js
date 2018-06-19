@@ -26,7 +26,7 @@ import CustomCascader from './components/Cascader';
           });
       }
       callback =(data)=> {
-          console.log(data);
+        //   console.log(data);
           this.setState({
               children: true,
               idChildren: data

@@ -134,7 +134,56 @@ export const asyncClinicalTrials = () => {
     );
 }
 
+export const asyncNetworkManager = () => {
 
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/NetworkManager'),
+            modules: ['../routes/Manager/containers/NetworkManager'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/NetworkManager')],
+        })
+    );
+}
+export const asyncSupervisors = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Supervisors'),
+            modules: ['../routes/Manager/containers/Supervisors'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Supervisors')],
+        })
+    );
+}
+export const asyncCareManager = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/CareManager'),
+            modules: ['../routes/Manager/containers/CareManager'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/CareManager')],
+        })
+    );
+}
+export const asyncAnalysts = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Analysts'),
+            modules: ['../routes/Manager/containers/Analysts'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Analysts')],
+        })
+    );
+}
+export const asyncSupportStaff = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/SupportStaff'),
+            modules: ['../routes/Manager/containers/SupportStaff'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/SupportStaff')],
+        })
+    );
+}
 
 
 

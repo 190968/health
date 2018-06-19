@@ -22,7 +22,7 @@ import {PlanAvatar} from "../../../../../../../../../../components/Avatars/compo
 import {getIconByFileType, formatFileName} from "../../../../../../../../../../components/FormCustomFields/components/Attachments/index";
 
 export const getTimelineElementCardTitle = (item) => {
-    console.log(item, 'item');
+    // console.log(item, 'item');
     const {activity={}} = item;
     let {type, typeText} = item;
     let elTitle = '';

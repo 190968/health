@@ -1,6 +1,6 @@
 import React from 'react'
 import PrivateRoute from '../../../routes/privateRoute';
-import {asyncWorkflow, asyncActionplans, asyncProfile, asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials} from '../../../routes/manager';
+import {asyncWorkflow, asyncActionplans, asyncProfile, asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff} from '../../../routes/manager';
 
 export const ManagerRoutes = ({store}) => {
     return (
@@ -15,6 +15,11 @@ export const ManagerRoutes = ({store}) => {
             <PrivateRoute path="/cancers" component={asyncCancers(store)}/>
             <PrivateRoute path="/chemotherapies" component={asyncChemotherapies(store)}/>
             <PrivateRoute path="/clinicaltrials" component={asyncClinicalTrials(store)}/>
+            <PrivateRoute path="/admins" component={asyncNetworkManager(store)}/>
+            <PrivateRoute path="/supervisors" component={asyncSupervisors(store)}/>
+            <PrivateRoute path="/ncm" component={asyncCareManager(store)}/>
+            <PrivateRoute path="/analysts" component={asyncAnalysts(store)}/>
+            <PrivateRoute path="/employers" component={asyncSupportStaff(store)}/>
         </React.Fragment>
     )
 }

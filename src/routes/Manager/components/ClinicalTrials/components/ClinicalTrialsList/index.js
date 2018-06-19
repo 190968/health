@@ -1,9 +1,12 @@
 import React from 'react';
-import {Input, Card,Table,  Button, Icon, Tooltip} from 'antd';
+import {Input, Card,Table, Radio, Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers, withProps} from 'recompose';
 ////import ChemotherapyManager from './containers/ChemotherapyManager';
 import sort from '../../../../../../components/Tables/sort'
 import ClinicalTrialView from '../../containers/ClinicalTrialView';
+import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 const CancerTitlePure = ({clinicalTrial, openView, openViewModal, hideViewModal}) => {
     return <React.Fragment>
@@ -74,10 +77,25 @@ const ClinicalTrialsListPure = props => {
         total: total,
         hideOnSinglePage: true/*, showSizeChanger:true*/
     };
+    const actions = <React.Fragment>
+    <RadioGroup defaultValue="all" style={{marginRight:10}} >
+        <RadioButton value="all">All</RadioButton>
+        <RadioButton value="open">Open</RadioButton>
+        <RadioButton value="past">Past</RadioButton>
+    </RadioGroup>
+</React.Fragment>;
+
     return (<React.Fragment>
-        <Card type="table" title={'Clinical Trials '+ (total > 0 ? ' ('+total+')' : '')} >
+        <PageHeaderLayout title={'Clinical Trials '+ (total > 0 ? ' ('+total+')' : '')}
+                          content="You can view and manage tumor boards here"
+                          // extraContent={<Input.Search style={{width:200}} />}
+                          action={actions}
+                          >
+
+        <Card type="table" >
             <Table dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
         </Card>
+        </PageHeaderLayout>
     </React.Fragment>);
 }
 
