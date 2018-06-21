@@ -51,6 +51,18 @@ export const asyncPlanbuilder = (store) => {
     );
 }
 
+
+export const asyncConference = (store) => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Conference/containers/View'),
+            modules: ['../routesConference/containers/View'],
+            webpack: () => [require.resolveWeak('../routes/Conference/containers/View')],
+        })
+    );
+}
+
 export const asyncPathways = (store) => {
 
     return (
