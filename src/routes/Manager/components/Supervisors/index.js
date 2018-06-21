@@ -15,48 +15,60 @@ const RadioGroup = Radio.Group;
 const Supervisors = props => {
     const {management=[], openModal,totalCount, visibleModal,hideModal,loading=false} = props;
     const {edges} = management;
+    console.log(edges);
     const columns = [{
         title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        // render: (user) => {
-        //     return <AvatarWithName user={props.management} />
-        // },
-        // sorter: (a, b) => sort(a,b,"name"),
-    },
-    {
-        title: 'Joined',
-        dataIndex: 'joinedDate',
-        key: 'joinedDate',
-        // render: (joinedDate) => {
-        //     return moment(joinedDate).format('L')
-        // },
-        // sorter: (a, b) => a.joinedDate - b.joinedDate,
+        dataIndex: 'user',
+        key: 'user',
+        render: (user) => {
+            console.log(user);
+            return <AvatarWithName user={user} />
+        },
+         sorter: (a, b) => sort(a.user,b.user,"fullName"),
     },
     {
         title: 'Phone',
-        dataIndex: 'phone',
+        dataIndex: 'user',
         key: 'phone',
-        // render: (phone) => {
-        //     return phone.number;
-        // },
+        render: (user) => {
+            return user.phone.number;
+        },
     },
-        {
-            title: 'Last Login',
-            dataIndex: 'lastLoginDate',
-            key: 'lastLoginDate',
-            // render: (lastLoginDate) => {
-            //     return lastLoginDate;
-            // },
+    {
+        title: '# of CMs',
+        dataIndex: 'getTotalCareManagers',
+        key: 'getTotalCareManagers',
+        render: (getTotalCareManagers) => {
+            return getTotalCareManagers
         },
-        {
-            title: 'Access Level',
-            dataIndex: 'accessLevel',
-            key: 'accessLevel',
-            // render: (accessLevel) => {
-            //     return accessLevel ;
-            // },
+        sorter: (a, b) => a.getTotalCareManagers - b.getTotalCareManagers,
+    },
+    {
+        title: '# of Patients',
+        dataIndex: 'getTotalPatients',
+        key: 'getTotalPatients',
+        render: (getTotalPatients) => {
+            return getTotalPatients
         },
+        sorter: (a, b) => a.getTotalPatients - b.getTotalPatients,
+    },
+    {
+        title: 'Access Level',
+        dataIndex: 'accessLevel',
+        key: 'accessLevel',
+        render: (accessLevel) => {
+            return accessLevel ;
+        },
+        
+        filters: [{
+            text: 'Limited',
+            value: 'Limited',
+        }, {
+            text: 'Full Access',
+            value: 'Full Access',
+        }],
+        onFilter: (value, record) => record.accessLevel.indexOf(value) === 0,
+    },
 
     ];
      const pageOpts = {
@@ -72,7 +84,14 @@ const Supervisors = props => {
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} size="small"><Icon type="plus"  /></Button></Tooltip>
     </React.Fragment>;
-
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+        name: record.name,
+    }),
+};
         return (
                 <PageHeaderLayout title={'Supervisors Manager'+ (totalCount > 0 ? ' ('+totalCount+')' : '')}
                 content="You can view and manage tumor boards here"
@@ -80,7 +99,7 @@ const Supervisors = props => {
                 >
 
     <Card type="basic1  ant-card-type-table">
-        <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>
     {visibleModal && <SupervisorsManager onHide={hideModal} />}
     </PageHeaderLayout>

@@ -14,7 +14,6 @@ const AnalystsManager = ({ form, formItemLayout,targetKeys,selectedKeys,handleCh
     const children = [];
     return   <Form>
     <FormItem
-        // {...formItemLayout}
         label="Enter in the email address of who you would like to invite to Fitango Demo"
     >
                 {getFieldDecorator('email', {
@@ -27,7 +26,7 @@ const AnalystsManager = ({ form, formItemLayout,targetKeys,selectedKeys,handleCh
                   </Select>
                   
                 )}
-          <label>You can send multiple invites by using a comma between each email address.</label>
+          <p>You can send several invitations by pressing Enter after each.</p>
     </FormItem>
     </Form>
 }

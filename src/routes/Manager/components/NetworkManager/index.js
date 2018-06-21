@@ -13,49 +13,58 @@ const RadioGroup = Radio.Group;
 
 
 const NetworkManager = props => {
-    const {management=[], openModal,totalCount, visibleModal,hideModal,loading=false} = props;
+    const {management=[], openModal,totalCount,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
     const {edges} = management;
     const columns = [{
         title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        // render: (user) => {
-        //     return <AvatarWithName user={props.management} />
-        // },
-        // sorter: (a, b) => sort(a,b,"name"),
+        dataIndex: 'user',
+        key: 'user',
+        render: (user) => {
+            console.log(user);
+            return <AvatarWithName user={user} />
+        },
+         sorter: (a, b) => sort(a.user,b.user,"fullName"),
     },
     {
         title: 'Joined',
         dataIndex: 'joinedDate',
         key: 'joinedDate',
-        // render: (joinedDate) => {
-        //     return moment(joinedDate).format('L')
-        // },
-        // sorter: (a, b) => a.joinedDate - b.joinedDate,
+        render: (joinedDate) => {
+            return moment(joinedDate).format('L')
+        },
+        sorter: (a, b) => a.joinedDate - b.joinedDate,
     },
     {
         title: 'Phone',
-        dataIndex: 'phone',
+        dataIndex: 'user',
         key: 'phone',
-        // render: (phone) => {
-        //     return phone.number;
-        // },
+        render: (user) => {
+            return user.phone.number;
+        },
     },
         {
             title: 'Last Login',
             dataIndex: 'lastLoginDate',
             key: 'lastLoginDate',
-            // render: (lastLoginDate) => {
-            //     return lastLoginDate;
-            // },
+            render: (lastLoginDate) => {
+                return lastLoginDate;
+            },
         },
         {
             title: 'Access Level',
             dataIndex: 'accessLevel',
             key: 'accessLevel',
-            // render: (accessLevel) => {
-            //     return accessLevel ;
-            // },
+            render: (accessLevel) => {
+                return accessLevel ;
+            },
+            filters: [{
+                text: 'Limited',
+                value: 'Limited',
+            }, {
+                text: 'Full Access',
+                value: 'Full Access',
+            }],
+            onFilter: (value, record) => record.accessLevel.indexOf(value) === 0,
         },
 
     ];
@@ -63,6 +72,15 @@ const NetworkManager = props => {
         pageSize:20,
         total: totalCount,
         hideOnSinglePage: true
+    }; 
+    const rowSelection = {
+        onChange:  record => (
+            record.length < 1 ? hideShowButton() : openShowButton(record.length)
+            
+        ),
+        getCheckboxProps: record => ({
+            name: record.name,
+        }),
     };
         const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight:10}} >
@@ -80,7 +98,8 @@ const NetworkManager = props => {
                 >
 
     <Card type="basic1  ant-card-type-table">
-        <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        {showButton && <Row><br/><Col offset={1} span={3}><p>{selectedCount} Selected</p></Col><Col offset={14}><Button type="primary" onClick={openModal}>Meeting invite</Button><Divider type="vertical" /><Button type="primary" onClick={openModal} >SMS</Button><Divider type="vertical" /><Button type="primary" onClick={openModal}>Email</Button></Col><br/></Row>}
     </Card>
     {visibleModal && <NetworkManagerr onHide={hideModal} />}
     </PageHeaderLayout>

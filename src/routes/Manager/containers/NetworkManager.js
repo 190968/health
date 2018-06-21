@@ -1,7 +1,7 @@
 import NetworkManager from '../components/NetworkManager';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {compose, branch, withHandlers, withState, withProps} from 'recompose';
+import {compose, branch, withStateHandlers, withState, withProps} from 'recompose';
 
 const GET_PROFILE  = gql`
 query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput) {
@@ -18,30 +18,33 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput)
           accessLevel
           user {
             id
-          phone{
-            code
-            number
-          }
+            firstName
+            lastName
+            fullName
+            phone{
+              code
+              number
+            }
           }
           getTotalPatients
         }
       }
     }
-  }  
+  }
+  
  `;
 
 const withQuery = graphql(GET_PROFILE, {
     options: (ownProps) => {
         return{
             variables: {
-                search:'2',
+                search:'',
                 role:'manager'
             }
         }
     },
     props: ({ data }) => {
         if (!data.loading) {
-            console.log(data);
             return {
                 management: data.management.getNetworkStaff,
                 loading: data.loading
@@ -55,9 +58,21 @@ const withQuery = graphql(GET_PROFILE, {
 
 const enhance = compose(
     withQuery,
-    withHandlers({
-
-    })
+    withStateHandlers(
+        (props) => ({
+        showButton: false,
+        selectedCount:0
+        }),
+        {
+            openShowButton: ({ counter }) => (value) => ({
+                showButton: true,
+                selectedCount:value
+            }),
+            hideShowButton: ({ counter }) => (value) => ({
+                showButton: false
+            }),
+        }
+        )
 );
 
 export default enhance(NetworkManager);

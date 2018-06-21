@@ -18,24 +18,28 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput)
           accessLevel
           user {
             id
-          phone{
-            code
-            number
-          }
+            firstName
+            lastName
+            fullName
+            phone{
+              code
+              number
+            }
           }
           getTotalPatients
+          getTotalCareManagers
         }
       }
     }
-  }  
+  }
  `;
 
 const withQuery = graphql(GET_PROFILE, {
     options: (ownProps) => {
         return{
             variables: {
-                search:'2',
-                role:'manager'
+                search:'',
+                role:'cm'
             }
         }
     },

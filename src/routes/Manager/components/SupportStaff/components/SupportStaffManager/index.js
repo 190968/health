@@ -13,10 +13,8 @@ const SupportStaffManager = ({ form, formItemLayout,targetKeys,selectedKeys,hand
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     const children = [];
     return   <Form>
-    <FormItem
-        {...formItemLayout}
-        label="Email"
-        required
+     <FormItem
+        label="Enter in the email address of who you would like to invite to Fitango Demo"
     >
                 {getFieldDecorator('email', {
                 })(
@@ -25,10 +23,10 @@ const SupportStaffManager = ({ form, formItemLayout,targetKeys,selectedKeys,hand
                     style={{ width: '100%' }}
                     tokenSeparators={[',']}
                   >
-                    {children}
                   </Select>
+                  
                 )}
-          
+          <p>You can send several invitations by pressing Enter after each.</p>
     </FormItem>
     </Form>
 }

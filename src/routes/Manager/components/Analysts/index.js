@@ -17,47 +17,30 @@ const Analysts = props => {
     const {edges} = management;
     const columns = [{
         title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        // render: (user) => {
-        //     return <AvatarWithName user={props.management} />
-        // },
-        // sorter: (a, b) => sort(a,b,"name"),
-    },
-    {
-        title: 'Joined',
-        dataIndex: 'joinedDate',
-        key: 'joinedDate',
-        // render: (joinedDate) => {
-        //     return moment(joinedDate).format('L')
-        // },
-        // sorter: (a, b) => a.joinedDate - b.joinedDate,
+        dataIndex: 'user',
+        key: 'user',
+        render: (user) => {
+            console.log(user);
+            return <AvatarWithName user={user} />
+        },
+         sorter: (a, b) => sort(a.user,b.user,"fullName"),
     },
     {
         title: 'Phone',
-        dataIndex: 'phone',
+        dataIndex: 'user',
         key: 'phone',
-        // render: (phone) => {
-        //     return phone.number;
-        // },
+        render: (user) => {
+            return user.phone.number;
+        },
     },
         {
             title: 'Last Login',
             dataIndex: 'lastLoginDate',
             key: 'lastLoginDate',
-            // render: (lastLoginDate) => {
-            //     return lastLoginDate;
-            // },
+            render: (lastLoginDate) => {
+                return lastLoginDate;
+            },
         },
-        {
-            title: 'Access Level',
-            dataIndex: 'accessLevel',
-            key: 'accessLevel',
-            // render: (accessLevel) => {
-            //     return accessLevel ;
-            // },
-        },
-
     ];
      const pageOpts = {
         pageSize:20,
@@ -72,7 +55,14 @@ const Analysts = props => {
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} size="small"><Icon type="plus"  /></Button></Tooltip>
     </React.Fragment>;
-
+const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+        name: record.name,
+    }),
+};
         return (
                 <PageHeaderLayout title={'Analysts '+ (totalCount > 0 ? ' ('+totalCount+')' : '')}
                 content="You can view and manage tumor boards here"
@@ -80,7 +70,7 @@ const Analysts = props => {
                 >
 
     <Card type="table">
-        <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>
     {visibleModal && <AnalystsManager onHide={hideModal} />}
     </PageHeaderLayout>

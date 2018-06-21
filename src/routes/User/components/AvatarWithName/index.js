@@ -17,8 +17,7 @@ export class AvatarWithName extends React.PureComponent {
     render() {
         const {user={}, size} = this.props;
         const {info=user, align, useLink} = this.props;
-
-
+console.log(this.props);
         const name = info.fullName ? info.fullName : ((info.firstName && info.firstName !== ' ') ? info.fullName : (info.email ? info.email : 'N/A'));
 
 
