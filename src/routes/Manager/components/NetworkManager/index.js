@@ -6,6 +6,7 @@ import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import NetworkManagerr from "./containers/NetworkManager";
+import InviteModal from "./containers/inviteModal";
 import sort from '../../../../components/Tables/sort';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -101,7 +102,8 @@ const NetworkManager = props => {
         <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
         {showButton && <Row><br/><Col offset={1} span={3}><p>{selectedCount} Selected</p></Col><Col offset={14}><Button type="primary" onClick={openModal}>Meeting invite</Button><Divider type="vertical" /><Button type="primary" onClick={openModal} >SMS</Button><Divider type="vertical" /><Button type="primary" onClick={openModal}>Email</Button></Col><br/></Row>}
     </Card>
-    {visibleModal && <NetworkManagerr onHide={hideModal} />}
+    {/* {visibleModal && <NetworkManagerr onHide={hideModal} />} */}
+    {visibleModal && <InviteModal onHide={hideModal} />}
     </PageHeaderLayout>
             );
     }
