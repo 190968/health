@@ -93,7 +93,7 @@ const PlanbuilderLayout = (props) => {
                 collapsible
                 breakpoint="lg"
             >
-                <div className="logo" style={{padding: 16, color:'#fff',  'fontSize': '1.2em', background: '#223240'}}>
+                <div className="logo" style={{padding: '19px 10px', color:'#51ade2',  'fontSize': '1.2em', background: '#fff'}}>
                     <center>{builderTitle}</center>
                 </div>
                 <Menu theme="dark" onSelect={this.onMenuSelect} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} mode="inline">

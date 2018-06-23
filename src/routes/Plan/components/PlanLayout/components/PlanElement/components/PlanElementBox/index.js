@@ -15,11 +15,12 @@ import AliasElement from "../../../../../Plan/components/AliasElement";
 import TextElement from "../../../../../Plan/components/TextElement";
 import ClinicalNoteElement from "../../../../../Plan/components/ClinicalNoteElement";
 import TreatmentElement from "../../../../../Plan/components/TreatmentElement";
-import DecisionElement from "../../../../../Plan/components/DecisionElement";
+import DecisionElement, {FootNoteButton} from "../../../../../Plan/components/DecisionElement";
 import ConditionElement from "../../../../../Plan/components/ConditionElement";
 import CalculatorElement from "../../../../../Plan/components/CalculatorElement";
 import {getLabelFromElement} from "../../../PlanElementBuilder/utils";
 import './index.less';
+import {FitIcon} from "../../../../../../../../components/FitIcon/index";
 
 const PlanElementBox = (props) => {
     let {currentInOrder = null, element, date, isDraggable, onDrop, isBuilderMode, isPreviewMode, planId, upid, schedule, mode, i=0, lessonId, sectionId, parentId, parentValue } = props;
@@ -34,6 +35,7 @@ const PlanElementBox = (props) => {
     let fieldTitle = '';
     let reportValues = [];
     let showTitle = true;
+    let titleExtra = false;
     //console.log(props);
     switch(itemType) {
         default: break;
@@ -91,6 +93,11 @@ const PlanElementBox = (props) => {
             reportValues = reports && reports.map((report) => (report.value));
             reportValues = reportValues && reportValues[0];
             reportValues = reportValues && reportValues[0];
+
+            const {footnote} = element;
+            if (footnote) {
+                titleExtra = <FootNoteButton footnote={footnote} />
+            }
             //fieldTitle = item.label;
             field = <DecisionElement id={id} planId={planId} item={item} mode={mode} isDraggable={isDraggable} onDrop={onDrop} isPreviewMode={isPreviewMode} isBuilderMode={isBuilderMode} showChildren={props.showChildren} hasChildren={hasChildren} reports={reportValues} onChange={props.onChange} />
             break;
@@ -225,7 +232,7 @@ const PlanElementBox = (props) => {
         {(showAdd && i===0) && <Divider className="element-actions" style={{marginTop:-10}}>
             {addBeforeEl}
         </Divider>}
-        <PlanElementCard showTitle={showTitle} element={element} isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} extra={(isBuilderMode && !isPreviewMode) ? <PlanElementActions id={id} i={i} lessonId={lessonId} sectionId={sectionId} planId={planId} type='' mode={mode} schedule={schedule} parentId={parentId} parentValue={parentValue} /> : false} >{field}</PlanElementCard>
+        <PlanElementCard showTitle={showTitle} element={element} isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} extra={(isBuilderMode && !isPreviewMode) ? <PlanElementActions id={id} i={i} lessonId={lessonId} sectionId={sectionId} planId={planId} type='' mode={mode} schedule={schedule} parentId={parentId} parentValue={parentValue} /> : titleExtra} >{field}</PlanElementCard>
         {showAdd && addAfter && <Divider className="element-actions" style={{marginBottom:-15}}>{addAfterEl}</Divider>}
     </div>);
 }
@@ -234,8 +241,9 @@ export default PlanElementBox;
 
 
 const PlanElementCard = ({children, element, showTitle, isBuilderMode, extra={}}) => {
-    const title = showTitle ? getLabelFromElement(element, {isBuilderMode:isBuilderMode}) : false;//'Add name of'
     const {footnote='', reference=''} = element;
+    const title = showTitle ? getLabelFromElement(element, {isBuilderMode:isBuilderMode, footnote}) : false;//'Add name of'
+
     const useExtra = false;//footnote !== '' && reference !== '';
     return <Card title={title} hoverable={isBuilderMode} type={element.itemType} extra={extra}>
 

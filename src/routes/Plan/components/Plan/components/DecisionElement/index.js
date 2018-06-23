@@ -1,8 +1,8 @@
 import React from 'react';
-import {Divider, Card} from 'antd';
+import {Divider, Modal, Icon} from 'antd';
 
 
-import {branch, compose} from 'recompose';
+import {withHandlers, compose} from 'recompose';
 import DecisionElementOption from './containers/DecisionElementOption';
 import './index.less';
 
@@ -25,3 +25,24 @@ const DecisionElement = (props) => {
 
 
 export default DecisionElement;
+
+
+
+export const FootNoteButtonPure = ({showInfo}) => {
+    return <React.Fragment>
+        <Icon type={'share-alt'} onClick={showInfo} />
+    </React.Fragment>;
+}
+
+const enhance = compose(
+    withHandlers({
+        showInfo: props => () => {
+            Modal.info({
+                title: 'Additional Info',
+                content: <span dangerouslySetInnerHTML={{__html: props.footnote}}></span>,
+                //onOk() {},
+            });
+        }
+    })
+);
+export const FootNoteButton = enhance(FootNoteButtonPure);

@@ -1,4 +1,5 @@
-
+import React from 'react';
+import {Icon} from 'antd';
 export const getLabelFromElement = (element={}, props={}) => {
     const {itemInfo:item={},itemType, type, typeText} = element;
     const {isBuilderMode=false} = props;
