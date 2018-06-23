@@ -5,7 +5,7 @@ import Patients from "../../../Manager/containers/Patients";
 
 const DashManagerLayout  = props => {
     return <React.Fragment>
-        <PopulationShapshot />
+        <div style={{margin:24}}><PopulationShapshot /></div>
         <div style={{marginTop:16}}><Patients limit={10} /></div>
     </React.Fragment>;
 }

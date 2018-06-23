@@ -20,7 +20,7 @@ export default class Patients extends React.Component {
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
         </RadioGroup>
-        <Tooltip title="Add New Patients"><Link to='/pb'><Button size="small"><Icon type="plus"  /></Button></Link></Tooltip>
+        <Tooltip title="Add New Patients"><Link to='/pb'><Button type={'primary'}><Icon type="plus"  /></Button></Link></Tooltip>
     </React.Fragment>;
 
         const plansTotal = this.props.total;
@@ -29,6 +29,7 @@ export default class Patients extends React.Component {
                           content="You can view and manage tumor boards here"
                           // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
+                              mainAffix
                           >
 
             <Card type="table">
