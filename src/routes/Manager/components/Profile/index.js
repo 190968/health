@@ -43,7 +43,6 @@ const Profile = props => {
    
 
         const {match, loading, user={},addCancer,hideManager,openManage,handleTabChange, fullName} = props;
-console.log(props);
 
         const {id, tab = 'dashboard', subtab = ''} = match.params;
 
@@ -92,7 +91,7 @@ console.log(props);
             },
         ];
 
-        const {genderText, age, email, birthday='', phoneFormatted, addressText, getUserNetwork={}, getAdherence={}, getInsurance={}} = user;
+        const {genderText, age, email, birthday='', phoneFormatted, addressText, getUserNetwork={}, getAdherence={}, getInsurance={}, getDiagnosis={}} = user;
         //
         const {lastLogin, joinedDate} = getUserNetwork;
 
@@ -100,6 +99,9 @@ console.log(props);
             groupNumber = '',
             payer = {}} = getInsurance;
         const {name:payerName=''} = payer;
+
+        const {code={}} = getDiagnosis;
+        const {name:DiagnosisName} = code;
 
         const descriptionDetails = [
             //['Name', user.fullName],
@@ -109,6 +111,7 @@ console.log(props);
             //['Birthday', birthday],
             ['Phone', phoneFormatted],
             //['Email', email],
+            ['Diagnosis', (DiagnosisName || null/*<span>Add Diagnosis</span>*/)],
             ['Cancer', cancerName],
             ['Stage', stageName],
             ['Last Login', lastLogin],
@@ -123,9 +126,9 @@ console.log(props);
                 content={<Row style={{padding:5}}>
                     <Col md={6}><Avatar info={user} size="huge" /></Col>
                     <Col md={18}>
-                        <DescriptionList col={3}>
+                        <DescriptionList col={3} >
                             {descriptionDetails.map((details, i) => {
-                                return  <Description term={details[0]}  >
+                                return  <Description term={details[0]} excludeEmpty >
                                     {details[1]}
                                 </Description>;
                             })}
