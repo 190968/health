@@ -7,13 +7,14 @@ import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/i
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import CareManagerr from "./containers/CareManager";
 import sort from '../../../../components/Tables/sort';
+import InviteButton from "../../../../components/Tables/InviteButton/index";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 
 
 const CareManager = props => {
-    const {management=[], openModal,totalCount, visibleModal,hideModal,loading=false} = props;
+    const {management=[], openModal,totalCount,selectedCount,showButton,openShowButton,hideShowButton ,visibleModal,hideModal,loading=false} = props;
     const {edges} = management;
     console.log(edges);
     const columns = [{
@@ -42,23 +43,7 @@ const CareManager = props => {
             return getTotalPatients
         },
         sorter: (a, b) => a.getTotalPatients - b.getTotalPatients,
-    },
-    {
-        title: 'Access Level',
-        dataIndex: 'accessLevel',
-        key: 'accessLevel',
-        render: (accessLevel) => {
-            return accessLevel ;
-        },
-        filters: [{
-            text: 'Limited',
-            value: 'Limited',
-        }, {
-            text: 'Full Access',
-            value: 'Full Access',
-        }],
-        onFilter: (value, record) => record.accessLevel.indexOf(value) === 0,
-    },
+    },  
 
     ];
      const pageOpts = {
@@ -72,12 +57,13 @@ const CareManager = props => {
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
         </RadioGroup>
-        <Tooltip title="Invite"><Button onClick={openModal} size="small"><Icon type="plus"  /></Button></Tooltip>
+        <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus" /></Button></Tooltip>
     </React.Fragment>;
-const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
+  const rowSelection = {
+    onChange:  record => (
+        record.length < 1 ? hideShowButton() : openShowButton(record.length)
+        
+    ),
     getCheckboxProps: record => ({
         name: record.name,
     }),
@@ -90,6 +76,7 @@ const rowSelection = {
 
     <Card type="basic1  ant-card-type-table">
         <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        {showButton && <InviteButton selectedCount={selectedCount} />}
     </Card>
     {visibleModal && <CareManagerr onHide={hideModal} />}
     </PageHeaderLayout>

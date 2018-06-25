@@ -1,5 +1,6 @@
+import React from 'react';
 import Family from '../components/Family';
-import {compose} from 'recompose';
+import {compose,withStateHandlers} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
@@ -51,7 +52,41 @@ const withQuery = graphql(GET_FAMILY_QUERY, {
 
 
 const enhance = compose(
-    withQuery
+    withQuery,
+    withStateHandlers(
+        (props) => (
+            {
+            searchText: '',
+        }),
+        {        
+            onSearch: ({searchText},props) =>(value) => (
+                {
+                    searchText: value.target.value,
+                    members: props.members.map((record) => {
+                        console.log(record);
+                        const match = record.user.fullName.match(new RegExp(searchText, 'gi'));
+                        if (!match) {
+                            return null;
+                        }                        
+                        return {
+                            ...record,
+                            fullName: (
+                                <span>
+                      {record.user.fullName.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                      ))}
+                    </span>
+                            ),
+                        };
+                    }).filter(record => !!record),
+            }),
+            emitEmpty: ({searchText}) =>(value) => (
+                {
+                    searchText: ''
+                     })
+            })        
+
 );
+
 
 export default enhance(Family);

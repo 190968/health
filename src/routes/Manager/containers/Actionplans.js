@@ -1,4 +1,6 @@
 import Actionplans from '../components/Actionplans';
+import React from 'react';
+import {compose,withStateHandlers} from 'recompose';
 import {PlanCardFragment} from '../../Plan/components/Plan/fragments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -83,5 +85,39 @@ console.log(data.planstore.plans);
         },
     }
 );
+const enhance = compose(
+    withQuery,
+    withStateHandlers(
+        (props) => (
+            {
+            searchText: '',
+        }),
+        {        
+            onSearch: ({searchText},props) =>(value) => (
+                {
+                    searchText: value.target.value,
+                    plans: props.plans.map((record) => {
+                        const match = record.title.match(new RegExp(searchText, 'gi'));
+                        if (!match) {
+                            return null;
+                        }                        
+                        return {
+                            ...record,
+                            title: (
+                                <span>
+                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                      ))}
+                    </span>
+                            ),
+                        };
+                    }).filter(record => !!record),
+            }),
+            emitEmpty: ({searchText}) =>(value) => (
+                {
+                    searchText: ''
+                     })
+            })        
 
-export default withQuery(Actionplans);
+);
+export default enhance(Actionplans);

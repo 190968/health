@@ -1,10 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
-import {Input,Menu,Dropdown, DatePicker,Table,  Button, Icon, Tooltip} from 'antd';
+import {Input, Menu, Dropdown, DatePicker, Table, Button, Icon, Tooltip} from 'antd';
 import sort from '../../../../../../components/Tables/sort'
 import './index.css'
-const {  RangePicker } = DatePicker;
+
+const {RangePicker} = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 
 
@@ -21,33 +22,8 @@ export default class TableCustom extends React.Component {
     };
 
     static defaultProps = {
-        plans:[],
-        plansTotal:0
-    }
-    onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
-
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.plans.map((record) => {
-                const match = record.title.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    title: (
-                        <span>
-              {record.title.split(reg).map((text, i) => (
-                  i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
+        plans: [],
+        plansTotal: 0
     }
 
     handleChange = (pagination, filters, sorter) => {
@@ -58,55 +34,36 @@ export default class TableCustom extends React.Component {
         });
     }
     onInputChange = (e) => {
-        this.setState({ searchText: e.target.value });
+        this.setState({searchText: e.target.value});
     }
-     onChange=(date, dateString)=> {
 
-         this.setState({
-             data: this.props.plans.map((record) => {
-                 console.log(record,dateString)
-                 return {
-                     ...record,
-                     date:(
-                         (record.date > dateString[0] && record.date < dateString[1])? record.date : null
-
-                     ),
-                 };
-             }).filter((data)=>{return data.date != null}),
-         });
-    }
     render() {
         const {loading} = this.props;
-        let { sortedInfo } = this.state;
+        let {sortedInfo} = this.state;
+        const suffix = this.props.searchText ? <Icon type="close-circle" onClick={this.props.emitEmpty}/> : null
+        console.log(this.props.plans);
         const columns = [{
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
             //sorter: (a, b) => a.title.length - b.title.length,
             render: (title, info) => {
-                return <Link to={'/pb/'+info.id}>{title}</Link>
+                return <Link to={'/pb/' + info.id}>{title}</Link>
             },
-            sorter:(a, b) => sort(a,b,"title"),
-            // search
+            sorter: (a, b) => sort(a, b, "title"),
             filterDropdown: (
                 <div className="custom-filter-dropdown">
                     <Input
+                        suffix={suffix}
                         ref={ele => this.searchInput = ele}
                         placeholder="Search name"
-                        value={this.state.searchText}
-                        onChange={this.onInputChange}
-                        onPressEnter={this.onSearch}
+                        value={this.props.searchText}
+                        onChange={this.props.onSearch}
+                        onPressEnter={this.props.onSearch}
                     />
-                    <Button type="primary" onClick={this.onSearch}>Search</Button>
                 </div>
             ),
-            filterIcon: <Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />,
-            filterDropdownVisible: this.state.filterDropdownVisible,
-            onFilterDropdownVisibleChange: (visible) => {
-                this.setState({
-                    filterDropdownVisible: visible,
-                }, () => this.searchInput && this.searchInput.focus());
-            },
+            filterIcon: <Icon type="search"/>,
         }, {
             title: 'Status',
             dataIndex: 'status',
@@ -118,7 +75,9 @@ export default class TableCustom extends React.Component {
                 {text: 'Active', value: true},
                 {text: 'Inactive', value: false},
             ],
-            onFilter: (value, record) => { console.log(value, record)},
+            onFilter: (value, record) => {
+                console.log(value, record)
+            },
         }, {
             title: 'Date',
             dataIndex: 'createdAt',
@@ -126,7 +85,7 @@ export default class TableCustom extends React.Component {
             render: (info) => moment(info).format('L'),
             sorter: (a, b) => a.createdAt - b.createdAt,
             filterDropdown: (
-                <div  className="custom-filter-dropdown">
+                <div className="custom-filter-dropdown">
                     <RangePicker
                         onChange={this.onChange}
                         defaultValue={[moment(new Date(), dateFormat), moment(new Date(), dateFormat)]}
@@ -134,34 +93,34 @@ export default class TableCustom extends React.Component {
                     />
                 </div>
             ),
-            filterIcon: <Icon type="filter" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />,
-        },{
+            filterIcon: <Icon type="filter" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
+        }, {
             title: 'Actions',
 
             render: (info) => {
                 const menu = (
                     <Menu>
-                        <Menu.Item >
-                            <Icon  type="edit"/> Edit
+                        <Menu.Item>
+                            <Icon type="edit"/> Edit
                         </Menu.Item>
-                        <Menu.Item >
-                            <Icon  type="delete"/> Delete
+                        <Menu.Item>
+                            <Icon type="delete"/> Delete
                         </Menu.Item>
                     </Menu>
                 );
-                return <Dropdown  overlay={menu} trigger={['click']}>
-                    <Icon type="setting" />
+                return <Dropdown overlay={menu} trigger={['click']}>
+                    <Icon type="setting"/>
                 </Dropdown>;
             }
         },];
 
-        const dataSource = this.state.data;
+        const dataSource = this.props.plans;
 
         return (
-                <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange}
-                       ref={(input) => {
-                           this.table = input;
-                       }}/>
+            <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange}
+                   ref={(input) => {
+                       this.table = input;
+                   }}/>
         )
     }
 }

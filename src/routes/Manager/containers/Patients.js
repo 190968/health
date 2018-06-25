@@ -3,20 +3,28 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const GET_PATIENTS_QUERY = gql`    
-  query GET_PATIENTS {
-  management {
-    getPatients {
-      edges {
-        id
-        fullName
-        gender
-        age
-        memberId
+query GET_PATIENTS {
+    management {
+      getPatients {
+        edges {
+          id
+          fullName
+          gender
+          age
+          memberId
+          getDiagnosis {
+            id
+            code {
+              id
+              name
+            }
+          }
+        }
+        totalCount
       }
-      totalCount
     }
   }
-}
+  
 
 `;
 

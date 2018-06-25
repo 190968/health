@@ -1,4 +1,6 @@
 import Pathways from '../components/Pathways';
+import React from 'react';
+import {compose,withStateHandlers} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -91,5 +93,40 @@ const withQuery = graphql(
         },
     }
 );
+const enhance = compose(
+    withQuery,
+    withStateHandlers(
+        (props) => (
+            {
+            searchText: '',
+        }),
+        {        
+            onSearch: ({searchText},props) =>(value) => (
+                {
+                    searchText: value.target.value,
+                    pathways: props.pathways.map((record) => {
+                        const match = record.title.match(new RegExp(searchText, 'gi'));
+                        if (!match) {
+                            return null;
+                        }                        
+                        return {
+                            ...record,
+                            title: (
+                                <span>
+                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                      ))}
+                    </span>
+                            ),
+                        };
+                    }).filter(record => !!record),
+            }),
+            emitEmpty: ({searchText}) =>(value) => (
+                {
+                    searchText: ''
+                     })
+            })        
 
-export default withQuery(Pathways);
+);
+
+export default enhance(Pathways);

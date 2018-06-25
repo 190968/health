@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import {Table,Input,  Button, Icon, Tooltip, Radio} from 'antd';
+import {Table, Input, Button, Icon, Tooltip, Radio} from 'antd';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
+
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -22,7 +23,7 @@ export default class Actionplans extends React.Component {
 
     render() {
 
-        let { sortedInfo } = this.state;
+        let {sortedInfo} = this.state;
         const columns = [{
             title: 'Title',
             dataIndex: 'title',
@@ -53,7 +54,7 @@ export default class Actionplans extends React.Component {
             title: 'Downloads',
             dataIndex: 'downloads',
             key: 'downloads',
-        },{
+        }, {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
@@ -62,27 +63,27 @@ export default class Actionplans extends React.Component {
         const dataSource = [];
         const total = 0;
         const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight:10}} >
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
-        </RadioGroup>
-                    <Tooltip title="Add New ActionPlan"><Button><Icon type="plus" /></Button></Tooltip>
-            
-    </React.Fragment>;
+            <RadioGroup defaultValue="all" style={{marginRight: 10}}>
+                <RadioButton value="all">All</RadioButton>
+                <RadioButton value="open">Open</RadioButton>
+                <RadioButton value="past">Past</RadioButton>
+            </RadioGroup>
+            <Tooltip title="Add New ActionPlan"><Button type="primary"><Icon type="plus"/></Button></Tooltip>
+
+        </React.Fragment>;
         return (
             <React.Fragment>
-                   <PageHeaderLayout title={'Workflow Boards '+ (total > 0 ? ' ('+total+')' : '')}
-                          content="You can view and manage tumor boards here"
-                          // extraContent={<Input.Search style={{width:200}} />}
-                          action={actions}
-                          >
-               
-                <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange}
-                       ref={(input) => {
-                           this.table = input;
-                       }}/>
-                       </PageHeaderLayout>
+                <PageHeaderLayout title={'Workflow Boards ' + (total > 0 ? ' (' + total + ')' : '')}
+                                  content="You can view and manage tumor boards here"
+                    // extraContent={<Input.Search style={{width:200}} />}
+                                  action={actions}
+                >
+
+                    <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange}
+                           ref={(input) => {
+                               this.table = input;
+                           }}/>
+                </PageHeaderLayout>
             </React.Fragment>);
     }
 }

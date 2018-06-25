@@ -7,12 +7,13 @@ const dateFormat = 'YYYY/MM/DD';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-const InviteFormModal = ({ form, formItemLayout,targetKeys,selectedKeys,handleChange,handleSelectChange}) => {
+const InviteMeeting = ({ form, formItemLayout,targetKeys,selectedKeys,handleChange,handleSelectChange}) => {
   
 
      const {getFieldDecorator} = form;
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     const children = [];
+    console.log("InviteFormModal");
     return   <Form>
      
     <FormItem
@@ -135,4 +136,4 @@ const InviteFormModal = ({ form, formItemLayout,targetKeys,selectedKeys,handleCh
     </Form>
 }
 
-export default InviteFormModal;
+export default InviteMeeting;

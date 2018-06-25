@@ -1,7 +1,7 @@
 import AnalystsManager from '../components/Analysts';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {compose, branch, withHandlers, withState, withProps} from 'recompose';
+import {compose, branch, withHandlers, withStateHandlers,withState, withProps} from 'recompose';
 
 const GET_PROFILE = gql`
 query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput) {
@@ -58,9 +58,21 @@ const withQuery = graphql(GET_PROFILE, {
 
 const enhance = compose(
     withQuery,
-    withHandlers({
-
-    })
+    withStateHandlers(
+        (props) => ({
+        showButton: false,
+        selectedCount:0
+        }),
+        {
+            openShowButton: ({ counter }) => (value) => ({
+                showButton: true,
+                selectedCount:value
+            }),
+            hideShowButton: ({ counter }) => (value) => ({
+                showButton: false
+            }),
+        }
+        )
 );
 
 export default enhance(AnalystsManager);

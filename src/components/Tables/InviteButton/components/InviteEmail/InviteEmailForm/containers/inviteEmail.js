@@ -1,10 +1,11 @@
-import InviteFormModal from '../components/InviteModal/index';
+
+import InviteEmail from '../components/index';
 import { graphql } from 'react-apollo';
 import React from 'react';
 import {compose,withStateHandlers, branch, withHandlers, withState, withProps} from 'recompose';
 import {Form} from 'antd';
 import gql from 'graphql-tag';
-import {withModal} from "../../../../../components/Modal/index";
+import {withModal} from "../../../../../../Modal/index";
 const GET_PROFILE  = gql`
 query GET_USER_TEAM($user_id:UID) {
     patient(id: $user_id) {
@@ -27,7 +28,8 @@ query GET_USER_TEAM($user_id:UID) {
   }
 `;
 
-const withQuery = graphql(GET_PROFILE, {
+
+const withQueryEmail = graphql(GET_PROFILE, {
     options: ({patient}) => {
         return {
             variables: {
@@ -41,8 +43,8 @@ const withQuery = graphql(GET_PROFILE, {
     },
 });
 
-const enhance = compose(
-    withQuery,
+const  enhance = compose(
+    withQueryEmail,
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
@@ -61,9 +63,8 @@ const enhance = compose(
         },       
     }),
     withProps(props => {
-        return {modalTitle: 'Create a meeting'}
+        return {modalTitle: 'Invite to Email'}
     }),
     withModal
 );
-
-export default enhance(InviteFormModal);
+export default enhance(InviteEmail);

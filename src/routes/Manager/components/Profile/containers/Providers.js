@@ -50,18 +50,35 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
 const enhance = compose(
     withQuery,
     withStateHandlers(
+        (props) => (
+            {
+            searchText: '',
+        }),
         {        
-            // onSearch: onSearch
-        //     onChange: ({searchText}) =>(date, dateString)=> ({
-        //         providers: fakeData.map((record) => {
-        //                 return {
-        //                     ...record,
-        //                     joinedDate:(
-        //                         (record.joinedDate > dateString[0] && record.joinedDate < dateString[1])? record.date : null
-        //                     ),
-        //                 };
-        //             }).filter((data)=>{return data.date != null}),
-        //    })
+            onSearch: ({searchText},props) =>(value) => (
+                {
+                    searchText: value.target.value,
+                    providers: props.providers.map((record) => {
+                        const match = record.provider.name.match(new RegExp(searchText, 'gi'));
+                        if (!match) {
+                            return null;
+                        }                        
+                        return {
+                            ...record,
+                            name: (
+                                <span>
+                      {record.provider.name.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                      ))}
+                    </span>
+                            ),
+                        };
+                    }).filter(record => !!record),
+            }),
+            emitEmpty: ({searchText}) =>(value) => (
+                {
+                    searchText: ''
+                     })
             })        
 
 );
