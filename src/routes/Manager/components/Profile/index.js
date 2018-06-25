@@ -37,32 +37,12 @@ const enhanceTitle = compose(
 );
 
 const CancerTitle = enhanceTitle(CancerTitlePure);
-
-const Profile = props => {
-
-   
-
-        const {match, loading, user={},addCancer,hideManager,openManage,handleTabChange, fullName} = props;
-
-        const {id, tab = 'dashboard', subtab = ''} = match.params;
-
-        const selectedItem = subtab || tab;
-        const openItem = tab;
-
-        let mainUrl = '/u';
-        if (id !== '') {
-            mainUrl += '/'+id;
-        }
-        let cancerName = 'Small Cell Lung Cancer';
-        let stageName = 'T1 N2 M0 Stage 1';
-
-        const menu = (
+ const menu = (
             <Menu>
                 <Menu.Item key="1">Suspend</Menu.Item>
                 <Menu.Item key="2">Delete</Menu.Item>
             </Menu>
         );
-
         const tabList = [
             {
                 key: 'dashboard',
@@ -90,6 +70,27 @@ const Profile = props => {
                 tab: 'Stakeholders',
             },
         ];
+const Profile = props => {
+
+   
+
+        const {match, loading, user={},addCancer,hideManager,openManage,handleTabChange, fullName} = props;
+
+        const {id, tab = 'dashboard', subtab = ''} = match.params;
+
+        const selectedItem = subtab || tab;
+        const openItem = tab;
+
+        let mainUrl = '/u';
+        if (id !== '') {
+            mainUrl += '/'+id;
+        }
+        let cancerName = 'Small Cell Lung Cancer';
+        let stageName = 'T1 N2 M0 Stage 1';
+
+       
+
+        
 
         const {genderText, age, email, birthday='', phoneFormatted, addressText, getUserNetwork={}, getAdherence={}, getInsurance={}, getDiagnosis={}} = user;
         //

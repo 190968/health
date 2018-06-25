@@ -6,7 +6,16 @@ import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/i
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+const actions = <React.Fragment>
+<RadioGroup defaultValue="all" style={{marginRight: 10}}>
+    <RadioButton value="all">All</RadioButton>
+    <RadioButton value="open">Open</RadioButton>
+    <RadioButton value="past">Past</RadioButton>
+</RadioGroup>
+<Tooltip title="Add New Pathway"><Link to='/pb/type/pathway'><Button type="primary"><Icon
+    type="plus"/></Button></Link></Tooltip>
 
+</React.Fragment>;
 export default class Pathways extends React.Component {
 
     render() {
@@ -15,17 +24,7 @@ export default class Pathways extends React.Component {
             return <div>Loading...</div>
         }
         const {pathways, total, searchText, emitEmpty, onSearch} = this.props;
-        console.log(pathways);
-        const actions = <React.Fragment>
-            <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-                <RadioButton value="all">All</RadioButton>
-                <RadioButton value="open">Open</RadioButton>
-                <RadioButton value="past">Past</RadioButton>
-            </RadioGroup>
-            <Tooltip title="Add New Pathway"><Link to='/pb/type/pathway'><Button type="primary"><Icon
-                type="plus"/></Button></Link></Tooltip>
-
-        </React.Fragment>;
+     
 
         return (
             <PageHeaderLayout title={'Pathways ' + (total > 0 ? ' (' + total + ')' : '')}

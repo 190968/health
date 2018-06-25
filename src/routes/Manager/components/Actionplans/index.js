@@ -7,7 +7,15 @@ import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/i
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-
+    const actions = <React.Fragment>
+            <RadioGroup defaultValue="all" style={{marginRight: 10}}>
+                <RadioButton value="all">All</RadioButton>
+                <RadioButton value="open">Open</RadioButton>
+                <RadioButton value="past">Past</RadioButton>
+            </RadioGroup>
+            <Tooltip title="Add New ActionPlan"><Link to='/pb'><Button type="primary"><Icon
+                type="plus"/></Button></Link></Tooltip>
+        </React.Fragment>;
 
 export default class ActionPlans extends React.Component {
 
@@ -20,26 +28,16 @@ export default class ActionPlans extends React.Component {
 
         const plansTotal = this.props.plansTotal;
         const {searchText, emitEmpty, onSearch} = this.props;
-        const actions = <React.Fragment>
-            <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-                <RadioButton value="all">All</RadioButton>
-                <RadioButton value="open">Open</RadioButton>
-                <RadioButton value="past">Past</RadioButton>
-            </RadioGroup>
-            <Tooltip title="Add New ActionPlan"><Link to='/pb'><Button type="primary"><Icon
-                type="plus"/></Button></Link></Tooltip>
-        </React.Fragment>;
+    
 
         return (
             <PageHeaderLayout title={'ActionPlans Boards ' + (plansTotal > 0 ? ' (' + plansTotal + ')' : '')}
                               content=""
                               action={actions}
             >
-
                 <Card type="table">
                     <TableCustom plans={this.props.plans} searchText={searchText} emitEmpty={emitEmpty}
                                  onSearch={onSearch}/>
-
                 </Card>
             </PageHeaderLayout>);
     }

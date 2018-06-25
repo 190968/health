@@ -11,8 +11,6 @@ import InviteButton from "../../../../components/Tables/InviteButton/index";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-
-
 const Analysts = props => {
     const {management=[], openModal,totalCount,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
     const {edges} = management;
@@ -48,6 +46,15 @@ const Analysts = props => {
         total: totalCount,
         hideOnSinglePage: true
     };
+    const rowSelection = {
+        onChange:  record => (
+            record.length < 1 ? hideShowButton() : openShowButton(record.length)
+            
+        ),
+        getCheckboxProps: record => ({
+            name: record.name,
+        }),
+    };
         const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight:10}} >
             <RadioButton value="all">All</RadioButton>
@@ -56,15 +63,7 @@ const Analysts = props => {
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus" /></Button></Tooltip>
     </React.Fragment>;
-  const rowSelection = {
-    onChange:  record => (
-        record.length < 1 ? hideShowButton() : openShowButton(record.length)
-        
-    ),
-    getCheckboxProps: record => ({
-        name: record.name,
-    }),
-};
+ 
         return (
                 <PageHeaderLayout title={'Analysts '+ (totalCount > 0 ? ' ('+totalCount+')' : '')}
                 content="You can view and manage tumor boards here"
