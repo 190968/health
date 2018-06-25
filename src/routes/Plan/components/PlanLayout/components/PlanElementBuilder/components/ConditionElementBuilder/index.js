@@ -4,7 +4,7 @@ import { compose, withHandlers, withState, lifecycle} from 'recompose';
 import {injectIntl} from 'react-intl';
 import messages from './messages';
 import {Options} from "../../../../../../../../components/FormCustomFields/components/Options/index";
-
+import AdditionalInfo from './containers/AdditionalInfo';
 
 const FormItem = Form.Item;
 
@@ -21,7 +21,7 @@ const formTailLayout = {
 
 export const prepareInput = (values) => {
     console.log(values);
-    const {title, schedule, keys=[], ids=[]} = values;
+    const {title, schedule, keys=[], ids=[], footnote} = values;
     let {options=[]} = values;
     options = keys.map(i => {
         const id =  ids[i] || '';// ? timesPerHour[i]['id'] : '';
@@ -34,7 +34,8 @@ export const prepareInput = (values) => {
         schedule:schedule,
         decisionElement: {
             title,
-            options
+            options,
+            footnote
         }
     }
 }
@@ -42,10 +43,9 @@ export const prepareInput = (values) => {
 
 
 const ConditionElementBuilder = (props) => {
-    //console.log(props);
     const {form, intl, element={}, keys} = props;
     const {getFieldDecorator} = form;
-    const {itemInfo={}} = element;
+    const {itemInfo={}, footnote=''} = element;
     const {label:title, options = [blankOption, blankOption] } = itemInfo;
 
     return (
@@ -65,6 +65,8 @@ const ConditionElementBuilder = (props) => {
             </FormItem>
 
             <Options form={form} options={options} minLines={2} />
+
+            <AdditionalInfo form={form} formItemLayout={formItemLayout} footnote={footnote} />
 
         </React.Fragment>
     );

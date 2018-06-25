@@ -1,9 +1,9 @@
 import React from 'react';
 import {injectIntl} from 'react-intl';
 import {Form, Input} from 'antd';
-import Wysiwyg from '../../../../../../../../components/FormCustomFields/wysiwyg';
+import {Wyisiwyg} from "../../../../../../../../components/FormCustomFields/components/Wysiwyg/index";
 import messages from './messages';
-
+import {Wysiwyg} from "../../../../../../../../components/FormCustomFields/components/Wysiwyg/index";
 
 
 const FormItem = Form.Item;

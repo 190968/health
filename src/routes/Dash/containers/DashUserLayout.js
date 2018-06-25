@@ -98,7 +98,8 @@ const DashLayoutWithQuery = graphql(
 const mapStateToProps = (state) => {
     return {
         date: moment().format('YYYY-MM-DD'),
-        user_id: state.user.info.id
+        user_id: state.user.info.id,
+        user: state.user
     };
 };
 

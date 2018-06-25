@@ -51,6 +51,13 @@ const GET_PROFILE  = gql`
             name
         }
      }
+     getDiagnosis {
+      id
+      code {
+        id
+        name
+      }
+    }
     
   }
 }

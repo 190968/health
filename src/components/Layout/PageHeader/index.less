@@ -44,7 +44,7 @@
 
     :global {
       .ant-tabs-bar {
-        border-bottom: @border-width-base @border-style-base @border-color-split;
+        border-bottom: none;
       }
     }
 
@@ -52,9 +52,14 @@
       background: #fff;
       margin:0 -32px;
       padding: 0 24px;
+      box-shadow: rgba(0, 21, 41, 0.08) 0px 1px 4px;
+      border-bottom: 1px solid #e8e8e8;
 
       .ant-tabs-bar {
         margin-bottom: 0;
+      }
+      .ant-tabs-ink-bar {
+        height:3px;
       }
     }
   }
@@ -125,6 +130,14 @@
   }
 }
 
+.ant-card-body {
+  .pageHeader {
+    padding: 0;
+  }
+  .pageContent {
+    margin:0;
+  }
+}
 @media screen and (max-width: @screen-xl) {
   .pageHeader {
     .extraContent {
