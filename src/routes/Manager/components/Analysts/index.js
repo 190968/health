@@ -66,7 +66,7 @@ const Analysts = props => {
  
         return (
                 <PageHeaderLayout title={'Analysts '+ (totalCount > 0 ? ' ('+totalCount+')' : '')}
-                content="You can view and manage tumor boards here"
+                content=""
                 action={actions}
                 >
 

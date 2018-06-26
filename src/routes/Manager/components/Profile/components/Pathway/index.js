@@ -74,7 +74,7 @@ export default class Pathway extends React.Component {
             <DragDropContextProvider backend={HTML5Backend}>
                 <Row>
                     <Col span={span} style={{marginRight: '-1px'}}>
-                        <Timeline userId={user.id} droppable togglePathway={this.togglePathway}
+                        <Timeline userId={user.id} user={user} droppable togglePathway={this.togglePathway}
                                   showPathway={showPathway} showElement={this.toggleElementView}
                                   activeElement={activeElement}/>
                     </Col>

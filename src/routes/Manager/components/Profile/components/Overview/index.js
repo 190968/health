@@ -6,7 +6,6 @@ import Assessments from '../../containers/Assessments';
 import Programs from '../../containers/Programs';
 import Tasks from '../../containers/Tasks';
 const Overview = props => {
-    console.log(props);
     const {user={}} = props;
     const {id:userId} = user;
     return <React.Fragment>

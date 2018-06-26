@@ -108,10 +108,10 @@ export default class Stages extends React.Component {
         <Tooltip title="Add New Cancer"><Button size="small" onClick={this.addStage}><Icon type="plus"  /></Button></Tooltip>
     </React.Fragment>;
 
-      
+
         return (
-            <PageHeaderLayout title={'Cancer Boards '+ (total > 0 ? ' ('+total+')' : '')}
-                          content="You can view and manage tumor boards here"
+            <PageHeaderLayout title={'Cancer '+ (total > 0 ? ' ('+total+')' : '')}
+                          content=""
                           // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
                           >

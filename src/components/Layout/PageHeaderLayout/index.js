@@ -6,7 +6,7 @@ import {PageHeader} from "../PageHeader/index";
 
 export const PageHeaderLayoutPure = ({ children, wrapperClassName, top, onChange, mainAffix=false, ...restProps }) => {
     let header = false;
-    if (mainAffix) {
+    if (1===1 || mainAffix) {
         header = <Affix onChange={onChange} offsetTop={0}>
             <PageHeader key="pageheader" {...restProps} />
         </Affix>

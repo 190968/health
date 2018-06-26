@@ -73,8 +73,8 @@ export default class Actionplans extends React.Component {
         </React.Fragment>;
         return (
             <React.Fragment>
-                <PageHeaderLayout title={'Workflow Boards ' + (total > 0 ? ' (' + total + ')' : '')}
-                                  content="You can view and manage tumor boards here"
+                <PageHeaderLayout title={'Workflow ' + (total > 0 ? ' (' + total + ')' : '')}
+                                  content=""
                                   action={actions}
                 >
 

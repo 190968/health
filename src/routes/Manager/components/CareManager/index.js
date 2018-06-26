@@ -70,7 +70,7 @@ const CareManager = props => {
 };
         return (
                 <PageHeaderLayout title={'Care Managers '+ (totalCount > 0 ? ' ('+totalCount+')' : '')}
-                content="You can view and manage tumor boards here"
+                content=""
                 action={actions}
                 >
 

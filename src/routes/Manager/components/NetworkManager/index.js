@@ -94,7 +94,7 @@ const NetworkManager = props => {
 
     return (
         <PageHeaderLayout title={'Network Managers ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
-                          content="You can view and manage tumor boards here"
+                          content=""
                           action={actions}
         >
 

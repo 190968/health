@@ -16,7 +16,9 @@ export const PageHeader = props => {
                      tabList={tabList}
                      onTabChange={onTabChange}
                      bodyStyle={{padding:0}}
-        ></Card>
+                     activeTabKey={activeTab}
+        >
+        </Card>
     }
     return <div className="pageHeader">
         <Row>

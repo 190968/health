@@ -77,7 +77,7 @@ const SupportStaff = props => {
     };
     return (
         <PageHeaderLayout title={'Support Staff ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
-                          content="You can view and manage tumor boards here"
+                          content=""
                           action={actions}
         >
 

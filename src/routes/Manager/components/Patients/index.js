@@ -26,7 +26,7 @@ export default class Patients extends React.Component {
         const plansTotal = this.props.total;
         return (
             <PageHeaderLayout title={'Patients'+ (plansTotal > 0 ? ' ('+plansTotal+')' : '')}
-                          content="You can view and manage tumor boards here"
+                          content=""
                           // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
                               mainAffix

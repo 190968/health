@@ -28,10 +28,10 @@ export default class ActionPlans extends React.Component {
 
         const plansTotal = this.props.plansTotal;
         const {searchText, emitEmpty, onSearch} = this.props;
-    
+
 
         return (
-            <PageHeaderLayout title={'ActionPlans Boards ' + (plansTotal > 0 ? ' (' + plansTotal + ')' : '')}
+            <PageHeaderLayout title={'ActionPlans ' + (plansTotal > 0 ? ' (' + plansTotal + ')' : '')}
                               content=""
                               action={actions}
             >

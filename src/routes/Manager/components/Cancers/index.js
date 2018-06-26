@@ -74,7 +74,7 @@ const CancersPure = props => {
 
     return (<React.Fragment>
         <PageHeaderLayout title={'Cancers'+ (total > 0 ? ' ('+total+')' : '')}
-                          content="You can view and manage tumor boards here"
+                          content=""
                           // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
                           >
