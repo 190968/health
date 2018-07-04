@@ -8,3 +8,5 @@ coverage
 .idea/
 .yarn-cache
 
+src/routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementFormFields/components/TreatmentElementFormFields/components/TreatmentBlockManage/components/TreatmentBlockOptionManager/containers/TreatmentBlockOptionElementEditor.js
+src/routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementFormFields/components/TreatmentElementFormFields/components/TreatmentBlockManage/components/TreatmentBlockOptionManager/containers/TreatmentBlockOptionDecisiontEditor.js

@@ -163,9 +163,10 @@ export default class TableCustom extends React.Component {
                 title: 'Dignosis',
                 dataIndex: 'getDiagnosis',
                 key: 'getDiagnosis',
+                width:200,
                 render: (getDiagnosis) => {
                     if (getDiagnosis) {
-                        return <Truncate lines={2}>{getDiagnosis.code.name.slice(0, 90)}</Truncate>
+                        return <Truncate lines={1}>{getDiagnosis.code.name}</Truncate>
                     }
                 },
             }, {
