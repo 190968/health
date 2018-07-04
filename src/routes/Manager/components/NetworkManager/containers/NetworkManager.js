@@ -46,7 +46,7 @@ const withQuery = graphql(GET_PROFILE, {
 });
 
 const enhance = compose(
-    withQuery,
+    //withQuery,
     Form.create(),
     withHandlers({
         onSubmit: props => () => {

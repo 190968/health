@@ -47,6 +47,7 @@ const withQuery = graphql(GET_PROFILE, {
         if (!data.loading) {
             return {
                 management: data.management.getNetworkStaff,
+                totalCount: data.management.totalCount,
                 loading: data.loading
             }
         }
