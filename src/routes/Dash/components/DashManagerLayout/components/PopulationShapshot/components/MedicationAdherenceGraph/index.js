@@ -12,7 +12,7 @@ const formatAxis =  (tickItem) => {
 export const RiskLevelGraph = props => {
     const {items=[], handleClick} = props
     return <ResponsiveContainer height={300}  >
-        <AreaChart   data={items} >
+        <AreaChart   data={items}  >
 
         <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -21,8 +21,8 @@ export const RiskLevelGraph = props => {
             </linearGradient>
         </defs>
 
-            <XAxis width={40} dataKey="date" tickFormatter={formatAxis} tickCount={1} minTickGap={50} />
-            <YAxis domain={[0, 100]}/>
+            <XAxis dataKey="date" tickFormatter={formatAxis} tickCount={1} minTickGap={50} />
+            <YAxis width={30} domain={[0, 100]}/>
             <Tooltip/>
             <Area type='monotone' dataKey='value' stroke='#48a5dc' fill="url(#colorUv)" strokeWidth={1} name="Adhrence" onClick={handleClick}  />
         </AreaChart>

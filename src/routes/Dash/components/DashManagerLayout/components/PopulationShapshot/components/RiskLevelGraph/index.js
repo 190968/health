@@ -37,7 +37,7 @@ export const RiskLevelGraph = props => {
             data={items}
             dataKey='value'
             // labelLine={false}
-            outerRadius={80}
+            outerRadius={100}
             fill="#8884d8"
             label={renderCustomizedLabel}
             onClick={handleClick}

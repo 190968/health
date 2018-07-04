@@ -10,7 +10,7 @@ export const RiskLevelGraph = props => {
     return <ResponsiveContainer height={300}  >
         <BarChart  data={items} >
         <XAxis dataKey="name"/>
-        <YAxis domain={[0, 100]}/>
+        <YAxis width={30} domain={[0, 100]}/>
         <Tooltip/>
             <Bar dataKey="value" fill="#8884d8" label name="Engagement" unit="%"  onClick={handleClick}>
                 {

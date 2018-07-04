@@ -5,6 +5,8 @@ import {compose, withStateHandlers, branch, withHandlers, withState, withProps} 
 import {Form} from 'antd';
 import gql from 'graphql-tag';
 import {withModal} from "../../../../../components/Modal/index";
+import { UserInfoFragment } from '../../../../User/fragments';
+
 
 const GET_PROFILE = gql`
 query GET_USER_TEAM($user_id:UID) {
@@ -26,6 +28,7 @@ query GET_USER_TEAM($user_id:UID) {
        }
     }
   }
+  ${UserInfoFragment}
 `;
 
 const withQuery = graphql(GET_PROFILE, {

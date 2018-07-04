@@ -9,7 +9,7 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
     const {getFieldDecorator} = form;
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     const children = [];
-    return <Form>
+    return <Form layout='vertical'>
         <FormItem
             label="Enter in the email address of who you would like to invite to Fitango Demo"
             extra="You can send several invitations by pressing Enter after each."
