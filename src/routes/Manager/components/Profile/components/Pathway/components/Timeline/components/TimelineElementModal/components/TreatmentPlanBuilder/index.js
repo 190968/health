@@ -22,6 +22,7 @@ const TreatmentPlanBuilder = props => {
             </Col>
             <Col span={span}>
               {/*<TreatmentPlanBuilderSide user={user} onSubmit={onSubmit} treatmentPlan={treatmentPlan} loading={loading} elements={tmpElements}  updateElements={setTmpElements} />*/}
+
             </Col>
             {/*{viewNote && <TumorBoardPreview element={viewNote}  userId={user.id} onSave={props.saveElement} onCancel={props.onCancel} />}*/}
         </Row>
