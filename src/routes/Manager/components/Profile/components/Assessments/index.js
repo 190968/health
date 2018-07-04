@@ -56,7 +56,7 @@ export const AssessmentsTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic  ant-card-type-table" title={'Assessments '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type={"table"} title={'Assessments '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

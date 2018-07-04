@@ -13,6 +13,9 @@ export const USER_PLANS_LIST_QUERY = gql`
               id
               plans (status: $status)  {
                   id
+                  startDate
+                  endDate
+                  endsIn
                   plan {
                     ...PlanCardInfo
                     progress

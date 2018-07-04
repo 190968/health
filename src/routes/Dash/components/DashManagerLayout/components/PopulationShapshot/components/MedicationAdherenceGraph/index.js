@@ -16,15 +16,15 @@ export const RiskLevelGraph = props => {
 
         <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#48a5dc" stopOpacity={1}/>
-            <stop offset="95%" stopColor="#5BC5C5" stopOpacity={0.9}/>
+            <stop offset="65%" stopColor="#93ECEE" stopOpacity={1}/>
+            <stop offset="95%" stopColor="#93ECEE" stopOpacity={0.5}/>
             </linearGradient>
         </defs>
 
             <XAxis dataKey="date" tickFormatter={formatAxis} tickCount={1} minTickGap={50} />
             <YAxis domain={[0, 100]}/>
             <Tooltip/>
-            <Area type='monotone' dataKey='value' stroke='#48a5dc' fill="url(#colorUv)" strokeWidth={2} name="Adhrence" onClick={handleClick}  />
+            <Area type='monotone' dataKey='value' stroke='#48a5dc' fill="url(#colorUv)" strokeWidth={1} name="Adhrence" onClick={handleClick}  />
         </AreaChart>
 
     </ResponsiveContainer>

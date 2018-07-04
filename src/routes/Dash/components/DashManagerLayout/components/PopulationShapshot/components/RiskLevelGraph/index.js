@@ -17,11 +17,16 @@ const renderCustomizedLabel2 = ({ cx, cy, midAngle, innerRadius, outerRadius, pe
 };
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    // const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    // const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-    // const y = cy  + radius * Math.sin(-midAngle * RADIAN);
-
-    return (percent * 100).toFixed(0)+'%';
+    return (percent * 100).toFixed(0);
+    const radius = outerRadius+40;//innerRadius + ( - innerRadius)  ;
+  const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+ 
+  return (
+    <text  x={x} y={y} fill="#000" dominantBaseline="central">
+    	{`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
 };
 
 export const RiskLevelGraph = props => {

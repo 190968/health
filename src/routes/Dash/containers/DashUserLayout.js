@@ -15,6 +15,9 @@ export const DASH_QUERY = gql`
             id
             plans (status: $status) {
                 id
+                startDate
+                  endDate
+                  endsIn
                 plan {
                     ...PlanCardInfo
                     progress
@@ -69,6 +72,7 @@ const DashLayoutWithQuery = graphql(
     DASH_QUERY,
     {
         props: ({ data }) => {
+           
             if (!data.loading) {
                 return {
                     plans: data.user.plans,

@@ -11,6 +11,9 @@ export const DASH_QUERY = gql`
             id
             plans (status: $status) {
                 id
+                startDate
+                  endDate
+                  endsIn
                 plan {
                     ...PlanCardInfo
                     progress
