@@ -8,10 +8,11 @@ const RadioGroup = Radio.Group;
  const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight:10}} >
             <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+            <RadioButton value="active">Active</RadioButton>
+            <RadioButton value="suspended">Suspended</RadioButton>
+            <RadioButton value="guests">Guests</RadioButton>
         </RadioGroup>
-        <Tooltip title="Add New Patients"><Link to='/pb'><Button type={'primary'}><Icon type="plus"  /></Button></Link></Tooltip>
+        <Tooltip title="Add New Patient"><Link to='/pb'><Button type={'primary'}><Icon type="plus"  /></Button></Link></Tooltip>
     </React.Fragment>;
 
 export default class Patients extends React.Component {

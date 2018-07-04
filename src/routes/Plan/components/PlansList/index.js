@@ -75,7 +75,7 @@ export class PlansList extends React.Component {
                         }
                         if (endsIn) {
                             description.push(<React.Fragment>
-                                Ends in {endsIn} days
+                                <span style={{float:'right'}}><Tooltip title={'Ends In'}><Icon type="schedule" /></Tooltip> {endsIn} days</span>
                             </React.Fragment>);
                         }
                         return  <List.Item>
