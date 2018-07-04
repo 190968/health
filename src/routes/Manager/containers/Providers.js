@@ -6,6 +6,7 @@ import {compose, branch, withStateHandlers, withState, withProps} from 'recompos
 const GET_PROVIDERSa  = gql`
 query GET_PROVIDERS {
   network {
+    id
     getProviders(status: active) {
       totalCount
       edges {
