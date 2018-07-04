@@ -7,6 +7,7 @@ import RightMenu from '../../../../components/Header/containers/RightMenu';
 import PrivateRoute from '../../../../../routes/privateRoute';
 import {asyncPlanbuilder} from '../../../../../routes/manager';
 import Logo from './logo';
+import './index.less';
 const {Sider, Header, Content, Footer} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -48,6 +49,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                 <Sider
                     collapsible
                     breakpoint="lg"
+                    theme="dark"
                 >
 
                     <Menu theme="dark" defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} mode="inline">

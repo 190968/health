@@ -14,14 +14,16 @@ const formItemLayoutDefault = {
 };
 
 const TreatmentPlanBodyEditor = props => {
-  const {form, formItemLayout=formItemLayoutDefault} = props;
+  const {form, formItemLayout=formItemLayoutDefault, treatmentPlan={}} = props;
 const {getFieldDecorator} = form;
+const {title='', startDate, endDate} = treatmentPlan;
     return <div>
       <FormItem
            {...formItemLayout}
           label='Title'
       >
           {getFieldDecorator('title', {
+            initialValue:title,
               rules: [{
                    required: true, message: 'Enter Title',
               }],
@@ -29,7 +31,7 @@ const {getFieldDecorator} = form;
               <Input />
           )}
       </FormItem>
-      <StartEndForm /*names={{startDate:"schedule[startDate]", endDate:"schedule[endDate]"}}*/ form={form} formItemLayout={formItemLayout} inline={false} />
+      <StartEndForm startDate={startDate} endDate={endDate} /*names={{startDate:"schedule[startDate]", endDate:"schedule[endDate]"}}*/ form={form} formItemLayout={formItemLayout} inline={false} />
         {/* <TumorboardManager {...props} /> */}
         <div style={{textAlign:'right'}}>
         <Button type="primary" onClick={props.onSubmit}>Next</Button>
@@ -38,7 +40,6 @@ const {getFieldDecorator} = form;
 }
 
 const enhance = compose(
-    withTreatmentPlanMutation,
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
@@ -49,18 +50,11 @@ const enhance = compose(
                     let input = values;
 
                     props.onSubmit(input).then(({data})=> {
-                        const {treatmentPlanCreate} = data;
-                        const {id} = treatmentPlanCreate;
-                        props.setId(id);
-                        //const {}
-                        // set
+                        const {treatmentPlanCreate:{id}={}} = data;
+                        const {treatmentPlanUpdate:{id:treatmentPlanId=id}={}} = data;
+                        props.setId(treatmentPlanId);
+                        // to to next step
                         props.setStep(1);
-
-                        // if (data.tumorboardCreate) {
-                        //     props.setTumorboard(data.tumorboardCreate);
-                        // }
-                        //props.setTumorboard();
-                        //props.onHide();
                     });
                 }
             });

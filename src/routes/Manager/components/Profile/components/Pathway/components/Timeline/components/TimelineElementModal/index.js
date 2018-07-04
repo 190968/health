@@ -14,7 +14,7 @@ import LinkElement from './containers/LinkElement';
 import ChecklistElement from './containers/ChecklistElement';
 import CancerStageElement from './containers/CancerStageElement';
 import DiagnosisElement from './containers/DiagnosisElement';
-//import TreatmentPlanBuilder from './containers/TreatmentPlanBuilder';
+import TreatmentPlanBuilder from './containers/TreatmentPlanBuilder';
 import BlankElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/BlankElementBuilder";
 import ApElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder";
 import MediaElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
@@ -73,11 +73,10 @@ const enhance = compose(
                     const {notes='', date, isCritical=false} = timeline;
                     //const datetime = moment(values.date).format('L');
                     const inputFromElement = prepareInput(values);
-                    console.log(values);
+                    //console.log(values);
                     let sourceInfo = {};
                     if (props.pathway) {
                         //console.log(props);
-
                         sourceInfo['type'] = 'pathway';
                         sourceInfo['id'] = props.pathway.id;
                         sourceInfo['elementId'] = elementId;
@@ -139,8 +138,8 @@ const enhance = compose(
         {when: ({type}) => type === 'clinical_note', then: ClinicalNoteElement},
         {when: ({type}) => type === 'clinical_trial', then: ClinicalTrialElement},
         {when: ({type}) => type === 'ap', then: ApElementBuilder},
-        //{when: ({type}) => type === 'treatment_plan', then: TreatmentPlanBuilder},
-        { when: ({type}) => type === 'media', then: MediaElementBuilder },
+        {when: ({type}) => type === 'treatment_plan', then: TreatmentPlanBuilder},
+        {when: ({type}) => type === 'media', then: MediaElementBuilder },
     ]),
 
 );

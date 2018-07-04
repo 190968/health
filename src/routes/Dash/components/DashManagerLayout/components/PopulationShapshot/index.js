@@ -7,7 +7,7 @@ import EngagementGraph from './components/EngagementGraph';
 const PopulationShapshot = props => {
     const {snapshot={}} = props;
     const {riskLevel=[], medicationAdherence=[], engagement=[]} = snapshot;
-    return <Row gutter={16}>
+    return <Row gutter={24}>
         <Col md={8}><Card title="Risk Level"><RiskLevelGraph items={riskLevel} /></Card></Col>
         <Col md={8}><Card title="Medication Adhrerence"><MedicationAdherenceGraph items={medicationAdherence} /></Card></Col>
         <Col md={8}><Card title="Engagement"><EngagementGraph items={engagement} /></Card></Col></Row>;

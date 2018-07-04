@@ -13,7 +13,7 @@ import {withTreatmentPlanAddElementMutation} from './mutations';
 //import TimelineElementDetails from '../../components/Pathway/components/Timeline/containers/TimelineElementDetails'
 
 const TreatmentPlanBuilder = props => {
-    const {user, tumorboard, loading, viewNote=false, tmpElements=[], setTmpElements} = props;
+    const {user, treatmentPlan, loading, viewNote=false, tmpElements=[], setTmpElements, onSubmit} = props;
     console.log(props);
     const span = 12;
     return <Row>
@@ -21,7 +21,7 @@ const TreatmentPlanBuilder = props => {
                 <Timeline userId={user.id} draggable onDrop={props.onDrop} onlyFilters /*togglePathway={this.togglePathway} showPathway={showPathway}   showElement={this.toggleElementView} activeElement={activeElement}*/ />
             </Col>
             <Col span={span}>
-              <TreatmentPlanBuilderSide user={user} loading={loading} elements={tmpElements}  updateElements={setTmpElements} />
+              <TreatmentPlanBuilderSide user={user} onSubmit={onSubmit} treatmentPlan={treatmentPlan} loading={loading} elements={tmpElements}  updateElements={setTmpElements} />
             </Col>
             {viewNote && <TumorBoardPreview element={viewNote}  userId={user.id} onSave={props.saveElement} onCancel={props.onCancel} />}
         </Row>

@@ -15,8 +15,15 @@ module.exports = function override(config, env) {
                   "@layout-body-background": "#f2f2f2",
                   //"@heading-color-dark": "#565a5c",
                   //"@text-color-secondary-dark": "#565a5c",
-                  //"@layout-header-background": "#fff",
+                  "@layout-sider-background": "#3882C3",
+                  "@layout-trigger-background": "#3882C3",
+                  "@menu-dark-color": "#fff",
+                  "@menu-dark-bg": "#3882C3",
+                  "@menu-dark-item-active-bg": "#3271A9",//5AC2C4
+                  "@menu-dark-highlight-color": "#5BC5C5",
+                  "@menu-dark-submenu-bg": "#3782c3",
                   "@layout-footer-background": "#303030",
+                  
                   // avatar
                   "@avatar-size-lg": '60px',
                   "@card-padding-wider": '24px',

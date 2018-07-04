@@ -22,7 +22,7 @@ const radioStyle = {
     lineHeight: '30px',
 };
 
-const TumorBoardPublish = props => {
+const TreatmentPlanInvite = props => {
     const {form, formItemLayout=formItemLayoutDefault, tumorboard={}} = props;
     const {getFieldDecorator, getFieldValue} = form;
     const isOpen = getFieldValue('isOpen');
@@ -32,25 +32,6 @@ const TumorBoardPublish = props => {
     });
     return <div>
         <Form>
-            <FormItem
-                {...formItemLayout}
-                label="Visibility"
-            >
-                {getFieldDecorator('isOpen', {
-                    initialValue: visibilityOpen,
-                    rules: [{
-                        required: true,
-                        message: "Please Select People you want to invite",
-                        //whitespace: true
-                    }],
-                })(
-                    <RadioGroup style={{marginTop:5}}>
-                        <Radio style={radioStyle} value={false}>Open</Radio>
-                        <Radio style={radioStyle} value={true}>By Invitation</Radio>
-                    </RadioGroup>
-                )}
-            </FormItem>
-            {isOpen &&
             <FormItem
                 {...formItemLayout}
                 label="Invite People"
@@ -66,8 +47,6 @@ const TumorBoardPublish = props => {
                     <PeopleSelect mode="multiple"/>
                 )}
             </FormItem>
-            }
-            {isOpen &&
             <FormItem
                 {...formItemLayout}
                 label="Message"
@@ -78,7 +57,6 @@ const TumorBoardPublish = props => {
                     <Input.TextArea />
                 )}
             </FormItem>
-            }
         </Form>
         <div style={{textAlign:'right'}}>
         <Button type="primary" onClick={props.doFinish}>Invite and Finish</Button>
@@ -90,7 +68,6 @@ const enhance = compose(
     Form.create(),
     withHandlers({
         doFinish: props => () => {
-            console.log(props, 'Props before input');
             props.form.validateFields((err, values) => {
                 //console.log(err);
                 //console.log(values);
@@ -110,4 +87,4 @@ const enhance = compose(
 );
 
 
-export default enhance(TumorBoardPublish);
+export default enhance(TreatmentPlanInvite);
