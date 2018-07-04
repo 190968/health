@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import {withApollo} from 'react-apollo';
-import {Input, Card,Table,  Button, Icon, Tooltip, Radio} from 'antd';
+import {Input, Card, Table, Button, Icon, Tooltip, Radio} from 'antd';
 import {TumorobardQueryOptions} from "../../queries";
 import {compose, withState, withHandlers, withStateHandlers, withProps} from 'recompose';
 import sort from '../../../../../../components/Tables/sort'
@@ -20,7 +20,7 @@ const RadioGroup = Radio.Group;
 const CancerTitlePure = ({tumorboard, openView, openViewModal, hideViewModal, openEditorModal, hideEditorModal, openEditor}) => {
     return <React.Fragment>
         <a onClick={openViewModal}>{tumorboard.title}</a>
-        {openView &&  <TumorboardView onHide={hideViewModal} tumorboard={tumorboard} asModal />}
+        {openView && <TumorboardView onHide={hideViewModal} tumorboard={tumorboard} asModal/>}
     </React.Fragment>
 }
 const enhanceTitle = compose(
@@ -29,59 +29,50 @@ const enhanceTitle = compose(
             openView: false,
         }),
         {
-            openViewModal: ({ counter }) => (value) => ({
+            openViewModal: ({counter}) => (value) => ({
                 openView: true
             }),
-            hideViewModal: ({ counter }) => (value) => ({
+            hideViewModal: ({counter}) => (value) => ({
                 openView: false
             }),
         }
-        )
+    )
 );
 const Title = enhanceTitle(CancerTitlePure);
 
 const TumorobardsListPure = props => {
-    const {items=[], total, loading, openManage, addCancer, hideManager} = props;
+    const {items = [], total, loading, openManage, addCancer, hideManager} = props;
+    console.log(items);
     const columns = [{
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
-            sorter:(a, b) => sort(a,b,"title"),
-             render: (title, info) => {
-                 return <Title tumorboard={info}/>;
-             },
-                filterIcon: <Icon type="search" />,
-
-        // // search
-            // filterDropdown: (
-            //     <div className="custom-filter-dropdown">
-            //         <Input
-            //             ref={ele => this.searchInput = ele}
-            //             placeholder="Search name"
-            //             value={this.state.searchText}
-            //             onChange={this.onInputChange}
-            //             onPressEnter={this.onSearch}
-            //         />
-            //         <Button type="primary" onClick={this.onSearch}>Search</Button>
-            //     </div>
-            // ),
-            // filterIcon: <Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />,
-            // filterDropdownVisible: this.state.filterDropdownVisible,
-            // onFilterDropdownVisibleChange: (visible) => {
-            //     this.setState({
-            //         filterDropdownVisible: visible,
-            //     }, () => this.searchInput && this.searchInput.focus());
-            // },
+        title: 'Title',
+        dataIndex: 'title',
+        key: 'title',
+        sorter: (a, b) => sort(a, b, "title"),
+        render: (title, info) => {
+            return <Title tumorboard={info}/>;
         },
+        filterDropdown: (
+            <div className="custom-filter-dropdown">
+                <Input
+                    // suffix={suffix}
+                    ref={ele => this.searchInput = ele}
+                    placeholder="Search name"
+                    // value={searchText}
+                    //onChange={onSearch}
+                    //onPressEnter={onSearch}
+                />
+            </div>
+        ),
+        filterIcon: <Icon type="search"/>,
+    },
         {
             title: 'Lead',
             dataIndex: 'lead',
             key: 'lead',
             render: (title, info) => {
-                return <AvatarWithName user={info.lead} />
+                return <AvatarWithName user={info.lead}/>
             },
-            sorter:(a, b) => sort(a,b,"lead"),
-
+            sorter: (a, b) => sort(a, b, "lead"),
         },
         {
             title: 'Date',
@@ -102,7 +93,7 @@ const TumorobardsListPure = props => {
                 return moment(title).format('LT');
             },
             sorter: (a, b) => a.startTime - b.startTime,
-            width:100,
+            width: 100,
 
         },
         {
@@ -114,7 +105,7 @@ const TumorobardsListPure = props => {
             title: '# Invitee',
             key: 'invitee',
             render: (title, info) => {
-                const {participants=[]} = info;
+                const {participants = []} = info;
                 return participants.length;
             },
         },
@@ -122,22 +113,22 @@ const TumorobardsListPure = props => {
             title: '# Cases',
             key: 'cases',
             render: (title, info) => {
-                const {getCases=[]} = info;
+                const {getCases = []} = info;
                 return getCases.length;
             },
         },
         {
             title: '',
             key: 'action',
-            width:50,
+            width: 50,
             render: (text, record) => (
-                       <TumorboardEdit tumorboard={record} />
+                <TumorboardEdit tumorboard={record}/>
             ),
         }];
-    const dataSource = items.map((cancer, i) => ({...cancer, key:i}));
+    const dataSource = items.map((cancer, i) => ({...cancer, key: i}));
 
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight:10}} onChange={props.onChangeStatus}>
+        <RadioGroup defaultValue="all" style={{marginRight: 10}} onChange={props.onChangeStatus}>
             <RadioButton value="all">All</RadioButton>
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
@@ -145,26 +136,25 @@ const TumorobardsListPure = props => {
         <TumorboardAdd />
     </React.Fragment>;
     return (<React.Fragment>
-        <PageHeaderLayout title={'Tumor Boards '+ (total > 0 ? ' ('+total+')' : '')}
+        <PageHeaderLayout title={'Tumor Boards ' + (total > 0 ? ' (' + total + ')' : '')}
                           content=""
-                          // extraContent={<Input.Search style={{width:200}} />}
+            // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
-                          >
+        >
             <Card type="table"
             >
                 <Table dataSource={dataSource} columns={columns}
                        loading={loading ? <SpinIndicator /> : false }
                        expandedRowRender={info => {
                            //console.log(info);
-                           return <TumorboardView tumorboard={info} />;
+                           return <TumorboardView tumorboard={info}/>;
                        }}
-                       //onExpand={props.loadDetails}
-                       pagination={false} />
+                    //onExpand={props.loadDetails}
+                       pagination={false}/>
             </Card>
         </PageHeaderLayout>
     </React.Fragment>);
 }
-
 
 
 const enhance = compose(

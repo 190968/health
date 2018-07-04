@@ -6,7 +6,7 @@ import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/i
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-export default class Actionplans extends React.Component {
+export default class WorkFlow extends React.Component {
     state = {
         filteredInfo: null,
         sortedInfo: {},
@@ -29,6 +29,19 @@ export default class Actionplans extends React.Component {
             dataIndex: 'title',
             key: 'title',
             sorter: (a, b) => a.title.length - b.title.length,
+            filterDropdown: (
+                <div className="custom-filter-dropdown">
+                    <Input
+                        // suffix={suffix}
+                        ref={ele => this.searchInput = ele}
+                        placeholder="Search name"
+                        // value={searchText}
+                        //onChange={onSearch}
+                        //onPressEnter={onSearch}
+                    />
+                </div>
+            ),
+            filterIcon: <Icon type="search"/>,
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
@@ -49,7 +62,19 @@ export default class Actionplans extends React.Component {
             dataIndex: 'createdBy',
             key: 'createdBy',
             sorter: (a, b) => a.createdBy - b.createdBy,
-            //render: (info) => moment(info).format('L'),
+            filterDropdown: (
+                <div className="custom-filter-dropdown">
+                    <Input
+                        // suffix={suffix}
+                        ref={ele => this.searchInput = ele}
+                        placeholder="Search name"
+                        // value={searchText}
+                        //onChange={onSearch}
+                        //onPressEnter={onSearch}
+                    />
+                </div>
+            ),
+            filterIcon: <Icon type="search"/>,
         }, {
             title: 'Downloads',
             dataIndex: 'downloads',
@@ -68,7 +93,7 @@ export default class Actionplans extends React.Component {
                 <RadioButton value="open">Open</RadioButton>
                 <RadioButton value="past">Past</RadioButton>
             </RadioGroup>
-            <Tooltip title="Add New ActionPlan"><Button type="primary"><Icon type="plus"/></Button></Tooltip>
+            <Tooltip title="Add New Workflow"><Button type="primary"><Icon type="plus"/></Button></Tooltip>
 
         </React.Fragment>;
         return (

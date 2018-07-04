@@ -1,5 +1,5 @@
- import React from 'react';
-import {Input, Card,Table, Radio, Button, Icon, Tooltip} from 'antd';
+import React from 'react';
+import {Input, Card, Table, Radio, Button, Icon, Tooltip} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import CancerManager from './containers/CancerManager';
 import sort from '../../../../components/Tables/sort'
@@ -10,80 +10,74 @@ const RadioGroup = Radio.Group;
 const CancerTitlePure = ({cancer, openEditorModal, hideEditorModal, openEditor}) => {
     return <React.Fragment>
         <a onClick={openEditorModal}>{cancer.title}</a>
-        {openEditor &&  <CancerManager onHide={hideEditorModal} cancer={cancer} />}
+        {openEditor && <CancerManager onHide={hideEditorModal} cancer={cancer}/>}
     </React.Fragment>
 }
 const enhanceTitle = compose(
     withStateHandlers(
         (props) => ({
-        openEditor: false,
+            openEditor: false,
         }),
         {
-            openEditorModal: ({ counter }) => (value) => ({
+            openEditorModal: ({counter}) => (value) => ({
                 openEditor: true
             }),
-            hideEditorModal: ({ counter }) => (value) => ({
+            hideEditorModal: ({counter}) => (value) => ({
                 openEditor: false
             }),
         }
-        )
+    )
 );
 const CancerTitle = enhanceTitle(CancerTitlePure);
 
 const CancersPure = props => {
 
-    const {cancers=[], total, openManage, addCancer, hideManager} = props;
+    const {cancers = [], total, openManage, addCancer, hideManager} = props;
     const columns = [{
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
-            sorter:(a, b) => sort(a,b,"title"),
-             render: (title, info) => {
-                 return <CancerTitle cancer={info}/>;
-             },
-            // // search
-            // filterDropdown: (
-            //     <div className="custom-filter-dropdown">
-            //         <Input
-            //             ref={ele => this.searchInput = ele}
-            //             placeholder="Search name"
-            //             value={this.state.searchText}
-            //             onChange={this.onInputChange}
-            //             onPressEnter={this.onSearch}
-            //         />
-            //         <Button type="primary" onClick={this.onSearch}>Search</Button>
-            //     </div>
-            // ),
-            // filterIcon: <Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />,
-            // filterDropdownVisible: this.state.filterDropdownVisible,
-            // onFilterDropdownVisibleChange: (visible) => {
-            //     this.setState({
-            //         filterDropdownVisible: visible,
-            //     }, () => this.searchInput && this.searchInput.focus());
-            // },
-        }];
-    const dataSource = cancers.map((cancer, i) => ({...cancer, key:i}))
+        title: 'Title',
+        dataIndex: 'title',
+        key: 'title',
+        sorter: (a, b) => sort(a, b, "title"),
+        render: (title, info) => {
+            return <CancerTitle cancer={info}/>;
+        },
+        filterDropdown: (
+            <div className="custom-filter-dropdown">
+                <Input
+                    // suffix={suffix}
+                    ref={ele => this.searchInput = ele}
+                    placeholder="Search name"
+                    // value={searchText}
+                    //onChange={onSearch}
+                    //onPressEnter={onSearch}
+                />
+            </div>
+        ),
+        filterIcon: <Icon type="search"/>,
+    }];
+    const dataSource = cancers.map((cancer, i) => ({...cancer, key: i}))
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight:10}} >
+        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
             <RadioButton value="all">All</RadioButton>
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
         </RadioGroup>
-        <Tooltip title="Add New Cancer"><Button size="small" onClick={addCancer}><Icon type="plus"  /></Button></Tooltip>
+        <Tooltip title="Add New Cancer"><Button type="primary" onClick={addCancer}><Icon
+            type="plus"/></Button></Tooltip>
     </React.Fragment>;
 
     return (<React.Fragment>
-        <PageHeaderLayout title={'Cancers'+ (total > 0 ? ' ('+total+')' : '')}
+        <PageHeaderLayout title={'Cancers' + (total > 0 ? ' (' + total + ')' : '')}
                           content=""
-                          // extraContent={<Input.Search style={{width:200}} />}
+            // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
-                          >
+        >
 
-        <Card type="table" >
-            <Table dataSource={dataSource} columns={columns} pagination={false} />
-        </Card>
+            <Card type="table">
+                <Table dataSource={dataSource} columns={columns} pagination={false}/>
+            </Card>
         </PageHeaderLayout>
-        {openManage && <CancerManager onHide={hideManager} />}
+        {openManage && <CancerManager onHide={hideManager}/>}
     </React.Fragment>);
 }
 

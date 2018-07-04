@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "../fragments";
 
-export const GET_TUMORBARDS_QUERY = gql`
+export const GET_TUMORBARDS_QUERY = gql`    
     query GET_TUMORBOARDS_LIST ($status: String) {
         getTumorboardsList (status: $status) {
             totalCount

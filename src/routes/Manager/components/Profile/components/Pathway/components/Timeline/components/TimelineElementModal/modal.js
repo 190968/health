@@ -32,7 +32,7 @@ const enhance = compose(
             modalOpts.footer = props.modalFooter();
         }
         if (props.modalWidth) {
-            modalOpts.width = typeof props.modalWidth === 'function' ? props.modalWidth() : props.modalWidth;
+            modalOpts.width = props.modalWidth();
         }
         return {
             ...modalOpts

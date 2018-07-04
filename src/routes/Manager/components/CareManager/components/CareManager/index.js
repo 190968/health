@@ -1,10 +1,6 @@
 import React from 'react';
-import {Card, Select, Form,} from 'antd';
-import moment from 'moment';
-
-const Option = Select.Option;
+import {Input, Select, Form,} from 'antd';
 const FormItem = Form.Item;
-const dateFormat = 'YYYY/MM/DD';
 
 
 const CareManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
@@ -26,6 +22,13 @@ const CareManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
                 </Select>
             )}
             <p>You can send several invitations by pressing Enter after each.</p>
+        </FormItem>
+        <FormItem
+            label="Optional Message to Recipients(s)"
+        >
+            {getFieldDecorator('message', {})(
+                <Input />
+            )}
         </FormItem>
     </Form>
 }

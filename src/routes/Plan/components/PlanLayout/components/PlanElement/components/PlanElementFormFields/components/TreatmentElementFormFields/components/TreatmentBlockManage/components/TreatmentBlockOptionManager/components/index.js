@@ -1,3 +1,6 @@
+/**
+ * Created by Павел on 30.06.2018.
+ */
 import React from 'react';
 import {Form, Input} from 'antd';
 

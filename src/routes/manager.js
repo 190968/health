@@ -196,3 +196,16 @@ export const asyncSupportStaff = () => {
         })
     );
 }
+export const asyncProviders = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Providers'),
+            modules: ['../routes/Manager/containers/Providers'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Providers')],
+        })
+    );
+}
+
+
+

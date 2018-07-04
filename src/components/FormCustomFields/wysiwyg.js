@@ -13,7 +13,7 @@ import htmlToDraft from 'html-to-draftjs';
 //import 'alloyeditor/dist/alloy-editor/assets/alloy-editor-atlas-min.css';
 
 
-const WysiwygPure = ({editorState, onEditorStateChange, value=''})=> {
+const Wysiwyg = ({editorState, onEditorStateChange, value=''})=> {
 
     //return  <div id='wysiwyg' dangerouslySetInnerHTML={{__html: value}}></div>;
 
@@ -68,5 +68,4 @@ const enhance = compose(
     )
 );
 
-export const Wysiwyg = enhance(WysiwygPure);
-export default Wysiwyg;
+export default enhance(Wysiwyg);

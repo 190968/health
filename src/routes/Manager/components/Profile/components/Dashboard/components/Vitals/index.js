@@ -10,12 +10,11 @@ export const Vitals = props => {
     if (vitals.length === 0) {
         return null;
     }
-
-    const limit = 4;
-    const slidesToShow = limit;//vitals.length >= limit ? limit : vitals.length;
+    const limit = 3;
+    const slidesToShow = vitals.length >= limit ? limit : vitals.length;
     //console.log(props);
-    return  <Card type="basic1 ant-card-type-pure" title="Vitals">
-        <Carousel slidesToShow={slidesToShow} arrows={true} infinite={false} centerPadding={10} slidesToScroll={slidesToShow} responsive={[{ breakpoint: 900, settings: { slidesToShow: 2, slidesToScroll:2 }}, { breakpoint: 700, settings: { slidesToShow: 1, slidesToScroll:1 }}]}>
+    return  <Card type="basic1 ant-card-type-pure" bordered={false} title="Vitals">
+        <Carousel slidesToShow={slidesToShow} arrows={true}  centerPadding={10} slidesToScroll={slidesToShow} responsive={[{ breakpoint: 900, settings: { slidesToShow: 2, slidesToScroll:2 }}, { breakpoint: 700, settings: { slidesToShow: 1, slidesToScroll:1 }}]}>
 
             {vitals.map((tracker, i) => {
 

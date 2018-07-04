@@ -33,6 +33,7 @@ ${UserInfoFragment}
 
 const withQuery = graphql(GET_PROVIDERS_QUERY, {
     options: (ownProps) => {
+        console.log("-------------------------------",ownProps)
         return{
             variables: {
                 user_id:ownProps.user.id

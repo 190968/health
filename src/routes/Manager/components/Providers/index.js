@@ -5,15 +5,15 @@ import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
-import NetworkManagerr from "./containers/NetworkManager";
-import InviteButton from "../../../../components/Tables/InviteButton/index";
+import ProvidersManagerr from "./containers/ProvidersManager";
+//import InviteButton from "../../../../components/Tables/InviteButton/index";
 import sort from '../../../../components/Tables/sort';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 
-const NetworkManager = props => {
+const ProidersManager = props => {
     const {management = [], openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
     const {edges} = management;
     const columns = [{
@@ -93,16 +93,16 @@ const NetworkManager = props => {
     </React.Fragment>;
 
     return (
-        <PageHeaderLayout title={'Network Managers ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
+        <PageHeaderLayout title={'Providers ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
                           action={actions}
         >
 
             <Card type="basic1  ant-card-type-table">
                 <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {showButton && <InviteButton selectedCount={selectedCount}/>}
+                {/* {showButton && <InviteButton selectedCount={selectedCount}/>} */}
             </Card>
-            {visibleModal && <NetworkManagerr onHide={hideModal}/>}
+            {/* {visibleModal && <NetworkManagerr onHide={hideModal}/>} */}
         </PageHeaderLayout>
     );
 }
@@ -118,4 +118,4 @@ const enhance = compose(
     }),
 );
 
-export default enhance(NetworkManager);
+export default enhance(ProidersManager);

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Select} from 'antd';
-import './index.less';
+//import './index.less';
 const Option = Select.Option;
 
 export default class ConditionElement extends React.PureComponent {

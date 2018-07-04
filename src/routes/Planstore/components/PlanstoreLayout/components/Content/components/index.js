@@ -6,7 +6,7 @@ import {
 
 import PlanWidget from '../../../../../../Plan/components/Plan';
 import InfiniteScroll from 'react-infinite-scroller';
-import './index.less';
+//import './index.less';
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 

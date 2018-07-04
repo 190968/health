@@ -3,7 +3,7 @@ import {Input, Select, Form,} from 'antd';
 const FormItem = Form.Item;
 
 
-const SupervisorsManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
+const ProvidersManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
 
 
     const {getFieldDecorator} = form;
@@ -33,4 +33,4 @@ const SupervisorsManager = ({form, formItemLayout, targetKeys, selectedKeys, han
     </Form>
 }
 
-export default SupervisorsManager;
+export default ProvidersManager;

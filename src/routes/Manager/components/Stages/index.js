@@ -16,6 +16,7 @@ export default class Stages extends React.Component {
         searchText: '',
         filtered: false,
         //
+        data:this.props.stages,
         filteredInfo: null,
         sortedInfo: {},
     };
@@ -44,7 +45,38 @@ export default class Stages extends React.Component {
             sortedInfo: sorter,
         });
     }
+    onSearch = () => {
+        console.log("onSearch");
+        const {searchText} = this.state;
+        const reg = new RegExp(searchText, 'gi');
+        this.setState({
+            filterDropdownVisible: false,
+            filtered: !!searchText,
+            data: this.props.stages.map((record) => {
+                const match = record.title.match(reg);
+                if (!match) {
+                    return null;
+                }
+                return {
+                    ...record,
+                    title:(
+                        <span>
+              {record.title.split(reg).map((text, i) => (
+                  i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+              ))}
+            </span>
+                    ),
+                };
+            }).filter(record => !!record),
+        });
+    }
 
+    onInputChange = (e) => {
+        console.log("onInputChange");
+        this.setState({searchText: e.target.value});
+        this.onSearch();
+        console.log(" end------onInputChange");
+    }
 
     render() {
         const {loading} = this.props;
@@ -67,16 +99,9 @@ export default class Stages extends React.Component {
                         onChange={this.onInputChange}
                         onPressEnter={this.onSearch}
                     />
-                    <Button type="primary" onClick={this.onSearch}>Search</Button>
                 </div>
             ),
-            filterIcon: <Icon type="search" style={{ color: this.state.filtered ? '#108ee9' : '#aaa' }} />,
-            filterDropdownVisible: this.state.filterDropdownVisible,
-            onFilterDropdownVisibleChange: (visible) => {
-                this.setState({
-                    filterDropdownVisible: visible,
-                }, () => this.searchInput && this.searchInput.focus());
-            },
+            filterIcon: <Icon type="search"/>,
         }/*, {
             title: 'Status',
             dataIndex: 'status',
@@ -98,19 +123,21 @@ export default class Stages extends React.Component {
             render: (info) => moment(info).format('L'),
         }*/];
 
-        const {stages, total} = this.props;
+        const { total} = this.props;
+        const stages = this.state.data;
+        console.log(this.props.stages,stages);
         const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight:10}} >
             <RadioButton value="all">All</RadioButton>
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
         </RadioGroup>
-        <Tooltip title="Add New Cancer"><Button size="small" onClick={this.addStage}><Icon type="plus"  /></Button></Tooltip>
+        <Tooltip title="Add New Stages"><Button type="primary" onClick={this.addStage}><Icon type="plus"  /></Button></Tooltip>
     </React.Fragment>;
 
-
+      
         return (
-            <PageHeaderLayout title={'Cancer '+ (total > 0 ? ' ('+total+')' : '')}
+            <PageHeaderLayout title={'Stages'+ (total > 0 ? ' ('+total+')' : '')}
                           content=""
                           // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}

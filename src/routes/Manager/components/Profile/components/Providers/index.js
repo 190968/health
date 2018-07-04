@@ -94,7 +94,6 @@ export const UserProvidersTable = props => {
                               content=""
                               action={actions}
     >
-
         <Card type="basic1  ant-card-type-table">
             <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts}
                    loading={loading}/>

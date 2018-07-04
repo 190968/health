@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Table, Dropdown, Menu, Slider, Input, Button, Icon, Modal} from 'antd';
+import {Table, Dropdown, Menu, Slider, Input, Icon, Modal} from 'antd';
 import CustomModal from '../../containers/Modal'
 import Truncate from 'react-truncate';
 import sort from '../../../../../../components/Tables/sort'
@@ -27,6 +27,7 @@ export default class TableCustom extends React.Component {
         plansTotal: 0
     }
     onSearch = () => {
+        console.log("onSearch");
         const {searchText} = this.state;
         const reg = new RegExp(searchText, 'gi');
         this.setState({
@@ -52,7 +53,10 @@ export default class TableCustom extends React.Component {
     }
 
     onInputChange = (e) => {
+        console.log("onInputChange");
         this.setState({searchText: e.target.value});
+        this.onSearch();
+        console.log(" end------onInputChange");
     }
     handleChange = (pagination, filters, sorter) => {
 
@@ -87,10 +91,19 @@ export default class TableCustom extends React.Component {
             visible: false,
         });
     }
+    emitEmpty = () =>() => {
+        console.log("emitEmpty");
+        this.setState({
+            searchText: '',
+        });
+        this.onSearch();
+    }
+
 
     render() {
         const {loading} = this.props;
         let {sortedInfo} = this.state;
+        const suffix = this.state.searchText ? <Icon type="close-circle" onClick={this.emitEmpty(this)}/> : null;
         const marks = {
             0: '0',
             99: '99'
@@ -107,22 +120,16 @@ export default class TableCustom extends React.Component {
                 filterDropdown: (
                     <div className="custom-filter-dropdown">
                         <Input
+                             suffix={suffix}
                             ref={ele => this.searchInput = ele}
                             placeholder="Search name"
                             value={this.state.searchText}
                             onChange={this.onInputChange}
                             onPressEnter={this.onSearch}
                         />
-                        <Button type="primary" onClick={this.onSearch}>Search</Button>
                     </div>
                 ),
-                filterIcon: <Icon type="search" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
-                filterDropdownVisible: this.state.filterDropdownVisible,
-                onFilterDropdownVisibleChange: (visible) => {
-                    this.setState({
-                        filterDropdownVisible: visible,
-                    }, () => this.searchInput && this.searchInput.focus());
-                },
+                filterIcon: <Icon type="search"/>,
             },
             {
                 title: 'Age',
@@ -185,6 +192,7 @@ export default class TableCustom extends React.Component {
                 name: record.name,
             }),
         };
+        console.log(this.state.data);
         const dataSource = this.state.data;
         return (
             <div>
