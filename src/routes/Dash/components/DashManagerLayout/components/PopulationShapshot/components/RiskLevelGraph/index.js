@@ -4,7 +4,7 @@ import {compose, withHandlers} from 'recompose';
 import {PieChart, Pie, Sector, Cell, Legend, ResponsiveContainer} from 'recharts';
 
 const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+const renderCustomizedLabel2 = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x  = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy  + radius * Math.sin(-midAngle * RADIAN);
@@ -16,6 +16,14 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     );
 };
 
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    // const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    // const x  = cx + radius * Math.cos(-midAngle * RADIAN);
+    // const y = cy  + radius * Math.sin(-midAngle * RADIAN);
+
+    return (percent * 100).toFixed(0)+'%';
+};
+
 export const RiskLevelGraph = props => {
     const {items=[], handleClick} = props
     // console.log(items);
@@ -23,11 +31,12 @@ export const RiskLevelGraph = props => {
         <Pie
             data={items}
             dataKey='value'
-            labelLine={false}
+            // labelLine={false}
             outerRadius={80}
             fill="#8884d8"
             label={renderCustomizedLabel}
             onClick={handleClick}
+            innerRadius={40}
         >
             {
                 items.map((entry, index) => {

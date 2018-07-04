@@ -89,7 +89,7 @@ export const TimelineElementView = (item, props={}) => {
     //const {id:activeElementId} = activeElement;
     //console.log(item);
     //console.log(activity);
-    let activityText = '';//'Unknown Activity'; 5 03 13. +375259420637 прописка и первая. и копия удостоверение.
+    let activityText = '';//'Unknown Activity';
     //let extra = {};
     let body = [];
     let image = '';
