@@ -123,7 +123,7 @@ const enhance = compose(
             }),
             emitEmpty: ({searchText}) =>(value) => (
                 {
-                    searchText: ''
+                    searchText: '',
                      })
             })        
 

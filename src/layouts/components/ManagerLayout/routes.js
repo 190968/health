@@ -15,11 +15,11 @@ export const ManagerRoutes = ({store}) => {
             <PrivateRoute path="/cancers" component={asyncCancers(store)}/>
             <PrivateRoute path="/chemotherapies" component={asyncChemotherapies(store)}/>
             <PrivateRoute path="/clinicaltrials" component={asyncClinicalTrials(store)}/>
-            <PrivateRoute path="/admins" component={asyncNetworkManager(store)}/>
-            <PrivateRoute path="/supervisors" component={asyncSupervisors(store)}/>
-            <PrivateRoute path="/ncm" component={asyncCareManager(store)}/>
-            <PrivateRoute path="/analysts" component={asyncAnalysts(store)}/>
-            <PrivateRoute path="/employers" component={asyncSupportStaff(store)}/>
+            <PrivateRoute path="/staff/admins" component={asyncNetworkManager(store)}/>
+            <PrivateRoute path="/staff/supervisors" component={asyncSupervisors(store)}/>
+            <PrivateRoute path="/staff/ncm" component={asyncCareManager(store)}/>
+            <PrivateRoute path="/staff/analysts" component={asyncAnalysts(store)}/>
+            <PrivateRoute path="/staff/employers" component={asyncSupportStaff(store)}/>
             <PrivateRoute path="/providers" component={asyncProviders(store)}/>
         </React.Fragment>
     )

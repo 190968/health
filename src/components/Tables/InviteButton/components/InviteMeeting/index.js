@@ -3,8 +3,8 @@ import {Card,Row,Col,Button,Select,Form,Divider,Radio,DatePicker,TimePicker, Inp
 import InviteMeeting from './InviteMeetingForm/containers/inviteMeeting';
 const InviteMeetingButton = ({visibleModal=false,openModal,hideModal}) => {
     //console.log(visibleModal,openModal);
-    return  (<div><Button type="primary" onClick={openModal} >Meeting invite</Button>
-     {visibleModal && <InviteMeeting onHide={hideModal} />}</div>)
+    return  (<React.Fragment><Button type="primary" onClick={openModal} >Meeting invite</Button>
+     {visibleModal && <InviteMeeting onHide={hideModal} />}</React.Fragment>)
     
 }
 

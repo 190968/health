@@ -48,7 +48,7 @@ const NetworkManager = props => {
             dataIndex: 'lastLoginDate',
             key: 'lastLoginDate',
             render: (lastLoginDate) => {
-                return lastLoginDate;
+                return moment(lastLoginDate).format('L')
             },
         },
         {
@@ -84,10 +84,9 @@ const NetworkManager = props => {
         }),
     };
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+        <RadioGroup defaultValue="active" style={{marginRight: 10}}>
+            <RadioButton value="active">Active</RadioButton>
+            <RadioButton value="pending">Pending</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;

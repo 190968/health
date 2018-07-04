@@ -36,7 +36,7 @@ export default class TableCustom extends React.Component {
         const {loading} = this.props;
         let {sortedInfo} = this.state;
         console.log(this.props);
-        const suffix = this.props.searchText ? <Icon type="close-circle" onClick={this.props.emitEmpty}/> : null
+        const suffix = this.props.searchText ? <Icon type="close-circle-o" onClick={this.props.emitEmpty}/> : <Icon type="search"/>
         const columns = [{
             title: 'Title',
             dataIndex: 'title',
@@ -50,7 +50,7 @@ export default class TableCustom extends React.Component {
                     <Input
                         suffix={suffix}
                         ref={ele => this.searchInput = ele}
-                        placeholder="Search name"
+                        placeholder="Search"
                         value={this.props.searchText}
                         onChange={this.props.onSearch}
                         onPressEnter={this.props.onSearch}

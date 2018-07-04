@@ -3,8 +3,8 @@ import {Card,Row,Col,Button,Select,Form,Divider,Radio,DatePicker,TimePicker, Inp
 import InviteEmail from './InviteEmailForm/containers/inviteEmail';
 const InviteEmailButton = ({visibleModal=false,openModal,hideModal}) => {
     //console.log(visibleModal,openModal);
-    return  (<div><Button type="primary" onClick={openModal} >Email</Button>
-     {visibleModal && <InviteEmail onHide={hideModal} />}</div>)
+    return  (<React.Fragment><Button type="primary" onClick={openModal} >Email</Button>
+     {visibleModal && <InviteEmail onHide={hideModal} />}</React.Fragment>)
     
 }
 

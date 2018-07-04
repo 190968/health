@@ -15,12 +15,16 @@ const BasicLayout = ({loading, user, store, location, match}) => {
 
 
     //console.log(location);
-    //console.log(match);
+    console.log(match);
     const {id, tab = 'build', subtab = 'header'} = match.params;
 
     const selectedItem = subtab || tab;
     const openItem = tab;
 
+    console.log(selectedItem);
+    console.log(openItem);
+    console.log(tab);
+    console.log(subtab);
 
     let mainUrl = '/pb';
     if (id !== '') {
@@ -62,11 +66,11 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                             key="staff"
                             title={<span><Icon type="user"/><span>Staff</span></span>}
                         >
-                            <Menu.Item key="admins"><NavLink to="/admins">Network Managers</NavLink></Menu.Item>
-                            <Menu.Item key="supervisors"><NavLink to="/supervisors">Supervisors</NavLink></Menu.Item>
-                            <Menu.Item key="ncms"><NavLink to="/ncm">Care Managers</NavLink></Menu.Item>
-                            <Menu.Item key="analysts"><NavLink to="/analysts">Analysts</NavLink></Menu.Item>
-                            <Menu.Item key="employers"><NavLink to="/employers">Support Staff</NavLink></Menu.Item>
+                            <Menu.Item key="admins"><NavLink to="/staff/admins">Network Managers</NavLink></Menu.Item>
+                            <Menu.Item key="supervisors"><NavLink to="/staff/supervisors">Supervisors</NavLink></Menu.Item>
+                            <Menu.Item key="ncms"><NavLink to="/staff/ncm">Care Managers</NavLink></Menu.Item>
+                            <Menu.Item key="analysts"><NavLink to="/staff/analysts">Analysts</NavLink></Menu.Item>
+                            <Menu.Item key="employers"><NavLink to="/staff/employers">Support Staff</NavLink></Menu.Item>
                         </SubMenu>
                         <SubMenu
                             key="patients"

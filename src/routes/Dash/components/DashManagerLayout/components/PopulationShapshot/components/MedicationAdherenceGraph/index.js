@@ -21,7 +21,7 @@ export const RiskLevelGraph = props => {
             </linearGradient>
         </defs>
 
-            <XAxis dataKey="date" tickFormatter={formatAxis} tickCount={1} minTickGap={50} />
+            <XAxis width={40} dataKey="date" tickFormatter={formatAxis} tickCount={1} minTickGap={50} />
             <YAxis domain={[0, 100]}/>
             <Tooltip/>
             <Area type='monotone' dataKey='value' stroke='#48a5dc' fill="url(#colorUv)" strokeWidth={1} name="Adhrence" onClick={handleClick}  />

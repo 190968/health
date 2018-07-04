@@ -12,6 +12,7 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
     return <Form>
         <FormItem
             label="Enter in the email address of who you would like to invite to Fitango Demo"
+            extra="You can send several invitations by pressing Enter after each."
         >
             {getFieldDecorator('email', {})(
                 <Select
@@ -21,7 +22,6 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
                 >
                 </Select>
             )}
-            <p>You can send several invitations by pressing Enter after each.</p>
         </FormItem>
         <FormItem
             label="Optional Message to Recipients(s)"
