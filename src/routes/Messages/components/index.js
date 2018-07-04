@@ -2,7 +2,7 @@ import React from 'react';
 import ChatThreads from '../containers/ChatThreads';
 import Thread from './Thread';
 
-import  './index.less';
+//import  './index.less';
 
 
 
