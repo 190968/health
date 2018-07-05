@@ -17,7 +17,7 @@ const ManagerLayout = ({loading, user, store, location}) => {
             <Switch>
             <Route path="/pb/type/:type" component={asyncPlanbuilder(store)}/>
             <Route path="/pb/:id?/:tab?/:subtab?" component={asyncPlanbuilder(store)}/>
-            <Route component={BasicLayout} />
+            <Route path="/:tab?/:subtab?" component={BasicLayout} />
             </Switch>
     )
 }

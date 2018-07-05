@@ -133,6 +133,7 @@ export default class TableCustom extends React.Component {
                 title: 'Age',
                 dataIndex: 'age',
                 key: 'age',
+                width:100,
                 sorter: (a, b) => a.age - b.age,
                 filterDropdown: (
                     <div style={{width: 200, height: 60}} className="custom-filter-dropdown">
@@ -145,6 +146,7 @@ export default class TableCustom extends React.Component {
                 title: 'Gender',
                 dataIndex: 'gender',
                 key: 'gender',
+                width:120,
                 render: (gender) => {
                     return gender[0].toUpperCase()
                 },
@@ -161,14 +163,15 @@ export default class TableCustom extends React.Component {
                 title: 'Dignosis',
                 dataIndex: 'getDiagnosis',
                 key: 'getDiagnosis',
-                width:200,
+                //width:200,
                 render: (getDiagnosis) => {
                     if (getDiagnosis) {
                         return <Truncate lines={1}>{getDiagnosis.code.name}</Truncate>
                     }
                 },
             }, {
-                title: 'Actions',
+                title: '',
+                width:50,
                 render: (info) => {
                     const menu = (
                         <Menu>
