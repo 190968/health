@@ -32,6 +32,7 @@ const CancerTitle = enhanceTitle(CancerTitlePure);
 
 const ChemotherapiesPure = props => {
     const {cancers=[], total, openManage, addCancer, hideManager} = props;
+    const suffix = props.searchText ? <Icon type="close-circle-o" onClick={props.emitEmpty}/> : <Icon type="search"/>
     const columns = [{
             title: 'Title',
             dataIndex: 'title',
@@ -41,16 +42,14 @@ const ChemotherapiesPure = props => {
                  return <CancerTitle chemotherapy={info}/>;
              },
         filterDropdown: (
-            <div className="custom-filter-dropdown">
                 <Input
-                   // ref={ele => this.searchInput = ele}
+                    suffix={suffix}
+                    ref={ele => this.searchInput = ele}
                     placeholder="Search name"
-                    //value={this.state.searchText}
-                  //  onChange={this.onInputChange}
-                    //onPressEnter={this.onSearch}
-                />
-                <Button type="primary" onClick={this.onSearch}>Search</Button>
-            </div>
+                    value={props.searchText}
+                    onChange={props.onInputChange}
+                    onPressEnter={props.onSearch}
+                />           
         ),
         filterIcon: <Icon type="search"/>,
         }];

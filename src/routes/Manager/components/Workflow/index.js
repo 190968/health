@@ -24,22 +24,21 @@ export default class WorkFlow extends React.Component {
     render() {
 
         let {sortedInfo} = this.state;
+        const suffix = this.props.searchText ? <Icon type="close-circle-o" onClick={this.props.emitEmpty}/> : <Icon type="search"/>
         const columns = [{
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
             sorter: (a, b) => a.title.length - b.title.length,
             filterDropdown: (
-                <div className="custom-filter-dropdown">
                     <Input
-                        // suffix={suffix}
+                         suffix={suffix}
                         ref={ele => this.searchInput = ele}
                         placeholder="Search name"
-                        // value={searchText}
-                        //onChange={onSearch}
-                        //onPressEnter={onSearch}
+                         value={this.props.searchText}
+                        onChange={this.props.onSearch}
+                        onPressEnter={this.props.onSearch}
                     />
-                </div>
             ),
             filterIcon: <Icon type="search"/>,
         }, {
@@ -47,16 +46,9 @@ export default class WorkFlow extends React.Component {
             dataIndex: 'createdAt',
             key: 'createdAt',
             sorter: (a, b) => a.createdAt - b.createdAt,
-            /*render: (text, info) => {
-                return info.isActive ? 'Active' : 'Inactive'
+            render: (text, info) => {
+                return  moment(info.createdAt).format('L');
             },
-            filters: [
-                {text: 'Active', value: true},
-                {text: 'InActive', value: false},
-            ],
-            onFilter: (value, record) => record.isActive.includes(value),
-            sorter: (a, b) => a.isActive - b.isActive,
-            sortOrder: sortedInfo.columnKey === 'isActive' && sortedInfo.order,*/
         }, {
             title: 'By',
             dataIndex: 'createdBy',
@@ -65,7 +57,7 @@ export default class WorkFlow extends React.Component {
             filterDropdown: (
                 <div className="custom-filter-dropdown">
                     <Input
-                        // suffix={suffix}
+                         suffix={suffix}
                         ref={ele => this.searchInput = ele}
                         placeholder="Search name"
                         // value={searchText}

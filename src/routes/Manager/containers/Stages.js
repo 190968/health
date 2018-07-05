@@ -1,7 +1,8 @@
 import Stages from '../components/Stages';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import React from 'react';
+import {compose,withStateHandlers} from 'recompose';
 export const GET_CANCER_STAGES_QUERY = gql`    
     query GET_CANCER_STAGES {
         getCancerStages {
@@ -81,4 +82,39 @@ const withQuery = graphql(
     }
 );
 
-export default withQuery(Stages);
+const enhance = compose(
+   withQuery,
+    withStateHandlers(
+        (props) => (
+            {
+            searchText: '',
+        }),
+        {        
+            onSearch: ({searchText},props) =>(value) => (
+                {
+                    searchText: value.target.value,
+                    workflow: props.workflow.map((record) => {
+                        const match = record.title.match(new RegExp(searchText, 'gi'));
+                        if (!match) {
+                            return null;
+                        }                        
+                        return {
+                            ...record,
+                            title: (
+                                <span>
+                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                      ))}
+                    </span>
+                            ),
+                        };
+                    }).filter(record => !!record),
+            }),
+            emitEmpty: ({searchText}) =>(value) => (
+                {
+                    searchText: '',
+                     })
+            })        
+
+);
+export default enhance(Stages);

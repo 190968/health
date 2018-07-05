@@ -45,42 +45,13 @@ export default class Stages extends React.Component {
             sortedInfo: sorter,
         });
     }
-    onSearch = () => {
-        console.log("onSearch");
-        const {searchText} = this.state;
-        const reg = new RegExp(searchText, 'gi');
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.stages.map((record) => {
-                const match = record.title.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    title:(
-                        <span>
-              {record.title.split(reg).map((text, i) => (
-                  i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
-    }
-
-    onInputChange = (e) => {
-        console.log("onInputChange");
-        this.setState({searchText: e.target.value});
-        this.onSearch();
-        console.log(" end------onInputChange");
-    }
+  
 
     render() {
         const {loading} = this.props;
         let { sortedInfo } = this.state;
+        const suffix = this.props.searchText ? <Icon type="close-circle-o" onClick={this.props.emitEmpty}/> : <Icon type="search"/>
+
         const columns = [{
             title: 'Title',
             dataIndex: 'title',
@@ -91,15 +62,14 @@ export default class Stages extends React.Component {
             },
             // search
             filterDropdown: (
-                <div className="custom-filter-dropdown">
                     <Input
+                        suffix={suffix}
                         ref={ele => this.searchInput = ele}
                         placeholder="Search name"
-                        value={this.state.searchText}
-                        onChange={this.onInputChange}
-                        onPressEnter={this.onSearch}
+                        value={this.props.searchText}
+                        onChange={this.props.onSearch}
+                        onPressEnter={this.props.onSearch}
                     />
-                </div>
             ),
             filterIcon: <Icon type="search"/>,
         }/*, {

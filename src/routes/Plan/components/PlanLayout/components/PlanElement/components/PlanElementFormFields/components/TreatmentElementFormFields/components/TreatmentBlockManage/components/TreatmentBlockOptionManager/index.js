@@ -1,7 +1,7 @@
 import React from 'react';
 import { compose, branch, renderComponent} from 'recompose';
-import TreatmentBlockOptionElementEditor  from './containers/TreatmentBlockOptionElementEditor';
-import TreatmentBlockOptionDecisiontEditor  from './containers/TreatmentBlockOptionDecisiontEditor';
+import TreatmentBlockOptionElementEditor  from './components/TreatmentBlockOptionElementEditor';
+import TreatmentBlockOptionDecisiontEditor  from './components/TreatmentBlockOptionDecisiontEditor';
 
 
 

@@ -43,6 +43,7 @@ const Title = enhanceTitle(CancerTitlePure);
 const TumorobardsListPure = props => {
     const {items = [], total, loading, openManage, addCancer, hideManager} = props;
     console.log(items);
+    const suffix = props.searchText ? <Icon type="close-circle-o" onClick={props.emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'Title',
         dataIndex: 'title',
@@ -52,16 +53,14 @@ const TumorobardsListPure = props => {
             return <Title tumorboard={info}/>;
         },
         filterDropdown: (
-            <div className="custom-filter-dropdown">
                 <Input
-                    // suffix={suffix}
+                     suffix={suffix}
                     ref={ele => this.searchInput = ele}
                     placeholder="Search name"
-                    // value={searchText}
-                    //onChange={onSearch}
-                    //onPressEnter={onSearch}
+                     value={props.searchText}
+                    onChange={props.onSearch}
+                    onPressEnter={props.onSearch}
                 />
-            </div>
         ),
         filterIcon: <Icon type="search"/>,
     },
@@ -79,7 +78,7 @@ const TumorobardsListPure = props => {
             dataIndex: 'startDate',
             key: 'date',
             render: (title, info) => {
-                return moment(title).format('L');
+                return moment(info.startDate).format('L');
             },
             sorter: (a, b) => a.startDate - b.startDate,
             width: 110,

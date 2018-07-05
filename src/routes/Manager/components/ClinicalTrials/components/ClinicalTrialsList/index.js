@@ -33,6 +33,7 @@ const Title = enhanceTitle(CancerTitlePure);
 
 const ClinicalTrialsListPure = props => {
     const {items = [], total, changePage, loading = false} = props;
+    const suffix = props.searchText ? <Icon type="close-circle-o" onClick={props.emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'ID',
         dataIndex: 'nctId',
@@ -40,16 +41,14 @@ const ClinicalTrialsListPure = props => {
         width: 140,
         sorter: (a, b) => a.nctId - b.nctId,
         filterDropdown: (
-            <div className="custom-filter-dropdown">
                 <Input
-                    // suffix={suffix}
+                    suffix={suffix}
                     ref={ele => this.searchInput = ele}
                     placeholder="Search name"
-                    // value={searchText}
-                    //onChange={onSearch}
-                    //onPressEnter={onSearch}
+                    value={props.searchText}
+                    onChange={props.onSearch}
+                    onPressEnter={props.onSearch}
                 />
-            </div>
         ),
         filterIcon: <Icon type="search"/>,
     }, {
@@ -61,16 +60,14 @@ const ClinicalTrialsListPure = props => {
             return <Title clinicalTrial={info}/>;
         },
         filterDropdown: (
-            <div className="custom-filter-dropdown">
                 <Input
-                    // suffix={suffix}
+                     suffix={suffix}
                     ref={ele => this.searchInput = ele}
                     placeholder="Search name"
                     // value={searchText}
                     //onChange={onSearch}
                     //onPressEnter={onSearch}
                 />
-            </div>
         ),
         filterIcon: <Icon type="search"/>,
     },

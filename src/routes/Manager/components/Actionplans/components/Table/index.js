@@ -39,7 +39,7 @@ export default class TableCustom extends React.Component {
     render() {
         const {loading} = this.props;
         let {sortedInfo} = this.state;
-        const suffix = this.props.searchText ? <Icon type="close-circle" onClick={this.props.emitEmpty}/> : null
+        const suffix = this.props.searchText ? <Icon type="close-circle" onClick={this.props.emitEmpty}/> :  <Icon type="search"/>
         console.log(this.props.plans);
         const columns = [{
             title: 'Title',
@@ -51,7 +51,6 @@ export default class TableCustom extends React.Component {
             },
             sorter: (a, b) => sort(a, b, "title"),
             filterDropdown: (
-                <div className="custom-filter-dropdown">
                     <Input
                         suffix={suffix}
                         ref={ele => this.searchInput = ele}
@@ -60,7 +59,6 @@ export default class TableCustom extends React.Component {
                         onChange={this.props.onSearch}
                         onPressEnter={this.props.onSearch}
                     />
-                </div>
             ),
             filterIcon: <Icon type="search"/>,
         }, {

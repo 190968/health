@@ -46,7 +46,7 @@ export default class TableCustom extends React.Component {
             },
             sorter: (a, b) => sort(a, b, "title"),
             filterDropdown: (
-                <div className="custom-filter-dropdown">
+                
                     <Input
                         suffix={suffix}
                         ref={ele => this.searchInput = ele}
@@ -55,7 +55,6 @@ export default class TableCustom extends React.Component {
                         onChange={this.props.onSearch}
                         onPressEnter={this.props.onSearch}
                     />
-                </div>
             ),
             filterIcon: <Icon type="search"/>,
         },

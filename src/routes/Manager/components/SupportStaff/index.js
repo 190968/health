@@ -48,7 +48,7 @@ const SupportStaff = props => {
             dataIndex: 'lastLoginDate',
             key: 'lastLoginDate',
             render: (lastLoginDate) => {
-                return lastLoginDate;
+                return moment(lastLoginDate).format('L');
             },
         },
 
