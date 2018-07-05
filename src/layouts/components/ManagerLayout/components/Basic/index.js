@@ -16,13 +16,13 @@ const BasicLayout = ({loading, user, store, location, match}) => {
 
     //console.log(location);
     console.log(match);
-    const {id, tab = 'build', subtab = 'header'} = match.params;
+    const {id, tab = '', subtab} = match.params;
 
     const selectedItem = subtab || tab;
     const openItem = tab;
 
-    console.log(selectedItem);
-    console.log(openItem);
+    console.log(selectedItem, 'selectedItem');
+    console.log(openItem, 'openItem');
     console.log(tab);
     console.log(subtab);
 

@@ -23,11 +23,10 @@ class CoreByMode extends React.Component {
     render() {
 
         const {currentRole} = this.props;
-
        /* if (loading) {
             return <Card loading/>
         }
-
+           
         */
         //console.log(currentRole);
         //return null;
