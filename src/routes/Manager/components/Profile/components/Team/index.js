@@ -13,7 +13,7 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 export const UserTeamTable = props => {
 
-    const {members = [], openModal, searchText, emitEmpty, onSearch, visibleModal, hideModal, loading = false} = props;
+    const {members = [], openModal, searchText, emitEmpty, onSearch, visibleModal, hideModal, loading = false, user} = props;
     const total = members.length;
     const suffix = searchText ? <Icon type="close-circle" onClick={emitEmpty}/> : null
     const columns = [{
@@ -73,17 +73,16 @@ export const UserTeamTable = props => {
         hideOnSinglePage: true
     };
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+        <RadioGroup defaultValue="active" style={{marginRight: 10}}>
+            <RadioButton value="active">Active</RadioButton>
+            <RadioButton value="inactive">Inactive</RadioButton>
         </RadioGroup>
-        <Tooltip title="Add New CareTeam"><Button onClick={openModal}><Icon type="plus"/></Button></Tooltip>
+        <Tooltip title="Manage Care Team"><Button onClick={openModal}><Icon type="edit"/></Button></Tooltip>
 
     </React.Fragment>;
 
 
-    return (<PageHeaderLayout title={'CareTeam' + (total > 0 ? ' (' + total + ')' : '')}
+    return (<PageHeaderLayout title={'Care Team Members' + (total > 0 ? ' (' + total + ')' : '')}
                               content=""
                               action={actions}
     >
@@ -91,7 +90,7 @@ export const UserTeamTable = props => {
             <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts}
                    loading={loading}/>
         </Card>
-        {visibleModal && <TeamManager onHide={hideModal}/>}
+        {visibleModal && <TeamManager onHide={hideModal} user={user}/>}
     </PageHeaderLayout>)
 }
 const enhance = compose(

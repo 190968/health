@@ -88,7 +88,7 @@ const {Option} = AntdSelect;
      render() {
         const {i18n, items=[], loading=false, mode} = this.props;
         const { fetching, value } = this.state;
-        const options = items.map(d => <Option key={d.id}>{d.title}</Option>);
+        const options = items.map(d => <Option key={d.id}>{d.title || d.name}</Option>);
         return (<AntdSelect showSearch
                             allowClear
                             optionFilterProp="name"

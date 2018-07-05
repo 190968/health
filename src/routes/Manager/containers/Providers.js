@@ -3,11 +3,11 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {compose, branch, withStateHandlers, withState, withProps} from 'recompose';
 
-const GET_PROVIDERSa  = gql`
-query GET_PROVIDERS {
+export const GET_PROVIDERS_QUERY  = gql`
+query GET_PROVIDERS ($search: String, $status: RoleStatusEnum = active) {
   network {
     id
-    getProviders(status: active) {
+    getProviders(search:$search, status: $status) {
       totalCount
       edges {
         id
@@ -18,7 +18,7 @@ query GET_PROVIDERS {
 }
  `;
 
-const withQuery = graphql(GET_PROVIDERSa, {
+const withQuery = graphql(GET_PROVIDERS_QUERY, {
     props: ({ data }) => {
         if (!data.loading) {
             console.log(data);
