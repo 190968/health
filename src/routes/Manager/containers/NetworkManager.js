@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {compose, branch, withStateHandlers, withState, withProps} from 'recompose';
 
-const GET_PROFILE  = gql`
+export const GET_NETWORK_MANAGERS_LIST  = gql`
 query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput) {
     management {
       getNetworkStaff(search: $search, role: $role, cursors: $cursors) {
@@ -34,7 +34,7 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput)
   
  `;
 
-const withQuery = graphql(GET_PROFILE, {
+const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
     options: (ownProps) => {
         return{
             variables: {

@@ -2,66 +2,62 @@ import NetworkManager from '../components/NetworkManager/index';
 import {graphql} from 'react-apollo';
 import React from 'react';
 import {compose, withStateHandlers, branch, withHandlers, withState, withProps} from 'recompose';
-import {Form} from 'antd';
+import {Form, message} from 'antd';
 import gql from 'graphql-tag';
 import {withModal} from "../../../../../components/Modal/index";
-import { UserInfoFragment } from '../../../../User/fragments';
+import { GET_NETWORK_MANAGERS_LIST } from '../../../containers/NetworkManager';
 
 
-const GET_PROFILE = gql`
-query GET_USER_TEAM($user_id:UID) {
-    patient(id: $user_id) {
-       id
-       motivation {
-              careTeam {
-                  totalCount,
-                  edges{
-                      id,
-                      user {
-                          ...UserInfo
-                          phoneFormatted
-                      }
-                      joinedDate
-                      roleText
-                  }
-              }
-       }
+const INVITE_STAFF_MUTATION = gql`
+    mutation InviteStaff($role: RoleEnum!, $input:InviteEmailsInput!){
+        networkStaffInvite(role:$role,input:$input) {
+            sent
+            failed
+        }
     }
-  }
-  ${UserInfoFragment}
 `;
 
-const withQuery = graphql(GET_PROFILE, {
-    options: ({patient}) => {
+const withMutation = graphql(INVITE_STAFF_MUTATION, {
+    props: ({mutate, ownProps}) => {
+        const {role = 'manager'} = ownProps;
+        let QUERY_EXECUTE = null;
+        // use different queries depending on the role. switch or if-else should be here
+        if (role === 'manager') {
+            QUERY_EXECUTE = GET_NETWORK_MANAGERS_LIST;
+        }
         return {
-            variables: {
-                id: '',
+            onSubmit: (input) => {
+                return mutate({
+                    variables: {input, role},
+                    refetchQueries: [{
+                        query: QUERY_EXECUTE,
+                        variables: {role}
+                    }],
+                });
             },
         }
-    },
-    props: ({data, ownProps}) => {
-        const {patient} = ownProps;
-        return {loading: data.loading, patient: patient}
-    },
+    }
 });
 
 const enhance = compose(
-    //withQuery,
+    withMutation,
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
-            console.log(props, 'Props before input');
-            // props.form.validateFields((err, values) => {
-            //     console.log(err);
-            //     console.log(values);
-            // if (!err) {
-            //     console.log(values);
-            //     props.onHide();
-            //     // props.onSubmit(values).then(({data})=> {
-            //     //     props.onHide();
-            //     // });
-            // }
-            // });
+            props.form.validateFields((err, values) => {
+                if (!err) {
+                    const input = values;
+                    props.onSubmit(input).then(({data})=> {
+                        const {networkStaffInvite={}} = data;
+                        const {sent=0, failed=0} = networkStaffInvite;
+                        message.success('Sent:'+sent);
+                        if (failed > 0) {
+                            message.error('Failed:'+failed);
+                        }
+                        props.onHide();
+                    });
+                }
+            });
         },
     }),
     withProps(props => {
