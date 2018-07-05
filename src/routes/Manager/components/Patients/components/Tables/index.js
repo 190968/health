@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import {Table, Dropdown, Menu, Slider, Input, Icon, Modal} from 'antd';
 import CustomModal from '../../containers/Modal'
 import Truncate from 'react-truncate';
+import InviteButtons from "../../../../../../components/Tables/InviteButton/index";
+
 import sort from '../../../../../../components/Tables/sort'
 import './index.css'
 
@@ -26,38 +28,7 @@ export default class TableCustom extends React.Component {
         plans: [],
         plansTotal: 0
     }
-    onSearch = () => {
-        console.log("onSearch");
-        const {searchText} = this.state;
-        const reg = new RegExp(searchText, 'gi');
-        this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: this.props.patients.map((record) => {
-                const match = record.fullName.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    fullName: (
-                        <span>
-              {record.fullName.split(reg).map((text, i) => (
-                  i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
-        });
-    }
-
-    onInputChange = (e) => {
-        console.log("onInputChange");
-        this.setState({searchText: e.target.value});
-        this.onSearch();
-        console.log(" end------onInputChange");
-    }
+ 
     handleChange = (pagination, filters, sorter) => {
 
         this.setState({
@@ -65,21 +36,7 @@ export default class TableCustom extends React.Component {
             sortedInfo: sorter,
         });
     }
-    sliderChange = (value) => {
-        this.setState({
-            data: this.props.patients.map((record) => {
-                return {
-                    ...record,
-                    age: (
-                        (record.age > value[0] && record.age < value[1]) ? record.age : null
-
-                    ),
-                };
-            }).filter((data) => {
-                return data.age != null
-            }),
-        });
-    }
+   
     showModal = (id) => {
         this.setState({
             visible: true,
@@ -91,23 +48,19 @@ export default class TableCustom extends React.Component {
             visible: false,
         });
     }
-    emitEmpty = () =>() => {
-        console.log("emitEmpty");
-        this.setState({
-            searchText: '',
-        });
-        this.onSearch();
-    }
+ 
 
 
     render() {
         const {loading} = this.props;
         let {sortedInfo} = this.state;
-        const suffix = this.state.searchText ? <Icon type="close-circle-o" onClick={this.emitEmpty.bind(this)}/> : <Icon type="search"/> 
+ 
+        const suffix = this.props.searchText ? <Icon type="close-circle-o" onClick={this.props.emitEmpty}/> : <Icon type="search"/> 
          const marks = {
             0: '0',
             99: '99'
         };
+        const {selectedCount,openShowButton,hideShowButton,showButton} = this.props;
         const columns = [
             {
                 title: "Name",
@@ -122,9 +75,9 @@ export default class TableCustom extends React.Component {
                              suffix={suffix}
                             ref={ele => this.searchInput = ele}
                             placeholder="Search name"
-                            value={this.state.searchText}
-                            onChange={this.onInputChange}
-                            onPressEnter={this.onSearch}
+                            value={this.props.searchText}
+                            onChange={this.props.onSearch}
+                            onPressEnter={this.props.onSearch}
                         />
                 ),
                 filterIcon: <Icon type="search"/>,
@@ -137,7 +90,7 @@ export default class TableCustom extends React.Component {
                 sorter: (a, b) => a.age - b.age,
                 filterDropdown: (
                     <div style={{width: 200, height: 60}} className="custom-filter-dropdown">
-                        <Slider marks={marks} range defaultValue={[20, 50]} onChange={this.sliderChange}/>
+                        <Slider marks={marks} range defaultValue={[20, 50]} onChange={this.props.sliderChange}/>
                     </div>
                 ),
                 filterIcon: <Icon type="filter" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
@@ -187,15 +140,15 @@ export default class TableCustom extends React.Component {
             },
         ];
         const rowSelection = {
-            onChange: (selectedRowKeys, selectedRows) => {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            },
+            onChange: record => (
+                record.length < 1 ? hideShowButton() : openShowButton(record.length)
+    
+            ),
             getCheckboxProps: record => ({
                 name: record.name,
             }),
         };
-        console.log(this.state.data);
-        const dataSource = this.state.data;
+        const dataSource = this.props.patients;
         return (
             <div>
                 <Modal
@@ -210,6 +163,7 @@ export default class TableCustom extends React.Component {
                        ref={(input) => {
                            this.table = input;
                        }}/>
+                       {showButton && <InviteButtons selectedCount={selectedCount} />}
             </div>);
     }
 }

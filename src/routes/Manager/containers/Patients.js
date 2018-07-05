@@ -1,7 +1,8 @@
 import Patients from '../components/Patients';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import React from 'react';
+import {compose,withStateHandlers} from 'recompose';
 export const GET_PATIENTS_QUERY = gql`    
 query GET_PATIENTS {
     management {
@@ -90,4 +91,67 @@ const withQuery = graphql(
     }
 );
 
-export default withQuery(Patients);
+const enhance = compose(
+    withQuery,
+    withStateHandlers(
+        (props) => (
+            {
+                showButton: false,
+        selectedCount:0,
+            searchText: '',
+        }),
+        {        
+
+            openShowButton: ({ counter }) => (value) => ({
+                showButton: true,
+                selectedCount:value
+            }),
+            hideShowButton: ({ counter }) => (value) => ({
+                showButton: false
+            }),
+
+            onSearch: ({searchText},props) =>(value) => (
+                {
+                    searchText: value.target.value,
+                    patients: props.patients.map((record) => {
+                       
+                        const match = record.fullName.match(new RegExp(value.target.value, 'gi'));
+                        if (!match) {
+                            return null;
+                        }                      
+                        return {
+                            ...record,
+                            fullName: (
+                                <span>
+                      {record.fullName.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
+                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                      ))}
+                    </span>
+                            ),
+                        };
+                    }).filter(record => !!record),
+            }),
+            emitEmpty: ({searchText},props) =>(value) => (
+                {
+                    searchText: '',
+                    patients:props.patients
+                     }),
+            sliderChange: ({searchText},props) =>(value) =>  (
+                {
+                patients: props.patients.map((record) => {
+                                return {
+                                    ...record,
+                                    age: (
+                                        (record.age > value[0] && record.age < value[1]) ? record.age : null
+                
+                                    ),
+                                };
+                            }).filter((data) => {
+                                return data.age != null
+                            })
+                        })
+                    
+            })        
+
+);
+export default enhance(Patients);
