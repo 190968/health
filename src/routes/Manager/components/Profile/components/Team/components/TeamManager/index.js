@@ -8,19 +8,19 @@ const FormItem = Form.Item;
 const dateFormat = 'YYYY/MM/DD';
 
 
-const TeamManager = ({mockData = {}, form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
-
+const TeamManager = (props) => {
+    const {careTeam=[], items = [], form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange} = props;
+    console.log(props);
 
     // const {getFieldDecorator} = form;
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
-    console.log(mockData);
     return <Transfer
-        dataSource={mockData}
-        titles={['Source', 'Target']}
+        dataSource={items}
+        showSearch
+        operations={['Add', 'Remove']}
+        // titles={['Source', 'Target']}
         targetKeys={targetKeys}
-        selectedKeys={selectedKeys}
         onChange={handleChange}
-        onSelectChange={handleSelectChange}
         render={item => item.title}
     />
 }

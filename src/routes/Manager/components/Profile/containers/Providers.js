@@ -8,9 +8,9 @@ import {UserInfoFragment} from "../../../../User/fragments";
 const dateFormat = 'YYYY/MM/DD';
 const fakeData = [];
 
-const GET_PROVIDERS_QUERY  = gql`
- query GET_USER_PROVIDERS($user_id:UID) {
-  patient(id: $user_id) {
+export const GET_PATIENT_PROVIDERS_QUERY  = gql`
+ query GET_USER_PROVIDERS($userId:UID) {
+  patient(id: $userId) {
      id
      getProviders {
          edges {
@@ -31,12 +31,12 @@ const GET_PROVIDERS_QUERY  = gql`
 ${UserInfoFragment}
 `;
 
-const withQuery = graphql(GET_PROVIDERS_QUERY, {
+const withQuery = graphql(GET_PATIENT_PROVIDERS_QUERY, {
     options: (ownProps) => {
         console.log("-------------------------------",ownProps)
         return{
             variables: {
-                user_id:ownProps.user.id
+                userId:ownProps.user.id
             }
         }
     },

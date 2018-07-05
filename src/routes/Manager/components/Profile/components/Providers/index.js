@@ -15,10 +15,9 @@ const {RangePicker} = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 export const UserProvidersTable = props => {
 
-    const {providers = [], onSearch, emitEmpty, loading = false, searchText, openModal, visibleModal, hideModal, filterDropdownVisible = true, onChange} = props;
+    const {providers = [], onSearch, emitEmpty, loading = false, searchText, openModal, visibleModal, hideModal, filterDropdownVisible = true, onChange, user} = props;
     const total = providers.length;
     const suffix = searchText ? <Icon type="close-circle" onClick={emitEmpty}/> : null
-    console.log(searchText, providers);
     const columns = [{
         title: 'Name',
         key: 'name',
@@ -80,12 +79,12 @@ export const UserProvidersTable = props => {
         hideOnSinglePage: true
     };
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
+        {/* <RadioGroup defaultValue="all" style={{marginRight: 10}}>
             <RadioButton value="all">All</RadioButton>
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
-        </RadioGroup>
-        <Tooltip title="Add New Providers"><Button onClick={openModal}><Icon type="plus"/></Button></Tooltip>
+        </RadioGroup> */}
+        <Tooltip title="Add New Providers"><Button type={'primary'} onClick={openModal}><Icon type="plus"/></Button></Tooltip>
 
     </React.Fragment>;
 
@@ -98,7 +97,7 @@ export const UserProvidersTable = props => {
             <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts}
                    loading={loading}/>
         </Card>
-        {visibleModal && <ProvirdersManager onHide={hideModal}/>}
+        {visibleModal && <ProvirdersManager onHide={hideModal} user={user}/>}
     </PageHeaderLayout>)
 }
 const enhance = compose(
