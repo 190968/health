@@ -50,9 +50,9 @@ const enhance = compose(
                     props.onSubmit(input).then(({data})=> {
                         const {networkStaffInvite={}} = data;
                         const {sent=0, failed=0} = networkStaffInvite;
-                        message.success('Sent:'+sent);
+                        message.success('Succesfully Sent: '+sent);
                         if (failed > 0) {
-                            message.error('Failed:'+failed);
+                            message.error('Failed: '+failed);
                         }
                         props.onHide();
                     });
