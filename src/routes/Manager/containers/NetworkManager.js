@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import {compose, branch, withStateHandlers, withState, withProps} from 'recompose';
 
 export const GET_NETWORK_MANAGERS_LIST  = gql`
-query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput) {
+query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput, $status: RoleStatusEnum) {
     management {
-      getNetworkStaff(search: $search, role: $role, cursors: $cursors) {
+      getNetworkStaff(search: $search, role: $role, cursors: $cursors, status: $status) {
         totalCount
         edges {
           id
@@ -15,6 +15,7 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput)
           startDate
           joinedDate
           lastLoginDate
+          invitedDate
           accessLevel
           user {
             id
@@ -39,7 +40,8 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
         return{
             variables: {
                 search:'',
-                role:'manager'
+                role:'manager',
+                status:'active',  
             }
         }
     },
@@ -47,7 +49,6 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
         if (!data.loading) {
             return {
                 management: data.management.getNetworkStaff,
-                totalCount: data.management.totalCount,
                 loading: data.loading
             }
         }

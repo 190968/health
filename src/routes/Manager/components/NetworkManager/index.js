@@ -14,8 +14,8 @@ const RadioGroup = Radio.Group;
 
 
 const NetworkManager = props => {
-    const {management = [], openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
-    const {edges} = management;
+    const {management = [], openModal, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const {edges, totalCount} = management;
     const columns = [{
         title: 'Name',
         dataIndex: 'user',
