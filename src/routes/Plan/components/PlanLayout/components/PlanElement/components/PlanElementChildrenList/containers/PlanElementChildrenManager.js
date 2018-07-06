@@ -18,10 +18,10 @@ const addChildElementMutation = gql`
     props: ({ ownProps, mutate }) => ({
         addChildElement: (input) => {
             return mutate({
-                variables: {planId:ownProps.planId, type:ownProps.type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:input},
+                variables: {planId:ownProps.plan.id, type:ownProps.type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:input},
                 refetchQueries: [{
                     query: PLAN_ELEMENT_CHILDREN_QUERY,
-                    variables: {id:ownProps.parentId, planId:ownProps.planId, elementValue:ownProps.parentValue}
+                    variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}
                 }]
             })
         },

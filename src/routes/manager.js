@@ -42,11 +42,18 @@ export const asyncActionplans = (store) => {
 
 export const asyncPlanbuilder = (store) => {
 
+    // return (
+    //     Loadable({
+    //         loader: () => import('../routes/Manager/containers/Planbuilder'),
+    //         modules: ['../routes/Manager/containers/Planbuilder'],
+    //         webpack: () => [require.resolveWeak('../routes/Manager/containers/Planbuilder')],
+    //     })
+    // );
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Planbuilder'),
-            modules: ['../routes/Manager/containers/Planbuilder'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Planbuilder')],
+            loader: () => import('../routes/Manager/components/Planbuilder/layout'),
+            modules: ['../routes/Manager/components/Planbuilder/layout'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Planbuilder/layout')],
         })
     );
 }

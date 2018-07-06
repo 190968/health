@@ -116,7 +116,6 @@ export const withDeleteMutation = graphql(DeleteElementMutation, {
                 variables: {treatmentId:ownProps.treatmentId, id:ownProps.option.id},
 
                 update: (client, { data: { planElementReport } }) => {
-                    //const {mode, planId, parentId} = ownProps;
                     //console.log(ownProps);
                     const treatmentId = ownProps.treatmentId;
                     // if it's pathway - remove

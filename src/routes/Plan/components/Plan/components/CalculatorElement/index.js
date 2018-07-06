@@ -36,7 +36,7 @@ const CalculatorElementResultLinePure = ({amid, userId, tracker, openReport, i, 
 
 
 
-const CalculatorElementResultPure = ({element, planId, date, userId, resultInfo: {value, formula, missingTrackers=[]}, openReport=false, toggleReport}) => {
+const CalculatorElementResultPure = ({element, plan, date, userId, resultInfo: {value, formula, missingTrackers=[]}, openReport=false, toggleReport}) => {
     if (value) {
         return (
             <Row gutter={16}>
@@ -60,7 +60,7 @@ const CalculatorElementResultPure = ({element, planId, date, userId, resultInfo:
         )//'Calculated value:'+ + '('+formula+')';
     } else {
         if (openReport) {
-            return <TrackersReportModal trackers={missingTrackers} date={date} userId={userId} planId={planId} onHide={toggleReport} />
+            return <TrackersReportModal trackers={missingTrackers} date={date} userId={userId} plan={plan} onHide={toggleReport} />
         }
         const missingBlock = missingTrackers.map((tracker, i) => {
             return <CalculatorElementResultLinePure key={i} i={i} tracker={tracker} showNumbers={missingTrackers.length > 1} userId={userId} />;
@@ -94,7 +94,7 @@ const CalculatorElementResult = compose(
 
 
 const CalculatorElement = (props) => {
-    const { userId, planId, date, loading, intl, element, onCalculate, resultView, resultInfo={}, isBuilderMode=false} = props;
+    const { userId, plan, date, loading, intl, element, onCalculate, resultView, resultInfo={}, isBuilderMode=false} = props;
 
     const {title = '', formulaString, tokens=[]} = element;
 
@@ -133,7 +133,7 @@ const CalculatorElement = (props) => {
         <Card title={title+'='+formulaFormatted} loading={loading} hoverable extra={!isBuilderMode && <Popover content={content} title="Trackers" trigger="hover">
             <Icon type="info-circle-o" /></Popover>} >
             {resultView ?
-                <CalculatorElementResult userId={userId} date={date} planId={planId} element={element} resultInfo={resultInfo} onCalculate={onCalculate} />
+                <CalculatorElementResult userId={userId} date={date} plan={plan} element={element} resultInfo={resultInfo} onCalculate={onCalculate} />
                 :
                 <div style={{textAlign:'center', marginTop:10}}><Button type="primary" disabled={isBuilderMode} onClick={onCalculate}>Calculate</Button></div>
             }
@@ -190,7 +190,7 @@ const enhance = compose(
             //console.log(props);
 
             calculateQueryOptions.variables = {
-                planId:props.planId,
+                planId:props.plan.id,
                 id:props.actFieldId,
                 date:props.date,
                 //id: targetOption.value

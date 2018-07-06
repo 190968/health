@@ -22,7 +22,7 @@ import OptionElements from './components/OptionElements';
 
 
 const DecisionElementOptionCard = (props) => {
-    const { i, mode, planId, option, isDragging, preventCardDraggable, connectDragSource, isDraggable=false, isBuilderMode = false} = props;
+    const { i, mode, plan, option, isDragging, preventCardDraggable, connectDragSource, isDraggable=false, isBuilderMode = false} = props;
 
     //const extra = isBuilderMode ? <a onClick={props.toggleAdd} style={{color:'inherit'}}><Icon type="plus" /> Element</a> : null;
     //const opacity = isDragging ? 0.4 : 1
@@ -32,7 +32,7 @@ const DecisionElementOptionCard = (props) => {
         </Card>
         {/*(isBuilderMode && props.openAddOption) &&
                <Modal title="Select Element" visible={true} onOk={props.toggleAdd} onCancel={props.toggleAdd}>
-                   <PlanElementChildrenSelect mode={mode} view="decision" planId={planId} parentId={props.id} parentValue={option.value} onHide={props.toggleAdd} onElementAdd={props.onElementAdd} />
+                   <PlanElementChildrenSelect mode={mode} view="decision" plan={plan} parentId={props.id} parentValue={option.value} onHide={props.toggleAdd} onElementAdd={props.onElementAdd} />
                </Modal>
             */}
     </React.Fragment>;

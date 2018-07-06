@@ -37,15 +37,10 @@ const withQuery = graphql(
 
         },
         props: ({ ownProps, data }) => {
-            if (!data.loading) {
-                return {
-                    plan: data.plan,
-                    type:data.plan.type,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
-            }
+            const {plan={}} = data;
+            const {type} = plan;
+
+            return {loading: data.loading, plan, type};
         },
     }
 );

@@ -24,7 +24,7 @@ const PlanbuilderLayout = (props) => {
 
     const selectedItem = subtab || tab;
     const openItem = tab;
-    //console.log(plan);
+    console.log(plan, 'Plan');
     type = plan && plan.id ? type : typefromUrl;
 
 
@@ -93,7 +93,7 @@ const PlanbuilderLayout = (props) => {
                 collapsible
                 breakpoint="lg"
             >
-                <div className="logo" style={{padding: '19px 10px', color:'#51ade2',  'fontSize': '1.2em', background: '#fff'}}>
+                <div className="logo" style={{padding: '19px 10px', color:'#fff',  'fontSize': '1.2em'}}>
                     <center>{builderTitle}</center>
                 </div>
                 <Menu theme="dark" onSelect={this.onMenuSelect} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} mode="inline">

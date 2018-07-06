@@ -32,13 +32,9 @@ const RouteWithSubRoutes = route => {
 
 
 
-class PlanbuilderContent extends React.Component{
-
-    onMenuSelect = (e) => {
-        console.log(e);
-    }
-    render() {
-        const {match, location, plan={}, loading, routes:routes1, type} = this.props;
+const PlanbuilderContent = props => {
+ 
+        const {match, location, plan={}, loading, type} = props;
 
         if (loading) {
             return <Loading/>
@@ -59,9 +55,7 @@ class PlanbuilderContent extends React.Component{
         }
         const isPathway = type === 'pathway';
 
-        //console.log(mainUrl);
-
-
+        const params = {plan, type};
         const routes = [
 
             {
@@ -72,7 +66,7 @@ class PlanbuilderContent extends React.Component{
             {
                 path: mainUrl + "/publish",
                 component: Publish,
-                params: {plan, type}
+                params
             },
             {
                 path: mainUrl,
@@ -81,17 +75,17 @@ class PlanbuilderContent extends React.Component{
                     {
                         path: mainUrl + "/build/header",
                         component: isPathway ? BuildHeaderPathway : BuildHeader,
-                        params: {plan, type}
+                        params
                     },
                     {
                         path: mainUrl + "/build/body",
                         component: isPathway ? BuildBodyPathway : BuildBody,
-                        params: {plan, type}
+                        params
                     },
                     {
                         path: mainUrl,
                         component: isPathway ? BuildHeaderPathway : BuildHeader,
-                        params: {plan, type}
+                        params
                     },
                 ]
             }
@@ -106,7 +100,6 @@ class PlanbuilderContent extends React.Component{
                 {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route}  />)}
             </Switch>
         )
-    }
 }
 
 export default PlanbuilderContent;

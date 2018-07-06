@@ -15,8 +15,9 @@ const SubMenu = Menu.SubMenu;
 const ManagerLayout = ({loading, user, store, location}) => {
     return (
             <Switch>
-            <Route path="/pb/type/:type" component={asyncPlanbuilder(store)}/>
-            <Route path="/pb/:id?/:tab?/:subtab?" component={asyncPlanbuilder(store)}/>
+                <Route path="/pb" component={asyncPlanbuilder(store)}/>
+            {/* <Route path="/pb/type/:type" component={asyncPlanbuilder(store)}/>
+            <Route path="/pb/:id?/:tab?/:subtab?" component={asyncPlanbuilder(store)}/> */}
             <Route path="/:tab?/:subtab?" component={BasicLayout} />
             </Switch>
     )

@@ -9,7 +9,6 @@ const ConditionElementOptionActions = (props) => {
     if (loading) {
         return 'Loading...';
     }
-    //const {planId, treatmentId, blockId, details, onEdit, onDelete, showEditModal, onHide, mode} = props;
     //const {id, type, description} = details;
     if (elements.length === 0) {
         return <EmptyList>Click + to add an Element</EmptyList>;

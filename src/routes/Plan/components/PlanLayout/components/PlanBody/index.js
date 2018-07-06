@@ -9,205 +9,134 @@ import './index.less';
 
 // adding filters
 // for modal
-import { Modal, BackTop, List, Affix, Card, Row, Col} from 'antd';
-
-export class PlanBody extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentTab: '',
-            currentKey: '',
-            currentKeyI: 0,
-            inited: false,
-
-        };
-        this.handleClick = this.handleClick.bind(this);
-        //this.handleTab = this.handleTab.bind(this);
-        this.showFirstSection = this.showFirstSection.bind(this);
-        this.saveSection = this.saveSection.bind(this);
-        this.showNextLesson = this.showNextLesson.bind(this);
-        this.showNextSection = this.showNextSection.bind(this);
-    };
-    static propTypes = {
-    };
-
-    static defaultProps = {
-        isBuilderMode: false,
-        isPreviewMode: false,
-        planId:''//'NzUyNw'
-    }
+import { Modal, BackTop, List, Affix, Card, Row, Col, message} from 'antd';
+import { compose, withState, withStateHandlers, withHandlers } from 'recompose';
+import { withSpinnerWhileLoading } from '../../../../../../components/Modal';
 
 
-    handleClick = (key, currentKeyI, tab) => {
+const menuStyle = {
+    height: '100vh',
+    background: '#fff',
+    borderRight: '1px solid #e8e8e8',
+    overflowY: 'auto'
+};
 
-        this.setState({
-            currentTab: tab || this.state.tab,
-            currentKey: key,
-            currentKeyI: currentKeyI,
-        });
+const PlanBodyPure = props => {
+    const {isBuilderMode=false, isPreviewMode=false, plan, upid, date} = props;
 
-    }
+    const defaultProps = {isBuilderMode, isPreviewMode, plan};
 
-    showFirstSection () {
-        this.setState({
-            currentTab: 'activities',
-            currentKey: 'section_0',
-            currentKeyI: 0,
-        });
-    };
+    // menu handlers
+    const {setCurrentView, currentTab, currentKeyI} = props;
+    // lessons, activities, intro
+    const {lessons=[], activities=[], intro=[]} = props;
+    const lessonsNum = lessons.length;
+    const activitiesNum = activities.length;
 
-    showNextLesson = () => {
-        let {currentKeyI} = this.state;
-        currentKeyI++;
-        this.setState({
-            currentTab: 'lessons',
-            currentKey: 'lesson_'+currentKeyI,
-            currentKeyI: currentKeyI,
-        });
-    };
+    const showEmptyBlock = isBuilderMode && currentKeyI === -1;
+ 
 
-    saveSection = (e, sectionId, isLastSection) => {
+    return (<Row>
+        <BackTop />
+        <Col xs={5} style={isBuilderMode ? menuStyle : {}} className="plan-menu" >
+            <Affix offsetTop={10} >
+                <PlanBodyMenu {...defaultProps}   lessons={lessons} activities={activities} onClick={setCurrentView} currentTab={currentTab} currentKeyI={currentKeyI} />
+            </Affix>
+        </Col>
+        <Col offset={5}>
+            {(currentTab === 'introduction' && isBuilderMode) && <Row>
+                <Col xs={24}>
+                    <PlanIntroduction {...defaultProps} elements={intro} />
+                </Col>
+            </Row>}
+            {(currentTab === 'lessons' && lessonsNum > 0) && lessons.map((section, i) =>{
 
-        if (isLastSection) {
-            // some message
-        } else {
-            this.showNextSection();
-        }
-    };
+                if (currentKeyI === i) {
+                    const isLastLesson = i===lessonsNum-1;
+                    const list = <Row key={section.id}>
+                        <Col xs={24}>
+                            <PlanLesson {...defaultProps} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={props.showNextLesson} showFirstSection={props.showFirstSection} />
+                        </Col>
+                    </Row>;
 
-    showNextSection = () => {
-        let {currentKeyI} = this.state;
-        currentKeyI++;
-        this.setState({
-            currentTab: 'activities',
-            currentKey: 'section_'+currentKeyI,
-            currentKeyI: currentKeyI,
-        });
-    };
+                    return list;
+                }
+                return null;
+            })}
 
+            {(currentTab === 'activities' && activitiesNum > 0) && activities.map((section, i) => {
 
+                if (currentKeyI === i) {
+                    const isLastSection = i===activitiesNum-1;
+                    const list = <Row key={section.id}>
+                        <Col xs={24}>
+                            <PlanSection {...defaultProps}  upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={props.showNextSection} />
+                        </Col>
+                    </Row>;
 
+                    return list;
+                }
+                return null;
+            })}
 
-
-
-    render() {
-        //console.log(this.props);
-        const {showIntro, date, hideIntro, upid, activities, lessons, intro, loading, isBuilderMode, isPreviewMode, planId, plan} = this.props;
-        //const planId = plan.id;
-        //console.log(planId);
-        let {currentTab, currentKey} = this.state;
-        console.log(loading);
-        if (loading) {
-            return (
-                <Card loading>Loading....</Card>
-            );
-        }
-
-        /*const {plan} = client.readQuery({
-            query: PLAN_BODY_QUERY,
-            variables: {
-                id: id,
-                upid: upid,
-                date: date
-            }
-        });
-
-        const {activities, lessons, intro} = plan;
-       */
-        const lessonsNum = lessons.length;
-        const activitiesNum = activities.length;
-
-
-        if (showIntro && intro.length > 0)  {
-
-            const introHtml =  <List
-                size="large"
-                itemLayout="vertical"
-                split={false}
-                dataSource={intro}
-                renderItem={item => {
-                    return <List.Item
-                        id={'field' + item.id}
-                        key={item.id}>
-                        <PlanElement element={item} />
-                    </List.Item>
-                }}
-            />;
-            Modal.info({
-                title: 'Info',
-                content: (
-                    introHtml
-                ),
-                onOk() {hideIntro()},
-            });
-        }
-
-        //console.log(currentKey);
-        //console.log(currentTab);
-        let menuStyle = {}
-        if (isBuilderMode) {
-            menuStyle = {
-                height: '100vh',
-                background: '#fff',
-                borderRight: '1px solid #e8e8e8',
-                overflowY: 'auto'
-            }
-        }
-
-
-        const showEmptyBlock = isBuilderMode && currentKey === '';
-
-        //console.log(currentKey);
-        return (<Row>
-            <BackTop />
-            <Col xs={5} style={menuStyle} className="plan-menu" >
-                <Affix offsetTop={10} >
-                    <PlanBodyMenu isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} planId={planId}  lessons={lessons} activities={activities} onClick={this.handleClick} currentTab={currentTab} currentKey={currentKey} />
-                </Affix>
-            </Col>
-            <Col offset={5}>
-
-                {(currentKey === 'introduction' && isBuilderMode) && <Row>
-                    <Col xs={24}>
-                        <PlanIntroduction isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} planId={planId} elements={intro} />
-                    </Col>
-                </Row>}
-                {lessonsNum > 0 && lessons.map((section, i) =>{
-
-                    if (currentKey === 'lesson_'+i) {
-                        const isLastLesson = i===lessonsNum-1;
-                        const list = <Row key={section.id}>
-                            <Col xs={24}>
-                                <PlanLesson isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode} planId={planId} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={this.showNextLesson} showFirstSection={this.showFirstSection} />
-                            </Col>
-                        </Row>;
-
-                        return list;
-                    }
-                    return null;
-                })}
-
-                {activitiesNum > 0 && activities.map((section, i) => {
-
-                    if (currentKey === 'section_'+i) {
-                        const isLastSection = i===activitiesNum-1;
-                        const list = <Row key={section.id}>
-                            <Col xs={24}>
-                                <PlanSection isBuilderMode={isBuilderMode} isPreviewMode={isPreviewMode}  planId={planId}  upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={this.showNextSection} />
-                            </Col>
-                        </Row>;
-
-                        return list;
-                    }
-                    return null;
-                })}
-
-                {showEmptyBlock && <div className="empty-builder-text">Please add Introduction and Lesson or Activity</div>}
-            </Col>
-        </Row>)
-    }
+            {showEmptyBlock && <div className="empty-builder-text">Please add Introduction and Lesson or Activity</div>}
+        </Col>
+    </Row>)
 }
 
+const enhance = compose(
+    withSpinnerWhileLoading,
+    withStateHandlers(
+        (props) => ({
+            currentTab: '',
+            currentKeyI: -1,
+          }), {
+                setCurrentView: props => (tab, keyI) => {
+                    return {
+                        currentTab: tab,
+                        currentKeyI: keyI,
+                    }
+                },
+                showFirstSection: props => () => {
+                    return {
+                        currentTab: 'activities',
+                        currentKeyI: 0,
+                    }
+                },
+                showNextSection : props => () => {
+                    let {currentKeyI} = props;
+                    currentKeyI++;
+                    return {
+                        currentTab: 'activities',
+                        currentKeyI: currentKeyI,
+                    }
+                },
+                showFirstLesson: props => () => {
+                    return {
+                        currentTab: 'lessons',
+                        currentKeyI: 0,
+                    }
+                },
+                showNextLesson : props => () => {
+                    let {currentKeyI} = props;
+                    currentKeyI++;
+                    return {
+                        currentTab: 'lessons',
+                        currentKeyI: currentKeyI,
+                    }
+                }
+          }
+    ),
+    withHandlers({
+        saveSection: props => (e, sectionId, isLastSection) => {
+            if (isLastSection) {
+                message.success('This is the last Section');
+            } else {
+                this.showNextSection();
+            }
+        }
+    })
+);
 
-
+const PlanBody = enhance(PlanBodyPure);
 export default PlanBody

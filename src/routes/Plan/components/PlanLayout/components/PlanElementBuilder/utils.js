@@ -2,7 +2,7 @@ import React from 'react';
 import {Icon} from 'antd';
 export const getLabelFromElement = (element={}, props={}) => {
     const {itemInfo:item={},itemType, type, typeText} = element;
-    const {isBuilderMode=false} = props;
+    const {isBuilderMode=false, showType=true} = props;
     let fieldTitle = '';
     //console.log(element, item);
     switch(itemType) {
@@ -13,7 +13,6 @@ export const getLabelFromElement = (element={}, props={}) => {
             break;
         case 'choice_input':
         case 'checklist':
-            console.log(item);
             fieldTitle = item.label;
             break;
         case 'radio_input':
@@ -45,10 +44,14 @@ export const getLabelFromElement = (element={}, props={}) => {
             fieldTitle = item.title || '';
             break;
         case 'line':
-            fieldTitle = 'Line';
+            if (showType) {
+                fieldTitle = 'Line';
+            }
             break;
         case 'instruction_tipbox':
-            fieldTitle = 'Tipbox';
+            if (showType) {
+                fieldTitle = 'Tipbox';
+            }
             break;
         case 'link':;
             fieldTitle = item.label;
@@ -61,10 +64,14 @@ export const getLabelFromElement = (element={}, props={}) => {
             fieldTitle = item.title;
             break;
         case 'diagnosis':
+        if (showType) {
             fieldTitle = 'Diagnosis';
+        }
             break;
         case 'cancer_stage':
+        if (showType) {
             fieldTitle = 'Stage';
+        }
             break;
         case 'alias':
             fieldTitle = item.label || '';//getLabelFromElement(element.itemInfo);
@@ -74,7 +81,7 @@ export const getLabelFromElement = (element={}, props={}) => {
             break;
 
     }
-    if (1===1 || isBuilderMode) {
+    if (showType && isBuilderMode) {
         fieldTitle = typeText+(fieldTitle !== '' ? ' – ' : '')+ fieldTitle;
     }
 

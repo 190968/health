@@ -21,17 +21,17 @@ export class PlanIntroduction extends React.Component {
 
     render() {
 
-        const {elements, isBuilderMode, isPreviewMode, planId} = this.props;
+        const {elements, isBuilderMode, isPreviewMode, plan} = this.props;
 
         return (<Card  bordered={false} >
-            {1==5 && isBuilderMode && !isPreviewMode && <PlanElementsSelectbox mode="introduction" planId={planId} />}
+            {1==5 && isBuilderMode && !isPreviewMode && <PlanElementsSelectbox mode="introduction" plan={plan} />}
             {elements.length > 0 ? <List
             size="large"
             itemLayout="vertical"
             split={false}
             dataSource={elements}
             renderItem={(item, i) => {
-                return  <PlanElementEnhanced item={item} key={'item' + item.id} index={i} i={i} isBuilderMode={isBuilderMode} mode="introduction"  isPreviewMode={isPreviewMode} planId={planId}  element={item} />
+                return  <PlanElementEnhanced item={item} key={'item' + item.id} index={i} i={i} isBuilderMode={isBuilderMode} mode="introduction"  isPreviewMode={isPreviewMode} plan={plan}  element={item} />
             }}
             />:  <EmptyResults {...this.props} />}
         </Card>)
@@ -53,7 +53,7 @@ const EmptyResultsPure = (props) => {
 const PlanElementAddLinePure = (props) => {
 
     return <Divider className="element-actions">
-        {props.modalAdd && <Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}><PlanElementsSelectbox mode="introduction" planId={props.planId} /></Modal>}
+        {props.modalAdd && <Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}><PlanElementsSelectbox mode="introduction" plan={props.plan} /></Modal>}
         <Tooltip title="Add Element" onClick={props.openAddElement} ><Icon type="plus-circle-o" style={{cursor:'pointer'}} /> Add First Element</Tooltip>
     </Divider>;
 }

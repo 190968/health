@@ -2,7 +2,7 @@
  * Created by Pavel on 11.01.2018.
  */
 import React from 'react';
-import {Form ,Card,List } from 'antd';
+import {Form ,Card,List, Carousel } from 'antd';
 import { withApollo } from 'react-apollo'
 
 import '../../../../style.css';
@@ -41,15 +41,19 @@ class MyCategories extends React.Component{
 
             </Card>
         )
-        /*return(
-            <Card title="My Categories">
-                <Carousel slidesToShow={6} arrows={true} centerPadding={20} slidesToScroll={6} responsive={[{ breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll:3 }}]}>
+        const limit = 3;
+        const slidesToShow = info.length >= limit ? limit : info.length;
 
-                        {CarouselItem}
-
+        const items = info.map(item => (
+            <CategoryCard key={item.category.id} item={item.category} />
+    ));
+        return(
+            <Card  title={"My Communities"+" ("+info.length+")"}>
+                <Carousel slidesToShow={slidesToShow} arrows={true} centerPadding={20} slidesToScroll={6} responsive={[{ breakpoint: 768, settings: { slidesToShow: 3, slidesToScroll:3 }}]}>
+                        {items}
                 </Carousel>
             </Card>
-        )*/
+        )
     }
 
 }

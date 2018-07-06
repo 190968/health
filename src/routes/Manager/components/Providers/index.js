@@ -14,60 +14,53 @@ const RadioGroup = Radio.Group;
 
 
 const ProidersManager = props => {
-    const {management = [], openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
-    const {edges} = management;
+    const {getProviders = {}, openModal, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const {edges, totalCount} = getProviders;
     const columns = [{
         title: 'Name',
-        dataIndex: 'user',
-        key: 'user',
-        render: (user) => {
-            console.log(user);
-            return <AvatarWithName user={user}/>
-        },
-        sorter: (a, b) => sort(a.user, b.user, "fullName"),
+        dataIndex: 'name',
+        key: 'name',
+       
+        sorter: (a, b) => sort(a.name, b.name),
     },
+        
         {
-            title: 'Joined',
-            dataIndex: 'joinedDate',    
-            key: 'joinedDate',
-            render: (joinedDate) => {
-                return moment(joinedDate).format('L')
-            },
-            sorter: (a, b) => (a.joinedDate - b.joinedDate)
+            title: 'Type',
+            dataIndex: 'typeText',
+            key: 'type',
         },
         {
-            title: 'Phone',
-            dataIndex: 'user',
-            key: 'phone',
-            render: (user) => {
-                return user.phone.number;
+            title: 'Patients',
+            dataIndex: 'getTotalPatients',
+            key: 'getTotalPatients',
+            render: (total) => {
+                return total;
             },
         },
         {
-            title: 'Last Login',
-            dataIndex: 'lastLoginDate',
-            key: 'lastLoginDate',
-            render: (lastLoginDate) => {
-                return lastLoginDate;
+            title: 'Managers',
+            dataIndex: 'getTotalManagers',
+            key: 'getTotalManagers',
+            render: (total) => {
+                return total;
             },
         },
         {
-            title: 'Access Level',
-            dataIndex: 'accessLevel',
-            key: 'accessLevel',
-            render: (accessLevel) => {
-                return accessLevel;
+            title: 'Care Givers',
+            dataIndex: 'getTotalCareGivers',
+            key: 'getTotalManagers',
+            render: (total) => {
+                return total;
             },
-            filters: [{
-                text: 'Limited',
-                value: 'Limited',
-            }, {
-                text: 'Full Access',
-                value: 'Full Access',
-            }],
-            onFilter: (value, record) => record.accessLevel.indexOf(value) === 0,
         },
-
+        {
+            title: 'Score',
+            dataIndex: 'getAdherence',
+            key: 'getAdherence',
+            render: (adhrence) => {
+                return adhrence.level;
+            },
+        },
     ];
     const pageOpts = {
         pageSize: 20,
@@ -84,10 +77,9 @@ const ProidersManager = props => {
         }),
     };
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+        <RadioGroup defaultValue="active" style={{marginRight: 10}}>
+            <RadioButton value="active">Active</RadioButton>
+            <RadioButton value="archived">Archived</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;

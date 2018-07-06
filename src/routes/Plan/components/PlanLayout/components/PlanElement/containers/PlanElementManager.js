@@ -7,14 +7,17 @@ import {GET_PLAN_ELEMENT_QUERY} from "./queries";
 export const PlanElementWithQuery = graphql(
     GET_PLAN_ELEMENT_QUERY,
     {
-        options: (ownProps) => ({
-            skip: !ownProps.id,
-            variables: {
-                id: ownProps.id || '',
-                planId: ownProps.planId,
-            },
+        options: (ownProps) => {
+            console.log(ownProps);
+            return {
+                skip: !ownProps.id,
+                variables: {
+                    id: ownProps.id || '',
+                    planId: ownProps.plan.id,
+                }
+            }
             //fetchPolicy: !ownProps.id ? 'cache-only' : undefined,
-        }),
+        },
         props: ({ownProps, data}) => {
             //return {loading:true};
             if (!data.loading) {

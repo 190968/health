@@ -89,9 +89,9 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                             title={<span><Icon type="share-alt"/><span>Providers</span></span>}
                         >
                             <Menu.Item key="providers"><NavLink to="/providers">Active</NavLink></Menu.Item>
-                            <Menu.Item key="providers/analysis"><NavLink to="/providers/analysis">Analysis</NavLink></Menu.Item>
-                            <Menu.Item key="providers/reports"><NavLink to="/providers/reports">Reports</NavLink></Menu.Item>
-                            <SubMenu key="authorizations" title="Authorization">
+                            <Menu.Item key="providers/analysis" disabled><NavLink to="/providers/analysis">Analysis</NavLink></Menu.Item>
+                            <Menu.Item key="providers/reports" disabled><NavLink to="/providers/reports">Reports</NavLink></Menu.Item>
+                            <SubMenu key="authorizations" title="Authorization" disabled>
                                 <Menu.Item key="providers/authorization/all"><NavLink to="/providers/authorization/all">All</NavLink></Menu.Item>
                                 <Menu.Item key="providers/authorization/new"><NavLink to="/providers/authorization/new">New</NavLink></Menu.Item>
                                 <Menu.Item key="providers/authorization/approved"><NavLink to="/providers/authorization/approved">Approved</NavLink></Menu.Item>
@@ -102,8 +102,8 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                             key="programs"
                             title={<span><Icon type="laptop"/><span>Programs</span></span>}
                         >
-                            <Menu.Item key="programs/active">Active</Menu.Item>
-                            <Menu.Item key="programs/archived">Archived</Menu.Item>
+                            <Menu.Item key="active">Active</Menu.Item>
+                            <Menu.Item key="analysis" disabled>Analysis</Menu.Item>
                         </SubMenu>
                         <SubMenu
                             key="other"
@@ -121,9 +121,9 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                                 <Menu.Item key="doctors"><NavLink to="/doctors">Doctors</NavLink></Menu.Item>
                             </SubMenu>
                             <Menu.Item key="assessments"><NavLink to="/assessments">Assessments</NavLink></Menu.Item>
-                            <Menu.Item key="checklists"><NavLink to="/checklists">Checklists</NavLink></Menu.Item>
-                            <Menu.Item key="protocols"><NavLink to="/protocols">Protocols</NavLink></Menu.Item>
-                            <SubMenu key="dme" title="DME">
+                            <Menu.Item key="checklists" disabled><NavLink to="/checklists">Checklists</NavLink></Menu.Item>
+                            <Menu.Item key="protocols" disabled><NavLink to="/protocols">Protocols</NavLink></Menu.Item>
+                            <SubMenu key="dme" title="DME" disabled>
                                 <SubMenu key="dme/orders" title="Orders">
                                     <Menu.Item key="dme/orders/all"><NavLink to="/dme/orders/all">All</NavLink></Menu.Item>
                                     <Menu.Item key="dme/orders/new"><NavLink to="/dme/orders/new">New</NavLink></Menu.Item>
@@ -131,7 +131,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                                 </SubMenu>
                                 <Menu.Item key="dme/worklist"><NavLink to="/dme/worklist">Worklist</NavLink></Menu.Item>
                             </SubMenu>
-                            <Menu.Item key="claims"><NavLink to="/claims">Claims</NavLink></Menu.Item>
+                            <Menu.Item key="claims" disabled><NavLink to="/claims">Claims</NavLink></Menu.Item>
                             <Menu.Item key="clinicaltrials"><NavLink to="/clinicaltrials">Clinical Trials</NavLink></Menu.Item>
 
                         </SubMenu>

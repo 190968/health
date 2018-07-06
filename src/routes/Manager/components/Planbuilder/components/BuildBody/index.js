@@ -4,5 +4,4 @@ import PlanBody from '../../../../../Plan/components/PlanLayout/components/PlanB
 
 const BuildBody = props => <PlanBody {...props} isBuilderMode />;
 
-
 export default BuildBody

@@ -5,7 +5,7 @@ import TreatmentElementBlockItem from '../TreatmentElementBlockItem';
 import TreatmentBlockManageOptionModal from '../../../../../PlanLayout/components/PlanElementBuilder/components/TreatmentElementBuilder/containers/TreatmentBlockManageOptionModal';
 import {getTreatmentElementLabel} from "../../../../../PlanLayout/components/PlanElementBuilder/components/TreatmentElementBuilder/components/TreatmentBlockOptionSelect/index";
 
-const TreatmentElementBlock = ({i, planId, option, isPreviewMode, mode, treatmentId, isBuilderMode=false, onEdit, onDelete, onHide, showEditModal=false, onElementUpdate, handleReport=false}) => {
+const TreatmentElementBlock = ({i, plan, option, isPreviewMode, mode, treatmentId, isBuilderMode=false, onEdit, onDelete, onHide, showEditModal=false, onElementUpdate, handleReport=false}) => {
     const haveNote = option.notes || false;
     //console.log(option);
     const content = (
@@ -23,12 +23,12 @@ const TreatmentElementBlock = ({i, planId, option, isPreviewMode, mode, treatmen
             title={getTreatmentElementLabel(option)}
             description={<React.Fragment>
 
-                <TreatmentElementBlockItem planId={planId} treatmentId={treatmentId} isPreviewMode={isPreviewMode} mode={mode} details={option} />
+                <TreatmentElementBlockItem plan={plan} treatmentId={treatmentId} isPreviewMode={isPreviewMode} mode={mode} details={option} />
                 {haveNote && <div>{option.notes}</div>/*<div><Popover content={content} title="Notes" trigger="hover"><Icon type="file" style={{marginLeft:5}} /></Popover></div>*/}
             </React.Fragment>
             }
         />
-        {showEditModal && <TreatmentBlockManageOptionModal i={i} onElementUpdate={onElementUpdate} treatmentId={treatmentId} details={option} id={option.id} planId={planId} type={option.type} mode={mode} onHide={onHide}  />}
+        {showEditModal && <TreatmentBlockManageOptionModal i={i} onElementUpdate={onElementUpdate} treatmentId={treatmentId} details={option} id={option.id} plan={plan} type={option.type} mode={mode} onHide={onHide}  />}
 
     </List.Item>
 

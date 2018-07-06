@@ -4,7 +4,6 @@ import ConditionElementOption from '../../containers/ConditionElementOption';
 
 export const ConditionElementOptions = (props) => {
     console.log(props, 'options');
-    //const {planId, mode, openAddOption, details={}} = props;
     //const {id, title='', options=[]} = details;
     const {details={}} = props;
     const {options=[]} = details;
