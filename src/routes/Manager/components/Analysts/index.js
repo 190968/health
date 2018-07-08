@@ -1,6 +1,5 @@
 import React from 'react';
-import { Row, Col,Layout,Table,Radio, Card,Menu, Icon, Divider, Alert, Button, Dropdown,Tooltip } from 'antd';
-import {NavLink} from 'react-router-dom';
+import {Input,Table,Radio, Card,Icon,Button,Tooltip } from 'antd';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
@@ -12,8 +11,9 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Analysts = props => {
-    const {management=[], openModal,totalCount,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
-    const {edges} = management;
+    const {management=[],totalCount, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
+       const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
+
     const columns = [{
         title: 'Name',
         dataIndex: 'user',
@@ -23,6 +23,18 @@ const Analysts = props => {
             return <AvatarWithName user={user} />
         },
          sorter: (a, b) => sort(a.user,b.user,"fullName"),
+         filterDropdown: (
+                
+            <Input
+                suffix={suffix}
+                ref={ele => this.searchInput = ele}
+                placeholder="Search"
+                value={searchText}
+                onChange={onSearch}
+                onPressEnter={onSearch}
+            />
+    ),
+    filterIcon: <Icon type="search"/>,
     },
     {
         title: 'Phone',
@@ -71,7 +83,7 @@ const Analysts = props => {
                 >
 
     <Card type="table">
-        <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
         {showButton && <InviteButton selectedCount={selectedCount} />}
     </Card>
     {visibleModal && <AnalystsManager onHide={hideModal} />}

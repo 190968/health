@@ -1,21 +1,20 @@
 import React from 'react';
-import {Input,Button, Select, Form,} from 'antd';
+import {Input, Select, Form,} from 'antd';
 const FormItem = Form.Item;
 
 
-const ProvidersManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
+const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
 
 
     const {getFieldDecorator} = form;
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     const children = [];
-    return <Form>
-        <Button type="primary">Create new</Button>
-        <Button type="primary">Select from Existing</Button>
+    return <Form layout='vertical'>
         <FormItem
             label="Enter in the email address of who you would like to invite to Fitango Demo"
+            extra="You can send several invitations by pressing Enter after each."
         >
-            {getFieldDecorator('email', {})(
+            {getFieldDecorator('emails', {})(
                 <Select
                     mode="tags"
                     style={{width: '100%'}}
@@ -23,7 +22,6 @@ const ProvidersManager = ({form, formItemLayout, targetKeys, selectedKeys, handl
                 >
                 </Select>
             )}
-            <p>You can send several invitations by pressing Enter after each.</p>
         </FormItem>
         <FormItem
             label="Optional Message to Recipients(s)"
@@ -35,4 +33,4 @@ const ProvidersManager = ({form, formItemLayout, targetKeys, selectedKeys, handl
     </Form>
 }
 
-export default ProvidersManager;
+export default TeamManager;

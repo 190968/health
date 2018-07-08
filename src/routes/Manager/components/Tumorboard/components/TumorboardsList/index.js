@@ -125,7 +125,7 @@ const TumorobardsListPure = props => {
             ),
         }];
     const dataSource = items.map((cancer, i) => ({...cancer, key: i}));
-
+        console.log(dataSource);
     const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight: 10}} onChange={props.onChangeStatus}>
             <RadioButton value="all">All</RadioButton>

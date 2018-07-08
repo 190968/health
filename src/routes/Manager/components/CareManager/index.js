@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col,Layout,Table,Radio, Card,Menu, Icon, Divider, Alert, Button, Dropdown,Tooltip } from 'antd';
+import { Row, Col,Input,Table,Radio, Card,Menu, Icon, Divider, Alert, Button, Dropdown,Tooltip } from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
@@ -14,9 +14,9 @@ const RadioGroup = Radio.Group;
 
 
 const CareManager = props => {
-    const {management=[], openModal,totalCount,selectedCount,showButton,openShowButton,hideShowButton ,visibleModal,hideModal,loading=false} = props;
-    const {edges} = management;
-    console.log(edges);
+    const {management=[],totalCount, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton ,visibleModal,hideModal,loading=false} = props;
+    const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
+
     const columns = [{
         title: 'Name',
         dataIndex: 'user',
@@ -26,6 +26,18 @@ const CareManager = props => {
             return <AvatarWithName user={user} />
         },
          sorter: (a, b) => sort(a.user,b.user,"fullName"),
+         filterDropdown: (
+                
+            <Input
+                suffix={suffix}
+                ref={ele => this.searchInput = ele}
+                placeholder="Search"
+                value={searchText}
+                onChange={onSearch}
+                onPressEnter={onSearch}
+            />
+    ),
+    filterIcon: <Icon type="search"/>,
     },
     {
         title: 'Phone',
@@ -75,7 +87,7 @@ const CareManager = props => {
                 >
 
     <Card type="basic1  ant-card-type-table">
-        <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+        <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
         {showButton && <InviteButton selectedCount={selectedCount} />}
     </Card>
     {visibleModal && <CareManagerr onHide={hideModal} />}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col, Layout, Table, Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
+import {Row, Col, Input, Table, Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
@@ -14,8 +14,9 @@ const RadioGroup = Radio.Group;
 
 
 const NetworkManager = props => {
-    const {management = [], openModal, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
-    const {edges, totalCount} = management;
+    const {management = [],testq,loadByStatus,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+   console.log(props);
+    const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'Name',
         dataIndex: 'user',
@@ -25,6 +26,17 @@ const NetworkManager = props => {
             return <AvatarWithName user={user}/>
         },
         sorter: (a, b) => sort(a.user, b.user, "fullName"),
+        filterDropdown: (
+            <Input
+                suffix={suffix}
+                ref={ele => this.searchInput = ele}
+                placeholder="Search"
+                value={searchText}
+                onChange={onSearch}
+                onPressEnter={onSearch}
+            />
+    ),
+    filterIcon: <Icon type="search"/>,
     },
         {
             title: 'Joined',
@@ -85,8 +97,8 @@ const NetworkManager = props => {
     };
     const actions = <React.Fragment>
         <RadioGroup defaultValue="active" style={{marginRight: 10}}>
-            <RadioButton value="active">Active</RadioButton>
-            <RadioButton value="pending">Pending</RadioButton>
+            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
+            <RadioButton value="pending" onClick={testq}>Pending</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
@@ -97,7 +109,7 @@ const NetworkManager = props => {
         >
 
             <Card type="basic1  ant-card-type-table">
-                <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns}
+                <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
                 {showButton && <InviteButton selectedCount={selectedCount}/>}
             </Card>

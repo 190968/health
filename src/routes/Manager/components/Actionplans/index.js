@@ -9,9 +9,9 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
     const actions = <React.Fragment>
             <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-                <RadioButton value="all">All</RadioButton>
-                <RadioButton value="open">Open</RadioButton>
-                <RadioButton value="past">Past</RadioButton>
+                <RadioButton value="all">Published</RadioButton>
+                <RadioButton value="open">Draft </RadioButton>
+                <RadioButton value="past">Now</RadioButton>
             </RadioGroup>
             <Tooltip title="Add New ActionPlan"><Link to='/pb'><Button type="primary"><Icon
                 type="plus"/></Button></Link></Tooltip>

@@ -1,12 +1,12 @@
 import React from 'react';
-import {Row, Col, Layout, Table, Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
+import {Row, Col, Layout, Table, Input,Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
-import ProvidersManagerr from "./containers/ProvidersManager";
-//import InviteButton from "../../../../components/Tables/InviteButton/index";
+import ProviderEditor from "./containers/ProvidersManager";
+
 import sort from '../../../../components/Tables/sort';
 
 const RadioButton = Radio.Button;
@@ -14,74 +14,64 @@ const RadioGroup = Radio.Group;
 
 
 const ProidersManager = props => {
-    const {management = [], openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
-    const {edges} = management;
+    const {getProviders = [], edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
+console.log(getProviders);
     const columns = [{
-        title: 'Name',
-        dataIndex: 'user',
-        key: 'user',
-        render: (user) => {
-            console.log(user);
-            return <AvatarWithName user={user}/>
-        },
-        sorter: (a, b) => sort(a.user, b.user, "fullName"),
+        title: 'Title',
+        dataIndex: 'name',
+        key: 'name',
+        sorter: (a, b) => sort(a, b,"name"),
+        filterDropdown: (
+                
+            <Input
+                suffix={suffix}
+                ref={ele => this.searchInput = ele}
+                placeholder="Search"
+                value={searchText}
+                onChange={onSearch}
+                onPressEnter={onSearch}
+            />
+    ),
+    filterIcon: <Icon type="search"/>,
     },
         {
-            title: 'Joined',
-            dataIndex: 'joinedDate',    
-            key: 'joinedDate',
-            render: (joinedDate) => {
-                return moment(joinedDate).format('L')
-            },
-            sorter: (a, b) => (a.joinedDate - b.joinedDate)
+            title: 'Type',
+            dataIndex: 'type',    
+            key: 'type',
+            sorter: (a, b) => (a.type - b.type)
         },
         {
-            title: 'Phone',
-            dataIndex: 'user',
-            key: 'phone',
-            render: (user) => {
-                return user.phone.number;
-            },
+            title: 'Patients',
+            dataIndex: 'patients',
+            key: 'patients',
+            sorter: (a, b) => (a.patients - b.patients)
         },
         {
-            title: 'Last Login',
-            dataIndex: 'lastLoginDate',
-            key: 'lastLoginDate',
-            render: (lastLoginDate) => {
-                return lastLoginDate;
-            },
+            title: 'Managers',
+            dataIndex: 'managers',
+            key: 'managers',
+            sorter: (a, b) => (a.managers - b.managers  )
         },
         {
-            title: 'Access Level',
-            dataIndex: 'accessLevel',
-            key: 'accessLevel',
-            render: (accessLevel) => {
-                return accessLevel;
-            },
-            filters: [{
-                text: 'Limited',
-                value: 'Limited',
-            }, {
-                text: 'Full Access',
-                value: 'Full Access',
-            }],
-            onFilter: (value, record) => record.accessLevel.indexOf(value) === 0,
+            title: 'Care Givers',
+            dataIndex: 'managers',
+            key: 'managers',
+            sorter: (a, b) => (a.managers - b.managers  )
         },
+        {
+            title: 'Score',
+            dataIndex: 'score',
+            key: 'score',
+            sorter: (a, b) => (a.managers - b.managers  )
+        },
+        
 
     ];
     const pageOpts = {
         pageSize: 20,
         total: totalCount,
         hideOnSinglePage: true
-    };
-    const rowSelection = {
-        onChange: record => (
-            record.length < 1 ? hideShowButton() : openShowButton(record.length)
-
-        ),
-        getCheckboxProps: record => ({
-            name: record.name,
-        }),
     };
     const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight: 10}}>
@@ -98,11 +88,10 @@ const ProidersManager = props => {
         >
 
             <Card type="basic1  ant-card-type-table">
-                <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns}
+                <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {/* {showButton && <InviteButton selectedCount={selectedCount}/>} */}
             </Card>
-            {/* {visibleModal && <NetworkManagerr onHide={hideModal}/>} */}
+            {visibleModal && <ProviderEditor onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }

@@ -46,7 +46,6 @@ export default class TableCustom extends React.Component {
             },
             sorter: (a, b) => sort(a, b, "title"),
             filterDropdown: (
-                
                     <Input
                         suffix={suffix}
                         ref={ele => this.searchInput = ele}
@@ -82,12 +81,9 @@ export default class TableCustom extends React.Component {
                 key: 'date',
                 render: (info) => moment(info).format('L'),
                 filterDropdown: (
-                    <div className="custom-filter-dropdown">
-                        <RangePicker
-                            onChange={this.onChange}
-                            defaultValue={[moment(new Date(), dateFormat), moment(new Date(), dateFormat)]}
-                            format={dateFormat}
-                        />
+                    <div>
+                        <DatePicker />
+                        <DatePicker />
                     </div>
                 ),
                 filterIcon: <Icon type="filter" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
@@ -101,8 +97,7 @@ export default class TableCustom extends React.Component {
                 },
                 sorter: (a, b) => sort(a, b, "creator"),
             }, {
-                title: 'Actions',
-
+                className: 'action',
                 render: (info) => {
                     const menu = (
                         <Menu>

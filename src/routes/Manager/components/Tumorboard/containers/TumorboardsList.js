@@ -24,11 +24,11 @@ const withQuery = graphql(
         options: (ownProps) => {
             return {
                 //skip: !ownProps.ready,
-                /*variables: {
-                    user_id: ownProps.user_id,
+                variables: {
+                   // user_id: ownProps.user_id,
                     status: 'active'
                     //date:ownProps.date
-                },*/
+                },
                 fetchPolicy: 'network-only',
                 //notifyOnNetworkStatusChange:true
             }

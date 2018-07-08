@@ -1,35 +1,28 @@
-import Pathways from '../components/Pathways';
-import React from 'react';
-import {compose,withStateHandlers} from 'recompose';
+import Assessments from '../components/Assessments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
-export const GET_PATHWAYS_QUERY = gql`    
-    query GET_PATHWAYS {
-        getPathways (status: "all") {
-            totalCount
-            edges {
-                id
-                title
-                cancer {
-                    id
-                    title
-                }
-                createdOn
-                creator {
-                    id
-                    fullName
-                }
-                status
-                statusText
-            }
-        }
+import React from 'react';
+import {compose,withStateHandlers} from 'recompose';
+export const GET_CANCER_STAGES_QUERY = gql`    
+query GET_ASSESSMENTS {
+    getAssessments {
+      totalCount
+      edges {
+        id
+        name
+        isForm
+        status
+        isPatientReport
+        getTotalAssigns
+        createdDate
+      }
     }
+  }
 `;
 
 // 1- add queries:
 const withQuery = graphql(
-    GET_PATHWAYS_QUERY,
+    GET_CANCER_STAGES_QUERY,
     {
         //name: 'PlanstorePlans',
         options: (ownProps) => {
@@ -48,8 +41,8 @@ const withQuery = graphql(
             if (!data.loading) {
 
                 return {
-                    pathways: data.getPathways.edges,
-                    total: data.getPathways.totalCount,
+                    getAssessments: data.getAssessments.edges,
+                    total: data.getAssessments.totalCount,
                     loading: data.loading,
                     loadByStatus(status) {
                         return data.fetchMore({
@@ -93,27 +86,29 @@ const withQuery = graphql(
         },
     }
 );
+
 const enhance = compose(
-    withQuery,
+   withQuery,
     withStateHandlers(
         (props) => (
             {
             searchText: '',
+            searchTextCode: '',
         }),
         {        
             onSearch: ({searchText},props) =>(value) => (
                 {
                     searchText: value.target.value,
-                    pathways: props.pathways.map((record) => {
-                        const match = record.title.match(new RegExp(value.target.value, 'gi'));
+                    getAssessments: props.getAssessments.map((record) => {
+                        const match = record.name.match(new RegExp(value.target.value, 'gi'));
                         if (!match) {
                             return null;
                         }                        
                         return {
                             ...record,
-                            title: (
+                            name: (
                                 <span>
-                      {record.title.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
+                      {record.name.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
                       i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
                       ))}
                     </span>
@@ -124,10 +119,34 @@ const enhance = compose(
             emitEmpty: ({searchText},props) =>(value) => (
                 {
                     searchText: '',
-                    pathways: props.pathways
-                     })
+                    getAssessments: props.getAssessments
+                     }),
+            onSearchCode: ({searchTextCode},props) =>(value) => (
+                        {
+                            searchTextCode: value.target.value,
+                            getPayers: props.getPayers.map((record) => {
+                                const match = record.code.match(new RegExp(value.target.value, 'gi'));
+                                if (!match) {
+                                    return null;
+                                }                        
+                                return {
+                                    ...record,
+                                    code: (
+                                        <span>
+                              {record.code.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
+                              i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                              ))}
+                            </span>
+                                    ),
+                                };
+                            }).filter(record => !!record),
+                    }),
+            emitEmptyCode: ({searchTextCode},props) =>(value) => (
+                        {
+                            searchTextCode: '',
+                            getPayers: props.getPayers
+                             })
             })        
 
 );
-
-export default enhance(Pathways);
+export default enhance(Assessments);

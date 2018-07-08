@@ -206,6 +206,36 @@ export const asyncProviders = () => {
         })
     );
 }
+export const asyncPayers = () => {
 
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Payers'),
+            modules: ['../routes/Manager/containers/Payers'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Payers')],
+        })
+    );
+}
+
+export const asyncDoctors = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Doctors'),
+            modules: ['../routes/Manager/containers/Doctors'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Doctors')],
+        })
+    );
+}
+export const asyncAssessments = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Assessments'),
+            modules: ['../routes/Manager/containers/Assessments'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Assessments')],
+        })
+    );
+}
 
 
