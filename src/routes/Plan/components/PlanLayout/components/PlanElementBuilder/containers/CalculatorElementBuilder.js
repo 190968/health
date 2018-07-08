@@ -28,7 +28,7 @@ const CalculatorElementBuilderWithQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                pid: ownProps.planId,
+                pid: ownProps.plan.id,
             }
         }),
         props: ({data}) => {

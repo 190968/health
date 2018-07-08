@@ -38,10 +38,11 @@ const planElementChildrenFragment =  gql`
 export const withMutation = graphql(deletePlanElement, {
     props: ({ ownProps, mutate }) => ({
         deleteElement: (id) => {
+            console.log(ownProps);
             return mutate({
-                variables: { planId:ownProps.planId, id: id},
+                variables: { planId:ownProps.plan.id, id: id},
                 update: (client, { data: { planElementReport } }) => {
-                    const {mode, planId, parentId} = ownProps;
+                    const {mode, plan, parentId} = ownProps;
                     console.log(ownProps);
                     if (parentId) {
                         // update element
@@ -51,7 +52,7 @@ export const withMutation = graphql(deletePlanElement, {
                             fragmentName: "PlanBodyElements",
                         });
 
-                        console.log(pathway);
+                        //console.log(pathway);
                         // let {childrenElements:elements} = pathway;
                         // elements = elements.filter(element => element.id !== id);
                         // elements = elements.length > 0 ? elements : [];
@@ -71,7 +72,7 @@ export const withMutation = graphql(deletePlanElement, {
                         if (mode === 'pathway') {
                             // if it's pathway - remov
                             let pathway = client.readFragment({
-                                id: 'Pathway:' + planId, // `id` is any id that could be returned by `dataIdFromObject`.
+                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
                                 fragment: pathwayFragment,
                                 fragmentName: "PathwayElements",
                             });
@@ -81,7 +82,7 @@ export const withMutation = graphql(deletePlanElement, {
                             elements = elements.length > 0 ? elements : [];
 
                             client.writeFragment({
-                                id: 'Pathway:' + planId, // `id` is any id that could be returned by `dataIdFromObject`.
+                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
                                 fragment: pathwayFragment,
                                 fragmentName: "PathwayElements",
                                 data: {
@@ -139,7 +140,6 @@ const enhanceInner = compose(
         },
         addBeforeElement: props => () => {
             let i = props.i;
-            console.log(props.i);
             if (i > 0) {
                 i--;
             }

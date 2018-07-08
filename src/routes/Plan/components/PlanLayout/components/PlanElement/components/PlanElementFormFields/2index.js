@@ -49,12 +49,12 @@ class PlanElementEditModal extends React.Component{
             return <LoadingModal />;
         }
         //console.log(this.props);
-        const {element, type, planId, form} = this.props;
+        const {element, type, plan, form} = this.props;
         let block = null;
         let prepareInput = null;
 
         const propsForElement = {
-            planId,
+            plan,
             //blockId,
             //blockIsAction,
             details: element.itemInfo,

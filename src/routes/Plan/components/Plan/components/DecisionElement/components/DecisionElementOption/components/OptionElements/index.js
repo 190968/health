@@ -36,7 +36,7 @@ const PlanElementAddLinePure = (props) => {
     // console.log(props);
     const {parentId, parentValue} = props;
     return <Divider className="element-actions">
-        {props.modalAdd && <Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}><PlanElementsSelectbox mode="decision" planId={props.planId} parentId={parentId} parentValue={parentValue} /></Modal>}
+        {props.modalAdd && <Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}><PlanElementsSelectbox mode="decision" plan={props.plan} parentId={parentId} parentValue={parentValue} /></Modal>}
         <Tooltip title="Add Element" onClick={props.openAddElement} ><Icon type="plus-circle-o" style={{cursor:'pointer'}} /> Add First Element</Tooltip>
     </Divider>;
 }

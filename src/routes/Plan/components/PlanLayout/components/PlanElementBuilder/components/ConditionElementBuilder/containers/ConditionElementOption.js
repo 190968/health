@@ -12,7 +12,7 @@ const withQuery = graphql(
         options: (ownProps) => ({
             variables: {
                 id: ownProps.element.id,
-                planId: ownProps.planId,
+                planId: ownProps.plan.id,
                 elementValue: ownProps.option.value
             },
             //fetchPolicy: 'network_only'

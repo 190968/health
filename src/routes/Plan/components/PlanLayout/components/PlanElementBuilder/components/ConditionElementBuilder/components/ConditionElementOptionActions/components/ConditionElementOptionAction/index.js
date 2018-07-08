@@ -4,7 +4,6 @@ import PlanElement from '../../../../../../../../components/PlanElement';
 
 const ConditionElementOptionAction = (props) => {
     console.log(props);
-    //const {planId, treatmentId, blockId, details, onEdit, onDelete, showEditModal, onHide, mode} = props;
     const {element} = props;
     return <List.Item
             key={element.id}

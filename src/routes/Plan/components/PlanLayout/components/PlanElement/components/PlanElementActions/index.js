@@ -16,7 +16,6 @@ const PlanElementActions = (props) => {
     //console.log(props);
     let {order = null, openEditElement, toggleEditElement, deleteElement, addAfterElement, hideOrder, buttons=[]} = props;
     // let button =
-    console.log(props);
     if (order !== null ) {
         return <React.Fragment>
             <Modal title="Select Element" visible={true} footer={false} onCancel={hideOrder}><PlanElementsSelectbox {...props} id="" type="" onHide={hideOrder} /></Modal>

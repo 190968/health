@@ -2,7 +2,7 @@ import React from 'react';
 //import Decision from './containers/Decision';
 
 
-export const TreatmentElementBlockItem = ({planId, details, showChildren, isPreviewMode, mode, }) => {
+export const TreatmentElementBlockItem = ({plan, details, showChildren, isPreviewMode, mode, }) => {
     const {type, description='', element={}} = details;
     let html = null;
     switch(type) {
@@ -20,7 +20,7 @@ export const TreatmentElementBlockItem = ({planId, details, showChildren, isPrev
         /*case 'decision':
             //element
             html = <React.Fragment>
-                <Decision planId={planId} elementId={element.id} isPreviewMode={isPreviewMode} mode={mode} options={element.info.options} />
+                <Decision plan={plan} elementId={element.id} isPreviewMode={isPreviewMode} mode={mode} options={element.info.options} />
             </React.Fragment>
             break;*/
         default:

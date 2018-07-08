@@ -10,10 +10,9 @@ import {EmptyList} from "../../../../../../../../components/Loading/index";
 
 const PlanElementChildrenList = (props) => {
     //console.log(props);
-    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, planId, mode, loading} = props;
+    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, plan, mode, loading} = props;
     return (<React.Fragment>
 
-        {/*isBuilderMode && <PlanElementChildrenSelect mode={mode} planId={planId} parentId={elementId} parentValue={elementValue} onHide={props.onHide} onElementAdd={props.onElementAdd} />*/}
         {elements.length > 0 ?
             <List
                 size="large"
@@ -24,7 +23,7 @@ const PlanElementChildrenList = (props) => {
                     return <List.Item
                         id={'field' + item.id}
                         key={item.id}>
-                        <PlanElementChildrenElement i={i} isDraggable={isDraggable} onDrop={onDrop} element={item} planId={planId} mode={mode} isBuilderMode={isBuilderMode}
+                        <PlanElementChildrenElement i={i} isDraggable={isDraggable} onDrop={onDrop} element={item} plan={plan} mode={mode} isBuilderMode={isBuilderMode}
                                                     parentId={elementId} parentValue={elementValue}
                                                      isPreviewMode={isPreviewMode}
                         />
@@ -44,10 +43,10 @@ export default PlanElementChildrenList;
 
 
 const AddChildrenButtonPure = props => {
-    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, planId, mode, loading} = props;
+    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, plan, mode, loading} = props;
     return <React.Fragment>
         {props.showModal && <Modal title="Select Element" visible={true} onOk={props.toggleModal} onCancel={props.toggleModal}>
-            <PlanElementChildrenSelect mode={mode} planId={planId} parentId={elementId} parentValue={elementValue} onHide={props.hideModal} onElementAdd={props.onElementAdd} />
+            <PlanElementChildrenSelect mode={mode} plan={plan} parentId={elementId} parentValue={elementValue} onHide={props.hideModal} onElementAdd={props.onElementAdd} />
         </Modal>}
         <Button onClick={props.toggleModal}>Add First Element</Button>
     </React.Fragment>

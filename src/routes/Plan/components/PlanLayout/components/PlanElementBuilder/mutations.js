@@ -16,13 +16,14 @@ export const UpdateElementMutation = gql`
     ${PlanElementPureFragment}
 `;
 export const withMutation = graphql(UpdateElementMutation, {
-    props: ({ ownProps, mutate }) => ({
+    props: ({ ownProps, mutate }) => {
+        return {
         updateElement: (input) => {
             return mutate({
-                variables: {planId:ownProps.planId, id: ownProps.id, input:input},
+                variables: {planId:ownProps.plan.id, id: ownProps.id, input:input},
             })
-        },
-    }),
+        }}
+    },
 });
 
 
@@ -104,10 +105,10 @@ export const withAddLessonMutation = graphql(AddLessonElementMutation, {
             const {order=null} = ownProps;
             const inputOrder = {...input, order};
             return mutate({
-                variables: {planId:ownProps.planId, type:type, lessonId:ownProps.lessonId, input:inputOrder},
+                variables: {planId:ownProps.plan.id, type:type, lessonId:ownProps.lessonId, input:inputOrder},
                 refetchQueries: [{
                     query: PLAN_PLAN_LESSONS_QUERY,
-                    variables: {id:ownProps.planId}
+                    variables: {id:ownProps.plan.id}
                 }],
             })
         },
@@ -128,10 +129,10 @@ export const withAddSectionMutation = graphql(AddSectionElementMutation, {
             const {order=null} = ownProps;
             const inputOrder = {...input, order};
             return mutate({
-                variables: {planId:ownProps.planId, type:type, activityId:ownProps.sectionId, input:inputOrder},
+                variables: {planId:ownProps.plan.id, type:type, activityId:ownProps.sectionId, input:inputOrder},
                 refetchQueries: [{
                     query: PLAN_PLAN_ACTIVITIES_QUERY,
-                    variables: {id:ownProps.planId}
+                    variables: {id:ownProps.plan.id}
                 }],
             })
         },
@@ -152,10 +153,10 @@ export const withAddIntroMutation = graphql(AddIntroElementMutation, {
             const {order=null} = ownProps;
             const inputOrder = {...input, order};
             return mutate({
-                variables: {planId:ownProps.planId, type:type, input:inputOrder},
+                variables: {planId:ownProps.plan.id, type:type, input:inputOrder},
                 refetchQueries: [{
                     query: PLAN_PLAN_INTRO_QUERY,
-                    variables: {id:ownProps.planId}
+                    variables: {id:ownProps.plan.id}
                 }],
             })
         },
@@ -177,10 +178,10 @@ export const withAddPathwayMutation = graphql(AddPathwayElementMutation, {
             const {order=null} = ownProps;
             const inputOrder = {...input, order};
             return mutate({
-                variables: {planId:ownProps.planId, type:type, input:inputOrder},
+                variables: {planId:ownProps.plan.id, type:type, input:inputOrder},
                 refetchQueries: [{
                     query: PATHWAY_ELEMENTS_QUERY,
-                    variables: {id:ownProps.planId}
+                    variables: {id:ownProps.plan.id}
                 }],
             })
         },
@@ -203,10 +204,10 @@ const withAddChildMutation = graphql(addChildElementMutation, {
             const {order=null} = ownProps;
             const inputOrder = {...input, order};
             return mutate({
-                variables: {planId:ownProps.planId, type:type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:inputOrder},
+                variables: {planId:ownProps.plan.id, type:type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:inputOrder},
                 refetchQueries: [{
                     query: PLAN_ELEMENT_CHILDREN_QUERY,
-                    variables: {id:ownProps.parentId, planId:ownProps.planId, elementValue:ownProps.parentValue}
+                    variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}
                 }]
             })
         },

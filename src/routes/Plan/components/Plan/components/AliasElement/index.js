@@ -15,11 +15,11 @@ const AliasModal = compose(
 )(PlanElementChildrenList);
 
 export const AliasElement = props => {
-    const {element={}, toggleChildren, viewModal = false, onDrop, planId, isDraggable, isBuilderMode, mode} = props;
+    const {element={}, toggleChildren, viewModal = false, onDrop, plan, isDraggable, isBuilderMode, mode} = props;
     const {itemInfo={}} = element;
     let {btnLabel='Show', hasElement=false} = itemInfo;
     return <React.Fragment>
-        {viewModal && <AliasModal onHide={toggleChildren} elementId={element.id} onDrop={onDrop} planId={planId} isDraggable={isDraggable} isPreviewMode={true} isBuilderMode={isBuilderMode} mode={mode} /*elementValue={props.elementValue} */ />}
+        {viewModal && <AliasModal onHide={toggleChildren} elementId={element.id} onDrop={onDrop} plan={plan} isDraggable={isDraggable} isPreviewMode={true} isBuilderMode={isBuilderMode} mode={mode} /*elementValue={props.elementValue} */ />}
         {hasElement && <Button type="primary" onClick={toggleChildren}>{btnLabel}</Button>}
         {!hasElement && <Alert message="No Element has been added" type="error" />}
     </React.Fragment>

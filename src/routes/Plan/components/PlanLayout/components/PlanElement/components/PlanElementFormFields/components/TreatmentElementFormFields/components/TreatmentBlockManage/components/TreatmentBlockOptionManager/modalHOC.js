@@ -19,7 +19,7 @@ export const withAddPathwayMutation = graphql(AddPathwayElementMutation, {
     props: ({ ownProps, mutate }) => ({
         addPathwayElement: (input) => {
             return mutate({
-                variables: {planId:ownProps.planId, type:ownProps.type, input:input},
+                variables: {planId:ownProps.plan.id, type:ownProps.type, input:input},
             })
         },
     }),

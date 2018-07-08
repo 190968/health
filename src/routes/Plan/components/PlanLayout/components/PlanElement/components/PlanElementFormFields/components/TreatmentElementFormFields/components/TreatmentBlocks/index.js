@@ -134,7 +134,7 @@ class OptionsElementFormFields extends React.Component {
 
     render() {
         console.log(this.props);
-        const {id="", form, intl, details, planId} = this.props;
+        const {id="", form, intl, details, plan} = this.props;
         const {getFieldDecorator, getFieldValue} = form;
         const {id:treatmentId,title, blocks=[]} = details;
         //getFieldDecorator('keys');
@@ -150,7 +150,6 @@ class OptionsElementFormFields extends React.Component {
                     required={true}
                     key={k}
                 >
-                            {/*<TreatmentBlockManagerModal k={k} form={form} planId={planId} treatmentId={treatmentId} details={block} id={block.id||''} onHide={this.hideBlock} />*/}
                             {getFieldDecorator(`blocks[${k}]`, {
                                 initialValue: block.title || '',
                                 validateTrigger: ['onChange', 'onBlur']

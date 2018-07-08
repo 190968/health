@@ -11,13 +11,12 @@ const enhance = compose(
     mapProps(
         props => {
             let {parentId, parentValue} = props;
-            const {planId, lessonId, sectionId, id, type, mode, onHide, order=null } = props;
-
+            const {plan, lessonId, sectionId, id, type, mode, onHide, order=null } = props;
             // if (element) {
             //     parentId = element.id;
             // }
             return {
-                planId,
+                plan,
                 lessonId,
                 sectionId,
                 id,

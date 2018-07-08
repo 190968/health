@@ -19,7 +19,7 @@ class TreatmentBlockOptionAddModal extends React.Component {
 
     render() {
 
-        const {id, onAdd, form, planId} = this.props;
+        const {id, onAdd, form, plan} = this.props;
 
         return (<Modal
             title={this.state.optionType === '' ? "Select Element" : 'Add Element'}
@@ -28,7 +28,7 @@ class TreatmentBlockOptionAddModal extends React.Component {
             footer={false}
         >
             {this.state.optionType !== '' &&
-            <TreatmentBlockOptionManager planId={planId} id={id} form={form} type={this.state.optionType}
+            <TreatmentBlockOptionManager plan={plan} id={id} form={form} type={this.state.optionType}
                                          onHide={this.close} onAdd={onAdd}/>
             }
             <TreatmentBlockOptionSelect onHide={this.props.onHide} onSelect={this.onSelect}/>

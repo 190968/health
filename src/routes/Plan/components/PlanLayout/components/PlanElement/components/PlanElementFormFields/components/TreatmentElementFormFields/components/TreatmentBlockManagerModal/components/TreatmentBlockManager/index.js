@@ -18,7 +18,7 @@ const formTailLayout = {
 
 
 export const TreatmentBlockManagerPure = (props) => {
-    const {planId, mode, treatmentId = '', openAddOption, details={}, k} = props;
+    const {plan, mode, treatmentId = '', openAddOption, details={}, k} = props;
     const {id, title='', options=[]} = details;
     return <Card title={title} extra={<Icon type="plus" onClick={props.onAddOption} />} >
 
@@ -26,11 +26,11 @@ export const TreatmentBlockManagerPure = (props) => {
             itemLayout="horizontal"
             dataSource={options}
             renderItem={(option, i) => (
-                    <TreatmentBlockOption planId={planId} treatmentId={treatmentId} blockId={id} mode={mode} details={option} />
+                    <TreatmentBlockOption plan={plan} treatmentId={treatmentId} blockId={id} mode={mode} details={option} />
             )}
         />
 
-        {openAddOption && <TreatmentBlockManageOptionModal planId={planId} treatmentId={treatmentId} blockId={id} mode={mode} onHide={props.onHideOption} onElementAdd={props.onElementAdd} />}
+        {openAddOption && <TreatmentBlockManageOptionModal plan={plan} treatmentId={treatmentId} blockId={id} mode={mode} onHide={props.onHideOption} onElementAdd={props.onElementAdd} />}
     </Card>
 }
 

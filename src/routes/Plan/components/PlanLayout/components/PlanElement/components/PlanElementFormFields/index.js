@@ -56,12 +56,12 @@ export default class PlanElementFormFields extends React.Component{
         }
 
        // console.log(this.props);
-        const {id, element, type, planId, form, handleSave} = this.props;
+        const {id, element, type, plan, form, handleSave} = this.props;
         let block = null;
 
         const propsForElement = {
             id,
-            planId,
+            plan,
             handleSave:handleSave,
             //blockId,
             //blockIsAction,

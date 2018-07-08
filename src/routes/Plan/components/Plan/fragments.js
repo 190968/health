@@ -3,13 +3,14 @@ import {TreatmentElementFragment} from "./components/TreatmentElement/components
 
 export const PlanCardFragment = gql`
         fragment PlanCardInfo on Plan {
-            id,
-            title,
-            description,
+            id
+            title
+            description
+            type
             thumb {
-                small,
-                medium,
-                large,
+                small
+                medium
+                large
                 wide
             }
         }

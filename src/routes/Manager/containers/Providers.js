@@ -13,6 +13,13 @@ query GET_PROVIDERS ($search: String, $status: RoleStatusEnum = active) {
       edges {
         id
         name
+        typeText
+        getTotalPatients
+        getTotalCareGivers:getTotalStaff(role: cm)
+        getTotalManagers:getTotalStaff(role: manager)
+        getAdherence {
+            level
+        }
       }
     }
   }

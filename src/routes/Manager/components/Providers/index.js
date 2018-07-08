@@ -16,7 +16,7 @@ const RadioGroup = Radio.Group;
 const ProidersManager = props => {
     const {getProviders = [], edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
-console.log(getProviders);
+
     const columns = [{
         title: 'Title',
         dataIndex: 'name',
@@ -74,10 +74,9 @@ console.log(getProviders);
         hideOnSinglePage: true
     };
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+        <RadioGroup defaultValue="active" style={{marginRight: 10}}>
+            <RadioButton value="active">Active</RadioButton>
+            <RadioButton value="archived">Archived</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;

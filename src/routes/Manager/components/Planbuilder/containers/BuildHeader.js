@@ -118,4 +118,4 @@ export const withMutations = compose(
 
 
 
-export default withMutations((BuildHeader));//withQuery
+export default withMutations(BuildHeader);

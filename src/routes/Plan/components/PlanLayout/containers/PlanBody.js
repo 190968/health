@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import PlanBody from '../components/PlanBody'
+import PlanBody from '../components/PlanBody';
+import {compose, withHandlers, withState} from 'recompose';
 // gragement
 import {PlanCardFragment, PlanElementFragment} from '../../../../Plan/components/Plan/fragments';
 
@@ -44,16 +45,17 @@ export const PLAN_BODY_QUERY = gql`
 const PlanBodyWithQuery = graphql(
     PLAN_BODY_QUERY,
     {
-        options: (ownProps) => ({
-            variables: {
-                id: ownProps.id,
-                upid: ownProps.upid,
-                date: ownProps.date
+        options: (ownProps) => {
+            console.log(ownProps);
+            return {
+                variables: {
+                    id: ownProps.plan.id,
+                    upid: ownProps.upid,
+                    date: ownProps.date
+                }
             }
-
-        }),
+        },
         props: ({  data }) => {
-            console.log(data);
             if (!data.loading) {
                 const plan = data.plan;
 
@@ -73,24 +75,12 @@ const PlanBodyWithQuery = graphql(
                     loadDate(date) {
 
                         return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
                             variables: {
-                                // We are able to figure out which offset to use because it matches
-                                // the feed length, but we could also use state, or the previous
-                                // variables to calculate this (see the cursor example below)
-                                //id: ownProps.id,
-                                //upid: ownProps.upid,
                                 date: date,
                             },
                             updateQuery: (previousResult, {fetchMoreResult}) => {
-                                //return {medicationPlan:{id:29}};
-
-                                //fetchMoreResult.date = date;
                                 if (!fetchMoreResult) { return previousResult; }
                                 return fetchMoreResult;
-                                /*return Object.assign({}, previousResult, {
-                                    medicationPlan: fetchMoreResult.medicationPlan,
-                                });*/
                             },
                         });
                     }
@@ -101,29 +91,11 @@ const PlanBodyWithQuery = graphql(
             }
         },
     }
-)(PlanBody);
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
+);
+ 
+const enhance = compose(
+    PlanBodyWithQuery,
+    //withState('', ''),
+);
 
-const mapStateToProps = (state) => {
-    return {
-        // view store:
-        //currentView:  state.views.currentView,
-        // userAuth:
-        //plan: state.plan,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        //increment: (info) => {dispatch(increment(info))},
-        //doubleAsync
-    }
-};
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PlanBodyWithQuery);
+export default enhance(PlanBody);
