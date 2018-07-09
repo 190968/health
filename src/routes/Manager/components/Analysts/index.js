@@ -11,7 +11,7 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Analysts = props => {
-    const {management=[],totalCount, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
+    const {management=[],totalCount,loadByStatus, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
        const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
 
     const columns = [{
@@ -69,9 +69,8 @@ const Analysts = props => {
     };
         const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight:10}} >
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
+            <RadioButton value="pending" onClick={loadByStatus}>Pending</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus" /></Button></Tooltip>
     </React.Fragment>;

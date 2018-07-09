@@ -52,11 +52,10 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
                 management: data.management.getNetworkStaff.edges,
                 totalCount: data.management.getNetworkStaff.totalCount,
                 loadByStatus(status) {
-                    console.log(status);
                     return data.fetchMore({
                         // query: ... (you can specify a different query. FEED_QUERY is used by default)
                         variables: {
-                            status:"pending"
+                            status:status.target.value
                         },
                         updateQuery: (previousResult, {fetchMoreResult}) => {
                             if (!fetchMoreResult) { return previousResult; }
@@ -64,44 +63,7 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
                         },
                     });
                 },
-            //     loadByStatus:({searchText},props) =>(value) => (
-            //         {
-            //         management: data.fetchMore({
-            //             // query: ... (you can specify a different query. FEED_QUERY is used by default)
-            //             variables: {
-            //                 status:value
-            //             },
-            //             updateQuery: (previousResult, {fetchMoreResult}) => {
-            //                 if (!fetchMoreResult) { return previousResult; }
-            //                 return fetchMoreResult;
-            //             },
-            //         })
-            //     }
-            // ),
-                testq:  () =>(console.log("===========pasha======")),
                 loading: data.loading,
-               
-                loadMoreEntries() {
-            
-                    return data.fetchMore({
-                        // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                        variables: {
-                            // We are able to figure out which offset to use because it matches
-                            // the feed length, but we could also use state, or the previous
-                            // variables to calculate this (see the cursor example below)
-                            page: ownProps.page+1,
-                        },
-                        updateQuery: (previousResult, {fetchMoreResult}) => {
-                            if (!fetchMoreResult) { return previousResult; }
-            
-                            return fetchMoreResult;
-                            return Object.assign({}, previousResult, {
-                                // Append the new feed results to the old one
-                                planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                            });
-                        },
-                    });
-                }
             }
         }
         else {

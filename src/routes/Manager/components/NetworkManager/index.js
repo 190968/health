@@ -14,7 +14,7 @@ const RadioGroup = Radio.Group;
 
 
 const NetworkManager = props => {
-    const {management = [],testq,loadByStatus,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const {management = [],loadByStatus,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
    console.log(props);
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
     const columns = [{
@@ -22,7 +22,6 @@ const NetworkManager = props => {
         dataIndex: 'user',
         key: 'user',
         render: (user) => {
-            console.log(user);
             return <AvatarWithName user={user}/>
         },
         sorter: (a, b) => sort(a.user, b.user, "fullName"),
@@ -98,7 +97,7 @@ const NetworkManager = props => {
     const actions = <React.Fragment>
         <RadioGroup defaultValue="active" style={{marginRight: 10}}>
             <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
-            <RadioButton value="pending" onClick={testq}>Pending</RadioButton>
+            <RadioButton value="pending" onClick={loadByStatus}>Pending</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;

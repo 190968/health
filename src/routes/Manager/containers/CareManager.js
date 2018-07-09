@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import {compose, branch, withHandlers, withState,withStateHandlers, withProps} from 'recompose';
 import React from 'react';
 const GET_PROFILE  = gql`
-query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput) {
+query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput, $status: RoleStatusEnum) {
     management {
-      getNetworkStaff(search: $search, role: $role, cursors: $cursors) {
+      getNetworkStaff(search: $search, role: $role, cursors: $cursors, status: $status) {
         totalCount
         edges {
           id
@@ -15,6 +15,7 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput)
           startDate
           joinedDate
           lastLoginDate
+          invitedDate
           accessLevel
           user {
             id
@@ -27,11 +28,11 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput)
             }
           }
           getTotalPatients
-          getTotalCareManagers
         }
       }
     }
   }
+  
  `;
 
 const withQuery = graphql(GET_PROFILE, {
@@ -39,7 +40,8 @@ const withQuery = graphql(GET_PROFILE, {
         return{
             variables: {
                 search:'',
-                role:'cm'
+                role:'cm',
+                status:'active',
             }
         }
     },
@@ -49,7 +51,19 @@ const withQuery = graphql(GET_PROFILE, {
                 
                 management: data.management.getNetworkStaff.edges,
                 totalCount: data.management.getNetworkStaff.totalCount,
-                loading: data.loading
+                loading: data.loading,
+                loadByStatus(status) {
+                    return data.fetchMore({
+                        // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                        variables: {
+                            status:status.target.value
+                        },
+                        updateQuery: (previousResult, {fetchMoreResult}) => {
+                            if (!fetchMoreResult) { return previousResult; }
+                            return fetchMoreResult;
+                        },
+                    });
+                },
             }
         }
         else {
