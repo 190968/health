@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col, Layout, Table, Input,Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
+import { Modal, Table, Input,Radio, Card, Icon, Button, Tooltip} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
@@ -14,7 +14,7 @@ const RadioGroup = Radio.Group;
 
 
 const ProidersManager = props => {
-    const {getProviders = [], edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const {getProviders = [], loadByStatus,edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
 
     const columns = [{
@@ -75,8 +75,8 @@ const ProidersManager = props => {
     };
     const actions = <React.Fragment>
         <RadioGroup defaultValue="active" style={{marginRight: 10}}>
-            <RadioButton value="active">Active</RadioButton>
-            <RadioButton value="archived">Archived</RadioButton>
+            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
+            <RadioButton value="archived" onClick={loadByStatus}>Archived</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
@@ -85,12 +85,15 @@ const ProidersManager = props => {
         <PageHeaderLayout title={'Providers ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
                           action={actions}
         >
-
             <Card type="basic1  ant-card-type-table">
                 <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
             </Card>
-            {visibleModal && <ProviderEditor onHide={hideModal}/>}
+            {visibleModal && <Modal
+                                   visible={true}
+                            >
+                              <p>Pasha</p>
+                            </Modal>}
         </PageHeaderLayout>
     );
 }

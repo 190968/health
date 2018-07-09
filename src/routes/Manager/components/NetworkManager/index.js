@@ -87,6 +87,7 @@ const NetworkManager = props => {
     };
     const rowSelection = {
         onChange: record => (
+            console.log(record),
             record.length < 1 ? hideShowButton() : openShowButton(record.length)
 
         ),
@@ -110,7 +111,7 @@ const NetworkManager = props => {
             <Card type="basic1  ant-card-type-table">
                 <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {showButton && <InviteButton selectedCount={selectedCount}/>}
+                {showButton && <InviteButton  selectedCount={selectedCount}/>}
             </Card>
             {visibleModal && <NetworkManagerr onHide={hideModal}/>}
         </PageHeaderLayout>

@@ -27,11 +27,32 @@ query GET_PROVIDERS ($search: String, $status: RoleStatusEnum = active) {
  `;
 
 const withQuery = graphql(GET_PROVIDERS_QUERY, {
+    options: (ownProps) => {
+        return{
+            variables: {
+                search:"",
+                status:"active",  
+            }
+        }
+    },
     props: ({ data }) => {
         if (!data.loading) {
             return {
                 edges: data.network.getProviders.edges,
-                loading: data.loading
+                loading: data.loading,
+                loadByStatus(status) {
+                    console.log(status.target.value);
+                    return data.fetchMore({
+                        // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                        variables: {
+                            status:status.target.value
+                        },
+                        updateQuery: (previousResult, {fetchMoreResult}) => {
+                            if (!fetchMoreResult) { return previousResult; }
+                            return fetchMoreResult;
+                        },
+                    });
+                },
             }
         }
         else {
