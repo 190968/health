@@ -39,7 +39,7 @@ class PhoneForm extends React.Component{
                             initialValue: code,
                             rules: [{ required: required, message: 'Please select code' }],
                         })(
-                            <Select style={{width:'100px'}} notFoundContent="Loading...">
+                            <Select style={{width:'90px'}} notFoundContent="Loading...">
                                 {countries.map(country => <Option key={country.id} value={country.id}>{country.phoneCode} ({country.name})</Option>)}
                             </Select>
                         )}
@@ -47,7 +47,7 @@ class PhoneForm extends React.Component{
                             initialValue: number,
                             rules: [{ required: required, message: "Please input your phone number."}/*, {type:'number', message: "Phone number consist of numbers only."}*/],
                         })(
-                            <Input  style={{ width: '200px' }} />
+                            <Input  style={{ width: '185px' }} />
                         )}
 
 

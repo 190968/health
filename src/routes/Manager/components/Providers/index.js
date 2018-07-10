@@ -13,7 +13,7 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 
-const ProidersManager = props => {
+const ProvidersManager = props => {
     const {getProviders = [], loadByStatus,edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
 
@@ -23,7 +23,6 @@ const ProidersManager = props => {
         key: 'name',
         sorter: (a, b) => sort(a, b,"name"),
         filterDropdown: (
-                
             <Input
                 suffix={suffix}
                 ref={ele => this.searchInput = ele}
@@ -89,11 +88,7 @@ const ProidersManager = props => {
                 <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
             </Card>
-            {visibleModal && <Modal
-                                   visible={true}
-                            >
-                              <p>Pasha</p>
-                            </Modal>}
+            {visibleModal && <ProviderEditor onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }
@@ -109,4 +104,4 @@ const enhance = compose(
     }),
 );
 
-export default enhance(ProidersManager);
+export default enhance(ProvidersManager);
