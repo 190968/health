@@ -101,17 +101,7 @@ export default class TableCustom extends React.Component {
                 className: 'action',
                 render: (info) => {
                     const menu = (
-                        <Menu>
-                            <Menu.Item>
-                                <Icon type="edit"/> Edit
-                            </Menu.Item>
-                            <Menu.Item>
-                                <PathwayFlowButton pathway={info} />
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Icon type="delete"/> Delete
-                            </Menu.Item>
-                        </Menu>
+                        <PathwayFlowButton pathway={info} />
                     );
                     return <Dropdown overlay={menu} trigger={['click']}>
                         <Icon type="setting"/>

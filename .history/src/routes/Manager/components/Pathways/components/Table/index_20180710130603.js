@@ -106,7 +106,7 @@ export default class TableCustom extends React.Component {
                                 <Icon type="edit"/> Edit
                             </Menu.Item>
                             <Menu.Item>
-                                <PathwayFlowButton pathway={info} />
+                                <PathwayFlowButton pathway={info} /><Icon type="flow"/> View Flow
                             </Menu.Item>
                             <Menu.Item>
                                 <Icon type="delete"/> Delete

@@ -87,6 +87,7 @@ const ClinicalTrialsListPure = props => {
         </RadioGroup>
     </React.Fragment>;
 
+   
     return (<React.Fragment>
         <PageHeaderLayout title={'Clinical Trials ' + (total > 0 ? ' (' + total + ')' : '')}
                           content=""
@@ -95,7 +96,7 @@ const ClinicalTrialsListPure = props => {
         >
 
             <Card type="table">
-                <Table dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading}/>
+                <Table dataSource={dataSource} columns={columns} pagination={false} ref={props.tableRef} loading={loading}/>
             </Card>
         </PageHeaderLayout>
     </React.Fragment>);

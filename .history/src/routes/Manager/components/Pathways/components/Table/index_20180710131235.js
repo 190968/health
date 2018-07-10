@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {Input, Menu, Dropdown, Card, Table, DatePicker, Button, Icon, Tooltip} from 'antd';
 import './index.css'
 import sort from '../../../../../../components/Tables/sort'
-import {PathwayFlowButton} from './components/Buttons'; 
+import {PathwayMenu} from './components/Buttons'; 
 
 const {RangePicker} = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -101,17 +101,7 @@ export default class TableCustom extends React.Component {
                 className: 'action',
                 render: (info) => {
                     const menu = (
-                        <Menu>
-                            <Menu.Item>
-                                <Icon type="edit"/> Edit
-                            </Menu.Item>
-                            <Menu.Item>
-                                <PathwayFlowButton pathway={info} />
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Icon type="delete"/> Delete
-                            </Menu.Item>
-                        </Menu>
+                        <PathwayMenu pathway={info} />
                     );
                     return <Dropdown overlay={menu} trigger={['click']}>
                         <Icon type="setting"/>
