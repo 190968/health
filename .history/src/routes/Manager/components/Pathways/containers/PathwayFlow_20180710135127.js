@@ -1,9 +1,10 @@
 import PathwayFlow from  '../components/PathwayFlow';
 import {compose, withProps} from 'recompose';
-import { withModal, withSpinnerWhileLoading } from '../../../../../components/Modal';
+import { withModal } from '../../../../../components/Modal';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { PlanElementPureFragment } from '../../../../Plan/components/Plan/fragments';
+import { withSpinnerWhileLoading } from '../../../../Modal/components';
 
 const GET_PATHWAY_FLOW_QUERY  = gql`
  query GET_PATHWAY_FLOW ($id: UID!) {

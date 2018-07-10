@@ -7,7 +7,7 @@ import { compose, withState, withHandlers } from 'recompose';
 const PathwayFlowButtonPure = props => {
     const {openModal, toggleModal, pathway} = props;
     return <React.Fragment>
-        <span onClick={toggleModal}><Icon type="eye-o" /> View Flow</span>
+        <span onClick={toggleModal}><Icon type="flow"/> View Flow</span>
         {openModal && <PathwayFlow pathway={pathway} />}
         </React.Fragment>
 }

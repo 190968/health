@@ -47,21 +47,6 @@ cond=>condition: Google?
 st(right)->op1(right)->op2(right)->cond(yes)->sub(bottom)
 cond(no)->e`;
 
-const code2 = `st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-op2=>operation: Stuff|current
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?\n:>http://www.google.com
-c2=>condition: Good idea|rejected
-io=>inputoutput: catch something...|request
-st->op1(right)->cond
-cond(yes, right)->c2
-cond(no)->sub1(left)->op1
-c2(true)->io->e
-c2(false)->op2->e`;
-
 
 
 const convertElementsToCode = elements => {
@@ -88,17 +73,15 @@ const convertElementsToCode = elements => {
             label = 'op'+i;
             // just add element
             code += label+'=>operation: '+typeText+'\n';
-            rules += label+'->';
         }
 
-        
+        rules += label+'->';
 
         return null;
      });
 
      rules += 'e';
      console.log(code);
-     console.log(rules);
      
 
      return code+rules;
@@ -108,16 +91,15 @@ const PathwayFlow = props => {
     const {elements=[]} = pathway;
 
     const chartCode = convertElementsToCode(elements);
-    return <div>
-         <Flowchart
-    chartCode={code2}
-    options={opt}
-  />
+    return <div style={{width:500, height:500, scroll:'auto'}}>
     <Flowchart
     chartCode={chartCode}
     options={opt}
   />
-   </div>
+    <Flowchart
+    chartCode={code}
+    options={opt}
+  /></div>
 }
 
 export default PathwayFlow;

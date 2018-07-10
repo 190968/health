@@ -47,20 +47,21 @@ cond=>condition: Google?
 st(right)->op1(right)->op2(right)->cond(yes)->sub(bottom)
 cond(no)->e`;
 
-const code2 = `st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-op2=>operation: Stuff|current
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?\n:>http://www.google.com
-c2=>condition: Good idea|rejected
-io=>inputoutput: catch something...|request
-st->op1(right)->cond
-cond(yes, right)->c2
-cond(no)->sub1(left)->op1
-c2(true)->io->e
-c2(false)->op2->e`;
+const code2 = 'st=>start: Start:>http://www.google.com[blank]\n' +
+'e=>end:>http://www.google.com\n' +
+'op1=>operation: My Operation\n' +
+'op2=>operation: Stuff|current\n' +
+'sub1=>subroutine: My Subroutine\n' +
+'cond=>condition: Yes \n' + // use cond(align-next=no) to disable vertical align of symbols below
+'or No?\n:>http://www.google.com\n' +
+'c2=>condition: Good idea|rejected\n' +
+'io=>inputoutput: catch something...|request\n' +
+'\n' +
+'st->op1(right)->cond\n' +
+'cond(yes, right)->c2\n' + // conditions can also be redirected like cond(yes, bottom) or cond(yes, right)
+'cond(no)->sub1(left)->op1\n' + // the other symbols too...
+'c2(true)->io->e\n' +
+'c2(false)->op2->e'  //allow for true and false in conditionals
 
 
 
@@ -109,10 +110,6 @@ const PathwayFlow = props => {
 
     const chartCode = convertElementsToCode(elements);
     return <div>
-         <Flowchart
-    chartCode={code2}
-    options={opt}
-  />
     <Flowchart
     chartCode={chartCode}
     options={opt}
