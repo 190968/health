@@ -2,7 +2,7 @@ import ClinicalTrialsList from '../components/ClinicalTrialsList';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import React from 'react';
-import {compose,withStateHandlers} from 'recompose';
+import {compose,withStateHandlers, lifecycle, withProps} from 'recompose';
 import {ClinicalTrialFragment} from "../fragments";
 
 export const GET_CLINICAL_TRIALS_LIST_QUERY = gql`    
@@ -94,6 +94,27 @@ const withQuery = graphql(
 
 const enhance = compose(
     withQuery,
+    withProps(props => {
+        const tableRef = React.createRef();
+        return {
+            tableRef
+        }
+    }),
+    lifecycle({
+        componentDidMount() {
+
+            /*const {tableRef} = this.props;
+            console.log(tableRef.current);
+            tableRef.current.addEventListener('scroll', (event) => {
+                  let maxScroll = event.target.scrollHeight - event.target.clientHeight
+                  let currentScroll = event.target.scrollTop
+                  if (currentScroll === maxScroll) {
+                     // load more data
+                     console.log('aaaaaa');
+                  }
+                })*/
+            } 
+    }),
     withStateHandlers(
         (props) => (
             {
