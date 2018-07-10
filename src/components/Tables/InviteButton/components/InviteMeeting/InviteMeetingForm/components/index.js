@@ -7,29 +7,23 @@ const dateFormat = 'YYYY/MM/DD';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-const InviteMeeting = ({ form, formItemLayout,targetKeys,selectedKeys,handleChange,handleSelectChange}) => {
-  
-
+const InviteMeeting = props => {
+const { form, formItemLayout,selectedObj} = props;
+console.log(selectedObj);
      const {getFieldDecorator} = form;
-    // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
-    const children = [];
-    console.log("InviteFormModal");
     return   <Form>
      
     <FormItem
     {...formItemLayout}
         label="Participants to invite"
     >
-                {getFieldDecorator('participants', {
-                })(
                     <Select
-                    mode="tags"
+                    mode="multiple"
                     style={{ width: '100%' }}
-                    tokenSeparators={[',']}
+                    defaultValue={selectedObj}
                   >
+                    {selectedObj.map(obj => <Option key={obj} value={obj}>{obj}</Option>)}
                   </Select>
-                  
-                )}
     </FormItem>
     <FormItem
       {...formItemLayout}
