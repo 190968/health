@@ -1,12 +1,12 @@
 import React from 'react';
-import {Row, Col, Layout, Table, Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
+import { Modal, Table, Input,Radio, Card, Icon, Button, Tooltip} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
-import ProvidersManagerr from "./containers/ProvidersManager";
-//import InviteButton from "../../../../components/Tables/InviteButton/index";
+import ProviderEditor from "./containers/ProvidersManager";
+
 import sort from '../../../../components/Tables/sort';
 
 const RadioButton = Radio.Button;
@@ -14,72 +14,69 @@ const RadioGroup = Radio.Group;
 
 
 const ProidersManager = props => {
-    const {getProviders = {}, openModal, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
-    const {edges, totalCount} = getProviders;
+    const {getProviders = [], loadByStatus,edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
+
     const columns = [{
-        title: 'Name',
+        title: 'Title',
         dataIndex: 'name',
         key: 'name',
-       
-        sorter: (a, b) => sort(a.name, b.name),
+        sorter: (a, b) => sort(a, b,"name"),
+        filterDropdown: (
+                
+            <Input
+                suffix={suffix}
+                ref={ele => this.searchInput = ele}
+                placeholder="Search"
+                value={searchText}
+                onChange={onSearch}
+                onPressEnter={onSearch}
+            />
+    ),
+    filterIcon: <Icon type="search"/>,
     },
-        
         {
             title: 'Type',
-            dataIndex: 'typeText',
+            dataIndex: 'type',    
             key: 'type',
+            sorter: (a, b) => (a.type - b.type)
         },
         {
             title: 'Patients',
-            dataIndex: 'getTotalPatients',
-            key: 'getTotalPatients',
-            render: (total) => {
-                return total;
-            },
+            dataIndex: 'patients',
+            key: 'patients',
+            sorter: (a, b) => (a.patients - b.patients)
         },
         {
             title: 'Managers',
-            dataIndex: 'getTotalManagers',
-            key: 'getTotalManagers',
-            render: (total) => {
-                return total;
-            },
+            dataIndex: 'managers',
+            key: 'managers',
+            sorter: (a, b) => (a.managers - b.managers  )
         },
         {
             title: 'Care Givers',
-            dataIndex: 'getTotalCareGivers',
-            key: 'getTotalManagers',
-            render: (total) => {
-                return total;
-            },
+            dataIndex: 'managers',
+            key: 'managers',
+            sorter: (a, b) => (a.managers - b.managers  )
         },
         {
             title: 'Score',
-            dataIndex: 'getAdherence',
-            key: 'getAdherence',
-            render: (adhrence) => {
-                return adhrence.level;
-            },
+            dataIndex: 'score',
+            key: 'score',
+            sorter: (a, b) => (a.managers - b.managers  )
         },
+        
+
     ];
     const pageOpts = {
         pageSize: 20,
         total: totalCount,
         hideOnSinglePage: true
     };
-    const rowSelection = {
-        onChange: record => (
-            record.length < 1 ? hideShowButton() : openShowButton(record.length)
-
-        ),
-        getCheckboxProps: record => ({
-            name: record.name,
-        }),
-    };
     const actions = <React.Fragment>
         <RadioGroup defaultValue="active" style={{marginRight: 10}}>
-            <RadioButton value="active">Active</RadioButton>
-            <RadioButton value="archived">Archived</RadioButton>
+            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
+            <RadioButton value="archived" onClick={loadByStatus}>Archived</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
@@ -88,13 +85,15 @@ const ProidersManager = props => {
         <PageHeaderLayout title={'Providers ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
                           action={actions}
         >
-
             <Card type="basic1  ant-card-type-table">
-                <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns}
+                <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {/* {showButton && <InviteButton selectedCount={selectedCount}/>} */}
             </Card>
-            {/* {visibleModal && <NetworkManagerr onHide={hideModal}/>} */}
+            {visibleModal && <Modal
+                                   visible={true}
+                            >
+                              <p>Pasha</p>
+                            </Modal>}
         </PageHeaderLayout>
     );
 }

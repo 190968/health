@@ -62,7 +62,7 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return {modalTitle: 'Invite a Providers to Fitango Demo'}
+        return {modalTitle: 'Select an Action'}
     }),
     withModal
 );

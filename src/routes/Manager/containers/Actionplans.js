@@ -27,11 +27,9 @@ const withQuery = graphql(
         options: (ownProps) => {
             return {
                 //skip: !ownProps.ready,
-                /*variables: {
-                    user_id: ownProps.user_id,
+                variables: {
                     status: 'active'
-                    //date:ownProps.date
-                },*/
+                },
                 fetchPolicy: 'network-only'
             }
 
@@ -97,15 +95,15 @@ const enhance = compose(
                 {
                     searchText: value.target.value,
                     plans: props.plans.map((record) => {
-                        const match = record.title.match(new RegExp(searchText, 'gi'));
-                        if (!match) {
+                        const match = record.title.match(new RegExp(value.target.value, 'gi'));
+                        if (!match) {   
                             return null;
                         }                        
                         return {
                             ...record,
                             title: (
                                 <span>
-                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      {record.title.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
                       i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
                       ))}
                     </span>
@@ -113,9 +111,10 @@ const enhance = compose(
                         };
                     }).filter(record => !!record),
             }),
-            emitEmpty: ({searchText}) =>(value) => (
+            emitEmpty:  ({searchText},props) =>(value) => (
                 {
-                    searchText: ''
+                    searchText: '',
+                    plans:props.plans
                      })
             })        
 

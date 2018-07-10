@@ -83,11 +83,8 @@ export default class TableCustom extends React.Component {
             sorter: (a, b) => a.createdAt - b.createdAt,
             filterDropdown: (
                 <div className="custom-filter-dropdown">
-                    <RangePicker
-                        onChange={this.onChange}
-                        defaultValue={[moment(new Date(), dateFormat), moment(new Date(), dateFormat)]}
-                        format={dateFormat}
-                    />
+                   <DatePicker /> 
+                   <DatePicker />
                 </div>
             ),
             filterIcon: <Icon type="filter" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
@@ -110,7 +107,7 @@ export default class TableCustom extends React.Component {
                 </Dropdown>;
             }
         },];
-
+console.log(this.props.plans);
         const dataSource = this.props.plans;
 
         return (

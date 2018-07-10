@@ -124,8 +124,8 @@ const enhance = compose(
             onSearch: ({searchText},props) =>(value) => (
                 {
                     searchText: value.target.value,
-                    workflow: props.items.map((record) => {
-                        const match = record.title.match(new RegExp(searchText, 'gi'));
+                    items: props.items.map((record) => {
+                        const match = record.title.match(new RegExp(value.target.value, 'gi'));
                         if (!match) {
                             return null;
                         }                        
@@ -133,7 +133,7 @@ const enhance = compose(
                             ...record,
                             title: (
                                 <span>
-                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      {record.title.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
                       i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
                       ))}
                     </span>
@@ -141,9 +141,10 @@ const enhance = compose(
                         };
                     }).filter(record => !!record),
             }),
-            emitEmpty: ({searchText}) =>(value) => (
+            emitEmpty:({searchText},props) =>(value) => (
                 {
                     searchText: '',
+                    items:props.items
                      })
             })        
 

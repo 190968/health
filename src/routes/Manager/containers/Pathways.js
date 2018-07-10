@@ -105,7 +105,7 @@ const enhance = compose(
                 {
                     searchText: value.target.value,
                     pathways: props.pathways.map((record) => {
-                        const match = record.title.match(new RegExp(searchText, 'gi'));
+                        const match = record.title.match(new RegExp(value.target.value, 'gi'));
                         if (!match) {
                             return null;
                         }                        
@@ -113,7 +113,7 @@ const enhance = compose(
                             ...record,
                             title: (
                                 <span>
-                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
+                      {record.title.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
                       i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
                       ))}
                     </span>
@@ -121,9 +121,10 @@ const enhance = compose(
                         };
                     }).filter(record => !!record),
             }),
-            emitEmpty: ({searchText}) =>(value) => (
+            emitEmpty: ({searchText},props) =>(value) => (
                 {
                     searchText: '',
+                    pathways: props.pathways
                      })
             })        
 

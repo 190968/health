@@ -1,8 +1,7 @@
 import React from 'react';
-import {Row, Col, Layout, Table, Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
-import {NavLink} from 'react-router-dom';
+import {Input, Table, Radio, Card, Icon,Button,Tooltip} from 'antd';
 import moment from 'moment';
-import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
+import {compose, withState, withHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import SupportStaffManager from "./containers/SupportStaffManager";
@@ -14,8 +13,8 @@ const RadioGroup = Radio.Group;
 
 
 const SupportStaff = props => {
-    const {management = [], openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, hideModal, loading = false} = props;
-    const {edges} = management;
+    const {management = [],totalCount,loadByStatus,openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, hideModal, loading = false} = props;
+    const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'Name',
         dataIndex: 'user',
@@ -25,6 +24,18 @@ const SupportStaff = props => {
             return <AvatarWithName user={user}/>
         },
         sorter: (a, b) => sort(a.user, b.user, "fullName"),
+        filterDropdown: (
+                
+            <Input
+                suffix={suffix}
+                ref={ele => this.searchInput = ele}
+                placeholder="Search"
+                value={searchText}
+                onChange={onSearch}
+                onPressEnter={onSearch}
+            />
+    ),
+    filterIcon: <Icon type="search"/>,
     },
         {
             title: 'Position',
@@ -60,9 +71,8 @@ const SupportStaff = props => {
     };
     const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
+            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
+            <RadioButton value="pending" onClick={loadByStatus}>Pending</RadioButton>
         </RadioGroup>
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
@@ -82,7 +92,7 @@ const SupportStaff = props => {
         >
 
             <Card type="basic1  ant-card-type-table">
-                <Table rowSelection={rowSelection} size="middle" dataSource={edges} rowKey={'id'} columns={columns}
+                <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
                 {showButton && <InviteButton selectedCount={selectedCount}/>}
             </Card>
