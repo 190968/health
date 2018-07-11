@@ -245,4 +245,15 @@ export const asyncAssessments = () => {
     );
 }
 
+export const asyncPrograms = () => {
+
+    return (
+        Loadable({
+            loader: () => import('../routes/Manager/containers/Programs'),
+            modules: ['../routes/Manager/containers/Programs'],
+            webpack: () => [require.resolveWeak('../routes/Manager/containers/Programs')],
+        })
+    );
+}
+
 

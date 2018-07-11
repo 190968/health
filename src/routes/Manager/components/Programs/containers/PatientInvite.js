@@ -1,10 +1,11 @@
-import ProvidersManager from '../components/ProvidersManager/index';
+import PatientInvite from '../components/PatientInvite/index';
 import {graphql} from 'react-apollo';
 import React from 'react';
-import {compose, withHandlers, withProps} from 'recompose';
+import {compose, withStateHandlers, branch, withHandlers, withState, withProps} from 'recompose';
 import {Form} from 'antd';
 import gql from 'graphql-tag';
 import {withModal} from "../../../../../components/Modal/index";
+
 
 const GET_PROFILE = gql`
 query GET_USER_TEAM($user_id:UID) {
@@ -43,7 +44,7 @@ const withQuery = graphql(GET_PROFILE, {
 });
 
 const enhance = compose(
-    withQuery,
+    //withQuery,
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
@@ -62,9 +63,9 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return {modalTitle: 'Select an Action'}
+        return {modalTitle: 'Add a Patient'}
     }),
     withModal
 );
 
-export default enhance(ProvidersManager);
+export default enhance(PatientInvite);

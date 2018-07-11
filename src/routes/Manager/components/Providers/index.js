@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Table, Input,Radio, Card, Icon, Button, Tooltip} from 'antd';
+import {Row, Col, Layout, Table, Input,Radio, Card, Menu, Icon, Divider, Alert, Button, Dropdown, Tooltip} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
@@ -13,7 +13,7 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 
-const ProvidersManager = props => {
+const ProidersManager = props => {
     const {getProviders = [], loadByStatus,edges=[],searchText,emitEmpty,onSearch, openModal, totalCount, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
 
@@ -23,6 +23,7 @@ const ProvidersManager = props => {
         key: 'name',
         sorter: (a, b) => sort(a, b,"name"),
         filterDropdown: (
+                
             <Input
                 suffix={suffix}
                 ref={ele => this.searchInput = ele}
@@ -104,4 +105,4 @@ const enhance = compose(
     }),
 );
 
-export default enhance(ProvidersManager);
+export default enhance(ProidersManager);
