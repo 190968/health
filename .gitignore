@@ -4,6 +4,7 @@ src/clients/apolloClient.js
 node_modules/
 dist
 build/
+.history/
 coverage
 .idea/
 .yarn-cache

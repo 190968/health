@@ -1,123 +1,118 @@
 import React from 'react';
-import Flowchart from 'react-simple-flowchart';
+import * as go from 'gojs';
+import { ToolManager, Diagram } from 'gojs';
+import { GojsDiagram, ModelChangeEventType } from 'react-gojs';
+import { compose, withHandlers, withProps } from 'recompose';
+import './index.less';
 
-const opt = {
-    x: 0,
-    y: 0,
-    'line-width': 3,
-    'line-length': 50,
-    'text-margin': 10,
-    'font-size': 14,
-    'font-color': 'black',
-    'line-color': 'black',
-    'element-color': 'black',
-    fill: 'white',
-    'yes-text': 'yes',
-    'no-text': 'no',
-    'arrow-end': 'block',
-    scale: 1,
-    symbols: {
-      start: {
-        'font-color': 'red',
-        'element-color': 'green',
-        'font-weight': 'bold',
-      },
-      end: {
-        'font-color': 'red',
-        'element-color': 'green',
-        'font-weight': 'bold',
-      },
-    },
-    flowstate: {
-      department1: { fill: 'pink' },
-      department2: { fill: 'yellow' },
-      external: { fill: 'green' },
-    },
-  };
+const convertElementsToCode = (elements) => {
+	let code = '';
+	let st = '';
+	let e = '';
+	let vars = '';
+	let rules = 'st->';
+	const elementsTotal = elements.length;
+	console.log(elements);
+	elements.map((element, i) => {
+		const { typeText } = element;
+		let label = 'op' + i;
+		if (i === 0) {
+			label = 'st';
+			// start element
+			st = label + '=>start: ' + typeText + '\n';
+			code += st;
+		} else if (elementsTotal === i + 1) {
+			// end element
+			e = 'e=>end: ' + typeText + '\n';
+			code += e;
+		} else {
+			label = 'op' + i;
+			// just add element
+			code += label + '=>operation: ' + typeText + '\n';
+			rules += label + '->';
+		}
 
+		return null;
+	});
 
-  const code =
-      `st=>start: Begin
-e=>end: End
-op1=>operation: Operation 1|department1
-op2=>operation: Operation 2|department2
-sub=>subroutine: Go To Google|external:>http://www.google.com
-cond=>condition: Google?
+	rules += 'e';
+	console.log(code);
+	console.log(rules);
 
-st(right)->op1(right)->op2(right)->cond(yes)->sub(bottom)
-cond(no)->e`;
+	return code + rules;
+};
+const PathwayFlow = (props) => {
+	const { pathway } = props;
+	const { elements = [] } = pathway;
 
-const code2 = `st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-op2=>operation: Stuff|current
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?\n:>http://www.google.com
-c2=>condition: Good idea|rejected
-io=>inputoutput: catch something...|request
-st->op1(right)->cond
-cond(yes, right)->c2
-cond(no)->sub1(left)->op1
-c2(true)->io->e
-c2(false)->op2->e`;
+	const chartCode = convertElementsToCode(elements);
+	return (
+		<GojsDiagram
+			key="gojsDiagram"
+			diagramId="myDiagramDiv"
+			model={props.model}
+			createDiagram={props.createDiagram}
+			className="myDiagram"
+		/>
+	);
+};
 
+const enhance = compose(
+	withProps((props) => {
+		return {
+			model: {
+				nodeDataArray: [
+					{ key: 'Alpha', color: 'lightblue' },
+					{ key: 'Beta', color: 'orange' },
+					{ key: 'Gamma', color: 'lightgreen' },
+					{ key: 'Delta', color: 'pink' },
+					{ key: 'Omega', color: 'grey' }
+				],
+				linkDataArray: [
+					{ from: 'Alpha', to: 'Beta' },
+					{ from: 'Alpha', to: 'Gamma' },
+					{ from: 'Beta', to: 'Delta' },
+					{ from: 'Gamma', to: 'Omega' }
+				]
+			}
+		};
+	}),
+	withHandlers({
+		createDiagram: (props) => (diagramId) => {
+			const $ = go.GraphObject.make;
 
+			const myDiagram = $(go.Diagram, diagramId, {
+				initialContentAlignment: go.Spot.LeftCenter,
+				layout: $(go.TreeLayout, {
+					angle: 0,
+					arrangement: go.TreeLayout.ArrangementVertical,
+					treeStyle: go.TreeLayout.StyleLayered
+				}),
+				isReadOnly: false,
+				allowHorizontalScroll: true,
+				allowVerticalScroll: true,
+				allowZoom: false,
+				allowSelect: true,
+				autoScale: Diagram.Uniform,
+				contentAlignment: go.Spot.LeftCenter
+			});
 
-const convertElementsToCode = elements => {
-    let code = '';
-     let st = '';
-     let e = '';
-     let vars = '';
-     let rules ='st->';
-    const elementsTotal = elements.length;
-    console.log(elements);
-     elements.map((element, i) => {
-        const {typeText} = element;
-        let label = 'op'+i;
-        if (i === 0) {
-            label = 'st';
-            // start element
-            st = label+'=>start: '+typeText+'\n';
-            code +=st;
-        } else if (elementsTotal === i+1) {
-            // end element
-            e = 'e=>end: '+typeText+'\n';
-            code +=e;
-        } else {
-            label = 'op'+i;
-            // just add element
-            code += label+'=>operation: '+typeText+'\n';
-            rules += label+'->';
-        }
+			myDiagram.toolManager.panningTool.isEnabled = false;
+			myDiagram.toolManager.mouseWheelBehavior = ToolManager.WheelScroll;
 
-        
+			myDiagram.nodeTemplate = $(
+				go.Node,
+				'Auto',
+				{
+					selectionChanged: (node) => this.nodeSelectionHandler(node.key, node.isSelected)
+				},
+				$(go.Shape, 'RoundedRectangle', { strokeWidth: 0 }, new go.Binding('fill', 'color')),
+				$(go.TextBlock, { margin: 8 }, new go.Binding('text', 'color'))
+			);
 
-        return null;
-     });
+			return myDiagram;
+		}
+	})
+);
 
-     rules += 'e';
-     console.log(code);
-     console.log(rules);
-     
-
-     return code+rules;
-}
-const PathwayFlow = props => {
-    const {pathway} = props;
-    const {elements=[]} = pathway;
-
-    const chartCode = convertElementsToCode(elements);
-    return <div>
-         <Flowchart
-    chartCode={code2}
-    options={opt}
-  />
-    <Flowchart
-    chartCode={chartCode}
-    options={opt}
-  />
-   </div>
-}
-
-export default PathwayFlow;
+export default enhance(PathwayFlow);
