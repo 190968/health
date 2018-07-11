@@ -3,11 +3,11 @@ import {Card,Row,Col,Button,Select,Form,Divider,Radio,DatePicker,TimePicker, Inp
 import InviteEmail from './containers/InviteEmail';
 import InviteSMS from './containers/InviteSMS';
 import InviteMeeting from './containers/InviteMeeting';
-const InviteButton = ({ form, formItemLayout,targetKeys,selectedKeys,handleChange,selectedCount}) => {
-  
+const InviteButton = props => {
+  const {selectedCount,selectedObj} = props;
     return  (<div style={{padding:'20px 30px'}}><Row>
     <Col sm={12}><p>{selectedCount} Selected</p></Col>
-    <Col sm={12} style={{textAlign:'right'}}><InviteMeeting /> <InviteEmail /> <InviteSMS /></Col>
+    <Col sm={12} style={{textAlign:'right'}}><InviteMeeting selectedObj={selectedObj} /> <InviteEmail selectedObj={selectedObj} /> <InviteSMS selectedObj={selectedObj}/></Col>
     </Row></div>)
 }
 

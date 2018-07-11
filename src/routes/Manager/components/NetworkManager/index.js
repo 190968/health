@@ -14,7 +14,7 @@ const RadioGroup = Radio.Group;
 
 
 const NetworkManager = props => {
-    const {management = [],loadByStatus,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
+    const {management = [],loadByStatus,selectedObj,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
    console.log(props);
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
     const columns = [{
@@ -44,7 +44,7 @@ const NetworkManager = props => {
             render: (joinedDate) => {
                 return moment(joinedDate).format('L')
             },
-            sorter: (a, b) => (a.joinedDate - b.joinedDate)
+            sorter: (a, b) => (moment(a.joinedDate) - moment(b.joinedDate))
         },
         {
             title: 'Phone',
@@ -86,9 +86,9 @@ const NetworkManager = props => {
         hideOnSinglePage: true
     };
     const rowSelection = {
-        onChange: record => (
-            console.log(record),
-            record.length < 1 ? hideShowButton() : openShowButton(record.length)
+        onChange: (record,data) => (
+            console.log(record,data),
+            record.length < 1 ? hideShowButton() : openShowButton(data)
 
         ),
         getCheckboxProps: record => ({
@@ -109,9 +109,9 @@ const NetworkManager = props => {
         >
 
             <Card type="basic1  ant-card-type-table">
-                <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
+                <Table rowSelection={rowSelection} size="middle" dataSource={management} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {showButton && <InviteButton  selectedCount={selectedCount}/>}
+                {showButton && <InviteButton selectedObj={selectedObj} selectedCount={selectedCount}/>}
             </Card>
             {visibleModal && <NetworkManagerr onHide={hideModal}/>}
         </PageHeaderLayout>

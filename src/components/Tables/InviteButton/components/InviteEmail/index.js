@@ -1,10 +1,10 @@
 import React from 'react';
 import {Card,Row,Col,Button,Select,Form,Divider,Radio,DatePicker,TimePicker, Input} from 'antd';
 import InviteEmail from './InviteEmailForm/containers/inviteEmail';
-const InviteEmailButton = ({visibleModal=false,openModal,hideModal}) => {
-    //console.log(visibleModal,openModal);
+const InviteEmailButton = props => {
+    const {visibleModal=false,openModal,hideModal,selectedObj} =props;
     return  (<React.Fragment><Button type="primary" onClick={openModal} >Email</Button>
-     {visibleModal && <InviteEmail onHide={hideModal} />}</React.Fragment>)
+     {visibleModal && <InviteEmail selectedObj={selectedObj} onHide={hideModal} />}</React.Fragment>)
     
 }
 

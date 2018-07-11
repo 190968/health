@@ -13,7 +13,7 @@ const RadioGroup = Radio.Group;
 
 
 const SupportStaff = props => {
-    const {management = [],totalCount,loadByStatus,openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, hideModal, loading = false} = props;
+    const {management = [],totalCount,selectedObj,loadByStatus,openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, hideModal, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'Name',
@@ -78,7 +78,7 @@ const SupportStaff = props => {
     </React.Fragment>;
     const rowSelection = {
         onChange: record => (
-            record.length < 1 ? hideShowButton() : openShowButton(record.length)
+            record.length < 1 ? hideShowButton() : openShowButton(record)
 
         ),
         getCheckboxProps: record => ({
@@ -94,7 +94,7 @@ const SupportStaff = props => {
             <Card type="basic1  ant-card-type-table">
                 <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {showButton && <InviteButton selectedCount={selectedCount}/>}
+                {showButton && <InviteButton selectedObj={selectedObj} selectedCount={selectedCount}/>}
             </Card>
             {visibleModal && <SupportStaffManager onHide={hideModal}/>}
         </PageHeaderLayout>

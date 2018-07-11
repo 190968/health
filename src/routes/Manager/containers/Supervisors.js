@@ -78,11 +78,13 @@ const enhance = compose(
         showButton: false,
         selectedCount:0,
         searchText: '',
+        selectedObj:''
         }),
         {
             openShowButton: ({ counter }) => (value) => ({
                 showButton: true,
-                selectedCount:value
+                selectedCount:value.length,
+                selectedObj:value
             }),
             hideShowButton: ({ counter }) => (value) => ({
                 showButton: false

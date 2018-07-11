@@ -11,7 +11,7 @@ const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Analysts = props => {
-    const {management=[],totalCount,loadByStatus, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
+    const {management=[],totalCount,loadByStatus,selectedObj, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
        const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
 
     const columns = [{
@@ -60,7 +60,7 @@ const Analysts = props => {
     };
     const rowSelection = {
         onChange:  record => (
-            record.length < 1 ? hideShowButton() : openShowButton(record.length)
+            record.length < 1 ? hideShowButton() : openShowButton(record)
             
         ),
         getCheckboxProps: record => ({
@@ -83,7 +83,7 @@ const Analysts = props => {
 
     <Card type="table">
         <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
-        {showButton && <InviteButton selectedCount={selectedCount} />}
+        {showButton && <InviteButton selectedObj={selectedObj} selectedCount={selectedCount} />}
     </Card>
     {visibleModal && <AnalystsManager onHide={hideModal} />}
     </PageHeaderLayout>
