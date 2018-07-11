@@ -14,7 +14,7 @@ const RadioGroup = Radio.Group;
 
 
 const CareManager = props => {
-    const {management=[],totalCount,loadByStatus, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton ,visibleModal,hideModal,loading=false} = props;
+    const {management=[],totalCount,selectedObj,loadByStatus, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton ,visibleModal,hideModal,loading=false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
 
     const columns = [{
@@ -72,7 +72,7 @@ const CareManager = props => {
     </React.Fragment>;
   const rowSelection = {
     onChange:  record => (
-        record.length < 1 ? hideShowButton() : openShowButton(record.length)
+        record.length < 1 ? hideShowButton() : openShowButton(record)
         
     ),
     getCheckboxProps: record => ({
@@ -87,7 +87,7 @@ const CareManager = props => {
 
     <Card type="basic1  ant-card-type-table">
         <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
-        {showButton && <InviteButton selectedCount={selectedCount} />}
+        {showButton && <InviteButton selectedObj={selectedObj} selectedCount={selectedCount} />}
     </Card>
     {visibleModal && <CareManagerr onHide={hideModal} />}
     </PageHeaderLayout>

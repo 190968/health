@@ -7,14 +7,26 @@ const dateFormat = 'YYYY/MM/DD';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-const InviteSMS = ({ form, formItemLayout,targetKeys,selectedKeys,handleChange,handleSelectChange}) => {
-  
+const InviteSMS = props => {
+    const { form, formItemLayout,selectedObj} = props;
+    let defVal = selectedObj.map(obj =>obj.user.fullName);
 
      const {getFieldDecorator} = form;
-    // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
-    const children = [];
     return   <Form>
+        <FormItem
+    {...formItemLayout}
+        label="Participants to invite"
+    >
+                    <Select
+                    mode="multiple"
+                    style={{ width: '100%' }}
+                    defaultValue= {defVal}
+                  >
+                    {selectedObj.map(obj => <Option key={obj.user.fullName} value={obj.user.fullName}>{obj.user.fullName}</Option>)}
+                  </Select>
+    </FormItem>
     <FormItem
+    {...formItemLayout}
         label="Enter your Message"
     >
                 {getFieldDecorator('email', {

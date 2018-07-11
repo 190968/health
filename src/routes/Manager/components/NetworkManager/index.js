@@ -44,7 +44,7 @@ const NetworkManager = props => {
             render: (joinedDate) => {
                 return moment(joinedDate).format('L')
             },
-            sorter: (a, b) => (a.joinedDate - b.joinedDate)
+            sorter: (a, b) => (moment(a.joinedDate) - moment(b.joinedDate))
         },
         {
             title: 'Phone',
@@ -86,9 +86,9 @@ const NetworkManager = props => {
         hideOnSinglePage: true
     };
     const rowSelection = {
-        onChange: record => (
-            console.log(record),
-            record.length < 1 ? hideShowButton() : openShowButton(record)
+        onChange: (record,data) => (
+            console.log(record,data),
+            record.length < 1 ? hideShowButton() : openShowButton(data)
 
         ),
         getCheckboxProps: record => ({
