@@ -102,7 +102,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                             key="programs"
                             title={<span><Icon type="laptop"/><span>Programs</span></span>}
                         >
-                            <Menu.Item key="active">Active</Menu.Item>
+                            <Menu.Item key="active"><NavLink to="/programs">Active</NavLink></Menu.Item>
                             <Menu.Item key="analysis" disabled>Analysis</Menu.Item>
                         </SubMenu>
                         <SubMenu

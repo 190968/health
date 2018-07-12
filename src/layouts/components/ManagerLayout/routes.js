@@ -1,6 +1,6 @@
 import React from 'react'
 import PrivateRoute from '../../../routes/privateRoute';
-import {asyncWorkflow, asyncActionplans, asyncProfile, asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
+import {asyncWorkflow, asyncActionplans, asyncProfile, asyncPrograms,asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
 
 export const ManagerRoutes = ({store}) => {
     return (
@@ -24,6 +24,7 @@ export const ManagerRoutes = ({store}) => {
             <PrivateRoute path="/payers" component={asyncPayers(store)}/>
             <PrivateRoute path="/doctors" component={asyncDoctors(store)}/>
             <PrivateRoute path="/assessments" component={asyncAssessments(store)}/>
+            <PrivateRoute path="/programs" component={asyncPrograms(store)}/>
         </React.Fragment>
     )
 }
