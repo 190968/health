@@ -8,7 +8,7 @@ const PathwayFlowButtonPure = props => {
     const {openModal, toggleModal, pathway} = props;
     return <React.Fragment>
         <span onClick={toggleModal}><Icon type="eye-o" /> View Flow</span>
-        {openModal && <PathwayFlow pathway={pathway} />}
+        {openModal && <PathwayFlow pathway={pathway} onHide={toggleModal} />}
         </React.Fragment>
 }
 

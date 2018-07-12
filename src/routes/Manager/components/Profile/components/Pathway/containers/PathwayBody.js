@@ -38,7 +38,7 @@ const withQuery = graphql(GET_PATHWAY_QUERY, {
     options: (ownProps) => {
         return {
             variables: {
-                id: ownProps.id,
+                id: ownProps.pathway.id,
             },
         }
     },

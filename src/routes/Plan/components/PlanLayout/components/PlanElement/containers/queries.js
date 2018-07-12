@@ -34,13 +34,14 @@ export const PlanElementChildrenListWithQuery = graphql(
         options: (ownProps) => ({
             variables: {
                 id: ownProps.elementId,
-                planId: ownProps.planId,
+                planId: ownProps.plan.id,
                 elementValue: ownProps.elementValue
             },
             fetchPolicy: 'network_only'
         }),
-        props: ({  data }) => {
-            //console.log(data);
+        props: ({ownProps,  data }) => {
+            console.log(ownProps);
+            console.log(data);
             if (!data.loading) {
                 const planElement = data.planElement;
                 const {childrenElements=[]} = planElement;

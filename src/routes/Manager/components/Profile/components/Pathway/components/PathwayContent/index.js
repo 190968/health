@@ -4,6 +4,7 @@ import PathwayBody from '../../containers/PathwayBody';
 import PathwaySelect from './containers/PathwaySelect';
 import keydown from 'react-keydown';
 import {compose, lifecycle, withState} from 'recompose';
+import { PathwayFlowButton } from '../../../../../Pathways/components/Table/components/Buttons';
 
 const Option = Select.Option;
 
@@ -94,10 +95,10 @@ class PathwayContent extends React.Component {
         //console.log(pathwayId);
 
         console.log(cancer);
-        if (pathwayId) {
+        if (pathway.id) {
             const {title:cancerTitle=''} = cancer;
             return (<PathwayBodyCardEnhanced
-                title={title+' - '+cancerTitle+(version !== '' ? ' - v'+version : '')} loading={loading} pathwayId={pathwayId} userId={userId} onAdd={this.props.onAdd} setCurrent={this.setCurrent} current={current} handleMenuClick={this.handleMenuClick}
+                title={title+' - '+cancerTitle+(version !== '' ? ' - v'+version : '')} loading={loading}  pathway={pathway} userId={userId} onAdd={this.props.onAdd} setCurrent={this.setCurrent} current={current} handleMenuClick={this.handleMenuClick}
             />);
                 // <Card title={title} loading={loading} extra={pathwayId ? <React.Fragment><Tooltip title="Previous Element (Shift+Up)"><Icon type="left-circle-o" onClick={() => this.setCurrent('prev')} /></Tooltip> <Tooltip title="Next Element (Shift+Down)"><Icon type="right-circle-o" onClick={() => this.setCurrent('next')} /></Tooltip> <Dropdown overlay={menu} trigger={['click']}><Icon type="setting" /></Dropdown></React.Fragment> : <Icon type="setting" />} bodyStyle={{overflowY:'auto', height:'100vh'}}>
                 //      <PathwayBody  userId={userId} onAdd={this.props.onAdd} id={pathwayId} currentInOrder={current} setCurrentInOrder={this.setCurrent} />
@@ -117,11 +118,12 @@ const PathwayBodyCard = props => {
     const menu = (
         <Menu onClick={props.handleMenuClick}>
             <Menu.Item key="leave">Leave Pathway</Menu.Item>
+            <Menu.Item key="flow"><PathwayFlowButton pathway={props.pathway} /></Menu.Item>
         </Menu>
     );
-    const {title, loading, pathwayId, userId, onAdd, setCurrent, current, openElement, setOpenElement } = props;
-    return <Card title={title} loading={loading} extra={pathwayId ? <React.Fragment><Tooltip title="Previous Element (Shift+Up)"><Icon type="left-circle-o" onClick={() => setCurrent('prev')} /></Tooltip> <Tooltip title="Next Element (Shift+Down)"><Icon type="right-circle-o" onClick={() => setCurrent('next')} style={{marginRight:5}} /></Tooltip> <Dropdown overlay={menu} trigger={['click']}><Icon type="setting" /></Dropdown></React.Fragment> : <Icon type="setting" />} bodyStyle={{overflowY:'auto', height:'100vh'}}>
-        <PathwayBody  userId={userId} onAdd={onAdd} id={pathwayId} currentInOrder={current} setCurrentInOrder={setCurrent} openElement={openElement} setOpenElement={setOpenElement} />
+    const {title, loading, pathway, userId, onAdd, setCurrent, current, openElement, setOpenElement } = props;
+    return <Card title={title} loading={loading} extra={pathway.id ? <React.Fragment><Tooltip title="Previous Element (Shift+Up)"><Icon type="left-circle-o" onClick={() => setCurrent('prev')} /></Tooltip> <Tooltip title="Next Element (Shift+Down)"><Icon type="right-circle-o" onClick={() => setCurrent('next')} style={{marginRight:5}} /></Tooltip> <Dropdown overlay={menu} trigger={['click']}><Icon type="setting" /></Dropdown></React.Fragment> : <Icon type="setting" />} bodyStyle={{overflowY:'auto', height:'100vh'}}>
+        <PathwayBody  userId={userId} onAdd={onAdd} pathway={pathway} currentInOrder={current} setCurrentInOrder={setCurrent} openElement={openElement} setOpenElement={setOpenElement} />
     </Card>
 }
 

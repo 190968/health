@@ -60,7 +60,7 @@ const PathwayBody = props => {
                         return <List.Item
                             id={'field' + item.id}
                             key={item.id}>
-                            <PathwayBodyElement planId={id} i={i} currentInOrder={currentInOrder} element={item}
+                            <PathwayBodyElement plan={pathway} i={i} currentInOrder={currentInOrder} element={item}
                                                 onDrop={onDrop}/>
                         </List.Item>
                     }}

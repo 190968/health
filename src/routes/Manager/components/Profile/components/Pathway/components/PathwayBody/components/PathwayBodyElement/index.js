@@ -39,16 +39,16 @@ const boxSource = {
     }
 
     render() {
-        const {i, element, planId, onDrop, currentInOrder} = this.props;
+        const {i, element, plan, onDrop, currentInOrder} = this.props;
 
         const { isDragging, connectDragSource } = this.props
         const opacity = isDragging ? 0.4 : 1
 
         if (canBeDraggable(element)) {
-            return connectDragSource(<div className={"pathway-el-dnd"} style={{opacity}}><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} planId={planId} /></div>);
+            return connectDragSource(<div className={"pathway-el-dnd"} style={{opacity}}><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} /></div>);
 
         } else {
-            return <div className={element.type === 'condition' ? 'red-card-wrap' : {}} ><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} planId={planId} /></div>;
+            return <div className={element.type === 'condition' ? 'red-card-wrap' : {}} ><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} /></div>;
         }
 
     }

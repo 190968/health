@@ -11,10 +11,7 @@ query GET_DOCTORS {
         id
         firstName
         lastName
-        phone {
-          code
-          number
-        }
+        phoneFormatted
         npi
       }
     }

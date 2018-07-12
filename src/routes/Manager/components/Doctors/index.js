@@ -52,8 +52,8 @@ const Doctors = props => {
         },
         {
             title: 'Phone number',
-            dataIndex: 'npi',    
-            key: 'npi',
+            dataIndex: 'phoneFormatted',    
+            key: 'phoneFormatted',
             sorter: (a, b) => a.npi - b.npi,
             filterDropdown: (
                 <Input
