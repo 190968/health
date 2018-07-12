@@ -12,6 +12,13 @@ const GET_PATHWAY_FLOW_QUERY  = gql`
     elements {
         ...PlanElement
     }
+    getConnectedElements {
+        parentId
+        parentValue
+        element {
+          ...PlanElement
+          }
+      }
   }
 }
 ${PlanElementPureFragment}

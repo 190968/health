@@ -1,18 +1,20 @@
 import React from 'react';
 import * as go from 'gojs';
+import {Button} from 'antd';
 import { ToolManager, Diagram } from 'gojs';
 import { GojsDiagram, ModelChangeEventType } from 'react-gojs';
-import { compose, withHandlers, withProps } from 'recompose';
+import { compose, withHandlers, withProps, withState } from 'recompose';
 import './index.less';
 //PlanElementChildrenListWithQue
 const convertElementsToCode = (elements, props) => {
 	let nodeDataArray = [];
 	let linkDataArray = [];
 
-	const {elementsByElements={}} = props;
+	const {elementsByElements={}, pathway={}} = props;
+	const {getConnectedElements=[]} = pathway;
 
 	const elementsTotal = elements.length;
-	console.log(elements, 'Elements');
+	//console.log(elements, 'Elements');
 	let prevElement = null;
 	elements.map((element, i) => {
 		const { id, itemType, typeText, itemInfo, hasChildren/*, childrenElements=[]*/} = element;
@@ -20,7 +22,8 @@ const convertElementsToCode = (elements, props) => {
 		const data = { key: id, name: typeText, bgColor: '#e6f7ff', color: '#91d5ff', itemInfo,  text: ''  };
 		let haveConnection = true;
 
-		const childrenElements = elementsByElements[id] || null;
+		//const childrenElements = elementsByElements[id] || null;
+		
 
 		switch (itemType) {
 			case 'clinical_note':
@@ -75,12 +78,20 @@ const convertElementsToCode = (elements, props) => {
 					nodeDataArray.push({ key: 'cond' + value, name: label, color: 'blue', bgColor: '#5ac6c4' });
 					linkDataArray.push({ from: id, to: 'cond' + value });
 					//console.log(childrenElements);
+					const childrenElements = getConnectedElements.filter(connectedElement => {
+						return connectedElement.parentId === id && connectedElement.parentValue === value;
+					})
+					console.log(getConnectedElements, 'getConnectedElements');
+					console.log(childrenElements, 'childrenElements');
 					if (childrenElements) {
 
-						const childrenElement = childrenElements[value] || [];
+						//const childrenElement = childrenElements[value] || [];
+						//const childrenElement = [];
+						
 						//console.log(childrenElement);
-						if (childrenElement.length > 0) {
+						if (childrenElements.length > 0) {
 							// append children
+							const childrenElement = childrenElements.map(child => child.element);
 							const childrenCodes = convertElementsToCode(childrenElement, props);
 							console.log(childrenCodes);
 							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
@@ -97,7 +108,7 @@ const convertElementsToCode = (elements, props) => {
 							}
 						}
 					} else {
-						props.loadChildren(id, value);
+						//props.loadChildren(id, value);
 					}
 					//if (hasChildren) {
 						// load children of this item.
@@ -184,7 +195,7 @@ const PathwayFlow = (props) => {
 	const { elements= [] } = props;
 
 	const chartModel = convertElementsToCode(elements, props);
-	return (
+	return (<React.Fragment>
 		<GojsDiagram
 			key="gojsDiagram"
 			diagramId="myDiagramDiv"
@@ -192,6 +203,10 @@ const PathwayFlow = (props) => {
 			createDiagram={props.createDiagram}
 			className="myDiagram"
 		/>
+		<div style={{marginTop:10}}>
+			<Button onClick={props.zoomFit}>Zoom to Fit</Button> <Button type={'primary'} onClick={props.zoomIn}>Zoom In</Button> <Button type={'primary'} onClick={props.zoomOut}>Zoom out</Button>
+		</div>
+		</React.Fragment>
 	);
 };
 function textStyle() {
@@ -199,25 +214,26 @@ function textStyle() {
 }
 
 const enhance = compose(
-	withProps((props) => {
-		return {
-			model: {
-				nodeDataArray: [
-					{ key: 'Alpha', color: 'lightblue' },
-					{ key: 'Beta', color: 'orange' },
-					{ key: 'Gamma', color: 'lightgreen' },
-					{ key: 'Delta', color: 'pink' },
-					{ key: 'Omega', color: 'grey' }
-				],
-				linkDataArray: [
-					{ from: 'Alpha', to: 'Beta' },
-					{ from: 'Alpha', to: 'Gamma' },
-					{ from: 'Beta', to: 'Delta' },
-					{ from: 'Gamma', to: 'Omega' }
-				]
-			}
-		};
-	}),
+	withState('diagram', 'setDiagram', false),
+	// withProps((props) => {
+	// 	return {
+	// 		diagram: {
+	// 			nodeDataArray: [
+	// 				{ key: 'Alpha', color: 'lightblue' },
+	// 				{ key: 'Beta', color: 'orange' },
+	// 				{ key: 'Gamma', color: 'lightgreen' },
+	// 				{ key: 'Delta', color: 'pink' },
+	// 				{ key: 'Omega', color: 'grey' }
+	// 			],
+	// 			linkDataArray: [
+	// 				{ from: 'Alpha', to: 'Beta' },
+	// 				{ from: 'Alpha', to: 'Gamma' },
+	// 				{ from: 'Beta', to: 'Delta' },
+	// 				{ from: 'Gamma', to: 'Omega' }
+	// 			]
+	// 		}
+	// 	};
+	// }),
 	withHandlers({
 		createDiagram: (props) => (diagramId) => {
 			const $ = go.GraphObject.make;
@@ -362,7 +378,18 @@ const enhance = compose(
 				//$(go.TextBlock, { margin: 8 }, new go.Binding('text', 'color'))
 			);
 
+			props.setDiagram(myDiagram);
+
 			return myDiagram;
+		},
+		zoomFit: props => () => {
+			props.diagram.zoomToFit();
+		},
+		zoomIn: props => () => {
+			props.diagram.commandHandler.increaseZoom();
+		},
+		zoomOut: props => () => {
+			props.diagram.commandHandler.decreaseZoom();
 		}
 	})
 );
