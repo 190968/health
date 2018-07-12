@@ -1,4 +1,4 @@
-import NetworkManager from '../components/NetworkManager/index';
+import DoctorManager from '../components/DoctorManager/index';
 import {graphql} from 'react-apollo';
 import React from 'react';
 import {compose, withStateHandlers, branch, withHandlers, withState, withProps} from 'recompose';
@@ -61,9 +61,9 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return {modalTitle: 'Invite a Network Manager to Fitango Demo'}
+        return {modalTitle: 'Manage Doctor'}
     }),
     withModal
 );
 
-export default enhance(NetworkManager);
+export default enhance(DoctorManager);

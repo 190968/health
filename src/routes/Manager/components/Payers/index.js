@@ -1,15 +1,15 @@
 import React from 'react';
-import {Table, Radio, Card, Input, Icon} from 'antd';
+import {Table,Tooltip,Button, Radio, Card, Input, Icon} from 'antd';
 
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import sort from '../../../../components/Tables/sort';
-
+import PayersManager from './containers/PayersManager.js'
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Payers = props => {
-    const {getPayers = [], totalCount,searchText,emitEmpty,onSearch,searchTextCode,emitEmptyCode,onSearchCode, loading = false} = props;
+    const {getPayers = [], visibleModal,openModal,hideModal,totalCount,searchText,emitEmpty,onSearch,searchTextCode,emitEmptyCode,onSearchCode, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/> 
     const suffixCode = searchTextCode ? <Icon type="close-circle-o" onClick={emitEmptyCode}/> : <Icon type="search"/> 
     const columns = [
@@ -62,7 +62,7 @@ const Payers = props => {
             <RadioButton value="active">Active</RadioButton>
             <RadioButton value="pending">Pending</RadioButton>
         </RadioGroup>
-        {/* <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip> */}
+        <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
 
     return (
@@ -73,9 +73,8 @@ const Payers = props => {
             <Card type="basic1  ant-card-type-table">
                 <Table  size="middle" dataSource={getPayers} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {/* {showButton && <InviteButton selectedCount={selectedCount}/>} */}
             </Card>
-            {/* {visibleModal && <NetworkManagerr onHide={hideModal}/>} */}
+            {visibleModal && <PayersManager onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }

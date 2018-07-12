@@ -15,8 +15,7 @@ export default class Stages extends React.Component {
         filterDropdownVisible: false,
         searchText: '',
         filtered: false,
-        //
-        data:this.props.stages,
+    
         filteredInfo: null,
         sortedInfo: {},
     };
@@ -72,30 +71,17 @@ export default class Stages extends React.Component {
                     />
             ),
             filterIcon: <Icon type="search"/>,
-        }/*, {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (text, info) => {
-                return info.isActive ? 'Active' : 'Inactive'
+        },{
+            title: 'Letters',
+            dataIndex: 'letters',
+            key: 'letters',
+            render: (info) => {
+                return <span>{info}</span>
             },
-            filters: [
-                {text: 'Active', value: true},
-                {text: 'InActive', value: false},
-            ],
-            onFilter: (value, record) => record.isActive.includes(value),
-            sorter: (a, b) => a.isActive - b.isActive,
-            sortOrder: sortedInfo.columnKey === 'isActive' && sortedInfo.order,
-        }, {
-            title: 'Date',
-            dataIndex: 'createdAt',
-            key: 'date',
-            render: (info) => moment(info).format('L'),
-        }*/];
+        }];
 
-        const { total} = this.props;
-        const stages = this.state.data;
-        console.log(this.props.stages,stages);
+        const { total,stages} = this.props;
+        console.log(stages);
         const actions = <React.Fragment>
         <RadioGroup defaultValue="all" style={{marginRight:10}} >
             <RadioButton value="all">All</RadioButton>
