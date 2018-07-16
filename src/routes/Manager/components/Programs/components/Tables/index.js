@@ -79,6 +79,38 @@ export default class TableCustom extends React.Component {
                 ),
                 filterIcon: <Icon type="search"/>,
             },
+            {
+                title: "Categories",
+                dataIndex: 'categories',
+                key: 'categories',
+                render: (categories,data) => {
+                    return data.name
+                },
+                sorter: (a, b) => sort(a, b, "category","name"),
+            },
+            {
+                title: "Type",
+                dataIndex: 'typeText',
+                key: 'typeText',
+            },
+            {
+                title: "Referrals",
+                dataIndex: 'getReferrals',
+                key: 'getReferrals',
+                sorter: (a, b) => a.getReferrals -b.getReferrals,
+            },
+            {
+                title: "Reviews",
+                dataIndex: 'getReviews',
+                key: 'getReviews',
+                render: (categories,data) => {
+                    return <React.Fragment><Icon style={{ fontSize: 15, color: '#FFFF00' }} type="star" />
+                                           <Icon style={{ fontSize: 15, color: '#FFFF00' }} type="star" />
+                                           <Icon style={{ fontSize: 15, color: '#FFFF00' }} type="star" />
+                                           <Icon style={{ fontSize: 15, color: '#FFFF00' }} type="star" />
+                                           <Icon style={{ fontSize: 15, color: '#FFFF00' }} type="star" /></React.Fragment>
+                },
+            },
              {
                 title: '',
                 width:50,

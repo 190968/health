@@ -1,15 +1,15 @@
 import React from 'react';
-import {Table, Radio, Card, Input, Icon} from 'antd';
+import {Table, Tooltip, Button,Radio, Card, Input, Icon} from 'antd';
 
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import sort from '../../../../components/Tables/sort';
-
+import DoctorManager from './containers/DoctorManager';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Doctors = props => {
-    const {getDoctors = [], totalCount,searchText,emitEmpty,onSearch,searchTextCode,emitEmptyCode,onSearchCode, loading = false} = props;
+    const {getDoctors = [], total,visibleModal,hideModal,searchText,openModal,emitEmpty,onSearch,searchTextCode,emitEmptyCode,onSearchCode,searchTextPhone,emitEmptyPhone,onSearchPhone, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/> 
     const suffixCode = searchTextCode ? <Icon type="close-circle-o" onClick={emitEmptyCode}/> : <Icon type="search"/> 
     const columns = [
@@ -17,8 +17,8 @@ const Doctors = props => {
             title: 'Full Name',
             dataIndex: 'firstName',    
             key: 'firstName',
-            render: (fullName) => {
-                return fullName;
+            render: (firstName,data) => {
+                return <span>{data.firstName} {" "}{data.lastName}</span>;
             },
             sorter: (a, b) => sort(a,b,"firstName"),
             filterDropdown: (
@@ -54,15 +54,15 @@ const Doctors = props => {
             title: 'Phone number',
             dataIndex: 'phoneFormatted',    
             key: 'phoneFormatted',
-            sorter: (a, b) => a.npi - b.npi,
+            sorter: (a, b) => a.phoneFormatted - b.phoneFormatted,
             filterDropdown: (
                 <Input
                      suffix={suffixCode}
                     ref={ele => this.searchInput = ele}
                     placeholder="Search npi"
-                    value={searchTextCode}
-                    onChange={onSearchCode}
-                    onPressEnter={onSearchCode}
+                    value={searchTextPhone}
+                    onChange={onSearchPhone}
+                    onPressEnter={onSearchPhone}
                 />
         ),
         filterIcon: <Icon type="search"/>,
@@ -70,29 +70,24 @@ const Doctors = props => {
     ];
     const pageOpts = {
         pageSize: 20,
-        total: totalCount,
+        total: total,
         hideOnSinglePage: true
     };
  
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="active" style={{marginRight: 10}}>
-            <RadioButton value="active">Active</RadioButton>
-            <RadioButton value="pending">Pending</RadioButton>
-        </RadioGroup>
-        {/* <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip> */}
+        <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
 
     return (
-        <PageHeaderLayout title={'Doctors ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
+        <PageHeaderLayout title={'Doctors ' + (total > 0 ? ' (' + total + ')' : '')}
                           action={actions}
         >
 
             <Card type="basic1  ant-card-type-table">
                 <Table  size="middle" dataSource={getDoctors} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {/* {showButton && <InviteButton selectedCount={selectedCount}/>} */}
             </Card>
-            {/* {visibleModal && <NetworkManagerr onHide={hideModal}/>} */}
+            {visibleModal && <DoctorManager onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }

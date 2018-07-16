@@ -93,9 +93,11 @@ const enhance = compose(
             {
             searchText: '',
             searchTextCode: '',
+            searchTextPhone:''
         }),
         {        
             onSearch: ({searchText},props) =>(value) => (
+               
                 {
                     searchText: value.target.value,
                     getDoctors: props.getDoctors.map((record) => {
@@ -123,16 +125,16 @@ const enhance = compose(
             onSearchCode: ({searchTextCode},props) =>(value) => (
                         {
                             searchTextCode: value.target.value,
-                            getPayers: props.getPayers.map((record) => {
-                                const match = record.code.match(new RegExp(value.target.value, 'gi'));
+                            getDoctors: props.getDoctors.map((record) => {
+                                const match = record.npi.match(new RegExp(value.target.value, 'gi'));
                                 if (!match) {
                                     return null;
                                 }                        
                                 return {
                                     ...record,
-                                    code: (
+                                    npi: (
                                         <span>
-                              {record.code.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
+                              {record.npi.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
                               i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
                               ))}
                             </span>
@@ -140,11 +142,36 @@ const enhance = compose(
                                 };
                             }).filter(record => !!record),
                     }),
-            emitEmptyCode: ({searchTextCode},props) =>(value) => (
+                            emitEmptyCode: ({searchTextCode},props) =>(value) => (
                         {
-                            searchTextCode: '',
-                            getPayers: props.getPayers
-                             })
+                            searchTextPhone: '',
+                            getDoctors: props.getDoctors
+                             }),
+                             onSearchPhone: ({searchText},props) =>(value) => (
+                                {
+                                    searchTextPhone: value.target.value,
+                                    getDoctors: props.getDoctors.map((record) => {
+                                        const match = record.phoneFormatted.match(new RegExp(value.target.value, 'gi'));
+                                        if (!match) {
+                                            return null;
+                                        }                        
+                                        return {
+                                            ...record,
+                                            phoneFormatted: (
+                                                <span>
+                                      {record.phoneFormatted.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
+                                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                                      ))}
+                                    </span>
+                                            ),
+                                        };
+                                    }).filter(record => !!record),
+                            }),
+                            emitEmptyPhone: ({searchText},props) =>(value) => (
+                                {
+                                    searchText: '',
+                                    getDoctors: props.getDoctors
+                                     }),
             })        
 
 );

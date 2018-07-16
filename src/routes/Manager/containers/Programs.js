@@ -5,12 +5,19 @@ import React from 'react';
 import {compose,withStateHandlers} from 'recompose';
 export const GET_PROGRAMS_QUERY = gql`    
 query GET_PROGRAMS {
-    management{
-      getPrograms{
+    management {
+      getPrograms {
         totalCount
-        edges{
+        edges {
           id
           name
+          typeText
+          categories{
+            id
+            name
+          }
+          getReviews
+          getReferrals
         }
       }
     }
