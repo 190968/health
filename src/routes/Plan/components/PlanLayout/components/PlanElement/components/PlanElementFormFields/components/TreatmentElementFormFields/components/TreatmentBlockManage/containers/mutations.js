@@ -5,7 +5,7 @@ import {TreatmentElementFragment} from "../../../../../../../../../../Plan/compo
 export const AddElementMutation = gql`
     mutation addTreatmentBlockElement($blockId: UID!, $type:String!, $input:TreatmentBlockElementInput!) {
         addTreatmentBlockElement(blockId: $blockId, type:$type, input: $input) {
-            ...TreatmentElement
+            ...TreatmentElementInfo
         }
     }
     ${TreatmentElementFragment}
@@ -14,7 +14,7 @@ const fragment =  gql`
        fragment TreatmentBlock on TreatmentBlock {
             id
             options {
-                 ...TreatmentElement
+                 ...TreatmentElementInfo
             }
        }
         ${TreatmentElementFragment}
@@ -61,7 +61,7 @@ export const withAddMutation = graphql(AddElementMutation, {
 export const EditElementMutation = gql`
     mutation updateTreatmentBlockElement($blockId: UID!, $id:UID!, $input:TreatmentBlockElementInput!) {
         updateTreatmentBlockElement(blockId: $blockId, id:$id, input: $input) {
-            ...TreatmentElement
+            ...TreatmentElementInfo
         }
     }
     ${TreatmentElementFragment}
@@ -81,7 +81,7 @@ export const GET_TREATMENT_BLOCK_ELEMENTS_QUERY = gql`
         getTreatment (id: $treatmentId) {
             getBlock(id: $blockId) {
                 options {
-                    ...TreatmentElement
+                    ...TreatmentElementInfo
                 }
             }
         }
@@ -115,7 +115,7 @@ export const GET_TREATMENT_BLOCK_ELEMENT_QUERY = gql`
         getTreatment (id: $treatmentId) {
             getBlock(id: $blockId) {
                 getOption (id:$id) {
-                    ...TreatmentElement
+                    ...TreatmentElementInfo
                 }
             }
         }

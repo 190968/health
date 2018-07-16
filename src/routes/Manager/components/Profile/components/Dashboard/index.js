@@ -11,6 +11,7 @@ import News from "./containers/News";
 import Timeline from "./containers/Timeline";
 import Genomics from "./components/Genomics";
 import FamilyHistory from "./components/FamilyHistory";
+import CancerTreatment from "./components/CancerTreatment";
 
 
 const Overview = props => {
@@ -21,6 +22,7 @@ const Overview = props => {
         <Row gutter={16}>
             <Col xl={17}>
 
+                <CancerTreatment user={user} />
                         <Stages userId={userId} />
                 <Row  style={{marginBottom:16}}>
                     <Col>

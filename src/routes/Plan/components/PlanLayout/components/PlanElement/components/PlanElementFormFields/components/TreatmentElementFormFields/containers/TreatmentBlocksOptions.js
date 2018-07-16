@@ -10,7 +10,7 @@ export const GET_TREATMENT_BLOCKS_QUERY = gql`
                 id
                 title
                 options {
-                    ...TreatmentElement
+                    ...TreatmentElementInfo
                 }
             }
         }

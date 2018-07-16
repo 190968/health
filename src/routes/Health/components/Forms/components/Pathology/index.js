@@ -92,7 +92,7 @@ export const preparePathologyInput = values => {
         tumorSize} = values;
 
     return {
-        clinicalTrial: {
+        pathology: {
             date,
             tumorHistology,
             tumorBehavior,

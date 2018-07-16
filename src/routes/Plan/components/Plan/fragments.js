@@ -148,7 +148,7 @@ export const ElementTreatmentFragment = gql`
           id
           title
           elements {
-                ...TreatmentElement
+                ...TreatmentElementInfo
           }
     }
    ${TreatmentElementFragment}
@@ -238,9 +238,6 @@ export const ElementAliasFragment = gql`
         btnLabel
         hasElement
     }
-   ${TreatmentElementFragment}
-   ${ElementApFragment}
-   ${ElementTrackerFragment}
 `;
 /*
  ${TreatmentBlockElementFragment}

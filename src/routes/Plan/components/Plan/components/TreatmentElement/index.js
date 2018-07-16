@@ -6,6 +6,7 @@ import './index.less';
 
 const TreatmentElement = ({item, plan, isPreviewMode, isBuilderMode, mode, handleReport=false}) => {
     const {elements} = item;
+    
         return <List
             size="small"
             type="horizontal"

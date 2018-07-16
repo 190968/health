@@ -6,10 +6,10 @@ import moment from 'moment';
 export const UserActionPlansTable = props => {
 
 
-    const {items=[{id:1, title:'EHFR', createdDate: '2018-01-01'}, {id:1, title:'ALK', createdDate: '2018-02-01'}], loading=false} = props;
+    const {items=[{id:1, title:'EGFR', createdDate: '2018-01-01'}, {id:1, title:'ALK', createdDate: '2018-02-01'}], loading=false} = props;
     const total = items.length;
     const columns = [{
-        title: 'Genome',
+        title: 'Mutation',
         dataIndex: 'title',
         key: 'title',
         render: (title, info) => {

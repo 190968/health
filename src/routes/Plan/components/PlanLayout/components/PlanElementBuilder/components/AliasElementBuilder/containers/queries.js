@@ -21,9 +21,10 @@ export const PathwayBodyWithQuery = graphql(
     PB_PLAN_BODY_QUERY,
     {
         options: (ownProps) => {
+            console.log(ownProps);
             return {
                 variables: {
-                    id: ownProps.planId,
+                    id: ownProps.plan.id,
                 }}
         },
         props: ({ ownProps, data }) => {
