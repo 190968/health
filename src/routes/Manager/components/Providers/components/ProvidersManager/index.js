@@ -5,6 +5,7 @@ import SelectExesting from './containers/SelectExesting';
 
 const ProvidersManager = props => {
 const {visibleModal,openModal,hideModal,visibleModalExesting,openModalExesting,hideModalExesting} =props;
+console.log(visibleModal,visibleModalExesting);
     return <React.Fragment >
                     <Col  offset={5} span={5}>
                         <Button type="primary" onClick={openModal}>Create new</Button>   

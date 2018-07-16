@@ -26,7 +26,7 @@ const NetworkManager = props => {
         },
         sorter: (a, b) => sort(a.user, b.user, "fullName"),
         filterDropdown: (
-            <Input
+            <Input 
                 suffix={suffix}
                 ref={ele => this.searchInput = ele}
                 placeholder="Search"
@@ -35,7 +35,9 @@ const NetworkManager = props => {
                 onPressEnter={onSearch}
             />
     ),
-    filterIcon: <Icon type="search"/>,
+                filterIcon: <Icon type="search"/>,
+               // filterDropdownVisible: this.state.filterDropdownVisible,
+                onFilterDropdownVisibleChange: (visible) =>   this.searchInput.focus()
     },
         {
             title: 'Joined',
