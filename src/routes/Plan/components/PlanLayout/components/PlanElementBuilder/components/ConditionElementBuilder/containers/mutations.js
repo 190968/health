@@ -8,7 +8,7 @@ export const GET_TREATMENT_BLOCK_ELEMENTS_QUERY = gql`
         getTreatment (id: $treatmentId) {
             getBlock(id: $blockId) {
                 options {
-                    ...TreatmentElement
+                    ...TreatmentElementInfo
                 }
             }
         }

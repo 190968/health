@@ -106,7 +106,7 @@ export const prepareRadiationInput = values => {
         regionalFractions} = values;
 
     return {
-        clinicalTrial: {
+        radiation: {
             date,
             treatmentAnatomicSite,
             treatmentTechnique,

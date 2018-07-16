@@ -29,7 +29,7 @@ const enhance = compose(
 
 
     withProps(props => {
-        const elements = props.elements;
+        const {elements=[]} = props;
         //console.log(props);
         const {element={}} = props;
         const {itemInfo={}} = element;
@@ -107,9 +107,9 @@ const enhance = compose(
             targetOption.loading = true;
 
             // load options lazily
-
+            
             queryOptions.variables = {
-                planId:props.planId,
+                planId:props.plan.id,
                 id: targetOption.value
             };
 
@@ -155,7 +155,7 @@ const enhance = compose(
     }),
     lifecycle({
         componentDidMount() {
-            //console.log(this.props);
+            console.log(this.props);
             let {options, element={}} = this.props;
             const {itemInfo={}} = element;
             //console.log(element);

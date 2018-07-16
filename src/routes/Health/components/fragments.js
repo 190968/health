@@ -99,7 +99,7 @@ export const PathologyFragment  = gql`
 export const HealthElementFragment  = gql`
     fragment HealthElement on HealthRecord {
         id
-        type
+        healthType
         title
         isActive
         typeText
@@ -139,5 +139,4 @@ export const HealthElementFragment  = gql`
     ${PathologyFragment}
     ${ClinicalTrialElementFragment}
 `;
-
 

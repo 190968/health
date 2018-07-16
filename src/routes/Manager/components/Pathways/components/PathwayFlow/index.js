@@ -21,6 +21,7 @@ const convertElementsToCode = (elements, props) => {
 
 		const data = { key: id, name: typeText, bgColor: '#e6f7ff', color: '#91d5ff', itemInfo,  text: ''  };
 		let haveConnection = true;
+		let extraData = [];
 
 		//const childrenElements = elementsByElements[id] || null;
 		
@@ -73,9 +74,10 @@ const convertElementsToCode = (elements, props) => {
 				data.name = label;
 				data.bgColor = '#fff1f0';
 				data.color = '#fff1f0';
+				let condItems = [];
 				condOption.map((option) => {
 					const { label, value } = option;
-					nodeDataArray.push({ key: 'cond' + value, name: label, color: 'blue', bgColor: '#5ac6c4' });
+					extraData.push({ key: 'cond' + value, name: label, color: 'blue', bgColor: '#5ac6c4' });
 					linkDataArray.push({ from: id, to: 'cond' + value });
 					//console.log(childrenElements);
 					const childrenElements = getConnectedElements.filter(connectedElement => {
@@ -96,7 +98,7 @@ const convertElementsToCode = (elements, props) => {
 							console.log(childrenCodes);
 							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
 
-							nodeDataArray = [...nodeDataArray, ...childrenNodeDataArray];
+							extraData = [...extraData, ...childrenNodeDataArray];
 							linkDataArray = [...linkDataArray, ...childrenLinkDataArray];
 							//console.log(childrenNodeDataArray);
 							// add connection as well
@@ -141,7 +143,10 @@ const convertElementsToCode = (elements, props) => {
 		
 
 		nodeDataArray.push(data);
-
+		//console.log(nodeDataArray);
+		//console.log(extraData);
+		nodeDataArray = [...nodeDataArray, ...extraData];//.push();
+		//console.log(nodeDataArray);
 		if (i > 0 && haveConnection) {
 			// if this is not the fist item
 			const { id: prevId } = prevElement;
@@ -236,11 +241,12 @@ const enhance = compose(
 	// }),
 	withHandlers({
 		createDiagram: (props) => (diagramId) => {
+			go.licenseKey = "2bf843e0b66e58c511895a25406c7efb0ff12d33cf874df3590517f4ed0d3a442798e17d55d099d0d4ac1ea91b7c93de89926b21961f0c3be331dbd545b580fdb26275e7165a148ba05471969ef92da1f47924fbd0a571f78a7e8ca0bba9d18c5fe9f3dd57cc11bb2a";
 			const $ = go.GraphObject.make;
 
 			const myDiagram = $(go.Diagram, diagramId, {
-				initialDocumentSpot: go.Spot.Center,
-            	initialViewportSpot: go.Spot.Center,
+				initialDocumentSpot: go.Spot.TopCenter,
+            	initialViewportSpot: go.Spot.TopCenter,
 				layout: $(go.TreeLayout, {
 					angle: 90,
 					layerSpacing: 35
@@ -250,7 +256,7 @@ const enhance = compose(
 				allowVerticalScroll: true,
 				allowZoom: true,
 				allowSelect: false,
-				scale:1,
+				scale:1.1,
 				//autoScale: Diagram.Uniform,
 				contentAlignment: go.Spot.Center
 			});

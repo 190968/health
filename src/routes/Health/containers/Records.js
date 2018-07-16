@@ -11,7 +11,7 @@ const GET_Records_QUERY = gql`
               totalCount
               edges {
                 id
-                type
+                healthType
                 typeText
                 title
                 createdAt

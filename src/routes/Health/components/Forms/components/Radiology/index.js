@@ -86,7 +86,7 @@ export const prepareRadiologyInput = values => {
         metastaticSites} = values;
 
     return {
-        clinicalTrial: {
+        radiology: {
             date,
             procedure,
             tumorSize,
