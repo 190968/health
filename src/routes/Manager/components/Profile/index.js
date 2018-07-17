@@ -69,6 +69,10 @@ const CancerTitle = enhanceTitle(CancerTitlePure);
                 key: 'stakeholders',
                 tab: 'Stakeholders',
             },
+            {
+                key: 'treatmentOptions',
+                tab: 'Treatment Options',
+            },
         ];
 const Profile = props => {
 

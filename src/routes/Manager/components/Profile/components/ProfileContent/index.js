@@ -19,6 +19,7 @@ import ActionPlans from '../../components/Dashboard/containers/ActionPlans';
 import {Stakeholders} from "./components/Stakeholders/index";
 import Plans from "./components/Plans";
 import {compose, withHandlers} from 'recompose';
+import CancerTreatment from '../Dashboard/containers/CancerTreatment';
 
 const RouteWithSubRoutes = route => {
     //console.log(route);
@@ -74,6 +75,11 @@ const ProfileContentPure = props => {
             {
                 path: mainUrl + "/stakeholders",
                 component: Stakeholders,
+                params: defaultParams
+            },
+            {
+                path: mainUrl + "/treatmentOptions",
+                component: CancerTreatment,
                 params: defaultParams
             },
             {
