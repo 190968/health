@@ -61,7 +61,7 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return {modalTitle: 'Add a Program'}
+        return {modalTitle: 'Edit'}
     }),
     withModal
 );

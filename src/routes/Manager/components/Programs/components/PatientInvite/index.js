@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import { Card, Tabs ,Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+const TabPane = Tabs.TabPane;
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -33,6 +34,8 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     const children = [];
     return  <Form >
+        <Tabs defaultActiveKey="1">
+    <TabPane tab="Tab 1" key="1">
     <FormItem
         {...formItemLayout}
         label="Title"
@@ -183,6 +186,11 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
         </Select>
     )}
     </FormItem>
+    </TabPane>
+    <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
+    <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+  </Tabs>
+
 </Form>
 }
 

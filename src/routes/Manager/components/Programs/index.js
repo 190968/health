@@ -25,7 +25,7 @@ export  class Programs extends React.Component {
             <RadioButton value="all">All</RadioButton>
             <RadioButton value="active">Active</RadioButton>
         </RadioGroup>
-        {/* <Tooltip title="Add New Patient"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip> */}
+        <Tooltip title="Add New Patient"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
         return (
             <PageHeaderLayout title={'Programs'+ (total > 0 ? ' ('+total+')' : '')}
@@ -39,7 +39,7 @@ export  class Programs extends React.Component {
                 <TableCustom programs={programs} selectedCount={selectedCount} openShowButton={openShowButton} hideShowButton={hideShowButton} showButton={showButton} onSearch={onSearch} emitEmpty={emitEmpty} searchText={searchText} sliderChange={sliderChange}/>
                
             </Card>
-            {/* {visibleModal && <PatientInvite onHide={hideModal}/>} */}
+            {visibleModal && <PatientInvite onHide={hideModal}/>}
             </PageHeaderLayout>);
     }
 }

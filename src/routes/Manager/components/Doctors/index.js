@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Tooltip, Button,Radio, Card, Input, Icon} from 'antd';
+import {Table,Menu,Dropdown, Tooltip, Button,Radio, Card, Input, Icon} from 'antd';
 
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
@@ -67,6 +67,24 @@ const Doctors = props => {
         ),
         filterIcon: <Icon type="search"/>,
         },
+        {
+            render: (info) => {
+                const menu = (
+                    <Menu>
+                        <Menu.Item>
+                            <Icon type="edit"/> Edit
+                        </Menu.Item>
+                        <Menu.Item>
+                            <Icon type="delete"/> Delete
+                        </Menu.Item>
+                    </Menu>
+                );
+                return <Dropdown overlay={menu} trigger={['click']}>
+                    <Icon type="setting"/>
+                </Dropdown>;
+            },
+            width:50
+        }
     ];
     const pageOpts = {
         pageSize: 20,

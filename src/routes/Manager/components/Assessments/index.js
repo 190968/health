@@ -1,15 +1,16 @@
 import React from 'react';
-import {Table, Radio, Card, Input, Icon} from 'antd';
+import {Table,Menu,Tooltip,Button, Dropdown, Radio, Card, Input, Icon} from 'antd';
 import moment from 'moment';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import sort from '../../../../components/Tables/sort';
+import AssessmentsEditor from "./containers/AssessmentsEditor";
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
 const Assessments = props => {
-    const {getAssessments = [], totalCount,searchText,emitEmpty,onSearch,searchTextCode,emitEmptyCode,onSearchCode, loading = false} = props;
+    const {getAssessments = [],openModal,visibleModal,hideModal, totalCount,searchText,emitEmpty,onSearch,searchTextCode,emitEmptyCode,onSearchCode, loading = false} = props;
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/> 
     const suffixCode = searchTextCode ? <Icon type="close-circle-o" onClick={emitEmptyCode}/> : <Icon type="search"/> 
     const columns = [
@@ -53,6 +54,24 @@ const Assessments = props => {
             key: 'getTotalAssigns',
             sorter: (a, b) => a.getTotalAssigns - b.getTotalAssigns,
         },
+        {
+            render: (info) => {
+                const menu = (
+                    <Menu>
+                        <Menu.Item>
+                            <Icon type="edit"/> Edit
+                        </Menu.Item>
+                        <Menu.Item>
+                            <Icon type="delete"/> Delete
+                        </Menu.Item>
+                    </Menu>
+                );
+                return <Dropdown overlay={menu} trigger={['click']}>
+                    <Icon type="setting"/>
+                </Dropdown>;
+            },
+            width:50
+        }
     ];
     const pageOpts = {
         pageSize: 20,
@@ -65,7 +84,7 @@ const Assessments = props => {
             <RadioButton value="active">Active</RadioButton>
             <RadioButton value="pending">Pending</RadioButton>
         </RadioGroup>
-        {/* <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip> */}
+        <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip>
     </React.Fragment>;
 
     return (
@@ -76,9 +95,8 @@ const Assessments = props => {
             <Card type="basic1  ant-card-type-table">
                 <Table  size="middle" dataSource={getAssessments} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
-                {/* {showButton && <InviteButton selectedCount={selectedCount}/>} */}
             </Card>
-            {/* {visibleModal && <NetworkManagerr onHide={hideModal}/>} */}
+            {visibleModal && <AssessmentsEditor onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }

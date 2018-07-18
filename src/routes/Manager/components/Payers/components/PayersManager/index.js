@@ -3,7 +3,7 @@ import {Input, Select, Form,} from 'antd';
 const FormItem = Form.Item;
 
 
-const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
+const PayersManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
 
 
     const {getFieldDecorator} = form;
@@ -11,26 +11,22 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
     const children = [];
     return <Form layout='vertical'>
         <FormItem
-            label="Enter in the email address of who you would like to invite to Fitango Demo"
-            extra="You can send several invitations by pressing Enter after each."
+        {...formItemLayout}
+            label="Name"
         >
-            {getFieldDecorator('emails', {})(
-                <Select
-                    mode="tags"
-                    style={{width: '100%'}}
-                    tokenSeparators={[',']}
-                >
-                </Select>
+            {getFieldDecorator('name', {})(
+                  <Input />
             )}
         </FormItem>
         <FormItem
-            label="Optional Message to Recipients(s)"
+         {...formItemLayout}
+            label="HP Code"
         >
-            {getFieldDecorator('message', {})(
+            {getFieldDecorator('hpcode', {})(
                 <Input />
             )}
         </FormItem>
     </Form>
 }
 
-export default TeamManager;
+export default PayersManager;

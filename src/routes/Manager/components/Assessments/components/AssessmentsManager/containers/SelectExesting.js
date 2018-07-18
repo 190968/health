@@ -1,4 +1,4 @@
-import CreateNew from '../components/CreateNew/index';
+import SelectExesting from '../components/SelectExesting/index';
 import {graphql} from 'react-apollo';
 import React from 'react';
 import {compose, withHandlers, withProps} from 'recompose';
@@ -7,37 +7,46 @@ import gql from 'graphql-tag';
 import {withModal} from "../../../../../../../components/Modal/index";
 
 const GET_PROFILE = gql`
-query GET_USER_TEAM($user_id:UID) {
-    patient(id: $user_id) {
-       id
-       motivation {
-              careTeam {
-                  totalCount,
-                  edges{
-                      id,
-                      user {
-                          phoneFormatted
-                      }
-                      joinedDate
-                      roleText
-                  }
-              }
-       }
+query GET_PROVIDERS ($search: String, $status: RoleStatusEnum = active) {
+    network {
+      id
+      getProviders(search:$search, status: $status) {
+        totalCount
+        edges {
+          id
+          name
+          typeText
+          getTotalPatients
+          getTotalCareGivers:getTotalStaff(role: cm)
+          getTotalManagers:getTotalStaff(role: manager)
+          getAdherence {
+              level
+          }
+        }
+      }
     }
   }
 `;
 
 const withQuery = graphql(GET_PROFILE, {
-    options: ({patient}) => {
-        return {
+    options: (ownProps) => {
+        return{
             variables: {
-                id: '',
-            },
+                search:"",
+                status:"active",  
+            }
         }
     },
-    props: ({data, ownProps}) => {
-        const {patient} = ownProps;
-        return {loading: data.loading, patient: patient}
+    props: ({ data }) => {
+        if (!data.loading) {
+            return {
+                edges: data.network.getProviders.edges,
+                loading: data.loading,
+            }
+        }
+        else {
+            return {loading: data.loading}
+        }
     },
 });
 
@@ -61,9 +70,9 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return {modalTitle: 'Add a Provider'}
+        return {modalTitle: 'Select from Existing Providers'}
     }),
     withModal
 );
 
-export default enhance(CreateNew);
+export default enhance(SelectExesting);

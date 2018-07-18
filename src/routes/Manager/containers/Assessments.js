@@ -42,7 +42,7 @@ const withQuery = graphql(
 
                 return {
                     getAssessments: data.getAssessments.edges,
-                    total: data.getAssessments.totalCount,
+                    totalCount: data.getAssessments.totalCount,
                     loading: data.loading,
                     loadByStatus(status) {
                         return data.fetchMore({
