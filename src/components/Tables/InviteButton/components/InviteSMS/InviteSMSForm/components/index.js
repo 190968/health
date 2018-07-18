@@ -9,7 +9,14 @@ const RadioGroup = Radio.Group;
 
 const InviteSMS = props => {
     const { form, formItemLayout,selectedObj} = props;
-    let defVal = selectedObj.map(obj =>obj.user.fullName);
+    let defVal,options;
+    if(selectedObj[0].fullName){
+        defVal = selectedObj.map(obj =>obj.fullName);
+        options = selectedObj.map(obj => <Option key={obj.fullName} value={obj.fullName}>{obj.fullName}</Option>)
+    } else {
+        defVal = selectedObj.map(obj =>obj.user.fullName);
+        options = selectedObj.map(obj => <Option key={obj.user.fullName} value={obj.user.fullName}>{obj.user.fullName}</Option>)
+    }
 
      const {getFieldDecorator} = form;
     return   <Form>
@@ -22,8 +29,10 @@ const InviteSMS = props => {
                     style={{ width: '100%' }}
                     defaultValue= {defVal}
                   >
-                    {selectedObj.map(obj => <Option key={obj.user.fullName} value={obj.user.fullName}>{obj.user.fullName}</Option>)}
-                  </Select>
+                  {
+                    options
+                  }
+                    </Select>
     </FormItem>
     <FormItem
     {...formItemLayout}

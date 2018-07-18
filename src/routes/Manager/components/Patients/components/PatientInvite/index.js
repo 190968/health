@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card, Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import AddressForm from '../../../../../../components/AddressForm';
+import PhoneForm from '../../../../../../components/PhoneForm';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -132,14 +134,14 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
         // validateStatus={phoneNumberError ? 'error' : ''}
         // help={phoneNumberError || ''}
     >
-        {/* <PhoneForm getFieldDecorator={getFieldDecorator} required phone={phone} /> */}
+        <PhoneForm getFieldDecorator={getFieldDecorator} required  />
     </FormItem>
 
     <FormItem
         {...formItemLayout}
         label={"Address"}
     >
-        {/* <AddressForm getFieldDecorator={getFieldDecorator} countries={countries} states={states} address={user.address} /> */}
+        <AddressForm getFieldDecorator={getFieldDecorator}  />
     </FormItem>
 
     <FormItem

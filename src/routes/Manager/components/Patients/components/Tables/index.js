@@ -60,7 +60,7 @@ export default class TableCustom extends React.Component {
             0: '0',
             99: '99'
         };
-        const {selectedCount,openShowButton,hideShowButton,showButton} = this.props;
+        const {selectedCount,openShowButton,hideShowButton,showButton,selectedObj} = this.props;
         const columns = [
             {
                 title: "Name",
@@ -140,8 +140,10 @@ export default class TableCustom extends React.Component {
             },
         ];
         const rowSelection = {
-            onChange: record => (
-                record.length < 1 ? hideShowButton() : openShowButton(record.length)
+            
+            onChange: (record,data) => (
+                console.log("rowSelection",data),
+                record.length < 1 ? hideShowButton() : openShowButton(data)
     
             ),
             getCheckboxProps: record => ({
@@ -149,6 +151,7 @@ export default class TableCustom extends React.Component {
             }),
         };
         const dataSource = this.props.patients;
+        console.log(selectedObj);
         return (
             <div>
                 <Modal
@@ -158,12 +161,12 @@ export default class TableCustom extends React.Component {
                 >
                     <CustomModal id={this.state.id}/>
                 </Modal>
-                <Table rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false}
+                <Table  rowKey={'id'} rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false}
                        onChange={this.handleChange}
                        ref={(input) => {
                            this.table = input;
                        }}/>
-                       {showButton && <InviteButtons selectedCount={selectedCount} />}
+                       {showButton && <InviteButtons selectedCount={selectedCount} selectedObj={selectedObj} />}
             </div>);
     }
 }

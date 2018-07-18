@@ -39,9 +39,9 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
         if (!data.loading) {
             return {
                 edges: data.network.getProviders.edges,
+                totalCount: data.network.getProviders.totalCount,
                 loading: data.loading,
                 loadByStatus(status) {
-                    console.log(status.target.value);
                     return data.fetchMore({
                         // query: ... (you can specify a different query. FEED_QUERY is used by default)
                         variables: {

@@ -59,8 +59,8 @@ const Analysts = props => {
         hideOnSinglePage: true
     };
     const rowSelection = {
-        onChange:  record => (
-            record.length < 1 ? hideShowButton() : openShowButton(record)
+        onChange: (record,data) => (
+            record.length < 1 ? hideShowButton() : openShowButton(data)
             
         ),
         getCheckboxProps: record => ({

@@ -9,7 +9,15 @@ const RadioGroup = Radio.Group;
 
 const InviteMeeting = props => {
 const { form, formItemLayout,selectedObj} = props;
-let defVal = selectedObj.map(obj =>obj.user.fullName);
+let defVal,options;
+if(selectedObj[0].fullName){
+    defVal = selectedObj.map(obj =>obj.fullName);
+    options = selectedObj.map(obj => <Option key={obj.fullName} value={obj.fullName}>{obj.fullName}</Option>)
+} else {
+    defVal = selectedObj.map(obj =>obj.user.fullName);
+    options = selectedObj.map(obj => <Option key={obj.user.fullName} value={obj.user.fullName}>{obj.user.fullName}</Option>)
+}
+
      const {getFieldDecorator} = form;
     return   <Form>
      
@@ -22,7 +30,9 @@ let defVal = selectedObj.map(obj =>obj.user.fullName);
                     style={{ width: '100%' }}
                     defaultValue= {defVal}
                   >
-                    {selectedObj.map(obj => <Option key={obj.user.fullName} value={obj.user.fullName}>{obj.user.fullName}</Option>)}
+                  {
+                      options
+                  }
                   </Select>
     </FormItem>
     <FormItem

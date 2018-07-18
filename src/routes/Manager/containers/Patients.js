@@ -102,9 +102,10 @@ const enhance = compose(
         }),
         {        
 
-            openShowButton: ({ counter }) => (value) => ({
-                showButton: true,
-                selectedCount:value
+            openShowButton: ({ counter }) => (value) => (console.log(value),{
+                showButton: true, 
+                selectedCount:value.length,
+                selectedObj:value
             }),
             hideShowButton: ({ counter }) => (value) => ({
                 showButton: false

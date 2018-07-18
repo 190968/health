@@ -89,7 +89,7 @@ const ProidersManager = props => {
                 <Table size="middle" dataSource={edges} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
             </Card>
-            {visibleModal && <ProviderEditor onHide={hideModal}/>}
+            {visibleModal && <ProviderEditor     onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }

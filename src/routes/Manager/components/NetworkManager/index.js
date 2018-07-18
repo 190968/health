@@ -15,7 +15,7 @@ const RadioGroup = Radio.Group;
 
 const NetworkManager = props => {
     const {management = [],loadByStatus,selectedObj,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
-   console.log(props);
+   console.log("managhement",management);
     const suffix = searchText ? <Icon type="close-circle-o" onClick={emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'Name',

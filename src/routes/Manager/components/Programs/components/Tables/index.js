@@ -86,7 +86,7 @@ export default class TableCustom extends React.Component {
                 render: (categories,data) => {
                     return data.name
                 },
-                sorter: (a, b) => sort(a, b, "category","name"),
+                sorter: (a, b) => sort(a, b, "categories","name"),
             },
             {
                 title: "Type",

@@ -55,7 +55,6 @@ export default class WorkFlow extends React.Component {
             key: 'createdBy',
             sorter: (a, b) => a.createdBy - b.createdBy,
             filterDropdown: (
-                <div className="custom-filter-dropdown">
                     <Input
                          suffix={suffix}
                         ref={ele => this.searchInput = ele}
@@ -64,7 +63,6 @@ export default class WorkFlow extends React.Component {
                         //onChange={onSearch}
                         //onPressEnter={onSearch}
                     />
-                </div>
             ),
             filterIcon: <Icon type="search"/>,
         }, {

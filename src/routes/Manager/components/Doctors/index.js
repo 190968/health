@@ -25,7 +25,7 @@ const Doctors = props => {
                 <Input
                      suffix={suffix}
                     ref={ele => this.searchInput = ele}
-                    placeholder="Search full name"
+                    placeholder="Search"
                     value={searchText}
                     onChange={onSearch}
                     onPressEnter={onSearch}

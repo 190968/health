@@ -71,8 +71,8 @@ const CareManager = props => {
         <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus" /></Button></Tooltip>
     </React.Fragment>;
   const rowSelection = {
-    onChange:  record => (
-        record.length < 1 ? hideShowButton() : openShowButton(record)
+    onChange: (record,data) => (
+        record.length < 1 ? hideShowButton() : openShowButton(data)
         
     ),
     getCheckboxProps: record => ({
