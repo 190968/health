@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col, Card} from 'antd';
-import {EmptyList} from "../../../../../../components/Loading/index";
+import {EmptyList} from "../../../../../../components/Loading";
 import {DiagnosesList} from "../../../../../Health/containers/Diagnoses";
 import Vitals from "./containers/Vitals";
 import Stages from "./containers/Stages";
@@ -11,7 +11,6 @@ import News from "./containers/News";
 import Timeline from "./containers/Timeline";
 import Genomics from "./components/Genomics";
 import FamilyHistory from "./components/FamilyHistory";
-import CancerTreatment from "./components/CancerTreatment";
 
 
 const Overview = props => {
@@ -21,8 +20,6 @@ const Overview = props => {
     return <React.Fragment>
         <Row gutter={16}>
             <Col xl={17}>
-
-                <CancerTreatment user={user} />
                         <Stages userId={userId} />
                 <Row  style={{marginBottom:16}}>
                     <Col>

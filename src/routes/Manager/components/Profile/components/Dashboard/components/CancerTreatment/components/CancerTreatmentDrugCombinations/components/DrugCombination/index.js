@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Progress,Tabs, Row, Col, Table} from 'antd';
+import {Card, Progress,Tabs, Row, Col, Table, Icon, Alert} from 'antd';
 
 const { TabPane } = Tabs;
 const gridStyle = {
@@ -9,15 +9,12 @@ const gridStyle = {
 
  
 const DrugCombination = props => {
-    const {combination={}} = props;
-    const {maxDrugs=0, drugs=[
-        {percentage: 12},
-        {percentage: 34}
-    ]} = combination;
+    const {combination={}, treatment} = props;
+    const {maxDrugs=0, combos=[]} = combination;
     return <Card  type={'pure'}  bordered={false}>
         <Tabs className={'topBorderedTab'} tabPosition={'top'} >
-            {drugs.map((drug, i) => <TabPane tab={<DrugCombinationBlock drug={drug} currentTabKey={i} />} key={i}>
-               <DrugCombinationBlockInfo drug={drug} />
+            {combos.map((drug, i) => <TabPane tab={<DrugCombinationBlock drug={drug} currentTabKey={i} />} key={i}>
+               <DrugCombinationBlockInfo drug={drug} treatment={treatment} />
             </TabPane>)}
         </Tabs>
     </Card>
@@ -28,10 +25,10 @@ export default DrugCombination;
 
 const DrugCombinationBlock = props => {
     const {drug} = props;
-    const {percentage=0, combinations=[]} = drug;
+    const {score=0, drugtargets=[]} = drug;
     return <Row style={{width:120}}>
-        <Col xs={8} style={{textAlign: 'left'}}><DrugCombinationChart value={percentage} /></Col>
-        <Col xs={12} offset={1} style={{lineHeight:'1.1em'}}><small>Some Drugs here <br /> Some Drugs here</small></Col>
+        <Col xs={8} style={{textAlign: 'left'}}><DrugCombinationChart value={score} /></Col>
+        <Col xs={12} offset={1} style={{lineHeight:'1.1em'}}><small>{drugtargets.map((target, i) => <div key={i}>{target.drug}</div>)}</small></Col>
     </Row>;
 }
 
@@ -40,44 +37,66 @@ const DrugCombinationChart = ({value=0}) => {
 }
 
 
+ 
+const DrugCombinationBlockInfo = props => {
+    const {drug={}, treatment} = props;
+    const {blackbox='', contraindications='',drugtargets=[]} = drug;
+    const {drugs=[]} = treatment;
+
+    console.log(drugs, 'drugs');
+
 const columns = [{
     title: 'Drug',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'drug',
+    key: 'drug',
+    render: (title) => {
+
+        const fullInfo = drugs.filter(drug => drug.drugName.toLowerCase() ===  title.toLowerCase());
+        
+        console.log(fullInfo);
+        return <React.Fragment>{title} <Icon type="info-circle-o" /></React.Fragment>;
+    }
   }, {
     title: 'Targeting Description',
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'target',
+    key: 'target',
+    render: (title, info) => {
+        console.log(info);
+        const {targets=[]} = info;
+        return targets.map((target, i) => {
+            const {marker, targetSubstitution} = target;
+            return <div key={i}>{marker +' via ' + targetSubstitution}</div>;
+        })
+       
+    }
   }, {
-    title: 'Indication recomendations',
+    title: 'Indication Recomendations',
     children: [{
         title: 'On Compedia',
-        dataIndex: 'age1',
-        key: 'age1',
+        dataIndex: 'ind',
+        key: 'Ind1',
+        align: 'center',
+        render: (title, info) => {
+            return title === true && <Icon type="check" />;
+        }
       },
       {
         title: 'Off-Label',
-        dataIndex: 'age2',
-        key: 'age2',
+        dataIndex: 'ind',
+        key: 'Ind2',
+        align: 'center',
+        render: (title, info) => {
+            return title === false && <Icon type="check" />;
+        }
       }]
   }];
 
 
-const data = [];
-for (let i = 0; i < 5; i++) {
-  data.push({
-    key: i,
-    name: 'Bittner',
-    age: i + 1,
-    street: 'Lake Park',
-    building: 'C',
-    number: 2035,
-    companyAddress: 'Lake Street 42',
-    companyName: 'SoftLake Co',
-    gender: 'M',
-  });
-}
-
-const DrugCombinationBlockInfo = props => {
-    return <Table dataSource={data} columns={columns}  size={'small'} pagination={false} />;
+    //
+    //const footer = renderTableFooter(drug);
+    return <React.Fragment>
+        <Table dataSource={drugtargets}  key={'drug'} columns={columns}  size={'small'} pagination={false}    />
+    {blackbox !== '' && <Alert message={'FDA black-box warning:'} type="error" description={<span dangerouslySetInnerHTML={{__html: blackbox}} />} showIcon style={{marginTop:10}} ></Alert>}
+    {contraindications !== '' && <Alert message={'Contraindications:'} type="warning" description={contraindications} showIcon style={{marginTop:10}} ></Alert>}
+    </React.Fragment>;
 }
