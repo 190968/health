@@ -116,7 +116,8 @@ export default class TableCustom extends React.Component {
                     return <Dropdown overlay={menu} trigger={['click']}>
                         <Icon type="setting"/>
                     </Dropdown>;
-                }
+                },                
+            width:50
             },
         ];
 
