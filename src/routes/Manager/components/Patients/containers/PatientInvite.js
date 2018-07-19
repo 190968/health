@@ -28,7 +28,9 @@ query GET_PROFILE_FORM {
 const withQuery = graphql(GET_PROFILE_FORM, {
     props: ({ownProps, data }) => {
         console.log(data);
-        return {loading: data.loading, getProfileForm: data.management.getProfileForm}
+        const {management={}} = data;
+        const {getProfileForm={}} = management;
+        return {loading: data.loading, getProfileForm};
     },
 });
 
