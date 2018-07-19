@@ -1,7 +1,10 @@
 import React from 'react';
-import { Card, Tabs ,Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import { Radio , Tabs ,Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import AddressForm from '../../../../../../components/AddressForm';
+import PhoneForm from '../../../../../../components/PhoneForm';
 const TabPane = Tabs.TabPane;
 const InputGroup = Input.Group;
+const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -35,7 +38,7 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
     const children = [];
     return  <Form >
         <Tabs defaultActiveKey="1">
-    <TabPane tab="Tab 1" key="1">
+    <TabPane tab="Basic" key="1">
     <FormItem
         {...formItemLayout}
         label="Title"
@@ -135,14 +138,14 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
         // validateStatus={phoneNumberError ? 'error' : ''}
         // help={phoneNumberError || ''}
     >
-        {/* <PhoneForm getFieldDecorator={getFieldDecorator} required phone={phone} /> */}
+        <PhoneForm getFieldDecorator={getFieldDecorator} required  />
     </FormItem>
 
     <FormItem
         {...formItemLayout}
         label={"Address"}
     >
-        {/* <AddressForm getFieldDecorator={getFieldDecorator} countries={countries} states={states} address={user.address} /> */}
+        <AddressForm getFieldDecorator={getFieldDecorator}  />
     </FormItem>
 
     <FormItem
@@ -187,8 +190,31 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
     )}
     </FormItem>
     </TabPane>
-    <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
-    <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+    <TabPane tab="Filters" key="2">
+    <FormItem
+        {...formItemLayout}
+        label={"Date Format"}
+
+    > {getFieldDecorator('dateFormat', {
+      
+    })(
+        <RadioGroup>
+            <Radio value={1}>A</Radio>
+            <Radio value={2}>B</Radio>
+            <Radio value={3}>C</Radio>
+            <Radio value={4}>D</Radio>
+            <Radio value={5}>A</Radio>
+            <Radio value={6}>B</Radio>
+            <Radio value={7}>C</Radio>
+            <Radio value={8}>D</Radio>
+            <Radio value={9}>A</Radio>
+            <Radio value={10}>B</Radio>
+            <Radio value={11}>C</Radio>
+            <Radio value={12}>D</Radio>
+        </RadioGroup>
+    )}
+    </FormItem>
+    </TabPane>
   </Tabs>
 
 </Form>

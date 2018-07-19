@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import { Radio , Tabs ,Input,Col,Select,Form, DatePicker,Button, } from 'antd';
 import AddressForm from '../../../../../../components/AddressForm';
 import PhoneForm from '../../../../../../components/PhoneForm';
+const TabPane = Tabs.TabPane;
 const InputGroup = Input.Group;
+const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -28,13 +30,15 @@ const tailFormItemLayout = {
     },
 };
 const dateFormat = 'YYYY/MM/DD';
-const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
-
-
-    const {getFieldDecorator} = form;
-    // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
-    const children = [];
+const PatientInvite = props => {
+    
+    //  const {getProfileForm} = props;
+     const {getFieldDecorator} = props.form;
+    console.log(props);
+    
     return  <Form >
+        <Tabs defaultActiveKey="1">
+    <TabPane tab="Basic" key="1">
     <FormItem
         {...formItemLayout}
         label="Title"
@@ -185,6 +189,34 @@ const PatientInvite = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
         </Select>
     )}
     </FormItem>
+    </TabPane>
+    <TabPane tab="Filters" key="2">
+    <FormItem
+        {...formItemLayout}
+        label={"Date Format"}
+
+    > {getFieldDecorator('dateFormat', {
+      
+    })(
+        <RadioGroup>
+            <Radio value={1}>A</Radio>
+            <Radio value={2}>B</Radio>
+            <Radio value={3}>C</Radio>
+            <Radio value={4}>D</Radio>
+            <Radio value={5}>A</Radio>
+            <Radio value={6}>B</Radio>
+            <Radio value={7}>C</Radio>
+            <Radio value={8}>D</Radio>
+            <Radio value={9}>A</Radio>
+            <Radio value={10}>B</Radio>
+            <Radio value={11}>C</Radio>
+            <Radio value={12}>D</Radio>
+        </RadioGroup>
+    )}
+    </FormItem>
+    </TabPane>
+  </Tabs>
+
 </Form>
 }
 

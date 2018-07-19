@@ -7,43 +7,33 @@ import gql from 'graphql-tag';
 import {withModal} from "../../../../../components/Modal/index";
 
 
-const GET_PROFILE = gql`
-query GET_USER_TEAM($user_id:UID) {
-    patient(id: $user_id) {
-       id
-       motivation {
-              careTeam {
-                  totalCount,
-                  edges{
-                      id,
-                      user {
-                          phoneFormatted
-                      }
-                      joinedDate
-                      roleText
-                  }
-              }
-       }
+const GET_PROFILE_FORM = gql`
+query GET_PROFILE_FORM {
+    management {
+      getProfileForm {
+        id
+        label
+        fields {
+          id
+          type
+          label
+          isMandatory
+        }
+      }
     }
   }
+  
 `;
 
-const withQuery = graphql(GET_PROFILE, {
-    options: ({patient}) => {
-        return {
-            variables: {
-                id: '',
-            },
-        }
-    },
-    props: ({data, ownProps}) => {
-        const {patient} = ownProps;
-        return {loading: data.loading, patient: patient}
+const withQuery = graphql(GET_PROFILE_FORM, {
+    props: ({ownProps, data }) => {
+        console.log(data);
+        return {loading: data.loading, getProfileForm: data.management.getProfileForm}
     },
 });
 
 const enhance = compose(
-    //withQuery,
+    withQuery,
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
