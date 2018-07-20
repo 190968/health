@@ -1,7 +1,14 @@
 import React from 'react';
 import { Radio , Tabs ,Input,Col,Select,Form, DatePicker,Button, } from 'antd';
-import AddressForm from '../../../../../../components/AddressForm';
-import PhoneForm from '../../../../../../components/PhoneForm';
+import FullNameForm from '../Full_name';
+import BirthdayForm from '../Birthday';
+import GenderForm from '../Gender';
+import EmailForm from '../Email';
+import AddressForm from '../Address';
+import PhoneForm from '../Phone';
+import TimeZoneForm from '../TimeZone';
+import LanguageForm from '../Language';
+import CohortsForm from '../Cohorts';
 const TabPane = Tabs.TabPane;
 const InputGroup = Input.Group;
 const RadioGroup = Radio.Group;
@@ -36,34 +43,34 @@ const PatientInvite = props => {
 let tab1=[];
 getProfileForm.map(data => data.fields.map(data => {
    if (data.type=="full_name"){
-    tab1.push(<p>full_name</p>)
+    tab1.push(<FullNameForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="birthday"){
-    tab1.push(<p>birthday</p>)
+    tab1.push(<BirthdayForm  getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="gender"){
-    tab1.push(<p>gender</p>)
+    tab1.push(<GenderForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="email"){
-    tab1.push(<p>email</p>)
+    tab1.push(<EmailForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="address"){
-    tab1.push(<p>address</p>)
+    tab1.push(<AddressForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="phone"){
-    tab1.push(<p>phone</p>)
+    tab1.push(<PhoneForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="tz"){
-    tab1.push(<p>timezone</p>)
+    tab1.push(<TimeZoneForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="language"){
-    tab1.push(<p>language</p>)
+    tab1.push(<LanguageForm getFieldDecorator={getFieldDecorator}/>)
    }
    if (data.type=="radio"){
     tab1.push(<p>radio</p>)
    }
    if (data.type=="cohorts"){
-    tab1.push(<p>cohorts</p>)
+    tab1.push(<CohortsForm getFieldDecorator={getFieldDecorator}/>)
    }
 })
 )
