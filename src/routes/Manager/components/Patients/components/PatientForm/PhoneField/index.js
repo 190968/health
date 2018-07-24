@@ -2,7 +2,7 @@
  * Created by Pavel on 06.12.2017.
  */
 import React from 'react';
-import PhoneFormCustom from '../../../../../../components/PhoneForm';
+import PhoneFormCustom from '../../../../../../../components/PhoneForm';
 import {Form} from 'antd';
 const FormItem = Form.Item;
 const formItemLayout = {

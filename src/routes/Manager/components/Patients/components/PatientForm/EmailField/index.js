@@ -2,8 +2,8 @@
  * Created by Pavel on 06.12.2017.
  */
 import React from 'react';
-import AddressFormCustom from '../../../../../../components/AddressForm';
-import {Form} from 'antd';
+
+import {Input,Form} from 'antd';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -15,22 +15,24 @@ const formItemLayout = {
         sm: { span: 14 },
     },
 };
-
-const AddressForm = props => {
+const EmailForm = props => {
      const {getFieldDecorator} = props;
       
 
         return(
           
             <FormItem
-                {...formItemLayout}
-                label={"Address"}
-                required
-            >
-               <AddressFormCustom getFieldDecorator={getFieldDecorator}/>
-            </FormItem>
+            {...formItemLayout}
+            label="Email"
+
+        >
+            {getFieldDecorator('email', {
+        })(
+            <Input />
+        )}
+        </FormItem>
 
               );
     }
 
-    export default AddressForm;
+    export default EmailForm;
