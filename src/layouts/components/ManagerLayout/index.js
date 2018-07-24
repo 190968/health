@@ -2,7 +2,7 @@ import React from 'react'
 import {Switch, Route} from 'react-router-dom';
 import {asyncPlanbuilder} from '../../../routes/manager';
 
-import BasicLayout from './components/Basic';
+ import BasicLayout from './components/Basic';
 
 
 const ManagerLayout = ({loading, user, store, location}) => {

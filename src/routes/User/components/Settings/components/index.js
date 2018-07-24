@@ -17,14 +17,14 @@ const TabPane = Tabs.TabPane;
 const AsyncBasic = () => {
     return (
         Loadable({
-            loader: () => import('../../../../../routes/User/components/Settings/components/Basic/containers/index.js'),
+            loader: () => import(/* webpackChunkName: "profileBasicChunk" */'../../../../../routes/User/components/Settings/components/Basic/containers/index.js'),
         })
     );
 }
 const AsyncPassword = () => {
     return (
         Loadable({
-            loader: () => import('../../../../../routes/User/components/Settings/components/Password/containers/index.js'),
+            loader: () => import(/* webpackChunkName: "profilePasswordChunk" */'../../../../../routes/User/components/Settings/components/Password/containers/index.js'),
         })
     );
 }
@@ -32,7 +32,7 @@ const AsyncPassword = () => {
  const AsyncPicture = () => {
      return (
          Loadable({
-             loader: () => import('../../../../../routes/User/components/Settings/components/Picture/containers/index.js'),
+             loader: () => import(/* webpackChunkName: "stagesChunk" */'../../../../../routes/User/components/Settings/components/Picture/containers/index.js'),
          })
      );
  }
