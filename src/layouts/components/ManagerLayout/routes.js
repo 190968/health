@@ -1,6 +1,6 @@
 import React from 'react'
 import PrivateRoute from '../../../routes/privateRoute';
-import {asyncWorkflow, asyncActionplans, asyncProfile, asyncPrograms,asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
+import {asyncProfile, asyncWorkflow, asyncActionplans, asyncPrograms,asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
 
 export const ManagerRoutes = ({store}) => {
     return (

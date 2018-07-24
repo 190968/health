@@ -5,10 +5,14 @@ import {withTreatmentPlanMutation} from '../components/TreatmentPlanBuilder/muta
 import {withSpinnerWhileLoading} from '../../../../../../../../../../../components/Modal'
 const enhanceProps = compose(
     defaultProps({
-      treatmentPlan: {id:8283}
+      treatmentPlan: {/*id:8307*/}
     }),
     withTreatmentPlanMutation,
-
+    withState('tmpElements', 'setTmpElements', props => {
+        const  {treatmentPlan={}} = props;
+        const {elements=[]} = treatmentPlan;
+        return elements;
+      }),
     withProps(props => {
         const {details} = props;
         return {
@@ -22,16 +26,29 @@ const enhanceProps = compose(
         }
     }),
     withHandlers({
-
+        // onSubmit: props => () => {
+        //     const {tmpElements=[]} = props;
+ 
+        //     console.log(tmpElements);
+        //     console.log(props);
+        //     // const elements = caseElements.map((element, i) => {
+        //     //     const {id, timelineId, notes} = element;
+        //     //     return {id, timelineId, notes}
+        //     // });
+ 
+        //     // props.createTumorboardCase(elements).then(() => {
+        //     //     props.onHide();
+        //     // });
+        //     // now just save in memory
+        //     //const tumorCase = {id:'', patient:props.user, elements:tmpElements};
+        //     //props.onFinish(tumorCase);
+        //     props.onHide();
+        // }
     }),
     //enhance,
     withModal,
     withSpinnerWhileLoading,
-    withState('tmpElements', 'setTmpElements', props => {
-      const  {treatmentPlan={}} = props;
-      const {elements=[]} = treatmentPlan;
-      return elements;
-    }),
+    
 );
 
 export default enhanceProps(TreatmentPlanBuilder);

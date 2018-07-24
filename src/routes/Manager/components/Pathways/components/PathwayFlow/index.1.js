@@ -1,5 +1,5 @@
 import React from 'react';
-import Flowchart from 'react-simple-flowchart';
+//import Flowchart from 'react-simple-flowchart';
 
 const opt = {
     x: 0,
@@ -109,14 +109,7 @@ const PathwayFlow = props => {
 
     const chartCode = convertElementsToCode(elements);
     return <div>
-         <Flowchart
-    chartCode={code2}
-    options={opt}
-  />
-    <Flowchart
-    chartCode={chartCode}
-    options={opt}
-  />
+          
    </div>
 }
 

@@ -33,6 +33,37 @@ const conditionalRender = (states) =>
         branch(state.when, renderComponent(state.then))
     ));
 
+
+export const withPlanElementUnion = conditionalRender([
+        { when: ({type}) => type === 'condition', then: ConditionElementBuilder },
+        { when: ({type}) => type === 'decision', then: ConditionElementBuilder },
+        { when: ({type}) => type === 'treatment', then: TreatmentElementBuilder },
+        { when: ({type}) => type === 'alias', then: AliasElementBuilder },
+        { when: ({type}) => type === 'checklist', then: ChecklistElementBuilder  },
+        { when: ({type}) => type === 'diagnosis', then: BlankElementBuilder  },
+        { when: ({type}) => type === 'cancer_stage', then: BlankElementBuilder },
+        { when: ({type}) => type === 'link', then: LinkElementBuilder },
+        { when: ({type}) => type === 'clinical_note', then: ClinicalNoteElementBuilder },
+        { when: ({type}) => type === 'ap', then: ApElementBuilder },
+        { when: ({type}) => type === 'calculator', then: CalculatorElementBuilder },
+        { when: ({type}) => type === 'assessment', then: AssessmentElementBuilder },
+        { when: ({type}) => type === 'scale', then: ScaleElementBuilder },
+        { when: ({type}) => type === 'textInput', then: TextInputElementBuilder },
+        { when: ({type}) => type === 'fileInput', then: FileInputElementBuilder },
+        { when: ({type}) => type === 'options', then: OptionsElementBuilder },
+        { when: ({type}) => type === 'instruction', then: TextElementBuilder },
+        { when: ({type}) => type === 'text', then: TextElementBuilder },
+        { when: ({type}) => type === 'line', then: LineElementBuilder },
+        { when: ({type}) => type === 'tipbox', then: TipboxElementBuilder },
+        { when: ({type}) => type === 'embed', then: EmbedElementBuilder },
+        { when: ({type}) => type === 'tracker', then: TrackerElementBuilder },
+        { when: ({type}) => type === 'media', then: MediaElementBuilder },
+        // { when: ({type}) => type === 'video', then: MediaElementBuilder },
+        // { when: ({type}) => type === 'audio', then: MediaElementBuilder },
+        // { when: ({type}) => type === 'ppt', then: MediaElementBuilder },
+        // { when: ({type}) => type === 'pdf', then: MediaElementBuilder },
+    ]);
+
 const enhance = compose(
     debug, // print out the props here
 
@@ -124,37 +155,7 @@ const enhance = compose(
             });
         }
     }),
-    conditionalRender([
-        { when: ({type}) => type === 'condition', then: ConditionElementBuilder },
-        { when: ({type}) => type === 'decision', then: ConditionElementBuilder },
-        { when: ({type}) => type === 'treatment', then: TreatmentElementBuilder },
-        { when: ({type}) => type === 'alias', then: AliasElementBuilder },
-        { when: ({type}) => type === 'checklist', then: ChecklistElementBuilder  },
-        { when: ({type}) => type === 'diagnosis', then: BlankElementBuilder  },
-        { when: ({type}) => type === 'cancer_stage', then: BlankElementBuilder },
-        { when: ({type}) => type === 'link', then: LinkElementBuilder },
-        { when: ({type}) => type === 'clinical_note', then: ClinicalNoteElementBuilder },
-        { when: ({type}) => type === 'ap', then: ApElementBuilder },
-        { when: ({type}) => type === 'calculator', then: CalculatorElementBuilder },
-        { when: ({type}) => type === 'assessment', then: AssessmentElementBuilder },
-        { when: ({type}) => type === 'scale', then: ScaleElementBuilder },
-        { when: ({type}) => type === 'textInput', then: TextInputElementBuilder },
-        { when: ({type}) => type === 'fileInput', then: FileInputElementBuilder },
-        { when: ({type}) => type === 'options', then: OptionsElementBuilder },
-        { when: ({type}) => type === 'text', then: TextElementBuilder },
-        { when: ({type}) => type === 'line', then: LineElementBuilder },
-        { when: ({type}) => type === 'tipbox', then: TipboxElementBuilder },
-        { when: ({type}) => type === 'embed', then: EmbedElementBuilder },
-        { when: ({type}) => type === 'tracker', then: TrackerElementBuilder },
-        { when: ({type}) => type === 'media', then: MediaElementBuilder },
-        // { when: ({type}) => type === 'video', then: MediaElementBuilder },
-        // { when: ({type}) => type === 'audio', then: MediaElementBuilder },
-        // { when: ({type}) => type === 'ppt', then: MediaElementBuilder },
-        // { when: ({type}) => type === 'pdf', then: MediaElementBuilder },
-
-
-    ]),
-
+    withPlanElementUnion,
 );
 
 

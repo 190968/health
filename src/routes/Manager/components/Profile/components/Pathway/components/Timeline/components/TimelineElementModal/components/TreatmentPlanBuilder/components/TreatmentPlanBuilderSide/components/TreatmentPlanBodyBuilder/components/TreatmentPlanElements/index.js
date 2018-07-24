@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Badge, Tooltip, Icon, message} from 'antd';
+import {Card, Badge, Tooltip, Icon, message, Checkbox} from 'antd';
 import {SortableContainer, SortableElement, arrayMove, SortableHandle} from 'react-sortable-hoc';
 import {defaultProps, branch,compose, withState, withHandlers, lifecycle, withProps} from 'recompose';
 
@@ -17,10 +17,11 @@ const TumorboardElementCardPure = props => {
     const showComments = false;// !editable && typeof i === 'number';
     const {body, color, activityText, image, icon, progress, title} = TimelineElementView(element);
     return <Card
-                title={<React.Fragment>{i >= 0 && <Badge count={i >= 0 && (i+1)} style={{ backgroundColor: '#52c41a' }}  />} {title}</React.Fragment>}
+                title={<React.Fragment><Checkbox /> {i >= 0 && <Badge count={i >= 0 && (i+1)} style={{ backgroundColor: '#52c41a' }}  />} {title}</React.Fragment>}
                 key={i}
                 extra={(editable ? <DragHandle /> : undefined)}
     >
+    
         {activityText}
         {notes !== '' && <div className="ant-card-notes">{notes}</div>}
         {showComments &&  <CardComments id={id} type="tumorboard_el" title="Comments" userId={userId} />}
@@ -40,10 +41,10 @@ export const TumorboardElementCard = enhanceItem(TumorboardElementCardPure);
 
 const TumorboardElementsPure = props => {
     const {elements=[], userId, editable} = props;
-    console.log(elements);
-    return <div>{elements.map((element, i) => {
+    //onsole.log(elements);
+    return elements.map((element, i) => {
         return <TumorboardElementCard element={element} key={`item-${i}`} index={i} i={i} userId={userId} editable={editable} />
-    })}</div>;
+    });
 };
 
 

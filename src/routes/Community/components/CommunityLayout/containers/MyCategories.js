@@ -1,11 +1,3 @@
-
-/**
- * Created by Pavel on 10.01.2018.
- */
-//import React from 'react'
-import { connect } from 'react-redux'
-
-
 import MyCategories from '../components/MyCategories';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -33,12 +25,11 @@ const MY_CATEGORIES  = gql`
               }
             }
             }
-          
      }
 }
 `;
 
-const withMutation = graphql(MY_CATEGORIES, {
+const withQuery = graphql(MY_CATEGORIES, {
     props: ({ ownProps, data }) => {
 
         if (!data.loading) {
@@ -52,15 +43,6 @@ const withMutation = graphql(MY_CATEGORIES, {
         }
     },
 });
+ 
 
-const mapStateToProps = (state) => {
-    return {
-
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-
-});
-
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(MyCategories));
+export default withQuery(MyCategories);

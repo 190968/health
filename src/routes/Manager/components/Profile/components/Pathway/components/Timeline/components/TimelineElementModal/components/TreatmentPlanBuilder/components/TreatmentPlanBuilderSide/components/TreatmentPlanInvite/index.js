@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form,Button, Radio, Input} from 'antd';
+import {Form,Button, Radio, Input, message} from 'antd';
 import {compose, withState, withHandlers} from 'recompose';
 import {PeopleSelect} from '../../../../../../../../../../../../../../../../components/Autosuggest/containers/PeopleSelect';
 const FormItem = Form.Item;
@@ -23,7 +23,7 @@ const radioStyle = {
 };
 
 const TreatmentPlanInvite = props => {
-    const {form, formItemLayout=formItemLayoutDefault, tumorboard={}} = props;
+    const {form, formItemLayout=formItemLayoutDefault, tumorboard={}, user} = props;
     const {getFieldDecorator, getFieldValue} = form;
     const isOpen = getFieldValue('isOpen');
     let {participants=[], isOpen:visibilityOpen} = tumorboard;
@@ -44,7 +44,7 @@ const TreatmentPlanInvite = props => {
                         //whitespace: true
                     }],
                 })(
-                    <PeopleSelect mode="multiple"/>
+                    <PeopleSelect mode="multiple" role={'careteam'} user={user} />
                 )}
             </FormItem>
             <FormItem
@@ -75,10 +75,11 @@ const enhance = compose(
                     let input = values;
                     //const {participants} = values;
 
-                    props.onSubmit(props.tumorboard.id, {...input}).then(({data})=> {
+                    props.onSubmit(props.treatmentPlan.id, {...input}).then(({data})=> {
                         // set
-                        props.setStep(3);
-                        //props.onHide();
+                        //props.setStep(3);
+                        props.onHide();
+                        message.success('Done');
                     });
                 }
             });

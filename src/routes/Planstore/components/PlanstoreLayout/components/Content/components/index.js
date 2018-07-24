@@ -116,7 +116,7 @@ export class PlanstoreLayout extends React.Component {
 
                                 loading={loading}
                                 grid={{gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 4}}
-                                pagination={pageOpts}
+                                pagination={false/*pageOpts*/}
                                 dataSource={plans}
                                 renderItem={product => (
                                     <List.Item key={product.id}>

@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom'
 const AsyncIndex = () => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Planstore/containers/index.js'),
+            loader: () => import(/* webpackChunkName: "planstoreChunk" */'../../../routes/Planstore/containers/index.js'),
         })
     );
 }
@@ -16,7 +16,7 @@ const AsyncIndex = () => {
 const AsyncView = () => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Planstore/containers/view.js'),
+            loader: () => import(/* webpackChunkName: "planstoreViewChunk" */'../../../routes/Planstore/containers/view.js'),
         })
     );
 }

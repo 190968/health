@@ -38,7 +38,7 @@ class MainCategories extends React.Component{
                     <List
                         split={false}
                         loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 4}}
+                        grid={{gutter: 10, xs: 1, sm: 2, md: 6}}
                         dataSource={info}
                         renderItem={item => (
                             <List.Item key={item.id}>

@@ -15,7 +15,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
 
 
     //console.log(location);
-    console.log(match);
+  //console.log(match);
     const {id, tab = '', subtab} = match.params;
 
     let selectedItem = subtab || tab;
@@ -27,10 +27,10 @@ const BasicLayout = ({loading, user, store, location, match}) => {
         }
     }
 
-    console.log(selectedItem, 'selectedItem');
-    console.log(openItem, 'openItem');
-    console.log(tab);
-    console.log(subtab);
+    // console.log(selectedItem, 'selectedItem');
+    // console.log(openItem, 'openItem');
+    // console.log(tab);
+    // console.log(subtab);
 
     let mainUrl = '/pb';
     if (id !== '') {

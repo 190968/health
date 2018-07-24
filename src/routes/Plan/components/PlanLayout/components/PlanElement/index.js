@@ -5,7 +5,7 @@ import PlanElementChildrenList from './containers/PlanElementChildrenList';
 import { compose, withProps, branch, withHandlers , defaultProps, withState} from 'recompose';
 
 
-const PlanElement = (props) => {
+const PlanElementPure = (props) => {
     //console.log(props);
     const {i,element, date, isDraggable, onDrop, isBuilderMode, isPreviewMode, plan, upid, schedule, mode } = props;
     const {id,itemType, type, itemInfo, reports, hasChildren=false} = element;
@@ -58,7 +58,8 @@ const enhance = compose(
 );
 
 
-export default enhance(PlanElement);
+export const PlanElement = enhance(PlanElementPure);
+export default PlanElement;
 
 
 

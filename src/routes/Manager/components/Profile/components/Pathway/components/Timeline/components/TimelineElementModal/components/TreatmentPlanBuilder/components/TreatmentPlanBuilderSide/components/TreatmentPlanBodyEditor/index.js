@@ -48,11 +48,14 @@ const enhance = compose(
 
                 if (!err) {
                     let input = values;
-
+                    //console.log(values);
                     props.onSubmit(input).then(({data})=> {
-                        const {treatmentPlanCreate:{id}={}} = data;
-                        const {treatmentPlanUpdate:{id:treatmentPlanId=id}={}} = data;
-                        props.setId(treatmentPlanId);
+                        //console.log(data);
+                        const {treatmentPlanCreate={}} = data;
+                        const {treatmentPlanUpdate:treatmentPlan=treatmentPlanCreate} = data;
+
+                        props.setId(treatmentPlan.id);
+                        props.setTreatmentPlan(treatmentPlan);
                         // to to next step
                         props.setStep(1);
                     });

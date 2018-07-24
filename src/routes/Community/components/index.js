@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom';
 const AsyncCategoryView = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/components/CommunityLayout/containers/Category.js'),
+            loader: () => import(/* webpackChunkName: "catVirweChunk" */'../../../routes/Community/components/CommunityLayout/containers/Category.js'),
             modules: ['../../../routes/Community/components/CommunityLayout/containers/Category.js'],
             webpack: () => [require.resolveWeak('../../../routes/Community/components/CommunityLayout/containers/Category.js')],
 },undefined, props)
@@ -17,7 +17,7 @@ const AsyncCategoryView = (props) => {
 const AsyncCategoryDash = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/containers/CommunityLayout.js'),
+            loader: () => import(/* webpackChunkName: "catDashChunk" */'../../../routes/Community/containers/CommunityLayout.js'),
 
 }, undefined, props
     )
@@ -26,7 +26,7 @@ const AsyncCategoryDash = (props) => {
 const AsyncCommynityDiscussion = (props) => {
     return (
         Loadable({
-            loader: () => import('../../../routes/Community/components/CommunityLayout/components/Discussion/containers/Discussion.js'),
+            loader: () => import(/* webpackChunkName: "catDiscussionChunk" */'../../../routes/Community/components/CommunityLayout/components/Discussion/containers/Discussion.js'),
 }, undefined, props)
     );
 }

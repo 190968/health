@@ -18,10 +18,10 @@ const withMutation = graphql(addTimelineElementMutation, {
         submitTimelineElement: (input) => {
             const type = ownProps.type || ownProps.element.type;
             return mutate({
-                variables: { userId: ownProps.userId, type, input: input},
+                variables: { userId: ownProps.user.id, type, input: input},
                 refetchQueries: [{
                     query: GET_TIMELINE_QUERY,
-                    variables: { userId: ownProps.userId},
+                    variables: { userId: ownProps.user.id},
                 }],
             })
         },
@@ -46,7 +46,7 @@ const updateTimelineElementMutation = gql`
         submitTimelineElement: (input) => {
             //console.log(ownProps);
             return mutate({
-                variables: { id: ownProps.item.id, userId: ownProps.userId, input: input},
+                variables: { id: ownProps.item.id, userId: ownProps.user.id, input: input},
             })
         },
     }),

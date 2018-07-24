@@ -9,7 +9,7 @@ export const asyncWorkflow = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Workflow'),
+            loader: () => import(/* webpackChunkName: "workflowChunk" */'../routes/Manager/containers/Workflow'),
             modules: ['../routes/Manager/containers/Workflow'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Workflow')],
         })
@@ -22,7 +22,7 @@ export const asyncProfile = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Profile'),
+            loader: () => import(/* webpackChunkName: "profileChunk" */'../routes/Manager/containers/Profile'),
             modules: ['../routes/Manager/containers/Profile'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Profile')],
         })
@@ -33,7 +33,7 @@ export const asyncActionplans = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Actionplans'),
+            loader: () => import(/* webpackChunkName: "actionplansChunk" */'../routes/Manager/containers/Actionplans'),
             modules: ['../routes/Manager/containers/Actionplans'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Actionplans')],
         })
@@ -51,7 +51,7 @@ export const asyncPlanbuilder = (store) => {
     // );
     return (
         Loadable({
-            loader: () => import('../routes/Manager/components/Planbuilder/layout'),
+            loader: () => import(/* webpackChunkName: "planbuilderChunk" */'../routes/Manager/components/Planbuilder/layout'),
             modules: ['../routes/Manager/components/Planbuilder/layout'],
             webpack: () => [require.resolveWeak('../routes/Manager/components/Planbuilder/layout')],
         })
@@ -63,7 +63,7 @@ export const asyncConference = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Conference/containers/View'),
+            loader: () => import(/* webpackChunkName: "conferenceChunk" */'../routes/Conference/containers/View'),
             modules: ['../routesConference/containers/View'],
             webpack: () => [require.resolveWeak('../routes/Conference/containers/View')],
         })
@@ -74,7 +74,7 @@ export const asyncPathways = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Pathways'),
+            loader: () => import(/* webpackChunkName: "pathwaysChunk" */'../routes/Manager/containers/Pathways'),
             modules: ['../routes/Manager/containers/Pathways'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Pathways')],
         })
@@ -85,7 +85,7 @@ export const asyncStages = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Stages'),
+            loader: () => import(/* webpackChunkName: "stagesChunk" */'../routes/Manager/containers/Stages'),
             modules: ['../routes/Manager/containers/Stages'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Stages')],
         })
@@ -100,7 +100,7 @@ export const asyncPatients = (store) => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Patients'),
+            loader: () => import(/* webpackChunkName: "patientsChunk" */'../routes/Manager/containers/Patients'),
             modules: ['../routes/Manager/containers/Patients'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Patients')],
         })
@@ -112,7 +112,7 @@ export const asyncCancers = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Cancers'),
+            loader: () => import(/* webpackChunkName: "cancersChunk" */'../routes/Manager/containers/Cancers'),
             modules: ['../routes/Manager/containers/Cancers'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Cancers')],
         })
@@ -124,7 +124,7 @@ export const asyncChemotherapies = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Chemotherapies'),
+            loader: () => import(/* webpackChunkName: "chemotherapyChunk" */'../routes/Manager/containers/Chemotherapies'),
             modules: ['../routes/Manager/containers/Chemotherapies'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Chemotherapies')],
         })
@@ -135,7 +135,7 @@ export const asyncTumorboards = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/components/Tumorboard/containers/TumorboardsList'),
+            loader: () => import(/* webpackChunkName: "tumorboardsChunk" */'../routes/Manager/components/Tumorboard/containers/TumorboardsList'),
             modules: ['../routes/Manager/components/Tumorboard/containers/TumorboardsList'],
             webpack: () => [require.resolveWeak('../routes/Manager/components/Tumorboard/containers/TumorboardsList')],
         })
@@ -146,7 +146,7 @@ export const asyncClinicalTrials = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList'),
+            loader: () => import(/* webpackChunkName: "clinicaltrialsChunk" */'../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList'),
             modules: ['../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList'],
             webpack: () => [require.resolveWeak('../routes/Manager/components/ClinicalTrials/containers/ClinicalTrialsList')],
         })
@@ -157,7 +157,7 @@ export const asyncNetworkManager = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/NetworkManager'),
+            loader: () => import(/* webpackChunkName: "networkManagersChunk" */'../routes/Manager/containers/NetworkManager'),
             modules: ['../routes/Manager/containers/NetworkManager'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/NetworkManager')],
         })
@@ -167,7 +167,7 @@ export const asyncSupervisors = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Supervisors'),
+            loader: () => import(/* webpackChunkName: "supervisorsChunk" */'../routes/Manager/containers/Supervisors'),
             modules: ['../routes/Manager/containers/Supervisors'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Supervisors')],
         })
@@ -177,7 +177,7 @@ export const asyncCareManager = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/CareManager'),
+            loader: () => import(/* webpackChunkName: "cmsChunk" */'../routes/Manager/containers/CareManager'),
             modules: ['../routes/Manager/containers/CareManager'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/CareManager')],
         })
@@ -187,7 +187,7 @@ export const asyncAnalysts = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Analysts'),
+            loader: () => import(/* webpackChunkName: "analystChunk" */'../routes/Manager/containers/Analysts'),
             modules: ['../routes/Manager/containers/Analysts'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Analysts')],
         })
@@ -197,7 +197,7 @@ export const asyncSupportStaff = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/SupportStaff'),
+            loader: () => import(/* webpackChunkName: "supportStaffChunk" */'../routes/Manager/containers/SupportStaff'),
             modules: ['../routes/Manager/containers/SupportStaff'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/SupportStaff')],
         })
@@ -207,7 +207,7 @@ export const asyncProviders = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Providers'),
+            loader: () => import(/* webpackChunkName: "providersChunk" */'../routes/Manager/containers/Providers'),
             modules: ['../routes/Manager/containers/Providers'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Providers')],
         })
@@ -217,7 +217,7 @@ export const asyncPayers = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Payers'),
+            loader: () => import(/* webpackChunkName: "payersChunk" */'../routes/Manager/containers/Payers'),
             modules: ['../routes/Manager/containers/Payers'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Payers')],
         })
@@ -228,7 +228,7 @@ export const asyncDoctors = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Doctors'),
+            loader: () => import(/* webpackChunkName: "doctorsChunk" */'../routes/Manager/containers/Doctors'),
             modules: ['../routes/Manager/containers/Doctors'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Doctors')],
         })
@@ -238,7 +238,7 @@ export const asyncAssessments = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Assessments'),
+            loader: () => import(/* webpackChunkName: "assessmentsChunk" */'../routes/Manager/containers/Assessments'),
             modules: ['../routes/Manager/containers/Assessments'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Assessments')],
         })
@@ -249,7 +249,7 @@ export const asyncPrograms = () => {
 
     return (
         Loadable({
-            loader: () => import('../routes/Manager/containers/Programs'),
+            loader: () => import(/* webpackChunkName: "programsChunk" */'../routes/Manager/containers/Programs'),
             modules: ['../routes/Manager/containers/Programs'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Programs')],
         })

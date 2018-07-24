@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Modal, Icon, Upload, Alert, Button, Card, Tooltip } from 'antd';
+import { Divider, Modal, Icon, Upload, Alert, Button, Card, Tooltip, Checkbox } from 'antd';
 
 import Measurement from '../../../../containers/PlanMeasurement';
 import PlanElementActions from '../../containers/PlanElementActions';
@@ -40,7 +40,8 @@ const PlanElementBox = (props) => {
 		sectionId,
 		parentId,
 		parentValue,
-		showElementsAsCard = false
+		showElementsAsCard = false,
+		withCompleteCheckmark = false
 	} = props;
 
 	const { id, itemType, type, itemInfo, reports, hasChildren = false } = element;
@@ -392,7 +393,8 @@ const PlanElementBox = (props) => {
 				showTitle={showTitle}
 				element={element}
 				isBuilderMode={isBuilderMode}
-                isPreviewMode={isPreviewMode}
+				isPreviewMode={isPreviewMode}
+				withCompleteCheckmark={withCompleteCheckmark}
                 plan={plan}
 				extra={
 					isBuilderMode && !isPreviewMode ? (
@@ -427,16 +429,24 @@ const PlanElementBox = (props) => {
 
 export default PlanElementBox;
 
-const PlanElementCard = ({ children, element, showTitle, isBuilderMode, isPreviewMode=false, extra = {}, plan={} }) => {
+const PlanElementCard = ({ children, element, showTitle, isBuilderMode, withCompleteCheckmark=false, isPreviewMode=false, extra = {}, plan={} }) => {
     const { footnote = '', reference = '' } = element;
     const {type} = plan;
     let bordered = true;
-    let hoverable = isBuilderMode && !isPreviewMode;
+	let hoverable = isBuilderMode && !isPreviewMode;
+	const showType = type !== 'ap';
     if (type === 'ap') {
         bordered = false;
-    }
-	const title = showTitle ? getLabelFromElement(element, { isBuilderMode: isBuilderMode, footnote, showType:false }) : false; //'Add name of'
+	}
+	//console.log(element);
+	let title = showTitle ? getLabelFromElement(element, { isBuilderMode: isBuilderMode, footnote, showType }) : false; //'Add name of'
 
+	if (title && withCompleteCheckmark) {
+		title = <React.Fragment>
+			<Checkbox style={{marginRight:5}} />
+			{title}
+		</React.Fragment>;
+	}
 	const useExtra = false; //footnote !== '' && reference !== '';
 	return (
 		<Card title={title} bordered={bordered} hoverable={hoverable} type={element.itemType} extra={extra}>

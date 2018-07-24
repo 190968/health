@@ -1,7 +1,8 @@
 import React from 'react';
 import {Icon} from 'antd';
 export const getLabelFromElement = (element={}, props={}) => {
-    const {itemInfo:item={},itemType, type, typeText} = element;
+    const {itemInfo:item={}, type, typeText} = element;
+    const {itemType = type} = element;
     const {isBuilderMode=false, showType=true} = props;
     let fieldTitle = '';
     //console.log(element, item);
@@ -39,6 +40,10 @@ export const getLabelFromElement = (element={}, props={}) => {
             break;
         case 'instruction':
         case 'instruction_embed':
+        //console.log(showType, 'item');
+            if (showType) {
+                fieldTitle = 'Instruction';
+            }
             break;
         case 'clinical_note':
             fieldTitle = item.title || '';

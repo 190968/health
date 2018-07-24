@@ -1,6 +1,8 @@
 import TreatmentPlanInvite from '../components/TreatmentPlanInvite';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import { TreatmentPlanFragment } from '../../../fragments';
+import { GET_TIMELINE_QUERY } from '../../../../../../../../../containers/Timeline';
 //import {TumorboardFragment} from "../../../../../../Tumorboard/containers/TumorboardManager";
 //import {UserInfoFragment} from "../../../../../../../../User/fragments";
 //
@@ -32,26 +34,30 @@ import gql from 'graphql-tag';
 //     },
 // });
 //
-// const TUMORBOARD_PUBLISH_MUTATION = gql`
-//     mutation TumorboardPublish($id: UID!, $userId: UID!, $participants:[UID], $isOpen: Boolean!, $message: String){
-//         tumorboardInvite(id:$id, userId:$userId, participants:$participants, isOpen:$isOpen, message:$message)
-//     }
-// `;
-//
-//
-// const withMutation = graphql(TUMORBOARD_PUBLISH_MUTATION, {
-//     props: ({ownProps, mutate }) => ({
-//         onSubmit: (id, participants) => {
-//             return mutate({
-//                 variables: {id: id, userId:ownProps.userId, ...participants},
-//                 // refetchQueries: [{
-//                 //     query: GET_PATIENT_TUMORBOARD_QUERY,
-//                 // }],
-//             });
-//         },
-//     }),
-// });
-//
-// const withQueryMutation = compose(withQuery, withMutation);
+const TUMORBOARD_PUBLISH_MUTATION = gql`
+    mutation TreatmentPlanPublish($id: UID!,   $participants:[UID],   $message: String){
+        treatmentPlanInvite(id:$id,  participants:$participants,   message:$message) {
+            ...TreatmentPlanInfo
+        }
+    }
+    ${TreatmentPlanFragment}
+`;
 
-export default (TreatmentPlanInvite);
+
+const withMutation = graphql(TUMORBOARD_PUBLISH_MUTATION, {
+    props: ({ownProps, mutate }) => ({
+        onSubmit: (id, participants) => {
+            return mutate({
+                variables: {id: id, ...participants},
+                refetchQueries: [{
+                    query: GET_TIMELINE_QUERY,
+                    variables: { userId: ownProps.user.id},
+                }],
+            });
+        },
+    }),
+});
+//
+ //const withQueryMutation = compose(withQuery, withMutation);
+
+export default withMutation(TreatmentPlanInvite);

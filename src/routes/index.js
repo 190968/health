@@ -22,7 +22,7 @@ export const asyncDash = (store) => {
     }*/
     return (
         Loadable({
-            loader: () => import('../routes/Dash/containers/DashLayout'),
+            loader: () => import(/* webpackChunkName: "dashChunk" */'../routes/Dash/containers/DashLayout'),
             modules: ['../routes/Dash/containers/DashLayout'],
             webpack: () => [require.resolveWeak('../routes/Dash/containers/DashLayout')],
         })
@@ -47,7 +47,7 @@ export const asyncLogin = (store) => {
 export const asyncRegister = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/registerContainer'),
+            loader: () => import(/* webpackChunkName: "registerChunk" */'../routes/User/containers/registerContainer'),
             modules: ['../routes/User/containers/registerContainer'],
             webpack: () => [require.resolveWeak('../routes/User/containers/registerContainer')],
             reducers: {
@@ -61,7 +61,7 @@ export const asyncRegister = (store) => {
 export const asyncLogout = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/logoutContainer'),
+            loader: () => import(/* webpackChunkName: "logoutChunk" */'../routes/User/containers/logoutContainer'),
             modules: ['../routes/User/containers/logoutContainer'],
             webpack: () => [require.resolveWeak('../routes/User/containers/logoutContainer')],
             reducers: {
@@ -75,7 +75,7 @@ export const asyncLogout = (store) => {
 export const asyncForgotPassword = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/forgotPasswordContainer'),
+            loader: () => import(/* webpackChunkName: "forgotPasswordChunk" */'../routes/User/containers/forgotPasswordContainer'),
             modules: ['../routes/User/containers/forgotPasswordContainer'],
             webpack: () => [require.resolveWeak('../routes/User/containers/forgotPasswordContainer')],
         })
@@ -84,7 +84,7 @@ export const asyncForgotPassword = (store) => {
 export const asyncRepository = (store) => {
     return (
         Loadable({
-            loader: () => import('../components/Autosuggest/containers/CategorySelect'),
+            loader: () => import(/* webpackChunkName: "categorySelectChunk" */'../components/Autosuggest/containers/CategorySelect'),
             modules: ['../components/Autosuggest/containers/CategorySelect'],
             webpack: () => [require.resolveWeak('../components/Autosuggest/containers/CategorySelect')],
         })
@@ -95,7 +95,7 @@ export const asyncRepository = (store) => {
 export const asyncSettings = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/components/Settings/components'),
+            loader: () => import(/* webpackChunkName: "settingsChunk" */'../routes/User/components/Settings/components'),
             modules: ['../routes/User/components/Settings/components'],
             webpack: () => [require.resolveWeak('../routes/User/components/Settings/components')],
         })
@@ -105,7 +105,7 @@ export const asyncSettings = (store) => {
 export const asyncPlanstore = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Planstore/components'),
+            loader: () => import(/* webpackChunkName: "planstoreChunk" */'../routes/Planstore/components'),
             modules: ['../routes/Planstore/components'],
             webpack: () => [require.resolveWeak('../routes/Planstore/components')],
             reducers: {
@@ -118,7 +118,7 @@ export const asyncPlanstore = (store) => {
 export const asyncVerifyPhone = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/verifyPhoneContainer'),
+            loader: () => import(/* webpackChunkName: "phoneVerifyChunk" */'../routes/User/containers/verifyPhoneContainer'),
             modules: ['../routes/User/containers/verifyPhoneContainer'],
             webpack: () => [require.resolveWeak('../routes/User/containers/verifyPhoneContainer')],
             reducers: {
@@ -131,7 +131,7 @@ export const asyncVerifyPhone = (store) => {
 export const asyncVerifyPhoneConfirm = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/verifyPhoneConfirmContainer'),
+            loader: () => import(/* webpackChunkName: "phoneVerifyFonfirmChunk" */'../routes/User/containers/verifyPhoneConfirmContainer'),
             modules: ['../routes/User/containers/verifyPhoneConfirmContainer'],
             webpack: () => [require.resolveWeak('../routes/User/containers/verifyPhoneConfirmContainer')],
             reducers: {
@@ -145,7 +145,7 @@ export const asyncVerifyPhoneConfirm = (store) => {
 export const asyncMessages = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Messages/components'),
+            loader: () => import(/* webpackChunkName: "messagesChunk" */'../routes/Messages/components'),
             modules: ['../routes/Messages/components'],
             webpack: () => [require.resolveWeak('../routes/Messages/components')],
         })
@@ -155,7 +155,7 @@ export const asyncMessages = (store) => {
 export const asyncHealth = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Health/components'),
+            loader: () => import(/* webpackChunkName: "healthChunk" */'../routes/Health/components'),
             modules: ['../routes/Health/components'],
             webpack: () => [require.resolveWeak('../routes/Health/components')],
         })
@@ -165,7 +165,7 @@ export const asyncHealth = (store) => {
 export const asyncHelp = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Help/containers'),
+            loader: () => import(/* webpackChunkName: "helpChunk" */'../routes/Help/containers'),
             modules: ['../routes/Help/containers'],
             webpack: () => [require.resolveWeak('../routes/Help/containers')],
         })
@@ -179,7 +179,7 @@ export const asyncHelp = (store) => {
 export const asyncCommynity = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Community/components'),
+            loader: () => import(/* webpackChunkName: "communityChunk" */'../routes/Community/components'),
             modules: ['../routes/Community/components'],
             webpack: () => [require.resolveWeak('../routes/Community/components')],
         })
@@ -189,7 +189,7 @@ export const asyncCommynity = (store) => {
 export const asyncMotivation = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/motivationContainer.js'),
+            loader: () => import(/* webpackChunkName: "motivationChunk" */'../routes/User/containers/motivationContainer.js'),
             modules: ['../routes/User/containers/motivationContainer.js'],
         webpack: () => [require.resolveWeak('../routes/User/containers/motivationContainer.js')],
 })
@@ -199,7 +199,7 @@ export const asyncMotivation = (store) => {
 export const asyncProfile = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/User/containers/profileContainer.js'),
+            loader: () => import(/* webpackChunkName: "profileChunk" */'../routes/User/containers/profileContainer.js'),
             modules: ['../routes/User/containers/profileContainer.js'],
         webpack: () => [require.resolveWeak('../routes/User/containers/profileContainer.js')],
 })
@@ -218,7 +218,7 @@ export const asyncProfile = (store) => {
 export const asyncCalendar = (store) => {
     return (
         Loadable({
-            loader: () => import('../routes/Calendar/containers/Calendar'),
+            loader: () => import(/* webpackChunkName: "calendarChunk" */'../routes/Calendar/containers/Calendar'),
             modules: ['../routes/Calendar/containers/Calendar'],
             webpack: () => [require.resolveWeak('../routes/Calendar/containers/Calendar')],
         })
@@ -229,7 +229,7 @@ export const asyncCalendar = (store) => {
 export const asyncPlan = (store) => {
     return (
         Loadable({
-                loader: () => import('../routes/Plan/containers/PlanLayout'),
+                loader: () => import(/* webpackChunkName: "planChunk" */'../routes/Plan/containers/PlanLayout'),
             modules: ['../routes/PlansList/containers/PlanLayout'],
             webpack: () => [require.resolveWeak('../routes/Plan/containers/PlanLayout')],
                 reducers: {

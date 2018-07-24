@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {withTreatmentPlanQuery, TREATMENT_PLAN_QUERY} from './queries';
 import {TreatmentPlanFragment} from './fragments';
+import { GET_TIMELINE_QUERY } from '../../../../../../containers/Timeline';
 
 
 
@@ -42,10 +43,6 @@ export const withAddMutation = graphql(TREATMENT_PLAN_CREATE_MUTATION, {
         onSubmit: (input) => {
             return mutate({
                 variables: {input:input, userId:ownProps.user.id},
-                // refetchQueries: [{
-                //     query: GET_PATIENT_TUMORBOARD_QUERY,
-                //     variables: {userId:ownProps.userId},
-                // }],
             });
         }
     })

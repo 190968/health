@@ -6,6 +6,7 @@ import PlanBody from './containers/PlanBody';
 import { Card } from 'antd';
 import moment from 'moment/moment';
 import { PlanContextProvider } from '../../planContext';
+import { PageHeaderLayout } from '../../../../components/Layout/PageHeaderLayout';
 
 export class PlanLayout extends React.Component {
 	constructor(props) {
@@ -38,6 +39,7 @@ export class PlanLayout extends React.Component {
 		}
 		return (
 			<div>
+				
 				<PlanContextProvider value={{ plan, isBuilderMode: false, isPreviewMode: false }}>
 					<PlanHeader
 						plan={plan}
@@ -46,6 +48,7 @@ export class PlanLayout extends React.Component {
 						toggleIntro={this.toggleIntro}
 						setDate={this.setDate}
 					/>
+					<div className="pageContent">
 					<Card>
 						<PlanBody
 							upid={info.id}
@@ -57,6 +60,7 @@ export class PlanLayout extends React.Component {
 							hideIntro={this.toggleIntro}
 						/>
 					</Card>
+					</div>
 				</PlanContextProvider>
 			</div>
 		);

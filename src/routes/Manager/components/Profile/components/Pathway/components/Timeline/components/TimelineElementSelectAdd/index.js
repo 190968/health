@@ -1,20 +1,26 @@
 import React from 'react';
 import {Popover, Tooltip, Button} from 'antd';
-import {compose, withState, withHandlers} from 'recompose';
+import {compose, withState, withHandlers, withProps} from 'recompose';
 import TimelineElementSelect from '../TimelineElementSelect';
+import { withModal } from '../../../../../../../../../../components/Modal';
+
+
+const TimelineElementSelectModal = compose(
+    withProps(props => ({
+        modalTitle: 'Select Element',
+        modalFooter:false
+    })),
+    withModal
+)(TimelineElementSelect)
+
 
 const TimelineElementSelectAddPure = props => {
-     console.log(props);
-    const {onClick, show, handleVisibleChange, onSelect} = props;
-     const content = (
-         <div>
-             <TimelineElementSelect onSelect={onSelect} />
-         </div>
-     );
-    return <Popover
-        visible={show}
-        onVisibleChange={handleVisibleChange}
-        content={content} placement="bottom" title="Select Element to Add"  trigger="click"><Tooltip title="Add Element"><Button icon="plus" size={'small'} shape="circle" onClick={onClick} /></Tooltip></Popover>;
+    const {onClick, show, handleVisibleChange, onSelect, user} = props;
+     
+    return <React.Fragment>
+        {show && <TimelineElementSelectModal onSelect={onSelect} onHide={handleVisibleChange} user={user} /> }
+        <Tooltip title="Add Element"><Button icon="plus" size={'small'} shape="circle" onClick={onClick} /></Tooltip>
+        </React.Fragment>;
 }
 
 const enhance = compose(

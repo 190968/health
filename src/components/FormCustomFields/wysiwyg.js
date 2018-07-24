@@ -1,10 +1,5 @@
 import React from 'react';
 import {compose, withState, withHandlers, lifecycle} from 'recompose';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
 
 //import  '../../vendors/redactor/redactor';
 //import   '../../vendors/redactor/redactor.min.css';
@@ -17,13 +12,7 @@ const Wysiwyg = ({editorState, onEditorStateChange, value=''})=> {
 
     //return  <div id='wysiwyg' dangerouslySetInnerHTML={{__html: value}}></div>;
 
-    return <React.Fragment><Editor
-        editorState={editorState}
-        onEditorStateChange={onEditorStateChange}
-        placeholder="Enter some text..."
-        wrapperClassName="demo-wrapper"
-        editorClassName="demo-editor"
-    />
+    return <React.Fragment>sdfsfsdfsdfsdfsf
          {/*<textarea
     //         disabled
     //         value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
@@ -51,13 +40,7 @@ const enhance = compose(
     }),
     lifecycle({
             componentDidMount() {
-                const {alloyEditorConfig={
-                    buttonCfg: {
-                        bold: {
-                            tabIndex: 1
-                        }
-                    }
-                }} = this.props;
+                
                 //$R('#wysiwyg');
                 //this.props.setEditor(AlloyEditor.editable('wysiwyg', alloyEditorConfig));
             },

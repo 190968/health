@@ -1,0 +1,23 @@
+import React from 'react';
+import {List} from 'antd';
+import { TreatmentPlanElements } from '../../../Manager/components/Profile/components/Pathway/components/Timeline/components/TimelineElementModal/components/TreatmentPlanBuilder/components/TreatmentPlanBuilderSide/components/TreatmentPlanBodyBuilder/components/TreatmentPlanElements';
+import { EmptyList } from '../../../../components/Loading';
+import PlanElement from '../PlanLayout/components/PlanElement';
+
+
+const TreatmentPlanBodyPure = props => {
+    const {treatmentPlan={}, loading, user={}} = props;
+    const {elements=[]} = treatmentPlan;
+    return <div>
+        {elements.map((element, i) => {
+            return <PlanElement key={i} element={element} plan={treatmentPlan} withCompleteCheckmark />
+        })}
+        {/* {elements.length > 0 ? (
+						<TreatmentPlanElements elements={elements}  userId={user.id} loading={loading} />
+					) : (
+						<EmptyList>No Elements</EmptyList>
+					)} */}
+    </div>
+}
+
+export default TreatmentPlanBodyPure;

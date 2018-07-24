@@ -2,6 +2,7 @@ import React from 'react';
 import {Card, Table, Progress} from 'antd';
 import EllipsisText from 'react-ellipsis-text';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 export const UserActionPlansTable = props => {
 
@@ -11,8 +12,8 @@ export const UserActionPlansTable = props => {
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-        render: (title, info) => {
-            return <EllipsisText text={title} length={45}  />
+        render: (title, plan) => {
+            return <Link to={'/plan/'+plan.id}><EllipsisText text={title} length={45}  /></Link>
         },
     },
         {

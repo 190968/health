@@ -20,6 +20,7 @@ const TimelineElementDetails = ({onChange, onEdit, activeTab, panes, activeEleme
         activeKey={activeTab || 'item_'+activeElement.id}
         type="editable-card"
         hideAdd
+        className={'no-margin'}
     >
         {panes.map(pane => {
             //console.log(pane.key);
@@ -64,10 +65,10 @@ const enhance = compose(
                     lastIndex = i - 1;
                 }
             });
-             console.log(props);
-            console.log(lastIndex);
-            console.log(activeKey);
-            console.log(targetKey);
+            //  console.log(props);
+            // console.log(lastIndex);
+            // console.log(activeKey);
+            // console.log(targetKey);
             let newPanes = props.panes.filter(pane => pane.key !== targetKey);
             const oldPanesLength = newPanes.length;
             console.log(newPanes);
@@ -90,8 +91,8 @@ const enhance = compose(
             const elements = newPanes.map(pane => {
                 return pane.content;
             });
-            console.log(elements);
-            console.log(element);
+            // console.log(elements);
+            // console.log(element);
 
             props.updateElements(elements, element);
             //this.setState({ panes:, activeKey });

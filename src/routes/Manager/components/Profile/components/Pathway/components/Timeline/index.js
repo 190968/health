@@ -12,7 +12,7 @@ import TimelineElementSelectAdd from "./components/TimelineElementSelectAdd/inde
 
 
 const TimelinePure = props => {
-    const {onlyFilters=false,droppable=false, draggable=false, canDrop=false, isOver=false, items =[], userId, showElement, activeElement, } = props;
+    const {onlyFilters=false,droppable=false, draggable=false, canDrop=false, isOver=false, items =[], userId, showElement, activeElement, user} = props;
     const isActive = canDrop && isOver;
     const {filters=null, showFilters=false} = props;
     const {togglePathway, showPathway, onDrop} = props;
@@ -29,7 +29,7 @@ const TimelinePure = props => {
     }
 
     return <div>
-        {props.openAddElement && <TimelineElementModal userId={userId} type={props.elementType} onHide={props.hideTimelineElement} />}
+        {props.openAddElement && <TimelineElementModal userId={userId}  user={user} type={props.elementType} onHide={props.hideTimelineElement} />}
         <Card title="Timeline" bodyStyle={{overflowY:'auto',background:(canDrop ? '#f6ffed':'transparent'), height:'100vh', backgroundColor:'#f9f9f9', 'marginTop':1}}
               extra={extra}
         >

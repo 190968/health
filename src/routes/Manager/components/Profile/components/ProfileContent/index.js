@@ -1,23 +1,23 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom';
 import {Loading} from "../../../../../../components/Loading";
-
-
-import Pathway from '../../containers/Pathway';
-import Tumorboard from '../../containers/Tumorboard';
 import Dashboard from '../../components/Dashboard';
-import Overview from '../../components/Overview';
-import Providers from '../../containers/Providers';
-import Family from '../../containers/Family';
-import Team from '../../containers/Team';
-import QualMeasures from '../../containers/QualMeasures';
-import Cohorts from '../../containers/Cohorts';
-import Details from '../../containers/Details';
-import Alerts from '../../containers/Alerts';
-import Health from '../../components/Health';
-import ActionPlans from '../../components/Dashboard/containers/ActionPlans';
-import {Stakeholders} from "./components/Stakeholders/index";
-import Plans from "./components/Plans";
+
+// import Pathway from '../../containers/Pathway';
+// import Tumorboard from '../../containers/Tumorboard';
+
+// import Overview from '../../components/Overview';
+// import Providers from '../../containers/Providers';
+// import Family from '../../containers/Family';
+// import Team from '../../containers/Team';
+// import QualMeasures from '../../containers/QualMeasures';
+// import Cohorts from '../../containers/Cohorts';
+// import Details from '../../containers/Details';
+// import Alerts from '../../containers/Alerts';
+// import Health from '../../components/Health';
+// import ActionPlans from '../../components/Dashboard/containers/ActionPlans';
+// import {Stakeholders} from "./components/Stakeholders/index";
+// import Plans from "./components/Plans";
 import {compose, withHandlers} from 'recompose';
 import CancerTreatment from '../Dashboard/containers/CancerTreatment';
 
@@ -52,36 +52,36 @@ const ProfileContentPure = props => {
         const defaultParams = {user, mainUrl, handleSubTab, match};
 
         const routes = [
-            {
-                path: mainUrl + "/timeline",
-                component: Pathway,
-                params: defaultParams
-            },
-            {
-                path: mainUrl + "/details",
-                component: Details,
-                params: defaultParams
-            },
-            {
-                path: mainUrl + "/plans",
-                component: Plans,
-                params: defaultParams
-            },
-            {
-                path: mainUrl + "/alerts",
-                component: Alerts,
-                params: defaultParams
-            },
-            {
-                path: mainUrl + "/stakeholders",
-                component: Stakeholders,
-                params: defaultParams
-            },
-            {
-                path: mainUrl + "/treatmentOptions",
-                component: CancerTreatment,
-                params: defaultParams
-            },
+            // {
+            //     path: mainUrl + "/timeline",
+            //     component: Pathway,
+            //     params: defaultParams
+            // },
+            // {
+            //     path: mainUrl + "/details",
+            //     component: Details,
+            //     params: defaultParams
+            // },
+            // {
+            //     path: mainUrl + "/plans",
+            //     component: Plans,
+            //     params: defaultParams
+            // },
+            // {
+            //     path: mainUrl + "/alerts",
+            //     component: Alerts,
+            //     params: defaultParams
+            // },
+            // {
+            //     path: mainUrl + "/stakeholders",
+            //     component: Stakeholders,
+            //     params: defaultParams
+            // },
+            // {
+            //     path: mainUrl + "/treatmentOptions",
+            //     component: CancerTreatment,
+            //     params: defaultParams
+            // },
             {
                 path: mainUrl,
                 component: Dashboard,

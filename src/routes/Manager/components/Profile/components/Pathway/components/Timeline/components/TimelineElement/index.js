@@ -20,11 +20,12 @@ import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
 import {CommentsModalFromIcon, Comments} from "../../../../../../../../../../components/Comments/index";
 import {PlanAvatar} from "../../../../../../../../../../components/Avatars/components/PlanAvatar/index";
 import {getIconByFileType, formatFileName} from "../../../../../../../../../../components/FormCustomFields/components/Attachments/index";
+import { TreatmentPlanBody } from '../../../../../../../../../Plan/containers/TreatmentPlanBody';
 
 export const getTimelineElementCardTitle = (item) => {
     // console.log(item, 'item');
     const {activity={}} = item;
-    let {type, typeText} = item;
+    let {type, typeText=''} = item;
     let elTitle = '';
     let {title='', label='', text=''} = activity || {};
 
@@ -36,6 +37,9 @@ export const getTimelineElementCardTitle = (item) => {
         case 'link':
             let {url=''} = activity;
             elTitle = label+(url ? ' '+url : '');
+            break;
+        case 'instruction':
+            return 'Instruction';
             break;
         case 'media':
             const {mediaType} = activity;
@@ -54,8 +58,12 @@ export const getTimelineElementCardTitle = (item) => {
             let {typeText} = activity;
             elTitle = typeText;//+' - '+title;
             break;
+        case 'plan_assigned':
+            //const {}
+            break;
     }
-
+    //console.log(typeText);
+    //console.log(type);
     return typeText+(elTitle !== '' ? ' - '+elTitle : '');
 
 }
@@ -66,7 +74,7 @@ const colorsByType = {
     plan: '#f5511e',
     treatment: '#34A853',
     health: '#ee685c',
-    media: '#2a2a2a',
+    media: '#000000',
     visit: '#7baf41',
     cancer_stage: '#8c25a8',
     tumorboard: '#3f51b5',
@@ -109,11 +117,15 @@ export const TimelineElementView = (item, props={}) => {
             icon = <Icon type='link' />;
             body.push( activity.description || '');
             break;
+        case 'instruction':
+            activityText = <span dangerouslySetInnerHTML={{__html:activity.text}} />;
+            //body.push();
+            break;
         case 'media':
             const {mediaType:activityType='', filename:label=''} = activity;
             activityText = <MediaElement item={activity} />;
             icon = getIconByFileType({type:activityType, label});
-            console.log(icon);
+            group = 'media';
             progress = formatFileName(activity);
             //body.push( activity.description || '');
             break;
@@ -203,8 +215,13 @@ export const TimelineElementView = (item, props={}) => {
             break;
         case 'plan_assigned':
             const {plan = {}} = activity;
+            const {type:planType} = plan;
             icon = <FitIcon icon="actionplan"/>;
-            activityText = <PlanAvatar plan={plan} />;
+            if (planType === 'treatment') {
+                activityText = <TreatmentPlanBody treatmentPlan={plan} />
+            } else {
+                activityText = <PlanAvatar plan={plan} />;
+            }
             progress = plan.title;
             break;
         case 'plan_created':
@@ -322,6 +339,7 @@ class TimelineElement extends React.PureComponent {
 
         if (getOnlyActivity) {
 
+            console.log(item);
             // if (1===1) {
             //     extra = [
             //

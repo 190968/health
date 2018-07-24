@@ -3,7 +3,7 @@ import { Row, Col,Layout, Menu, Icon, Divider, Alert, Button, Dropdown } from 'a
 import {NavLink} from 'react-router-dom';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import Avatar from '../../../User/components/Avatar/index';
-import ProfileContent from './components/ProfileContent';
+//import ProfileContent from './components/ProfileContent';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
 import {withModal} from "../../../../components/Modal/index"
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
@@ -155,7 +155,7 @@ const Profile = props => {
                 activeTab={tab}
                 onTabChange={handleTabChange}
             >
-                <ProfileContent {...props} />
+                {/* <ProfileContent {...props} /> */}
                 {openManage && <ProfileManager patient={user} onHide={hideManager} />}
             </PageHeaderLayout>
             

@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../routes/User/fragments";
 
 export const PEOPLE_LIST_QUERY = gql`
-    query GET_PEOPLE_LIST ($search: String) {
-        getPeople (search:$search) {
+    query GET_PEOPLE_LIST ($search: String, $role: String, $userId: UID) {
+        getPeople (search:$search, role:$role, userId:$userId) {
             totalCount
             edges {
                 ...UserInfo
@@ -17,8 +17,10 @@ export const PEOPLE_LIST_QUERY = gql`
 
 const PeopleWithQuery = graphql(PEOPLE_LIST_QUERY,
     {
-        options: () => {
+        options: (props) => {
+            const {role, user} = props;
             return {
+                variables: {role, userId: user.id}
                 //fetchPolicy: 'network-only'
             }
         },

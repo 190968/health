@@ -11,13 +11,49 @@ import {
 } from 'react-intl';
 import moment from "moment/moment";
 import Motivators from '../../../../../User/containers/motivatorsContainer';
+import { PageHeader } from '../../../../../../components/Layout/PageHeader';
 
 const confirm = Modal.confirm;
 const { Meta } = Card;
 
 
 
+const options = (
+    <Menu onClick={this.handleMenuClick}>
+        <Menu.Item key="motivators">
+            Motivators
+        </Menu.Item>
+        <Menu.SubMenu title="Actions">
+            <Menu.Item key="edit">
+                Edit
+            </Menu.Item>
+            <Menu.Item key="delete">
+                Delete
+            </Menu.Item>
+            <Menu.Item key="complete">
+                Complete
+            </Menu.Item>
+        </Menu.SubMenu>
+        <Menu.Item key="reminders">
+            Reminders
+        </Menu.Item>
+        <Menu.Item key="print" disabled>
+            <a >Print</a>
+        </Menu.Item>
+        <Menu.Item key="export" disabled>
+            <a >Export</a>
+        </Menu.Item>
+    </Menu>
+);
 
+export const PlanHeaderNew = props => {
+    const {plan} = props;
+    let action = {};
+    return <PageHeader
+        title={plan.title}
+        action={action}
+    />;
+}
 
 export class PlanHeader extends React.Component {
     constructor(props) {
