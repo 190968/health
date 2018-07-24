@@ -101,14 +101,14 @@ const enhance = compose(
     withHandlers({
 
         handleTabChange :  props=>(key)=> {
-            console.log(props,key);
+            //console.log(props,key);
             //console.log(this.props);\
             const {id, tab = 'dashboard', subtab = ''} = props.match.params;
         
             const selectedItem = subtab || tab;
             const openItem = tab;
         
-            console.log(tab, subtab);
+            //console.log(tab, subtab);
             let mainUrl = '/u';
             if (id !== '') {
                 mainUrl += '/'+id;

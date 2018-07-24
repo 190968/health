@@ -133,7 +133,7 @@ const Profile = props => {
                     <Col md={18}>
                         <DescriptionList col={3} >
                             {descriptionDetails.map((details, i) => {
-                                return  <Description term={details[0]} excludeEmpty >
+                                return  <Description key={i} term={details[0]} excludeEmpty >
                                     {details[1]}
                                 </Description>;
                             })}

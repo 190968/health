@@ -1,35 +1,22 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom';
 import {Loading} from "../../../../../../components/Loading";
-import Dashboard from '../../components/Dashboard';
 
-import Pathway from '../../containers/Pathway';
-import Tumorboard from '../../containers/Tumorboard';
-
-import Overview from '../../components/Overview';
-import Providers from '../../containers/Providers';
-import Family from '../../containers/Family';
-import Team from '../../containers/Team';
-import QualMeasures from '../../containers/QualMeasures';
-import Cohorts from '../../containers/Cohorts';
-import Details from '../../containers/Details';
-import Alerts from '../../containers/Alerts';
-import Health from '../../components/Health';
-import ActionPlans from '../../components/Dashboard/containers/ActionPlans';
 import {Stakeholders} from "./components/Stakeholders/index";
-import Plans from "./components/Plans";
 import {compose, withHandlers} from 'recompose';
 import CancerTreatment from '../Dashboard/containers/CancerTreatment';
+import {asyncProfileDetails, asyncProfileTimeline, asyncProfilePlans, asyncProfileAlerts, asyncProfileDashboard} from './routes';
 
 const RouteWithSubRoutes = route => {
     //console.log(route);
     return (
         <Route
             path={route.path}
-
+            //component={route.component()}
             render={props => {
+                //eturn route.component();
                 // pass the sub-routes down to keep nesting
-                //console.log(props);
+                console.log(props);
                 return (<route.component {...props} {...route.params} routes={route.routes}/>)
             }}
         />)
@@ -54,22 +41,22 @@ const ProfileContentPure = props => {
         const routes = [
             {
                 path: mainUrl + "/timeline",
-                component: Pathway,
+                component: asyncProfileTimeline,
                 params: defaultParams
             },
             {
                 path: mainUrl + "/details",
-                component: Details,
+                component: asyncProfileDetails,
                 params: defaultParams
             },
             {
                 path: mainUrl + "/plans",
-                component: Plans,
+                component: asyncProfilePlans,
                 params: defaultParams
             },
             {
                 path: mainUrl + "/alerts",
-                component: Alerts,
+                component: asyncProfileAlerts,
                 params: defaultParams
             },
             {
@@ -84,7 +71,7 @@ const ProfileContentPure = props => {
             },
             {
                 path: mainUrl,
-                component: Dashboard,
+                component: asyncProfileDashboard,
                 params: defaultParams
             },
             /*{

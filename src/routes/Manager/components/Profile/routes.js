@@ -1,7 +1,6 @@
 import React from 'react'
 import PrivateRoute from '../../../../routes/privateRoute';
-/** loadable **/
-import Loadable from '../components/Loadable';
+import Loadable  from '../../../../components/Loadable';
 
 
 /** Dash **/

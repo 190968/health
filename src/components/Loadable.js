@@ -1,11 +1,11 @@
 import React from "react";
-import Loadable from 'react-loadable';
+import Loadbl from 'react-loadable';
 
 
 import LoadingPage from './LoadingPage';
 
 export default function MyLoadable (opts, store, initProps) {
-    return Loadable(Object.assign({
+    return Loadbl(Object.assign({
         loading: LoadingPage,
         render(loaded, props) {
 
@@ -76,6 +76,8 @@ export default function MyLoadable (opts, store, initProps) {
         ...opts,
     });*/
 }
+
+export const Loadable = MyLoadable;
 
 export function LoadSimple (url) {
     const load = '../routes/Manager/containers/Workflow';//'../routes/'+url;
