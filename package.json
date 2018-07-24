@@ -63,7 +63,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "node --max_old_space_size=8096 node_modules/.bin/react-app-rewired build",
+    "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "build:langs": "babel-node ./src/utils/translator.js",
