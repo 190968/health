@@ -1,10 +1,10 @@
 import PatientInvite from '../components/PatientInvite/index';
-import {graphql} from 'react-apollo';
+import { graphql } from 'react-apollo';
 import React from 'react';
-import {compose, withStateHandlers, branch, withHandlers, withState, withProps} from 'recompose';
-import {Form} from 'antd';
+import { compose, withStateHandlers, branch, withHandlers, withState, withProps } from 'recompose';
+import { Form } from 'antd';
 import gql from 'graphql-tag';
-import {withModal} from "../../../../../components/Modal/index";
+import { withModal } from "../../../../../components/Modal/index";
 
 
 const GET_PROFILE_FORM = gql`
@@ -30,10 +30,10 @@ query GET_PROFILE_FORM {
 `;
 
 const withQuery = graphql(GET_PROFILE_FORM, {
-    props: ({ownProps, data }) => {
-        const {management={}} = data;
-        const {getProfileForm={}} = management;
-        return {loading: data.loading, getProfileForm};
+    props: ({ ownProps, data }) => {
+        const { management = {} } = data;
+        const { getProfileForm = {} } = management;
+        return { loading: data.loading, getProfileForm };
     },
 });
 
@@ -57,7 +57,7 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return {modalTitle: 'Add a Patient'}
+        return { modalTitle: 'Add a Patient' }
     }),
     withModal
 );

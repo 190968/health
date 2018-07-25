@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import {Select,Form} from 'antd';
+import { Select, Form } from 'antd';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -16,16 +16,15 @@ const formItemLayout = {
         sm: { span: 14 },
     },
 };
-const TimeZoneForm = props => {
-     const {getFieldDecorator} = props;
-      
+const TimeZoneForm = ({form,label},props) => {
+    const { getFieldDecorator } = form;
 
-     
-        return(
-          
-            <FormItem
+console.log("components",props);
+    return (
+
+        <FormItem
             {...formItemLayout}
-            label="Time zone"
+            label={label}
 
         > {getFieldDecorator('timezone', {
         })(
@@ -35,7 +34,7 @@ const TimeZoneForm = props => {
         )}
         </FormItem>
 
-              );
-    }
+    );
+}
 
-    export default TimeZoneForm;
+export default TimeZoneForm;

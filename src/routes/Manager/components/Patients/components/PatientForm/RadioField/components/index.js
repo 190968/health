@@ -1,8 +1,4 @@
-/**
- * Created by Pavel on 06.12.2017.
- */
 import React from 'react';
-
 import { Radio, Form } from 'antd';
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -16,32 +12,25 @@ const formItemLayout = {
         sm: { span: 14 },
     },
 };
-const radioStyle = {
-    display: 'block',
-    height: '30px',
-    lineHeight: '30px',
-};
-const GenderForm = props => {
-    const { getFieldDecorator } = props;
-    const { label } = props;
+const RadioForm = ({ form, label, options }, props) => {
+    const { getFieldDecorator } = form;
+    const opt = [];
 
+    options.map((data) => { opt.push(<Radio value={data.label} >{data.label}</Radio>) })
+    console.log(opt, props);
     return (
 
         <FormItem
             {...formItemLayout}
             label={label}
-
         >
-            {getFieldDecorator('gender', {
+            {getFieldDecorator('drop', {
             })(
                 <RadioGroup >
-                    <Radio style={radioStyle} value={1}>Male</Radio>
-                    <Radio style={radioStyle} value={2}>Female</Radio>
+                    {opt}
                 </RadioGroup>
             )}
         </FormItem>
-
     );
 }
-
-export default GenderForm;
+export default RadioForm;

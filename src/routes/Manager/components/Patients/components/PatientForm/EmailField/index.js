@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import {Input,Form} from 'antd';
+import { Input, Form } from 'antd';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -16,23 +16,23 @@ const formItemLayout = {
     },
 };
 const EmailForm = props => {
-     const {getFieldDecorator} = props;
-      
+    const { getFieldDecorator } = props;
+    const { label } = props;
 
-        return(
-          
-            <FormItem
+    return (
+
+        <FormItem
             {...formItemLayout}
-            label="Email"
+            label={label}
 
         >
             {getFieldDecorator('email', {
-        })(
-            <Input />
-        )}
+            })(
+                <Input />
+            )}
         </FormItem>
 
-              );
-    }
+    );
+}
 
-    export default EmailForm;
+export default EmailForm;

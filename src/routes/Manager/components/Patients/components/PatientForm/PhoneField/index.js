@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PhoneFormCustom from '../../../../../../../components/PhoneForm';
-import {Form} from 'antd';
+import { Form } from 'antd';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -17,20 +17,20 @@ const formItemLayout = {
 };
 
 const PhoneForm = props => {
-     const {getFieldDecorator} = props;
-      
+    const { getFieldDecorator } = props;
+    const { label } = props;
 
-        return(
-          
-            <FormItem
-                {...formItemLayout}
-                label={"Phone"}
-                required
-            >
-               <PhoneFormCustom getFieldDecorator={getFieldDecorator}/>
-            </FormItem>
+    return (
 
-              );
-    }
+        <FormItem
+            {...formItemLayout}
+            label={label}
+            required
+        >
+            <PhoneFormCustom getFieldDecorator={getFieldDecorator} />
+        </FormItem>
 
-    export default PhoneForm;
+    );
+}
+
+export default PhoneForm;

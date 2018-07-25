@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import {Select,Form} from 'antd';
+import { Select, Form } from 'antd';
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -17,25 +17,25 @@ const formItemLayout = {
     },
 };
 const LanguageForm = props => {
-     const {getFieldDecorator} = props;
-      
+    const { getFieldDecorator } = props;
+    const { label } = props;
 
-     
-        return(
-            <FormItem
-                {...formItemLayout}
-                label="Primary Language"
 
-            > {getFieldDecorator('language', {
+    return (
+        <FormItem
+            {...formItemLayout}
+            label={label}
 
-            })(
-                <Select  >
-                    {/* {languages.map(language => <Option key={language.value} value={language.value}>{language.label}</Option>)} */}
-                </Select>
-            )}
-            </FormItem>
+        > {getFieldDecorator('language', {
 
-              );
-    }
+        })(
+            <Select  >
+                {/* {languages.map(language => <Option key={language.value} value={language.value}>{language.label}</Option>)} */}
+            </Select>
+        )}
+        </FormItem>
 
-    export default LanguageForm;
+    );
+}
+
+export default LanguageForm;

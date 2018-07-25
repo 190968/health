@@ -1,13 +1,13 @@
 /**
  * Created by Pavel on 06.12.2017.
  */
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 
 import BasicForm from '../../../../User/components/Settings/components/Basic/components'
-import {graphql} from 'react-apollo';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {message} from 'antd';
+import { message } from 'antd';
 //import { compose } from 'react-apollo';
 
 const settingUser = gql`
@@ -101,7 +101,7 @@ const withQuery = graphql(settingUser,
             }
 
         }),
-        props: ({data}) => {
+        props: ({ data }) => {
             if (!data.loading) {
                 return {
                     account: data,
@@ -113,17 +113,17 @@ const withQuery = graphql(settingUser,
                 }
 
             } else {
-                return {loading: data.loading}
+                return { loading: data.loading }
             }
         },
     }
 )(BasicForm);
 
 const withMutation = graphql(settingUserMutate, {
-    props: ({mutate}) => ({
+    props: ({ mutate }) => ({
         updateInfo: (input, id) => {
             return mutate({
-                variables: {input, id},
+                variables: { input, id },
             })
         },
     }),
@@ -141,7 +141,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (values, stopLoading) => {
 
         console.log(ownProps, "values mutation", values);
-        const {title, firstName, lastName, middleName, birthday, phone, gender, email, timezone, address, language, dateFormat} = values;
+        const { title, firstName, lastName, middleName, birthday, phone, gender, email, timezone, address, language, dateFormat } = values;
         const id = ownProps.id;
         const input = {
             title,
@@ -158,7 +158,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             dateFormat
 
         };
-        return ownProps.updateInfo(input, id).then(({data}) => {
+        return ownProps.updateInfo(input, id).then(({ data }) => {
 
             console.log(data);
             message.success('Updated');

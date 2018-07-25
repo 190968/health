@@ -3,7 +3,7 @@
  */
 import React from 'react';
 
-import {Checkbox,Form} from 'antd';
+import { Checkbox, Form } from 'antd';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -16,23 +16,23 @@ const formItemLayout = {
     },
 };
 const CohortsForm = props => {
-     const {getFieldDecorator} = props;
-      
+    const { getFieldDecorator } = props;
+    const { label } = props;
 
-        return(
-          
-            <FormItem
+    return (
+
+        <FormItem
             {...formItemLayout}
-            label="Cohorts"
+            label={label}
 
         >
             {getFieldDecorator('cohorts', {
-        })(
-            <Checkbox >Checkbox</Checkbox>,
-        )}
+            })(
+                <Checkbox ></Checkbox>,
+            )}
         </FormItem>
 
-              );
-    }
+    );
+}
 
-    export default CohortsForm;
+export default CohortsForm;
