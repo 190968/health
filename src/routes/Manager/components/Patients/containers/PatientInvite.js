@@ -16,19 +16,19 @@ query GET_PROFILE_FORM {
         fields {
           id
           type
+          label
           getChildren {
             id
             label
             type
-            isMandatory
             options {
+              id
               key
               label
             }
           }
-          label
           isMandatory
-          options{
+          options {
             id
             label
             key
@@ -37,7 +37,6 @@ query GET_PROFILE_FORM {
       }
     }
   }
-  
 `;
 
 const withQuery = graphql(GET_PROFILE_FORM, {
