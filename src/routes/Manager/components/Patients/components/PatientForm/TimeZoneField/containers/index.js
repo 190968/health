@@ -15,14 +15,30 @@ query getTimeZone {
   }
   
    `;
-const withQuery = graphql(GET_TIMEZONE, {
-    props: ({ ownProps, data }) => {
-        console.log("containers",ownProps, data);
-        const { staticContent = {} } = data;
-        const { timezones = {} } = staticContent;
-        return { loading: data.loading, timezones: timezones };
-    },
-});
+// const withQuery = graphql(GET_TIMEZONE, {
+//     props: ({ ownProps, data }) => {
+//         console.log("containers",ownProps, data);
+//         const { staticContent = {} } = data;
+//         const { timezones = {} } = staticContent;
+//         return { loading: data.loading, timezones: timezones };
+//     },
+// });
+
+const withQuery = graphql(GET_TIMEZONE,
+    {
+        props: ({ data}) => {
+            if (!data.loading) {
+                console.log(data);
+                return {
+                    timezones: data.staticContent.timezones
+                }
+
+            } else {
+                return {loading: data.loading}
+            }
+        },
+    }
+);
 
 const enhance = compose(
     withQuery,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button, Radio, Icon, Tooltip } from 'antd';
-import TableCustom from './components/Tables'
+import TableCustom from './containers/Tables'
 import { PageHeaderLayout } from "../../../../components/Layout/PageHeaderLayout/index";
 import { compose, withState, withHandlers, withStateHandlers } from 'recompose';
 import PatientInvite from "./containers/PatientInvite";

@@ -54,7 +54,7 @@ export default class TableCustom extends React.Component {
     render() {
         const {loading} = this.props;
         let {sortedInfo} = this.state;
- 
+ console.log(this.props);
         const suffix = this.props.searchText ? <Icon type="close-circle-o" onClick={this.props.emitEmpty}/> : <Icon type="search"/> 
          const marks = {
             0: '0',
@@ -161,7 +161,7 @@ export default class TableCustom extends React.Component {
                 >
                     <CustomModal id={this.state.id}/>
                 </Modal>
-                <Table  rowKey={'id'} rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false}
+                <Table  id="pasha" rowKey={'id'} rowSelection={rowSelection} dataSource={dataSource} columns={columns} pagination={false}
                        onChange={this.handleChange}
                        ref={(input) => {
                            this.table = input;
