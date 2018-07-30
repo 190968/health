@@ -17,16 +17,26 @@ query GET_PROFILE_FORM {
           id
           type
           label
-          isMandatory
-          options{
+          getChildren {
             id
             label
+            type
+            options {
+              id
+              key
+              label
+            }
+          }
+          isMandatory
+          options {
+            id
+            label
+            key
           }
         }
       }
     }
   }
-  
 `;
 
 const withQuery = graphql(GET_PROFILE_FORM, {

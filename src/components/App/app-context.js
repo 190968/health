@@ -60,7 +60,7 @@ export const GetActiveUser = props => {
     );
 }
 
-export const withActiveUser = Component => {
+ const withActiveUser = Component => {
     const ActiveUserHOC = props => {
         return (
             <ActiveUserContext.Consumer>

@@ -5,6 +5,8 @@ import ReactPlaceholder from 'react-placeholder';
 import RightMenu from './containers/RightMenu';
 import { Row, Col, Menu} from 'antd';
 import {GetGlobalLabel} from "../../../components/App/app-context";
+import { withCurrentUser } from '../../../queries/user';
+import { withCurrentNetwork} from '../../../queries/network';
 
 
 
@@ -33,9 +35,12 @@ class LHeader extends React.Component {
     }
     render() {
         const loading = this.props.loading;
-        const token = this.props.token;
+        //console.log(this.props);
+        const {currentUser={}} = this.props;
+        const {token} = currentUser;
         const location = this.props.location;
 
+        const {currentNetwork:network={}} = this.props;
         const menu_items = [
             ['Dashboard', '/', 'dashboard'],
             ['Planstore', '/planstore', 'planstore'],
@@ -68,7 +73,7 @@ class LHeader extends React.Component {
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
-                    <NavLink to="/"><img alt="" className="logo" style={{height:'50px'}} src={this.props.network.logo} /></NavLink>
+                    <NavLink to="/"><img alt="" className="logo" style={{height:'50px'}} src={network.logo} /></NavLink>
                 </div>
             )
         }
@@ -78,7 +83,7 @@ class LHeader extends React.Component {
 
 
                 <Row type="flex" justify="space-between" align="middle">
-                    <Col md={5}><Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={this.props.network.logo} /></Link></Col>
+                    <Col md={5}><Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={network.logo} /></Link></Col>
                     <Col>
                         <Menu
                             onClick={this.handleClick}
@@ -101,27 +106,24 @@ class LHeader extends React.Component {
 }
 
 
-const mapStateToProps = (state) => {
+// const mapStateToProps = (state) => {
 
-    return {
-        // view store:
-        //currentView:  state.views.currentView,
-        // userAuth:
-        //messages:    state.user.info.unreadMessages,
-        //notifications:    state.user.info.unreadNotifications,
-        network:    state.network,
-        //loading: state.user.loading,
-        //user: state.user.info,
-        //token: state.user.token
-    };
-};
+//     return {
+//         // view store:
+//         //currentView:  state.views.currentView,
+//         // userAuth:
+//         //messages:    state.user.info.unreadMessages,
+//         //notifications:    state.user.info.unreadNotifications,
+//         network:    state.network,
+//         //loading: state.user.loading,
+//         //user: state.user.info,
+//         //token: state.user.token
+//     };
+// };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//     }
+// };
 
-export default  connect(
-    mapStateToProps,
-    mapDispatchToProps
-)((LHeader));
+export default  withCurrentNetwork(withCurrentUser(LHeader));
