@@ -16,11 +16,22 @@ query GET_PROFILE_FORM {
         fields {
           id
           type
+          getChildren {
+            id
+            label
+            type
+            isMandatory
+            options {
+              key
+              label
+            }
+          }
           label
           isMandatory
           options{
             id
             label
+            key
           }
         }
       }
