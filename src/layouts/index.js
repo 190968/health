@@ -13,68 +13,24 @@ import {CustomizedLabelsProvider, ActiveUserProvider} from "../components/App/ap
 // import main layouts
 import ManagerLayout from './components/ManagerLayout';
 import PatientLayout from './components/PatientLayout';
+import { withCurrentUser } from '../queries/user';
 
 
 /**
  * Show proper layout according to current role
  */
-class CoreByMode extends React.Component {
-
-    render() {
-
-        const {currentRole} = this.props;
-       /* if (loading) {
-            return <Card loading/>
-        }
-           
-        */
-        //console.log(currentRole);
-        //return null;
-        if (!currentRole || currentRole === 'patient') {
-            return <PatientLayout {...this.props} />;
-        } else {
-            return <ManagerLayout {...this.props} />;
-        }
+const CoreByMode  = props => {
+    const {currentUser={}} = props;
+    const {currentRole=false} = currentUser;
+    if (!currentRole || currentRole === 'patient') {
+        return <PatientLayout {...props} />;
+    } else {
+        return <ManagerLayout {...props} />;
     }
 }
 
-/**
- * Get current role of the patient from cache
- */
-export const GET_CURRENT_ROLE_QUERY = gql`
-    query GET_CURRENT_ROLE {
-      account {
-         currentRole
-         token
-      }
-    }
-`;
 
-const withQuery = graphql(
-    GET_CURRENT_ROLE_QUERY,
-    {
-        options: () => {
-            return {
-                fetchPolicy: 'cache-only'
-            }
-        },
-        props: ({data}) => {
-
-
-            if (!data.loading) {
-                return {
-                    currentRole: data.account.currentRole,
-                    token: data.account.token,
-                }
-            } else {
-                return {loading: data.loading}
-            }
-        },
-    }
-)
-
-
-const CoreByModeWithQuery = withQuery(CoreByMode);
+const CoreByModeWithQuery = withCurrentUser(CoreByMode);
 
 
 class Core extends React.Component {

@@ -1,7 +1,7 @@
 import ChangeRole from '../components/ChangeRole';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {GET_CURRENT_ROLE_QUERY} from "../../../../../index";
+import { GET_CURRENT_ROLE_QUERY } from '../../../../../../routes/Dash/containers/DashLayout';
 
 const ChangeRole_Mutation = gql`
  mutation ChangeRole($role: RoleEnum!) {

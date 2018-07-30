@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import moment from 'moment';
 import Loading from 'components/Loading';
-import {withActiveUser} from "../../../../../components/App/app-context";
 
 
 import InfiniteScroll from 'react-infinite-scroller';
@@ -11,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Popconfirm, Row, Col,Button, List, Spin, Icon,} from 'antd';
 import Avatar from 'routes/User/components/Avatar';
 import {compose, withState, lifecycle, withHandlers} from 'recompose';
+import { withCurrentUser } from '../../../../../queries/user';
 
 
 const Notifications = props => {
@@ -59,7 +59,7 @@ const Notifications = props => {
 }
 
 const enhance = compose(
-    withActiveUser,
+    withCurrentUser,
     withRouter,
     withState('loading', 'setLoading', false),
     withHandlers({
