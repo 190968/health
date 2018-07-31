@@ -9,6 +9,10 @@ query GET_PATIENTS {
       getPatients {
         edges {
           id
+          getInfoByNetworkTable  {
+            code
+            value
+          }
           fullName
           gender
           age
@@ -24,6 +28,7 @@ query GET_PATIENTS {
         totalCount
       }
     }
+ 
   }
   
 
@@ -45,9 +50,11 @@ const withQuery = graphql(
         },
         props: ({ ownProps, data }) => {
             if (!data.loading) {
+                console.log(data);
                 return {
                     patients: data.management.getPatients.edges,
                     total: data.management.getPatients.totalCount,
+                   // getPatientsTable:data.network.tables,
                     loading: data.loading,
                     /*loadByStatus(status) {
                         return data.fetchMore({

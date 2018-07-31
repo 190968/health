@@ -6,43 +6,30 @@ import {compose,withStateHandlers} from 'recompose';
 export const GET_PATIENTS_TABLE_COLUMNS = gql`    
 query GET_PATIENTS_TABLE_COLUMNS  {
     network {
-      tables {
-      getPatients {
         id
-        fields {
-          id
-          field
-          label
+        tables {
+          getPatientsTable {
+            id
+            fields {
+              id
+              field
+              label
+            }
+          }
         }
       }
-      }
-    }
 }
 `;
 
-const withQuery = graphql(
-    GET_PATIENTS_TABLE_COLUMNS,
-    {
-        props: ({ ownProps, data }) => {
-            if (!data.loading) {
-                console.log(data);
-                return {
-                    getPatients: data.network.tables.getPatients,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
-            }
-        },
-    }
-);
+const withQuery = graphql(GET_PATIENTS_TABLE_COLUMNS, {
+    props: ({data, ownProps}) => {       
+         const {network={}} = data;
+         const {tables={}} = network;
+         const {getPatientsTable={}} = tables;
+        return {loading: data.loading,getPatientsTable}
+    },
+});
 
 const enhance = compose(
-    withQuery,
-    withStateHandlers(
-        (props) => (
-            {
-        })       
-
-))
+    withQuery)
 export default enhance(Tables);

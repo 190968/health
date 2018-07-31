@@ -29,7 +29,7 @@ const PatientInvite = props => {
                     tab0.push(<BirthdayForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "gender") {
-                    tab0.push(<GenderForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<GenderForm key={data.id} options={data.options} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "email") {
                     tab0.push(<EmailForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)

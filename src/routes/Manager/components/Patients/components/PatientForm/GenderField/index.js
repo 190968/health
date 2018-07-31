@@ -25,6 +25,7 @@ const GenderForm = props => {
     const { getFieldDecorator } = props;
     const { label } = props;
 
+    console.log(props);
     return (
 
         <FormItem
