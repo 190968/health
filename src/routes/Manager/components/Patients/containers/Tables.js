@@ -30,6 +30,4 @@ const withQuery = graphql(GET_PATIENTS_TABLE_COLUMNS, {
     },
 });
 
-const enhance = compose(
-    withQuery)
-export default enhance(Tables);
+export default withQuery(Tables);

@@ -24,8 +24,10 @@ const radioStyle = {
 const GenderForm = props => {
     const { getFieldDecorator } = props;
     const { label } = props;
-
-    console.log(props);
+    const options =[];
+    props.options.map((data)=>{
+        options.push(<Radio style={radioStyle} value={data.key}>{data.label}</Radio>)
+    })
     return (
 
         <FormItem
@@ -36,8 +38,7 @@ const GenderForm = props => {
             {getFieldDecorator('gender', {
             })(
                 <RadioGroup >
-                    <Radio style={radioStyle} value={1}>Male</Radio>
-                    <Radio style={radioStyle} value={2}>Female</Radio>
+                    {options}
                 </RadioGroup>
             )}
         </FormItem>

@@ -63,7 +63,6 @@ export default class TableCustom extends React.Component {
             99: '99'
         };
         const {selectedCount,openShowButton,hideShowButton,showButton,selectedObj,getPatientsTable={}} = this.props;
-        console.log(this.props);
         const testColumns = [];
         const testData = [];
         getPatientsTable.fields.map((data)=>{

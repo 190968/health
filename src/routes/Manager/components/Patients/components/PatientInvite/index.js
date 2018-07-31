@@ -23,7 +23,7 @@ const PatientInvite = props => {
         if (count == 0) {
             data.fields.map(data => {
                 if (data.type == "full_name") {
-                    tab0.push(<FullNameForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<FullNameForm key={data.id} label={data.label} getChildren={data.getChildren}  getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "birthday") {
                     tab0.push(<BirthdayForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)

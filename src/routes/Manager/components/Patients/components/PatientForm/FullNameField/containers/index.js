@@ -33,7 +33,7 @@ const enhance = compose(
         },
     }),
     withProps(props => {
-        return { label: props.label }
+        return { label: props.label,props:props }
     }),
 );
 export default enhance(FullNameField);

@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { Input, Col, Select, Form } from 'antd';
-import { isValidLiteralValue } from 'graphql';
+import DropdownField from '../../DropdownField/containers/index'
 const Option = Select.Option;
 const InputGroup = Input.Group;
 const FormItem = Form.Item;
@@ -19,7 +19,7 @@ const formItemLayout = {
     },
 };
 
-const FullNameForm = ({ form, label, user }, props) => {
+const FullNameForm = ({ form, label, user, props} ) => {
     const { getFieldDecorator } = form;
 
     console.log(user, props);
@@ -33,14 +33,7 @@ const FullNameForm = ({ form, label, user }, props) => {
 
             <InputGroup >
                 <Col span={6}>
-                    {getFieldDecorator('title', {
-
-                    })(
-
-                        <Select style={{ width: 70 }} >
-                            {/* {user.possibleTitles.map((title, i) => <Option key={title} value={i}>{title}</Option>)} */}
-                        </Select>
-                    )}
+                   <DropdownField options={props.getChildren[0].options}/>
                 </Col>
                 <Col offset={1} span={8}>
                     {getFieldDecorator('firstName', {
