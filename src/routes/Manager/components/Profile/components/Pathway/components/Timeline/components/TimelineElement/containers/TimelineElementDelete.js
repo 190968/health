@@ -19,7 +19,7 @@ const withMutation = graphql(TIMELINE_ELEMENT_DELETE_MUTATION, {
                 variables: { id: ownProps.item.id},
                 refetchQueries: [{
                     query: GET_TIMELINE_QUERY,
-                    variables: { userId: ownProps.userId},
+                    variables: { userId: ownProps.user.id},
                 }],
             }).then(({data}) => {
                 message.success('Deleted');

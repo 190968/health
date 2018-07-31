@@ -22,9 +22,7 @@ export class PlanstoreLayout extends React.Component {
         this.props.loadMoreEntries(page)
     }
 
-    search = (value) => {
-        this.props.updateSearchStore(value);
-    }
+    
 
     stopLoading = () => {
         this.setState({
@@ -56,17 +54,6 @@ export class PlanstoreLayout extends React.Component {
         if (loading) {
             return (
                 <Col>
-                    <div style={{marginBottom: 24}}>
-                        <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans"
-                                                       description="Action plan"/>}>
-                            <Input.Search
-                                onKeyUp={this.search}
-                                defaultValue={search}
-                                size="large"
-                            />
-                        </Card>
-                    </div>
-
                     <List
                         grid={{gutter: 20, xs: 1, sm: 1, md: 2, lg: 3, xl: 4}}
                         dataSource={planPlaceholder}
@@ -86,22 +73,9 @@ export class PlanstoreLayout extends React.Component {
             hideOnSinglePage: true/*, showSizeChanger:true*/
         };
         //const hasMore = true;
-        const searchText = 'Search for ActionPlan';//<FormattedMessage id="planstore.search" defaultMessage="Search for ActionPlan" description="Action plan search" />;
         return (
 
             <div>
-                <div style={{marginBottom: 12}}>
-                    <Card title={<FormattedMessage id="planstore.content.header" defaultMessage="ActionPlans"
-                                                   description="Action plan"/>}>
-                        <Input.Search
-                            placeholder={searchText}
-                            onSearch={this.search}
-                            defaultValue={search}
-                            size="large"
-                        />
-                    </Card>
-                </div>
-
                 {plans.length > 0 ?
                     <div className="demo-infinite-container1">
                         <InfiniteScroll

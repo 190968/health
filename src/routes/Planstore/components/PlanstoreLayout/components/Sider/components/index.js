@@ -4,6 +4,7 @@ import {
 } from 'react-intl';
 import {Card, Button} from 'antd';
 import Filters from '../../Filters/components'
+import { PlanstoreSearch } from '../../PlanstoreSearch/components';
 
 export class PlanstoreLayout extends React.Component {
 
@@ -68,6 +69,7 @@ export class PlanstoreLayout extends React.Component {
 
         return (
             <div>
+                <PlanstoreSearch />
                 <Filters filters={filters} activeFilters={activeFilters} onSuccess={this.updateFilters}/>
                 <Button onClick={this.updateZeroFilters} style={{marginTop:24}}>{<FormattedMessage id="planstore.planstorelayout.cleanfilter"
                                                                             defaultMessage="Reset filters"

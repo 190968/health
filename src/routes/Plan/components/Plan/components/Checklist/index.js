@@ -50,7 +50,7 @@ export default class PlanChecklist extends React.Component {
 
     render() {
 
-        const {item, isBuilderMode, simple=false} = this.props;
+        const {item, isBuilderMode, simple=false, disabled=false} = this.props;
         const {value} = this.state;
         //const {label} = item;
 
@@ -70,6 +70,6 @@ export default class PlanChecklist extends React.Component {
         });
 
 
-        return <CheckboxGroup value={value} onChange={this.onChange} >{plainOptions}</CheckboxGroup>
+        return <CheckboxGroup value={value} onChange={this.onChange} disabled={disabled} >{plainOptions}</CheckboxGroup>
     }
 }

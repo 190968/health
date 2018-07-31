@@ -4,11 +4,11 @@ import {TimelineElementModalWithMutation as TimelineElementModal} from "../../..
 
 
 const TimelineElementEditPure = props => {
-    const {edit, openEdit, closeEdit, item, userId} = props;
+    const {edit, openEdit, closeEdit, item, user} = props;
     //const {activity} = element;
     //console.log(item.type);
     return <React.Fragment>
-        {edit && <TimelineElementModal userId={userId} item={item} onHide={closeEdit} />}
+        {edit && <TimelineElementModal user={user} item={item} onHide={closeEdit} />}
         <Tooltip title="Edit Element" ><Icon type="edit" onClick={openEdit} style={{marginRight:5}} /></Tooltip>
     </React.Fragment>;
 }

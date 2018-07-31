@@ -80,7 +80,7 @@ export default class Pathway extends React.Component {
                     </Col>
                     {showElement ?
                         <Col span={span}>
-                            <TimelineElementDetails userId={user.id} elements={elementsDetails}
+                            <TimelineElementDetails userId={user.id} user={user} elements={elementsDetails}
                                                     activeElement={activeElement}
                                                     updateElements={this.setElements}
                                                     showPathway={showPathway}
@@ -91,7 +91,7 @@ export default class Pathway extends React.Component {
                         </Col>
                         :
                         (showPathway && <Col span={span}>
-                            <PathwayContent userId={user.id} pathway={this.state.pathway} setPathway={this.setPathway}/>
+                            <PathwayContent user={user} pathway={this.state.pathway} setPathway={this.setPathway}/>
                         </Col>)
                     }
                 </Row>

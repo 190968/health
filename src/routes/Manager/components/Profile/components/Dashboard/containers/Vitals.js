@@ -25,7 +25,7 @@ const withQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                userId: ownProps.userId,
+                userId: ownProps.user.id,
             }
         }),
         props: ({data}) => {

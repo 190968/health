@@ -5,7 +5,7 @@ import TreatmentElementBlockItem from '../TreatmentElementBlockItem';
 import TreatmentBlockManageOptionModal from '../../../../../PlanLayout/components/PlanElementBuilder/components/TreatmentElementBuilder/containers/TreatmentBlockManageOptionModal';
 import {getTreatmentElementLabel} from "../../../../../PlanLayout/components/PlanElementBuilder/components/TreatmentElementBuilder/components/TreatmentBlockOptionSelect/index";
 
-const TreatmentElementBlock = ({i, plan, option, isPreviewMode, mode, treatmentId, isBuilderMode=false, onEdit, onDelete, onHide, showEditModal=false, onElementUpdate, handleReport=false}) => {
+const TreatmentElementBlock = ({i, plan, option, isPreviewMode, mode, treatmentId, isBuilderMode=false, onEdit, onDelete, onHide, showEditModal=false, onElementUpdate, handleReport=false, disabled=false}) => {
     const haveNote = option.notes || false;
     //console.log(option);
     const content = (
@@ -19,7 +19,7 @@ const TreatmentElementBlock = ({i, plan, option, isPreviewMode, mode, treatmentI
     return <List.Item  className="full-width" actions={isBuilderMode && [<Icon type="edit" onClick={onEdit} />, <Icon type="delete" onClick={onDelete} />]}
     >
         <List.Item.Meta
-            avatar={<Checkbox disabled={isBuilderMode} />}
+            avatar={<Checkbox disabled={disabled || isBuilderMode} />}
             title={getTreatmentElementLabel(option)}
             description={<React.Fragment>
 

@@ -9,7 +9,7 @@ import PathwayContent from '../../../../containers/PathwayContent';
 const TabPane = Tabs.TabPane;
 
 
-const TimelineElementDetails = ({onChange, onEdit, activeTab, panes, activeElement, userId, showPathway=false}) => {
+const TimelineElementDetails = ({onChange, onEdit, activeTab, panes, activeElement, user, showPathway=false}) => {
 
     const tabTitleLength = panes.length > 3 ? 10 : 20;
 
@@ -28,7 +28,7 @@ const TimelineElementDetails = ({onChange, onEdit, activeTab, panes, activeEleme
             if (pane.key === 'pathway') {
                 return <TabPane tab={tabTitle} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>
             }
-            return <TabPane tab={tabTitle} key={pane.key} closable={pane.closable}><TimelineElement item={pane.content} userId={userId} getOnlyActivity /></TabPane>;
+            return <TabPane tab={tabTitle} key={pane.key} closable={pane.closable}><TimelineElement item={pane.content} user={user} getOnlyActivity /></TabPane>;
         })}
     </Tabs></div>
 }
@@ -43,7 +43,7 @@ const enhance = compose(
         });
 
         if (showPathway) {
-            const pathTab = {title: 'Pathway', closable:false, content: <PathwayContent userId={props.userId} pathway={props.pathway} setPathway={props.setPathway} />, key: 'pathway'};
+            const pathTab = {title: 'Pathway', closable:false, content: <PathwayContent user={props.user} pathway={props.pathway} setPathway={props.setPathway} />, key: 'pathway'};
             panes = [pathTab, ...panes];
         }
 

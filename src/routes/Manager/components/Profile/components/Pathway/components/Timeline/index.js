@@ -39,7 +39,7 @@ const TimelinePure = props => {
 
             {!filters || filters.length > 0 ?
                 <div>
-                    {items.map((item, i) => <TimelineElement key={i} item={item} userId={userId} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} />)}
+                    {items.map((item, i) => <TimelineElement key={i} item={item} user={user} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} />)}
                 </div>
                 :
                 <EmptyList>Please filter at lease one parameter</EmptyList>

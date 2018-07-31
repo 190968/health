@@ -6,11 +6,11 @@ import TrackerChart from "../../../Tracker/containers/Chart";
 import {Popover, Icon, Tooltip} from "antd/lib/index";
 
 
-export default class TrackerChartPopup extends React.Component {
+export class TrackerChartPopup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date:props.date
+            date: props.date || moment().format("YYYY-MM-DD")
         };
         this.showDate = this.showDate.bind(this);
     };
@@ -37,3 +37,4 @@ export default class TrackerChartPopup extends React.Component {
         return (<Popover content={<TrackerChart date={date} item={item} userId={userId} />} title={<div>{label} Summary <div style={{float:'right'}}><Tooltip title={'Previous'}><Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip> <Tooltip title={'Next'}><Icon type="right" onClick={() => this.showDate('next')} style={{marginRight:10}} /></Tooltip></div></div>} trigger='click'><Icon type="area-chart" style={{marginLeft:10}} /></Popover>)
     }
 }
+export default TrackerChartPopup;

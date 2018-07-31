@@ -23,7 +23,7 @@ const Overview = props => {
                         <Stages userId={userId} />
                 <Row  style={{marginBottom:16}}>
                     <Col>
-                        <Vitals userId={userId} />
+                        <Vitals userId={userId} user={user} />
                     </Col>
                 </Row>
 

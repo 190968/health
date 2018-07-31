@@ -4,7 +4,7 @@ import {Card, Divider,List} from 'antd';
 import TreatmentElementBlock from './components/TreatmentElementBlock';
 import './index.less';
 
-const TreatmentElement = ({item, plan, isPreviewMode, isBuilderMode, mode, handleReport=false}) => {
+const TreatmentElement = ({item, plan, isPreviewMode, isBuilderMode, mode, handleReport=false, disabled=false}) => {
     const {elements} = item;
     
         return <List
@@ -12,7 +12,7 @@ const TreatmentElement = ({item, plan, isPreviewMode, isBuilderMode, mode, handl
             type="horizontal"
             dataSource={elements}
             renderItem={(option, i) => (
-                <TreatmentElementBlock key={i} plan={plan} handleReport={handleReport} isPreviewMode={isPreviewMode} isBuilderMode={isBuilderMode} mode={mode} option={option} />
+                <TreatmentElementBlock key={i} plan={plan} handleReport={handleReport} isPreviewMode={isPreviewMode} isBuilderMode={isBuilderMode} mode={mode} option={option} disabled={disabled} />
             )}
         />
 }

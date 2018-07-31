@@ -37,7 +37,7 @@ export default class PlanRadio extends React.PureComponent {
     }
 
     render() {
-        const {item} = this.props;
+        const {item, disabled=false} = this.props;
         const {value} = this.state;
 
         const options = item.options;
@@ -48,7 +48,7 @@ export default class PlanRadio extends React.PureComponent {
         }
 
 
-        return <RadioGroup onChange={this.onChange} value={value} >
+        return <RadioGroup onChange={this.onChange} value={value} disabled={disabled} >
             {options.map((option, i) => {
                 const coid = option.value;
                 const name = option.label;

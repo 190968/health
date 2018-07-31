@@ -16,8 +16,8 @@ export const RiskLevelGraph = props => {
 
         <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="65%" stopColor="#93ECEE" stopOpacity={1}/>
-            <stop offset="95%" stopColor="#93ECEE" stopOpacity={0.5}/>
+            <stop offset="45%" stopColor="#5fafe0" stopOpacity={1}/>
+            <stop offset="90%" stopColor="#5fafe0" stopOpacity={0.1}/>
             </linearGradient>
         </defs>
 
