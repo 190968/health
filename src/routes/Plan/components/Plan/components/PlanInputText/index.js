@@ -42,7 +42,7 @@ export default class PlanInputText extends React.PureComponent {
     }
 
     render() {
-        const {item} = this.props;
+        const {item, disabled=false} = this.props;
         const {value} = this.state;
 
         const {isLong, isDate, isTime} = item;
@@ -51,9 +51,9 @@ export default class PlanInputText extends React.PureComponent {
         } else if (isTime) {
             return <TimePicker  onChange={this.onChange} value={value} />;
         } else if (!isLong) {
-            return <Input onBlur={this.onChange} value={value} />;
+            return <Input onBlur={this.onChange} value={value} disabled={disabled} />;
         } else {
-            return <TextArea autosize={{ minRows: 2, maxRows: 6 }} value={value} onChange={this.onKeyUp} onBlur={this.onChange} />
+            return <TextArea autosize={{ minRows: 2, maxRows: 6 }} value={value} onChange={this.onKeyUp} disabled={disabled} onBlur={this.onChange} />
         }
     }
 }

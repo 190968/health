@@ -251,7 +251,7 @@ class TimelineElement extends React.PureComponent {
     render() {
 
         console.log(this.props,' Element props');
-        const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false} = this.props;
+        const {key, item, user, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false} = this.props;
         const {id: telid, activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
         const {id, fullName} = creator;
         const {id:activeElementId} = activeElement;
@@ -347,7 +347,7 @@ class TimelineElement extends React.PureComponent {
             // }
             return <React.Fragment>
                 <Card title={title}
-                         extra={[<TimelineElementEdit item={item} userId={userId} />, <TimelineElementDelete item={item} userId={userId} />]}
+                         extra={[<TimelineElementEdit item={item} user={user} />, <TimelineElementDelete item={item} user={user} />]}
             >
                 {activityText}
                     {body && <div>{body}</div>}

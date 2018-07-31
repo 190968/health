@@ -10,7 +10,7 @@ import {EmptyList} from "../../../../../../../../components/Loading/index";
 
 const PlanElementChildrenList = (props) => {
     //console.log(props);
-    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, plan, mode, loading} = props;
+    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, notClickable=false, plan, mode, loading} = props;
     return (<React.Fragment>
 
         {elements.length > 0 ?
@@ -26,6 +26,7 @@ const PlanElementChildrenList = (props) => {
                         <PlanElementChildrenElement i={i} isDraggable={isDraggable} onDrop={onDrop} element={item} plan={plan} mode={mode} isBuilderMode={isBuilderMode}
                                                     parentId={elementId} parentValue={elementValue}
                                                      isPreviewMode={isPreviewMode}
+                                                     notClickable={notClickable}
                         />
 
                     </List.Item>

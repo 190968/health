@@ -43,12 +43,12 @@ const TimelineElementModalEnhanced = compose(
 
 
 const PathwayBody = props => {
-    const {userId, pathway = {}, timelineElementToAdd: element, onHide, onDrop, currentInOrder, i, setTimelineElementToAdd} = props;
+    const {user, pathway = {}, timelineElementToAdd: element, onHide, onDrop, currentInOrder, i, setTimelineElementToAdd} = props;
     const {elements, id} = pathway;
 
     return (<Row>
         {props.openTimelineModal &&
-        <TimelineElementModalEnhanced userId={userId} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} {...element} onHide={onHide}/>}
+        <TimelineElementModalEnhanced user={user} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} {...element} onHide={onHide}/>}
         {elements ?
             <Col>
                 <List
@@ -60,7 +60,7 @@ const PathwayBody = props => {
                         return <List.Item
                             id={'field' + item.id}
                             key={item.id}>
-                            <PathwayBodyElement plan={pathway} i={i} currentInOrder={currentInOrder} element={item}
+                            <PathwayBodyElement plan={pathway} i={i} currentInOrder={currentInOrder} element={item} user={user}
                                                 onDrop={onDrop}/>
                         </List.Item>
                     }}

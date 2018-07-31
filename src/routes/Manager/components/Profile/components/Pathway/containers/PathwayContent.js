@@ -24,7 +24,7 @@ const withQuery = graphql(GET_USER_PATHWAY_QUERY, {
     options: (ownProps) => {
         return {
             variables: {
-                userId: ownProps.userId,
+                userId: ownProps.user.id,
             },
         }
     },
@@ -57,7 +57,7 @@ const withMutation = graphql(JoinPathwayMutation, {
     props: ({ ownProps, mutate }) => ({
         leavePathway: (id) => {
             return mutate({
-                variables: { userId: ownProps.userId, id: id}
+                variables: { userId: ownProps.user.id, id: id}
             })
         },
 

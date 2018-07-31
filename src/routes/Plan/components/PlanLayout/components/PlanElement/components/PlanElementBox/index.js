@@ -41,7 +41,8 @@ const PlanElementBox = (props) => {
 		parentId,
 		parentValue,
 		showElementsAsCard = false,
-		withCompleteCheckmark = false
+		withCompleteCheckmark = false,
+		notClickable=false
 	} = props;
 
 	const { id, itemType, type, itemInfo, reports, hasChildren = false } = element;
@@ -61,7 +62,7 @@ const PlanElementBox = (props) => {
 			break;
 		case 'measurement_input':
 			//showTitle = false;
-			field = <Measurement item={item} date={date} isBuilderMode={isBuilderMode} onChange={props.onChange} />;
+			field = <Measurement disabled={notClickable} item={item} date={date} isBuilderMode={isBuilderMode} onChange={props.onChange} />;
 			break;
 		case 'choice_input':
 		case 'checklist':
@@ -73,6 +74,7 @@ const PlanElementBox = (props) => {
 					reports={reportValues}
 					isBuilderMode={isBuilderMode}
 					onChange={props.onChange}
+					disabled={notClickable}
 				/>
 			);
 			//const vertically = item.is_vertically;
@@ -83,7 +85,7 @@ const PlanElementBox = (props) => {
 			reportValues = reportValues && reportValues[0];
 			reportValues = reportValues && reportValues[0];
 			field = (
-				<PlanRadio item={item} reports={reportValues} isBuilderMode={isBuilderMode} onChange={props.onChange} />
+				<PlanRadio item={item} reports={reportValues} isBuilderMode={isBuilderMode} disabled={notClickable} onChange={props.onChange} />
 			);
 			fieldTitle = item.label;
 
@@ -99,6 +101,7 @@ const PlanElementBox = (props) => {
 					reports={reportValues}
 					isBuilderMode={isBuilderMode}
 					onChange={props.onChange}
+					disabled={notClickable}
 				/>
 			);
 
@@ -119,6 +122,7 @@ const PlanElementBox = (props) => {
 					hasChildren={hasChildren}
 					reports={reportValues}
 					onChange={props.onChange}
+					disabled={notClickable}
 				/>
 			);
 
@@ -177,7 +181,7 @@ const PlanElementBox = (props) => {
 			fieldTitle = item.label;
 
 			field = (
-				<PlanScale item={item} reports={reportValues} isBuilderMode={isBuilderMode} onChange={props.onChange} />
+				<PlanScale item={item} disabled={notClickable} reports={reportValues} isBuilderMode={isBuilderMode} onChange={props.onChange} />
 			);
 
 			break;
@@ -246,7 +250,7 @@ const PlanElementBox = (props) => {
 
 		case 'treatment':
 			fieldTitle = item.title;
-			field = <TreatmentElement plan={plan} isPreviewMode={isPreviewMode} mode={mode} item={item} />;
+			field = <TreatmentElement plan={plan} disabled={notClickable} isPreviewMode={isPreviewMode} mode={mode} item={item} />;
 			break;
 		case 'diagnosis':
 			//fieldTitle = 'Diagnosis';

@@ -29,7 +29,7 @@ export const GetGlobalLabel = (props) => {
         <CustomizedLabelsContext.Consumer>
             {(context) => {
                 console.log(context);
-                return context[type] || defaultValue;
+                return context && context[type] || defaultValue;
             }}
         </CustomizedLabelsContext.Consumer>
     );
