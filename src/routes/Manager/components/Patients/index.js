@@ -39,7 +39,7 @@ export class Patients extends React.Component {
                 <Card type="table">
                     <PatientsTable patients={patients} selectedCount={selectedCount} selectedObj={selectedObj} openShowButton={openShowButton} hideShowButton={hideShowButton} showButton={showButton} onSearch={onSearch} emitEmpty={emitEmpty} searchText={searchText} sliderChange={sliderChange} />
                 </Card>
-                {visibleModal && <PatientInvite onHide={hideModal} />}
+                {visibleModal && <PatientInvite onHide={hideModal}  />}
             </PageHeaderLayout>);
     }
 }

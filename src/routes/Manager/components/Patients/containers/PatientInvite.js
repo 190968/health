@@ -48,28 +48,31 @@ const withQuery = graphql(GET_PROFILE_FORM, {
 });
 
 const enhance = compose(
-    withQuery,
-    Form.create(),
-    withHandlers({
-        onSubmit: props => () => {
-            console.log(props, 'Props before input');
-            // props.form.validateFields((err, values) => {
-            //     console.log(err);
-            //     console.log(values);
-            // if (!err) {
-            //     console.log(values);
-            //     props.onHide();
-            //     // props.onSubmit(values).then(({data})=> {
-            //     //     props.onHide();
-            //     // });
-            // }
-            // });
-        },
-    }),
-    withProps(props => {
-        return { modalTitle: 'Add a Patient' }
-    }),
-    withModal
+
+  branch(props => props.patients, withQuery, withQuery),
+  Form.create(),
+  withHandlers({
+      onSubmit: props => () => {
+          //console.log(props, 'Props before input');
+          props.form.validateFields((err, values) => {
+              //console.log(err);
+              //console.log(values);
+              if (!err) {
+                  props.onSubmit(values).then(({data})=> {
+                      props.onHide();
+                  });
+              }
+          });
+      },
+  }),
+  withProps(props => {
+    console.log(props);
+      const modalTitle = props.patients ? 'Edit Patients' : 'Add Patients';
+      return {
+          modalTitle:modalTitle
+      };
+  }),
+  withModal
 );
 
 export default enhance(PatientInvite);
