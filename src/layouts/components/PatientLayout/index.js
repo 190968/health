@@ -16,7 +16,7 @@ const PatientLayout = ({loading, store, location}) =>  {
             <Header style={{background:'#fff'}}>
                 <LayoutHeader loading={loading} location={location}  />
             </Header>
-            <Content style={{ padding: '20px 50px', flex: '1' }}>
+            <Content style={{ padding: '24px 50px', flex: '1' }}>
                     <BasicRoutes store={store} />
                     <PatientRoutes store={store} />
             </Content>

@@ -18,7 +18,7 @@ class CalendarWidget extends React.Component {
 
         return (
         <Card title="Health Calendar"
-              extra={<Button.Group><Link to='/calendar'><Button size={"small"} ><Icon type="calendar" /></Button></Link><Button size={"small"}  onClick={this.toggleAdd}><Icon type="plus" /></Button></Button.Group>}
+              extra={<Button.Group><Button size={"small"} ><Link to='/calendar'><Icon type="calendar" /></Link></Button><Button size={"small"}  onClick={this.toggleAdd}><Icon type="plus" /></Button></Button.Group>}
         >
             {this.state.showAdd && <AddCalendarEvent onHide={this.toggleAdd}/>}
             <Calendar fullscreen={false} />

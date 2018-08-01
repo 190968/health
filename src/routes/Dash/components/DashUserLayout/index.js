@@ -43,7 +43,7 @@ export class DashUserLayout extends React.Component {
 
 
         return (
-           <Row gutter={15}>
+           <Row gutter={20}>
                <Col>
                    <Alert
                        style={{marginBottom:24}}

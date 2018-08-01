@@ -2,7 +2,7 @@ import React from 'react'
 import {NavLink, withRouter } from 'react-router-dom';
 import { Menu, Icon,  Badge } from 'antd';
 import NotificationBadge from '../../containers/NotificationBadge';
-
+import './index.less';
 
 class RightMenu extends React.Component {
     constructor(props) {
@@ -47,6 +47,7 @@ class RightMenu extends React.Component {
             <Menu
                 selectedKeys={['1']}
                 mode="horizontal"
+                className={'ant-menu-thin'}
                 style={{'borderBottom':'none', 'float':'right'}}
             >
                 <Menu.Item key='inbox'>

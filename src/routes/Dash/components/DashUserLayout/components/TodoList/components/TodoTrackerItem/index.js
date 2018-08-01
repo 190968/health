@@ -15,7 +15,7 @@ export default class TodoTrackerItem extends React.PureComponent {
             return null;
         }
         return (
-            <Row type="flex" justify="space-between" align="top" style={{padding:5}}>
+            <Row type="flex" justify="space-between" align="top">
                 <Col xs={3} md={2}>
                     <Progress type="circle" showInfo={progress>0} strokeWidth={10} percent={progress > 0 ? progress : 0} width={30} />
                     </Col>

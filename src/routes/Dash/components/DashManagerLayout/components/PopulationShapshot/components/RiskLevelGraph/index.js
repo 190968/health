@@ -17,7 +17,7 @@ const renderCustomizedLabel2 = ({ cx, cy, midAngle, innerRadius, outerRadius, pe
 };
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    return (percent * 100).toFixed(0);
+    return ((percent * 100).toFixed(0))+'%';
     const radius = outerRadius+40;//innerRadius + ( - innerRadius)  ;
   const x  = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy  + radius * Math.sin(-midAngle * RADIAN);
@@ -37,7 +37,7 @@ export const RiskLevelGraph = props => {
             data={items}
             dataKey='value'
             // labelLine={false}
-            outerRadius={100}
+            outerRadius={90}
             fill="#8884d8"
             label={renderCustomizedLabel}
             onClick={handleClick}
