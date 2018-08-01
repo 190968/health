@@ -97,17 +97,24 @@ export default class TableCustom extends React.Component {
         })
         this.props.patients.map((data)=>{
             data.getInfoByNetworkTable.map((data)=>{
-                if(data.code =="cohorts"){
+
+                switch(data.code) {
+                    case 'cohorts':
                     testData.push({cohorts:data.value});
-                }
-                if(data.code =="care_manager"){
+                    break;
+                    case 'care_manager':
                     testData.push({care_manager:data.value});
-                }
-                if(data.code =="county"){
+                    break;
+                    case 'county':
                     testData.push({county:data.value});
+                    break;
+                    case 'full_name':
+                    testData.push({fullName:data.fullName});
+                    break;
                 }
             })            
-        })
+        });
+        //console.log(testData);
         const columns = [
             {
                 title: "Name",
@@ -197,8 +204,25 @@ export default class TableCustom extends React.Component {
                 name: record.name,
             }),
         };
-        const dataSource = this.props.patients;
-        console.log(selectedObj);
+        const dataSource = this.props.patients.map((patient, i) => {
+            const {getInfoByNetworkTable, id, fullName} = patient;
+            let newPatientData = {...patient};
+
+            getInfoByNetworkTable.map((data)=>{
+                const {code, value} = data;
+                switch(code) {
+                    default:
+                    newPatientData[code] = value;
+                    break;
+                    case 'full_name':
+                    newPatientData[code] = <Link to={'/u/' + id}>{fullName}</Link>;
+                    break;
+                }
+            })        
+
+            return newPatientData;
+        });
+        console.log(dataSource);
         return (
             <div>
                 <Modal
@@ -208,7 +232,7 @@ export default class TableCustom extends React.Component {
                 >
                     <CustomModal id={this.state.id}/>
                 </Modal>
-                <Table  id="pasha" rowKey={'id'} rowSelection={rowSelection} dataSource={testData} columns={testColumns} pagination={false}
+                <Table  id="pasha" rowKey={'id'} rowSelection={rowSelection} dataSource={dataSource} columns={testColumns} pagination={false}
                        onChange={this.handleChange}
                        ref={(input) => {
                            this.table = input;
