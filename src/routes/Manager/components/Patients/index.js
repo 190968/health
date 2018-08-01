@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button, Radio, Icon, Tooltip } from 'antd';
-import TableCustom from './containers/Tables'
+import PatientsTable from './containers/PatientsTable'
 import { PageHeaderLayout } from "../../../../components/Layout/PageHeaderLayout/index";
 import { compose, withState, withHandlers, withStateHandlers } from 'recompose';
 import PatientInvite from "./containers/PatientInvite";
@@ -37,8 +37,7 @@ export class Patients extends React.Component {
             >
 
                 <Card type="table">
-                    <TableCustom patients={patients} selectedCount={selectedCount} selectedObj={selectedObj} openShowButton={openShowButton} hideShowButton={hideShowButton} showButton={showButton} onSearch={onSearch} emitEmpty={emitEmpty} searchText={searchText} sliderChange={sliderChange} />
-
+                    <PatientsTable patients={patients} selectedCount={selectedCount} selectedObj={selectedObj} openShowButton={openShowButton} hideShowButton={hideShowButton} showButton={showButton} onSearch={onSearch} emitEmpty={emitEmpty} searchText={searchText} sliderChange={sliderChange} />
                 </Card>
                 {visibleModal && <PatientInvite onHide={hideModal} />}
             </PageHeaderLayout>);

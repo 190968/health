@@ -1,4 +1,4 @@
-import Tables from '../components/Tables';
+import PatientsTable from '../components/PatientsTable';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import React from 'react';
@@ -30,4 +30,4 @@ const withQuery = graphql(GET_PATIENTS_TABLE_COLUMNS, {
     },
 });
 
-export default withQuery(Tables);
+export default withQuery(PatientsTable);

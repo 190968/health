@@ -27,13 +27,13 @@ const DrugCombinationBlock = props => {
     const {drug} = props;
     const {score=0, drugtargets=[]} = drug;
     return <Row style={{width:120}}>
-        <Col xs={8} style={{textAlign: 'left'}}><DrugCombinationChart value={score} /></Col>
-        <Col xs={12} offset={1} style={{lineHeight:'1.1em'}}><small>{drugtargets.map((target, i) => <div key={i}>{target.drug}</div>)}</small></Col>
+        <Col xs={24} style={{textAlign:'center'}} ><DrugCombinationChart value={score} /></Col>
+        <Col xs={24} style={{lineHeight:'1.1em', textAlign:'center', marginTop:10}}><small>{drugtargets.map((target, i) => <div key={i}>{target.drug}</div>)}</small></Col>
     </Row>;
 }
 
 const DrugCombinationChart = ({value=0}) => {
-    return <Progress type="dashboard" percent={value} width={30} />;
+    return <Progress type="circle" strokeWidth={9} percent={value} width={90} />;
 }
 
 

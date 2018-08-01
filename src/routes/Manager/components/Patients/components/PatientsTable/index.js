@@ -8,6 +8,29 @@ import InviteButtons from "../../../../../../components/Tables/InviteButton/inde
 import sort from '../../../../../../components/Tables/sort'
 import './index.css'
 
+
+
+// export const PatientsTable = props => {
+//     return (
+//         <div>
+//             <Modal
+//                 title="Edit user"
+//                 visible={this.state.visible}
+//                 onCancel={this.handleCancel}
+//             >
+//                 <CustomModal id={this.state.id}/>
+//             </Modal>
+//             <Table rowKey={'id'} rowSelection={rowSelection} dataSource={testData} columns={testColumns} pagination={false}
+//                    onChange={this.handleChange}
+//                    ref={(input) => {
+//                        this.table = input;
+//                    }}/>
+//                    {showButton && <InviteButtons selectedCount={selectedCount} selectedObj={selectedObj} />}
+//         </div>);
+// }
+
+// export default PatientsTable;
+
 export default class TableCustom extends React.Component {
 
     state = {
