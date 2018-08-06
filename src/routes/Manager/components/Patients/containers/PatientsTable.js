@@ -20,10 +20,9 @@ query GET_PATIENTS_TABLE_COLUMNS  {
       }
 }
 `;
-
+  
 const withQuery = graphql(GET_PATIENTS_TABLE_COLUMNS, {
     props: ({data, ownProps}) => {       
-      console.log("PATIENTTABLE ==> ",data);
          const {network={}} = data;
          const {tables={}} = network;
          const {getPatientsTable={}} = tables;

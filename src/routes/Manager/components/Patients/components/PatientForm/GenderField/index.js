@@ -36,6 +36,7 @@ const GenderForm = props => {
 
         >
             {getFieldDecorator('gender', {
+                initialValue:props.gender
             })(
                 <RadioGroup >
                     {options}

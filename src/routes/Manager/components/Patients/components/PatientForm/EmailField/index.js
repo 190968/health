@@ -18,7 +18,6 @@ const formItemLayout = {
 const EmailForm = props => {
     const { getFieldDecorator } = props;
     const { label } = props;
-
     return (
 
         <FormItem
@@ -27,6 +26,7 @@ const EmailForm = props => {
 
         >
             {getFieldDecorator('email', {
+                initialValue:props.email
             })(
                 <Input />
             )}

@@ -18,8 +18,7 @@ const formItemLayout = {
 };
 const TimeZoneForm = ({form,label},props) => {
     const { getFieldDecorator } = form;
-
-console.log("components",props);
+const timezones = props.timezone;
     return (
 
         <FormItem

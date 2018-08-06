@@ -9,13 +9,32 @@ query GET_PATIENTS {
       getPatients {
         edges {
           id
-          getInfoByNetworkTable  {
+          getInfoByNetworkTable {
             code
             value
           }
           fullName
+          firstName
+          lastName
+          birthday
+          email
+          phone {
+            code
+            number
+          }
+          address {
+            id
+            line1
+            line2
+            country
+            city
+            state
+            zipcode
+          }
           gender
           age
+          timezone
+          language
           memberId
           getDiagnosis {
             id
@@ -28,10 +47,8 @@ query GET_PATIENTS {
         totalCount
       }
     }
- 
   }
   
-
 `;
 
 const withQuery = graphql(

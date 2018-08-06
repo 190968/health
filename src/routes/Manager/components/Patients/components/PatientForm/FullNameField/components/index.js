@@ -37,14 +37,16 @@ const FullNameForm = ({ form, label, user, props} ) => {
                 </Col>
                 <Col offset={1} span={8}>
                     {getFieldDecorator('firstName', {
+                        initialValue:props.firstName
                     })(
-                        <Input placeholder="First name" />
+                        <Input placeholder="First name"/>
                     )}
                 </Col>
                 <Col offset={1}  span={8}>
                     {getFieldDecorator('lastName', {
+                        initialValue:props.lastName
                     })(
-                        <Input placeholder="Last name" />
+                        <Input placeholder="Last name"/>
                     )}
                 </Col>
             </InputGroup>

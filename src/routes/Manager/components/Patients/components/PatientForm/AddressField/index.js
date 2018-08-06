@@ -19,7 +19,6 @@ const formItemLayout = {
 const AddressForm = props => {
     const { getFieldDecorator } = props;
     const { label } = props;
-
     return (
 
         <FormItem
@@ -27,7 +26,7 @@ const AddressForm = props => {
             label={label}
             required
         >
-            <AddressFormCustom getFieldDecorator={getFieldDecorator} />
+            <AddressFormCustom address={props.address} getFieldDecorator={getFieldDecorator} />
         </FormItem>
 
     );

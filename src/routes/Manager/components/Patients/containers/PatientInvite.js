@@ -1,7 +1,7 @@
 import PatientInvite from '../components/PatientInvite/index';
 import { graphql } from 'react-apollo';
 import React from 'react';
-import { compose, withStateHandlers, branch, withHandlers, withState, withProps } from 'recompose';
+import { compose, withStateHandlers, branch, withHandlers, defaultProps, withProps } from 'recompose';
 import { Form } from 'antd';
 import gql from 'graphql-tag';
 import { withModal } from "../../../../../components/Modal/index";
@@ -48,7 +48,17 @@ const withQuery = graphql(GET_PROFILE_FORM, {
 });
 
 const enhance = compose(
-
+  defaultProps({
+    patients:{
+    firstName:"",
+    lastName:"",
+    title:"",
+    email:"",
+    gender:"",
+    birthday:"",
+    timezone:""
+    }
+  }),
   branch(props => props.patients, withQuery, withQuery),
   Form.create(),
   withHandlers({

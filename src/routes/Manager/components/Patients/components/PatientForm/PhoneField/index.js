@@ -27,7 +27,7 @@ const PhoneForm = props => {
             label={label}
             required
         >
-            <PhoneFormCustom getFieldDecorator={getFieldDecorator} />
+            <PhoneFormCustom phone={props.phone} getFieldDecorator={getFieldDecorator} />
         </FormItem>
 
     );

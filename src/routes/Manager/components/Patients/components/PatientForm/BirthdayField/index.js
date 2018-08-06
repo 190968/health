@@ -2,6 +2,7 @@
  * Created by Pavel on 06.12.2017.
  */
 import React from 'react';
+import moment from 'moment';
 
 import { Input, DatePicker, Select, Form } from 'antd';
 
@@ -23,7 +24,6 @@ const BirthdayForm = props => {
     const { getFieldDecorator } = props;
     const { label } = props;
 
-
     return (
 
         <FormItem
@@ -32,6 +32,7 @@ const BirthdayForm = props => {
 
         >
             {getFieldDecorator('birthday', {
+                initialValue: moment(props.birthday),
                 rules: [{
                     type: 'object', message: "intl.messages.user_birthday_novalid",
                 }, {

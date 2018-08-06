@@ -15,33 +15,34 @@ import PlainFormField from '../PatientForm/PlainField/containers/index';
 const TabPane = Tabs.TabPane;
 
 const PatientInvite = props => {
-    const { getProfileForm } = props;
+    const { getProfileForm, } = props;
     const { getFieldDecorator } = props.form;
     let tab0 = [], tab1 = [], tab2 = [], tab3 = [], tab4 = [];
-    console.log(getProfileForm);
+    console.log("PatientInvite ==> ",props.patients);
+
     getProfileForm.map((data, count) => {
         if (count == 0) {
             data.fields.map(data => {
                 if (data.type == "full_name") {
-                    tab0.push(<FullNameForm key={data.id} label={data.label} getChildren={data.getChildren}  getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<FullNameForm key={data.id} firstName={props.patients.firstName} lastName={props.patients.lastName} label={data.label} getChildren={data.getChildren}  getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "birthday") {
-                    tab0.push(<BirthdayForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<BirthdayForm key={data.id} birthday={props.patients.birthday} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "gender") {
-                    tab0.push(<GenderForm key={data.id} options={data.options} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<GenderForm key={data.id} gender={props.patients.gender} options={data.options} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "email") {
-                    tab0.push(<EmailForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<EmailForm key={data.id} email={props.patients.email} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "address") {
-                    tab0.push(<AddressForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<AddressForm key={data.id} address={props.patients.address} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "phone") {
-                    tab0.push(<PhoneForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
+                    tab0.push(<PhoneForm key={data.id} phone={props.patients.phone} label={data.label} getFieldDecorator={getFieldDecorator} />)
                 }
                 if (data.type == "tz") {
-                    tab0.push(<TimeZoneForm key={data.id} label={data.label} />)
+                    tab0.push(<TimeZoneForm key={data.id} timezone={props.patients.timezone} label={data.label} />)
                 }
                 if (data.type == "language") {
                     tab0.push(<LanguageForm key={data.id} label={data.label} getFieldDecorator={getFieldDecorator} />)
@@ -56,7 +57,6 @@ const PatientInvite = props => {
         }
         if (count == 1) {
             data.fields.map(data => {
-                console.log(data.id);
                 if (data.type == "dropdown") {
                     tab1.push(<DropdownFormField key={data.id} label={data.label} options={data.options} />)
                 }
@@ -67,7 +67,6 @@ const PatientInvite = props => {
             })
         }
         if (count == 2) {
-            console.log("pasha", data);
             data.fields.map(data => {
                 if (data.type == "dropdown") {
                     tab2.push(<DropdownFormField key={data.id} label={data.label} options={data.options} />)
