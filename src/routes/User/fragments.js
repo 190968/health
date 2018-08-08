@@ -34,3 +34,21 @@ export const PatientInfoFragment = gql`
                 age
         }
 `;
+
+
+export const CurrentUserInfoFragment = gql`
+       fragment CurrentUserInfo on Account {
+            user {
+                ...UserInfo
+                phoneConfirmed
+            }
+            currentRole
+            currentToken {
+                token
+                isExpired
+            }
+            possibleNetworkRoles
+            possibleProviderRoles
+        }
+        ${UserInfoFragment}
+`;

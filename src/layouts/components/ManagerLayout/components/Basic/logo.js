@@ -1,27 +1,12 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { withCurrentNetwork } from '../../../../../queries/network';
 
 
 
-const Logo = props => {
-    return <Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={props.network.logo} /></Link>
+const LogoPure = props => {
+    return <Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={props.currentNetwork.logo} /></Link>
 }
-
-
-const mapStateToProps = (state) => {
-
-    return {
-        network:    state.network,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-};
-
-export default  connect(
-    mapStateToProps,
-    mapDispatchToProps
-)((Logo));
+ 
+export const NetworkLogo = withCurrentNetwork(LogoPure);
+export default  NetworkLogo;

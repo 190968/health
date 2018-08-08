@@ -28,7 +28,7 @@ export const GetGlobalLabel = (props) => {
     return (
         <CustomizedLabelsContext.Consumer>
             {(context) => {
-                console.log(context);
+                //console.log(context);
                 return context && context[type] || defaultValue;
             }}
         </CustomizedLabelsContext.Consumer>

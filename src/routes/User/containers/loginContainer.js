@@ -1,6 +1,7 @@
 //import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'react-apollo';
+import {withRouter} from 'react-router'
 import { message } from 'antd';
 import { loginUserSuccess, loginUserError} from '../modules/login'
 import {loadUser, loadUserFAIL, loadUserPrepare} from '../modules/user'
@@ -8,28 +9,20 @@ import {loadUser, loadUserFAIL, loadUserPrepare} from '../modules/user'
 import LoginForm from '../components/Login'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-const UserMainInfo_QUERY = gql`
-    query ACCOUNT_INFO {
-        account {
-            ...CurrenUserInfo
-            possibleNetworkRoles
-            possibleProviderRoles
-            currentRole
-        }
-    }
-    ${LoginForm.fragments.user}
-`;
+import { withCurrentUser, CurrentUserQUERY } from '../../../queries/user';
+ 
+import { withCurrentNetwork } from '../../../queries/network';
+import { CurrentUserInfoFragment } from '../fragments';
+
+
+export const UserMainInfo_QUERY = CurrentUserQUERY;
 const loginUser = gql`
     mutation loginUser($input: LoginInput!) {
         login(input: $input) {
-           ...CurrenUserInfo
-            possibleNetworkRoles
-            possibleProviderRoles
-            currentRole
-            checkToken
+            ...CurrentUserInfo
         }
     }
-    ${LoginForm.fragments.user}
+    ${CurrentUserInfoFragment}
 `;
 const forgotPassword = gql`
     mutation forgotPassword($email:Email!) {
@@ -62,8 +55,11 @@ const withMutation = graphql(loginUser, {
                         query: UserMainInfo_QUERY,
                     });
 
-                    const newData = {...data, ...{account: {...data.account, ...login}}};
+                    console.log(data);
+                   
 
+                    const newData = {...data, ...{account: {...data.account, ...login}}};
+                    console.log(newData);
                     store.writeQuery({
                         query: UserMainInfo_QUERY,
                         data: newData
@@ -75,9 +71,9 @@ const withMutation = graphql(loginUser, {
 });
 const mapStateToProps = (state) => {
     return {
-        allowSignUp: state.network.allowSignUp,
-        token: state.user.token,
-        loading: state.user.loading
+        //allowSignUp: state.network.allowSignUp,
+        //token: state.user.token,
+        //loading: state.user.loading
     };
 };
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -86,13 +82,22 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(loadUserPrepare());
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
-                const token = data.login.token;
+                const {currentToken={}} = data.login;
+                let {token, isExpired} = currentToken;
+                if (isExpired) {
+                    token = '';
+                }
                 let user = data.login.user;
                 user.token = token;
                 dispatch(loadUser(user));
+
+                localStorage.setItem('token', token);
                 //dispatch(setUserToken(token));
 
+
+
                 dispatch(loginUserSuccess({token}));
+                //ownProps.history.push('/');
             }).catch((error) => {
 
                 dispatch(loadUserFAIL({ error,
@@ -122,7 +127,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     },
 });
-export default compose(withMutation,withMutationForgot,connect(mapStateToProps, mapDispatchToProps))((LoginForm));
+export default compose(withMutation,withMutationForgot,connect(mapStateToProps, mapDispatchToProps))( withRouter(withCurrentNetwork(withCurrentUser(LoginForm))));
 
 
 

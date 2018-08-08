@@ -59,6 +59,11 @@ export const getTimelineElementCardTitle = (item) => {
             elTitle = typeText;//+' - '+title;
             break;
         case 'plan_assigned':
+            const {plan = {}} = activity;
+            const {type:planType} = plan;
+            if (planType=== 'treatment') {
+                return 'Treatment Plan Assigned';
+            }
             //const {}
             break;
     }
@@ -74,7 +79,7 @@ const colorsByType = {
     plan: '#f5511e',
     treatment: '#34A853',
     health: '#ee685c',
-    media: '#000000',
+    media: '#585858',
     visit: '#7baf41',
     cancer_stage: '#8c25a8',
     tumorboard: '#3f51b5',
@@ -126,7 +131,7 @@ export const TimelineElementView = (item, props={}) => {
             activityText = <MediaElement item={activity} />;
             icon = getIconByFileType({type:activityType, label});
             group = 'media';
-            progress = formatFileName(activity);
+            progress = formatFileName(activity, {showSize:false});
             //body.push( activity.description || '');
             break;
         case 'clinical_note':
@@ -178,7 +183,7 @@ export const TimelineElementView = (item, props={}) => {
                     percent = Math.floor(percent);
                 }
             }
-            progress = <Checklist item={activity} handleReport={handleReport} reports={reportValues} simple  />;
+            progress = <Checklist item={activity} handleReport={handleReport} reports={reportValues} simple={false}  />;
             group = 'todo';
             icon = <FitIcon icon="to-do"/>
             break;

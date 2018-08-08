@@ -8,7 +8,7 @@ import {Options} from "../../../../../../../../components/FormCustomFields/compo
 
 const FormItem = Form.Item;
 
-const formItemLayout = {
+const formItemLayoutDefault = {
     labelCol: {span: 4},
     wrapperCol: {span: 20},
 };
@@ -41,7 +41,7 @@ export const prepareInput = (values) => {
 
 
 const ChecklistElementBuilder = (props) => {
-    const {form, intl, element={}} = props;
+    const {form, intl, element={}, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator} = form;
     const {itemInfo={}} = element;
     const {label:title, options = [blankOption] } = itemInfo;
@@ -61,7 +61,7 @@ const ChecklistElementBuilder = (props) => {
                 )}
             </FormItem>
 
-            <Options form={form} options={options} title="To Do" />
+            <Options form={form} options={options} title="To Do" formItemLayout={formItemLayout} />
 
         </React.Fragment>
     );

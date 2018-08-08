@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Modal, Icon, Upload, Alert, Button, Card, Tooltip, Checkbox } from 'antd';
+import { Divider, Modal, Icon, Upload, Alert, Button, Card, Tooltip, Checkbox, Row, Col } from 'antd';
 
 import Measurement from '../../../../containers/PlanMeasurement';
 import PlanElementActions from '../../containers/PlanElementActions';
@@ -229,13 +229,22 @@ const PlanElementBox = (props) => {
 			field = <Divider style={opts} />;
 			break;
 		case 'instruction_tipbox':
+		console.log(item);
+		const {icon} = item;
+		const {id:iconId, url:iconUrl} = icon;
+		let text = '';
+		if (iconId) {
+			
+			text = <Row><Col md={4}><img src={iconUrl} /></Col><Col md={20}><div dangerouslySetInnerHTML={{ __html: item.text }} /></Col></Row>;
+		} else {
+			text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
+		}
 			fieldTitle = '';
 			field = (
 				<Alert
 					message="Tipbox"
-					description={<div dangerouslySetInnerHTML={{ __html: item.text }} />}
+					description={text}
 					type="info"
-					showIcon
 				/>
 			);
 			break;

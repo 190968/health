@@ -63,7 +63,10 @@ export const ElementTextFragment = gql`
     fragment TextElement on PlanElementText {
         id
         text
-        icon
+        icon {
+            id
+            url
+        }
     }
 `;
 

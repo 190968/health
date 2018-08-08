@@ -10,7 +10,6 @@ import { withCurrentNetwork} from '../../../queries/network';
 
 
 
-
 class LHeader extends React.Component {
     constructor(props) {
         super(props);
@@ -35,7 +34,7 @@ class LHeader extends React.Component {
     }
     render() {
         const loading = this.props.loading;
-        //console.log(this.props);
+        console.log(this.props);
         const {currentUser={}} = this.props;
         const {token} = currentUser;
         const location = this.props.location;
@@ -77,10 +76,8 @@ class LHeader extends React.Component {
                 </div>
             )
         }
-
         return (
             <ReactPlaceholder ready={!loading} rows={3} >
-
 
                 <Row type="flex" justify="space-between" align="middle">
                     <Col md={5}><Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={network.logo} /></Link></Col>

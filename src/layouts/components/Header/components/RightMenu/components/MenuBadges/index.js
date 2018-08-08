@@ -34,7 +34,8 @@ class RightMenu extends React.Component {
 
         if (!nextProps.token && nextProps.token !== this.props.token) {
             // reload to logout
-            this.props.history.push('/logout');
+            console.log(nextProps);
+            //this.props.history.push('/logout');
         }
     }
 

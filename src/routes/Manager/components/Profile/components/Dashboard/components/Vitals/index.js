@@ -38,7 +38,7 @@ export const Vitals = props => {
                 value = <Tooltip title="Critical Value"><span className="critical">{value}</span></Tooltip>;
             }
            
-            return  <List.Item><Card type="pure" className="vital" key={i}>
+            return  <List.Item key={i}><Card type="pure" className="vital" key={i}>
                     <div className="title">{label}</div>
                     <div className="units">{unitsName}  
                         <TrackerChartPopup item={tracker} userId={user.id} label={label} />

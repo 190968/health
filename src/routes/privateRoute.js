@@ -4,12 +4,14 @@ import {
     Redirect,
 } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { withCurrentUser } from '../queries/user';
 
-const PrivateRoute = ({state, token, component: Component, ...rest }) => {
+const PrivateRoute = ({state, currentUser:{token}, component: Component, ...rest }) => {
     return <Route {...rest} render={props => (
         token !== '' ? (
             <Component {...props}/>
         ) : (
+        //<div>Redirect to login</div>
             <Redirect to={{
                 pathname: '/login',
                 state: {from: props.location}
@@ -18,15 +20,6 @@ const PrivateRoute = ({state, token, component: Component, ...rest }) => {
     )}/>
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        token: state.user.token
-    };
-};
+ 
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
+export default withCurrentUser(PrivateRoute);

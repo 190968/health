@@ -12,6 +12,7 @@ import {  Modal, Menu, Dropdown, Popover,Table, List,Icon,Button, Card, Tooltip,
 import moment from "moment/moment";
 import Motivators from '../../../../User/containers/motivatorsContainer';
 import TrackerInfo from '../components/Biometric/components/TrackerInfo';
+import { getCardHeaderDate } from '../../../../../components/Card/utils';
 
 export class BiometricPlanBody extends React.Component {
     constructor(props) {
@@ -197,14 +198,7 @@ export class BiometricPlanBody extends React.Component {
 
         return (
 
-            <Card title={<FormattedMessage id="plan.trackers.medication.card.title2" defaultMessage="Trackers for {date}" values={{
-                date: <FormattedDate
-                    value={moment(date)}
-                    year='numeric'
-                    month='long'
-                    day='2-digit'
-                />
-            }} description="Trackers for Today" />}
+            <Card title={getCardHeaderDate(moment(date), 'Trackers')}
 
                   extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                       <Button.Group style={{marginLeft:10}}>

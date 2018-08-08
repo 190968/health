@@ -28,6 +28,7 @@ import {createBrowserHistory} from 'history'
 import {LocaleProvider} from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
 import LoginForm from "../../routes/User/components/Login";
+import { CurrentUserInfoFragment } from '../../routes/User/fragments';
 
 var history = createBrowserHistory();
 // Adding Locale data
@@ -63,15 +64,8 @@ export const NETWORK_INFO_QUERY = gql`
                 label
             }
         },
-        account {
-            ...CurrenUserInfo
-            possibleNetworkRoles
-            possibleProviderRoles
-            currentRole
-            checkToken
-        }
+       
     }
-     ${LoginForm.fragments.user}
 `;
 
 const queryOptions = {
@@ -82,27 +76,27 @@ const queryOptions = {
 const language = "en";
 const messages = localeData[language] || localeData.en;
 class App extends React.Component {
-
-    static propTypes = {
-        store: PropTypes.object.isRequired,
-        //locale: 'en'
-    }
-
     // load network and token info
-    componentWillMount() {
-        //this.setState({loading:true})
-        apolloClient.query(queryOptions)
-            .then(({data: {network, account: {user, checkToken}}}) => {
-            //this.setState({loading:false})
-                if (checkToken) {
-                    this.props.store.dispatch(loadUser(user));
+    // componentWillMount() {
+    //     //this.setState({loading:true})
+    //     apolloClient.query(queryOptions)
+    //         .then(({data: {network, account: {user, currentToken}}}) => {
+    //         //this.setState({loading:false})
+    //         let {token, isExpired} = currentToken;
+    //         if (isExpired) {
+    //             token = '';
+    //         }
+    //         localStorage.setItem('token', token);
+    //             if (token) {
+    //                 this.props.store.dispatch(loadUser(user));
+                    
 
-                } else {
-                    this.props.store.dispatch(loadUserFAIL(user));
-                }
-                this.props.store.dispatch(loadNetwork(network));
-            })
-    }
+    //             } else {
+    //                 this.props.store.dispatch(loadUserFAIL(user));
+    //             }
+    //             this.props.store.dispatch(loadNetwork(network));
+    //         })
+    // }
 
     shouldComponentUpdate() {
         return false
@@ -116,7 +110,7 @@ class App extends React.Component {
                     <Provider store={this.props.store}>
                         <BrowserRouter history={history} basename={basename}>
                             <LocaleProvider locale={enUS}>
-                                <Core store={this.props.store}/>
+                                <Core store={this.props.store} useLoading/>
                             </LocaleProvider>
                         </BrowserRouter>
                     </Provider>
@@ -127,3 +121,5 @@ class App extends React.Component {
 }
 
 export default App;
+
+ 

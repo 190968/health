@@ -6,6 +6,8 @@ import moment from 'moment';
 import Plan from 'routes/Plan/components/Plan';
 import {MedicationsByType} from 'routes/Plan/components/MedicationPlan/components/Medication/components/fragments';
 import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
+import { withCurrentUser } from '../../../queries/user';
+import {defaultProps} from 'recompose';
 
 
 // Query for grabbing everything for the dashboard items
@@ -86,7 +88,7 @@ const DashLayoutWithQuery = graphql(
         },
         options: (ownProps) => ({
             variables: {
-                user_id:ownProps.user_id,
+                user_id:ownProps.currentUser.id,
                 date:ownProps.date,
                 status: 'active'
             },
@@ -95,28 +97,6 @@ const DashLayoutWithQuery = graphql(
     }
 )(DashLayout);
 
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
-
-const mapStateToProps = (state) => {
-    return {
-        date: moment().format('YYYY-MM-DD'),
-        user_id: state.user.info.id,
-        user: state.user
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-    return {
-        /*increment: (info) => {dispatch(increment(info))},
-        doubleAsync*/
-    }
-};
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DashLayoutWithQuery);
+export default defaultProps({
+    date: moment().format('YYYY-MM-DD'),
+})(withCurrentUser(DashLayoutWithQuery));

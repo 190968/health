@@ -2,15 +2,12 @@ import React from 'react'
 import Avatar from '../../../../routes/User/components/Avatar';
 
 
-export default class UserWidget extends React.PureComponent {
-    static defaultProps = {
-        onlyFirst: false
-    }
-    render() {
+export const UserWidget = props => {
+   
+    const {user, onlyFirst=false} = props;
+    const {firstName, fullName} = user;
 
-        const {user, onlyFirst} = this.props;
-        const {firstName, fullName} = user;
-
-        return (<span><Avatar info={user}/> <span style={{verticalAlign: 'middle'}}>{firstName}</span></span>);
-    }
+    return (<span><Avatar info={user}/> <span style={{verticalAlign: 'middle'}}>{firstName}</span></span>);
 }
+
+export default UserWidget;

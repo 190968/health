@@ -1,10 +1,11 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const CURRENT_NETWORK_QUERY = gql`
-    query GET_CURRENT_USER  {
-        account   {
-            network {
+
+
+export const CurrentNetworkInfoFragment = gql`
+       fragment CurrentNetworkInfo on Account {
+            currentNetwork {
                 id,
                 name,
                 description,
@@ -29,20 +30,32 @@ const CURRENT_NETWORK_QUERY = gql`
                 }
             }
         }
+`;
+
+
+const CURRENT_NETWORK_QUERY = gql`
+    query GET_CURRENT_USER  {
+        account   {
+            ...CurrentNetworkInfo
+        }
     }
+    ${CurrentNetworkInfoFragment}
 `;
 
 export const withCurrentNetwork = graphql(CURRENT_NETWORK_QUERY,
     {
         options: () => {
             return {
-                fetchPolicy: 'cache-only'
+                //fetchPolicy: 'cache-only'
             }
         },
-        props: ({ data }) => {
-            const {account={}} = data;
-            const {network} = account;
-            return {activeNetwork:network}
+        props: ({ownProps, data }) => {
+            const {loading:ownLoading} = ownProps;
+            const {account={}, loading=ownLoading} = data;
+            const {currentNetwork={}} = account;
+            
+            //console.log(network);
+            return {currentNetwork, loading}
         }
     }
 )

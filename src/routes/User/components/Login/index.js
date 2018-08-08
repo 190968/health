@@ -99,11 +99,14 @@ export class LoginForm extends React.Component {
 
     render() {
 
-        const token = this.props.token;
-        if (token !== '') {
-            return  <Redirect to={{
+        const {currentUser={}} = this.props;
+        const {token} = currentUser;
+        // const token = this.props.token;
+        if (token) {
+            //return <div>Redirect to dash</div>;
+            return <Redirect to={{
                 pathname: '/'
-            }} />;
+            }} />
         }
 
         const { getFieldDecorator } = this.props.form;

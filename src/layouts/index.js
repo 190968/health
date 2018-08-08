@@ -13,7 +13,8 @@ import {CustomizedLabelsProvider, ActiveUserProvider} from "../components/App/ap
 // import main layouts
 import ManagerLayout from './components/ManagerLayout';
 import PatientLayout from './components/PatientLayout';
-import { withCurrentUser } from '../queries/user';
+import { withCurrentUser, withCurrentUserAndNerwork } from '../queries/user';
+import { withCurrentNetwork } from '../queries/network';
 
 
 /**
@@ -22,6 +23,7 @@ import { withCurrentUser } from '../queries/user';
 const CoreByMode  = props => {
     const {currentUser={}} = props;
     const {currentRole=false} = currentUser;
+    console.log(props, 'Layout props');
     if (!currentRole || currentRole === 'patient') {
         return <PatientLayout {...props} />;
     } else {
@@ -30,7 +32,7 @@ const CoreByMode  = props => {
 }
 
 
-const CoreByModeWithQuery = withCurrentUser(CoreByMode);
+const CoreByModeWithQuery = (CoreByMode);
 
 
 class Core extends React.Component {
@@ -68,7 +70,8 @@ class Core extends React.Component {
 
     render() {
 
-        const {loading, user, labels={}} = this.props;
+        const {loading, currentUser:user={}} = this.props;
+        //console.log(loading);
         if (loading) {
             return (
                 <div style={{
@@ -80,8 +83,12 @@ class Core extends React.Component {
                 </div>
             );
         }
+        const {currentNetwork={}} = this.props;
+        const {labels={}} = currentNetwork;
 
-        if (user.info.id && !user.info.phoneConfirmed) {
+        const {id, phoneConfirmed=false} = user;
+
+        if (id && !phoneConfirmed) {
             return (
                 <VerifyPhone/>
             )
@@ -94,7 +101,7 @@ class Core extends React.Component {
                                              onOk={this._onActive} okText="Continue" cancelText="Logout">
                         You've been inactive. Would you like to continue or logout
                     </Modal> :
-                    ( user.info.id ?
+                    ( id ?
                         <IdleTimer
                             ref="idleTimer"
                             element={document}
@@ -113,27 +120,28 @@ class Core extends React.Component {
 }
 
 
-const mapStateToProps = (state) => {
-    let {labels=[]} = state.network;
-    let networkLabels = {};
-    labels.map(label => {
-        networkLabels[label['key']] = label['label'];
-        return null;
-    });
-    return {
-        loading: state.network.loading,
-        //token: state.user.token,
-        user: state.user,
-        labels: networkLabels,
-    }
-};
+// const mapStateToProps = (state) => {
+//     let {labels=[]} = state.network;
+//     let networkLabels = {};
+//     labels.map(label => {
+//         networkLabels[label['key']] = label['label'];
+//         return null;
+//     });
+//     return {
+//         loading: state.network.loading,
+//         //token: state.user.token,
+//         user: state.user,
+//         labels: networkLabels,
+//     }
+// };
 
 
-const mapDispatchToProps = () => {
+// const mapDispatchToProps = () => {
 
-    return {
-    }
-};
+//     return {
+//     }
+// };
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Core));
+
+export default withRouter(withCurrentUserAndNerwork(Core));

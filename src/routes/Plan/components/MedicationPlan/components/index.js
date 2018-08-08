@@ -15,6 +15,7 @@ import {
 } from 'react-intl';
 
 import { Menu, Dropdown, Popover, Table,Button, Icon, Modal, Divider, Card, Tooltip, Col } from 'antd';
+import { getCardHeaderDate } from '../../../../../components/Card/utils';
 
 export class MedicationPlanBody extends React.Component {
     constructor(props) {
@@ -100,17 +101,10 @@ export class MedicationPlanBody extends React.Component {
 
         const {info,  loading, user_id} = this.props;
         const {date} = this.state;
-
+        console.log(date);
         if (loading) {
             return (
-                <Card loading title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
-                    date: <FormattedDate
-                        value={moment(date)}
-                        year='numeric'
-                        month='long'
-                        day='2-digit'
-                    />
-                }} description="Medications for Today" />}>
+                <Card loading title={getCardHeaderDate(moment(date), 'Medications')}>
                 Loading
                 </Card>
             );
@@ -259,16 +253,18 @@ export class MedicationPlanBody extends React.Component {
                 <Menu.Item disabled key="print">Print</Menu.Item>
             </Menu>
         );
-
         return (
-                <Card title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
-                    date: <FormattedDate
-                        value={moment(date)}
-                        year='numeric'
-                        month='long'
-                        day='2-digit'
-                    />
-                }} description="Medications for Today" />}
+                <Card 
+                // title={<FormattedMessage id="plan.medicationpan.medication.card.title2" defaultMessage="Medications for {date}" values={{
+                //     date: <FormattedDate
+                //         value={moment(date)}
+                //         year='numeric'
+                //         month='long'
+                //         day='2-digit'
+                //     />
+                // }} description="Medications for Today" />}
+                title={getCardHeaderDate(moment(date), 'Medications')}
+
                       extra={<div><Button.Group><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}><Button size="small" onClick={() => this.showDate('prev')}><Icon type="left" /></Button></Tooltip><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Button size="small" onClick={() => this.showDate('next')}><Icon type="right" /></Button></Tooltip></Button.Group>
                           <Button.Group style={{marginLeft:10}}>
                               {/*<Tooltip title="Summary"><Button size="small" onClick={this.toggleSummary}><Icon type="area-chart"  /></Button></Tooltip>*/}

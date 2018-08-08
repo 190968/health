@@ -6,7 +6,7 @@ import './index.less';
 
 const FormItem = Form.Item;
 
-const formItemLayout = {
+const formItemLayoutDefault = {
     labelCol: {span: 4},
     wrapperCol: {span: 20},
 };
@@ -87,8 +87,8 @@ const OptionsList = SortableContainer(({keys=[], options=[], form, remove,  minO
 });
 
 const OptionsPure = (props) => {
-    const {required=true} = props;
-    //console.log(props);
+    const {required=true, formItemLayout=formItemLayoutDefault} = props;
+    console.log(props);
         return <React.Fragment>
             <FormItem
                 //optionsErrors

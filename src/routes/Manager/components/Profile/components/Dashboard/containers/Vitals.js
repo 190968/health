@@ -30,7 +30,6 @@ const withQuery = graphql(
         }),
         props: ({data}) => {
             if (!data.loading) {
-                console.log(data);
                 return {
                     vitals: data.patient.getVitals,
                     loading: data.loading,

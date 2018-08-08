@@ -31,10 +31,6 @@ const mapStateToProps = (state) => {
 
 
     return {
-        // view store:
-        //currentView:  state.views.currentView,
-        // userAuth:
-       // token: state.user.token
     };
 };
 const mapDispatchToProps = (dispatch, ownProps) => ({

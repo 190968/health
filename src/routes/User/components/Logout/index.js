@@ -8,7 +8,16 @@ class NormalLogoutForm extends React.Component{
     }
 
     render(){
-        console.log(111);
+
+        const {currentUser={}} = this.props;
+        const {token} = currentUser;
+        // const token = this.props.token;
+        // if (!token) {
+        //     //return <div>Redirect to dash</div>;
+        //     return <Redirect to={{
+        //         pathname: '/'
+        //     }} />
+        // }
         this.props.logout();
 
         /*
@@ -25,7 +34,7 @@ class NormalLogoutForm extends React.Component{
 
 
       //return ('')
-
+        return null;
         return(
             <Redirect to={{pathname: '/'}} />
         )

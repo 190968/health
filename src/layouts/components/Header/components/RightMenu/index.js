@@ -55,10 +55,9 @@ export default class RightMenu extends React.Component {
 
     render() {
 
-        const {account, user} = this.props;
-
+        const {currentUser={}} = this.props;
         // check if we have other roles - add switcher
-        const {possibleNetworkRoles, possibleProviderRoles, currentRole} = account;
+        const {possibleNetworkRoles=[], possibleProviderRoles=[], currentRole} = currentUser;
         const haveOtherRoles = possibleNetworkRoles.length > 1 || possibleProviderRoles.length > 1;
         const roles = possibleNetworkRoles;
         let user_menu_items = [];
@@ -90,9 +89,10 @@ export default class RightMenu extends React.Component {
                         mode="horizontal"
                         style={{'borderBottom':'none', 'float':'right'}}
                     >
-                        <SubMenu key="sub1" title={<UserWidget user={user} onlyFirst={true} />}>
+                        <SubMenu key="sub1" title={<UserWidget user={currentUser} onlyFirst={true} />}>
 
                             {user_menu_items.map((item) => {
+                                //console.log(item);
                                 if (item.length === 1) {
                                     return (<Menu.Divider key={'div'} />)
                                 }

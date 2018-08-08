@@ -8,8 +8,8 @@ import moment from 'moment';
 import {withModal} from "../../../../../../../../../../components/Modal/index";
 
 const formItemLayoutDefault = {
-    labelCol: {span: 5},
-    wrapperCol: {span: 19},
+    labelCol: {span: 4},
+    wrapperCol: {span: 20},
 };
 const formTailLayout = {
     labelCol: {span: 6},
@@ -61,7 +61,7 @@ export const modalHOCPure = (WrappedComponent) => {
         }
 
         onCancel = () => {
-            console.log('onCancel');
+            //console.log('onCancel');
             if (this.props.onHide) {
                 this.props.onHide();
             } else {
@@ -69,12 +69,12 @@ export const modalHOCPure = (WrappedComponent) => {
             }
         }
         render() {
-            console.log(this.props);
+            //console.log(this.props);
             //console.log(this.state);
-            const {modalVisible=true,loading=false, type='', intl, form, showNotes=true, useTimeline=true, formItemLayout=formItemLayoutDefault, pathway={}} = this.props;
+            const {modalVisible=true,loading=false, type='', intl, form, showNotes=true, useTimeline=true, pathway={}} = this.props;
             //let {id, details} = this.props;
             const {getFieldDecorator} = form;
-
+            const formItemLayout = formItemLayoutDefault;
 
 
             // Wraps the input component in a container, without mutating it. Good!
@@ -85,7 +85,7 @@ export const modalHOCPure = (WrappedComponent) => {
             return (
 
                         <React.Fragment>
-                            <WrappedComponent {...this.props} />
+                            <WrappedComponent {...this.props} formItemLayout={formItemLayout} />
 
                             {useTimeline && <React.Fragment>
 

@@ -154,10 +154,10 @@ export const prepareAttachmentsForForm = (attachments, single) => {
     return existedAttachments;
 }
 
-export const formatFileName = item => {
+export const formatFileName = (item, {showSize=true}) => {
     const {filename='', filesize=0} = item;
 
-    return filename +' '+formatBytes(filesize, 2);
+    return filename +(showSize ? ' '+formatBytes(filesize, 2) : '');
 }
 export const getIconByFileType = ({type, label='', asString=false}) => {
     let icon = '';

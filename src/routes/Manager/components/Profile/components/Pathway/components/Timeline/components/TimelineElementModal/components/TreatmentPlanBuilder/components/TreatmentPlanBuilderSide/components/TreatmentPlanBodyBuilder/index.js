@@ -61,7 +61,7 @@ const DroppableTPBuilderPure = (props) => {
 		</Row>
         <div style={{ textAlign: 'right', marginTop: 10 }}>
 						<Button type="primary" onClick={props.doPublish}>
-							Almost done
+							Next
 						</Button>
 					</div>
                     </div>

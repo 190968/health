@@ -105,7 +105,7 @@ const Profile = props => {
             payer = {}} = getInsurance;
         const {name:payerName=''} = payer;
 
-        const {code={}} = getDiagnosis;
+        const {code={}} = getDiagnosis || {};
         const {name:DiagnosisName} = code;
 
         const descriptionDetails = [

@@ -30,7 +30,7 @@ export class DashUserLayout extends React.Component {
     }
     render () {
         const {
-           loading, date, user_id, user
+           loading, date, currentUser
         } = this.props;
 
 
@@ -55,15 +55,15 @@ export class DashUserLayout extends React.Component {
                    />
                </Col>
                <Col xs={24} md={14} lg={15} xl={17}>
-                   <PlansList ready={!loading} date={date} user_id={user_id} list />
-                   <MedicationPlan ready={!loading} date={date} user_id={user_id} />
-                   <Assessments ready={!loading} date={date} user={user} />
-                   <BiometricPlan ready={!loading} date={date} user_id={user_id} />
+                   <PlansList ready={!loading} date={date} user_id={currentUser.id} list />
+                   <MedicationPlan ready={!loading} date={date} user_id={currentUser.id} />
+                   <Assessments ready={!loading} date={date} user={currentUser} />
+                   <BiometricPlan ready={!loading} date={date} user_id={currentUser.id} />
                </Col>
                <Col xs={24} md={10} lg={9} xl={7}>
-                   <TodoList ready={!loading} userId={user_id} date={date} />
+                   <TodoList ready={!loading} userId={currentUser.id} date={date} />
 
-                   <CalendarWidget ready={!loading} date={date} user_id={user_id} />
+                   <CalendarWidget ready={!loading} date={date} user_id={currentUser.id} />
 
                </Col>
            </Row>

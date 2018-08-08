@@ -1,19 +1,18 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { UserInfoFragment } from '../routes/User/fragments';
+import { CurrentUserInfoFragment } from '../routes/User/fragments';
+import { CurrentNetworkInfoFragment } from './network';
 
-const CurrentUserQUERY = gql`
+export const CurrentUserQUERY = gql`
     query GET_CURRENT_USER  {
         account   {
-            user {
-                ...UserInfo
-            }
-            currentRole
-            token
+            ...CurrentUserInfo
         }
     }
-    ${UserInfoFragment}
+    ${CurrentUserInfoFragment}
 `;
+
+
 
 export const withCurrentUser = graphql(CurrentUserQUERY,
     {
@@ -22,10 +21,47 @@ export const withCurrentUser = graphql(CurrentUserQUERY,
                 //fetchPolicy: 'cache-only'
             }
         },
-        props: ({ data }) => {
-            const {account={}} = data;
-            const {user, currentRole, token} = account;
-            return {currentUser:{...user, currentRole, token}};
+        props: ({ ownProps, data }) => {
+            const {loading:ownLoading} = ownProps;
+            const {account={}, loading=ownLoading} = data;
+            const {user, currentRole, currentToken={}, ...otherProps} = account;
+            let {token, isExpired=true} = currentToken;
+            //console.log(currentToken);
+            if (isExpired) {
+                token = '';
+            }
+            return {currentUser:{...user, currentRole, token, ...otherProps}, loading};
+        }
+    }
+)
+
+export const CurrentUserNetworkQUERY = gql`
+query GET_CURRENT_USER_NETWORK  {
+    account   {
+        ...CurrentUserInfo
+        ...CurrentNetworkInfo
+    }
+}
+${CurrentUserInfoFragment}
+${CurrentNetworkInfoFragment}
+`;
+
+export const withCurrentUserAndNerwork = graphql(CurrentUserNetworkQUERY,
+    {
+        options: () => {
+            return {
+                //fetchPolicy: 'cache-only'
+            }
+        },
+        props: ({ ownProps, data }) => {
+            const {account={}, loading} = data;
+            const {user, currentRole, currentToken={}, currentNetwork, ...otherProps} = account;
+            let {token, isExpired=true} = currentToken;
+            console.log(isExpired);
+            if (isExpired) {
+                token = '';
+            }
+            return {currentNetwork, currentUser:{...user, currentRole, token, ...otherProps}, loading};
         }
     }
 )

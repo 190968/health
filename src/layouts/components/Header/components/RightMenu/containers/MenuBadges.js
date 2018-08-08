@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 export const NOTIFICATIONS_POOL_QUERY  = gql`
    query NOTIFICATIONS_POOL ($cursors: CursorInput!) {
       account {
-        token
+        currentRole
         user {
           id
           notifications (cursors:$cursors, unread:true) @connection(key: "notificationPool") {
@@ -20,7 +20,10 @@ export const NOTIFICATIONS_POOL_QUERY  = gql`
       }
     }
 `;
-
+// currentToken {
+//     token
+//     isExpired
+// }
 const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
     options: (ownProps) => {
 
@@ -40,28 +43,15 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
         const lastCursor = !data.loading && data.account.user.notifications.pageInfo.endCursor !== '' ?  data.account.user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
         const totalCount = !data.loading && data.account.user.notifications.totalCount;
         const unreadMessages = data.account && data.account.unreadMessages;
-        const token = data.account && data.account.token;
+        const {currentToken={}} = data;
+        let {token, isExpired} = currentToken;
+        if (isExpired) {
+            token = '';
+        }
 
-        return {loading: data.loading, token:token, unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}
+        return {loading: data.loading, /*token:token,*/ unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}
 
     },
 });
 
-
-
-
-const mapStateToProps = (state) => {
-    return {
-        //messages: state.user.info.unreadMessages,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-};
-
-export default  connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withQuery(MenuBadges));
+export default withQuery(MenuBadges);

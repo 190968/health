@@ -10,7 +10,7 @@ export default class PlanMedia extends React.PureComponent {
     };
 
     render() {
-        const {item} = this.props;
+        const {item, showSize=true} = this.props;
         const {label, mediaType:type, url, embedHtml} = item;
         switch(type) {
             case 'image':
