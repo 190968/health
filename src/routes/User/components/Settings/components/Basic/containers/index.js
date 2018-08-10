@@ -9,6 +9,9 @@ import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {loadFullUser} from "../../../../../modules/user";
 import { message } from 'antd';
+import { UserInfoFragment } from '../../../../../fragments';
+import { withCurrentUser } from '../../../../../../../queries/user';
+import { withLoadingButton } from '../../../../../../../components/Loading';
 //import { compose } from 'react-apollo';
 
 const settingUser = gql`
@@ -16,8 +19,8 @@ const settingUser = gql`
     account
     {
       user {
+          ...UserInfo
           possibleTitles
-          id,
           title,
           firstName,
           middleName,
@@ -65,11 +68,12 @@ const settingUser = gql`
     }
     
 }
+${UserInfoFragment}
 `;
 const settingUserMutate = gql`
  mutation settingUser($input:UserInput!){
         updateUser(input:$input) {
-          id,
+            ...UserInfo
           title,
           firstName,
           middleName,
@@ -92,6 +96,7 @@ const settingUserMutate = gql`
           email
         }
     }
+    ${UserInfoFragment}
 `;
 
 const withQuery = graphql(settingUser,
@@ -115,8 +120,27 @@ const withQuery = graphql(settingUser,
 )(SettingForm);
 
 const withMutation = graphql(settingUserMutate, {
-    props: ({mutate}) => ({
-        updateInfo: input => {
+    props: ({ownProps, mutate}) => ({
+        updateInfo: (values) => {
+            const {title,firstName, lastName, middleName, birthday, phone, gender, email, timezone, address, language, dateFormat} = values;
+
+            const input = {
+                title,
+                firstName,
+                lastName,
+                middleName,
+                birthday:birthday.format("YYYY-MM-DD"),
+                phone,
+                gender,
+                email,
+                timezone,
+                address,
+                language,
+                dateFormat
+    
+            };
+
+            ownProps.setLoadingButton(true);
             return mutate({
                 variables: {input},
             })
@@ -124,59 +148,4 @@ const withMutation = graphql(settingUserMutate, {
     }),
 });
 
-
-const mapStateToProps = (state) => {
-
-    return {
-        dateFormat:state.user.info.dateFormat
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (values, stopLoading) => {
-
-
-        const {title,firstName, lastName, middleName, birthday, phone, gender, email, timezone, address, language, dateFormat} = values;
-
-        const input = {
-            title,
-            firstName,
-            lastName,
-            middleName,
-            birthday:birthday.format("YYYY-MM-DD"),
-            phone,
-            gender,
-            email,
-            timezone,
-            address,
-            language,
-            dateFormat
-
-        };
-        return ownProps.updateInfo(input).then(({data}) => {
-
-
-            message.success('Updated');
-            stopLoading();
-            dispatch(loadFullUser(data.updateUser));
-        })
-
-        /*
-
-        ownProps.settingUserMutate({user:{first_name:first_name,last_name:last_name,birthday:birthday,gender:gender, email:email, password:password,phone:[prefix,phone] }})
-            .then(({data}) => {
-
-            }).catch((error) => {
-
-        });*/
-    },
-});
-
-//export  withMutation(connect(mapStateToProps, mapDispatchToProps)(SettingForm));
-//export default compose(
-//  connect(mapStateToProps, mapDispatchToProps),withMutation,withQuery)((SettingForm));
-
-export default withMutation(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withQuery));
+export default withLoadingButton(withCurrentUser(withMutation(withQuery)));

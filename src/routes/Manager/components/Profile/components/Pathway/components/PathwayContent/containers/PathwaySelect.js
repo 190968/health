@@ -50,7 +50,7 @@ const withMutation = graphql(JoinPathwayMutation, {
     props: ({ ownProps, mutate }) => ({
         joinPathway: (id) => {
             return mutate({
-                variables: { userId: ownProps.userId, id: id}
+                variables: { userId: ownProps.user.id, id: id}
             })
         },
 

@@ -23,14 +23,14 @@ export const PatientsTable = props => {
         return <div></div>
     }
 
-    testColumns.push({
-        title: "Name",
-        dataIndex: 'fullName',
-        key: 'fullName',
-        render: (title, info) => {
-            return <Link to={'/u/' + info.id}>{title}</Link>;
-        },
-    });
+    // testColumns.push({
+    //     title: "Name",
+    //     dataIndex: 'fullName',
+    //     key: 'fullName',
+    //     render: (title, info) => {
+    //         return <Link to={'/u/' + info.id}>{title}</Link>;
+    //     },
+    // });
     getPatientsTable.fields.map((data) => {
         testColumns.push({
             title: data.label,

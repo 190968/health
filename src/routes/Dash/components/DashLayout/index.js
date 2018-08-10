@@ -4,7 +4,7 @@ import ManagerDash from '../../containers/DashManagerLayout'
 
 
 
-const  DashLayout  = props => {
+const DashLayout  = props => {
     const {currentUser={}} = props;
     const {currentRole} = currentUser;
     console.log(props, 'Dash props');

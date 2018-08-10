@@ -65,20 +65,20 @@ export class PlansList extends React.Component {
                     pagination={false}
                     dataSource={plans}
                     grid={{ gutter: 16, xs: 1, sm: 2, md: 3 }}
-                    renderItem={product => {
+                    renderItem={(product, i) => {
                         let description = [];
                         const {startDate, endsIn} = product;
                         if (startDate) {
-                            description.push(<React.Fragment>
+                            description.push(<React.Fragment key={'startDate'}>
                                 <Tooltip title={'Started on'}><Icon type="calendar" /></Tooltip> {moment(startDate).format('L')}
                             </React.Fragment>);
                         }
                         if (endsIn) {
-                            description.push(<React.Fragment>
+                            description.push(<React.Fragment key={'endsIn'}>
                                 <span style={{float:'right'}}><Tooltip title={'Ends In'}><Icon type="schedule" /></Tooltip> {endsIn} days</span>
                             </React.Fragment>);
                         }
-                        return  <List.Item>
+                        return  <List.Item key={i}>
                         <Link to={'/plan/'+product.id}>
                         <Card 
                         type={'ap'}

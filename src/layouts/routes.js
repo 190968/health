@@ -31,7 +31,7 @@ export const BasicRoutes = ({store}) => {
         <React.Fragment>
             <PrivateRoute exact path="/" component={asyncDash(store)}/>
             <Route exact path="/login" component={asyncLogin(store)}/>
-            <Route exact path="/logout" component={asyncLogout(store)}/>
+            <Route exact path="/logout" component={asyncLogout()}/>
             <Route exact path="/register/:code?" component={asyncRegister(store)}/>
             <Route exact path="/password/reset" component={asyncForgotPassword(store)}/>
             <PrivateRoute path="/settings" component={asyncSettings(store)}/>

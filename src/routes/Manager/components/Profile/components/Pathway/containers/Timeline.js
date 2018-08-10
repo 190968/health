@@ -22,7 +22,7 @@ const withQuery = graphql(GET_TIMELINE_QUERY, {
     options: (ownProps) => {
         return {
             variables: {
-                userId:ownProps.userId,
+                userId:ownProps.user.id,
                 filters:ownProps.filters,
                 //cursors: {after: ''}
             },

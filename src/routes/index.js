@@ -58,7 +58,7 @@ export const asyncRegister = (store) => {
     );
 }
 
-export const asyncLogout = (store) => {
+export const asyncLogout = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "logoutChunk" */'../routes/User/containers/logoutContainer'),
@@ -68,7 +68,7 @@ export const asyncLogout = (store) => {
                 'url': 'User/modules/logout',
                 'key': 'user_logout'
             }
-        }, store)
+        })
     );
 }
 

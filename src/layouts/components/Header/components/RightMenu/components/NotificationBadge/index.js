@@ -15,7 +15,8 @@ const TabPane = Tabs.TabPane;
 
         this.state = {
             visible: false,
-            totalNewNotifications:props.totalNewNotifications
+            totalNewNotifications:props.totalNewNotifications,
+            newNotificationsNum:props.newNotificationsNum
         };
     }
     static defaultProps = {
@@ -66,10 +67,14 @@ const TabPane = Tabs.TabPane;
     }
     render() {
         const unreadNotifications = this.state.totalNewNotifications;
+        const newNotificationsNum = this.props.newNotificationsNum;
+        //console.log(newNotificationsNum);
 
         const content = (
             <Tabs defaultActiveKey="1" style={{width: 336}} tabPosition="top">
-                <TabPane tab="Notifications" key="1"><Notification lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications} /></TabPane>
+                <TabPane tab="Notifications" key="1">
+                    <Notification lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications} />
+                </TabPane>
                 {/*<TabPane tab="Tasks" key="2"><div className="ant-list-empty-text">No tasks</div></TabPane>*/}
             </Tabs>
         );
@@ -79,7 +84,7 @@ const TabPane = Tabs.TabPane;
                      visible={this.state.visible}
                      onVisibleChange={this.handleVisibleChange}
                      trigger="click" style={{width: 336}}>
-                 <Badge count={unreadNotifications} overflowCount={999}><Icon type="bell" /></Badge>
+                 <Badge count={newNotificationsNum} overflowCount={999}><Icon type="bell" /></Badge>
             </Popover>
         );
     }

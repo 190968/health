@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom';
 import ReactPlaceholder from 'react-placeholder';
 import RightMenu from './containers/RightMenu';
-import { Row, Col, Menu} from 'antd';
+import { Row, Col, Menu, Card} from 'antd';
 import {GetGlobalLabel} from "../../../components/App/app-context";
 import { withCurrentUser } from '../../../queries/user';
-import { withCurrentNetwork} from '../../../queries/network';
+import { withCurrentNetwork } from '../../../queries/network';
 
 
 
-class LHeader extends React.Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
 
@@ -34,7 +34,6 @@ class LHeader extends React.Component {
     }
     render() {
         const loading = this.props.loading;
-        console.log(this.props);
         const {currentUser={}} = this.props;
         const {token} = currentUser;
         const location = this.props.location;
@@ -52,7 +51,7 @@ class LHeader extends React.Component {
                 /*<HaveModule module={item[2]}>*/
 
                 return (
-                    <Menu.Item as={NavLink} to={item[1]} key={item[1]}>
+                    <Menu.Item  key={item[1]}>
                         <NavLink to={item[1]}><GetGlobalLabel type={item[2]} defaultValue={item[0]} /></NavLink>
                     </Menu.Item>
                 )
@@ -68,7 +67,10 @@ class LHeader extends React.Component {
         const locationPath = '/'+location.pathname.split('/')[1];
 
 //{/*customPlaceholder={HeaderPlaceholder}*/}
-
+    console.log(this.props, 'Loading header');
+    if (loading) {
+        return <Card loading  bordered={false} />
+    }
         if (!token) {
             return (
                 <div style={{'textAlign':'center'}}>
@@ -77,8 +79,6 @@ class LHeader extends React.Component {
             )
         }
         return (
-            <ReactPlaceholder ready={!loading} rows={3} >
-
                 <Row type="flex" justify="space-between" align="middle">
                     <Col md={5}><Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={network.logo} /></Link></Col>
                     <Col>
@@ -97,30 +97,10 @@ class LHeader extends React.Component {
                     </Col>
 
                 </Row>
-            </ReactPlaceholder>
         );
     }
 }
 
+ 
 
-// const mapStateToProps = (state) => {
-
-//     return {
-//         // view store:
-//         //currentView:  state.views.currentView,
-//         // userAuth:
-//         //messages:    state.user.info.unreadMessages,
-//         //notifications:    state.user.info.unreadNotifications,
-//         network:    state.network,
-//         //loading: state.user.loading,
-//         //user: state.user.info,
-//         //token: state.user.token
-//     };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//     }
-// };
-
-export default  withCurrentNetwork(withCurrentUser(LHeader));
+ export default  withCurrentUser(withCurrentNetwork(Header));

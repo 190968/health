@@ -8,7 +8,7 @@ class NormalLogoutForm extends React.Component{
     }
 
     render(){
-
+        console.log(this.props);
         const {currentUser={}} = this.props;
         const {token} = currentUser;
         // const token = this.props.token;

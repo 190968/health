@@ -1,11 +1,8 @@
-/**
- * Created by Pavel on 06.12.2017.
- */
 import React from 'react';
 import AddressForm from '../../../../../../../components/AddressForm';
 import PhoneForm from '../../../../../../../components/PhoneForm';
-
-import { Card, Input,Col,Select,Form, DatePicker,Button, } from 'antd';
+import {compose, withState, withHandlers} from 'recompose';
+import { Card, Input,Col,Select,Form, DatePicker,Button, message } from 'antd';
 import { withApollo } from 'react-apollo'
 import {
     injectIntl
@@ -13,6 +10,7 @@ import {
 import moment from 'moment';
 import ru from './i18n/ru';
 import en from './i18n/en';
+import { DateField } from '../../../../../../../components/FormCustomFields';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -49,65 +47,33 @@ const tailFormItemLayout = {
 // });
 
 
- class SettingForm extends React.Component{
-
-    constructor(props){
-        super(props);
-
-        this.state = {displayedFamily: props};
-        this.stopLoading = this.stopLoading.bind(this);
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { onSubmit } = this.props;
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.setState({loading:true});
-                return onSubmit(values, this.stopLoading);
-            }
-        });
-    }
-     stopLoading() {
-         this.setState({ loading: false });
-     }
-
-     disabledDate = (current) => {
-         // Can not select future
-         return current && current > moment().endOf('day');
-
-     }
-
-
-    render(){
-
-        // settingsPlaceholder.push(  {
-        //     item:
-        //
-        // })
-        if (this.props.loading) {
+ const BasicSettingsForm  = props => {
+        const {loading, loadingButton=false} = props;
+        console.log(props);
+        console.log(loadingButton);
+        if (loading) {
             return (
                 <Card loading bordered={false}> Loading...
                 </Card>
             );
         }
 
-        const {dateFormat, countries, states, account, languages, timezones,} = this.props;
+        const {countries, states, account, languages, timezones} = props;
         const {user} = account;
         const phone = user.phone;
 
 
 
 
-        const { intl,form } = this.props;
-        const { getFieldDecorator } = this.props.form;
+        const { intl,form } = props;
+        const { getFieldDecorator } = form;
         const phoneNumberError = form.getFieldError('phone[number]');
 
 
 
         return(
 
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={props.handleSubmit}>
             <FormItem
                 {...formItemLayout}
                 label={intl.messages.user_basic_title}
@@ -168,7 +134,7 @@ const tailFormItemLayout = {
                         required: true, message:intl.messages.user_birthday_rule,
                     }],
                 })(
-                    <DatePicker format={dateFormat} allowClear={false} disabledDate={this.disabledDate} />
+                    <DateField allowClear={false} />
                 )}
             </FormItem>
 
@@ -261,16 +227,35 @@ const tailFormItemLayout = {
             </FormItem>
 
             <FormItem {...tailFormItemLayout}>
-                <Button loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
+                <Button loading={loadingButton} type="primary" htmlType="submit" className="register-form-button">
                     {intl.messages.user_submit}
                 </Button>
             </FormItem>
         </Form>
 
               );
-    }
 
 }
 
-const WrappedSettingForm = Form.create()(SettingForm);
-export default withApollo(injectIntl(WrappedSettingForm));
+const enhance = compose(
+    //withState(),
+    injectIntl,
+    Form.create(),
+    withHandlers({
+        handleSubmit: props => (e) => {
+            e.preventDefault();
+            props.form.validateFields((err, values) => {
+                if (!err) {
+                    props.updateInfo(values).then(({data}) => {
+
+                        message.success('Updated');
+                        props.setLoadingButton(false);
+                        props.updateCurrentUserInfo(data.updateUser);
+                        //dispatch(loadFullUser(data.updateUser));
+                    })
+                }
+            });
+        }
+    })
+);
+export default enhance(BasicSettingsForm);

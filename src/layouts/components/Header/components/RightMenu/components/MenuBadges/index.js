@@ -41,7 +41,6 @@ class RightMenu extends React.Component {
 
     render() {
         const {unreadMessages, loading, lastNotificationCursor, newCursor, newNotificationsNum} = this.props;
-
         // first call - lastNotification - empty, but lastCursor has value. It means that we can load the notifications
         const loadNew = !loading && lastNotificationCursor !== newCursor;
         return (

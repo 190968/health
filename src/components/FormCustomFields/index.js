@@ -11,6 +11,8 @@ import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from "moment/moment";
 import {connect} from "react-redux";
+import { withCurrentUser } from '../../queries/user';
+import { ActiveUserContext } from '../App/app-context';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
@@ -199,16 +201,6 @@ export class StartEndFormInit extends React.Component{
     }
 }
 
-
-const mapStateToProps = (state) => {
-    return {
-        dateFormat: state.user.info.dateFormat
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-});
-
 export const StartEndForm = injectIntl(StartEndFormInit);
 
 
@@ -288,24 +280,30 @@ class DateFieldInit extends React.Component{
 
     render(){
 
-        const {disabledDate, placeholder, dateFormat, allowClear } = this.props;
+        const {disabledDate, placeholder, currentUser, allowClear } = this.props;
+        const {dateFormat} = currentUser || {};
         //console.log(this.state);
-        return <DatePicker
-             placeholder={placeholder}
-             format={dateFormat}
-             disabledDate={disabledDate}
-             allowClear={allowClear}
-             onChange={this.onChange}
-             value={this.state.date}
-         />
+        return <ActiveUserContext.Consumer>
+        {context => {
+            const {user={},setUser, updateUserInfo} = context || {}
+            return <DatePicker
+                placeholder={placeholder}
+                format={user.dateFormat}
+                disabledDate={disabledDate}
+                allowClear={allowClear}
+                onChange={this.onChange}
+                value={this.state.date}
+            />
+        }}
+    </ActiveUserContext.Consumer>
+        
+        
+        
     }
 }
 
 
-export const DateField = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(DateFieldInit);
+export const DateField = (DateFieldInit);
 
 
 export const TimeFieldPure = props => {

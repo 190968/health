@@ -1,80 +1,71 @@
-/**
- * Created by Pavel on 08.12.2017.
- */
+
 import React from 'react';
 import {Button} from 'antd';
 import Avatar from '../../../../../components/Avatar';
 import './index.less';
-
+import {compose, withState, withHandlers} from 'recompose';
 import UploadImage from './uploadImage';
 
-class PictureForm extends React.Component{
+const  ChangePictureFormPure = props => {
 
-    state = {
-        modalOpen: false,
-        avatar:''
-    }
+    // // state = {
+    // //     modalOpen: false,
+    // //     avatar:''
+    // // }
 
-    /**
-     * Submit the password form
-     * @param e
-     */
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { onSubmit } = this.props;
+    // /**
+    //  * Submit the password form
+    //  * @param e
+    //  */
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     const { onSubmit } = this.props;
 
-    }
+    // }
 
-    onComplete = (results) => {
-        console.log(results);
-        const {original, thumb25, thumb40, thumb80, thumb150} = results;
-        this.props.updatePicture({original:original,large:thumb150, medium:thumb80, small:thumb25});
-        this.setState({avatar:thumb150 });
-        this.handleClose();
+    
 
-    }
+    // // componentWillReceiveProps(nextProps) {
 
-    componentWillReceiveProps(nextProps) {
+    // //     if (!nextProps.loading) {
+    // //         const {thumbs={large:''}} = nextProps;
+    // //         const {large} = thumbs;
 
-        if (!nextProps.loading) {
-            const {thumbs={large:''}} = nextProps;
-            const {large} = thumbs;
-
-            this.setState({avatar:large});
-        }
-    }
+    // //         this.setState({avatar:large});
+    // //     }
+    // // }
 
 
 
-
-    handleOpen = () => {
-        this.setState({
-            modalOpen: true
-        })
-    }
-
-    handleClose = () => {
-        this.setState({
-            modalOpen: false
-        })
-    }
-
-    render(){
-
-
-        const {letter = ''} = this.props;
+  
+        const {avatar, letter = '', modalOpen, toggleModal, onComplete} = props;
         return(
 
             <center>
-                <Avatar size="huge"  src={this.state.avatar}>{letter}</Avatar>
-                <div style={{marginTop:5}}>  <Button onClick={this.handleOpen}>Change avatar</Button>
-                    {this.state.modalOpen && <UploadImage template='userpic' onComplete={this.onComplete} simpleResult />}
+                <Avatar size="huge"  src={avatar}>{letter}</Avatar>
+                <div style={{marginTop:5}}>  <Button onClick={toggleModal}>Change avatar</Button>
+                    {modalOpen && <UploadImage template='userpic' onComplete={onComplete} simpleResult />}
                 </div>
             </center>
 
         );
-    }
-
 }
 
-export default PictureForm;
+const enhance = compose(
+    withState('modalOpen', 'setModalOpen', false),
+    withState('avatar', 'setAvatar', props => props.currentUser.thumbs.large),
+    withHandlers({
+        toggleModal: props => () => {
+            props.setModalOpen(!props.modalOpen);
+             
+        },
+        onComplete: props => (results) => {
+            //console.log(results);
+            const {original, thumb25, thumb40, thumb80, thumb150} = results;
+            props.updatePicture({original:original,large:thumb150, medium:thumb80, small:thumb25});
+            props.setAvatar(thumb150);
+            props.setModalOpen(false)
+        }
+    })
+);
+export default enhance(ChangePictureFormPure);

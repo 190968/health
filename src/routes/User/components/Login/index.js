@@ -99,7 +99,7 @@ export class LoginForm extends React.Component {
 
     render() {
 
-        const {currentUser={}} = this.props;
+        const {currentUser={}, loadingButton=false} = this.props;
         const {token} = currentUser;
         // const token = this.props.token;
         if (token) {
@@ -122,7 +122,7 @@ export class LoginForm extends React.Component {
                                 //initialValue: this.state.email.value,
                                 rules: [{ required: true, message: 'Please enter Email'/*, pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/*/ }],
                             })(
-                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={<FormattedMessage id="user.login.email" defaultMessage="Email" description="Email" />} />
+                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={'Email'} />
                             )}
 
                         </FormItem>
@@ -132,12 +132,12 @@ export class LoginForm extends React.Component {
                                 /* Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.*/
                                 rules: [{ required: true,  message: 'Please enter Password' /*pattern: '^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$', message: 'Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.'*/ }],
                             })(
-                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={<FormattedMessage id="user.login.password" defaultMessage="Password" description="Password" />} />//{intl.formatMessage(messages.title)}
+                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={'Password'} />//{intl.formatMessage(messages.title)}
                             )}
                         </FormItem>
                         <FormItem>
 
-                            <Button type="primary" htmlType="submit"  loading={loading}  className="login-form-button" id="submitButton">
+                            <Button type="primary" htmlType="submit"  loading={loadingButton}  className="login-form-button" id="submitButton">
                                 Log in
                             </Button>
                             <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>

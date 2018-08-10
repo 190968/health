@@ -11,8 +11,6 @@ import {ApolloProvider} from 'react-apollo';
 import {Provider} from 'react-redux'
 import gql from 'graphql-tag';
 import Core from '../../layouts'
-import {loadNetwork} from 'routes/Network/modules/network'
-import {loadUser, loadUserFAIL} from '../../routes/User/modules/user'
 import {addLocaleData, IntlProvider} from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import ru from 'react-intl/locale-data/ru';
@@ -68,14 +66,14 @@ export const NETWORK_INFO_QUERY = gql`
     }
 `;
 
-const queryOptions = {
-    query: NETWORK_INFO_QUERY,
-    fetchPolicy: 'cache-first'
-}
+// const queryOptions = {
+//     query: NETWORK_INFO_QUERY,
+//     fetchPolicy: 'cache-first'
+// }
 
 const language = "en";
 const messages = localeData[language] || localeData.en;
-class App extends React.Component {
+const App = props => {
     // load network and token info
     // componentWillMount() {
     //     //this.setState({loading:true})
@@ -98,26 +96,25 @@ class App extends React.Component {
     //         })
     // }
 
-    shouldComponentUpdate() {
-        return false
-    }
+    // shouldComponentUpdate() {
+    //     return false
+    // }
 
-    render() {
         const basename = "/static/myapp";
+        console.log('App init');
         return (
             <ApolloProvider client={apolloClient}>
                 <IntlProvider locale={language} messages={messages}>
-                    <Provider store={this.props.store}>
+                    <Provider store={props.store}>
                         <BrowserRouter history={history} basename={basename}>
                             <LocaleProvider locale={enUS}>
-                                <Core store={this.props.store} useLoading/>
+                                <Core store={props.store} initialLoad />
                             </LocaleProvider>
                         </BrowserRouter>
                     </Provider>
                 </IntlProvider>
             </ApolloProvider>
         );
-    }
 }
 
 export default App;

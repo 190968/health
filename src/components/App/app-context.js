@@ -1,4 +1,5 @@
 import React from 'react';
+import { compose, withState, withHandlers } from 'recompose';
 
 export const CustomizedLabelsContext = React.createContext();
 export const NetworkContext = React.createContext();
@@ -6,20 +7,30 @@ export const NetworkContext = React.createContext();
 
 
 export const CustomizedLabelsProvider = (props) => {
-    /*const labels =  {
-            lessons: 'Regimens',
-            lesson: 'Regimen',
-            activities: 'Decisions',
-            activity: 'Decision',
-            planstore: 'Library',
-    };*/
-    const {labels} = props;
         return (
-            <CustomizedLabelsContext.Provider value={labels} >
+            <CustomizedLabelsContext.Provider value={props} >
                 {props.children}
             </CustomizedLabelsContext.Provider>
         );
 }
+
+export const withActiveNetwork = Component => {
+    const ActiveNetworkHOC = props => {
+        return (
+            <CustomizedLabelsContext.Consumer>
+                {(context) => {
+                    const {currentNetwork={}} = context || {};
+                    //console.log(context);
+                    return <Component
+                        {...props}
+                        currentNetwork={currentNetwork}
+                    />
+                }}
+            </CustomizedLabelsContext.Consumer>
+        );
+    }
+    return ActiveNetworkHOC;
+  }
 
 
 export const GetGlobalLabel = (props) => {
@@ -27,9 +38,9 @@ export const GetGlobalLabel = (props) => {
     const {defaultValue = type} = props;
     return (
         <CustomizedLabelsContext.Consumer>
-            {(context) => {
+            {({labels}) => {
                 //console.log(context);
-                return context && context[type] || defaultValue;
+                return labels && labels[type] || defaultValue;
             }}
         </CustomizedLabelsContext.Consumer>
     );
@@ -37,44 +48,76 @@ export const GetGlobalLabel = (props) => {
 
 
 
-export const ActiveUserContext = React.createContext();
+export const ActiveUserContext = React.createContext({
+    user: {},
+    updateUser: () => {},
+});
 
 
-export const ActiveUserProvider = (props) => {
-    const {user} = props;
+
+ const ActiveUserProviderPure = (props) => {
+    const {user, setUser, updateUserInfo} = props;
     //console.log(props, 'ActiveUserProvider');
     return (
-        <ActiveUserContext.Provider user={user} >
+        <ActiveUserContext.Provider value={{
+            setUser:setUser,
+            updateUserInfo:updateUserInfo,
+            user:user
+        }} >
             {props.children}
         </ActiveUserContext.Provider>
     );
 }
 
-export const GetActiveUser = props => {
-    return (
-        <ActiveUserContext.Consumer>
-            {(context) => {
-                return context.user;
-            }}
-        </ActiveUserContext.Consumer>
-    );
-}
+export const ActiveUserProvider = compose(
+    withState('user', 'setUserState', props => props.user),
+    withHandlers({
+        setUser: props => user => {
+            props.setUserState(user);
+        },
+        updateUserInfo: props => (fields) => {
+            const {user} = props;
+            console.log(fields);
+            console.log({...user, ...fields});
+            props.setUserState({...user, ...fields});
+        }
+    }),
+)(ActiveUserProviderPure);
 
- const withActiveUser = Component => {
+
+export const withActiveUser = Component => {
     const ActiveUserHOC = props => {
         return (
             <ActiveUserContext.Consumer>
                 {context => {
-                    console.log(context, 'activeUserContext');
-                    const {user={}} = context || {};
+                    const {user={},setUser, updateUserInfo} = context || {}
                     return <Component
                         {...props}
-                         activeUser={user}
+                         currentUser={user}
+                         updateCurrentUser={setUser}
+                         updateCurrentUserInfo={updateUserInfo}
                     />
                 }}
             </ActiveUserContext.Consumer>
         );
     }
     return ActiveUserHOC;
-}
+  }
 
+  export const withLogoutActiveUser = Component => {
+    const ActiveUserLogoutHOC = props => {
+        return (
+            <ActiveUserContext.Consumer>
+                {context => {
+                    const {setUser} = context || {}
+                    return <Component
+                        {...props}
+                        logoutUser={setUser}
+                    />
+                }}
+            </ActiveUserContext.Consumer>
+        );
+    }
+    return ActiveUserLogoutHOC;
+  }
+ 

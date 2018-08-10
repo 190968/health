@@ -54,7 +54,6 @@ export default class RightMenu extends React.Component {
     }
 
     render() {
-
         const {currentUser={}} = this.props;
         // check if we have other roles - add switcher
         const {possibleNetworkRoles=[], possibleProviderRoles=[], currentRole} = currentUser;
@@ -73,31 +72,35 @@ export default class RightMenu extends React.Component {
                 ['Health', '/health', 'health'],
                 ['Help Center', '/help', 'help'],
             ];
+        } else {
+            defaultMenu = [
+                ['Settings', '/settings'],
+                ['Calendar', '/calendar', 'calendar'],
+                ['Help Center', '/help', 'help'],
+            ];
         }
         user_menu_items = [...user_menu_items, ...defaultMenu];
 
         user_menu_items.push([1]);
         user_menu_items.push(['Logout', '/logout']);
 
-
         return (
             <Row type="flex" justify="end" align="middle">
                 <Col>
                     <Menu
                         /*onClick={this.handleClick}*/
-                        selectedKeys={['1']}
                         mode="horizontal"
                         style={{'borderBottom':'none', 'float':'right'}}
                     >
                         <SubMenu key="sub1" title={<UserWidget user={currentUser} onlyFirst={true} />}>
 
-                            {user_menu_items.map((item) => {
+                            {user_menu_items.map((item, i) => {
                                 //console.log(item);
                                 if (item.length === 1) {
-                                    return (<Menu.Divider key={'div'} />)
+                                    return (<Menu.Divider key={i} />)
                                 }
                                 return (
-                                    <Menu.Item key={item[1]}>
+                                    <Menu.Item key={i}>
 
                                         {item[1] === 'onclick' ?
                                             <a onClick={item[2]}>{item[0]}</a>

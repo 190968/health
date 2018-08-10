@@ -7,7 +7,7 @@ import {PatientInfoFragment} from "../../../../../../User/fragments";
 const GET_USER_DETAILS_QUERY  = gql`
  query GET_USER_DETAILS($user_id:UID) {
   patient(id: $user_id) {
-     ...UserInfo
+     ...PatientInfo
      genderText
      age
      addressText

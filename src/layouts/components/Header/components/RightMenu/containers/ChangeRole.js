@@ -2,6 +2,7 @@ import ChangeRole from '../components/ChangeRole';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { GET_CURRENT_ROLE_QUERY } from '../../../../../../routes/Dash/containers/DashLayout';
+import { withCurrentUser } from '../../../../../../queries/user';
 
 const ChangeRole_Mutation = gql`
  mutation ChangeRole($role: RoleEnum!) {
@@ -14,7 +15,7 @@ const ChangeRole_Mutation = gql`
 
 
 const withMutation = graphql(ChangeRole_Mutation, {
-    props: ({mutate}) => ({
+    props: ({ownProps, mutate}) => ({
         changeRole: (role) => {
             return mutate({
                 variables: {role:role},
@@ -27,52 +28,20 @@ const withMutation = graphql(ChangeRole_Mutation, {
                     });
 
 
-                    const newData = {...data, ...{account: {...data.accelerator, ...{currentRole:currentRole}}}};
+                    const newData = {...data, ...{account: {...data.account, ...{currentRole:currentRole}}}};
 
                     store.writeQuery({
                         query: GET_CURRENT_ROLE_QUERY,
                         data: newData
                     });
-
-
-                    //if (id) {
-                        // add new to the list
-                    //}
-/*
-
-                    // Add our comment from the mutation to the end.
-                    //data = medicationUpdate;
-                    // Write our data back to the cache.
-                    if (trackerUpdate.id) {
-                        store.writeQuery({
-                            query: tracker,
-                            data: {tracker: trackerUpdate},
-                            variables: {
-                                id: trackerUpdate.id,
-                                user_id: ownProps.userId
-                            }
-                        });
-                    } else {
-                        store.writeQuery({
-                            query: tracker,
-                            data: {tracker: trackerUpdate},
-                            variables: {
-                                id: id,
-                                user_id: ownProps.userId
-                            }
-                        });
-
-                    }*/
+                    //console.log(ownProps);
+                    ownProps.updateCurrentUserInfo({currentRole});
+ 
                 },
-
-                //refetchQueries: ['GET_CURRENT_ROLE'/*{
-                    //query: GET_CURRENT_ROLE_QUERY,
-                    //variables: {user_id: uid, date: date},
-               // }*/],
             })
         },
     }),
 });
 
 
-export default withMutation(ChangeRole);
+export default withCurrentUser(withMutation(ChangeRole));

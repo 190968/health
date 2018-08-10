@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card,Modal, Spin, Icon} from 'antd';
+import {withState} from 'recompose';
 
 export class Loading extends React.PureComponent {
     render() {
@@ -34,5 +35,7 @@ export const LoadingModal = () => {
         <Spin indicator={<SpinIndicator />} />
     </Modal>
 }
+
+export const withLoadingButton = withState('loadingButton', 'setLoadingButton', false);
 
 

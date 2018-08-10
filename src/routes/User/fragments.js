@@ -19,7 +19,7 @@ export const UserInfoFragment = gql`
 
 
 export const PatientInfoFragment = gql`
-       fragment UserInfo on Patient {
+       fragment PatientInfo on Patient {
                 id,
                 firstName
                 thumbs {
@@ -40,6 +40,7 @@ export const CurrentUserInfoFragment = gql`
        fragment CurrentUserInfo on Account {
             user {
                 ...UserInfo
+                dateFormat
                 phoneConfirmed
             }
             currentRole

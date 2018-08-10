@@ -15,11 +15,10 @@ import { withCurrentUser } from '../../../../../queries/user';
 
 const Notifications = props => {
  
-        const { loading, notifications, hasMore, handleInfiniteOnLoad, handleNotification } = props;
+        const { loading, notifications=[], hasMore, handleInfiniteOnLoad, handleNotification } = props;
         if (loading) {
             return <Loading />;
         }
-
         if (notifications.length === 0) {
             return <div className="ant-list-empty-text">No notifications</div>
         }

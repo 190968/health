@@ -2,34 +2,25 @@
 import Picture from '../components'
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-
+import { withCurrentUser } from '../../../../../../../queries/user';
+import { UserInfoFragment } from '../../../../../fragments';
 const profilePictureQUERY = gql`
    query getProfilePicture {
-    account
-    {
+    account {
       user {
-          id
-          firstName
-          thumbs {
-            small
-            large
-            medium
-          }
+          ...UserInfo
       }
     }
 }
+${UserInfoFragment}
 `;
 const profilePictureMutation = gql`
  mutation updateProfilePicture($original:String!,$medium:String!, $large:String!, $small:String!){
         updateProfilePicture(original:$original,large:$large, small:$small, medium:$medium) {
-              id,
-              thumbs {
-                small
-                large
-                medium
-              }
+            ...UserInfo
+        }
     }
-    }
+    ${UserInfoFragment}
 `;
 
 const PictureWithQuery = graphql(profilePictureQUERY,
@@ -50,14 +41,18 @@ const PictureWithQuery = graphql(profilePictureQUERY,
 )(Picture);
 
 const withMutation = graphql(profilePictureMutation, {
-    props: ({mutate}) => ({
+    props: ({ownProps, mutate}) => ({
         updatePicture: input => {
             return mutate({
                 variables: input,
+            }).then(({data}) => {
+                const {updateProfilePicture} = data;
+                console.log(updateProfilePicture);
+                ownProps.updateCurrentUserInfo(updateProfilePicture);
             })
         },
     }),
 });
 
 
-export default withMutation(PictureWithQuery);
+export default withCurrentUser( withMutation(PictureWithQuery));

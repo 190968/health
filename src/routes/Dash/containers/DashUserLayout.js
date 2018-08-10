@@ -7,7 +7,7 @@ import Plan from 'routes/Plan/components/Plan';
 import {MedicationsByType} from 'routes/Plan/components/MedicationPlan/components/Medication/components/fragments';
 import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
 import { withCurrentUser } from '../../../queries/user';
-import {defaultProps} from 'recompose';
+import {compose,defaultProps} from 'recompose';
 
 
 // Query for grabbing everything for the dashboard items
@@ -26,32 +26,32 @@ export const DASH_QUERY = gql`
                 }
             }
         }
-         medicationPlan (userId: $user_id) {
+        medicationPlan (userId: $user_id) {
+            id
+            upid
+            isPersonal
+            progress(date: $date)
+            ...MedicationsByType
+            textBefore
+            textAfter
+            
+        }
+        biometricPlan (userId: $user_id) {
+            id
+            upid
+            isPersonal
+            progress(date: $date)
+            columns {
                 id
-                upid
-                isPersonal
-                progress(date: $date)
-                ...MedicationsByType
-                textBefore
-                textAfter
-                
+                name
             }
-            biometricPlan (userId: $user_id) {
-                id
-                upid
-                isPersonal
-                progress(date: $date)
-                columns {
-                    id
-                    name
-                }
-                trackers (date: $date) {
-                    ...BiometricCardInfo
-                    columns
-                }
-                startDate
-                endDate
+            trackers (date: $date) {
+                ...BiometricCardInfo
+                columns
             }
+            startDate
+            endDate
+        }
     }
    
     
@@ -59,16 +59,7 @@ export const DASH_QUERY = gql`
     ${MedicationsByType}
     ${Biometric.fragments.tracker}
 `;
-/*
- takeAtTimes {
-        ...MedicationCardInfo
-        timesPerHour {
-            id
-            time
-            quantity
-        }
-    }
- */
+ 
 
 const DashLayoutWithQuery = graphql(
     DASH_QUERY,
@@ -77,9 +68,9 @@ const DashLayoutWithQuery = graphql(
            
             if (!data.loading) {
                 return {
-                    plans: data.user.plans,
-                    medicationPlan: data.medicationPlan,
-                    loading: data.loading,
+                    //plans: data.user.plans,
+                    //medicationPlan: data.medicationPlan,
+                    //loading: data.loading,
                 }
 
             } else {
@@ -95,8 +86,13 @@ const DashLayoutWithQuery = graphql(
             fetchPolicy: 'network-only'
         }),
     }
-)(DashLayout);
+);
 
-export default defaultProps({
-    date: moment().format('YYYY-MM-DD'),
-})(withCurrentUser(DashLayoutWithQuery));
+const enhance = compose(
+    defaultProps({
+        date: moment().format('YYYY-MM-DD'),
+    }),
+    withCurrentUser,
+    DashLayoutWithQuery
+)
+export default enhance(DashLayout);;

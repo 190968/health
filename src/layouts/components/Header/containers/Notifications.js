@@ -7,29 +7,21 @@
 import Notifications from '../components/Notifications/index';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { UserInfoFragment } from '../../../../routes/User/fragments';
 
 
 export const NOTIFICATIONS_QUERY  = gql`
   query GET_NOTIFICATIONS ($cursors: CursorInput) {
   account {
-    user {
-      id
-      notifications (cursors:$cursors, unread:true) @connection(key: "notifications") {
+      getNotifications (cursors:$cursors, unread:true) @connection(key: "notifications") {
         totalCount
         edges {
           id
           sender {
-            id
-            firstName
-            thumbs {
-                small
-                large
-                medium
-            }
-            color
+            ...UserInfo
           }
           patient {
-            id
+            ...UserInfo
           }
           text
           isApproved
@@ -41,13 +33,12 @@ export const NOTIFICATIONS_QUERY  = gql`
               endCursor
             }
       }
-    }
   }
 }
-
+${UserInfoFragment}
 `;
 
-const withQuery = graphql(NOTIFICATIONS_QUERY, {
+export const withNotificationsQuery = graphql(NOTIFICATIONS_QUERY, {
     options: (ownProps) => {
 
         return {
@@ -62,8 +53,9 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
     },
     props: ({ ownProps, data }) => {
         if (!data.loading) {
-            const {edges, totalCount, pageInfo: {endCursor}} = data.account.user.notifications;
-
+            const {getNotifications={}} = data.account;
+            const {edges=[], totalCount=0, pageInfo={}} = getNotifications || {};
+            const {endCursor=''} = pageInfo || {};
             return {
                 notifications: edges,
                 endCursor: endCursor,
@@ -71,6 +63,7 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
                 totalCount:totalCount,
                 hasMore: edges.length < totalCount,
                 loadMore(endCursor, callback) {
+                    //console.log('Loading more');
                     return data.fetchMore({
                         variables: {
                             cursors: {before: endCursor, last:10}
@@ -79,16 +72,17 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
 
                             callback();
                             if (!fetchMoreResult) { return previousResult; }
-                            const newMessages = [...previousResult.account.user.notifications.edges, ...fetchMoreResult.account.user.notifications.edges]
+                            //return previousResult;
+                            const newMessages = [...previousResult.account.getNotifications.edges, ...fetchMoreResult.account.getNotifications.edges]
                             const obj =  Object.assign({}, previousResult, {
                                 account: {
-                                    ...previousResult.account, user: {
-                                        ...previousResult.account.user, notifications: {
-                                            ...previousResult.account.user.notifications,
+                                    ...previousResult.account, getNotifications: {
+                                        ...previousResult.account.getNotifications, getNotifications: {
+                                            ...previousResult.account.getNotifications,
                                             edges: newMessages
                                         }
-                                    }
                                 }
+                            }
                             });
                             return obj;
                         },
@@ -101,8 +95,6 @@ const withQuery = graphql(NOTIFICATIONS_QUERY, {
         }
     },
 });
-
-export const withNotificationsQuery  = withQuery;
 
 
 const handleNotification_Mutation = gql`
@@ -135,4 +127,4 @@ const withMutation = graphql(handleNotification_Mutation, {
     }),
 });
 
-export default withMutation(withQuery(Notifications));
+export default withNotificationsQuery(withMutation(Notifications));

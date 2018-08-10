@@ -9,9 +9,7 @@ import gql from 'graphql-tag';
 export const BADGE_NOTIFICATIONS_QUERY  = gql`
   query GET_NOTIFICATIONS ($cursors: CursorInput!) {
   account {
-    user {
-      id
-      notifications (cursors:$cursors, unread:true, generalTotal:true) @connection(key: "notifications", filter: ["generalTotal"]) {
+      getNotifications (cursors:$cursors, unread:true, generalTotal:true) @connection(key: "notifications", filter: ["generalTotal"]) {
         totalCount
         edges {
           id
@@ -34,7 +32,6 @@ export const BADGE_NOTIFICATIONS_QUERY  = gql`
           isCritical
         }
       }
-    }
   }
 }
 
@@ -53,11 +50,12 @@ const withQuery = graphql(BADGE_NOTIFICATIONS_QUERY, {
     },
     props: ({ ownProps, data }) => {
 
-        const newNotifications = data.account ? data.account.user.notifications : [];
-        const totalNewNotifications =  data.account ? data.account.user.notifications.totalCount : 0;
+        const newNotifications = data.account ? data.account.getNotifications : [];
+        const totalNewNotifications =  data.account ? data.account.getNotifications.totalCount : 0;
 
         return {loading: data.loading, newNotifications:newNotifications, totalNewNotifications:totalNewNotifications}
     },
 });
 
-export default withQuery(NotificationBadge);
+//export default withQuery(NotificationBadge);
+export default (NotificationBadge);

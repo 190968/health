@@ -13,6 +13,7 @@ import { withCurrentUser, CurrentUserQUERY } from '../../../queries/user';
  
 import { withCurrentNetwork } from '../../../queries/network';
 import { CurrentUserInfoFragment } from '../fragments';
+import { withLoadingButton } from '../../../components/Loading';
 
 
 export const UserMainInfo_QUERY = CurrentUserQUERY;
@@ -80,31 +81,37 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
         const{email, password} = props;
         dispatch(loadUserPrepare());
+        ownProps.setLoadingButton(true);
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
-                const {currentToken={}} = data.login;
-                let {token, isExpired} = currentToken;
+                ownProps.setLoadingButton(false);
+                const {currentToken={}, currentRole, user} = data.login;
+                let {token='', isExpired} = currentToken;
                 if (isExpired) {
                     token = '';
                 }
-                let user = data.login.user;
-                user.token = token;
-                dispatch(loadUser(user));
+                //let user = data.login.user;
+                //user.token = token;
+                //dispatch(loadUser(user));
+                
+                
 
                 localStorage.setItem('token', token);
                 //dispatch(setUserToken(token));
 
 
 
-                dispatch(loginUserSuccess({token}));
+                //dispatch(loginUserSuccess({token}));
+
+                ownProps.updateCurrentUser({...user, currentRole, token});
                 //ownProps.history.push('/');
             }).catch((error) => {
-
-                dispatch(loadUserFAIL({ error,
-                }));
-                dispatch(loginUserError({
-                    error,
-                }));
+                ownProps.setLoadingButton(false);
+                // dispatch(loadUserFAIL({ error,
+                // }));
+                // dispatch(loginUserError({
+                //     error,
+                // }));
                 //message.error(error.message);
 
 
@@ -127,7 +134,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     },
 });
-export default compose(withMutation,withMutationForgot,connect(mapStateToProps, mapDispatchToProps))( withRouter(withCurrentNetwork(withCurrentUser(LoginForm))));
+
+export default compose(withLoadingButton,withCurrentUser, withMutation,withMutationForgot,connect(mapStateToProps, mapDispatchToProps))( withRouter(withCurrentNetwork((LoginForm))));
 
 
 

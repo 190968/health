@@ -6,15 +6,11 @@ import gql from 'graphql-tag';
 export const NOTIFICATIONS_POOL_QUERY  = gql`
    query NOTIFICATIONS_POOL ($cursors: CursorInput!) {
       account {
-        currentRole
-        user {
-          id
-          notifications (cursors:$cursors, unread:true) @connection(key: "notificationPool") {
+        getNotifications (cursors:$cursors, unread:true) @connection(key: "notificationPool") {
             totalCount
             pageInfo {
               endCursor
             }
-          }
         }
         unreadMessages
       }
@@ -32,7 +28,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
             variables: {
                 cursors: {first:1, after:ownProps.lastNotificationCursor},// last cursor for notifications
             },
-            pollInterval: 5000,
+            //pollInterval: 5000,
             fetchPolicy: 'network-only',
             //notifyOnNetworkStatusChange: true// adding loading placeholder
         }
@@ -40,14 +36,20 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
     props: ({ ownProps, data }) => {
 
 
-        const lastCursor = !data.loading && data.account.user.notifications.pageInfo.endCursor !== '' ?  data.account.user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
-        const totalCount = !data.loading && data.account.user.notifications.totalCount;
-        const unreadMessages = data.account && data.account.unreadMessages;
-        const {currentToken={}} = data;
-        let {token, isExpired} = currentToken;
-        if (isExpired) {
-            token = '';
+        const {account={}} = data;
+        const {getNotifications={}, unreadMessages} = account;
+
+       // const lastCursor = !data.loading && user.notifications.pageInfo.endCursor !== '' ?  user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
+        const {totalCount, pageInfo={}} = getNotifications || {};
+        const {endCursor=''} = pageInfo || {};
+        let lastCursor = endCursor;
+        if (endCursor === '') {
+            lastCursor = ownProps.lastNotificationCursor
         }
+        // let {token, isExpired} = currentToken;
+        // if (isExpired) {
+        //     token = '';
+        // }
 
         return {loading: data.loading, /*token:token,*/ unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}
 

@@ -32,7 +32,7 @@ export class DashUserLayout extends React.Component {
         const {
            loading, date, currentUser
         } = this.props;
-
+        
 
         if (loading) {
             //return (<div>Loading...</div>);
@@ -40,6 +40,7 @@ export class DashUserLayout extends React.Component {
                 <Card loading>Loading...</Card>
             );
         }
+        console.log(this.props, 'User Dash');
 
 
         return (
