@@ -49,7 +49,7 @@ const withMutation = graphql(loginUser, {
                 variables: { input: {email: input.email, password: input.password}},
                 // update query
 
-                update: (store, { data: { login} }) => {
+                /*update: (store, { data: { login} }) => {
 
                     // Read the data from our cache for this query.
                     const data = store.readQuery({
@@ -65,7 +65,7 @@ const withMutation = graphql(loginUser, {
                         query: UserMainInfo_QUERY,
                         data: newData
                     });
-                }
+                }*/
             })
         },
     }),
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (props) => {
         const{email, password} = props;
-        dispatch(loadUserPrepare());
+        //dispatch(loadUserPrepare());
         ownProps.setLoadingButton(true);
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
@@ -110,9 +110,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
                 //console.log(location);
                 //console.log(pathname);
-                if (pathname) {
+                if (pathname && pathname !== '/') {
                     setTimeout(() => {
-                        ownProps.history.push(pathname);
+                        console.log(pathname, 'BOOOM, Redirect')
+                        //ownProps.history.push(pathname);
                     }, 100);
                 }
 

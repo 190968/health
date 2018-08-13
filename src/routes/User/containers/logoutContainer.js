@@ -2,10 +2,10 @@ import { connect } from 'react-redux'
 import { withApollo,graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import LogoutForm from '../components/Logout'
-import { logoutUser } from '../modules/user';
 import { UserMainInfo_QUERY } from './loginContainer';
 import { withLogoutActiveUser } from '../../../components/App/app-context';
 import { CurrentUserInfoFragment } from '../fragments';
+import {compose, lifecycle} from 'recompose';
 
 const logoutUserQuery = gql`
     mutation logout{
@@ -42,8 +42,8 @@ const LogoutFormWithMutation = graphql(logoutUserQuery,
                     }
                 }).then((data) => {
                     if (!data.loading) {
+                        ownProps.logoutUser({});
                         localStorage.removeItem('token');
-                        //ownProps.logoutUser({});
                         ownProps.history.push('/')
                     }
                 })
@@ -52,4 +52,15 @@ const LogoutFormWithMutation = graphql(logoutUserQuery,
     }
 );
 
-export default withApollo(withLogoutActiveUser(LogoutFormWithMutation(LogoutForm)));
+
+const enhance = compose(
+    withApollo,
+    withLogoutActiveUser,
+    LogoutFormWithMutation,
+    lifecycle({
+        componentDidMount() {
+            this.props.logout();
+        }
+    })
+);
+export default enhance(LogoutForm);

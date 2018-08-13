@@ -50,6 +50,7 @@ export const GetGlobalLabel = (props) => {
 
 export const ActiveUserContext = React.createContext({
     user: {},
+    setUser: () => {},
     updateUser: () => {},
 });
 
