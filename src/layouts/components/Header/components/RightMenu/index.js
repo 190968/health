@@ -8,8 +8,7 @@ import CategorySelect from '../../../../../components/Autosuggest/containers/Cat
 import Community from '../../../../../routes/Community/components/CommunityLayout/containers/Category';
 const SubMenu = Menu.SubMenu;
 
-
-export default class RightMenu extends React.Component {
+class RightMenu extends React.Component {
     constructor(props) {
         super(props);
 
@@ -54,7 +53,7 @@ export default class RightMenu extends React.Component {
     }
 
     render() {
-        const {currentUser={}} = this.props;
+        const {currentUser={}, updateCurrentUserInfo} = this.props;
         // check if we have other roles - add switcher
         const {possibleNetworkRoles=[], possibleProviderRoles=[], currentRole} = currentUser;
         const haveOtherRoles = possibleNetworkRoles.length > 1 || possibleProviderRoles.length > 1;
@@ -111,7 +110,7 @@ export default class RightMenu extends React.Component {
                         </SubMenu>
 
                     </Menu>
-                    <MenuBadges lastNotificationCursor={this.state.notificationsLastCursor} updateLastNotification={this.updateLastNotification} />
+                    <MenuBadges updateCurrentUserInfo={updateCurrentUserInfo} currentUser={currentUser} lastNotificationCursor={this.state.notificationsLastCursor} updateLastNotification={this.updateLastNotification} />
                     {this.state.openChangeRole && <ChangeRoleModal roles={roles} currentRole={currentRole} onHide={this.toggleRole} />}
                     {this.state.openMedicalRepository && <CategorySelect onHide={this.toggleMedicalRepository} handleOk={this.handleClick.bind(this,"a485")} />}
                     {/*{this.state.openCommunity && <Redirect to={{pathname: '/community/a485'}} />}*/}
@@ -121,3 +120,5 @@ export default class RightMenu extends React.Component {
         );
     }
 }
+
+export default (RightMenu);

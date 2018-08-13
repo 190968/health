@@ -102,9 +102,25 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
                 //dispatch(loginUserSuccess({token}));
+                const {location={}} = ownProps;
+                const {state={}} = location;
+                const {from={}} = state;
+                const {pathname} = from;
+                
+
+                //console.log(location);
+                //console.log(pathname);
+                if (pathname) {
+                    setTimeout(() => {
+                        ownProps.history.push(pathname);
+                    }, 100);
+                }
 
                 ownProps.updateCurrentUser({...user, currentRole, token});
-                //ownProps.history.push('/');
+
+                
+
+                //
             }).catch((error) => {
                 ownProps.setLoadingButton(false);
                 // dispatch(loadUserFAIL({ error,

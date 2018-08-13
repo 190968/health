@@ -97,7 +97,8 @@ const enhance = compose(
 	withState('isIddle', 'setIddle', false),
 	withHandlers({
 		_onLogout: (props) => () => {
-			// do the logout
+            // do the logout
+            props.setIddle(false);
 			props.history.push('/logout');
 		},
 		_onActive: (props) => () => {
