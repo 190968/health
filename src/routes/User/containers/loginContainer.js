@@ -85,7 +85,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
                 //ownProps.setLoadingButton(false);
-                const {currentToken={}, currentRole, user} = data.login;
+                const account = data.login;
+                const {currentToken={}, currentRole, user, ...otherProps} = account;
                 let {token='', isExpired} = currentToken;
                 if (isExpired) {
                     token = '';
@@ -112,12 +113,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 //console.log(pathname);
                 if (pathname && pathname !== '/') {
                     setTimeout(() => {
-                        console.log(pathname, 'BOOOM, Redirect')
+                        //console.log(pathname, 'BOOOM, Redirect')
                         //ownProps.history.push(pathname);
-                    }, 100);
+                    }, 500);
                 }
+                
 
-                ownProps.updateCurrentUser({...user, currentRole, token});
+            //     const {user={}, currentRole, currentToken={}, currentNetwork, ...otherProps} = account || {};
+            // let {token, isExpired} = currentToken;
+            // if (isExpired) {
+            //     token = '';
+            // }
+            // //console.log(data, 'loading user network');
+            // return {currentNetwork, currentUser:{...user, currentRole, token, ...otherProps}, loading};
+
+                ownProps.updateCurrentUser({...user, currentRole, token, ...otherProps});
 
                 
 

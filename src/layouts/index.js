@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import IdleTimer from 'react-idle-timer';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-
+import {BasicRoutes} from './routes';
 // import extra
 import { Spin, Modal, Icon } from 'antd';
 import VerifyPhone from '../routes/User/containers/verifyPhoneContainer';
@@ -21,9 +21,16 @@ import { compose, withState, withHandlers } from 'recompose';
  * Show proper layout according to current role
  */
 const CoreByMode = (props) => {
-	const { currentUser = {} } = props;
+	const { currentUser = {}, location } = props;
     const { currentRole = false } = currentUser;
-    console.log(currentRole, 'currentRole');
+    //console.log(currentRole, 'currentRole');
+
+    const {pathname} = location;
+    if (pathname === '/logout') {
+        const {store} = props;
+        return <BasicRoutes store={store} />;
+    }
+
 	if (!currentRole || currentRole === 'patient' || currentRole === 'guest') {
 		return <PatientLayout {...props} />;
 	} else {
@@ -55,7 +62,7 @@ const CorePure = (props) => {
 	//console.log(props);
 	const { labels = {} } = currentNetwork;
 
-	const { id, phoneConfirmed = false } = user || {};
+	const { id, phoneConfirmed = false, token ='' } = user || {};
     //console.log(id, 'User ID');
 	if (id && !phoneConfirmed) {
 		return <VerifyPhone />;
@@ -74,7 +81,7 @@ const CorePure = (props) => {
 					>
 						You've been inactive. Would you like to continue or logout
 					</Modal>
-				) : id ? (
+				) : id && token !== '' ? (
 					<IdleTimer
 						element={document}
 						idleAction={props._onIdle}

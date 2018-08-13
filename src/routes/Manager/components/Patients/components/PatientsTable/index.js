@@ -1,4 +1,4 @@
-import { Table, Menu, Dropdown, Icon } from 'antd';
+import { Table, Menu, Dropdown, Icon, Progress } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import InviteButtons from "../../../../../../components/Tables/InviteButton/index";
@@ -86,6 +86,11 @@ export const PatientsTable = props => {
                 case 'full_name':
                     newPatientData[code] = <Link to={'/u/' + id}>{fullName}</Link>;
                     break;
+                    case 'adherence':
+                    case 'med_adherence':
+
+                        newPatientData[code] = <Progress percent={value}   size="small" />;
+                        break;
             }
         })
 

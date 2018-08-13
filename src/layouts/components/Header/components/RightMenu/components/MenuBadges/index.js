@@ -1,6 +1,6 @@
 import React from 'react'
 import {NavLink, withRouter } from 'react-router-dom';
-import { Menu, Icon,  Badge } from 'antd';
+import { Menu, Icon,  Badge, notification } from 'antd';
 import NotificationBadge from '../../containers/NotificationBadge';
 import './index.less';
 
@@ -31,10 +31,19 @@ class RightMenu extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        // console.log(nextProps);
+        // console.log(this.props);
+        const {currentUser={}} = this.props;
+        const {token=''} = currentUser;
 
-        if (!nextProps.token && nextProps.token !== this.props.token) {
+        if (!nextProps.token && nextProps.token !== token) {
             // reload to logout
-            console.log(nextProps);
+            this.props.updateCurrentUserInfo({token: ''});
+            //console.log(nextProps);
+            notification['warning']({
+                message: 'You have been logged out',
+                description: 'Your session is expired. Please Re-Login',
+              });
             //this.props.history.push('/logout');
         }
     }
