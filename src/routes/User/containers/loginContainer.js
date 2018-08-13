@@ -49,23 +49,23 @@ const withMutation = graphql(loginUser, {
                 variables: { input: {email: input.email, password: input.password}},
                 // update query
 
-                /*update: (store, { data: { login} }) => {
+                update: (store, { data: { login} }) => {
 
                     // Read the data from our cache for this query.
                     const data = store.readQuery({
                         query: UserMainInfo_QUERY,
                     });
 
-                    console.log(data);
+                    //console.log(data);
                    
 
                     const newData = {...data, ...{account: {...data.account, ...login}}};
-                    console.log(newData);
+                    console.log(newData, 'New data upon login');
                     store.writeQuery({
                         query: UserMainInfo_QUERY,
                         data: newData
                     });
-                }*/
+                }
             })
         },
     }),

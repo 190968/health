@@ -60,12 +60,13 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
         }
         let {token, isExpired} = currentToken;
         if (isExpired) {
+            console.log(currentToken, 'EXPIRED TOKEN HERE')
             // if expired, then 
             //console.log('TOKEN EXPIRED. DO SMTH');
-            notification['warning']({
-                message: 'You have been logged out',
-                description: 'Your session is expired. Please Re-Login',
-              });
+            // notification['warning']({
+            //     message: 'You have been logged out',
+            //     description: 'Your session is expired. Please Re-Login',
+            //   });
             
             //ownProps.updateCurrentUserInfo({token: ''});
         }
