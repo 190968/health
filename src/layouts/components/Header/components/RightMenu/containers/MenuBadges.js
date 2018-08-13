@@ -28,7 +28,13 @@ export const NOTIFICATIONS_POOL_QUERY  = gql`
 const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
     options: (ownProps) => {
 
+        console.log(ownProps, 'Own Props pool notifications');
+        const {currentUser={}} = ownProps;
+        const {token=''} = currentUser;
+        console.log(token);
+        const userExists = token !== '';
         return {
+            //skip: userExists,
             //forceFetch: true,
             variables: {
                 cursors: {first:1, after:ownProps.lastNotificationCursor},// last cursor for notifications
@@ -60,7 +66,7 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
                 description: 'Your session is expired. Please Re-Login',
               });
             
-            ownProps.updateCurrentUserInfo({token: ''});
+            //ownProps.updateCurrentUserInfo({token: ''});
         }
 
         return {loading: data.loading, /*token:token,*/ unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}

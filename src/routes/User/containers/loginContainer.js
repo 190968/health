@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.setLoadingButton(true);
         ownProps.loginUser({ email:email, password:password })
             .then(({data}) => {
-                ownProps.setLoadingButton(false);
+                //ownProps.setLoadingButton(false);
                 const {currentToken={}, currentRole, user} = data.login;
                 let {token='', isExpired} = currentToken;
                 if (isExpired) {

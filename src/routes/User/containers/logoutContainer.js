@@ -34,6 +34,7 @@ const LogoutFormWithMutation = graphql(logoutUserQuery,
                         });
     
                         const newData = {...data, ...{account: {...data.account, ...logout}}};
+                        console.log(newData);
                         store.writeQuery({
                             query: UserMainInfo_QUERY,
                             data: newData
@@ -42,7 +43,7 @@ const LogoutFormWithMutation = graphql(logoutUserQuery,
                 }).then((data) => {
                     if (!data.loading) {
                         localStorage.removeItem('token');
-                        ownProps.logoutUser({});
+                        //ownProps.logoutUser({});
                         ownProps.history.push('/')
                     }
                 })

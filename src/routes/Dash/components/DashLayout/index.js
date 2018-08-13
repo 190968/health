@@ -7,8 +7,8 @@ import ManagerDash from '../../containers/DashManagerLayout'
 const DashLayout  = props => {
     const {currentUser={}} = props;
     const {currentRole} = currentUser;
-    console.log(props, 'Dash props');
-    if (currentRole === 'patient') {
+    //console.log(props, 'Dash props');
+    if (currentRole === 'patient' || currentRole === 'guest') {
         return <UserDash />;
     } else if (currentRole) {
         return <ManagerDash />;

@@ -77,8 +77,8 @@ export const ActiveUserProvider = compose(
         },
         updateUserInfo: props => (fields) => {
             const {user} = props;
-            console.log(fields);
-            console.log({...user, ...fields});
+            //console.log(fields);
+            console.log({...user, ...fields}, 'New User Info');
             props.setUserState({...user, ...fields});
         }
     }),

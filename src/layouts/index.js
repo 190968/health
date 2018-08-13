@@ -24,7 +24,7 @@ const CoreByMode = (props) => {
 	const { currentUser = {} } = props;
     const { currentRole = false } = currentUser;
     console.log(currentRole, 'currentRole');
-	if (!currentRole || currentRole === 'patient') {
+	if (!currentRole || currentRole === 'patient' || currentRole === 'guest') {
 		return <PatientLayout {...props} />;
 	} else {
 		return <ManagerLayout {...props} />;
