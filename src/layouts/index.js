@@ -23,7 +23,7 @@ import { compose, withState, withHandlers } from 'recompose';
 const CoreByMode = (props) => {
 	const { currentUser = {}, location } = props;
     const { currentRole = false } = currentUser;
-    //console.log(currentRole, 'currentRole');
+    console.log('currentRole', props);
 
     const {pathname} = location;
     if (pathname === '/logout') {
@@ -39,37 +39,17 @@ const CoreByMode = (props) => {
 };
 
 const CorePure = (props) => {
-	const { loading, isIddle = false, currentUser: user = {}, currentNetwork = {} } = props;
-
-	if (loading) {
-		return (
-			<div
-				style={{
-					height: '100%',
-					width: '100%',
-					overflow: 'auto',
-					display: 'flex',
-					top: '50%',
-					position: 'absolute',
-					minHeight: '100vh',
-					flexDirection: 'column'
-				}}
-			>
-				<Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
-			</div>
-		);
-	}
-	//console.log(props);
+	const { isIddle,  currentUser: user = {}, currentNetwork = {} } = props;
+	console.log('CorePure', props);
 	const { labels = {} } = currentNetwork;
 
 	const { id, phoneConfirmed = false, token ='' } = user || {};
     //console.log(id, 'User ID');
 	if (id && !phoneConfirmed) {
 		return <VerifyPhone />;
-	}
+    }
 	return (
-		<CustomizedLabelsProvider currentNetwork={currentNetwork} labels={labels}>
-			<ActiveUserProvider user={user}>
+        <React.Fragment>
 				{isIddle ? (
 					<Modal
 						title="No Activity"
@@ -88,19 +68,20 @@ const CorePure = (props) => {
 						timeout={1000 * 60 * 15}
 						format="MM-DD-YYYY HH:MM:ss.SSS"
 					>
-						<CoreByMode {...props} />
+						<CoreByMode {...props} blabla />
 					</IdleTimer>
 				) : (
 					<PatientLayout {...props} />
-				)}
-			</ActiveUserProvider>
-		</CustomizedLabelsProvider>
+                )}
+                </React.Fragment>
 	);
 };
 
+
+
 const enhance = compose(
-	withRouter,
-	withCurrentUserAndNetwork,
+    withRouter,
+    withCurrentUser,
 	withState('isIddle', 'setIddle', false),
 	withHandlers({
 		_onLogout: (props) => () => {
@@ -118,4 +99,35 @@ const enhance = compose(
 	})
 );
 
-export default enhance(CorePure);
+const CoreEnhanced = enhance(CorePure);
+
+const CoreWithNetworkUser = (props) => {
+    const { loading,  currentUser: user = {}, currentNetwork = {} } = props;
+    const { labels = {} } = currentNetwork;
+	if (loading) {
+		return (
+			<div
+				style={{
+					height: '100%',
+					width: '100%',
+					overflow: 'auto',
+					display: 'flex',
+					top: '50%',
+					position: 'absolute',
+					minHeight: '100vh',
+					flexDirection: 'column'
+				}}
+			>
+				<Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
+			</div>
+		);
+    }
+    
+    return <CustomizedLabelsProvider currentNetwork={currentNetwork} labels={labels}>
+			<ActiveUserProvider user={user}>
+                <CoreEnhanced {...props} />
+            </ActiveUserProvider>
+		</CustomizedLabelsProvider>;
+}
+
+export default withCurrentUserAndNetwork(CoreWithNetworkUser);

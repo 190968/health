@@ -74,6 +74,18 @@ const CancerTitle = enhanceTitle(CancerTitlePure);
                 tab: 'Treatment Options',
             },
         ];
+
+const BioDigitalButtonPure = props => {
+    return <Icon type="picture" onClick={props.openBioDigital} />
+}
+const BioDigitalButton = withHandlers({
+    openBioDigital: props => () => {
+        const {l='Lungs'} = props;
+        window.open('/static/myapp/biodigital.html?l='+l,'targetWindow',
+                                   "toolbar=no, location=no, status=no, menubar=no, crollbars=yes, resizable=yes, width=500, height=500");
+    }
+})(BioDigitalButtonPure);
+
 const Profile = props => {
 
    
@@ -117,7 +129,7 @@ const Profile = props => {
             ['Phone', phoneFormatted],
             //['Email', email],
             ['Diagnosis', (DiagnosisName || null/*<span>Add Diagnosis</span>*/)],
-            ['Cancer', cancerName],
+            ['Cancer', <span>{cancerName} <BioDigitalButton /></span>],
             ['Stage', stageName],
             ['Last Login', lastLogin],
             //['Group', groupNumber],

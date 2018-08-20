@@ -1,23 +1,62 @@
 import React from 'react'
+import {BasicRoutes, CoreRoutes, CoreRoutesEnd} from '../../routes';
 import PrivateRoute from '../../../routes/privateRoute';
+import {
+    Route, Switch
+  } from "react-router-dom";
+  
 import {
     asyncPlanstore,
     asyncHealth,
     asyncCommynity,
     asyncHelp,
     asyncMotivation,
-    asyncProfile
+    asyncProfile,
+    asyncLogin
 } from '../../../routes';
 
 export const PatientRoutes = ({store}) => {
-    return (
-        <React.Fragment>
-            <PrivateRoute path="/planstore" component={asyncPlanstore(store)}/>
-            <PrivateRoute path="/community" component={asyncCommynity(store)}/>
-            <PrivateRoute path="/health" component={asyncHealth(store)}/>
-            <PrivateRoute path="/help" component={asyncHelp(store)}/>
-            <PrivateRoute path="/motivation" component={asyncMotivation(store)}/>
-            <PrivateRoute path="/u/:uid" component={asyncProfile(store)}/>
-        </React.Fragment>
-    )
+    return 1;
+    // return (
+    //     <Switch>
+    //         <BasicRoutes store={store} />
+    //         <PrivateRoute path="/planstore" component={(store)}/>
+    //         <PrivateRoute path="/" component={(store)}/>
+    //         <PrivateRoute path="/" component={(store)}/>
+    //         <PrivateRoute path="/" component={(store)}/>
+    //         <PrivateRoute path="/" component={(store)}/>
+    //         <PrivateRoute path="" component={(store)}/>
+    //     </Switch>
+    // )
 }
+
+
+
+export const PatientRoutesList = [
+    ...CoreRoutes,
+    {
+      path: "/planstore",
+      component: asyncPlanstore(),
+    },
+    {
+        path: "/community",
+        component: asyncCommynity(),
+    },
+    {
+        path: "/health",
+        component: asyncHealth(),
+    },
+    {
+        path: "/help",
+        component: asyncHelp(),
+    },
+    {
+        path: "/motivation",
+        component: asyncMotivation(),
+    },
+    {
+        path: "/u/:uid",
+        component: asyncProfile(),
+    },
+    ...CoreRoutesEnd
+  ];

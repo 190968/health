@@ -31,24 +31,26 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
         console.log(ownProps, 'Own Props pool notifications');
         const {currentUser={}} = ownProps;
         const {token=''} = currentUser;
-        console.log(token);
+        console.log(token, 'TOKEN IN MENU BADGES');
         const userExists = token !== '';
+        console.log(userExists);
         return {
-            //skip: userExists,
+            //skip: !userExists,
             //forceFetch: true,
             variables: {
                 cursors: {first:1, after:ownProps.lastNotificationCursor},// last cursor for notifications
             },
+            //delay:true,
             //pollInterval: 5000,
             pollInterval: 10000,// 10 seconds check
-            fetchPolicy: 'network-only',
+            //fetchPolicy: !userExists ? 'cache-only' : 'cache-and-network',
             //notifyOnNetworkStatusChange: true// adding loading placeholder
         }
         },
     props: ({ ownProps, data }) => {
 
-        console.log(data);
-        const {account={}} = data;
+        console.log(data, 'DATA FROM POOL');
+        const {account={}, loading} = data;
         const {getNotifications={}, unreadMessages, currentToken={}} = account;
 
        // const lastCursor = !data.loading && user.notifications.pageInfo.endCursor !== '' ?  user.notifications.pageInfo.endCursor : ownProps.lastNotificationCursor;
@@ -58,11 +60,11 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
         if (endCursor === '') {
             lastCursor = ownProps.lastNotificationCursor
         }
-        let {token, isExpired} = currentToken;
+        let {token='', isExpired} = currentToken;
         if (isExpired) {
             token = '';
         }
-
+        console.log('TOKEN FROM POOL', token);
         // get current token:
         //const {currentUser={}} = ownProps;
         //const {token=''} = currentUser;
@@ -75,9 +77,10 @@ const withQuery = graphql(NOTIFICATIONS_POOL_QUERY, {
             //
         }
 
-        return {loading: data.loading, token, unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}
+        return {loading: loading, token, tokenIsExpired:isExpired, unreadMessages:unreadMessages, newCursor:lastCursor, newNotificationsNum: totalCount}
 
     },
 });
 
+//export default (MenuBadges);
 export default withQuery(MenuBadges);

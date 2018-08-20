@@ -2,9 +2,9 @@ import { Table, Menu, Dropdown, Icon, Progress } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import InviteButtons from "../../../../../../components/Tables/InviteButton/index";
-import PatientEditButton from "../PatientEditButton/index";
-
+import PatientEditButton from "../PatientEditButton";
 import './index.css';
+import { PatientPasswordButton } from '../PatientPasswordButton';
 
 const marks = {
     0: '0',
@@ -41,11 +41,14 @@ export const PatientsTable = props => {
     testColumns.push({
         title: '',
         width: 50,
-        render: (info) => {
+        render: ({user}) => {
             const menu = (
                 <Menu>
-                    <Menu.Item  >
-                        <PatientEditButton user={info} />
+                    <Menu.Item key={0} >
+                        <PatientEditButton user={user} asMenuItem />
+                    </Menu.Item>
+                    <Menu.Item key={1} >
+                        <PatientPasswordButton user={user} asMenuItem />
                     </Menu.Item>
                 </Menu>
             );
@@ -89,7 +92,7 @@ export const PatientsTable = props => {
                     case 'adherence':
                     case 'med_adherence':
 
-                        newPatientData[code] = <Progress percent={value}   size="small" />;
+                        newPatientData[code] = <Progress percent={parseInt(value)}   size="small" />;
                         break;
             }
         })

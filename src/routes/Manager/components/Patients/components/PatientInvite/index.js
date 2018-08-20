@@ -1,17 +1,6 @@
 import React from 'react';
 import { Radio, Tabs, Input, Col, Select, Form, DatePicker, Button, } from 'antd';
-import FullNameForm from '../PatientForm/FullNameField/containers/index';
-import BirthdayForm from '../PatientForm/BirthdayField';
-import GenderForm from '../PatientForm/GenderField';
-import EmailForm from '../PatientForm/EmailField';
-import AddressForm from '../PatientForm/AddressField';
-import PhoneForm from '../PatientForm/PhoneField';
-import TimeZoneForm from '../PatientForm/TimeZoneField/containers/index';
-import LanguageForm from '../PatientForm/LanguageField';
-import CohortsForm from '../PatientForm/CohortsField';
-import DropdownFormField from '../PatientForm/DropdownField/containers/index';
-import RadioFormField from '../PatientForm/RadioField/containers/index';
-import PlainFormField from '../PatientForm/PlainField/containers/index';
+
 const TabPane = Tabs.TabPane;
 
 const PatientInvite = props => {

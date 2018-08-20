@@ -53,6 +53,7 @@ class RightMenu extends React.Component {
     }
 
     render() {
+        //console.log(this.props, 'Loading right Menu')
         const {currentUser={}, updateCurrentUserInfo} = this.props;
         // check if we have other roles - add switcher
         const {possibleNetworkRoles=[], possibleProviderRoles=[], currentRole} = currentUser;

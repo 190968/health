@@ -1,10 +1,16 @@
-import React from 'react'
+import React from 'react';
+import {BasicRoutes, CoreRoutes, CoreRoutesEnd} from '../../routes';
 import PrivateRoute from '../../../routes/privateRoute';
 import {asyncProfile, asyncWorkflow, asyncActionplans, asyncPrograms,asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
+import {asyncLogin} from '../../../routes';
+import {
+    Route, Switch
+  } from "react-router-dom";
 
 export const ManagerRoutes = ({store}) => {
     return (
         <React.Fragment>
+            <BasicRoutes store={store}/>
             <PrivateRoute path="/u/:id/:tab?/:subtab?" component={asyncProfile(store)}/>
             <PrivateRoute path="/workflow" component={asyncWorkflow(store)}/>
             <PrivateRoute path="/patients" component={asyncPatients(store)}/>
@@ -28,3 +34,14 @@ export const ManagerRoutes = ({store}) => {
         </React.Fragment>
     )
 }
+
+
+
+const ManagerRoutesList = [
+    ...CoreRoutes,
+    {
+      path: "/patients",
+      component: asyncPatients()
+    },
+    ...CoreRoutesEnd
+  ];

@@ -62,9 +62,10 @@ class NormalRegisterForm extends React.Component {
         const { onSubmit } = this.props;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.setState({
-                    loading: true
-                });
+                // this.setState({
+                //     loading: true
+                // });
+                this.props.setLoadingButton(true);
                 return onSubmit(values,  this.stopLoading);
             }
         });
@@ -109,7 +110,8 @@ class NormalRegisterForm extends React.Component {
         callback();
     }
     stopLoading(){
-        this.setState({ loading: false });
+        this.props.setLoadingButton(false);
+        //this.setState({ loading: false });
     }
     disabledDate = (current) => {
         // Can not select future
@@ -117,7 +119,8 @@ class NormalRegisterForm extends React.Component {
 
     }
     render() {
-        const token = this.props.token;
+        const {currentUser:user, loadingButton} = this.props;
+        const {token = ''} = user;
         const form = this.props.form;
         if (token !== '') {
             return  <Redirect to={{
@@ -259,7 +262,7 @@ class NormalRegisterForm extends React.Component {
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
-                    <Button disabled={this.state.checked} loading={this.state.loading} type="primary" htmlType="submit" className="register-form-button">
+                    <Button disabled={this.state.checked} loading={loadingButton} type="primary" htmlType="submit" className="register-form-button">
                         {intl.messages.user_sign_up}
                     </Button>
                     {intl.messages.user_or} <Link to={'/login'}>{intl.messages.user_login_now}</Link>

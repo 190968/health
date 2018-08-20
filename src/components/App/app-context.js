@@ -1,5 +1,5 @@
 import React from 'react';
-import { compose, withState, withHandlers } from 'recompose';
+import { compose, withState, withHandlers, lifecycle } from 'recompose';
 
 export const CustomizedLabelsContext = React.createContext();
 export const NetworkContext = React.createContext();
@@ -58,7 +58,7 @@ export const ActiveUserContext = React.createContext({
 
  const ActiveUserProviderPure = (props) => {
     const {user, setUser, updateUserInfo} = props;
-    //console.log(props, 'ActiveUserProvider');
+    console.log(props, 'ActiveUserProvider');
     return (
         <ActiveUserContext.Provider value={{
             setUser:setUser,
@@ -71,18 +71,26 @@ export const ActiveUserContext = React.createContext({
 }
 
 export const ActiveUserProvider = compose(
-    withState('user', 'setUserState', props => props.user),
+    //withState('user', 'setUserState', props => props.user),
     withHandlers({
         setUser: props => user => {
-            props.setUserState(user);
+            console.log('SET USER CONTEXT', user);
+            //props.setUserState(user);
         },
         updateUserInfo: props => (fields) => {
             const {user} = props;
             //console.log(fields);
-            console.log({...user, ...fields}, 'New User Info');
-            props.setUserState({...user, ...fields});
+            console.log({...user, ...fields}, 'UPDATING User Info CONTEXT');
+            //props.setUserState({...user, ...fields});
         }
     }),
+    // lifecycle( {
+    //     getDerivedStateFromProps() {
+    //         fetchPosts().then(posts => {
+    //           this.setState({ posts });
+    //         })
+    //       }
+    // })
 )(ActiveUserProviderPure);
 
 
@@ -92,6 +100,7 @@ export const withActiveUser = Component => {
             <ActiveUserContext.Consumer>
                 {context => {
                     const {user={},setUser, updateUserInfo} = context || {}
+                    //console.log('With current User', user);
                     return <Component
                         {...props}
                          currentUser={user}

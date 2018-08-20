@@ -1,8 +1,8 @@
 /**
  * Created by Pavel on 09.12.2017.
  */
-import { connect } from 'react-redux'
-
+//import { connect } from 'react-redux'
+import {notification} from 'antd';
 /*  This is a container components. Notice it does not contain any JSX,
  nor does it import React. This components is **only** responsible for
  wiring in the actions and state necessary to render a presentational
@@ -14,6 +14,8 @@ import gql from 'graphql-tag';
 import {withRouter} from "react-router-dom";
 import LoginForm from "../components/Login";
 import {updatePhoneConfirm} from "../modules/user";
+import { UserInfoPhoneFragment } from '../fragments';
+import { withCurrentUser } from '../../../queries/user';
 
 
 const verifyPhoneConfirm = gql`
@@ -24,30 +26,46 @@ mutation verifyPhoneConfirm($code:String!) {
 
 const withMutation = graphql(verifyPhoneConfirm, {
     props: ({ ownProps, mutate }) => ({
-        verifyPhoneConfirm: (input, userId) => {
+        onSubmit: (props) => {
+            const{code} = props;
+            //console.log(ownProps);
+            const  {currentUser:user} = ownProps;
             return mutate({
-                variables: {code:input.code },
+                variables: {code:code },
                 update: (store, { data: { verifyPhoneConfirm } }) => {
 
 
-                    // let element = store.readFragment({
-                    //     id: 'User:'+userId, // `id` is any id that could be returned by `dataIdFromObject`.
-                    //     fragment: LoginForm.fragments.user,
-                    //     fragmentName: 'UserInfo'
-                    // });
+                    const userOld = store.readFragment({
+                        id: 'User:'+user.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                        fragment: UserInfoPhoneFragment,
+                        fragmentName: 'UserPhoneInfo'
+                    });
 
+                    //console.log(userOld);
 
-                    //element.phoneConfirmed = verifyPhoneConfirm;
+                    notification['success']({
+                        message: 'Phone verified',
+                        description: 'Now you can use the system',
+                      });
 
                     store.writeFragment({
-                        id: 'User:'+userId,
-                        fragment: LoginForm.fragments.user,
-                        fragmentName: 'UserInfo',
+                        id: 'User:'+user.id,
+                        fragment: UserInfoPhoneFragment,
+                        fragmentName: 'UserPhoneInfo',
                         data: {
+                            ...userOld,
                             phoneConfirmed: verifyPhoneConfirm,
                             __typename:'User'
                         },
-                    });/*
+                    });
+
+                    // const userOld2 = store.readFragment({
+                    //     id: 'User:'+user.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                    //     fragment: UserInfoPhoneFragment,
+                    //     fragmentName: 'UserPhoneInfo'
+                    // });
+                    // console.log(userOld2);
+                    /*
 
 
 
@@ -77,31 +95,30 @@ const withMutation = graphql(verifyPhoneConfirm, {
     }),
 });
 
-const mapStateToProps = (state) => {
+// const mapStateToProps = (state) => {
 
-    return {
-        userId: state.user.info.id
-    };
-};
+//     return {
+//     };
+// };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props, userId) => {
-        const{code} = props;
+// const mapDispatchToProps = (dispatch, ownProps) => ({
+//     onSubmit: (props, userId) => {
+//         const{code} = props;
 
-        ownProps.verifyPhoneConfirm({code:code }, userId)
-            .then(({data}) => {
+//         ownProps.verifyPhoneConfirm({code:code }, userId)
+//             .then(({data}) => {
 
-                // update user info
-                dispatch(updatePhoneConfirm(data.verifyPhoneConfirm));
+//                 // update user info
+//                 //dispatch(updatePhoneConfirm(data.verifyPhoneConfirm));
 
 
-                //ownProps.history.push('/');
+//                 //ownProps.history.push('/');
 
-            }).catch((error) => {
+//             }).catch((error) => {
 
-        });
-    },
-});
+//         });
+//     },
+// });
 
-export default withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(VerifyPhoneConfirmForm)));
+export default withRouter(withCurrentUser(withMutation(VerifyPhoneConfirmForm)));
 

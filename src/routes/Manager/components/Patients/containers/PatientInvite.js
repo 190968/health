@@ -1,4 +1,4 @@
-import PatientInvite from '../components/PatientInvite/index';
+import PatientInvite from '../components/PatientInvite/components/NetworkForm';
 import { graphql } from 'react-apollo';
 import React from 'react';
 import { compose, withStateHandlers, branch, withHandlers, defaultProps, withProps } from 'recompose';
@@ -9,7 +9,7 @@ import { withModal } from "../../../../../components/Modal/index";
 
 const GET_PROFILE_FORM = gql`
 query GET_PROFILE_FORM {
-    management {
+    management  {
       getProfileForm {
         id
         label
@@ -65,21 +65,21 @@ const enhance = compose(
       onSubmit: props => () => {
           //console.log(props, 'Props before input');
           props.form.validateFields((err, values) => {
-              //console.log(err);
-              //console.log(values);
+              console.log(err);
+              console.log(values);
               if (!err) {
-                  props.onSubmit(values).then(({data})=> {
-                      props.onHide();
-                  });
+                  // props.onSubmit(values).then(({data})=> {
+                  //     props.onHide();
+                  // });
               }
           });
       },
   }),
   withProps(props => {
-    console.log(props);
-      const modalTitle = props.patients ? 'Edit Patients' : 'Add Patients';
+      const modalTitle = props.patient ? 'Edit Patient' : 'Add Patient';
       return {
-          modalTitle:modalTitle
+          modalTitle,
+          modalFooter:false
       };
   }),
   withModal

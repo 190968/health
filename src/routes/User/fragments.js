@@ -17,6 +17,21 @@ export const UserInfoFragment = gql`
         }
 `;
 
+export const UserInfoPhoneFragment = gql`
+       fragment UserPhoneInfo on User {
+            ...UserInfo
+            phoneConfirmed
+            phone {
+                code
+                number
+            }
+
+        }
+        ${UserInfoFragment}
+`;
+
+
+
 
 export const PatientInfoFragment = gql`
        fragment PatientInfo on Patient {
@@ -42,6 +57,10 @@ export const CurrentUserInfoFragment = gql`
                 ...UserInfo
                 dateFormat
                 phoneConfirmed
+                phone {
+                    code
+                    number
+                }
             }
             currentRole
             currentToken {

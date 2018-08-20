@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html style="height: 100%; overflow: hidden;">
+  <body style="height: 100%; margin: 0">
+
+    <div style="margin:10px;">
+        <input id="search" style="width:100%" onkeyup=updateSearch(); />
+    </div>
+    <iframe id="myWidget"
+          src=""
+          width="100%"
+          height="100%">
+    </iframe>
+    <script src="https://developer.biodigital.com/builds/api/2/human-api.min.js"></script>
+    <script>
+    
+    var parameters = location.search.substring(1).split("&");
+
+    var temp = parameters[0].split("=");
+    l = unescape(temp[1]);
+     
+    document.getElementById("search").value = l;
+    document.getElementById("myWidget").src = "https://human.biodigital.com/widget/?m="+l+"&dk=c0fe191de0c6aa0985fb8d47e9eeac2f1fe5efda";
+    var timer = null;
+    function updateSearch(obj) {
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            var search = document.getElementById("search").value;
+            document.getElementById("myWidget").src = "https://human.biodigital.com/widget/?m="+search+"&dk=c0fe191de0c6aa0985fb8d47e9eeac2f1fe5efda";
+            //console.log('timer');
+            //timer = null;
+       },500);
+                        
+        
+    }
+    </script>
+  </body>
+</html>

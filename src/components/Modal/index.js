@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, Spin, Icon, Card, Button } from 'antd';
-import {compose, branch, renderComponent} from  'recompose';
+import {compose, branch, renderComponent, withState, withHandlers} from  'recompose';
 import './index.less';
 
 const formItemLayout = {
@@ -40,7 +40,8 @@ export const withModal = (WrappedComponent) => {
         render() {
             console.log(this.props);
             //console.log(this.state);
-            const {loading=false, modalVisible=true, destroyOnClose=true} = this.props;
+            const {loadingButton = false} = this.props;// in case we use withLoadingButton
+            const {loading=false, modalVisible=true, destroyOnClose=true, modalOKText='Save'} = this.props;
             let modalTitle = this.props.modalTitle;//type === '' ? 'Select Element' : this.props.getTypeName(type);
             // if (this.props.modalTitle) {
             //     modalTitle = ;
@@ -73,9 +74,10 @@ export const withModal = (WrappedComponent) => {
                     visible={modalVisible}
                     onOk={this.onOk}
                     onCancel={this.onCancel}
-                    okText="Save"
+                    okText={modalOKText}
                     maskClosable={false}
-                    confirmLoading={loading}
+                    confirmLoading={loadingButton}
+                    
                     {...modalOpts}
                 >
                     {loading ?
@@ -117,6 +119,17 @@ export const ModalBodyFooter = props => {
     return <div className="ant-modal-body-footer">{props.children}</div>
 }
 
+
+
+
+export const withToggleModal = compose(
+    withState('showModal', 'setShowModal', false),
+    withHandlers({
+        toggleModal: props => () => {
+            props.setShowModal(!props.showModal);
+        }
+    })
+);
 
 
 

@@ -7,17 +7,18 @@ import { connect } from 'react-redux'
 import { withCurrentUser } from '../queries/user';
 
 const PrivateRoute = ({state, currentUser={}, component: Component, ...rest }) => {
-    //console.log(currentUser);
+    console.log(rest);
+    const {path} = rest;
     const {token=''} = currentUser;
     return <Route {...rest} render={props => (
         token !== '' ? (
             <Component {...props}/>
         ) : (
-        //<div>Redirect to login</div>
-            <Redirect to={{
-                pathname: '/login',
-                state: {from: props.location}
-            }}/>
+            path != '/login' ? <Redirect to={{
+                     pathname: '/login',
+                     state: {from: props.location}
+                 }}/> : 
+                <div>Redirect to login</div>
         )
     )}/>
 }

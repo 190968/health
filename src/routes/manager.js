@@ -5,7 +5,7 @@ import Loadable from '../components/Loadable';
 
 
 /** Dash **/
-export const asyncWorkflow = (store) => {
+export const asyncWorkflow = () => {
 
     return (
         Loadable({
@@ -18,7 +18,7 @@ export const asyncWorkflow = (store) => {
 }
 
 
-export const asyncProfile = (store) => {
+export const asyncProfile = () => {
 
     return (
         Loadable({
@@ -29,7 +29,7 @@ export const asyncProfile = (store) => {
     );
 }
 
-export const asyncActionplans = (store) => {
+export const asyncActionplans = () => {
 
     return (
         Loadable({
@@ -40,7 +40,7 @@ export const asyncActionplans = (store) => {
     );
 }
 
-export const asyncPlanbuilder = (store) => {
+export const asyncPlanbuilder = () => {
 
     // return (
     //     Loadable({
@@ -59,7 +59,7 @@ export const asyncPlanbuilder = (store) => {
 }
 
 
-export const asyncConference = (store) => {
+export const asyncConference = () => {
 
     return (
         Loadable({
@@ -70,7 +70,7 @@ export const asyncConference = (store) => {
     );
 }
 
-export const asyncPathways = (store) => {
+export const asyncPathways = () => {
 
     return (
         Loadable({
@@ -81,7 +81,7 @@ export const asyncPathways = (store) => {
     );
 }
 
-export const asyncStages = (store) => {
+export const asyncStages = () => {
 
     return (
         Loadable({
@@ -96,7 +96,7 @@ export const asyncStages = (store) => {
 
 
 
-export const asyncPatients = (store) => {
+export const asyncPatients = () => {
 
     return (
         Loadable({
@@ -157,9 +157,9 @@ export const asyncNetworkManager = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "networkManagersChunk" */'../routes/Manager/containers/NetworkManager'),
-            modules: ['../routes/Manager/containers/NetworkManager'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/NetworkManager')],
+            loader: () => import(/* webpackChunkName: "networkManagersChunk" */'../routes/Manager/components/StaffMembers/containers/NetworkManagers'),
+            modules: ['../routes/Manager/components/StaffMembers/containers/NetworkManagers'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/StaffMembers/containers/NetworkManagers')],
         })
     );
 }
@@ -167,9 +167,9 @@ export const asyncSupervisors = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "supervisorsChunk" */'../routes/Manager/containers/Supervisors'),
-            modules: ['../routes/Manager/containers/Supervisors'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Supervisors')],
+            loader: () => import(/* webpackChunkName: "supervisorsChunk" */'../routes/Manager/components/StaffMembers/containers/Supervisors'),
+            modules: ['../routes/Manager/components/StaffMembers/containers/Supervisors'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/StaffMembers/containers/Supervisors')],
         })
     );
 }
@@ -177,9 +177,9 @@ export const asyncCareManager = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "cmsChunk" */'../routes/Manager/containers/CareManager'),
-            modules: ['../routes/Manager/containers/CareManager'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/CareManager')],
+            loader: () => import(/* webpackChunkName: "cmsChunk" */'../routes/Manager/components/StaffMembers/containers/CareManagers'),
+            modules: ['../routes/Manager/components/StaffMembers/containers/CareManagers'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/StaffMembers/containers/CareManagers')],
         })
     );
 }
@@ -187,9 +187,9 @@ export const asyncAnalysts = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "analystChunk" */'../routes/Manager/containers/Analysts'),
-            modules: ['../routes/Manager/containers/Analysts'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Analysts')],
+            loader: () => import(/* webpackChunkName: "analystsChunk" */'../routes/Manager/components/StaffMembers/containers/Analysts'),
+            modules: ['../routes/Manager/components/StaffMembers/containers/Analysts'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/StaffMembers/containers/Analysts')],
         })
     );
 }
@@ -197,9 +197,9 @@ export const asyncSupportStaff = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "supportStaffChunk" */'../routes/Manager/containers/SupportStaff'),
-            modules: ['../routes/Manager/containers/SupportStaff'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/SupportStaff')],
+            loader: () => import(/* webpackChunkName: "supportStaffChunk" */'../routes/Manager/components/StaffMembers/containers/SupportStaff'),
+            modules: ['../routes/Manager/components/StaffMembers/containers/SupportStaff'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/StaffMembers/containers/SupportStaff')],
         })
     );
 }

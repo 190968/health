@@ -14,43 +14,6 @@ export const CurrentUserQUERY = gql`
 
 
 export const withCurrentUser = withActiveUser;
-export const withCurrentUser3 = graphql(CurrentUserQUERY,
-    {
-        options: () => {
-            return {
-                fetchPolicy: 'cache-only'
-            }
-        },
-        props: ({ ownProps, data }) => {
-            const {loading:ownLoading} = ownProps;
-            const {account={}, loading=ownLoading} = data;
-            const {user, currentRole, currentToken={}, ...otherProps} = account;
-            let {token, isExpired=true} = currentToken;
-            //console.log(currentToken);
-            if (isExpired) {
-                token = '';
-            }
-            //console.log(data, 'Loading Current User');
-            return {currentUser:{...user, currentRole, token, ...otherProps}};
-        }
-    }
-)
-
-//const CurrentUserContext = React.createContext('light');
-
-// // This function takes a component...
-// export const withCurrentUserHOC = (Component) => {
-//   // ...and returns another component...
-//   return function withCurrentUserComponent(props) {
-//     // ... and renders the wrapped component with the context theme!
-//     // Notice that we pass through any additional props as well
-//     return (
-//       <CurrentUserContext.Consumer>
-//         {theme => <Component {...props} theme={theme} />}
-//       </CurrentUserContext.Consumer>
-//     );
-//   };
-// }
 
 export const CurrentUserNetworkQUERY = gql`
 query GET_CURRENT_USER_NETWORK  {
@@ -65,9 +28,12 @@ ${CurrentNetworkInfoFragment}
 
 export const withCurrentUserAndNetwork = graphql(CurrentUserNetworkQUERY,
     {
-        options: () => {
+        options: (ownProps) => {
+            //console.log(ownProps);
             return {
-                fetchPolicy: 'cache-first'
+                //fetchPolicy: 'cache-first'
+                //fetchPolicy: 'no-cache'
+                fetchPolicy: 'network-only'
             }
         },
         props: ({ ownProps, data }) => {
@@ -77,7 +43,7 @@ export const withCurrentUserAndNetwork = graphql(CurrentUserNetworkQUERY,
             if (isExpired) {
                 token = '';
             }
-            //console.log(data, 'loading user network');
+            console.log(data, 'loading user network');
             return {currentNetwork, currentUser:{...user, currentRole, token, ...otherProps}, loading};
         }
     }

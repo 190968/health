@@ -5,29 +5,8 @@ import NotificationBadge from '../../containers/NotificationBadge';
 import './index.less';
 
 class RightMenu extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.toggleUser = this.toggleUser.bind(this);
-        this.state = {
-            isOpen: false,
-            isOpenUser: false,
-            loading: false,
-        };
-    }
     static defaultProps = {
         lastNotification: ''// last notification cursor
-    }
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
-    toggleUser() {
-        this.setState({
-            isOpenUser: !this.state.isOpenUser
-        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -35,10 +14,13 @@ class RightMenu extends React.Component {
         // console.log(this.props);
         const {currentUser={}} = this.props;
         const {token=''} = currentUser;
-
-        if (!nextProps.token && nextProps.token !== token) {
+        console.log(nextProps);
+        console.log(this.props);
+        if (nextProps.tokenIsExpired && token !== '' && nextProps.token !== token) {
             // reload to logout
-            this.props.updateCurrentUserInfo({token: ''});
+           
+            console.log('RESET TOKEN FROM HEADER');
+            //this.props.updateCurrentUserInfo({token: ''});
             //console.log(nextProps);
             notification['warning']({
                 message: 'You have been logged out',
@@ -49,6 +31,7 @@ class RightMenu extends React.Component {
     }
 
     render() {
+        console.log('Menu Badges LOADED', this.props);
         const {unreadMessages, loading, lastNotificationCursor, newCursor, newNotificationsNum} = this.props;
         // first call - lastNotification - empty, but lastCursor has value. It means that we can load the notifications
         const loadNew = !loading && lastNotificationCursor !== newCursor;

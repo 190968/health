@@ -5,7 +5,7 @@ import Loadable from '../components/Loadable';
 
 
 /** Dash **/
-export const asyncDash = (store) => {
+export const asyncDash = () => {
     // if current user is admin
 
     /*if (1==1 && store.getState().network.curret_role == 'user') {// not working
@@ -30,7 +30,7 @@ export const asyncDash = (store) => {
 }
 
 /** Login **/
-export const asyncLogin = (store) => {
+export const asyncLogin = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "loginChunk" */'../routes/User/containers/loginContainer'),
@@ -40,11 +40,11 @@ export const asyncLogin = (store) => {
                 'url': 'User/modules/login',
                 'key': 'user_login'
             }
-        }, store)
+        })
     );
 }
 
-export const asyncRegister = (store) => {
+export const asyncRegister = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "registerChunk" */'../routes/User/containers/registerContainer'),
@@ -54,7 +54,7 @@ export const asyncRegister = (store) => {
                 'url': 'User/modules/register',
                 'key': 'user_register'
             }
-        }, store)
+        })
     );
 }
 
@@ -72,7 +72,7 @@ export const asyncLogout = () => {
     );
 }
 
-export const asyncForgotPassword = (store) => {
+export const asyncForgotPassword = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "forgotPasswordChunk" */'../routes/User/containers/forgotPasswordContainer'),
@@ -81,7 +81,7 @@ export const asyncForgotPassword = (store) => {
         })
     );
 }
-export const asyncRepository = (store) => {
+export const asyncRepository = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "categorySelectChunk" */'../components/Autosuggest/containers/CategorySelect'),
@@ -92,7 +92,7 @@ export const asyncRepository = (store) => {
 }
 
 
-export const asyncSettings = (store) => {
+export const asyncSettings = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "settingsChunk" */'../routes/User/components/Settings/components'),
@@ -115,7 +115,7 @@ export const asyncPlanstore = (store) => {
         }, store)
     );
 }
-export const asyncVerifyPhone = (store) => {
+export const asyncVerifyPhone = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "phoneVerifyChunk" */'../routes/User/containers/verifyPhoneContainer'),
@@ -125,7 +125,7 @@ export const asyncVerifyPhone = (store) => {
                 'url': 'User/modules/verifyPhone',
                 'key': 'verifyPhone'
             }
-        }, store)
+        })
     );
 }
 export const asyncVerifyPhoneConfirm = (store) => {
@@ -142,7 +142,7 @@ export const asyncVerifyPhoneConfirm = (store) => {
     );
 }
 
-export const asyncMessages = (store) => {
+export const asyncMessages = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "messagesChunk" */'../routes/Messages/components'),
@@ -152,7 +152,7 @@ export const asyncMessages = (store) => {
     );
 }
 
-export const asyncHealth = (store) => {
+export const asyncHealth = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "healthChunk" */'../routes/Health/components'),
@@ -162,7 +162,7 @@ export const asyncHealth = (store) => {
     );
 }
 
-export const asyncHelp = (store) => {
+export const asyncHelp = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "helpChunk" */'../routes/Help/containers'),
@@ -176,7 +176,7 @@ export const asyncHelp = (store) => {
 
 
 
-export const asyncCommynity = (store) => {
+export const asyncCommynity = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "communityChunk" */'../routes/Community/components'),
@@ -186,7 +186,7 @@ export const asyncCommynity = (store) => {
     );
 }
 
-export const asyncMotivation = (store) => {
+export const asyncMotivation = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "motivationChunk" */'../routes/User/containers/motivationContainer.js'),
@@ -196,7 +196,7 @@ export const asyncMotivation = (store) => {
     );
 }
 
-export const asyncProfile = (store) => {
+export const asyncProfile = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "profileChunk" */'../routes/User/containers/profileContainer.js'),
@@ -215,7 +215,7 @@ export const asyncProfile = (store) => {
 //     );
 // }
 
-export const asyncCalendar = (store) => {
+export const asyncCalendar = () => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "calendarChunk" */'../routes/Calendar/containers/Calendar'),

@@ -8,7 +8,7 @@ import {
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
-class AddressForm extends React.Component{
+class AddressFormPure extends React.Component{
     static defaultProps = {
         required:false,
         address: {line1:'', line2:'',country:'',city:'', state:'', zipcode:''}
@@ -118,6 +118,7 @@ const AddressFormWithQuery = graphql(countriesStatesQuery,
             }
         },
     }
-)(AddressForm);
+)(AddressFormPure);
 
+export const AddressForm = injectIntl(AddressFormWithQuery);
 export default injectIntl(AddressFormWithQuery);

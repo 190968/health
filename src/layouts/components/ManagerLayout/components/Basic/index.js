@@ -11,8 +11,8 @@ import './index.less';
 const {Sider, Header, Content, Footer} = Layout;
 const SubMenu = Menu.SubMenu;
 
-const BasicLayout = ({loading, user, store, location, match}) => {
-
+const BasicLayout = (props) => {
+    const {loading, user, store, location, match} = props;
 
     //console.log(location);
   //console.log(match);
@@ -26,7 +26,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
             selectedItem = 'active';
         }
     }
-
+console.log('Loading Manager Layout', props);
     // console.log(selectedItem, 'selectedItem');
     // console.log(openItem, 'openItem');
     // console.log(tab);
@@ -39,7 +39,7 @@ const BasicLayout = ({loading, user, store, location, match}) => {
 
     return (
         <Layout style={{minHeight: '100vh'}}>
-            <PrivateRoute path="/pb" component={asyncPlanbuilder(store)}/>
+            {/* <PrivateRoute path="/pb" component={asyncPlanbuilder(store)}/> */}
             <Header style={{background: '#fff', padding: 0, zIndex:1}}>
                 <div style={{
                     height: 64,
@@ -48,10 +48,9 @@ const BasicLayout = ({loading, user, store, location, match}) => {
                     position: 'relative',
                     boxShadow:' 0 1px 4px rgba(0,21,41,.08)'
                 }}>
-
                     <div className="logo" style={{marginTop: '-8px', marginLeft:5, float:'left'}}>
-
-                        <Logo /></div>
+                        <Logo />
+                    </div>
                     <RightMenu/>
                 </div>
             </Header>
@@ -140,8 +139,8 @@ const BasicLayout = ({loading, user, store, location, match}) => {
 
 
                 <Content style={{minHeight: '100vh'}}>
-                        <BasicRoutes store={store}/>
-                        <ManagerRoutes store={store}/>
+                    <ManagerRoutes store={store}/>
+
                     <Footer style={{textAlign: 'center', background: 'transparent'}}>
                         Copyright © 2010-2018 Fitango Inc. All rights reserved
                     </Footer>

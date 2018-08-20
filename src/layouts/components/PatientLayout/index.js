@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 import {Layout} from 'antd';
-import {Switch} from 'react-router-dom'
 import LayoutHeader from '../../components/Header';
-import {BasicRoutes} from '../../routes';
-import {PatientRoutes} from './routes';
-
+import {CoreRoutes, UseRoutes} from '../../routes';
+import {PatientRoutesList} from './routes';
+import {Switch} from 'react-router-dom'
 const {Header, Content, Footer} = Layout;
 
 const PatientLayout = ({loading, store, location}) =>  {
@@ -12,8 +11,9 @@ const PatientLayout = ({loading, store, location}) =>  {
     //console.log(location);
     const {pathname} = location;
     if (pathname === '/logout') {
-        return <BasicRoutes store={store} />;
+        return <UseRoutes routes={CoreRoutes} />;
     }
+    
     return (
         <React.Fragment>
             <div style={{height:'100%', display: 'flex',
@@ -24,8 +24,7 @@ const PatientLayout = ({loading, store, location}) =>  {
                     <LayoutHeader loading={loading} location={location} patientLayout  />
                 </Header>
                 <Content style={{ padding: '24px 50px', flex: '1' }}>
-                        <BasicRoutes store={store} />
-                        <PatientRoutes store={store} />
+                            <UseRoutes routes={PatientRoutesList} />
                 </Content>
                 <Footer>
                     Copyright © 2010-2018 Fitango Inc. All rights reserved

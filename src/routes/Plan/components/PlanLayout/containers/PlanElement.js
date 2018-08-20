@@ -20,7 +20,8 @@ export const PlanElementListItem = (props) => {
 		mode,
 		schedule = false,
 		lessonId,
-		sectionId
+		sectionId,
+		upid
 	} = props;
 	//console.log(props);
 	return (
@@ -40,6 +41,7 @@ export const PlanElementListItem = (props) => {
 							lessonId={lessonId}
 							sectionId={sectionId}
 							date={date}
+							upid={upid}
 						/>
 					);
 				}}

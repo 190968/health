@@ -1,16 +1,10 @@
-//import React from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'react-apollo';
-import {withRouter} from 'react-router'
-import { message } from 'antd';
-import { loginUserSuccess, loginUserError} from '../modules/login'
-import {loadUser, loadUserFAIL, loadUserPrepare} from '../modules/user'
-
+import {compose, withState, withHandlers} from 'recompose';
+import { Form, message } from 'antd';
 import LoginForm from '../components/Login'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+
 import { withCurrentUser, CurrentUserQUERY } from '../../../queries/user';
- 
 import { withCurrentNetwork } from '../../../queries/network';
 import { CurrentUserInfoFragment } from '../fragments';
 import { withLoadingButton } from '../../../components/Loading';
@@ -25,25 +19,9 @@ const loginUser = gql`
     }
     ${CurrentUserInfoFragment}
 `;
-const forgotPassword = gql`
-    mutation forgotPassword($email:Email!) {
-       forgotPassword(email:$email)
-    }
 
-`;
-const withMutationForgot = graphql(forgotPassword,
-    {
-        props: ({ mutate }) => ({
-            forgotPassword: input => {
-                return mutate({
-                    variables: { email: input.email},
-                })
-            },
-        }),
-    }
-);
 const withMutation = graphql(loginUser, {
-    props: ({ mutate }) => ({
+    props: ({ mutate, ownProps }) => ({
         loginUser: input => {
             return mutate({
                 variables: { input: {email: input.email, password: input.password}},
@@ -57,10 +35,21 @@ const withMutation = graphql(loginUser, {
                     });
 
                     //console.log(data);
+
+                    const account = login;
+                    const {currentToken={}} = account;
+                    let {token='', isExpired} = currentToken;
+                    if (isExpired) {
+                        token = '';
+                    }
+
+                    localStorage.setItem('token', token);
                    
 
                     const newData = {...data, ...{account: {...data.account, ...login}}};
-                    console.log(newData, 'New data upon login');
+
+                    ownProps.setLoadingButton(false);
+                    //console.log(newData, 'New data upon login');
                     store.writeQuery({
                         query: UserMainInfo_QUERY,
                         data: newData
@@ -70,99 +59,73 @@ const withMutation = graphql(loginUser, {
         },
     }),
 });
-const mapStateToProps = (state) => {
-    return {
-        //allowSignUp: state.network.allowSignUp,
-        //token: state.user.token,
-        //loading: state.user.loading
-    };
-};
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (props) => {
-        const{email, password} = props;
-        //dispatch(loadUserPrepare());
-        ownProps.setLoadingButton(true);
-        ownProps.loginUser({ email:email, password:password })
-            .then(({data}) => {
-                //ownProps.setLoadingButton(false);
-                const account = data.login;
-                const {currentToken={}, currentRole, user, ...otherProps} = account;
-                let {token='', isExpired} = currentToken;
-                if (isExpired) {
-                    token = '';
+ 
+// const mapDispatchToProps = (dispatch, ownProps) => ({
+    
+//     onClick: ({forgot_email}) => {
+//         ownProps.forgotPassword({ email:forgot_email})
+//             .then(({data}) => {
+
+//                 // redirect to Enter code
+//                 ownProps.history.push('/password/reset');
+//                 // show success message
+//                 message.success('Reset password link has been sent');
+
+//             });/*.catch((error) => {
+
+
+//         });*/
+
+
+//     },
+// });
+
+const enhance = compose(
+    Form.create(),
+    withLoadingButton,
+    withCurrentUser,
+    withMutation,
+    withHandlers({
+        onSubmit: props => (e) => {
+            e.preventDefault();
+    
+            props.form.validateFields((err, values) => {
+                if (!err) {
+
+                    const{email, password} = values;
+                    // set loading button as loading
+                    props.setLoadingButton(true);
+
+                    props.loginUser({ email:email, password:password }).then(({data}) => {
+                            // const account = data.login;
+                            // const {currentToken={}, currentRole, user, ...otherProps} = account;
+                            // let {token='', isExpired} = currentToken;
+                            // if (isExpired) {
+                            //     token = '';
+                            // }
+                            
+                            // const {location={}} = ownProps;
+                            // const {state={}} = location;
+                            // const {from={}} = state;
+                            // const {pathname} = from;
+                            message.success('Logged in');
+ 
+                        }).catch((error) => {
+                            props.setLoadingButton(false);
+                            
+                            //message.error(error.message);
+                    });
                 }
-                //let user = data.login.user;
-                //user.token = token;
-                //dispatch(loadUser(user));
-                
-                
-
-                localStorage.setItem('token', token);
-                //dispatch(setUserToken(token));
+            });
+        }
+    })
+);
+//withMutationForgot
+//withRouter
 
 
-
-                //dispatch(loginUserSuccess({token}));
-                const {location={}} = ownProps;
-                const {state={}} = location;
-                const {from={}} = state;
-                const {pathname} = from;
-                
-
-                //console.log(location);
-                //console.log(pathname);
-                if (pathname && pathname !== '/') {
-                    setTimeout(() => {
-                        //console.log(pathname, 'BOOOM, Redirect')
-                        //ownProps.history.push(pathname);
-                    }, 500);
-                }
-                
-
-            //     const {user={}, currentRole, currentToken={}, currentNetwork, ...otherProps} = account || {};
-            // let {token, isExpired} = currentToken;
-            // if (isExpired) {
-            //     token = '';
-            // }
-            // //console.log(data, 'loading user network');
-            // return {currentNetwork, currentUser:{...user, currentRole, token, ...otherProps}, loading};
-
-                ownProps.updateCurrentUser({...user, currentRole, token, ...otherProps});
-
-                
-
-                //
-            }).catch((error) => {
-                ownProps.setLoadingButton(false);
-                // dispatch(loadUserFAIL({ error,
-                // }));
-                // dispatch(loginUserError({
-                //     error,
-                // }));
-                //message.error(error.message);
-
-
-        });
-    },
-    onClick: ({forgot_email}) => {
-        ownProps.forgotPassword({ email:forgot_email})
-            .then(({data}) => {
-
-                // redirect to Enter code
-                ownProps.history.push('/password/reset');
-                // show success message
-                message.success('Reset password link has been sent');
-
-            });/*.catch((error) => {
-
-
-        });*/
-
-
-    },
-});
-
-export default compose(withLoadingButton,withCurrentUser, withMutation,withMutationForgot,connect(mapStateToProps, mapDispatchToProps))( withRouter(withCurrentNetwork((LoginForm))));
+export default enhance(LoginForm);
+//export default compose(,, ,,connect(mapStateToProps, mapDispatchToProps))( (((LoginForm))));
 
 
 

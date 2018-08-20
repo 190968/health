@@ -3,105 +3,22 @@ import { Redirect, Link } from 'react-router-dom'
 import {
     FormattedMessage
 } from 'react-intl';
-import './login.css'
+import './login.less'
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import gql from 'graphql-tag';
 import {Form, Icon, Input, Button, Card } from 'antd';
 import ru from './i18n/ru';
 import en from './i18n/en';
+import ForgotPasswordButton from './containers/ForgotPasswordButton';
 const FormItem = Form.Item;
-configure({ adapter: new Adapter() });
-export class LoginForm extends React.Component {
-
-    // fragment for the plan info
-    static fragments = {
-        user: gql`
-        fragment CurrenUserInfo on Account {
-            user {
-                ...UserInfo
-            }
-            token
-        }
-        fragment UserInfo on User {
-                id,
-                firstName
-                thumbs {
-                    small
-                    large
-                    medium
-                },
-                lastName,
-                dateFormat
-                token,
-                phoneConfirmed,
-                phone {
-                    code
-                    number
-                }
-        }
-        
-    `,
-
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: {
-                value: 'demo2patient@fitango.com',
-            },
-            password: {
-                value: 'Fitango2',
-            },
-            //loading: false,
-            visible: false,
-        };
-        this.showModal = this.showModal.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    };
 
 
-    showModal = () => {
-        this.setState({
-            visible: true,
-        });
-    }
+const LoginForm = props => {
 
-    handleCancel = () => {
-        this.setState({ visible: false });
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { onSubmit } = this.props;
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                this.setState({
-                    loading: true
-                });
-                return onSubmit(values);
-            }
-        });
-    }
-
-    handleClick = (e) => {
-        e.preventDefault();
-
-        const { onClick } = this.props;
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                return onClick(values);
-            }
-        });
-    }
-
-
-    render() {
-
-        const {currentUser={}, loadingButton=false} = this.props;
+    const {currentUser={}, loadingButton=false, form} = props;
         const {token} = currentUser;
-        // const token = this.props.token;
+        // if we have tolen, redirect to index page
         if (token) {
             //return <div>Redirect to dash</div>;
             return <Redirect to={{
@@ -109,17 +26,15 @@ export class LoginForm extends React.Component {
             }} />
         }
 
-        const { getFieldDecorator } = this.props.form;
-        const loading = this.props.loading;
+        const { getFieldDecorator, getFieldValue } = form;
         return (
             <div style={{padding:'8% 35% 20px'}}>
                 <Card
-                    title="Login"//{intl.formatMessage(messages.title)}
+                    title="Login"
                 >
-                    <Form onSubmit={this.handleSubmit} id="submitForm" className="login-form">
+                    <Form onSubmit={props.onSubmit} id="submitForm" className="login-form">
                         <FormItem>
                             {getFieldDecorator('email', {
-                                //initialValue: this.state.email.value,
                                 rules: [{ required: true, message: 'Please enter Email'/*, pattern: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/*/ }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={'Email'} />
@@ -136,24 +51,69 @@ export class LoginForm extends React.Component {
                             )}
                         </FormItem>
                         <FormItem>
-
-                            <Button type="primary" htmlType="submit"  loading={loadingButton}  className="login-form-button" id="submitButton">
+                            <Button type="primary" onClick={props.onSubmit} loading={loadingButton}  className="login-form-button" id="submitButton">
                                 Log in
                             </Button>
-                            <a className="login-form-forgot" onClick={this.showModal} >Forgot password</a>
-                            Or <Link to={'/register'}>
-                            Sign up
-                        </Link>
-
-
+                            <ForgotPasswordButton email={getFieldValue('email')} />
+                            
+                            Or <Link to={'/register'}>Sign up</Link>
                         </FormItem>
-
                     </Form>
                 </Card>
             </div>
         );
-    }
 }
 
-const WrappedLoginForm = Form.create()(LoginForm);
-export default WrappedLoginForm;
+// export class LoginForm1 extends React.Component {
+
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             email: {
+//                 value: 'demo2patient@fitango.com',
+//             },
+//             password: {
+//                 value: 'Fitango2',
+//             },
+//             //loading: false,
+//             visible: false,
+//         };
+//         this.showModal = this.showModal.bind(this);
+//         this.handleSubmit = this.handleSubmit.bind(this);
+//     };
+
+
+//     showModal = () => {
+//         this.setState({
+//             visible: true,
+//         });
+//     }
+
+//     handleCancel = () => {
+//         this.setState({ visible: false });
+//     }
+
+//     handleSubmit = (e) => {
+//         e.preventDefault();
+//         const { onSubmit } = this.props;
+//         this.props.form.validateFields((err, values) => {
+//             if (!err) {
+//                 this.setState({
+//                     loading: true
+//                 });
+//                 return onSubmit(values);
+//             }
+//         });
+//     }
+
+//     handleClick = 
+//     }
+
+
+//     render() {
+
+        
+//     }
+// }
+
+export default LoginForm;

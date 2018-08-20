@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom';
 import ReactPlaceholder from 'react-placeholder';
-import RightMenu from './containers/RightMenu';
+import RightMenu from './components/RightMenu';
 import { Row, Col, Menu, Card} from 'antd';
 import {GetGlobalLabel} from "../../../components/App/app-context";
 import { withCurrentUser } from '../../../queries/user';
@@ -34,7 +34,7 @@ class Header extends React.Component {
     }
     render() {
         const loading = this.props.loading;
-        const {currentUser={}} = this.props;
+        const {currentUser={}, updateCurrentUserInfo} = this.props;
         const {token} = currentUser;
         const location = this.props.location;
 
@@ -66,8 +66,9 @@ class Header extends React.Component {
 
         const locationPath = '/'+location.pathname.split('/')[1];
 
+        console.log('Loading Header', this.props);
 //{/*customPlaceholder={HeaderPlaceholder}*/}
-    console.log(this.props, 'Loading header');
+    //console.log(this.props, 'Loading header');
     if (loading) {
         return <Card loading  bordered={false} />
     }
@@ -93,7 +94,7 @@ class Header extends React.Component {
                     </Col>
 
                     <Col md={9}>
-                        <RightMenu />
+                        <RightMenu currentUser={currentUser} updateCurrentUserInfo={updateCurrentUserInfo} />
                     </Col>
 
                 </Row>
