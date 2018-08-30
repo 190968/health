@@ -22,6 +22,7 @@ export const getTimelineElementsConst = (includeViewOnly=false) => {
         {name:'Clinical Trial', type:'clinical_trial', icon:<FitIcon icon='regimen' />},
         {name:'Media', type:'media', icon:<Icon type='file' />},
         {name:'Treatment Plan', type:'treatment_plan', icon:<FitIcon icon='treatment' />},
+        {name:'Transition', type:'new_transition', icon:<Icon type='database' />},
         //{name:'Care Plan', type:'discharge'},
     ];
     if (includeViewOnly) {
@@ -44,6 +45,11 @@ export const getTimelineElementTitle = (type) => {
     return '';
 }
 
+const gridStyle = {
+    width: '33%',
+    textAlign: 'center',
+  };
+
 class TimelineElementSelect extends React.PureComponent {
 
 
@@ -55,7 +61,14 @@ class TimelineElementSelect extends React.PureComponent {
 
         const elements = getTimelineElementsConst();
         return (
-            elements.map(info => <Tag key={info.type} style={{marginBottom:5}} onClick={() => this.setType(info.type)}>{info.icon} <span>{info.name}</span></Tag>)
+            <Card type={'pure'} bordered={false}>
+            {elements.map((info, i) => {
+                return <Card.Grid key={i} style={gridStyle} onClick={() => this.setType(info.type)}>
+                <div style={{fontSize:'2em'}}>{info.icon}</div> <span>{info.name}</span>
+                </Card.Grid>
+            })}
+            </Card>
+            
         );
     }
 }

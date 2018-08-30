@@ -19,6 +19,7 @@ import TreatmentPlanBuilder from './containers/TreatmentPlanBuilder';
 import BlankElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/BlankElementBuilder";
 import ApElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder";
 import MediaElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
+import { TransitionManager } from '../../../../../Transitions/containers/TransitionManager';
 
 
 
@@ -141,6 +142,7 @@ const enhance = compose(
         {when: ({type}) => type === 'ap', then: ApElementBuilder},
         {when: ({type}) => type === 'treatment_plan', then: TreatmentPlanBuilder},
         {when: ({type}) => type === 'media', then: MediaElementBuilder },
+        {when: ({type}) => type === 'new_transition', then: TransitionManager },
 
     ]),
 

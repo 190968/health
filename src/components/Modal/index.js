@@ -65,7 +65,7 @@ export const withModal = (WrappedComponent) => {
             if (loading) {
                 modalOpts.footer = <div style={{clear:'both', height:32}}><div style={{float:'right',backgroundColor:'#cfd8dc9e', width:'30%', height:32}}></div></div>;
                 modalOpts.closable = false;
-                modalOpts.title = <div style={{backgroundColor:'#cfd8dc9e', width:'50%', height:22}}></div>;
+                modalOpts.title = <div style={{backgroundColor:'rgba(255, 255, 255, 0.17)', width:'50%', height:22}}></div>;
             }
             // Wraps the input component in a container, without mutating it. Good!
             return (

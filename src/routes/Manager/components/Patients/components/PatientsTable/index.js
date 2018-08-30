@@ -41,7 +41,7 @@ export const PatientsTable = props => {
     testColumns.push({
         title: '',
         width: 50,
-        render: ({user}) => {
+        render: (title, user) => {
             const menu = (
                 <Menu>
                     <Menu.Item key={0} >

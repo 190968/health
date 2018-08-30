@@ -7,6 +7,7 @@ import {HealthElementFragment} from "../../../../../../../Health/components/frag
 import {TumorboardSimpleFragment} from "../../../../../Tumorboard/containers/TumorboardManager";
 import {ClinicalTrialFragment} from "../../../../../ClinicalTrials/fragments";
 import {PlanCardFragment, UserPlanFragment} from "../../../../../../../Plan/components/Plan/fragments";
+import { TransitionInfoFragment } from '../../../Transitions/containers/TransitionManager';
 export const TimelineElementActivityFragment  = gql`
     fragment TimelineElementActivity on TimelineElement {
         activity {
@@ -47,6 +48,9 @@ export const TimelineElementActivityFragment  = gql`
             ... on PlanElementMedia {
                 ...MediaElement
             }
+            ... on UserTransition {
+                ...TransitionInfo
+            }
             __typename
         }
     }
@@ -60,6 +64,7 @@ export const TimelineElementActivityFragment  = gql`
      ${PlanCardFragment}
      ${UserPlanFragment}
      ${ElementMediaFragment}
+     ${TransitionInfoFragment}
      
 `;
 

@@ -3,6 +3,7 @@ import {Card, Row, Col} from 'antd';
 import EllipsisText from 'react-ellipsis-text';
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import moment from 'moment';
+import { Loading } from '../../../../components/Loading';
 
 const gridStyle = {
     width: '33%',
@@ -10,10 +11,16 @@ const gridStyle = {
 
 export const TasksList = props => {
 
-    const {tasks = [], loading = false} = props;
+    const {tasks = [], loading = false, hideOnEmpty = false} = props;
     const total = tasks.length;
+    if (loading) {
+        return <Loading />
+    }
+    if (total === 0 && hideOnEmpty) {
+        return null;
+    }
 
-    return (<Card type="basic pure" title={'Tasks ' + (total > 0 ? ' (' + total + ')' : '')}>
+    return (<Card title={'Tasks ' + (total > 0 ? ' (' + total + ')' : '')}>
         <Row gutter={8}>
             {tasks.map((task, i) => {
 
@@ -26,8 +33,8 @@ export const TasksList = props => {
                         color = '#FF8805';
                         break;
                 }
-                return <Col key={i} md={8}>
-                    <Card bordered={false} bodyStyle={{borderLeft: '3px solid ' + color, padding: 10}}>
+                return <Col key={i} md={8} style={{paddingBottom:4, paddingTop:4}}>
+                    <Card bordered={true} bodyStyle={{borderLeft: '3px solid ' + color, padding: 10}}>
                         <h4>{task.title}</h4>
                         <AvatarWithName user={task.sender} size={'small'}/>
 

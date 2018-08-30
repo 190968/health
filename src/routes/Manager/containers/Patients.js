@@ -73,6 +73,7 @@ const withQuery = graphql(
                     total: data.management.getPatients.totalCount,
                    // getPatientsTable:data.network.tables,
                     loading: data.loading,
+                    refetchList: data.refetch,
                     /*loadByStatus(status) {
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)

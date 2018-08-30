@@ -17,7 +17,7 @@ export class Patients extends React.Component {
         if (loading) {
             return <div>Loading...</div>
         }
-        const { onSearch, patients, emitEmpty, selectedObj, searchText, selectedCount, visibleModal, openShowButton, hideShowButton, openModal, hideModal, showButton, sliderChange } = this.props;
+        const { onSearch, patients, emitEmpty, selectedObj, searchText, selectedCount, visibleModal, openShowButton, hideShowButton, openModal, hideModal, showButton, sliderChange, hideModalReset } = this.props;
         const actions = <React.Fragment>
             <RadioGroup defaultValue="all" style={{ marginRight: 10 }} >
                 <RadioButton value="all">All</RadioButton>
@@ -39,7 +39,7 @@ export class Patients extends React.Component {
                 <Card type="table">
                     <PatientsTable patients={patients} selectedCount={selectedCount} selectedObj={selectedObj} openShowButton={openShowButton} hideShowButton={hideShowButton} showButton={showButton} onSearch={onSearch} emitEmpty={emitEmpty} searchText={searchText} sliderChange={sliderChange} />
                 </Card>
-                {visibleModal && <PatientInvite onHide={hideModal}  />}
+                {visibleModal && <PatientInvite onHide={hideModalReset}  />}
             </PageHeaderLayout>);
     }
 }
@@ -50,6 +50,12 @@ const enhance = compose(
             props.setOpenManager(true);
         },
         hideModal: props => () => {
+            props.setOpenManager(false);
+        },
+        hideModalReset: props => () => {
+            console.log(props);
+            // refetch the list
+            props.refetchList();
             props.setOpenManager(false);
         }
     }),

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Card, List} from 'antd';
 import EllipsisText from 'react-ellipsis-text';
-
+import PubMedLogo from  './PubMed.png';
 const News = props => {
     const {items=[]} = props;
 
-    return <Card title="News" type="basic1">
+    return <Card title="News" extra={<img src={PubMedLogo} style={{width:60}} />} type="basic1">
         <List
             size="small"
             dataSource={items}

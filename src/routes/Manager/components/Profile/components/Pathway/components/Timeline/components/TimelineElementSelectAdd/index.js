@@ -8,7 +8,8 @@ import { withModal } from '../../../../../../../../../../components/Modal';
 const TimelineElementSelectModal = compose(
     withProps(props => ({
         modalTitle: 'Select Element',
-        modalFooter:false
+        modalFooter:false,
+        modalWidth:700
     })),
     withModal
 )(TimelineElementSelect)

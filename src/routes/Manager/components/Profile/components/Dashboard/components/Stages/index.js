@@ -31,8 +31,7 @@ export const Vitals = props => {
         return {...stage, report:userStage };
     });
     //console.log(props);
-    return  <Row  style={{marginBottom:16}}>
-        <Col><Card title={'Stages'}>
+    return  <Card title={'Stages'}>
         <Steps progressDot={true} current={currentStep} >
             {finalStages.map((stage, i) => {
 
@@ -91,11 +90,11 @@ export const Vitals = props => {
                 }
 
                 console.log(stage);
-                return <Step title={title} description={<center>{description}</center>} />
+                return <Step title={title} key={i} description={<center>{description}</center>} />
                 //return <StepWithCounter stage={stage} finalStages={finalStages} key={i} i={i} />
             })}
         </Steps>
-        </Card></Col></Row>;
+        </Card>;
 }
 
 export default Vitals;

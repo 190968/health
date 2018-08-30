@@ -6,7 +6,7 @@ import PatientInvite from "../../containers/PatientInvite";
 
 const PatientEditButton = props => {
     const { openModal,visibleModal,hideModal,user, asMenuItem=false } = props;
-    console.log("PatientEditButton ==> ",user);
+    console.log("PatientEditButton ==> ",props);
     return <React.Fragment >
 
         {asMenuItem ? <span onClick={openModal}>Edit</span> : <Button onClick={openModal}><Icon type="edit" /> Edit</Button>}

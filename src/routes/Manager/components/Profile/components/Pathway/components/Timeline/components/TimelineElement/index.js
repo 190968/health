@@ -134,6 +134,11 @@ export const TimelineElementView = (item, props={}) => {
             progress = formatFileName(activity, {showSize:false});
             //body.push( activity.description || '');
             break;
+        case 'new_transition':
+            const {typeTxt=''} = activity;
+            body.push(typeTxt);
+            //activityText = ;
+            break;
         case 'clinical_note':
             icon = <FitIcon icon='clinical-note' />;
             activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;

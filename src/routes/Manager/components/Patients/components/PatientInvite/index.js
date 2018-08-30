@@ -4,7 +4,7 @@ import { Radio, Tabs, Input, Col, Select, Form, DatePicker, Button, } from 'antd
 const TabPane = Tabs.TabPane;
 
 const PatientInvite = props => {
-    const { getProfileForm, } = props;
+    const { getProfileForm=[] } = props;
     const { getFieldDecorator } = props.form;
     let tab0 = [], tab1 = [], tab2 = [], tab3 = [], tab4 = [];
     console.log("PatientInvite ==> ",props.patients);

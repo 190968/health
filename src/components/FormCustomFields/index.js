@@ -264,13 +264,16 @@ class DateFieldInit extends React.Component{
 
     triggerChange = (changedValue) => {
         // Should provide an event to pass value to Form.
-        const onChange = this.props.onChange;
+        const {onChange, asString=false} = this.props;
         if (onChange) {
             //console.log(Object.assign({}, this.state, changedValue.date));
-            const formattedDate = changedValue.date;
+            let formattedDate = changedValue.date;
             //const formattedDate = moment(date).format('YYYY-MM-DD');
             //console.log(this.state);
             //console.log(Object.assign({}, this.state, changedValue));
+            if (asString) {
+                formattedDate = formattedDate.format('YYYY-MM-DD');
+            }
             onChange(formattedDate);
             //const newValue = Object.assign({}, this.state, changedValue);
             this.setState(changedValue);

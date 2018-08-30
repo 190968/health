@@ -17,7 +17,8 @@ export const PageHeader = (props) => {
 		activeKeyProps = '',
 		onTabChange,
 		activeTab,
-		isCollapsed = false
+		isCollapsed = false,
+		extraContentDiff=0
 	} = props;
 	const span = action === '' ? 24 : 12;
 	const spanExtra = extraContent === '' ? 24 : 12;
@@ -41,12 +42,12 @@ export const PageHeader = (props) => {
 			</Row>
 			<Row>
 				{(content !== '' || extraContent !== '') && (
-					<Col md={spanExtra + 2}>
+					<Col md={spanExtra + 4+extraContentDiff}>
 						<div className="pageHeaderDesc">{content}</div>
 					</Col>
 				)}
 				{extraContent !== '' && (
-					<Col md={spanExtra - 2} style={{ textAlign: 'right' }}>
+					<Col md={spanExtra - 4-extraContentDiff} style={{ textAlign: 'right' }}>
 						{extraContent !== '' && <div className="pageHeaderExtra">{extraContent}</div>}
 					</Col>
 				)}

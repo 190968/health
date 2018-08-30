@@ -3,10 +3,10 @@ import {HealthElementFragment} from "./components/fragments";
 import {ElementTrackerFragment} from "../Plan/components/Plan/fragments";
 
 export const GET_USER_HEALTH_ITEMS_QUERY = gql`
-    query GET_USER_HEALTH_ITEMS ($userId: UID!, $type: String!) {
+    query GET_USER_HEALTH_ITEMS ($userId: UID!, $type: String!, $isFamily: Boolean) {
         patient (id: $userId) {
             id
-            healthRecords (type: $type) {
+            healthRecords (type: $type, isFamily:$isFamily) {
                 totalCount
                 edges {
                     ...HealthElement

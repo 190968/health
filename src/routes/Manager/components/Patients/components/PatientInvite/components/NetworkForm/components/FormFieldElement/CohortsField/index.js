@@ -3,26 +3,24 @@
  */
 import React from 'react';
 
-import { Checkbox, Form } from 'antd';
-const FormItem = Form.Item;
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
+import { Checkbox} from 'antd';
+const CheckboxGroup = Checkbox.Group;
+const vertStyle = {
+    display: 'block',
+    marginLeft: 0,
 };
+ 
 const CohortsForm = props => {
-    const { getFieldDecorator } = props;
-    const { label } = props;
+    const { options=[], label } = props;
 
     return (
 
         
-                <Checkbox ></Checkbox>
+        <CheckboxGroup  >{options.map((option) => {
+            const coid = option.id;
+            const name = option.label;
+            return <Checkbox key={coid} value={coid} style={vertStyle} >{name}</Checkbox>;
+        })}</CheckboxGroup>
 
     );
 }

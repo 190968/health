@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col,Tag,Card, Tooltip } from 'antd';
+import { Row, Col,Tag,Card, Tooltip, Icon } from 'antd';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
@@ -193,7 +193,7 @@ export class Plan extends React.PureComponent {
                     description={<Truncate lines={2}>{description}</Truncate>}
                 />
 
-
+                <div className={'viewPlan'}><Icon type="right-circle-o" /></div>
             </Card>
         </Link>
     );

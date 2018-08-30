@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Col,Layout, Menu, Icon, Divider, Alert, Button, Dropdown } from 'antd';
+import {LineChart, Line, ResponsiveContainer, Tooltip as ReachartsTooltip} from 'recharts';
+import { Row, Col,Layout, Menu, Icon, Divider, Alert, Button, Dropdown, Progress, Tooltip } from 'antd';
 import {NavLink} from 'react-router-dom';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import Avatar from '../../../User/components/Avatar/index';
@@ -9,6 +10,9 @@ import {withModal} from "../../../../components/Modal/index"
 import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
 import DescriptionList from "../../../../components/Layout/DescriptionList/DescriptionList";
 import ProfileManager from './containers/ProfileManager';
+import { CalculatorButton } from './components/Calculators/containers/CalculatorButton';
+import { PubMedArticlesButton } from '../../../Health/components/PubMedArticles/containers/PubMedArticlesButton';
+import { FollowUpButton } from './components/Visits/containers/FollowUpButton';
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 const Description = DescriptionList.Description;
@@ -73,6 +77,10 @@ const CancerTitle = enhanceTitle(CancerTitlePure);
                 key: 'treatmentOptions',
                 tab: 'Treatment Options',
             },
+            {
+                key: 'outreach',
+                tab: 'Outreach',
+            },
         ];
 
 const BioDigitalButtonPure = props => {
@@ -120,12 +128,19 @@ const Profile = props => {
         const {code={}} = getDiagnosis || {};
         const {name:DiagnosisName} = code;
 
+        // adherence
+        const {medications:medAdherence={}, total:generalAdherence={}} = getAdherence;
+
+        const {level:medAdherenceLevel=0} = medAdherence || {};
+        const {level:generalAdherenceLevel=0} = generalAdherence || {};
+
         const descriptionDetails = [
             //['Name', user.fullName],
             ['Member ID', memberId],
             ['Gender', genderText],
             ['Age', age],
-            //['Birthday', birthday],
+            // ['Medication Adherence', ],
+            // ['Adherence', ],
             ['Phone', phoneFormatted],
             //['Email', email],
             ['Diagnosis', (DiagnosisName || null/*<span>Add Diagnosis</span>*/)],
@@ -137,11 +152,22 @@ const Profile = props => {
         ];
 
 
+        const data = [
+            {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
+            {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
+            {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
+            {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
+            {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
+            {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
+            {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
+      ];
+
         return (
             <PageHeaderLayout
                 title={user.fullName}
                 content={<Row style={{padding:5}}>
                     <Col md={6}><Avatar info={user} size="huge" /></Col>
+                     
                     <Col md={18}>
                         <DescriptionList col={3} >
                             {descriptionDetails.map((details, i) => {
@@ -152,16 +178,53 @@ const Profile = props => {
                         </DescriptionList>
                     </Col>
                 </Row>}
+
+                extraContentDiff={2}
+                extraContent={<Row style={{textAlign:'center', borderLeft1: '1px solid #ccc'}}>
+                    <Col>
+                    Adherence
+                    </Col>
+                    <Col>
+                        <Row>
+                        <Col span={'12'}>
+                        <Progress type="circle" percent={medAdherenceLevel} strokeColor={'#8884d8'} width={70} />
+                        <br />Medical 
+                        </Col>
+                        <Col span={'12'}>
+                        <Progress type="circle" percent={generalAdherenceLevel}  strokeColor={'#51ade2'}  width={70} />
+                        <br />General 
+                        </Col>
+                        <Col>
+                        <div style={{height:60, marginTop:5, padding: '0 10px'}}>
+                        <ResponsiveContainer>
+                        <LineChart   data={data}>
+                        
+                            <Line type='monotone' dataKey='pv' stroke='#8884d8' strokeWidth={2} />
+                            <Line type='monotone' dataKey='uv' stroke='#51ade2' strokeWidth={2} />
+                            <ReachartsTooltip/>
+                        </LineChart>
+                        </ResponsiveContainer>
+                        </div>
+                        </Col>
+                        </Row>
+                    </Col>
+                </Row>}
                 action={<React.Fragment>
+                    <CalculatorButton user={user} />
+                    <PubMedArticlesButton search={'Small Cell Lung Cancer'} />
                     <ButtonGroup>
-                        <Button icon={'edit'} onClick={addCancer}  >Edit Profile</Button>
+                    <Tooltip title={'Edit Profile'}><Button icon={'edit'} onClick={addCancer}  ></Button></Tooltip>
                         <Dropdown overlay={menu} placement="bottomRight">
                             <Button>
                                 <Icon type="ellipsis" />
                             </Button>
                         </Dropdown>
                     </ButtonGroup>
-                    <Button type="primary" icon={'mail'} style={{ marginLeft: 8}}>Send Message</Button>
+                    <ButtonGroup style={{ marginLeft: 8}}>
+                        <Tooltip title={'Send Message'}><Button type="primary" icon={'mail'} ></Button></Tooltip>
+                        <FollowUpButton patient={user} />
+                    </ButtonGroup>
+                    
                 </React.Fragment>}
                 tabList={tabList}
                 activeTab={tab}

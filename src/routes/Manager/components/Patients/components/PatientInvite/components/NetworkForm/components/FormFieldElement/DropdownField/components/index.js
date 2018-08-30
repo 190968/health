@@ -17,13 +17,9 @@ const DropdownForm = ({ form, label, options }, props) => {
     const opt = [];
 
     options.map((data) => { opt.push(<Option value={data.label} key={data.id}>{data.label}</Option>) })
-    console.log(opt, props);
-    return (
-
-        
-                <Select >
+    //console.log(opt, props);
+    return <Select >
                     {opt}
                 </Select>
-    );
 }
 export default DropdownForm;

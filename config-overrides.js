@@ -6,7 +6,12 @@ module.exports = function override(config, env) {
         "enforceDescriptions": false}], config);  // adding messages
 
     config = injectBabelPlugin(['recharts'], config);  // add charts
-    config = injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);  // change importing css to less
+    config = injectBabelPlugin(['import', { libraryName: 'antd', "customName": (name) => {
+        // if (name === 'TimePicker'){
+        //   return 'antd/lib/custom-time-picker';
+        // }
+        return `antd/lib/${name}`;
+      }, style: true }], config);  // change importing css to less
      config = rewireLess.withLoaderOptions({
               modifyVars: {
                   "@text-color": "fade(#000, 80%)",
@@ -29,6 +34,7 @@ module.exports = function override(config, env) {
                   "@card-padding-wider": '24px',
                   //"@avatar-font-size-lg": '40px',
               },
+              javascriptEnabled: true
      })(config, env);
     // do stuff with the webpack config...
     return config;

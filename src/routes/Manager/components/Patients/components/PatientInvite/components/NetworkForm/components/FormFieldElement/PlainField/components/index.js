@@ -3,28 +3,12 @@
  */
 import React from 'react';
 
-import { Input, Form } from 'antd';
+import { Input } from 'antd';
+ 
 
-const FormItem = Form.Item;
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 14 },
-    },
-};
+const PlainForm = () => {
 
-const PlainForm = ({ form, label }, props) => {
-
-    return (
-
-        
-                <Input />
-
-    );
+    return  <div><Input /></div>;
 }
 
 export default PlainForm;

@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { withCurrentUser } from '../queries/user';
 
 const PrivateRoute = ({state, currentUser={}, component: Component, ...rest }) => {
-    console.log(rest);
+    //console.log(rest);
     const {path} = rest;
     const {token=''} = currentUser;
     return <Route {...rest} render={props => (

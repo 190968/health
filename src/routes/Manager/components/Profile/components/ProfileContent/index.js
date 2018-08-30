@@ -5,6 +5,7 @@ import {Loading} from "../../../../../../components/Loading";
 import {Stakeholders} from "./components/Stakeholders/index";
 import {compose, withHandlers} from 'recompose';
 import CancerTreatment from '../Dashboard/containers/CancerTreatment';
+import Outreach from '../Dashboard/containers/Outreach';
 import {asyncProfileDetails, asyncProfileTimeline, asyncProfilePlans, asyncProfileAlerts, asyncProfileDashboard} from './routes';
 
 const RouteWithSubRoutes = route => {
@@ -67,6 +68,11 @@ const ProfileContentPure = props => {
             {
                 path: mainUrl + "/treatmentOptions",
                 component: CancerTreatment,
+                params: defaultParams
+            },
+            {
+                path: mainUrl + "/outreach",
+                component: Outreach,
                 params: defaultParams
             },
             {
