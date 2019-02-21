@@ -1,13 +1,16 @@
 import Assessments from '../components/Assessments';
-import {compose} from 'recompose';
+import { compose, defaultProps } from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { ifModuleExists, withActiveUserSimple } from '../../../../../components/App/app-context';
+import moment from 'moment';
+import { UserAssessmentReportPureFragment } from '../../Assessments/fragments';
 
-const GET_PROVIDERS_QUERY  = gql`
- query GET_USER_assessmentsS($user_id:UID, $date: Date) {
-  patient(id: $user_id) {
+export const GET_USER_ASSESSMENTS_QUERY = gql`
+ query GET_USER_ASSESSMENTS($userId:UID, $date: Date, $status: GeneralStatusEnum) {
+  patient(id: $userId) {
      id
-     getAssessments (date:$date) {
+     getAssessments (date:$date, status:$status) {
          edges {
             id
             assessment {
@@ -15,42 +18,57 @@ const GET_PROVIDERS_QUERY  = gql`
                 name
                 isForm
             }
-            date
-            createdOn
-            isCompleted
-            completedOn
-            totalQuestions
-            totalAnswers
-            progress
+            startDate
+            endDate
+            canReport
+            getLatestReport (date: $date) {
+                ...UserAssessmentReportPure
+            }
         }
      }
   }
 }
+${UserAssessmentReportPureFragment}
 `;
 
-const withQuery = graphql(GET_PROVIDERS_QUERY, {
+const withQuery = graphql(GET_USER_ASSESSMENTS_QUERY, {
     options: (ownProps) => {
-        return{
+        return {
             variables: {
-                user_id:ownProps.user.id,
-                date:ownProps.date
-            }
+                userId: ownProps.user.id,
+                date: ownProps.date,
+                status: 'active',
+            },
+            fetchPolicy: 'network-only',
         }
     },
     props: ({ data }) => {
 
-        const {patient={}} = data;
-        const {getAssessments={}} = patient;
-        const {edges=[]} = getAssessments;
-
-        return {loading: data.loading, assessments:edges }
+        const { patient , refetch } = data;
+        const { getAssessments } = patient || {};
+        const { edges = [] } = getAssessments || {};
+        const {status} = data.variables || {};
+        return {
+            loading: data.loading, assessments: edges, status: status, refetch,
+            loadByStatus(status) {
+                return data.refetch({
+                    status: status
+                });
+            }
+        }
     },
 });
 
 
 
 const enhance = compose(
-    withQuery
+    ifModuleExists('assessments'),
+    defaultProps({
+        date: moment().format('YYYY-MM-DD')
+    }),
+    withQuery,
+    withActiveUserSimple
 );
 
-export default enhance(Assessments);
+export const UserAssessments = enhance(Assessments);
+export default UserAssessments;

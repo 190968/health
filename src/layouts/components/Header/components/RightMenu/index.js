@@ -5,7 +5,6 @@ import ChangeRoleModal from './containers/ChangeRole';
 import {Menu, Row, Col } from 'antd';
 import UserWidget from '../../../../../routes/User/components/UserWidget';
 import CategorySelect from '../../../../../components/Autosuggest/containers/CategorySelect.js';
-import Community from '../../../../../routes/Community/components/CommunityLayout/containers/Category';
 const SubMenu = Menu.SubMenu;
 
 class RightMenu extends React.Component {
@@ -49,7 +48,7 @@ class RightMenu extends React.Component {
 
     handleClick = (data) => {
         // this.setState({openCommunity: !this.state.openCommunity})
-        <Redirect to={{pathname: '/community/a485'}} />
+        // <Redirect to={{pathname: '/community/a485'}} />
     }
 
     render() {
@@ -62,7 +61,7 @@ class RightMenu extends React.Component {
         let user_menu_items = [];
         let defaultMenu = [];
         if (haveOtherRoles) {
-            user_menu_items.push(['Change Role', 'onclick',this.toggleRole]);
+            user_menu_items.push(['Change Mode', 'onclick',this.toggleRole]);
         }
         user_menu_items.push(['Medical Repository', 'onclick',this.toggleMedicalRepository]);
         if (currentRole === 'patient') {

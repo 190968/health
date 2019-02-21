@@ -1,17 +1,14 @@
-/**
- * Created by Павел on 02.02.2018.
- */
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
     "myFamily": {
         "id": "user_family_title",
-        "defaultMessage": "My Family",
+        "defaultMessage": "{isSelf, select, true {My } false {}} Family {count,  plural, =0 {} other {({count})}}",
         "description": "My Family"
     },
-    "noName": {
-        "id": "user_family_noname",
-        "defaultMessage": "No Name",
-        "description": "No Name"
+    "noFamily": {
+        "id": "user_family_empty",
+        "defaultMessage": "No Family Members",
+        "description": "No Family Members"
     }
 });

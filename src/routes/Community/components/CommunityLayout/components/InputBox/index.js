@@ -36,10 +36,10 @@ class InputBox extends React.Component{
         return(
         <Form onSubmit={this.handleSubmit} >
             <Row type="flex" justify="space-between" align="middle">
-            <Col span={2}>
+            {/* <Col span={2}>
                 <Avatar info={user}  />
-            </Col>
-            <Col span={19}>
+            </Col> */}
+            <Col span={21}>
                 <FormItem style={{margin:0}}>
                     {getFieldDecorator('text', {
                         rules: [{ required: true, message:"Input text Please" , whitespace: true }],
@@ -53,9 +53,9 @@ class InputBox extends React.Component{
                     )}
                 </FormItem>
             </Col>
-            <Col offset={1} span={2}>
+            <Col offset1={1} span={2}>
                 {
-                    isJoined ? <Button type="primary" size="large" htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled type="primary"  size="large" htmlType="submit">{intl.formatMessage(messages.post)}</Button>
+                    isJoined ? <Button type="primary" size="large" block htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled type="primary"  size="large" htmlType="submit">{intl.formatMessage(messages.post)}</Button>
                 }
             </Col>
             </Row>

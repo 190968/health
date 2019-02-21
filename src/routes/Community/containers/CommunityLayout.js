@@ -1,14 +1,9 @@
 
-/**
- * Created by Pavel on 10.01.2018.
- */
-//import React from 'react'
-import { connect } from 'react-redux'
-
-
-import CommunityLayout from '../components/CommunityLayout';
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import { ifPageExists } from '../../../components/App/app-context';
+import CommunityLayout from '../components/CommunityLayout';
+
 const CATEGORIES  = gql`
    query GET_MAIN_CATEGORIES {
        getMainCategories {
@@ -22,27 +17,17 @@ const CATEGORIES  = gql`
           medium
           wide
         }
-        
-       }
+    }
 }
 `;
-const withMutation = graphql(CATEGORIES, {
+const withQuery = graphql(CATEGORIES, {
     props: ({ ownProps, data }) => {
-        if (!data.loading) {
-            return {
-                info: data.getMainCategories,
-                loading: data.loading
-            }
-        }
-        else {
-            return {loading: data.loading}
+        const {getMainCategories} = data || {}
+        return {
+            info: getMainCategories,
+            loading: data.loading
         }
     },
 });
-const mapStateToProps = (state) => {
-    return {
-        user_id: state.user.info.id
-    };
-};
-const mapDispatchToProps = (dispatch, ownProps) => ({});
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(CommunityLayout));
+ 
+export default ifPageExists('community')(withQuery(CommunityLayout));

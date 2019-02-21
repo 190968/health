@@ -1,15 +1,15 @@
 import React from 'react';
 import {Button} from 'antd';
 import {compose, withHandlers, withState} from 'recompose';
-import {DashboardModal, Dashboard} from 'uppy/lib/react';
-import Uppy from 'uppy/lib/core';
-import 'uppy/dist/uppy.min.css';
-
-const Transloadit = require('uppy/lib/plugins/Transloadit')
-const Webcam = require('uppy/lib/plugins/Webcam')
-const Url = require('uppy/lib/plugins/Url')
-const GoogleDrive = require('uppy/lib/plugins/GoogleDrive')
-const Dropbox = require('uppy/lib/plugins/Dropbox')
+import '@uppy/dashboard/dist/style.min.css';
+import '@uppy/webcam/dist/style.min.css';
+import { DashboardModal } from '@uppy/react';
+import Uppy from '@uppy/core';
+import Webcam from '@uppy/webcam';
+const Transloadit = require('@uppy/transloadit')
+const Url = require('@uppy/url')
+const GoogleDrive = require('@uppy/google-drive')
+const Dropbox = require('@uppy/dropbox')
 
  class Upload extends React.Component {
 
@@ -107,7 +107,7 @@ const Dropbox = require('uppy/lib/plugins/Dropbox')
             }
 
 
-      }).use(Webcam).use(GoogleDrive).use(Dropbox).run()
+      }).use(Webcam);//.use(Dropbox).run()
      }
 
      componentWillUnmount () {
@@ -128,7 +128,7 @@ const Dropbox = require('uppy/lib/plugins/Dropbox')
                      open={open}
                      onRequestClose={onClose}
                      note={note}
-                     plugins={['Webcam', 'GoogleDrive', 'Dropbox']}
+                     plugins={['Webcam']}
 
                       metaFields = {[
                          { id: 'caption', name: 'Caption', placeholder: 'Describe what the file is about' }

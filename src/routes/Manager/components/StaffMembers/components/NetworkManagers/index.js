@@ -27,7 +27,7 @@ const NetworkManagers = props => {
         filterDropdown: (
             <Input 
                 suffix={suffix}
-                ref={ele => this.searchInput = ele}
+                // ref={ele => this.searchInput = ele}
                 placeholder="Search"
                 value={searchText}
                 onChange={onSearch}

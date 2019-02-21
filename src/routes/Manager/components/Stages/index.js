@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {Input, Card,Table,Radio,  Button, Icon, Tooltip} from 'antd';
 import StageManager from './containers/StageManager';
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
+import { TableWithMessage } from '../../../../components/Tables';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -55,22 +56,22 @@ export default class Stages extends React.Component {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            sorter: (a, b) => a.title.length - b.title.length,
-            render: (title, info) => {
-                return <span onClick={() => this.openEdit(info.id)}>{title}</span>
-            },
-            // search
-            filterDropdown: (
-                    <Input
-                        suffix={suffix}
-                        ref={ele => this.searchInput = ele}
-                        placeholder="Search name"
-                        value={this.props.searchText}
-                        onChange={this.props.onSearch}
-                        onPressEnter={this.props.onSearch}
-                    />
-            ),
-            filterIcon: <Icon type="search"/>,
+            // sorter: (a, b) => a.title.length - b.title.length,
+            // render: (title, info) => {
+            //     return <span onClick={() => this.openEdit(info.id)}>{title}</span>
+            // },
+            // // search
+            // filterDropdown: (
+            //         <Input
+            //             suffix={suffix}
+            //             ref={ele => this.searchInput = ele}
+            //             placeholder="Search name"
+            //             value={this.props.searchText}
+            //             onChange={this.props.onSearch}
+            //             onPressEnter={this.props.onSearch}
+            //         />
+            // ),
+            // filterIcon: <Icon type="search"/>,
         },{
             title: 'Letters',
             dataIndex: 'letters',
@@ -93,17 +94,18 @@ export default class Stages extends React.Component {
 
       
         return (
-            <PageHeaderLayout title={'Stages'+ (total > 0 ? ' ('+total+')' : '')}
+            <PageHeaderLayout title={'Cancer Stages'+ (total > 0 ? ' ('+total+')' : '')}
                           content=""
                           // extraContent={<Input.Search style={{width:200}} />}
                           action={actions}
                           >
             <Card type="table" >
                 {this.state.addStage && <StageManager id={this.state.editStageId} onCancel={this.hideManager}/>}
-                <Table dataSource={stages} columns={columns} pagination={false} onChange={this.handleChange}
-                       ref={(input) => {
-                           this.table = input;
-                       }}/>
+                <TableWithMessage
+                 dataSource={stages} 
+                 columns={columns} 
+                 onChange={this.handleChange}
+                />
             </Card>
             </PageHeaderLayout>);
     }

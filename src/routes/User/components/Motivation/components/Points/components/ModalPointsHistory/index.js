@@ -48,7 +48,7 @@ class ModalPointsHistory extends React.Component {
             title: intl.messages.user_motivation_receivedOn,
             dataIndex: 'receivedOn',
             key: 'receivedOn',
-            render: (date) => moment(date).format('LLL')
+            render: (date) => moment(date).format('lll')
         }];
 
 

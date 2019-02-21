@@ -5,6 +5,7 @@ import {compose, withStateHandlers, branch, withHandlers, withState, withProps} 
 import {Form} from 'antd';
 import gql from 'graphql-tag';
 import {withModal} from "../../../../../components/Modal/index";
+import { PhoneInfoFragment } from '../../../../../../../components/FormCustomFields/components/Phone/fragments';
 
 const GET_PROFILE = gql`
 query GET_USER_TEAM($user_id:UID) {
@@ -16,7 +17,8 @@ query GET_USER_TEAM($user_id:UID) {
                   edges{
                       id,
                       user {
-                          phoneFormatted
+                          id
+                          ...PhoneInfo
                       }
                       joinedDate
                       roleText
@@ -25,6 +27,7 @@ query GET_USER_TEAM($user_id:UID) {
        }
     }
   }
+  ${PhoneInfoFragment}
 `;
 
 const withQuery = graphql(GET_PROFILE, {

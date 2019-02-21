@@ -1,0 +1,51 @@
+@import '~antd/lib/style/themes/default.less';
+
+.avatarList {
+  display: inline-block;
+  ul {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0;
+  }
+}
+
+.avatarItem {
+  display: inline-block;
+  font-size: @font-size-base;
+  margin-left: -14px;
+  width: @avatar-size-base;
+  height: @avatar-size-base;
+  :global {
+    .ant-avatar {
+      border: 1px solid #fff !important;
+      // box-shadow: -1px 0px 2px -1px #000;
+    }
+  }
+}
+
+.avatarItemLarge {
+  width: @avatar-size-lg;
+  height: @avatar-size-lg;
+}
+
+.avatarItemSmall {
+  width: @avatar-size-sm;
+  height: @avatar-size-sm;
+}
+
+.avatarItemMini {
+  width: 16px;
+  height: 16px;
+  margin-left: -6px;
+  :global {
+    .ant-avatar {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+    }
+    .ant-avatar-sm > * {
+      line-height: 16px;
+      font-size:0.7em;
+    }
+  }
+}

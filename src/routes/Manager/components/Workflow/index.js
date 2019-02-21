@@ -29,18 +29,18 @@ export default class WorkFlow extends React.Component {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            sorter: (a, b) => a.title.length - b.title.length,
-            filterDropdown: (
-                    <Input
-                         suffix={suffix}
-                        ref={ele => this.searchInput = ele}
-                        placeholder="Search name"
-                         value={this.props.searchText}
-                        onChange={this.props.onSearch}
-                        onPressEnter={this.props.onSearch}
-                    />
-            ),
-            filterIcon: <Icon type="search"/>,
+            // sorter: (a, b) => a.title.length - b.title.length,
+            // filterDropdown: (
+            //         <Input
+            //              suffix={suffix}
+            //             ref={ele => this.searchInput = ele}
+            //             placeholder="Search name"
+            //              value={this.props.searchText}
+            //             onChange={this.props.onSearch}
+            //             onPressEnter={this.props.onSearch}
+            //         />
+            // ),
+            // filterIcon: <Icon type="search"/>,
         }, {
             title: 'Created',
             dataIndex: 'createdAt',
@@ -53,18 +53,18 @@ export default class WorkFlow extends React.Component {
             title: 'By',
             dataIndex: 'createdBy',
             key: 'createdBy',
-            sorter: (a, b) => a.createdBy - b.createdBy,
-            filterDropdown: (
-                    <Input
-                         suffix={suffix}
-                        ref={ele => this.searchInput = ele}
-                        placeholder="Search name"
-                        // value={searchText}
-                        //onChange={onSearch}
-                        //onPressEnter={onSearch}
-                    />
-            ),
-            filterIcon: <Icon type="search"/>,
+            // sorter: (a, b) => a.createdBy - b.createdBy,
+            // filterDropdown: (
+            //         <Input
+            //              suffix={suffix}
+            //             ref={ele => this.searchInput = ele}
+            //             placeholder="Search name"
+            //             // value={searchText}
+            //             //onChange={onSearch}
+            //             //onPressEnter={onSearch}
+            //         />
+            // ),
+            // filterIcon: <Icon type="search"/>,
         }, {
             title: 'Downloads',
             dataIndex: 'downloads',

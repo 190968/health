@@ -1,6 +1,6 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {TreatmentElementFragment} from "../../../../../../../../../../Plan/components/TreatmentElement/components/fragments";
+import { TreatmentElementFragment } from '../../../../../../../../../../../../Health/components/fragments';
 // Add
 export const AddElementMutation = gql`
     mutation addTreatmentBlockElement($blockId: UID!, $type:String!, $input:TreatmentBlockElementInput!) {

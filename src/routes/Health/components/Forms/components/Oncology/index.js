@@ -3,58 +3,50 @@ import {Form, Input, Select} from 'antd';
 import {DateField} from "../../../../../../components/FormCustomFields/index";
 import {DiagnosisSelect} from "../../../../../../components/Autosuggest/containers/DiagnosisSelect";
 import {withOncologyEnumsQuery} from "./query";
+import DefaultHealthFields from '../DefaultFields';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-const OncologyFormPure = ({form, ...otherProps}) => {
+const OncologyFormPure = (props) => {
+    const {form, ...otherProps} = props;
     const {getFieldDecorator} = form;
-    const {oncologyTypes=[], oncologyDisorders=[], oncologyBehaviors=[], loading=false, formItemLayout} = otherProps;
+    const {element,oncologyTypes=[], oncologyDisorders=[], oncologyBehaviors=[], loading=false, formItemLayout} = otherProps;
     //const {title='', code='', stage={}, chemotherapies=[]} = cancer;
-    return <Form>
+    const {diagnosis, date, type, disorder, behavior, organSystem, anatomicSite} = element || {};
+    //const {id:icd10code} = diagnosis || {};
+    //console.log(element);
+ 
+
+    return <React.Fragment>
         <FormItem
             {...formItemLayout}
             label="Diagnosis"
         >
             {getFieldDecorator('diagnosis', {
-                //initialValue: title,
+                initialValue: diagnosis,
                 rules: [{
                     required: true,
                     message: "Please select Diagnosis",
                 }],
             })(
-                <DiagnosisSelect />
+                <DiagnosisSelect getFullInfo />
             )}
         </FormItem>
-        <FormItem
-            {...formItemLayout}
-            label="Date Enrolled"
-        >
-            {getFieldDecorator('date', {
-                //initialValue: title,
-                rules: [{
-                    required: true,
-                    message: "Please select Date",
-                }],
-            })(
-                <DateField />
-            )}
-        </FormItem>
-
-
 
         <FormItem
             {...formItemLayout}
             label='Diagnosis Type'
         >
             {getFieldDecorator('type', {
+                initialValue: type,
                 rules: [{
                     required: true,
                     message: "Select Type",
                 }],
                 }
             )(
-                <Select>
+                <Select style={{width:'100%'}}>
                     {oncologyTypes.map(info => {
                         return  <Select.Option key={info.name}>{info.description}</Select.Option>
                     })}
@@ -67,13 +59,14 @@ const OncologyFormPure = ({form, ...otherProps}) => {
             label='Disorder'
         >
             {getFieldDecorator('disorder', {
+                initialValue: disorder,
                 rules: [{
                     required: true,
                     message: "Please select Disorder",
                 }],
                 }
             )(
-                <Select>
+                <Select style={{width:'100%'}}>
                     {oncologyDisorders.map(info => {
                         return  <Select.Option key={info.name}>{info.description}</Select.Option>
                     })}
@@ -85,13 +78,14 @@ const OncologyFormPure = ({form, ...otherProps}) => {
             label='Behavior'
         >
             {getFieldDecorator('behavior', {
+                initialValue: behavior,
                 rules: [{
                     required: true,
                     message: "Please select Behavior",
                 }],
                 }
             )(
-                <Select>
+                <Select style={{width:'100%'}}>
                     {oncologyBehaviors.map(info => {
                         return  <Select.Option key={info.name}>{info.description}</Select.Option>
                     })}
@@ -103,6 +97,7 @@ const OncologyFormPure = ({form, ...otherProps}) => {
             label='Organ System'
         >
             {getFieldDecorator('organSystem', {
+                initialValue: organSystem,
                 }
             )(
                 <Input  />
@@ -113,34 +108,38 @@ const OncologyFormPure = ({form, ...otherProps}) => {
             label='Anatomic Site'
         >
             {getFieldDecorator('anatomicSite', {
+                initialValue: anatomicSite,
                 }
             )(
                 <Input  />
             )}
         </FormItem>
-    </Form>
+
+        <DefaultHealthFields {...props} />
+    </React.Fragment>
 }
 
 export const OncologyForm = withOncologyEnumsQuery(OncologyFormPure);
+export default OncologyForm;
 
-export const prepareOncologyInput = values => {
-    const {diagnosis,
-        type,
-        disorder,
-        behavior,
-        organSystem,
-        anatomicSite,
-        date} = values;
+// export const prepareOncologyInput = values => {
+//     const {diagnosis,
+//         type,
+//         disorder,
+//         behavior,
+//         organSystem,
+//         anatomicSite,
+//         date} = values;
 
-    return {
-        oncology: {
-            diagnosis,
-            type,
-            disorder,
-            behavior,
-            organSystem,
-            anatomicSite,
-            date
-        }
-    }
-}
+//     return {
+//         oncology: {
+//             diagnosis,
+//             type,
+//             disorder,
+//             behavior,
+//             organSystem,
+//             anatomicSite,
+//             date
+//         }
+//     }
+// }

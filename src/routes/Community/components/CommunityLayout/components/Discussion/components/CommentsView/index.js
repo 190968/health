@@ -31,7 +31,7 @@ class CommentsView extends React.Component{
 
         return(
                 <Card
-                    title="Replies"
+                    // title="Replies"
                 >
                     <InputBox discussion={discussion} user={user} onSubmit={this.props.onSubmit}/>
                     <CommentsList discussion={{replies}} user={user} discussionReply={this.props.discussionReply} />

@@ -1,7 +1,4 @@
 import React from 'react';
-import {List} from 'antd';
-import { TreatmentPlanElements } from '../../../Manager/components/Profile/components/Pathway/components/Timeline/components/TimelineElementModal/components/TreatmentPlanBuilder/components/TreatmentPlanBuilderSide/components/TreatmentPlanBodyBuilder/components/TreatmentPlanElements';
-import { EmptyList } from '../../../../components/Loading';
 import PlanElement from '../PlanLayout/components/PlanElement';
 
 

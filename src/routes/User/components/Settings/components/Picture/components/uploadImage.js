@@ -1,14 +1,16 @@
 import React from 'react';
 import {Button} from 'antd';
-import {DashboardModal} from 'uppy/lib/react';
-import Uppy from 'uppy/lib/core';
-import 'uppy/dist/uppy.min.css';
+import '@uppy/dashboard/dist/style.min.css';
+import {DashboardModal} from '@uppy/react';
+const Uppy = require('@uppy/core')
 
-const Transloadit = require('uppy/lib/plugins/Transloadit')
-const Webcam = require('uppy/lib/plugins/Webcam')
-const Url = require('uppy/lib/plugins/Url')
-const GoogleDrive = require('uppy/lib/plugins/GoogleDrive')
-const Dropbox = require('uppy/lib/plugins/Dropbox')
+const GoogleDrive = require('@uppy/google-drive')
+const Transloadit = require('@uppy/transloadit')
+const Webcam = require('@uppy/webcam')
+const Url = require('@uppy/url')
+const Dropbox = require('@uppy/dropbox')
+
+
 
  class AvatarPicker extends React.Component {
 
@@ -68,8 +70,7 @@ const Dropbox = require('uppy/lib/plugins/Dropbox')
               //console.log(results);
               onComplete(results);
 
-      }).use(Webcam).use(GoogleDrive).use(Dropbox)
-             .run()
+      });//.use(Webcam).use(GoogleDrive).use(Dropbox);//.run()
      }
 
      componentWillUnmount () {
@@ -86,7 +87,7 @@ const Dropbox = require('uppy/lib/plugins/Dropbox')
                      closeModalOnClickOutside
                      open={true}
                      onRequestClose={this.handleClose}
-                     plugins={['Webcam', 'GoogleDrive', 'Dropbox']}
+                    //  plugins={['Webcam', 'GoogleDrive', 'Dropbox']}
                  />
          )
      }

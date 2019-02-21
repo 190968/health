@@ -1,7 +1,7 @@
 import TumorboardsList from '../components/TumorboardsList';
 import { graphql } from 'react-apollo';
 import React from 'react';
-import {compose,withStateHandlers} from 'recompose';
+import {compose, withHandlers} from 'recompose';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "../fragments";
 
@@ -29,12 +29,13 @@ const withQuery = graphql(
                     status: 'active'
                     //date:ownProps.date
                 },
-                fetchPolicy: 'network-only',
+                //fetchPolicy: 'network-only',
                 //notifyOnNetworkStatusChange:true
             }
 
         },
         props: ({ ownProps, data }) => {
+            //console.log(data);
             if (!data.loading) {
 
                 return {
@@ -85,37 +86,29 @@ const withQuery = graphql(
 );
 const enhance = compose(
     withQuery,
-    withStateHandlers(
-        (props) => (
-            {
-            searchText: '',
-        }),
-        {        
-            onSearch: ({searchText},props) =>(value) => (
-                {
-                    searchText: value.target.value,
-                    workflow: props.items.map((record) => {
-                        const match = record.title.match(new RegExp(searchText, 'gi'));
-                        if (!match) {
-                            return null;
-                        }                        
-                        return {
-                            ...record,
-                            title: (
-                                <span>
-                      {record.title.split( new RegExp(searchText, 'gi')).map((text, i) => (
-                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-                      ))}
-                    </span>
-                            ),
-                        };
-                    }).filter(record => !!record),
-            }),
-            emitEmpty: ({searchText}) =>(value) => (
-                {
-                    searchText: '',
-                     })
-            })        
-
+    withHandlers({
+        onChangeStatus: props => (e) => {
+            const status = e.target.value;
+            props.loadByStatus(status);
+        }
+        // loadDetails: props => (expanded, record) => {
+        //     // load info
+        //     if (expanded) {
+        //         TumorobardQueryOptions.variables = {
+        //             id: record.id
+        //         };
+        //         // if expanded, load the info
+        //         props.client.query(TumorobardQueryOptions)
+        //             .then(({data}) => {
+        //             console.log(data);
+        //                 const {getCancerStage = {}} = data;
+        //                 //props.selectStage(getCancerStage);
+        //             });
+        //     }
+        //     console.log(expanded);
+        //     console.log(record);
+        //     //props.setOpenManager(true);
+        // },
+    })
 );
 export default enhance(TumorboardsList);

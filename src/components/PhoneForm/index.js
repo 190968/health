@@ -6,6 +6,7 @@ import {
 } from 'react-intl';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
+import { CountryInfoFragment } from '../FormCustomFields/components/Address/fragments';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
@@ -64,12 +65,11 @@ const countriesQuery = gql`
    query getCountries {
         staticContent {
             countries {
-                id
-                name
-                phoneCode
+                ...CountryInfo
             }
         }
     }
+    ${CountryInfoFragment}
 `;
 
 

@@ -1,15 +1,22 @@
 import { compose, branch, renderComponent, withHandlers , withProps, withState} from 'recompose';
 import {TreatmentBlockElementEditorPure, prepareInput} from '../components/TreatmentBlockOptionElementEditor';
-import {modalHOC} from '../modal';
+import { withTreatmentItemModal } from '../modal';
 
 const enhance = compose(
     withHandlers({
-        prepareInput: props => values => {
-            console.log(values);
-            return prepareInput(values);
-        }
+        onSubmit: props => () => {
+            const {form} = props;
+            form.validateFields((err, values) => {
+                if (!err) {
+                    const {text} = values;
+                    const input = {notes: text};
+                    props.onSubmit(input);
+                }
+            });
+        },
     }),
-    modalHOC
+    withTreatmentItemModal
 )
+
 const TreatmentBlockElementEditor = enhance(TreatmentBlockElementEditorPure)
 export default TreatmentBlockElementEditor;

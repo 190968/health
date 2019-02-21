@@ -1,6 +1,6 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {TreatmentElementFragment} from "../../../../../../Plan/components/TreatmentElement/components/fragments";
+import { TreatmentElementFragment } from '../../../../../../../../Health/components/fragments';
 // Add
 export const AddElementMutation = gql`
     mutation addTreatmentElement($blockId: UID,  $input:TreatmentElementInput!) {
@@ -113,11 +113,11 @@ export const withDeleteMutation = graphql(DeleteElementMutation, {
         deleteElement: () => {
             console.log(ownProps);
             return mutate({
-                variables: {treatmentId:ownProps.treatmentId, id:ownProps.option.id},
+                variables: {treatmentId:ownProps.treatment.id, id:ownProps.option.id},
 
                 update: (client, { data: { planElementReport } }) => {
                     //console.log(ownProps);
-                    const treatmentId = ownProps.treatmentId;
+                    const treatmentId = ownProps.treatment.id;
                     // if it's pathway - remove
                     let treatment = client.readFragment({
                         id: 'Treatment:' + treatmentId, // `id` is any id that could be returned by `dataIdFromObject`.
@@ -167,7 +167,7 @@ export const withQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                treatmentId: ownProps.treatmentId,
+                treatmentId: ownProps.treatment.id,
                 blockId: ownProps.blockId,
                 id: ownProps.id,
             },

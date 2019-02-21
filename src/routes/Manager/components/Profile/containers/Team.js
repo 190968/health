@@ -1,40 +1,46 @@
 import React from 'react';
 import Team from '../components/Team';
-import {compose,withStateHandlers} from 'recompose';
+import {compose,withStateHandlers, withHandlers} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
+import { PhoneInfoFragment } from '../../../../../components/FormCustomFields/components/Phone/fragments';
 
-const GET_FAMILY_QUERY  = gql`
- query GET_USER_TEAM($user_id:UID) {
+export const GET_CARETEAM_QUERY  = gql`
+ query GET_USER_TEAM($user_id:UID, $status: String) {
   patient(id: $user_id) {
      id
      motivation {
-            careTeam {
-                totalCount,
-                edges{
-                    id,
-                    user {
-                        ...UserInfo
-                        phoneFormatted
+        careTeam (status: $status) {
+            totalCount,
+            edges {
+                id
+                user {
+                    ...UserInfo
+                    phone {
+                        ...PhoneInfo
                     }
-                    joinedDate
-                    roleText
                 }
+                objectId
+                joinedDate
+                roleText
             }
+        }
      }
   }
 }
 
 ${UserInfoFragment}
+${PhoneInfoFragment}
 `;
 
-const withQuery = graphql(GET_FAMILY_QUERY, {
+const withQuery = graphql(GET_CARETEAM_QUERY, {
     options: (ownProps) => {
         return{
             variables: {
                 user_id:ownProps.user.id
-            }
+            },
+            fetchPolicy: 'network_only',
         }
     },
     props: ({ data }) => {
@@ -44,7 +50,9 @@ const withQuery = graphql(GET_FAMILY_QUERY, {
         const {careTeam={}} = motivation;
         const {edges=[]} = careTeam;
 
-        return {loading: data.loading, members:edges }
+        return {loading: data.loading, members:edges, refetch:data.refetch, changeStatus(status) {
+            return data.refetch({status});
+        } }
     },
 });
 
@@ -83,7 +91,13 @@ const enhance = compose(
                 {
                     searchText: ''
                      })
-            })        
+            }),
+            withHandlers({
+                handleStatus: props => (e) => {
+                    const status = e.target.value;
+                    props.changeStatus(status);
+                }
+            })  
 
 );
 

@@ -1,73 +1,72 @@
 import React from 'react';
-import {Card, Input, Radio, Tooltip, DatePicker, Button, Icon, Table} from 'antd';
+import { Card, Input, Radio, Tooltip, DatePicker, Button, Icon, Table } from 'antd';
 import Truncate from 'react-truncate';
-import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
+import { compose, withState, withHandlers, withStateHandlers } from 'recompose';
 import moment from 'moment';
-import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
+import { AvatarWithName } from "../../../../../User/components/AvatarWithName/index";
 import './index.css'
-import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
+import { PageHeaderLayout } from "../../../../../../components/Layout/PageHeaderLayout/index";
 import sort from '../../../../../../components/Tables/sort';
 import ProvirdersManager from './containers/ProvidersManager';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-const {RangePicker} = DatePicker;
+const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
-export const UserProvidersTable = props => {
+const UserProvidersTable = props => {
 
-    const {providers = [], onSearch, emitEmpty, loading = false, searchText, openModal, visibleModal, hideModal, filterDropdownVisible = true, onChange, user} = props;
+    const { providers = [], onSearch, emitEmpty, loading = false, searchText, openModal, visibleModal, hideModal, filterDropdownVisible = true, onChange, user } = props;
     const total = providers.length;
-    const suffix = searchText ? <Icon type="close-circle" onClick={emitEmpty}/> : null
+    const suffix = searchText ? <Icon type="close-circle" onClick={emitEmpty} /> : null
     const columns = [{
         title: 'Name',
         key: 'name',
         render: (info) => {
             return <Truncate lines={1}>{info.provider.name}</Truncate>
         },
-        sorter: (a, b) => sort(a, b, "provider", "name"),
-        filterDropdown: (
-            <div className="custom-filter-dropdown">
-                <Input
-                    suffix={suffix}
-                    ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
-                    value={searchText}
-                    onChange={onSearch}
-                    onPressEnter={onSearch}
-                />
-            </div>
-        ),
-        filterIcon: <Icon type="search"/>,
-        // filterDropdownVisible: this.state.filterDropdownVisible,
+        // sorter: (a, b) => sort(a, b, "provider", "name"),
+        // filterDropdown: (
+        //     <div className="custom-filter-dropdown">
+        //         <Input
+        //             suffix={suffix}
+        //             ref={ele => this.searchInput = ele}
+        //             placeholder="Search name"
+        //             value={searchText}
+        //             onChange={onSearch}
+        //             onPressEnter={onSearch}
+        //         />
+        //     </div>
+        // ),
+        // filterIcon: <Icon type="search"/>,
     },
-        {
-            title: 'Added',
-            key: 'sender',
-            render: (info) => {
-                return <AvatarWithName user={info.sender}/>
-            },
-            sorter: (a, b) => sort(a, b, "sender"),
+    {
+        title: 'Added',
+        key: 'sender',
+        render: (info) => {
+            return <AvatarWithName user={info.sender} />
         },
-        {
-            title: 'On',
-            dataIndex: 'joinedDate',
-            key: 'joinedDate',
-            render: (date) => {
-                return moment(date).format('L')
-            },
-            sorter: (a, b) => a.joinedDate - b.joinedDate,
-            filterDropdown: (
-                <div className="custom-filter-dropdown">
-                    <RangePicker
-                        onChange={onChange}
-                        ranges={{'This Year': [moment(), moment().endOf('year')]}}
-                        defaultValue={[moment(new Date(), dateFormat), moment(new Date(), dateFormat)]}
-                        format={dateFormat}
-                    />
-                </div>
-            ),
-            filterIcon: <Icon type="filter"/>,
+        // sorter: (a, b) => sort(a, b, "sender"),
+    },
+    {
+        title: 'On',
+        dataIndex: 'joinedDate',
+        key: 'joinedDate',
+        render: (date) => {
+            return moment(date).format('L')
         },
+        // sorter: (a, b) => a.joinedDate - b.joinedDate,
+        // filterDropdown: (
+        //     <div className="custom-filter-dropdown">
+        //         <RangePicker
+        //             onChange={onChange}
+        //             ranges={{'This Year': [moment(), moment().endOf('year')]}}
+        //             defaultValue={[moment(new Date(), dateFormat), moment(new Date(), dateFormat)]}
+        //             format={dateFormat}
+        //         />
+        //     </div>
+        // ),
+        // filterIcon: <Icon type="filter"/>,
+    },
 
     ];
 
@@ -84,20 +83,20 @@ export const UserProvidersTable = props => {
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
         </RadioGroup> */}
-        <Tooltip title="Add New Providers"><Button type={'primary'} onClick={openModal}><Icon type="plus"/></Button></Tooltip>
+        <Tooltip title="Add New Providers"><Button type={'primary'} onClick={openModal}><Icon type="plus" /></Button></Tooltip>
 
     </React.Fragment>;
 
 
     return (<PageHeaderLayout title={'Providers ' + (total > 0 ? ' (' + total + ')' : '')}
-                              content=""
-                              action={actions}
+        content=""
+        action={actions}
     >
-        <Card type="basic1  ant-card-type-table">
+        <Card type="table">
             <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts}
-                   loading={loading}/>
+                loading={loading} />
         </Card>
-        {visibleModal && <ProvirdersManager onHide={hideModal} user={user}/>}
+        {visibleModal && <ProvirdersManager onHide={hideModal} user={user} />}
     </PageHeaderLayout>)
 }
 const enhance = compose(

@@ -28,8 +28,8 @@ const withQuery = graphql(GET_CALCULATORS_QUERY, {
     },
     props: ({ data }) => {
 
-        const {health={}} = data;
-        const {getEvidencioCalculators=[]} = health;
+        const {health} = data;
+        const {getEvidencioCalculators=[]} = health || {};
 
         return {loading: data.loading, calculators:getEvidencioCalculators }
     },

@@ -29,9 +29,7 @@ const GET_PATHWAY_QUERY  = gql`
     }
   }
 }
-
 ${PlanElementPureFragment}
-
 `;
 
 const withQuery = graphql(GET_PATHWAY_QUERY, {

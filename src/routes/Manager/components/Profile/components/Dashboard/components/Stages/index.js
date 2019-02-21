@@ -2,10 +2,12 @@ import React from 'react';
 import {Row, Col, Card, Steps, Tooltip, Popover} from 'antd';
 import {compose, withState, lifecycle, withProps} from 'recompose';
 import moment from 'moment';
+import { UserStageManagerButton } from './components/UserStageManager/components/Button';
+import { EmptyList } from '../../../../../../../../components/Loading';
 const Step = Steps.Step;
 
-export const Vitals = props => {
-    const {stages=[], patientStages=[]} = props;
+const UserStages = props => {
+    const {stages=[], patientStages=[], user, refetch} = props;
     if (stages.length === 0) {
         return null;
     }
@@ -30,9 +32,17 @@ export const Vitals = props => {
 
         return {...stage, report:userStage };
     });
+    console.log(patientStages);
+
+   
     //console.log(props);
-    return  <Card title={'Stages'}>
-        <Steps progressDot={true} current={currentStep} >
+    return  <Card title={'Continuum of care'} extra={<UserStageManagerButton user={user} refetch={refetch}  />}>
+
+    {patientStages.length === 0 && <EmptyList>
+            <UserStageManagerButton user={user} refetch={refetch} label={'Begin Continuum of Care'} />
+        </EmptyList>
+    }
+     {patientStages.length > 0 && <Steps progressDot={true} current={currentStep} size={'small'} >
             {finalStages.map((stage, i) => {
 
                 let {title, description, report, isTimestamp, isDatestamp} = stage;
@@ -41,9 +51,9 @@ export const Vitals = props => {
                     const {isCurrent} = report;
                     const reportTime = moment(report.startDate);
                     if (isTimestamp) {
-                        description = <Tooltip title={reportTime.format('LLL')} >{reportTime.format('LT')}</Tooltip>;
+                        description = <Tooltip title={reportTime.format('lll')} >{reportTime.format('LT')}</Tooltip>;
                     } else if (isDatestamp) {
-                        description = <Tooltip title={reportTime.format('LLL')} >{reportTime.format('L')}</Tooltip>;
+                        description = <Tooltip title={reportTime.format('lll')} >{reportTime.format('L')}</Tooltip>;
                     } else {
                         // get previous entry
                         if (i>0 && finalStages[i-1]) {
@@ -74,13 +84,13 @@ export const Vitals = props => {
 
                                     } else {
                                         // is last
-                                        newTime = reportTime.format('LLL');
+                                        newTime = reportTime.format('lll');
                                     }
                                 }
                                 //const newTime = isCurrent ? <StepsCounter time={reportTime} /> :  ;
                                 //moment(report.startDate).format('LT');reportTime
                                 // find time difference
-                                description = <Tooltip title={reportTime.format('LLL')} >{newTime}</Tooltip>;
+                                description = <Tooltip title={reportTime.format('lll')} >{newTime}</Tooltip>;
                             }
                         } else {
                             description = 'unknowm';
@@ -89,15 +99,14 @@ export const Vitals = props => {
                     }
                 }
 
-                console.log(stage);
                 return <Step title={title} key={i} description={<center>{description}</center>} />
                 //return <StepWithCounter stage={stage} finalStages={finalStages} key={i} i={i} />
             })}
-        </Steps>
+        </Steps>}
         </Card>;
 }
 
-export default Vitals;
+export default UserStages;
 
 const customDot = (dot, { status, index }) => (
     <Popover content={<span>step {index} status: {status}</span>}>
@@ -136,13 +145,14 @@ const StepWithCounter = props => {
         }
     }
 
-    console.log(stage);
+    //console.log(stage);
     return <Step title={title} description={description} />
 }
 
 const StepsCounterPure = props => {
     const {counter} = props;
     const duration = moment.duration(counter);
+    //console.log(duration);
     return formatDuration(duration);//moment(counter).calendar();
 }
 
@@ -155,6 +165,8 @@ const formatDuration = duration => {
         secs = duration.seconds();
 
     let string = '';
+    // console.log(hrs);
+    // console.log(mins);
 
     if (years > 0) {
         string += years+'y ';
@@ -168,9 +180,12 @@ const formatDuration = duration => {
     if (hrs > 0) {
         string += hrs+':';
     } else {
-        string += '00:';
+        //string += '00:';
     }
     if (mins > 0) {
+        if (hrs > 0 && mins < 10) {
+            mins += '0'+mins;
+        }
         string += mins+':';
     } else {
         string += '00:';

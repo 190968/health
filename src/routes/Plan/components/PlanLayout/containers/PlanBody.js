@@ -1,9 +1,5 @@
-import { connect } from 'react-redux'
 import PlanBody from '../components/PlanBody';
-import {compose, withHandlers, withState} from 'recompose';
-// gragement
-import {PlanCardFragment, PlanElementFragment} from '../../../../Plan/components/Plan/fragments';
-
+import {PlanCardFragment, PlanElementFragment, PlanElementPureFragment} from '../../../../Plan/components/Plan/fragments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -14,6 +10,12 @@ export const PLAN_BODY_QUERY = gql`
         plan (id: $id) {
             ...PlanCardInfo,
             upid
+            getBody {
+                ... on PlanBodyVideo {
+                    html
+                    text
+                }
+            }
             lessons {
                 id
                 title
@@ -22,12 +24,12 @@ export const PLAN_BODY_QUERY = gql`
                     ...PlanElement,
                 }
             }
-            activities(date:$date) {
+            activities(date:$date) @connection(key: "planActivities", filter: ["date"]) {
                 id
                 title
-                completed(date:$date, upid:$upid)
+                completed(date:$date, upid:$upid) @connection(key: "planActivitiesCompletion", filter: ["date", "upid"]) 
                 elements {
-                    ...PlanElement,
+                    ...PlanElementWithReports,
                 }
             }            
             intro {
@@ -38,6 +40,7 @@ export const PLAN_BODY_QUERY = gql`
     }
     ${PlanCardFragment}
     ${PlanElementFragment}
+    ${PlanElementPureFragment}
 `;
 
 
@@ -46,13 +49,13 @@ const PlanBodyWithQuery = graphql(
     PLAN_BODY_QUERY,
     {
         options: (ownProps) => {
-            console.log(ownProps);
             return {
                 variables: {
                     id: ownProps.plan.id,
                     upid: ownProps.upid,
                     date: ownProps.date
-                }
+                },
+                fetchPolicy: 'network-only'
             }
         },
         props: ({  data }) => {
@@ -64,24 +67,15 @@ const PlanBodyWithQuery = graphql(
                 const activities = plan.activities || [];
                 const intro = plan.intro || [];
                 return {
-                    //upid: data.plan.upid,
-                    //modules: data.network.modules,
                     loading: data.loading,
-                    //id: plan.id,
                     lessons: lessons,
                     activities: activities,
                     intro: intro,
+                    plan: plan,
 
                     loadDate(date) {
-
-                        return data.fetchMore({
-                            variables: {
-                                date: date,
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
-                                return fetchMoreResult;
-                            },
+                        return data.refetch({
+                            date: date,
                         });
                     }
                 }
@@ -92,10 +86,4 @@ const PlanBodyWithQuery = graphql(
         },
     }
 );
- 
-const enhance = compose(
-    PlanBodyWithQuery,
-    //withState('', ''),
-);
-
-export default enhance(PlanBody);
+export default PlanBodyWithQuery(PlanBody);

@@ -1,51 +1,54 @@
 import React from 'react';
 import Family from '../components/Family';
-import {compose,withStateHandlers} from 'recompose';
+import { compose, withStateHandlers, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {UserInfoFragment} from "../../../../User/fragments";
+import { FamilyMemberInfoFragment } from "../components/Family/fragments";
 
-const GET_FAMILY_QUERY  = gql`
- query GET_USER_family($user_id:UID) {
+export const GET_USER_FAMILY_QUERY = gql`
+ query GET_USER_FAMILY($user_id:UID, $status: String) {
   patient(id: $user_id) {
      id
      motivation {
-            family {
-                totalCount,
-                edges{
-                    id,
-                    user {
-                        ...UserInfo
-                        phoneFormatted
-                    }
-                    joinedDate
-                    roleText
-                    canReport
-                }
+        family (status: $status) {
+            totalCount,
+            edges{
+                ...FamilyMemberInfo
             }
+        }
      }
   }
 }
 
-${UserInfoFragment}
+${FamilyMemberInfoFragment}
 `;
 
-const withQuery = graphql(GET_FAMILY_QUERY, {
+const withQuery = graphql(GET_USER_FAMILY_QUERY, {
     options: (ownProps) => {
-        return{
+        return {
             variables: {
-                user_id:ownProps.user.id
+                user_id: ownProps.user.id,
+                status: 'active'
             }
         }
     },
     props: ({ data }) => {
+        //console.log(data);
+        const { patient = {}, variables,refetch } = data;
+        const { motivation = {} } = patient;
+        const { family = {} } = motivation;
+        const { edges = [] } = family;
+        const {status} = variables || {};
 
-        const {patient={}} = data;
-        const {motivation={}} = patient;
-        const {family={}} = motivation;
-        const {edges=[]} = family;
-
-        return {loading: data.loading, members:edges }
+        return {
+            loading: data.loading, 
+            members: edges, 
+            status:status,
+            refetch:refetch,
+            changeStatus(status) {
+                return refetch({ status });
+            }
+        }
     },
 });
 
@@ -53,13 +56,19 @@ const withQuery = graphql(GET_FAMILY_QUERY, {
 
 const enhance = compose(
     withQuery,
+    withHandlers({
+        handleStatus: props => (e) => {
+            const status = e.target.value;
+            props.changeStatus(status);
+        }
+    }),
     withStateHandlers(
         (props) => (
             {
-            searchText: '',
-        }),
-        {        
-            onSearch: ({searchText},props) =>(value) => (
+                searchText: '',
+            }),
+        {
+            onSearch: ({ searchText }, props) => (value) => (
                 {
                     searchText: value.target.value,
                     members: props.members.map((record) => {
@@ -67,24 +76,24 @@ const enhance = compose(
                         const match = record.user.fullName.match(new RegExp(searchText, 'gi'));
                         if (!match) {
                             return null;
-                        }                        
+                        }
                         return {
                             ...record,
                             fullName: (
                                 <span>
-                      {record.user.fullName.split( new RegExp(searchText, 'gi')).map((text, i) => (
-                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-                      ))}
-                    </span>
+                                    {record.user.fullName.split(new RegExp(searchText, 'gi')).map((text, i) => (
+                                        i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
+                                    ))}
+                                </span>
                             ),
                         };
                     }).filter(record => !!record),
-            }),
-            emitEmpty: ({searchText}) =>(value) => (
+                }),
+            emitEmpty: ({ searchText }) => (value) => (
                 {
                     searchText: ''
-                     })
-            })        
+                })
+        })
 
 );
 

@@ -33,9 +33,9 @@ export const asyncActionplans = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "actionplansChunk" */'../routes/Manager/containers/Actionplans'),
-            modules: ['../routes/Manager/containers/Actionplans'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Actionplans')],
+            loader: () => import(/* webpackChunkName: "actionplansChunk" */'../routes/Manager/components/Actionplans'),
+            modules: ['../routes/Manager/components/Actionplans'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Actionplans')],
         })
     );
 }
@@ -106,6 +106,42 @@ export const asyncPatients = () => {
         })
     );
 }
+
+export const asyncCohorts = () => {
+
+    return (
+        Loadable({
+            loader: () => import(/* webpackChunkName: "cohortsChunk" */'../routes/Manager/components/Cohorts/router'),
+            modules: ['../routes/Manager/components/Cohorts/router'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Cohorts/router')],
+        })
+    );
+}
+
+export const asyncScreenings = () => {
+
+    return (
+        Loadable({
+            loader: () => import(/* webpackChunkName: "screeningsChunk" */'../routes/Manager/components/Screenings'),
+            modules: ['../routes/Manager/components/Screenings'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Screenings')],
+        })
+    );
+}
+
+export const asyncCampaigns = () => {
+
+    return (
+        Loadable({
+            loader: () => import(/* webpackChunkName: "campaignsChunk" */'../routes/Manager/components/Campaigns'),
+            modules: ['../routes/Manager/components/Campaigns'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Campaigns')],
+        })
+    );
+}
+
+
+
 
 
 export const asyncCancers = () => {
@@ -207,9 +243,9 @@ export const asyncProviders = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "providersChunk" */'../routes/Manager/containers/Providers'),
-            modules: ['../routes/Manager/containers/Providers'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Providers')],
+            loader: () => import(/* webpackChunkName: "providersChunk" */'../routes/Manager/components/Providers'),
+            modules: ['../routes/Manager/components/Providers'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Providers')],
         })
     );
 }
@@ -249,9 +285,9 @@ export const asyncPrograms = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "programsChunk" */'../routes/Manager/containers/Programs'),
-            modules: ['../routes/Manager/containers/Programs'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Programs')],
+            loader: () => import(/* webpackChunkName: "programsChunk" */'../routes/Manager/components/Programs'),
+            modules: ['../routes/Manager/components/Programs'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Programs')],
         })
     );
 }

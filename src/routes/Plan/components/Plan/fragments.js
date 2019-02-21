@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
-import {TreatmentElementFragment} from "./components/TreatmentElement/components/fragments";
+import { UserInfoFragment } from '../../../User/fragments';
+import { TreatmentElementFragment, TreatmentInfoFragment } from '../../../Health/components/fragments';
 
 export const PlanCardFragment = gql`
         fragment PlanCardInfo on Plan {
@@ -16,15 +17,59 @@ export const PlanCardFragment = gql`
         }
 `;
 
-export const UserPlanFragment = gql`
-    fragment UserPlanInfo on UserPlan {
+export const UserPlanPureFragment = gql`
+    fragment UserPlanPure on UserPlan {
             id
-            plan {
+            approved
+            canChangeSchedule
+            canReport
+            canEdit
+            startDate
+            endDate
+            dows
+            lastUsedDate
+    }
+        
+`;
+
+export const UserPlanOnlyUserFragment = gql`
+ fragment UserPlanOnlyUser on UserPlan {
+        ...UserPlanPure
+        user {
+            ...UserInfo
+        }
+             
+    }
+    ${UserPlanPureFragment}   
+    ${UserInfoFragment}
+`;
+
+
+export const UserPlanOnlyFragment = gql`
+ fragment UserPlanOnly on UserPlan {
+        ...UserPlanPure
+        plan {
                 ...PlanCardInfo
             }
     }
-        
+    ${UserPlanPureFragment}   
     ${PlanCardFragment}
+`;
+
+
+export const UserPlanFragment = gql`
+    fragment UserPlanInfo on UserPlan {
+            ...UserPlanPure
+            plan {
+                ...PlanCardInfo
+            }
+            user {
+                ...UserInfo
+            }
+    }
+    ${UserPlanPureFragment}   
+    ${PlanCardFragment}
+    ${UserInfoFragment}
 `;
 
 export const PathwayCardFragment = gql`
@@ -63,6 +108,9 @@ export const ElementTextFragment = gql`
     fragment TextElement on PlanElementText {
         id
         text
+        tipType
+        iconAlign
+        color
         icon {
             id
             url
@@ -146,6 +194,7 @@ export const TreatmentBlockElementFragment = gql`
      ${ElementTextFragment}
 `;
 
+
 export const ElementTreatmentFragment = gql`
     fragment TreatmentPlanElement on Treatment {
           id
@@ -168,6 +217,7 @@ export const ElementTrackerReportFragment = gql`
             columnId
             isCritical
             value
+            valueFormatted
             comments
     }
 `;
@@ -251,7 +301,7 @@ element {
 
 
 export const PlanElementFragment = gql`
-            fragment PlanElement on PlanBodyElement {
+            fragment PlanElementWithReports on PlanBodyElement {
             id
             itemId
             itemType
@@ -260,7 +310,7 @@ export const PlanElementFragment = gql`
             hasChildren
             reports (date: $date) {
                 id
-                value,
+                value
                 date
             }
             footnote
@@ -353,7 +403,7 @@ export const PlanElementFragment = gql`
 `;
 
 export const PlanElementPureFragment = gql`
-            fragment PlanElement on PlanBodyElement {
+    fragment PlanElement on PlanBodyElement {
             id
             itemId
             itemType

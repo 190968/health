@@ -2,16 +2,16 @@ import React from 'react';
 import { Icon, Tabs, Input, Col, Select, Form, DatePicker, Button, } from 'antd';
 import { compose, withState, withHandlers } from 'recompose';
 
-import PatientInvite from "../../containers/PatientInvite";
+import PatientManager from "../../containers/PatientManager";
 
-const PatientEditButton = props => {
-    const { openModal,visibleModal,hideModal,user, asMenuItem=false } = props;
+const PatientEditButtonPure = props => {
+    const { openModal,visibleModal,hideModal, asMenuItem=false, ...otherProps} = props;
     console.log("PatientEditButton ==> ",props);
     return <React.Fragment >
 
         {asMenuItem ? <span onClick={openModal}>Edit</span> : <Button onClick={openModal}><Icon type="edit" /> Edit</Button>}
         
-        {visibleModal && <PatientInvite onHide={hideModal} patient={user} />}
+        {visibleModal && <PatientManager onHide={hideModal}  {...otherProps} />}
       </React.Fragment>
 }
 const enhance = compose(
@@ -25,4 +25,5 @@ const enhance = compose(
         }
     }),
 );
-export default enhance(PatientEditButton);
+export const PatientManagerButton =  enhance(PatientEditButtonPure);
+export default PatientManagerButton;

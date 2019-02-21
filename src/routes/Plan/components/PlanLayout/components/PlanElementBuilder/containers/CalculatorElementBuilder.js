@@ -75,7 +75,7 @@ const enhanceWithModal = compose(
         },
         modalFooter: props => values => {
             return [
-                <Button key="cancel" onClick={props.onCancel}>Cancel</Button>,
+                <Button key="cancel" onClick={props.onHide}>Cancel</Button>,
                 <Button key="test" type="primary" ghost onClick={props.onTest}>Test</Button>,
                 <Button key="next" type="primary" onClick={props.onSubmit}>Save</Button>
             ]

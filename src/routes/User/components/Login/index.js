@@ -1,23 +1,17 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom'
-import {
-    FormattedMessage
-} from 'react-intl';
 import './login.less'
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import gql from 'graphql-tag';
-import {Form, Icon, Input, Button, Card } from 'antd';
-import ru from './i18n/ru';
-import en from './i18n/en';
+import {Form, Icon, Input, Button, Card, Layout } from 'antd';
 import ForgotPasswordButton from './containers/ForgotPasswordButton';
+import { withCurrentNetwork } from '../../../../queries/network';
 const FormItem = Form.Item;
+const {Header, Content, Footer} = Layout;
 
+const LoginFormPure = props => {
 
-const LoginForm = props => {
-
-    const {currentUser={}, loadingButton=false, form} = props;
+    const {currentNetwork, currentUser={}, loadingButton=false, form} = props;
         const {token} = currentUser;
+        const {allowSignUp=false} = currentNetwork;
         // if we have tolen, redirect to index page
         if (token) {
             //return <div>Redirect to dash</div>;
@@ -28,7 +22,7 @@ const LoginForm = props => {
 
         const { getFieldDecorator, getFieldValue } = form;
         return (
-            <div style={{padding:'8% 35% 20px'}}>
+            <div className={'tinyBoxAlone'}>
                 <Card
                     title="Login"
                 >
@@ -55,8 +49,10 @@ const LoginForm = props => {
                                 Log in
                             </Button>
                             <ForgotPasswordButton email={getFieldValue('email')} />
-                            
-                            Or <Link to={'/register'}>Sign up</Link>
+                            {allowSignUp && <React.Fragment>
+                                Or <Link to={'/register'}>Sign up</Link>
+                            </React.Fragment>}
+                           
                         </FormItem>
                     </Form>
                 </Card>
@@ -64,56 +60,16 @@ const LoginForm = props => {
         );
 }
 
-// export class LoginForm1 extends React.Component {
 
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             email: {
-//                 value: 'demo2patient@fitango.com',
-//             },
-//             password: {
-//                 value: 'Fitango2',
-//             },
-//             //loading: false,
-//             visible: false,
-//         };
-//         this.showModal = this.showModal.bind(this);
-//         this.handleSubmit = this.handleSubmit.bind(this);
-//     };
-
-
-//     showModal = () => {
-//         this.setState({
-//             visible: true,
-//         });
-//     }
-
-//     handleCancel = () => {
-//         this.setState({ visible: false });
-//     }
-
-//     handleSubmit = (e) => {
-//         e.preventDefault();
-//         const { onSubmit } = this.props;
-//         this.props.form.validateFields((err, values) => {
-//             if (!err) {
-//                 this.setState({
-//                     loading: true
-//                 });
-//                 return onSubmit(values);
-//             }
-//         });
-//     }
-
-//     handleClick = 
-//     }
-
-
-//     render() {
-
-        
-//     }
-// }
-
-export default LoginForm;
+const LoginForm = props => {
+    const {currentNetwork} = props;
+    return <div  style={{height:'100%', display: 'flex', 'minHeight': '100vh', 'flexDirection':'column'}}>
+    <Header style={{background:'#fff', textAlign: 'center'}}>
+       <Link to={'/'}><img alt={currentNetwork.name} className="logo" style={{height:'50px', marginRight:'5px'}} src={currentNetwork.logo} /></Link>
+    </Header>
+    <Content className={'userside'}>
+        <LoginFormPure {...props} />
+    </Content>
+</div>;
+}
+export default withCurrentNetwork(LoginForm);

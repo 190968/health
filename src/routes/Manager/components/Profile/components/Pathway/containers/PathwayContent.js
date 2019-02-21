@@ -1,7 +1,7 @@
-import PathwayContent from '../components/PathwayContent';
+import PathwayContentPure from '../components/PathwayContent';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import {compose} from 'recompose';
 const GET_USER_PATHWAY_QUERY  = gql`
  query GET_USER_PATHWAY ($userId: UID!) {
   getUserPathway (userId: $userId) {
@@ -17,7 +17,6 @@ const GET_USER_PATHWAY_QUERY  = gql`
         }
   }
 }
-
 `;
 
 const withQuery = graphql(GET_USER_PATHWAY_QUERY, {
@@ -64,5 +63,10 @@ const withMutation = graphql(JoinPathwayMutation, {
     }),
 });
 
+const enhance = compose(
+    withQuery,
+    withMutation
+);
 
-export default withQuery(withMutation(PathwayContent));
+const PathwayContent = enhance(PathwayContentPure);
+export default PathwayContent;

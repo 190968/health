@@ -1,20 +1,20 @@
 import { compose, withHandlers , withProps} from 'recompose';
-import {OncologyForm, prepareOncologyInput} from "../../../../../../../../../../Health/components/Forms/components/Oncology/index";
-import {modalHOC} from '../modal';
+import {withTreatmentItemModal} from '../modal';
+import { OncologyPureForm, prepareOncologyInput }  from '../../../../../../../../../../Health/components/Forms/containers/Oncology';
 
 const enhance = compose(
-    withProps(props => {
-        // const  {chemotherapyElement=false} = props;
-        // if (chemotherapyElement) {
-        //     return {details:chemotherapyElement};
-        // }
-    }),
     withHandlers({
-        prepareInput: props => values => {
-            return prepareOncologyInput(values);
-        }
+        onSubmit: props => () => {
+            const {form} = props;
+            form.validateFields((err, values) => {
+                if (!err) {
+                    const input = prepareOncologyInput(values);
+                    props.onSubmit(input)
+                }
+            });
+        },
     }),
-    modalHOC
+    withTreatmentItemModal
 )
-const Enhanced = enhance(OncologyForm);
+const Enhanced = enhance(OncologyPureForm);
 export default Enhanced;

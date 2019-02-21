@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {compose, branch, withHandlers, withState,withStateHandlers, withProps} from 'recompose';
 import React from 'react';
+import { UserInfoFragment } from '../../../../User/fragments';
 const GET_PROFILE  = gql`
 query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput, $status: RoleStatusEnum) {
     management {
@@ -18,21 +19,18 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput,
           invitedDate
           accessLevel
           user {
-            id
-            firstName
-            lastName
-            fullName
-            phone{
-              code
-              number
-            }
+            ...UserInfo
+            phone {
+                    code
+                    number
+                }
           }
           getTotalPatients
         }
       }
     }
   }
-  
+  ${UserInfoFragment}
  `;
 
 const withQuery = graphql(GET_PROFILE, {

@@ -6,9 +6,6 @@ import keydown from 'react-keydown';
 import {compose, lifecycle, withState} from 'recompose';
 import { PathwayFlowButton } from '../../../../../Pathways/components/Table/components/Buttons';
 
-const Option = Select.Option;
-
-
 
 
 
@@ -23,10 +20,7 @@ class PathwayContent extends React.Component {
             current:0,
         }
     }
-
-    static defaultProps = {
-    }
-
+ 
     setPathway = (pathway) => {
         //console.log(value);
         this.setState({pathway});

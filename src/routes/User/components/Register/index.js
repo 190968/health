@@ -4,7 +4,6 @@
 import React from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import './register.css'
-import PhoneForm from '../../../../components/PhoneForm';
 
 import { Modal,Card, Form,  DatePicker, Input, Radio, Button, Checkbox } from 'antd';
 import { withApollo } from 'react-apollo'
@@ -15,6 +14,8 @@ import {
 import ru from './i18n/ru';
 import en from './i18n/en';
 import moment from 'moment';
+import {PhoneField, phoneFieldValidator} from '../../../../components/FormCustomFields/components/Phone';
+import { RegisterOrganization } from '../../containers/RegisterOrganization';
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const FormItem = Form.Item;
@@ -119,13 +120,26 @@ class NormalRegisterForm extends React.Component {
 
     }
     render() {
-        const {currentUser:user, loadingButton} = this.props;
+        const {currentNetwork, currentUser:user, loadingButton} = this.props;
         const {token = ''} = user;
         const form = this.props.form;
         if (token !== '') {
             return  <Redirect to={{
                 pathname: '/'
             }} />;
+        }
+
+        const {allowSignUp=false} = currentNetwork;
+        if (!allowSignUp) {
+            return <Redirect to={{
+                pathname: '/'
+            }} />;
+        }
+
+
+
+        if (1===1) {
+            return <RegisterOrganization />
         }
         const phoneNumberError = form.getFieldError('phone[number]');
         const { getFieldDecorator } = this.props.form;
@@ -244,13 +258,17 @@ class NormalRegisterForm extends React.Component {
                     {...formItemLayout}
                     label={intl.messages.user_phone_number}
                     required
-                    validateStatus={phoneNumberError ? 'error' : ''}
-                    help={phoneNumberError || ''}
+                    // validateStatus={phoneNumberError ? 'error' : ''}
+                    // help={phoneNumberError || ''}
 
                 >
-
-                    <PhoneForm getFieldDecorator={getFieldDecorator} required form={form} />
-
+                {getFieldDecorator('phone', {
+                    rules: [{
+                        required: true, message: 'Enter Phone', validator: phoneFieldValidator
+                    }],
+                })(
+                    <PhoneField />
+                )}
                 </FormItem>
 
                 <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
@@ -273,5 +291,6 @@ class NormalRegisterForm extends React.Component {
         );
     }
 }
+
 const WrappedNormalRegisterForm = Form.create()(NormalRegisterForm);
 export default withApollo(injectIntl(WrappedNormalRegisterForm));

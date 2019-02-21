@@ -2,10 +2,9 @@ import React from 'react';
 import {Card, Badge, Tooltip, Icon, message} from 'antd';
 import {SortableContainer, SortableElement, arrayMove, SortableHandle} from 'react-sortable-hoc';
 import {defaultProps, branch,compose, withState, withHandlers, lifecycle, withProps} from 'recompose';
-import {TimelineElementView} from "../../../../../Profile/components/Pathway/components/Timeline/components/TimelineElement/index";
 import {CardComments} from "../../../../../../../../components/Card/components/CardComments/index";
 import {withSpinnerWhileLoading} from "../../../../../../../../components/Modal/index";
-import {withUpdateOrderMutation} from "./mutation";
+import { TimelineElementView } from '../../../../../Profile/components/TimelineLayout/components/Timeline/components/TimelineElement';
 const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler"></span></Tooltip>);
 
 

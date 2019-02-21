@@ -2,6 +2,8 @@ import TodoList from '../components/TodoList'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Plan from '../../../../Plan/components/Plan';
+import { ifModuleExists } from '../../../../../components/App/app-context';
+import { PlanCardFragment } from '../../../../Plan/components/Plan/fragments';
 
 
 // Query for grabbing everything for the dashboard items
@@ -29,7 +31,7 @@ export const DASH_QUERY = gql`
     }
    
     
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 const TodoListWithQuery = graphql(
     DASH_QUERY,
@@ -62,4 +64,4 @@ const TodoListWithQuery = graphql(
     }
 )(TodoList);
 
-export default TodoListWithQuery;
+export default ifModuleExists('todo')(TodoListWithQuery);

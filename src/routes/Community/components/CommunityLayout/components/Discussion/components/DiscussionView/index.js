@@ -51,9 +51,9 @@ class DiscussionView extends React.Component{
                           </div>}>
                     <Row><p>{text}</p></Row>
                     <Row>
-                    <Col span={2}><AvatarWithName info={user}/></Col>
+                    <Col span={2}><AvatarWithName user={user}/></Col>
                     </Row>
-                    <Row><label>{ moment(createdAt).format('LLL')}</label></Row>
+                    <Row><label>{ moment(createdAt).format('lll')}</label></Row>
                 </Card>
         );
     }

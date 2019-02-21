@@ -28,7 +28,7 @@ class Discussions extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
-        handleBreadcrumbChange([['aaa','bbbb']]);
+        //handleBreadcrumbChange([['aaa','bbbb']]);
         const {title,id,text,createdAt,category,author,replies} = discussion;
         return(
             <div>

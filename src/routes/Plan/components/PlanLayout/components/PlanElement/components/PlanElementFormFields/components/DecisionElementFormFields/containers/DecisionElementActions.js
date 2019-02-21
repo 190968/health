@@ -11,7 +11,7 @@ const PlanElementManagerWithQuery = graphql(
             skip: !ownProps.id,
             variables: {
                 id: ownProps.id,
-                planId: ownProps.planId,
+                planId: ownProps.planId || ownProps.plan.id,
             }
         }),
         props: ({data}) => {

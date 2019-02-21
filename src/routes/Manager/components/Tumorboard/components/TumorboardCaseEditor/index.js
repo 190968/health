@@ -1,33 +1,30 @@
 import React from 'react';
 import {withHandlers, withState, compose} from 'recompose';
 import { Row, Col, Card } from 'antd';
-import { DragDropContextProvider } from 'react-dnd';
+import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Timeline from '../../../../components/Profile/components/Pathway/containers/Timeline';
 import TumorBoardPreview from '../../../../components/Profile/components/Tumorboard/containers/TumorBoardPreview';
 import {TumorboardCaseBodyBuilder} from "./containers/TumorboardCaseBodyBuilder";
+import { Timeline } from '../../../Profile/components/TimelineLayout/containers/Timeline';
 
 export const TumorboardCaseEditor = props => {
     const {user, tumorboard, loading, viewNote=false, caseElements=[], setCaseElements} = props;
     const span = 12;
-    return <DragDropContextProvider backend={HTML5Backend}>
-        <Row>
+    return <Row>
             <Col span={span} style={{marginRight:'-1px'}}>
-                <Timeline userId={user.id} draggable onDrop={props.onDrop} onlyFilters />
+                <Timeline user={user} draggable onDrop={props.onDrop} onlyFilters />
             </Col>
             <Col span={span}>
                 <TumorboardCaseBodyBuilder elements={caseElements} tumorboard={tumorboard} updateElements={setCaseElements} />
             </Col>
             {viewNote && <TumorBoardPreview element={viewNote} editable={true}  userId={user.id} onSave={props.saveElement} onCancel={props.onCancel} />}
-        </Row>
-
-    </DragDropContextProvider>
+        </Row>;
 }
 
 
 
 const enhance = compose(
-
+    DragDropContext(HTML5Backend),
     withState('viewNote', 'setViewNote', false),
     withHandlers({
         onDrop: props => (element) => {
@@ -55,6 +52,7 @@ const enhance = compose(
             props.setViewNote(false);
         },
     }),
+    
 )
 
 export default enhance(TumorboardCaseEditor);

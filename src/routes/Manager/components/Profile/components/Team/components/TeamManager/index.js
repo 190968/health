@@ -9,19 +9,29 @@ const dateFormat = 'YYYY/MM/DD';
 
 
 const TeamManager = (props) => {
-    const {careTeam=[], items = [], form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange} = props;
+    const {teamMembers=[], items=[], form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange} = props;
     console.log(props);
 
-    // const {getFieldDecorator} = form;
-    // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     return <Transfer
         dataSource={items}
         showSearch
         operations={['Add', 'Remove']}
+        listStyle={{
+            width: 220,
+            height: 300,
+          }}
         // titles={['Source', 'Target']}
+        render={item => {
+            return <React.Fragment>
+            {item.title} - <span style={{color:'#ccc', fontSize: '0.9em'}}>{item.description}</span>
+            </React.Fragment>
+        }}
         targetKeys={targetKeys}
         onChange={handleChange}
-        render={item => item.title}
+        // render={item => {
+        //     //console.log(item);
+        //     return item.title;
+        // }}
     />
 }
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import {Card} from 'antd';
-import {compose, withState} from 'recompose';
+import {withRouter} from 'react-router-dom';
+import {compose, withState, withHandlers} from 'recompose';
 import Providers from '../../../../containers/Providers';
 import Family from '../../../../containers/Family';
 import Team from '../../../../containers/Team';
+import Advocates from '../../../../containers/Advocates';
 
 const tabList = [{
     key: 'family',
     tab: 'Family Members',
-},
+    },
     {
         key: 'team',
         tab: 'Care Team',
@@ -16,11 +18,13 @@ const tabList = [{
     {
         key: 'providers',
         tab: 'Providers',
+    },{
+        key: 'advocates',
+        tab: 'Advocates',
     }];
 
 
 export const StakeholdersPure = props => {
-    console.log(props);
     const {activeTab} = props;
     // ;
 
@@ -28,12 +32,16 @@ export const StakeholdersPure = props => {
         family: <Family {...props} />,
         team: <Team {...props} />,
         providers: <Providers {...props} />,
+        advocates: <Advocates {...props} />,
     };
     return <Card
         style={{ width: '100%' }}
         tabList={tabList}
         activeTabKey={activeTab}
-        onTabChange={(key) => { props.setTab(key); }}
+        onTabChange={(key) => { 
+            //history.replace(`#${key}`); 
+             props.onTabChange(key);
+         }}
     >
         {contentList[activeTab]}
     </Card>;
@@ -41,8 +49,15 @@ export const StakeholdersPure = props => {
 
 const enhance = compose(
     withState('activeTab', 'setTab', props => {
+        console.log(props);
         const {subtab = 'family'} = props.match.params;
         return subtab;
+    }),
+    withHandlers({
+        onTabChange: props => key => {
+            props.setTab(key);
+            props.handleSubTab(key);
+        }
     })
 );
 

@@ -31,7 +31,7 @@ class Replies extends React.Component{
                                     dataSource={edges}
                                     renderItem={item => (
                                         <List.Item key={item.id}
-                                                   actions={[ moment(item.createdAt).format('LLL'), <IconText type="like-o" text="0" />]}
+                                                   actions={[ moment(item.createdAt).format('lll'), <IconText type="like-o" text="0" />]}
 
                                         >
                                             <List.Item.Meta

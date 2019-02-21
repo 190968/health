@@ -1,0 +1,31 @@
+.ant-carousel .slick-slider.dots-under {
+    .slick-dots {
+        bottom: -5px;
+
+        li  button {
+            background: #000;
+        }
+        li.slick-active button {
+            background: #51ade2;
+        }
+    }
+
+    .slick-arrow {
+        font-size:1.3em;
+        color: #ccc;
+
+        &:hover {
+            color: #51ade2;
+        }
+        &.slick-prev {
+            left: -18px;
+        }
+        &.slick-next {
+            right: -20px;
+        }
+
+        &:before {
+            content: '';
+        }
+    }
+}

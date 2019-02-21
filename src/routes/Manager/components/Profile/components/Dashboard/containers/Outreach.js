@@ -2,27 +2,22 @@ import OutreachPure from '../components/Outreach';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../../../../User/fragments';
+import { OutreachInfoFragment } from '../components/Outreach/queries';
 
 const USER_OUTREACH_QUERY = gql`    
     query GET_USER_OUTREACH ($user_id:UID)  {
         patient (id:$user_id) {
             id
-            getOutreach {
+            getCommunications {
                 totalCount
                 edges {
-                    id
-                    type
-                    date
-                    subject
-                    participants {
-                        ...UserInfo
-                    }
-                    details
+                   ...OutreachInfo 
                 }     
             }
         }
     }
     ${UserInfoFragment}
+    ${OutreachInfoFragment}
 `;
 
 const withQuery = graphql(
@@ -34,16 +29,15 @@ const withQuery = graphql(
             }
         }),
         props: ({data}) => {
+            const {refetch, patient, loading} = data;
             //console.log(data);
-            if (!data.loading) {
-                const {edges, totalCount} = data.patient.getOutreach;
-                return {
-                    items: edges,
-                    total: totalCount,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
+            const {getCommunications} = patient || {};
+            const {edges, totalCount} = getCommunications || {};
+            return {
+                items: edges,
+                total: totalCount,
+                loading,
+                refetch
             }
         },
     }

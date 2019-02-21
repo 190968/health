@@ -4,11 +4,11 @@ import Loadbl from 'react-loadable';
 
 import LoadingPage from './LoadingPage';
 
-export default function MyLoadable (opts, store, initProps) {
+export default function MyLoadable (opts, initProps) {
     return Loadbl(Object.assign({
         loading: LoadingPage,
         render(loaded, props) {
-
+            // console.log(props);
             //let Component = loaded.default;
             //return <Component {...props}/>;
 

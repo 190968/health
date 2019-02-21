@@ -43,7 +43,7 @@ const  ChangePictureFormPure = props => {
 
             <center>
                 <Avatar size="huge"  src={avatar}>{letter}</Avatar>
-                <div style={{marginTop:5}}>  <Button onClick={toggleModal}>Change avatar</Button>
+                <div style={{marginTop:10}}>  <Button type={'primary'} onClick={toggleModal}>Change avatar</Button>
                     {modalOpen && <UploadImage template='userpic' onComplete={onComplete} simpleResult />}
                 </div>
             </center>
@@ -53,7 +53,12 @@ const  ChangePictureFormPure = props => {
 
 const enhance = compose(
     withState('modalOpen', 'setModalOpen', false),
-    withState('avatar', 'setAvatar', props => props.currentUser.thumbs.large),
+    withState('avatar', 'setAvatar', props => {
+        const {currentUser} = props;
+        const {thumbs} = currentUser || {};
+        const {large} = thumbs || {};
+        return large;
+    }),
     withHandlers({
         toggleModal: props => () => {
             props.setModalOpen(!props.modalOpen);

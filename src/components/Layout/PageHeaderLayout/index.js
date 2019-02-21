@@ -3,8 +3,9 @@ import {Affix} from 'antd';
 import {compose, withState, withHandlers} from 'recompose';
 import './index.less';
 import {PageHeader} from "../PageHeader/index";
+import {LoadingBox} from '../../Loading';
 
-export const PageHeaderLayoutPure = ({ children, wrapperClassName, top, onChange, mainAffix=false, ...restProps }) => {
+export const PageHeaderLayoutPure = ({ children, loading=false, wrapperClassName, top, onChange, mainAffix=false, ...restProps }) => {
     let header = false;
     if (mainAffix) {
         header = <Affix onChange={onChange} offsetTop={0}>
@@ -14,6 +15,9 @@ export const PageHeaderLayoutPure = ({ children, wrapperClassName, top, onChange
         header = <PageHeader key="pageheader" {...restProps} />
     }
 
+    if (loading) {
+        return <LoadingBox />;
+    }
     return <div className={wrapperClassName}>
         {top}
         {header}

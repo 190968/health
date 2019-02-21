@@ -1,6 +1,6 @@
 import RightMenu from '../components/RightMenu';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { withCurrentUser } from '../../../../queries/user';
+import { withActiveUser } from '../../../../components/App/app-context';
 
-export default  withCurrentUser(RightMenu);
+export default  withActiveUser(RightMenu);

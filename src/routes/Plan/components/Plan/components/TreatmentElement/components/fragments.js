@@ -8,15 +8,13 @@ fragment StringUnitsInfo on StringUnits {
 }
 `;
 
-export const TreatmentElementFragment = gql`
+ const TreatmentElementFragment2 = gql`
         fragment TreatmentElementInfo on TreatmentElement {
             id
             type
             description
             notes
             element {
-                id
-                info {
                     ... on PlanElementChecklist {
                         id
                         label
@@ -25,7 +23,6 @@ export const TreatmentElementFragment = gql`
                             label
                         }
                     }
-                    
 
                     ... on PlanElementChemotherapy {
                         id
@@ -58,11 +55,12 @@ export const TreatmentElementFragment = gql`
                         }
                         type
                         disorder
-                        behaviour
+                        behavior
                         organSystem
                         anatomicSite
                       }
-                      ... on Radiation {
+
+                    ... on Radiation {
                         id
                         treatmentAnatomicSite
                         treatmentTechnique
@@ -72,7 +70,8 @@ export const TreatmentElementFragment = gql`
                         }
                         regionalFractions
                       }
-                      ... on Radiology {
+
+                    ... on Radiology {
                         id
                         CPTcode
                         tumorSize {
@@ -81,7 +80,8 @@ export const TreatmentElementFragment = gql`
                         regionalLymphNodes
                         metastaticSites
                       }
-                      ... on Pathology {
+
+                    ... on Pathology {
                         id
                         tumorHistology
                         tumorBehavior
@@ -89,10 +89,7 @@ export const TreatmentElementFragment = gql`
                         tumorSize {
                             ...StringUnitsInfo
                         }
-                      }
-
-                    
-                }
+                    }
             }
              
         }

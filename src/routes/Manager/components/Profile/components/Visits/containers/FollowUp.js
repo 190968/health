@@ -1,25 +1,21 @@
 import FollowUpPure from '../components/FollowUp';
 import {compose, withProps, branch, withHandlers} from 'recompose';
 import {Form} from 'antd';
-import { withModal } from '../../../../../../../components/Modal';
-
+import { withModal, withDrawer } from '../../../../../../../components/Modal';
+import moment from 'moment';
 
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../../../../User/fragments';
+import { VisitInfoFragment } from '../fragments';
+import { GET_TIMELINE_QUERY } from '../../TimelineLayout/queries';
+import { TransitionInfoFragment } from '../../Transitions/queries';
+import { withPatientSelectIfNeededModal } from '../../../../../../../components/Autosuggest/containers/PatientSelect';
+import { CalendarEventInfoFragment } from '../../../../../../Calendar/fragments';
 
 
 
-
-export const TransitionInfoFragment = gql`
-        fragment TransitionInfo on UserTransition {
-            id
-            transitionType:type
-            typeTxt
-            dateTime
-            alertEntireTeam
-        }
-`;
+ 
 
 export const TRANSITION_QUERY = gql`
     query GET_CHEMOTHERAPY ($id: UID!) {
@@ -77,11 +73,18 @@ const withQueryMutation = compose(withMutationEdit, withQuery);
 
 
 const CREATE_FOLLOW_UP_MUTATION = gql`
-    mutation createFollowUp($userId: UID!,$input:VisitInput!){
-        createFollowUp(patientId:$userId, input:$input) {
+    mutation createFollowUp($userId: UID!,$input:FollowUpInput!){
+        createFollowUp(userId:$userId, input:$input) {
             id
+                title
+                dateTime
+                user {
+                    ...UserInfo
+                }
+                isAccepted
         }
     }
+    ${UserInfoFragment}
 `;
 
 const withAddMutation = graphql(CREATE_FOLLOW_UP_MUTATION, {
@@ -91,6 +94,10 @@ const withAddMutation = graphql(CREATE_FOLLOW_UP_MUTATION, {
                 const {patient={}} = ownProps;
                 return mutate({
                     variables: {input, userId:patient.id},
+                    // refetchQueries: [{
+                    //     query: GET_TIMELINE_QUERY,
+                    //     variables: {userId: patient.id},
+                    // }],
                 });
             },
         }
@@ -100,18 +107,27 @@ const withAddMutation = graphql(CREATE_FOLLOW_UP_MUTATION, {
 
 
 const enhance = compose(
+    withPatientSelectIfNeededModal,
     branch(props => props.visit, withQueryMutation, withAddMutation),
     Form.create(),
+   
     withHandlers({
         onSubmit: props => () => {
             props.form.validateFields((err, values) => {
-                console.log(values);
+                // console.log(values);
                 if (!err) {
                     props.onSubmit(values).then(({data})=> {
                         props.onHide();
+                        if (props.refetch) {
+                            props.refetch();
+                        }
                     });
                 }
             });
+        },
+        disabledDate: props => (current) => {
+            // Can not select days before today and today
+            return current && current < moment().startOf('day');
         },
     }),
     withProps(props => {
@@ -121,7 +137,7 @@ const enhance = compose(
             modalTitle
         }
     }),
-    withModal
+    withDrawer
 );
 export const TransitionManager = enhance(FollowUpPure);
 export default TransitionManager;

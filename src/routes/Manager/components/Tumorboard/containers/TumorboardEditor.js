@@ -1,5 +1,5 @@
 import React from 'react';
-import {withModal, withSpinnerWhileLoading} from "../../../../../components/Modal/index";
+import {withModal, withSpinnerWhileLoading, withDrawer} from "../../../../../components/Modal/index";
 import TumorboardEditor from "../components/TumorboardEditor";
 import {compose, branch, withState, withProps, withHandlers} from 'recompose';
 import {withTumorboardQuery} from "../queries";
@@ -13,16 +13,14 @@ const enhance = compose(
             modalFooter:false
         }
     }),
-    branch(props => props.modal, withModal),
+    branch(props => props.asModal, withModal),
     withState('step','setStep',0),
-    branch(props => !props.tumorboard, withState('tumorboard','setTumorboard')),
-    branch(props => props.tumorboard, withTumorboardQuery),
-   // withSpinnerWhileLoading,
+    branch(props => !props.tumorboard, withState('tumorboard','setTumorboard'), withTumorboardQuery),
+    // withSpinnerWhileLoading,
 
 
     withHandlers({
         goNext: props => () => {
-            console.log(props.step);
             props.setStep(props.step+1);
         },
         goPrev: props => () => {
@@ -31,6 +29,7 @@ const enhance = compose(
             }
         }
     }),
+    withDrawer
 )
 
 

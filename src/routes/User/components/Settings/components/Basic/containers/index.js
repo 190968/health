@@ -9,9 +9,11 @@ import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {loadFullUser} from "../../../../../modules/user";
 import { message } from 'antd';
-import { UserInfoFragment } from '../../../../../fragments';
+import { UserSettingInfoFragment } from '../../../../../fragments';
 import { withCurrentUser } from '../../../../../../../queries/user';
 import { withLoadingButton } from '../../../../../../../components/Loading';
+import { prepareAddressInput } from '../../../../../../../components/FormCustomFields/components/Address';
+import { preparePhoneInput } from '../../../../../../../components/FormCustomFields/components/Phone';
 //import { compose } from 'react-apollo';
 
 const settingUser = gql`
@@ -19,30 +21,7 @@ const settingUser = gql`
     account
     {
       user {
-          ...UserInfo
-          possibleTitles
-          title,
-          firstName,
-          middleName,
-          lastName,
-          birthday,
-          gender,
-          phone {
-          code
-          number},
-          language,
-          timezone
-          address {
-            line1
-            line2
-            country
-            state 
-            city
-            zipcode
-          }
-          phoneConfirmed,
-          dateFormat
-          email      
+         ...UserSettingInfo   
       }
     }
     
@@ -50,15 +29,6 @@ const settingUser = gql`
         languages {
              value
              label
-        }
-        countries {
-            id
-            name
-            phoneCode
-        }
-        states {
-            id
-            name
         }
         timezones {
             id
@@ -68,35 +38,15 @@ const settingUser = gql`
     }
     
 }
-${UserInfoFragment}
+${UserSettingInfoFragment}
 `;
 const settingUserMutate = gql`
  mutation settingUser($input:UserInput!){
         updateUser(input:$input) {
-            ...UserInfo
-          title,
-          firstName,
-          middleName,
-          lastName,
-          birthday,
-          gender,
-          phone {code, number},
-          language,
-          timezone
-          address {
-            line1
-            line2
-            country
-            state 
-            city
-            zipcode
-          }
-          phoneConfirmed,
-          dateFormat
-          email
+            ...UserSettingInfo
         }
     }
-    ${UserInfoFragment}
+    ${UserSettingInfoFragment}
 `;
 
 const withQuery = graphql(settingUser,
@@ -106,8 +56,6 @@ const withQuery = graphql(settingUser,
                 return {
                     account: data.account,
                     loading: data.loading,
-                    countries: data.staticContent.countries,
-                    states: data.staticContent.states,
                     languages: data.staticContent.languages,
                     timezones: data.staticContent.timezones
                 }
@@ -130,11 +78,11 @@ const withMutation = graphql(settingUserMutate, {
                 lastName,
                 middleName,
                 birthday:birthday.format("YYYY-MM-DD"),
-                phone,
+                phone:preparePhoneInput(phone),
                 gender,
                 email,
                 timezone,
-                address,
+                address: prepareAddressInput(address),
                 language,
                 dateFormat
     

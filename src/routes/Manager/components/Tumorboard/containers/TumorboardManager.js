@@ -7,7 +7,7 @@ import {Form} from 'antd';
 import { ElementLinkFragment, ElementTextFragment, ElementTreatmentFragment, ElementOptionsFragment,
     ElementClinicalNoteFragment} from "../../../../Plan/components/Plan/fragments";
 import {HealthElementFragment} from "../../../../Health/components/fragments";
-
+import { withModal } from '../../../../../components/Modal';
 
 export const TumorboardElementFragment  = gql`
     fragment TumorboardElementInfo on TumorboardElement {

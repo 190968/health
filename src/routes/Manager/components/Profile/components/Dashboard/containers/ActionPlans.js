@@ -7,19 +7,25 @@ const withQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                userId: ownProps.userId,
+                user_id: ownProps.user.id,
                 status: 'active'
             }
         }),
         props: ({data}) => {
-            if (!data.loading) {
+            const {user, refetch} = data;
+            const {plans} = user || {};
+            const {status} = data.variables || {};
                 return {
-                    plans: data.user.plans,
+                    plans: plans,
                     loading: data.loading,
+                    status:status,
+                    refetch,
+                    loadByStatus(status) {
+                        return data.refetch({
+                          status: status
+                        });
+                      },
                 }
-            } else {
-                return {loading: data.loading}
-            }
         },
     }
 );

@@ -5,6 +5,7 @@ import DiagnosisManager from './containers/DiagnosisManager';
 import moment from "moment/moment";
 import Loading from 'components/Loading';
 import Truncate from 'react-truncate';
+import { DiagnosisManagerButton } from './containers/DiagnosisManagerButton';
 
 
 class Diagnoses extends React.Component{
@@ -93,7 +94,7 @@ class Diagnoses extends React.Component{
         return (
             <div>
                 {<div style={{textAlign:'right', 'marginBottom':10}}>
-                    <Button size="small" icon="plus" onClick={toggleAdd}>Add</Button>
+                    <DiagnosisManagerButton userId={userId} />
                 </div>}
                 {dataSource.length > 0 ?
             <Table dataSource={dataSource} size={size} columns={columns} pagination={false} onChange={this.handleChange} ref={(input) => { this.table = input; }} />
@@ -121,21 +122,21 @@ const DiagnosisTitle = compose(
     return <a onClick={onEdit}><Truncate lines={2}> {title}</Truncate></a>;
 });
 
-const enhance = compose(
-    withState('showAdd', 'setShowAdd', false),
-    withHandlers({
-        toggleAdd: props => () => {
-            props.setShowAdd(!props.showAdd);
-        },
-        onHide: props => () => {
-            // hide add Modal
-            props.setShowAdd(false);
-        },
-        onEdit: props => () => {
+// const enhance = compose(
+//     withState('showAdd', 'setShowAdd', false),
+//     withHandlers({
+//         toggleAdd: props => () => {
+//             props.setShowAdd(!props.showAdd);
+//         },
+//         onHide: props => () => {
+//             // hide add Modal
+//             props.setShowAdd(false);
+//         },
+//         onEdit: props => () => {
 
-        }
-    }),
-    branch(props => props.showAdd, renderComponent(DiagnosisManager))
-)
+//         }
+//     }),
+//     branch(props => props.showAdd, renderComponent(DiagnosisManager))
+// )
 
-export default enhance(Diagnoses);
+export default (Diagnoses);

@@ -5,42 +5,19 @@ import ChatInfo from '../../containers/Info';
 import ChatInput from '../../containers/ChatInput';
 import  './index.less';
 
+const Chat = props => {
+    const {refetch} = props;
+    return <div className={'panel'} style={ { display: 'flex' }}>
+        <ChatHeader {...props} />
+        <div style={{display: 'flex',
+            flex: '1 1 0%', flexDirection: 'row-reverse'}}>
+            {/* {this.state.showInfo && <ChatInfo {...props}  />} */}
+            <div className={'panelMain'}>
+                <ChatPresent {...props}  />
 
-export default class Chat extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            showInfo:false
-        }
-    }
-    static defaultProps = {
-        lastCursor: '',
-    }
-    componentWillReceiveProps(nextProps) {
-
-        if (!nextProps.loading && nextProps.lastCursor !== this.props.lastCursor  ) {
-            // fetch more results
-            this.props.loadMoreEntries(this.props.lastCursor);
-        }
-    }
-
-    toggleInfo = () => {
-        this.setState({showInfo:!this.state.showInfo});
-    }
-
-    render() {
-        return <div className={'panel'} style={ { display: 'flex' }}>
-            <ChatHeader {...this.props} toggleInfo={this.toggleInfo} showInfo={this.state.showInfo} />
-            <div style={{display: 'flex',
-                flex: '1 1 0%', flexDirection: 'row-reverse'}}>
-                {this.state.showInfo && <ChatInfo {...this.props}  />}
-                <div className={'panelMain'}>
-                    <ChatPresent {...this.props}  />
-
-                    <ChatInput id={this.props.id} lastCursor={this.props.lastCursor} />
-                </div>
+                <ChatInput id={props.id} refetch={refetch} />
             </div>
         </div>
-    }
+    </div>
 }
+export default Chat;

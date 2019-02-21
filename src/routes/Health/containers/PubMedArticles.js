@@ -2,10 +2,10 @@ import PubMedArticlesPure from '../components/PubMedArticles';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import {compose, withProps, withState} from 'recompose';
-import { withModal } from '../../../components/Modal';
+import { withDrawer } from '../../../components/Modal';
 
 export const GET_PUB_MED_PUBLICATIONS_QUERY = gql`
-    query GET_USER_DIAGNOSES ($search: String, $lastCursor: ID) {
+    query GET_PUBMED_ARTICLES ($search: String, $lastCursor: ID) {
         health {
             getPubMedArticles(search: $search, lastCursor: $lastCursor) {
                 id
@@ -50,7 +50,7 @@ const enhance = compose(
             modalFooter: 'close'
         }
     }),
-    withModal
+    withDrawer
 );
 export const PubMedArticles = enhance(PubMedArticlesPure);
 export default PubMedArticles;

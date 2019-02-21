@@ -4,13 +4,14 @@ import {branch, compose, withHandlers, withProps, withState} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {withUpdateOrderMutation} from "../components/PathwayBody/index";
+import { GET_PATIENT_POINTS_QUERY } from '../../../../../layouts/components/Header/components/RightMenu/containers/HeaderPoints';
 
 
 const reportOnSection_MUTATION = gql`
     mutation sectionReport($id: UID!, $upid: UID! $date: Date!) {
         sectionComplete(id:$id, upid:$upid, date:$date) {
              id
-             completed(date:$date, upid:$upid)
+             completed(date:$date, upid:$upid) @connection(key: "planActivitiesCompletion", filter: ["date", "upid"]) 
         }
     }
 `;
@@ -18,10 +19,26 @@ const reportOnSection_MUTATION = gql`
 const withMutation = graphql(reportOnSection_MUTATION, {
     props: ({ mutate, ownProps }) => ({
         sectionReport: (id) => {
-
             const {date, upid} = ownProps;
+            let refetchQueries = [];
+            const {user} = ownProps;
+            if (user) {
+                refetchQueries.push({
+                    query: GET_PATIENT_POINTS_QUERY,
+                    variables: {
+                        userId: ownProps.user.id,
+                    }
+                });
+            }
             return mutate({
                 variables: {upid:upid, id: id, date:date },
+                refetchQueries
+                // refetchQueries: [{
+                //     query: GET_PATIENT_POINTS_QUERY,
+                //     variables: {
+                //         userId: userId,
+                //     }
+                // }]
             });
         },
 
@@ -33,7 +50,10 @@ const withMutation = graphql(reportOnSection_MUTATION, {
  * Enhance Body
  */
 const builderEnhance = compose(
-    withState('elements2', 'setElements', null),
+    withState('elements', 'setElements', props => {
+        const {elements=[]} = props;
+        return elements;
+    }),
     withProps(props => {
         let propsUpdated = {
             mode:'section'
@@ -46,13 +66,6 @@ const builderEnhance = compose(
                 useWindowAsScrollContainer: true
             }}
         }
-
-        const {elements2=null} = props;
-        const {item={}} = props;
-        const {elements=[]} = item;
-
-        propsUpdated.elements = elements2 ? elements2 : elements;
-
         return propsUpdated;
     }),
 

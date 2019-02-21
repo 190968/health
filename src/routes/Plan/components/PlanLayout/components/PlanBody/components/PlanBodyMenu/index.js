@@ -7,11 +7,12 @@ import AddSectionModal from '../../../../../../../Manager/components/Planbuilder
 import gql from 'graphql-tag';
 import {GetGlobalLabel} from "../../../../../../../../components/App/app-context";
 import {compose, withState, withHandlers, lifecycle } from 'recompose';
-
+import './index.less';
 const SubMenu = Menu.SubMenu;
 
 const menuItem = item => {
-    return <React.Fragment>{item.completed ? <Icon type="check-circle" /> : <Icon type="check-circle-o" />}{item.title}</React.Fragment>
+    //console.log(item);
+    return <React.Fragment>{item.completed ? <Icon type="check" /> : <i className="anticon anticon-circle"><svg viewBox="64 64 896 896"  width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path></svg></i>}{item.title}</React.Fragment>
 }
 
  const PlanBodyMenuPure = props => {
@@ -21,27 +22,31 @@ const menuItem = item => {
     const {handleChangeTab,handleMenuClick,openAddLesson=false, openAddSection=false, toggleLessonEditor, toggleSectionEditor} = props;
 
     const currentKey = currentTab+'_'+currentKeyI;
-    if (!activeTabs.includes(currentTab)) {
+    if (props.initialLoad && !activeTabs.includes(currentTab)) {
         activeTabs.push(currentTab);
     }
+    //console.log(currentKey);
+    console.log(activeTabs);
     return (
         <React.Fragment>
             <Menu
                 onOpenChange={handleChangeTab}
                 onClick={handleMenuClick}
                 selectedKeys={[currentKey]}
-                openKeys={activeTabs}
+                defaultOpenKeys={['lessons', 'activities']}
                 mode="inline"
+                theme={'plan'}
+                inlineIndent={10}
             >
             {isBuilderMode && <Menu.Item key='introduction' style={{marginBottom:0}} > <Icon type="exclamation-circle-o" />Introduction</Menu.Item>}
 
             {(isBuilderMode || lessons.length > 0) && 
-                <SubMenu key="lessons" title={<span><Icon type="info-circle-o" /><GetGlobalLabel  type="lessons" /></span>}>
+                <SubMenu key="lessons" className={'tour-planmenu-lessons'} title={<span>{/*<Icon type="info-circle-o" />*/}<GetGlobalLabel type="lessons" /></span>}>
                     {lessons.map((lesson, i) => (<Menu.Item key={'lessons_'+i} i={i}>{menuItem(lesson)}</Menu.Item>))}
                     {isBuilderMode && !isPreviewMode && <Menu.Item key='addLesson' style={{marginBottom:0}} > <Icon type="plus" />Add <GetGlobalLabel type="lesson" /></Menu.Item>}
                 </SubMenu>}
             {(isBuilderMode || activities.length > 0) && 
-                <SubMenu key="activities" title={<span><Icon type="form" /><GetGlobalLabel  type="activities" /></span>}>
+                <SubMenu key="activities" className={'tour-planmenu-activities'} title={<span>{/*<Icon type="form" />*/}<GetGlobalLabel  type="activities" /></span>}>
                     {activities.map((section, i) => (<Menu.Item key={'activities_'+i}>{menuItem(section)}</Menu.Item>))}
                     {isBuilderMode && !isPreviewMode && <Menu.Item key='addSection' style={{marginBottom:0}} > <Icon type="plus" />Add <GetGlobalLabel type="activity" /></Menu.Item>}
                 </SubMenu>}
@@ -55,6 +60,7 @@ const menuItem = item => {
 const enhance = compose(
     withState('openAddLesson', 'setOpenAddLesson', false),
     withState('openAddSection', 'setOpenAddSection', false),
+    withState('initialLoad', 'setInitialLoad', true),
     withState('activeTabs', 'setCurrentTab', []),
     withHandlers({
         toggleSectionEditor: props => () => {
@@ -65,8 +71,8 @@ const enhance = compose(
         },
     }),
     withHandlers({
-       
         handleChangeTab: props => (tab) => {
+            props.setInitialLoad(false);
             props.setCurrentTab(tab);
         },
         handleMenuClick: props => (e) => {
@@ -129,6 +135,11 @@ const enhance = compose(
             if (currentTab !== '') {
                 onClick(currentTab, currentKeyI);
             }
+
+            console.log(currentTab);
+            // if (!activeTabs.includes(currentTab)) {
+            //     //activeTabs.push(currentTab);
+            // }
         }
     })
 );

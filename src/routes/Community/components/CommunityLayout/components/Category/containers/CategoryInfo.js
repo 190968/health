@@ -39,10 +39,10 @@ query GET_CATEGORY($id:UID) {
           title
           titleShort
           text
-          category {
-            id
-            name
-          }
+        #   category {
+        #     id
+        #     name
+        #   }
           thumbs {
             original
             small

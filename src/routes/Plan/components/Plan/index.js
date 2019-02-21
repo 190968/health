@@ -1,157 +1,20 @@
 import React from 'react';
-import { Row, Col,Tag,Card, Tooltip, Icon } from 'antd';
+import { Row, Col,Tag,Card, Tooltip, Icon, Button } from 'antd';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 //import PropType from 'prop-types'
 import './styles.less';
 
-export class Plan extends React.PureComponent {
-  // fragment for the plan info
-  static fragments = {
-    plan: gql`
-        fragment PlanCardInfo on Plan {
-            id,
-            title,
-            description,
-            thumb {
-                small,
-                medium,
-                large,
-                wide
-            }
-        }
-    `,
-      element: gql`
-        fragment PlanElement on PlanBodyElement {
-            id
-            itemId
-            itemType
-            type
-            reports (date: $date) {
-                id
-                value,
-                date
-           }
-            itemInfo {
-               
-                ... on PlanElementChecklist {
-                  id
-                  label
-                  isVertical
-                  options {
-                    value
-                    label
-                  }
-                }
-                ... on PlanElementRadio {
-                  id
-                  label
-                  isVertical
-                  options {
-                    value
-                    label
-                  }
-                }
-                ... on PlanElementTextInput {
-                  id
-                  label
-                  isLong
-                  isDate
-                  isTime
-                }
-                
-                ... on PlanElementText {
-                  id
-                  text
-                }
-                ... on PlanElementLink {
-                  id
-                  label
-                  url
-                  description
-                }
-                
-                 ... on Tracker {
-                    id
-                    label
-                    textBefore
-                    description
-                    graph
-                    allowMultipleReports
-                    units {
-                        id
-                        name
-                    }
-                    inputMask
-                    targets (date: $date){
-                        id
-                        title
-                        value
-                    }
-                    criticalRange {
-                        min
-                        max
-                    }
-                    normalRange {
-                        min
-                        max
-                    }
-                    
-                    reports (date: $date){
-                        id
-                        time,
-                        date
-                        reportKey
-                        columnId
-                        isCritical
-                        value
-                        comments
-                    }
-                }
-                ... on PlanElementMedia {
-                    id
-                    label
-                    description
-                    type
-                    source
-                    url
-                    embedHtml
-                }
-                ... on PlanElementLine {
-                    id
-                    height
-                    color
-                }
-                
-                 ... on Assessment {
-                    id
-                    name
-                }
-            }
-             
-        }
-    `
-  }
-
-
-  static defaultProps = {
-      list:false
-  }
-  static propTypes = {
-    //plan: propType(Plan.fragments.plan).isRequired,
-    //handleCancel: React.PropTypes.func.isRequired,
-  }
-
-  render() {
-
-    const list = this.props.list;
-    var name = this.props.info.title;
-    let description = this.props.info.description;
-    var img = this.props.info.thumb.large;
-    var id = this.props.info.id;
-    var upid = this.props.upid || '';
-    var ribbon = this.props.info.ribbon || '';
+export const Plan = props => {
+    const {list=false, wide=false, info} = props;
+    const {benefits=[]} = info || {};
+    var name = props.info.title;
+    let description = props.info.description;
+    var img = props.info.thumb.large;
+    var id = props.info.id;
+    var upid = props.upid || '';
+    var ribbon = props.info.ribbon || '';
 
     let link = '/planstore/plan/'+id;
     const is_user = upid !== '';
@@ -165,6 +28,32 @@ export class Plan extends React.PureComponent {
           //limit = 15;
       }
 
+      if (wide) {
+        return (
+           
+                <Row style={{background: '#fff'}}>
+                    <Col span={12}><div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} width={'100%'} style={{minHeight: '100px'}} src={img} /></div></Col>
+                    <Col span={12}>
+                        <div style={{margin:16, paddingBottom: 34}}>
+                            <h1>{name}</h1>
+                            <div>
+                            <ul>
+                                        {benefits.map((el, index) => {
+                                            return <li key={index}>{el}</li>;
+                                        })}
+                                    </ul>
+                            <small style={{color: '#ccc'}}><Truncate lines={4}>{description}</Truncate></small>
+                            </div>
+                        </div>
+                    </Col>
+                    <div style={{position:'absolute', right: 10, bottom:10}}> <Link style={{width:'100%', color: 'inherit'}}
+                to={link}
+                
+            ><Button type={'primary'}>View<Icon type="right" size={'large'} /></Button>  </Link></div>
+                </Row>
+          
+        );
+      }
       if (list) {
           return (
               <Link style={{width:'100%'}}
@@ -183,7 +72,7 @@ export class Plan extends React.PureComponent {
           to={link}
         >
             <Card
-                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} style={{maxHeight:153}} width={'100%'} src={img} /></div>}
+                cover={<div> {ribbon && <Tag color="magenta" style={{position:'absolute', top:10, right:0}}>{ribbon}</Tag>}<img alt={name} style={{maxHeight:206}} width={'100%'} src={img} /></div>}
                 hoverable={true}
                 type='plan'
             >
@@ -197,7 +86,6 @@ export class Plan extends React.PureComponent {
             </Card>
         </Link>
     );
-  }
 }
 
 export default Plan;

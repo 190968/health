@@ -23,23 +23,14 @@ const formItemLayout = {
     },
 };
 
+// const Compose = props => {
+
+// }
+
 class Compose extends React.Component{
-    state = {}
 
 
-    handleSubmit = () => {
-        const { sendMessage } = this.props;
-        this.props.form.validateFields((err, values) => {
-
-
-            if (!err) {
-                return sendMessage(values).then(() => {
-                    message.success(this.props.intl.formatMessage(messages.sent));
-                    this.props.onCancel();
-                });
-            }
-        });
-    }
+    
 
     render(){
 

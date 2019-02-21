@@ -1,11 +1,9 @@
 import { connect } from 'react-redux'
 import { PlansList } from '../components/PlansList'
 
-import Plan from '../components/Plan';
-
-
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { PlanCardFragment } from '../components/Plan/fragments';
 
 const QUERY = gql`    
     query GET_PERSONAL_PLANS ($user_id:UID) {
@@ -16,7 +14,7 @@ const QUERY = gql`
             }
         }
     }
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 
 const PLANS_PER_PAGE = 20;

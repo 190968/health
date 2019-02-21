@@ -2,7 +2,6 @@ import TumorboardEditorPublish from '../components/TumorboardEditorPublish';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import {TumorboardFragment} from "../../../fragments";
-import {UserInfoFragment} from "../../../../../../User/fragments";
 import {GET_TUMORBARDS_QUERY} from "../../../containers/TumorboardsList";
 
 const TUMORBOARD_PUBLISH_MUTATION = gql`

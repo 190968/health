@@ -4,6 +4,7 @@ import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
 import CancerManager from './containers/CancerManager';
 import sort from '../../../../components/Tables/sort'
 import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
+import { TableWithMessage } from '../../../../components/Tables';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -38,31 +39,9 @@ const CancersPure = props => {
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-        sorter: (a, b) => sort(a, b, "title"),
-        render: (title, info) => {
-            return <CancerTitle cancer={info}/>;
-        },
-        filterDropdown: (
-            <div className="custom-filter-dropdown">
-                <Input
-                     suffix={suffix}
-                    ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
-                     value={props.searchText}
-                    onChange={props.onSearch}
-                    onPressEnter={props.onSearch}
-                />
-            </div>
-        ),
-        filterIcon: <Icon type="search"/>,
     }];
     const dataSource = cancers.map((cancer, i) => ({...cancer, key: i}))
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
-        </RadioGroup>
         <Tooltip title="Add New Cancer"><Button type="primary" onClick={addCancer}><Icon
             type="plus"/></Button></Tooltip>
     </React.Fragment>;
@@ -75,7 +54,7 @@ const CancersPure = props => {
         >
 
             <Card type="table">
-                <Table dataSource={dataSource} columns={columns} pagination={false}/>
+                <TableWithMessage dataSource={dataSource} columns={columns}  total={total} />
             </Card>
         </PageHeaderLayout>
         {openManage && <CancerManager onHide={hideManager}/>}

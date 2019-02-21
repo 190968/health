@@ -5,6 +5,8 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import createStore from './store/createStore'
 import './index.less';
+import './display.less';
+import './media_queries.less';
 
 const store = createStore(window.__INITIAL_STATE__)
 

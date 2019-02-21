@@ -1,5 +1,6 @@
 import React from 'react';
 import {Icon} from 'antd';
+
 export const getLabelFromElement = (element={}, props={}) => {
     const {itemInfo:item={}, type, typeText} = element;
     const {itemType = type} = element;
@@ -9,8 +10,7 @@ export const getLabelFromElement = (element={}, props={}) => {
     switch(itemType) {
         default: break;
         case 'measurement_input':
-            //const {measurement={}} = item;
-            fieldTitle = item.label;//<Measurement item={item} date={date} onChange={this.onChange} />
+            fieldTitle = item.label;
             break;
         case 'choice_input':
         case 'checklist':
@@ -40,7 +40,6 @@ export const getLabelFromElement = (element={}, props={}) => {
             break;
         case 'instruction':
         case 'instruction_embed':
-        //console.log(showType, 'item');
             if (showType) {
                 fieldTitle = 'Instruction';
             }
@@ -63,7 +62,6 @@ export const getLabelFromElement = (element={}, props={}) => {
             break;
         case 'media':
             fieldTitle = item.label;
-            //field = <PlanMedia item={item} />
             break;
         case 'treatment':
             fieldTitle = item.title;
@@ -79,7 +77,7 @@ export const getLabelFromElement = (element={}, props={}) => {
         }
             break;
         case 'alias':
-            fieldTitle = item.label || '';//getLabelFromElement(element.itemInfo);
+            fieldTitle = item.label || '';
             break;
         case 'ap':
             fieldTitle = item.title;

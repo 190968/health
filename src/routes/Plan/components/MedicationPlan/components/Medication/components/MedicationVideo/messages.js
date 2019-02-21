@@ -9,4 +9,5 @@ export default defineMessages({
             "defaultMessage": "Make a Commitment",
             "description": "Make a Commitment"
         }
+    }
 );

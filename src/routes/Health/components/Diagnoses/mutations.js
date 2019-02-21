@@ -17,7 +17,7 @@ export const withUpdateMutation = graphql(UPDATE_HEALTH_ELEMENT_MUTATION, {
     props: ({ ownProps, mutate }) => ({
         updateHealthRecord: (input) => {
             return mutate({
-                variables: {userId:ownProps.userId, id: ownProps.id, input:input},
+                variables: {userId:ownProps.user.id, id: ownProps.id, input:input},
             })
         },
     }),
@@ -25,8 +25,8 @@ export const withUpdateMutation = graphql(UPDATE_HEALTH_ELEMENT_MUTATION, {
 
 
 export const ADD_HEALTH_ELEMENT_MUTATION = gql`
-    mutation addHealthRecord($userId: UID!, $input:HealthRecordInput!) {
-        addHealthRecord(userId: $userId, input: $input) {
+    mutation addHealthRecord($userId: UID!, $input:HealthRecordInput!, $isFamily: Boolean) {
+        addHealthRecord(userId: $userId, input: $input, isFamily: $isFamily) {
           ...HealthElement
         }
     }
@@ -35,11 +35,12 @@ export const ADD_HEALTH_ELEMENT_MUTATION = gql`
 export const withAddMutation = graphql(ADD_HEALTH_ELEMENT_MUTATION, {
     props: ({ ownProps, mutate }) => ({
         addHealthRecord: (input, type) => {
+            const {isFamily} = ownProps;
             return mutate({
-                variables: {userId:ownProps.userId, input:input},
+                variables: {userId:ownProps.user.id, input:input, isFamily},
                 refetchQueries: [{
                     query: GET_USER_DIAGNOSES_QUERY,
-                    variables: {userId:ownProps.userId}
+                    variables: {userId:ownProps.user.id, isFamily}
                 }],
             })
         },

@@ -4,10 +4,11 @@ import gql from 'graphql-tag';
 import React from 'react';
 import {compose,withStateHandlers, lifecycle, withProps} from 'recompose';
 import {ClinicalTrialFragment} from "../fragments";
+import { withTableCursors } from '../../../../../components/Tables/hocs';
 
 export const GET_CLINICAL_TRIALS_LIST_QUERY = gql`    
-    query GET_CLINICAL_TRIALS_LIST ($search: String) {
-        getClinicalTrialsList (search: $search) {
+    query GET_CLINICAL_TRIALS_LIST ($search: String, $cursors: CursorInput) {
+        getClinicalTrialsList (search: $search, cursors:$cursors) {
             totalCount
             edges {
                 ...ClinicalTrialInfo
@@ -47,6 +48,33 @@ const withQuery = graphql(
                     total: totalCount,
                     lastCursor: endCursor,
                     loading: data.loading,
+                    loadMoreEntries(variables) {
+                        return data.refetch(variables);
+                        return data.fetchMore({
+                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                            variables,
+                            updateQuery: (previousResult, {fetchMoreResult}) => {
+                                if (!fetchMoreResult) { return previousResult; }
+    
+                                const {getCampaign} = previousResult.management || {};
+                                const {getPopulation} = getCampaign || {};
+                                const {edges} = getPopulation || {};
+                                //
+                                const {getCampaign:getCampaignNew} = fetchMoreResult.management || {};
+                                const {getPopulation:getPopulationNew} = getCampaignNew || {};
+                                const {edges:edgesNew} = getPopulationNew || {};
+                                
+                                // return {management: management }
+                                // console.log(previousResult);
+                                // console.log(fetchMoreResult);
+                                return fetchMoreResult;
+                                return Object.assign({}, previousResult, {
+                                    // Append the new feed results to the old one
+                                    planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
+                                });
+                            },
+                        });
+                    },
                     // loadByStatus(status) {
                     //     return data.fetchMore({
                     //         // query: ... (you can specify a different query. FEED_QUERY is used by default)
@@ -100,21 +128,7 @@ const enhance = compose(
             tableRef
         }
     }),
-    lifecycle({
-        componentDidMount() {
-
-            /*const {tableRef} = this.props;
-            console.log(tableRef.current);
-            tableRef.current.addEventListener('scroll', (event) => {
-                  let maxScroll = event.target.scrollHeight - event.target.clientHeight
-                  let currentScroll = event.target.scrollTop
-                  if (currentScroll === maxScroll) {
-                     // load more data
-                     console.log('aaaaaa');
-                  }
-                })*/
-            } 
-    }),
+    withTableCursors,
     withStateHandlers(
         (props) => (
             {

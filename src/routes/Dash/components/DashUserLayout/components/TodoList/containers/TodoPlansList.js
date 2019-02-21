@@ -2,6 +2,7 @@ import TodoPlansList from '../components/TodoPlansList'
 import { graphql } from 'react-apollo';
 
 import {USER_PLANS_LIST_QUERY} from '../../../../../../Plan/containers/PlansList';
+import { ifModuleExists } from '../../../../../../../components/App/app-context';
 
 const TodoPlansListWithQuery = graphql(
     USER_PLANS_LIST_QUERY,
@@ -29,4 +30,4 @@ const TodoPlansListWithQuery = graphql(
     }
 )(TodoPlansList);
 
-export default TodoPlansListWithQuery;
+export default ifModuleExists('aps')(TodoPlansListWithQuery);

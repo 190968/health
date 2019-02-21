@@ -1,62 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types'
-
 import PathwayElement from './containers/PathwayElement';
-import { DragSource } from 'react-dnd'
 import './index.less';
-
-export const canBeDraggable = (element) => {
-    return element.type !== 'decision' && element.type !== 'condition';
-}
-const boxSource = {
-    beginDrag(props) {
-        return {
-            element: props.element,
-        }
-    },
-
-    endDrag(props, monitor) {
-        const item = monitor.getItem()
-        const dropResult = monitor.getDropResult()
-
-        if (dropResult) {
-            props.onDrop(item);
-            //alert(`You dropped ${item.element.type} into ${dropResult.name}!`) // eslint-disable-line no-alert
-        }
-    },
-    canDrag(props, monitor) {
-        //console.log(props);
-        return canBeDraggable(props.element);
-    }
-}
+import { pathwayElementCanBeDraggable } from '../../containers/PathwayBodyElement';
 
 
- class PathwayBodyElement extends React.Component {
-    static propTypes = {
-        connectDragSource: PropTypes.func.isRequired,
-        isDragging: PropTypes.bool.isRequired,
-        //name: PropTypes.string.isRequired,
-    }
+ const PathwayBodyElement  = props => {
+        const {i, element, plan, onDrop, currentInOrder, user} = props;
 
-    render() {
-        const {i, element, plan, onDrop, currentInOrder, user} = this.props;
-
-        const { isDragging, connectDragSource } = this.props
+        const { isDragging, connectDragSource } = props
         const opacity = isDragging ? 0.4 : 1
 
-        if (canBeDraggable(element)) {
+        if (pathwayElementCanBeDraggable(element)) {
             return connectDragSource(<div className={"pathway-el-dnd"} style={{opacity}}><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} user={user} notClickable /></div>);
-
         } else {
             return <div className={element.type === 'condition' ? 'red-card-wrap' : {}} ><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} user={user} notClickable /></div>;
         }
-
-    }
 }
 
-//export default PathwayBodyElement;
-
-export default DragSource('box', boxSource, (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-}))(PathwayBodyElement);
+export default PathwayBodyElement;

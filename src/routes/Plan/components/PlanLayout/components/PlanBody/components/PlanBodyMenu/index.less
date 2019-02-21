@@ -1,0 +1,47 @@
+.ant-menu.ant-menu-plan {
+    background: transparent;
+
+    > .ant-menu-submenu {
+        margin-top:16px;
+        &:first-child {
+            margin-top:0;
+        }
+    }
+    .ant-menu-submenu-title {
+        text-transform: uppercase;
+        color: #fff;
+        background: #a5cb37;
+        margin-top:0;
+        margin-bottom:0;
+        text-align: center;
+        i {
+            font-size:1.2em;
+        }
+        .ant-menu-submenu-arrow {
+            &:before, &:after {
+                background: #fff;
+            }
+        }
+    }
+
+    .ant-menu-submenu-selected {
+        .ant-menu-submenu-title {
+            // font-weight: bold;
+            // font-size:1.1em;
+        }
+        .ant-menu-sub {
+            padding-top:10px;
+        }
+    }
+
+    .ant-menu-item {
+        margin:0;
+    }
+    .ant-menu-item-selected {
+        background: transparent;
+        font-weight:bold;
+        &:after {
+            border-right-width:5px;
+        }
+    }
+}

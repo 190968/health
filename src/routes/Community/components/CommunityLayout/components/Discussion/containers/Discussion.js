@@ -17,6 +17,7 @@ import {compose} from 'react-apollo';
 import Discussion from '../index.js';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { UserInfoFragment } from '../../../../../../User/fragments.js';
 
 
 // import {MedicationPlan} from "../../PlansList/components/MedicationPlan/containers";
@@ -44,7 +45,7 @@ const DISCUSSION  = gql`
            name
          }
          author {
-            id
+            ...UserInfo
          }
          views
          replies {
@@ -56,6 +57,9 @@ const DISCUSSION  = gql`
                     createdAt
                     isImportant
                     unread
+                    author {
+                        ...UserInfo
+                    }
                     replies {
                       totalCount
                       edges{
@@ -65,12 +69,16 @@ const DISCUSSION  = gql`
                             createdAt
                             isImportant
                             unread
+                            author {
+                                ...UserInfo
+                            }
                       }
                   }    
               }
           }      
     }
 }
+${UserInfoFragment}
 `;
 const discussionReply = gql`
    mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {

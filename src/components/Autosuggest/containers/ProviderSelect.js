@@ -1,40 +1,24 @@
 import ProviderSelectPure from '../components/ProviderSelect';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import { GET_PROVIDERS_QUERY } from '../../../routes/Manager/containers/Providers';
+import { GET_PROVIDERS_QUERY } from '../../../routes/Manager/components/Providers/queries';
 
-const ProviderSelectWithQuery = graphql(GET_PROVIDERS_QUERY,
+const withQuery = graphql(GET_PROVIDERS_QUERY,
     {
-        options: () => {
-            return {
-                //fetchPolicy: 'network-only'
-            }
-        },
         props: ({ data }) => {
-            if (!data.loading) {
-                return {
-                    items: data.network.getProviders.edges,
-                    loading: data.loading,
 
+            const {getProviders} = data.network || {};
+            const {edges, totalCount} = getProviders || {};
+                return {
+                    items: edges,
+                    total: totalCount,
+                    loading: data.loading,
                     doSearch(search) {
-                        return data.fetchMore({
-                            variables: {
-                                search: search,
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
-                                return (fetchMoreResult);
-                            },
-                        });
+                        return data.refetch({search});
                     }
                 }
-            } else {
-                return {loading: data.loading}
-            }
         },
-
     }
-)(ProviderSelectPure);
+);
 
-export const ProviderSelect = ProviderSelectWithQuery;
+export const ProviderSelect = withQuery(ProviderSelectPure);
 export default ProviderSelect;

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import './index.less';
 import {Slider} from 'antd';
 
 
@@ -35,7 +35,7 @@ export default class PlanScale extends React.PureComponent {
         const {value} = this.state;
         var options = item.options;
         let marks = {};
-        let selectedMark = null;
+        let selectedMark = undefined;
         options.map((option, i) => {
             const coid = option.value;
             const name = option.label;
@@ -44,11 +44,31 @@ export default class PlanScale extends React.PureComponent {
                 selectedMark = i;
             }
 
-            marks[i] = name;
+            marks[i] = {label:name};
             return option;
         })
+        // console.log(value);
+        // console.log(selectedMark);
 
-        return <div style={{padding:'0 20px'}}><Slider onChange={this.onChange} marks={marks} max={options.length-1} value={selectedMark} /></div>;//<Slider marks={marks}    />
+        // let value = reports.map(report => report.answerId);
+        // value = value[0] || null;
+        
+        // answers.map((option, i) => {
+        //     const coid = option.id;
+        //     const name = option.label;
+    
+        //     if (value === coid) {
+        //         selectedMark = i;
+        //     }
+    
+        //     marks[i] = {label:name};
+        //     return option;
+        // });
+         
+    
+        // return <div style={{padding:'0 20px'}}><Slider disabled={disabled} onChange={onChange} marks={marks} max={answers.length-1} defaultValue={selectedMark} />
+
+        return <div className={'plan-slider'} ><Slider onChange={this.onChange} marks={marks} max={options.length-1} value={selectedMark} /></div>;//<Slider marks={marks}    />
 
     }
 }

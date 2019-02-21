@@ -6,6 +6,7 @@ import {AvatarWithName} from "../../../../../User/components/AvatarWithName/inde
 import sort from '../../../../../../components/Tables/sort';
 import StaffMemberInviteButton from '../../containers/StaffMemberInviteButton';
 import { TableFooterButtons } from '../../../../../../components/Tables/TableFooterButtons';
+import { TableWithMessage } from '../../../../../../components/Tables';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -27,7 +28,7 @@ const Supervisors = props => {
                 
             <Input
                 suffix={suffix}
-                ref={ele => this.searchInput = ele}
+                // ref={ele => this.searchInput = ele}
                 placeholder="Search"
                 value={searchText}
                 onChange={onSearch}
@@ -86,13 +87,15 @@ const Supervisors = props => {
         }),
     };
     return (
-        <PageHeaderLayout title={'Supervisors Manager' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
+        <PageHeaderLayout title={'Supervisors' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}
                           content=""
                           action={actions}
         >
 
             <Card type="basic1  ant-card-type-table">
-                <Table rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
+                <TableWithMessage
+                emptyMessage={'No Supervisors'}
+                rowSelection={rowSelection} size="middle" dataSource={management} rowKey={'id'} columns={columns}
                        pagination={pageOpts} loading={loading}/>
                 {showButton && <TableFooterButtons selectedObj={selectedObj} selectedCount={selectedCount}/>}
             </Card>

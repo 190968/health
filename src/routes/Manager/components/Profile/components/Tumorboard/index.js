@@ -1,15 +1,11 @@
 import React from 'react';
 import { Row, Col, Card } from 'antd';
-import PanelGroup from 'react-panelgroup';
-import moment from 'moment';
 import { DragDropContextProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import Timeline from '../../components/Pathway/containers/Timeline';
 import TumorboardSide from './containers/TumorboardSide';
 import TumorBoardPreview from './containers/TumorBoardPreview';
 import {compose, withHandlers, withState} from 'recompose';
-//import PathwayContent from './containers/PathwayContent';
-//import TimelineElementDetails from '../../components/Pathway/components/Timeline/containers/TimelineElementDetails'
+import { Timeline } from '../TimelineLayout/containers/Timeline';
 
 const Tumorboard = props => {
     const {user, tumorboard, loading, viewNote=false} = props;
@@ -17,7 +13,7 @@ const Tumorboard = props => {
     return <DragDropContextProvider backend={HTML5Backend}>
         <Row>
             <Col span={span} style={{marginRight:'-1px'}}>
-                <Timeline userId={user.id} draggable onDrop={props.onDrop} filters={['tumorboard']} onlyFilters /*togglePathway={this.togglePathway} showPathway={showPathway}   showElement={this.toggleElementView} activeElement={activeElement}*/ />
+                <Timeline user={user} draggable onDrop={props.onDrop} filters={['tumorboard']} onlyFilters />
             </Col>
             <Col span={span}>
                 <TumorboardSide setTumorboard={props.setTumorboard} userId={user.id} tumorboard={tumorboard} loading={loading} /*pathway={this.state.pathway} setPathway={this.setPathway}*/ />

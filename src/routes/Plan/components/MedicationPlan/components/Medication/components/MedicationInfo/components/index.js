@@ -3,10 +3,10 @@ import {Tooltip, Icon, Row, Col, Popconfirm, Popover} from 'antd';
 import {
     FormattedMessage,
 } from 'react-intl';
-import MedicationEditForm from '../../MedicationEdit/containers'
 import MedicationChartPopup from '../../MedicationChartPopup';
 import MedicationFullDetails from '../../../containers/MedicationFullDetails';
 import MedicationVideo from '../../../containers/MedicationVideo';
+import MedicationManager from '../../../containers/MedicationManager';
 
 export class MedicationInfo extends React.PureComponent {
 
@@ -69,9 +69,9 @@ export class MedicationInfo extends React.PureComponent {
         return (
             <div>
 
-                {this.state.showVideo && <MedicationVideo id={drug.id} onHide={this.hideVideo} />}
+                {this.state.showVideo && <MedicationVideo drug={drug} onHide={this.hideVideo} />}
                 {this.state.visible &&
-                <MedicationEditForm id={id}
+                <MedicationManager id={id}
                                     userId={user_id}
                                     date={date}
                                     title={<FormattedMessage id="plan.medicationplan.medication.medicationedit.modal"
@@ -85,7 +85,7 @@ export class MedicationInfo extends React.PureComponent {
 
                 <Row>
                     <Col>
-                        <Popover content={content} trigger="hover">{name}</Popover> <Icon type="video-camera" onClick={this.showVideo} /> {image && <Popover content={<div><img src={image} /></div>} title="Title" trigger="hover"><Icon type="camera-o"/></Popover>}
+                        <Icon type="video-camera" onClick={this.showVideo} /> {image && <Popover content={<div><img src={image} /></div>} title="Title" trigger="hover"><Icon type="camera-o"/></Popover>} <Popover content={content} trigger="hover">{name}</Popover> 
                     </Col>
                     <Col style={{fontSize: '0.8em'}}>
                         {dosage}

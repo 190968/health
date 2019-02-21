@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 import { Row, Col,Card, Spin,  Modal} from 'antd';
 import MedicationChart from '../MedicationChart';
 import AdverseReactions from "./containers/AdverseReactions";
-import MedicationReminders from "../../components/MedicationReminders";
+import {MedicationReminders} from "../../containers/MedicationReminders";
+import DescriptionList from '../../../../../../../../components/Layout/DescriptionList';
+import AvatarWithName from '../../../../../../../User/components/AvatarWithName';
+import { FormattedMessage } from 'react-intl';
+import messages from '../../../../i18n/en';
+import DefaultI18nEn from '../../../../../../../../i18n/en';
 
-
+const Description = DescriptionList.Description;
 
 export default class MedicationsFullDetails extends React.Component {
 
@@ -25,55 +30,44 @@ export default class MedicationsFullDetails extends React.Component {
     render() {
 
         const {loading} = this.props;
-        if (loading) {
-            return   <Modal
-                visible={true}
-                closable={false}
-                destroyOnClose
-                footer={false}
-                bodyStyle={{height:150, textAlign:'center', lineHeight:5}}
-            >
-                <Spin tip="Loading..." />
-            </Modal>
-        }
-        const {info, date, userId} = this.props;
-        const {drug, summary} = info;
+        
+        const {medication, date, user} = this.props;
+        const {drug, summary, prescription, period, prescriber, directions, purpose, sideEffects} = medication || {};
+        const {fullName} = prescriber || {};
 
-
-        const details = [
-            {label:'Form', details:drug.dosage+' '+drug.form},
-            {label:'Prescription', details: <span  dangerouslySetInnerHTML={{__html: info.prescription}}></span>},
-            {label:'Period', details:   info.period},
-            {label:'Prescribed', details: info.prescriber.fullName},
+        let details = [
+            [<FormattedMessage {...messages.form} />, drug.dosage+' '+drug.form],
+            [<FormattedMessage {...messages.prescription} />, <span  dangerouslySetInnerHTML={{__html: prescription}}></span>],
+            [<FormattedMessage {...messages.period} />, period],
+            [<FormattedMessage {...messages.prescriber} />, prescriber && <AvatarWithName user={prescriber} />],
         ]
-        if (info.directions !== '') {
-            details.push({label:'Directions', details: info.directions});
+
+       
+        if (directions !== '') {
+            details.push([<FormattedMessage {...messages.directions} />, directions]);
         }
-        if (info.purpose !== '') {
-            details.push({label:'Purpose', details: info.purpose});
+        if (purpose !== '') {
+            details.push([<FormattedMessage {...messages.purpose} />, purpose]);
         }
-        if (info.sideEffects !== '') {
-            details.push({label:'Side Effects', details: info.sideEffects});
+        if (sideEffects !== '') {
+            details.push([<FormattedMessage {...messages.sideEffects} />, sideEffects]);
         }
 
-        return (<Modal
-            visible={true}
-            destroyOnClose
-            footer={false}
-            title={drug.name}
-            onCancel={this.props.onClose}
-        >
-            <Card title="Details" type="inner">
-                {details.map((info) => <Row key={info.label} style={{marginBottom:10}}>
-                    <Col md={6}>{info.label}</Col>
-                    <Col md={18}>{info.details}</Col>
-                </Row>)}
+        return (<React.Fragment>
+            <Card title={<FormattedMessage {...messages.details} />} type="inner">
+          
+                <DescriptionList col={1} >
+                    {details.map((detail, i) => {
+                        return <Description term={detail[0]} key={i} excludeEmpty>{detail[1]}</Description>;
+                    })}
+                </DescriptionList>
+ 
             </Card>
-            <AdverseReactions userId={userId} item={info} />
-            <Card title="This Week Summary" type="inner">
-                <MedicationChart date={date} data={summary} userId={userId} width={430} useAxis={true} />
+            <AdverseReactions user={user} medication={medication} />
+            <Card title={<FormattedMessage {...DefaultI18nEn.thisWeekSummary} />} type="inner">
+                <MedicationChart date={date} data={summary} userId={user.id} width={430} useAxis={true} />
             </Card>
-            <MedicationReminders item={info}  />
-        </Modal>)
+            <MedicationReminders medication={medication} user={user} title={<FormattedMessage {...messages.medication} />}  />
+            </React.Fragment>)
     }
 }

@@ -21,6 +21,7 @@ export const GET_POPULATION_SNAPSHOT_QUERY = gql`
             name
             value
             color
+            date
           }
         }
       }
@@ -36,13 +37,11 @@ const withQuery = graphql(
             }
         },
         props: ({ data }) => {
-            if (!data.loading) {
-                return {
-                    snapshot: data.management.getPopulationShapshot,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
+
+            const {getPopulationShapshot} = data.management || {};
+            return {
+                snapshot: getPopulationShapshot,
+                loading: data.loading,
             }
         },
     }

@@ -1,5 +1,6 @@
-import DescriptionList from './DescriptionList';
+import DescriptionListPure from './DescriptionList';
 import Description from './Description';
 
-DescriptionList.Description = Description;
+DescriptionListPure.Description = Description;
+export const DescriptionList = DescriptionListPure;
 export default DescriptionList;

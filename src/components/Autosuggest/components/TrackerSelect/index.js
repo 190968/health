@@ -2,10 +2,12 @@ import React from 'react'
 import Select from '../Select';
 import { compose, branch, renderComponent, withProps, withHandlers, defaultProps, mapProps} from 'recompose';
 
-const TrackerSelect = ({loading, items=[], doSearch, onChange, value=undefined, getInfo=false}) => {
+const TrackerSelectPure = ({loading, items=[], doSearch, onChange, value=undefined, getInfo=false}) => {
     const trackers = items.map(item => {
-        return {id:item.id, title:item.label};
-    })
+        const {units} = item;
+        return {id:item.id, title:<React.Fragment>{item.label} <div style={{fontSize:'0.8em',color:'grey'}}>{units.name}</div></React.Fragment>};
+    });
+    
     return <Select value={value} i18n={{placeholder:"Select Tracker"}} loading={loading} items={trackers} doSearch={doSearch} onChange={onChange} />;
 };
 
@@ -18,10 +20,14 @@ const enhance = compose(
     }),
     withHandlers({
         onChange: props => trackerId => {
-            if (props.selectInfo) {
-                const tracker = props.items.filter(tracker => tracker.id === trackerId);
-                if (tracker.length > 0) {
-                    props.selectInfo(tracker[0]);
+            if (props.selectInfo || props.getSelectedInfo) {
+                const tracker = props.items.find(tracker => tracker.id === trackerId);
+                if (props.selectInfo && tracker) {
+                    props.selectInfo(tracker);
+                }
+                if (props.getSelectedInfo) {
+                    props.onChange(tracker);
+                    return true;
                 }
             }
             props.onChange(trackerId);
@@ -29,4 +35,5 @@ const enhance = compose(
     })
 )
 
-export default enhance(TrackerSelect);
+const TrackerSelect = enhance(TrackerSelectPure);
+export default TrackerSelect

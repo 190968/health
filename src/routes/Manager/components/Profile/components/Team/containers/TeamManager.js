@@ -4,8 +4,10 @@ import React from 'react';
 import {compose, withStateHandlers, branch, withHandlers, withState, withProps} from 'recompose';
 import {Form} from 'antd';
 import gql from 'graphql-tag';
-import {withModal, withSpinnerWhileLoading} from "../../../../../../../components/Modal/index";
+import {withModal, withSpinnerWhileLoading, withDrawer} from "../../../../../../../components/Modal/index";
 import { UserInfoFragment } from '../../../../../../User/fragments';
+import {withUpdateCareTeamMutation} from '../mutations';
+import { PhoneInfoFragment } from '../../../../../../../components/FormCustomFields/components/Phone/fragments';
 
 const GET_PATIENT_CARE_TEAM_QUERY = gql`
 query GET_USER_TEAM($userId:UID) {
@@ -16,9 +18,12 @@ query GET_USER_TEAM($userId:UID) {
                   totalCount,
                   edges{
                       id,
+                      objectId,
                       user {
                           ...UserInfo
-                          phoneFormatted
+                          phone {
+                              ...PhoneInfo
+                          }
                       }
                       joinedDate
                       roleText
@@ -27,77 +32,77 @@ query GET_USER_TEAM($userId:UID) {
        }
     }
 
-        management {
-            getNetworkProfessionals {
-                edges {
-                    id
-                    role
-                    roleTitle
-                    user {
-                        ...UserInfo
-                    }
+    management {
+        getNetworkProfessionals {
+            edges {
+                id
+                role
+                roleTitle
+                user {
+                    ...UserInfo
                 }
             }
         }
+    }
   }
   ${UserInfoFragment}
+  ${PhoneInfoFragment}
 `;
 
 const withCareTeamQuery = graphql(GET_PATIENT_CARE_TEAM_QUERY, {
     options: (ownProps) => {
         const {user} = ownProps;
+        //console.log(11111);
         return {
             variables: {
                 userId: user.id,
             },
+            fetchPolicy: 'network-only',
         }
     },
     props: ({data, ownProps}) => {
-        const {patient={}, management=[]} = data;
-        const {motivation={}} = patient;
-        const {careTeam={}} = motivation;
-        const {edges=[]} = careTeam;
-        const selectedItems = edges.map(item => {
-            const {id, user, role} = item;
-            return {id, title: user.fullName+' ('+role+')', key:id};
-        });
-        console.log(data, 'data');
-        //
-        const {getNetworkProfessionals={}} = management;
-        let {edges:items=[]} = getNetworkProfessionals;
+        const {patient, management} = data;
+        const {motivation} = patient || {};
+        const {careTeam} = motivation || {};
+        const {edges=[]} = careTeam || {};
+
+
+        // const selectedItems = edges.map(item => {
+        //     const {id, user, role} = item;
+        //     return {id, title: user.fullName+' ('+role+')', key:id};
+        // });
+        // console.log(data, 'data');
+        // //
+        const {getNetworkProfessionals} = management || {};
+        let {edges:items=[]} = getNetworkProfessionals || {};
         items = items.map(item => {
-            const {id, user, role} = item;
-            return {id, title: user.fullName+' ('+role+')', key:id};
+            const {id,user, roleTitle} = item;
+
+            return {id:id, title: user.fullName, description:roleTitle, key:id}; 
         })
-        return {loading: data.loading, selectedItems, items}
+        return {loading: data.loading, teamMembers:edges, items}
     },
 });
-
-
-const mockData = [];
-for (let i = 0; i < 20; i++) {
-    mockData.push({
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        disabled: i % 3 < 1,
-    });
-}
-const targetKeys = mockData
-    .filter(item => +item.key % 3 > 1)
-    .map(item => item.key);
-
-
-
 
 
 
 const enhance = compose(
     withCareTeamQuery,
-   
+    withUpdateCareTeamMutation,
+    withSpinnerWhileLoading,
+    withState('targetKeys', 'setTargetKeys', props => {
+        //console.log(props);
+        const {teamMembers=[]} = props;
+        //console.log(teamMembers.map(user => user.user.id));
+        return teamMembers.map(user => user.objectId);
+    }),
     withHandlers({
         onSubmit: props => () => {
             console.log(props, 'Props before input');
+            const {targetKeys:ids} = props;
+            props.updateCareTeam(ids).then(() => {
+                props.onHide();
+            })
             // props.form.validateFields((err, values) => {
             //     console.log(err);
             //     console.log(values);
@@ -114,31 +119,20 @@ const enhance = compose(
     withProps(props => {
         return {modalTitle: 'Manage Care Team'}
     }),
-    withModal,
-    withSpinnerWhileLoading,
-    withState('targetKeys', 'setTargetKeys', props => props.selectedItems || []),
+    withDrawer,
+    
     withHandlers({
         handleChange: props => (nextTargetKeys, direction, moveKeys) => {
-
-            // console.log('direction: ', direction);
-            // console.log('moveKeys: ', moveKeys);
-            // return {targetKeys: };
-
             props.setTargetKeys(nextTargetKeys);
-
         },
-
         handleSelectChange: (sourceSelectedKeys, targetSelectedKeys) => {
-            console.log('sourceSelectedKeys: ', sourceSelectedKeys);
-            console.log('targetSelectedKeys: ', targetSelectedKeys);
-            {
-                selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys]
-            }
-            ;
-
-
+            // console.log('sourceSelectedKeys: ', sourceSelectedKeys);
+            // console.log('targetSelectedKeys: ', targetSelectedKeys);
+            // {
+            //     selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys]
+            // }
+            // ;
         }
-
     }),
 );
 

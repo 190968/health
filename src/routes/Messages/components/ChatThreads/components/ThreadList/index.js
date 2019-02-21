@@ -1,9 +1,11 @@
 import React from 'react';
-import { Badge, Input,Avatar} from 'antd';
+import { Badge, Input} from 'antd';
 import {NavLink} from 'react-router-dom';
 import moment from 'moment';
 import Truncate from 'react-truncate';
 import  './index.less';
+import { EmptyList, Loading } from '../../../../../../components/Loading';
+import Avatar from '../../../../../User/components/Avatar';
 const Search = Input.Search;
 //
 // const select = props => ({
@@ -20,46 +22,41 @@ const Search = Input.Search;
 //     );
 // }
 
+const ThreadList = props => {
+    const {conversations=[], currentId, loading} = props;
 
-export default class ThreadList extends React.Component {
-    static defaultProps = {
-        conversations: [],
-        currentId: ''
+    if (loading) {
+        return <Loading />;
+    }
+    if (conversations.length === 0) {
+        return <EmptyList>No Conversations</EmptyList>;
     }
 
-    render() {
+    return <div>
+            {/* <div style={{padding:10, background: '#f2f2f2', marginBotton:5}}>
+                <Search placeholder="Search" />
+            </div> */}
 
-        const {conversations, currentId} = this.props;
-
-
-        if (conversations.length === 0) {
-            return <div className="ant-list-empty-text">No Conversations</div>;
-        }
-
-        return <div>
-            <div style={{padding:10}}>
-                <Search
-                placeholder="Search"
-            />
-            </div>
-
-            <div>
+            <div style={{marginTop:10}}>
                 {conversations.map(conversation => {
-                    const unreadMessages = conversation.unreadMessages
-                    return <NavLink key={conversation.id} to={'/messages/'+conversation.id}><div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    const {lastMessage, unreadMessages=0} = conversation;
+                    const {sender, sentAt, text} = lastMessage || {};
+                    return <NavLink key={conversation.id} to={'/messages/'+conversation.id}>
+                    <div className={"conversation " + (currentId === conversation.id ? 'active' : '')}>
+                    <Avatar user={sender} />
                     <div className="conversation--details">
-                        <div className="conversation--details_name"><span className="subject"><Badge count={unreadMessages} >{conversation.subject}</Badge> </span><span className="date">{moment(conversation.lastMessage.sentAt).fromNow()}</span></div>
-                        <div className="conversation--details_text"><Truncate>{conversation.lastMessage.text}</Truncate></div>
+                        <div className="conversation--details_name"><span className="subject"><Badge count={unreadMessages} >{conversation.subject}</Badge> </span><span className="date">{moment(sentAt).fromNow()}</span></div>
+                        <div className="conversation--details_text"><Truncate>{text}</Truncate></div>
                     </div>
-
-                </div></NavLink>})}
+                    </div>
+                </NavLink>}
+                )}
 
             </div>
-            </div>
-    }
+        </div>;
 }
 
+export default  ThreadList;
 /*
 
     render() {

@@ -11,6 +11,8 @@ import { connect } from 'react-redux'
 import VerifyPhoneForm from '../components/VerifyPhone'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { PhoneInfoFragment } from '../../../components/FormCustomFields/components/Phone/fragments';
+import { preparePhoneInput } from '../../../components/FormCustomFields/components/Phone';
 
 
 const verifyPhone = gql`
@@ -25,12 +27,12 @@ const getPhone = gql`
       user {
           id
           phone {
-            code
-            number
+            ...PhoneInfo
         }
       }
     }
 }
+${PhoneInfoFragment}
 `;
 
 const withMutation = graphql(verifyPhone, {
@@ -68,7 +70,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: ({phone},showCode) => {
-        ownProps.verifyPhone({phone})
+        ownProps.verifyPhone({phone: preparePhoneInput(phone)})
             .then(({data}) => {
 
                 if(data.verifyPhone){

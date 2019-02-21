@@ -15,7 +15,7 @@ query GET_USER_TEAM($user_id:UID) {
                   edges{
                       id,
                       user {
-                          phoneFormatted
+                          id
                       }
                       joinedDate
                       roleText

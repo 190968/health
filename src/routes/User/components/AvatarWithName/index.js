@@ -3,52 +3,97 @@
  */
 import React from 'react';
 import {Row, Col} from 'antd';
-import Avatar from '../Avatar'
 import Truncate from 'react-truncate';
+// import Avatar from '../Avatar'
 import {Link} from 'react-router-dom';
+import UserWidgetButton from './containers/UserWidgetButton';
+import Avatar from '../Avatar';
+import './index.less';
+import { SendMessageButton } from '../../../../components/User/containers/SendMessageButton';
 
-export class AvatarWithName extends React.PureComponent {
+export const UserName = props => {
+    const {user} = props;
+    const {firstName, lastName, fullName} = user || {};
+    return fullName;
+}
+export const AvatarWithName = props => {
 
-    static defaultProps = {
-        align: 'h',
-        useLink: true,
-    }
+        const {user, ...otherProps} = props;
 
-    render() {
-        const {user={}, size} = this.props;
-        const {info=user, align, useLink} = this.props;
-console.log(this.props);
-        const name = info.fullName ? info.fullName : ((info.firstName && info.firstName !== ' ') ? info.fullName : (info.email ? info.email : 'N/A'));
+        if (!user) {
+            return null;
+        }
+        let {mode, showEmail=false, truncate=false, showMail=false, isSelf=false, size, onlyName=false, useLink=true, widget=true} = otherProps || {};
+        const {id, firstName, fullName,email} = user;
 
+        if (isSelf) {
+            useLink = false;
+        }
+        switch(mode) {
+            case 'simple':
+                showMail = !isSelf;
+                widget = false;
+                onlyName = true;
+                break;
+        }
+        if (!id || id === '') {
+            useLink = false;
+        }
+        let displayName = onlyName ? firstName : fullName;
 
-        let avatarWithName = <span><Avatar info={info} size={size}/> <span style={{verticalAlign: 'middle', marginLeft:5}}>{name}</span></span>;
+        if (!id || id === '') {
+            if (email) {
+                displayName = email;
+            } else {
+                displayName = 'N/A';
+            }
+            useLink = false;
+        }
+        let avatarWithName = <span><Avatar user={user} size={size}/> <span className={'username'} >{truncate ? <Truncate lines={1}>{displayName}</Truncate> : displayName}</span></span>;
+        if (showEmail) {
+            avatarWithName = <span className={showEmail && 'with-email'}><Avatar user={user} size={size}/> <span className={'username'} >{truncate ? <Truncate lines={1}>{displayName}</Truncate> : displayName} {email && <div style={{color: '#ccc'}}>{email}</div>}</span></span>;
+        
+        }
+        if (onlyName) {
+            avatarWithName = displayName;
+        }
+        if (widget && useLink) {
+            return <UserWidgetButton user={user} displayName={avatarWithName} {...otherProps} />
+        }
+        
+
+        
         if (useLink) {
-            avatarWithName = <Link to={'/u/' + info.id} style={{color: 'inherit'}}>{avatarWithName}</Link>;
+
+            
+
+       
+
+        
+            avatarWithName = <Link to={'/u/' + id} style={{color: 'inherit'}}>{avatarWithName}</Link>;
         }
         return (
-            <React.Fragment>
-                {
-                    align === "v" ?
-                        info.firstName ?
-                            <Row>
-                                <Avatar info={info}/>
-                                <p>{info.firstName}</p>
-                            </Row> :
-                            info.email ?
-                                <Row>
-                                    <Avatar info={info}/>
-                                    <Truncate lines={2}><p>{info.email}</p></Truncate>
-                                </Row> :
-                                <center>
-                                    <Avatar info={info}/>
-                                    <p>No name</p>
-                                </center>
-                        :
+                <span className={'userlink clearfix'}>{
+                    // align === "v" ?
+                    //     info.firstName ?
+                    //         <Row>
+                    //             <Avatar user={info}/>
+                    //             <p>{info.firstName}</p>
+                    //         </Row> :
+                    //         info.email ?
+                    //             <Row>
+                    //                 <Avatar user={info}/>
+                    //                 <Truncate lines={2}><p>{info.email}</p></Truncate>
+                    //             </Row> :
+                    //             <center>
+                    //                 <Avatar user={info}/>
+                    //                 <p>No name</p>
+                    //             </center>
+                    //     :
                         avatarWithName
-                }
-            </React.Fragment>
+                } {showMail && <SendMessageButton user={user} iconOnly />}
+                </span>
         );
-    }
 }
 
 export default AvatarWithName;

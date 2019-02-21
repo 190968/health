@@ -11,6 +11,8 @@ import moment from 'moment';
 import ru from './i18n/ru';
 import en from './i18n/en';
 import { DateField } from '../../../../../../../components/FormCustomFields';
+import PhoneField from '../../../../../../../components/FormCustomFields/components/Phone';
+import AddressField from '../../../../../../../components/FormCustomFields/components/Address';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -58,9 +60,9 @@ const tailFormItemLayout = {
             );
         }
 
-        const {countries, states, account, languages, timezones} = props;
+        const {account, languages, timezones} = props;
         const {user} = account;
-        const phone = user.phone;
+        const {address, phone} = user;
 
 
 
@@ -174,14 +176,24 @@ const tailFormItemLayout = {
                 validateStatus={phoneNumberError ? 'error' : ''}
                 help={phoneNumberError || ''}
             >
-                <PhoneForm getFieldDecorator={getFieldDecorator} required phone={phone} />
+                {getFieldDecorator('phone', {
+                    initialValue: phone,
+                    rules: [{ required: true,   message:'Enter phone'}],
+                })(
+                    <PhoneField />
+                )}
             </FormItem>
 
             <FormItem
                 {...formItemLayout}
                 label={intl.messages.user_address}
             >
-                <AddressForm getFieldDecorator={getFieldDecorator} countries={countries} states={states} address={user.address} />
+            {getFieldDecorator('address', {
+                    initialValue: address,
+                    // rules: [{ required: true,   message:'Enter Address'}],
+                })(
+                    <AddressField />
+                )}
             </FormItem>
 
             <FormItem
@@ -211,20 +223,6 @@ const tailFormItemLayout = {
             )}
             </FormItem>
 
-
-            <FormItem
-                {...formItemLayout}
-                label={intl.messages.user_dateformat}
-
-            > {getFieldDecorator('dateFormat', {
-                initialValue: user.dateFormat
-            })(
-                <Select style={{ width: 150 }} >
-                    <Option value={1}>MM/DD/YY</Option>
-                    <Option value={2}>DD/MM/YY</Option>
-                </Select>
-            )}
-            </FormItem>
 
             <FormItem {...tailFormItemLayout}>
                 <Button loading={loadingButton} type="primary" htmlType="submit" className="register-form-button">

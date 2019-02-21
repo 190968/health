@@ -7,9 +7,8 @@ import VerifyPhoneConfirm from '../../containers/verifyPhoneConfirmContainer';
 import {
     injectIntl
 } from 'react-intl';
-import ru from './i18n/ru';
-import en from './i18n/en';
-import PhoneForm from '../../../../components/PhoneForm';
+
+import PhoneField, { phoneFieldValidator } from '../../../../components/FormCustomFields/components/Phone';
 const FormItem = Form.Item;
 const formItemLayout = {
     labelCol: {
@@ -65,12 +64,12 @@ class VerifyPhoneForm extends React.Component {
 
         const { form } = this.props;
         const { getFieldDecorator } = form;
-        const phoneNumberError = form.getFieldError('phone[number]');
-        const {intl}=this.props;
+        //const phoneNumberError = form.getFieldError('phone[number]');
+        const {intl, phone}=this.props;
 
 
         return (
-            <div className="register-form"  style={{padding:'8% 30% 20px'}}>
+            <div className="register-form"  className={'tinyBoxAlone'} style={{padding:'8% 30% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
                     title={intl.messages.user_verifyphone_verifyphone}
@@ -83,11 +82,19 @@ class VerifyPhoneForm extends React.Component {
                             {...formItemLayout}
                             label={intl.messages.user_verifyphone_phone}
                             hasFeedback
-                            validateStatus={phoneNumberError ? 'error' : ''}
-                            help={phoneNumberError || ''}
+                            // validateStatus={phoneNumberError ? 'error' : ''}
+                            // help={phoneNumberError || ''}
                         >
 
-                            <PhoneForm getFieldDecorator={getFieldDecorator} required phone={this.props.phone} />
+                        {getFieldDecorator('phone', {
+                            initialValue:phone,
+                            rules: [{
+                                required: true, message: 'Enter Phone', validator: phoneFieldValidator
+                            }],
+                        })(
+                            <PhoneField noType  />
+                        )}
+
 
                         </FormItem>
                 </Card>

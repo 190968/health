@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
 
 const GET_PROVIDERS_QUERY  = gql`
- query GET_USER_QUAL_MEASURES($user_id:UID) {
-  patient(id: $user_id) {
+ query GET_USER_QUAL_MEASURES($userId:UID) {
+  patient(id: $userId) {
      id
      getCohorts {
          edges {
@@ -31,7 +31,7 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
     options: (ownProps) => {
         return{
             variables: {
-                user_id:ownProps.user.id
+                userId:ownProps.user.id
             }
         }
     },
@@ -51,4 +51,5 @@ const enhance = compose(
     withQuery
 );
 
-export default enhance(Cohorts);
+export const PatientCohorts = enhance(Cohorts);
+export default PatientCohorts;

@@ -12,51 +12,40 @@ const enhance = compose(
     Form.create(),
     withHandlers({
         // submit the element
-        onSubmit: props => ({prepareInput, callback}) => {
+        onSubmit: props => (elementInput) => {
             console.log(props, 'onSubmit');
+            console.log(elementInput, 'onSubmitelementInput');
             const {id, type, isEdit=false} = props;
 
 
             props.form.validateFields((err, values) => {
 
                 if (!err) {
-                    let input = prepareInput(values);
-                    console.log(values);
-                    const {notes = ''} = values;
+                    //const {notes = ''} = values;
 
-                    input = {...input, notes};
+                    const input = {[type]:elementInput};//{...elementInput, notes};
 
 
                     if (props.updateElement) {
-                        console.log(input);
+                        //console.log(input);
                         props.updateElement({input}).then(({data}) => {
                             props.onHide();
-                            //console.log('update',data);
-                            // props.onElementAdd(data.updateTreatmentBlockElement);
-                            /*if (callback) {
-                                callback(data.updateTreatmentBlockElement);
-                            }*/
                         });
-                    // } else if (props.addElement) {
-                    //     // add element
-                    //     console.log(input);
-                    //     props.addElement({input}).then(({data}) => {
-                    //         props.onHide();
-                    //     });
+                  
                     } else {
+                        const newElement = {id: '', type, element:elementInput};
                         if (props.onElementUpdate) {
                             // if we are editing tmp item, then just replace with the info
-                            props.onElementUpdate(props.i, {id: '', type, ...input}, props.onHide);
+                            props.onElementUpdate(props.i, newElement, props.onHide);
                         } else if (props.onElementAdd) {
-                            const newElement = {id: '', type, ...input}
                             props.onElementAdd(newElement);
+                            props.onHide();
                         } else {
                             //error
                             message.warning('No action for option');
                         }
                     }
                 }
-
             });
         },
     })
@@ -64,6 +53,9 @@ const enhance = compose(
 
 
 const TreatmentBlockManageOptionModal = enhance((TreatmentBlockOptionElementEditor));
+
+
+
 
 
 const showSelectOptionModal = (showSelect) =>
@@ -75,8 +67,8 @@ const showSelectOptionModal = (showSelect) =>
 const enhanceModal = compose(
     // toggle type of the element
     withState('type', 'setType', ({type=''}) => type),
-    branch(props => props.id && props.id !== '', withEditMutation, withAddMutation),
-    branch(props => props.id && props.id !== '', withQuery),
+    branch(props => props.treatment && props.treatment.id !== '', withEditMutation, withAddMutation),
+    branch(props => props.treatment && props.treatment.id !== '', withQuery),
     withHandlers({
         getTypeName: props => type => {
             const elementsByType = getProperElements();
@@ -101,9 +93,9 @@ const enhanceModal = compose(
 );
 
 
-const TreatmentBlockManageOptionModalWithMutation = enhanceModal(TreatmentBlockManageOptionModal)
+const TreatmentItemManager = enhanceModal(TreatmentBlockManageOptionModal)
 
-export default TreatmentBlockManageOptionModalWithMutation;
+export default TreatmentItemManager;
 
 
 

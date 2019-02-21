@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {compose, branch, withHandlers, withStateHandlers,withState, withProps} from 'recompose';
 import React from 'react';
+import { UserInfoFragment } from '../../../../User/fragments';
 const GET_PROFILE  = gql`
 query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput,$status: RoleStatusEnum) {
     management {
@@ -17,10 +18,7 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput,
           lastLoginDate
           accessLevel
           user {
-            id
-            firstName
-            lastName
-            fullName
+            ...UserInfo
             phone{
               code
               number
@@ -32,6 +30,7 @@ query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput,
       }
     }
   } 
+  ${UserInfoFragment}
  `;
 
 const withQuery = graphql(GET_PROFILE, {
@@ -47,10 +46,13 @@ const withQuery = graphql(GET_PROFILE, {
     props: ({ data }) => {
         if (!data.loading) {
             console.log(data);
+            const {variables} = data;
+            const {status} = variables || {};
             return {
                 management: data.management.getNetworkStaff.edges,
                 totalCount: data.management.getNetworkStaff.totalCount,
                 loading: data.loading,
+                status,
                 loadByStatus(status) {
                     return data.fetchMore({
                         // query: ... (you can specify a different query. FEED_QUERY is used by default)

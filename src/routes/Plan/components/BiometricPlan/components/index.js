@@ -103,20 +103,20 @@ export class BiometricPlanBody extends React.Component {
         }
         const {date} = this.state;
 
-        const {columns, trackers} = info;
+        const {columns, trackers} = info || {};
         const listColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <TrackerInfo item={item} date={date} userId={user_id} editClick={this.editClick} deleteClick={this.deleteClick} />}},
+            { title: '', dataIndex: 'name', key: 'name', width: 300, render: (text, item) =>  { return <TrackerInfo item={item} date={date} userId={user_id} editClick={this.editClick} deleteClick={this.deleteClick} />}},
            //
-            { title: '', dataIndex: 'input', key: 'input', width: 150  },
+            { title: '', dataIndex: 'input', key: 'input', /*width: 150*/  },
             //{ title: '', dataIndex: 'icon', key: 'acts', width: 50}
         ];
 
         const tableColumns = [
-            { title: '', dataIndex: 'name', key: 'name', render: (text, item) =>  { return <TrackerInfo item={item} date={date} userId={user_id} editClick={this.editClick} deleteClick={this.deleteClick} />} },
+            { title: '', dataIndex: 'name', key: 'name', width: 300, render: (text, item) =>  { return <TrackerInfo item={item} date={date} userId={user_id} editClick={this.editClick} deleteClick={this.deleteClick} />} },
         ];
         // adding columns
         columns.map(column => {
-            tableColumns.push({ title: column.name, dataIndex: 'col_'+column.id, key: column.id, width: 150 },)
+            tableColumns.push({ title: column.name, dataIndex: 'col_'+column.id, key: column.id, /*width: 150*/ },)
             return column;
         });
 
@@ -213,8 +213,8 @@ export class BiometricPlanBody extends React.Component {
 
 
                 {dataList.length === 0 && data.length === 0 && <div className="ant-list-empty-text">No trackers</div>}
-                {dataList.length > 0 && <Table size="middle"  columns={listColumns} dataSource={dataList} scroll={{x: 600}} showHeader={false} pagination={false} />}
-                {data.length > 0 && <Table size="middle" columns={tableColumns} dataSource={data} scroll={{x: 600}} pagination={false} />}
+                {dataList.length > 0 && <Table size="middle"  columns={listColumns} dataSource={dataList}  showHeader={false} pagination={false} />}
+                {data.length > 0 && <Table size="middle" columns={tableColumns} dataSource={data}  pagination={false} />}
 
 
 

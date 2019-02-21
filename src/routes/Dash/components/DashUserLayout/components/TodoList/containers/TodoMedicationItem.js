@@ -1,11 +1,12 @@
 import TodoMedicationItem from '../components/TodoMedicationItem'
 import { graphql } from 'react-apollo';
-import {MedicationPlan_QUERY} from '../../../../../../Plan/components/MedicationPlan/containers';
+import { ifModuleExists } from '../../../../../../../components/App/app-context';
+import { GET_MEDICATION_PLAN_QUERY } from '../../../../../../Plan/containers/MedicationPlan';
 
 
 
 const TodoMedicationItemWithQuery = graphql(
-    MedicationPlan_QUERY,
+    GET_MEDICATION_PLAN_QUERY,
     {
         props: ({  data }) => {
             if (!data.loading) {
@@ -22,7 +23,7 @@ const TodoMedicationItemWithQuery = graphql(
         options: (ownProps) => ({
             skip: !ownProps.ready,
             variables: {
-                user_id:ownProps.userId,
+                userId:ownProps.userId,
                 date:ownProps.date,
             },
             fetchPolicy:  'cache-only'
@@ -30,4 +31,4 @@ const TodoMedicationItemWithQuery = graphql(
     }
 )(TodoMedicationItem);
 
-export default TodoMedicationItemWithQuery;
+export default ifModuleExists('meds', 'patient_meds', true)(TodoMedicationItemWithQuery);

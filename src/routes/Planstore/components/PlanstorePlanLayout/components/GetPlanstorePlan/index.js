@@ -2,7 +2,8 @@ import React from 'react'
 import moment from 'moment';
 import {FormattedDate} from 'react-intl';
 import { withRouter } from 'react-router-dom'
-import { Card, Modal,Form ,Popover, Radio, DatePicker} from 'antd';
+import { Card, Modal,Form ,Popover, Radio} from 'antd';
+import {DateField} from '../../../../../../components/FormCustomFields/index';
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -179,7 +180,7 @@ class GetPlanstorePlan extends React.Component {
                                         required: true, message: 'Please Select Start Date',
                                     }],
                                 })(
-                                    <DatePicker disabledDate={this.disabledStartDate} allowClear={false}
+                                    <DateField disabledDate={this.disabledStartDate} allowClear={false}
                                                 format={dateFormat}/>
                                 )}
                             </FormItem>
@@ -206,7 +207,7 @@ class GetPlanstorePlan extends React.Component {
                                                     message: 'End date must be after Start Date',
                                                 }],
                                             })(
-                                                <DatePicker disabledDate={this.disabledEndDate} format={dateFormat} style={{marginLeft:10}}/>
+                                                <DateField disabledDate={this.disabledEndDate} format={dateFormat} style={{marginLeft:10}}/>
                                             )}
                                         </Radio>
                                     </RadioGroup>

@@ -1,41 +1,33 @@
 import React from 'react';
 import {Form, Input} from 'antd';
-import {DiagnosisSelect} from "../../../../../../components/Autosuggest/containers/DiagnosisSelect";
+import {ProcedureSelect} from "../../../../../../components/Autosuggest/containers/ProcedureSelect";
 import {DateField} from "../../../../../../components/FormCustomFields/index";
-import {InputUnits, InputUnitsValidator} from "../../../../../../components/FormCustomFields/components/InputUnits/index";
+import {InputUnits, prepareInputUnitsValue, InputUnitsValidator} from "../../../../../../components/FormCustomFields/components/InputUnits/index";
+import DefaultHealthFields from '../DefaultFields';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-export const RadiologyForm = ({cancer={}, form, formItemLayout}) => {
+export const RadiologyForm = (props) => {
+    const {element={}, form, formItemLayout} = props;
     const {getFieldDecorator} = form;
     //const {title='', code='', stage={}, chemotherapies=[]} = cancer;
+    const {procedure, tumorSize, regionalLymphNodes} = element;
+    //const {id:procedureId} = procedure || {};
+    console.log(props);
     return <Form>
-        <FormItem
-            {...formItemLayout}
-            label="Date Enrolled"
-        >
-            {getFieldDecorator('date', {
-                //initialValue: title,
-                rules: [{
-                    required: true,
-                    message: "Please select Date",
-                }],
-            })(
-                <DateField />
-            )}
-        </FormItem>
+        
 
         <FormItem
             {...formItemLayout}
             label='Procedure'
         >
             {getFieldDecorator('procedure', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Select Trial"}],
+                    initialValue: procedure,
+                    rules: [{required: true, message: "Select Procedure"}],
                 }
             )(
-                <DiagnosisSelect />
+                <ProcedureSelect getFullInfo />
             )}
         </FormItem>
 
@@ -44,6 +36,7 @@ export const RadiologyForm = ({cancer={}, form, formItemLayout}) => {
             label='Tumorsize'
         >
             {getFieldDecorator('tumorSize', {
+                initialValue: prepareInputUnitsValue(tumorSize),
                 rules: [{validator:InputUnitsValidator, required: true, message: "Enter Tumor size"}],
                 }
             )(
@@ -56,6 +49,7 @@ export const RadiologyForm = ({cancer={}, form, formItemLayout}) => {
             label='Regional Lymph Nodes'
         >
             {getFieldDecorator('regionalLymphNodes', {
+                initialValue: regionalLymphNodes,
                 }
             )(
                 <Input />
@@ -67,31 +61,33 @@ export const RadiologyForm = ({cancer={}, form, formItemLayout}) => {
             label='Metastatic Sites'
         >
             {getFieldDecorator('metastaticSites', {
+                initialValue: regionalLymphNodes,
                 }
             )(
                 <Input />
             )}
         </FormItem>
+        <DefaultHealthFields {...props} />
     </Form>
 }
 
 export default RadiologyForm;
 
 
-export const prepareRadiologyInput = values => {
-    const {date,
-        procedure,
-        tumorSize,
-        regionalLymphNodes,
-        metastaticSites} = values;
+// export const prepareRadiologyInput = values => {
+//     const {date,
+//         procedure,
+//         tumorSize,
+//         regionalLymphNodes,
+//         metastaticSites} = values;
 
-    return {
-        radiology: {
-            date,
-            procedure,
-            tumorSize,
-            regionalLymphNodes,
-            metastaticSites
-        }
-    }
-}
+//     return {
+//         radiology: {
+//             date,
+//             procedure,
+//             tumorSize,
+//             regionalLymphNodes,
+//             metastaticSites
+//         }
+//     }
+// }

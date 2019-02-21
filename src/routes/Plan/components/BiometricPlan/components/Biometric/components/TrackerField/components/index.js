@@ -19,7 +19,7 @@ export class TrackerField extends React.Component {
     static propTypes = {
         id: PropTypes.number,
         date: PropTypes.string,
-        info: PropTypes.object.isRequired,
+        // info: PropTypes.object.isRequired,
         list_id: PropTypes.string,
         reportKey: PropTypes.number,
         column: PropTypes.number,
@@ -64,26 +64,25 @@ export class TrackerField extends React.Component {
 
         this.setState({ value });
 
-        this.timer = setTimeout(function () {this.triggerChange(value)}.bind(this), 500);
+        this.timer = setTimeout(function () {this.triggerChange(value)}.bind(this), 1000);
 
 
     }
 
     triggerChange(value) {
         //e.preventDefault();
+        //console.log(value);
+        const { onChange} = this.props;
 
-        const { onChange, info, report, date, list_id, reportKey, column } = this.props;
-        const {id} = info.measurement;
-        let report_input = {id:(report && report.id ? report.id : 0), value:value, date:date, reportKey:reportKey, column:column};
-
-        return onChange(id, report_input, list_id);
+        return onChange(value);
     }
 
     render() {
 
-        const {info} = this.props;
+        const {tracker} = this.props;
+        const {info=tracker} = this.props;
         const report_value = this.state.value;
-
+        console.log(report_value);
         return (<Tracker item={info.measurement} value={report_value} onChange={this.handleChange} />)
     }
 }

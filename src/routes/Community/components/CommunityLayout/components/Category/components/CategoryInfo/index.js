@@ -63,15 +63,25 @@ class Category extends React.Component {
         const tabListNoTitle = [];
         let contentListNoTitle = {};
         articles.forEach((item) => {
-            contentListNoTitle[item.title] = <div>
+            const {thumbs} = item;
+            const {medium} = thumbs || {};
+            if (!medium) {
+                contentListNoTitle[item.title] = <Row>
+                    <Col><h3>{item.title}</h3>
+                    <div dangerouslySetInnerHTML={{__html: item.text}}/>
+                </Col>
+            </Row>
+            } else {
+            contentListNoTitle[item.title] = <Row>
                 <Col span={16}>
                     <h3>{item.title}</h3>
                     <div dangerouslySetInnerHTML={{__html: item.text}}/>
                 </Col>
                 <Col offset={1} span={7}>
-                    <img alt="" src={item.thumbs.small}/>
+                    <img src={item.thumbs.medium}/>
                 </Col>
-            </div>
+            </Row>
+            }
         })
         for (let i = 0; i < articles.length; i++) {
             tabListNoTitle.push(

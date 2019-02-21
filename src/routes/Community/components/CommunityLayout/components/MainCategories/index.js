@@ -10,6 +10,7 @@ import {
 } from 'react-intl';
 import messages from './messages';
 import CategoryCard from '../CategoryCard';
+import { Carousel } from '../../../../../../components/UI/Carousel/index.js';
 
 class MainCategories extends React.Component{
 
@@ -29,26 +30,20 @@ class MainCategories extends React.Component{
             categoriesKV.push({value:item.id, text:item.name});
         });
 
-        return(
-                <Card
-                    title={intl.formatMessage(messages.title)}
-                    extra={ <Search categories={categoriesKV} />
-                    }
-                >
-                    <List
-                        split={false}
-                        loading={loading}
-                        grid={{gutter: 10, xs: 1, sm: 2, md: 6}}
-                        dataSource={info}
-                        renderItem={item => (
-                            <List.Item key={item.id}>
-                                <CategoryCard item={item} />
-                            </List.Item>
-                        )}
-                    />
 
-                </Card>
-        )
+        const items = info.map((item) => <div key={item.id}><div style={{padding:5}}><CategoryCard item={item} /></div></div>);
+        return (
+            <Card  
+            title={intl.formatMessage(messages.title)}
+            extra={ <Search categories={categoriesKV} />
+            }
+            >
+                <Carousel
+                    items={items}
+                    slidesToShow={4}
+                     />
+            </Card>
+        );
     }
 
 }

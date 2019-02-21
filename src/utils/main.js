@@ -1,3 +1,4 @@
+import {compose, branch, renderComponent} from 'recompose';
 export function chunkMap (map, chunkSize) {
   const chunkedMaps = []
   const mapAsArray = Array.from(map)
@@ -44,3 +45,9 @@ export function toNumber(v) {
     }
     return Number(v);
 }
+
+
+export const conditionalWhenThen = (states) =>
+    compose(...states.map(state =>
+        branch(state.when, renderComponent(state.then))
+    ));

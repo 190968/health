@@ -1,6 +1,6 @@
 import React from 'react';
-import {Modal, Spin, Icon, Card, Button } from 'antd';
-import {compose, branch, renderComponent, withState, withHandlers} from  'recompose';
+import {Modal, Spin, Icon, Card, Button, Drawer, message, Popconfirm } from 'antd';
+import {compose, branch, renderComponent, withState, withHandlers, withStateHandlers} from  'recompose';
 import './index.less';
 
 const formItemLayout = {
@@ -38,7 +38,7 @@ export const withModal = (WrappedComponent) => {
             }
         }
         render() {
-            console.log(this.props);
+            //console.log(this.props);
             //console.log(this.state);
             const {loadingButton = false} = this.props;// in case we use withLoadingButton
             const {loading=false, modalVisible=true, destroyOnClose=true, modalOKText='Save'} = this.props;
@@ -77,7 +77,7 @@ export const withModal = (WrappedComponent) => {
                     okText={modalOKText}
                     maskClosable={false}
                     confirmLoading={loadingButton}
-                    
+                    destroyOnClose={destroyOnClose}
                     {...modalOpts}
                 >
                     {loading ?
@@ -114,6 +114,15 @@ export const withSpinnerWhileLoading = branch(
 //     withSpinnerWhileLoading
 // );
 
+const showLoadingMessagePure = (text='Saving...') => {
+    return message.loading(text);
+}
+
+showLoadingMessagePure.hide = (text) => {
+    console.log(this);
+    message.success(text);
+}
+export const showLoadingMessage = showLoadingMessagePure;
 
 export const ModalBodyFooter = props => {
     return <div className="ant-modal-body-footer">{props.children}</div>
@@ -123,14 +132,211 @@ export const ModalBodyFooter = props => {
 
 
 export const withToggleModal = compose(
-    withState('showModal', 'setShowModal', false),
+    withState('showModal', 'setShowModal', props => props.showModal || false),
     withHandlers({
-        toggleModal: props => () => {
+        toggleModal: props => (e) => {
+            if (e) {
+                if (e.preventDefault) {
+                e.preventDefault();
+                e.stopPropagation();
+                }
+            }
             props.setShowModal(!props.showModal);
+            // if we hide the modal, run the callback
+            if (props.showModal && props.onHide) {
+                props.onHide();
+            }
+        }
+    })
+);
+
+export const withToggleState = compose(
+    withStateHandlers(props => {
+        return {
+            isToggled: props.isToggled || false
+        }
+    }, {
+        toggleState: props => (e) => {
+            if (e) {
+                if (e.preventDefault) {
+                e.preventDefault();
+                e.stopPropagation();
+                }
+            }
+            // // props.setShowModal();
+            // // if we hide the modal, run the callback
+            // if (props.showModal && props.onHide) {
+            //     props.onHide();
+            // }
+            return {isToggled: !props.isToggled}
         }
     })
 );
 
 
+export const withTabsState = withState('activeTab', 'setActiveTab', ({activeTab}) => activeTab);
+export const withStepsState = getSteps => WrappedComponent =>  {
+
+    return withStateHandlers(props => {
+        // 'activeStep', 'setActiveTab', ({activeTab}) => activeTab)
+        let stepsKeys = getSteps(props);
+        stepsKeys = stepsKeys.length > 0 ? stepsKeys : [];
+        const {activeStep=stepsKeys[0]} = props;
+        return {activeStep, stepsKeys}
+     }, {
+         setActiveStep: props => (activeStep) => {
+             return {
+                 activeStep
+             }
+         },
+         goNextStep: state => () => {
+            const {stepsKeys, activeStep} = state;
+            //console.log(activeStep);
+            let index = stepsKeys.indexOf(activeStep);
+            //console.log(index);
+            if (index === -1) {
+                return {
+                    activeStep
+                }
+            }
+            if(index >= 0 && index < stepsKeys.length - 1) {
+                index = stepsKeys[index+1];
+            }
+            return {
+                activeStep:index
+            }
+         },
+         goPrevStep: state => () => {
+            const {stepsKeys, activeStep} = state;
+            let index = stepsKeys.indexOf(activeStep);
+            if (index === -1) {
+                return {
+                    activeStep
+                }
+            }
+            if(index > 0 && index < stepsKeys.length - 1) {
+                index = stepsKeys[index-1];
+            }
+            return {
+                activeStep:index
+            }
+         }
+     })(WrappedComponent);
+}
 
 
+
+
+
+
+export const withDrawer = (WrappedComponent) => {
+
+    const  DrawerWrappeer = props => {
+        const {modalWidth=600, modalFooter=true, closable=true, maskClosable=false, loading=false, loadingButton=false, modalVisible=true, okLabel= 'Save', ...otherProps} = props;
+        let {modalTitle='View', modalOkTitle='Save'} = props;//type === '' ? 'Select Element' : this.props.getTypeName(type);
+            // if (this.props.modalTitle) {
+            //     modalTitle = ;
+            // }
+            //console.log(modalVisible);
+            //console.log(typeof this.props.modalFooter);
+            const modalOpts = {closable};
+            // if (this.props.modalFooter !== null) {
+            //      if (this.props.modalFooter === 'close') {
+            //          modalOpts.footer = <Button type="primary" onClick={this.onCancel}>Close</Button>;
+            //      } else if (this.props.modalFooter === false) {
+            //          modalOpts.footer = null
+            //      } else {
+            //          modalOpts.footer = this.props.modalFooter;
+            //      }
+            //  }
+             //console.log(modalOpts);
+            if (modalWidth) {
+                modalOpts.width = modalWidth;
+            }
+            if (loading) {
+                modalOpts.closable = false;
+                modalOpts.title = <div style={{backgroundColor:'rgba(255, 255, 255, 0.17)', width:'50%', height:22}}></div>;
+            }
+            // Wraps the input component in a container, without mutating it. Good!
+            return (
+                // <Modal
+                //     title={modalTitle}
+                //     visible={modalVisible}
+                //     onOk={this.onOk}
+                //     onCancel={this.onCancel}
+                //     okText={modalOKText}
+                //     maskClosable={false}
+                //     confirmLoading={loadingButton}
+                    
+                //     {...modalOpts}
+                // >
+
+                <Drawer
+                    title={modalTitle}
+                    placement="right"
+                    onClose={props.onClose}
+                    maskClosable={maskClosable}
+                    visible={modalVisible}
+                    {...modalOpts}
+                    style={{
+                        height: 'calc(100% - 55px)',
+                        overflow: 'auto',
+                        paddingBottom: 53,
+                      }}
+                      //getContainer={false}
+                    // zIndex={2000}
+                    // style={{
+                    //     height: 'calc(100% - 55px)',
+                    //     overflow: 'auto',
+                    //     paddingBottom: 53,
+                    // }}
+                    >
+                    {loading ?
+                        <Card bordered={false} loading />
+                        :
+                        <React.Fragment>
+                            <WrappedComponent {...otherProps} formItemLayout={formItemLayout} formTailLayout={formTailLayout} />
+                            {(modalFooter && props.onSubmit) && <DrawerFooter onHide={props.onClose} onDelete={props.onDelete} modalOkTitle={modalOkTitle} onSubmit={props.onSubmit} loadingButton={loadingButton} />}
+                        </React.Fragment>
+                    }
+                </Drawer>);
+    }
+    const enhance = compose(
+        withHandlers({
+            onClose: props => (e) => {
+                e.stopPropagation();
+                if (props.onHide) {
+                    props.onHide(e);
+                }
+            }
+        })
+    );
+
+    return enhance(DrawerWrappeer);
+}
+
+
+export const DrawerFooter = props => {
+    const {onSubmit, onHide, onDelete, loadingButton=false, modalOkTitle='Save'} = props;
+    return <div
+        className={'drawer-footer'}
+    >
+    {props.children}
+    {onDelete && <Popconfirm title="Are you sure you want to Archive?" onConfirm={onDelete}   okText="Yes" cancelText="No">
+    <Button type="danger" style={{float:'left'}}>Archive</Button>
+   </Popconfirm>}
+    { onSubmit && <React.Fragment>
+        <Button
+					style={{
+						marginRight: 8
+					}}
+					onClick={onHide}
+				>
+					Cancel
+				</Button>
+				<Button onClick={onSubmit} type="primary" loading={loadingButton}>
+					{modalOkTitle}
+				</Button>
+    </React.Fragment>}
+</div>
+}

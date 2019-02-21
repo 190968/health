@@ -1,6 +1,6 @@
-    /**
- * Created by Pavel on 08.01.2018.
- */
+/**
+* Created by Pavel on 08.01.2018.
+*/
 /**
  * Created by Pavel on 08.12.2017.
  */
@@ -13,40 +13,36 @@ import { message } from 'antd';
  wiring in the actions and state necessary to render a presentational
  components - in this case, the counter:   */
 
-import Motivators from '../components/Motivators';
+import MotivatorsPure from '../components/Motivators';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { UserInfoFragment } from '../fragments';
 
 const motivators = gql`
    query GET_MOTIVATORS {
         account {
             user {
             id
-                motivation{
-            motivators {
-                  totalCount,
-                  pageInfo{
-                  endCursor
-                  },
-                  edges{
-                    id,
-                    user {
-                      id,
-                      firstName
-            thumbs {
-                small
-                large
-                medium
-            },
-                      fullName,
-                      email
-                    }
-                  }
+            motivation {
+                motivators {
+                totalCount
+                pageInfo {
+                    endCursor
                 }
-            }}
-         }
-     }
+                edges {
+                    id
+                    user {
+                    ...UserInfo
+                    }
+                    email
+                }
+                }
+            }
+            }
+        }
+    }
+    ${UserInfoFragment}
 `;
 
 const motivatorInvite = gql`
@@ -62,7 +58,7 @@ const withQuery = graphql(motivators, {
 
         return {
             variables: {
-                cursors: {after: ''/*ownProps.lastCursor*/}
+                //cursors: { after: ''/*ownProps.lastCursor*/ }
             },
             fetchPolicy: 'network-only'
         }
@@ -70,58 +66,61 @@ const withQuery = graphql(motivators, {
     },
     props: ({ data }) => {
         if (!data.loading) {
-
-            console.log(data);
-            const {edges, totalCount, pageInfo: {endCursor}} = data.account.user.motivation.motivators;
+            const {account} = data;
+            const {user} = account || {};
+            const {motivation} = user || {};
+            const {motivators} = motivation || {};
+            const { edges=[], totalCount=0, pageInfo} = motivators || {};
+            const { endCursor } = pageInfo || {};
             return {
-                info: data.account.user.motivation,
-                endCursor: endCursor,
+                motivators: edges,
+                //endCursor: endCursor,
+                totalCount:totalCount,
                 loading: data.loading,
                 hasMore: edges.length < totalCount,
-                loadMore(endCursor, callback) {
-                    console.log(endCursor,"-----------------------------");
+                loadMore(callback) {
                     return data.fetchMore({
                         variables: {
-                            cursors: {before: endCursor, last:2}
+                            cursors: { before: endCursor }
                         },
-                        updateQuery: (previousResult, { fetchMoreResult }) => {
+                        // updateQuery: (previousResult, { fetchMoreResult }) => {
 
-                            callback();
-                            if (!fetchMoreResult) { return previousResult; }
-                            const newMessages = [...previousResult.account.user.motivation.motivators.edges, ...fetchMoreResult.account.user.motivation.motivators.edges]
-                            const obj =  Object.assign({}, previousResult, {
-                                account: {
-                                    ...previousResult.account, user: {
-                                        ...previousResult.account.user, motivation: {
-                                            ...previousResult.account.user.motivation, motivators: {
-                                                ...previousResult.account.user.motivation.motivators,
-                                                edges: newMessages
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                            return obj;
-                        },
+                        //     callback();
+                        //     if (!fetchMoreResult) { return previousResult; }
+                        //     const newMessages = [...previousResult.account.user.motivation.motivators.edges, ...fetchMoreResult.account.user.motivation.motivators.edges]
+                        //     const obj = Object.assign({}, previousResult, {
+                        //         account: {
+                        //             ...previousResult.account, user: {
+                        //                 ...previousResult.account.user, motivation: {
+                        //                     ...previousResult.account.user.motivation, motivators: {
+                        //                         ...previousResult.account.user.motivation.motivators,
+                        //                         edges: newMessages
+                        //                     }
+                        //                 }
+                        //             }
+                        //         }
+                        //     });
+                        //     return obj;
+                        // },
                     });
                 }
             }
         }
         else {
-            return {loading: data.loading}
+            return { loading: data.loading }
         }
     },
-})(Motivators);
+})(MotivatorsPure);
 
 const withMutation = graphql(motivatorInvite, {
     props: ({ mutate }) => ({
-        motivatorInvite: (input,userID) => {
+        motivatorInvite: (input, userID) => {
             return mutate({
-                variables:  {
+                variables: {
                     userId: userID,
-                    email:  input.email,
+                    email: input.email,
                     message: input.text
-                } ,
+                },
             })
         },
     }),
@@ -134,12 +133,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value, handleCancel) => {
-        ownProps.motivatorInvite(value,ownProps.user_id).then(({data}) => {
+        ownProps.motivatorInvite(value, ownProps.user_id).then(({ data }) => {
             message.success('Invited');
             handleCancel();
         })
     },
 });
 
-export default withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery)));
+
+export const Motivators = withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(withQuery)));
+export default Motivators;
 

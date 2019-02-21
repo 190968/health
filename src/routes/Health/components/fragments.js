@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import {ClinicalTrialFragment} from "../../Manager/components/ClinicalTrials/fragments";
 import {ElementTreatmentFragment} from "../../Plan/components/Plan/fragments";
+import { UserInfoFragment } from '../../User/fragments';
 
 export const StringUnitsFragment  = gql`
     fragment StringUnitsInfo on StringUnits {
@@ -14,6 +14,7 @@ export const ClinicalTrialElementFragment  = gql`
         id
         trial {
             id
+            nctId
             title
         }
         cohort
@@ -36,7 +37,6 @@ export const DiagnosisFragment  = gql`
         }
         date
         status
-        notes
     }
      ${ICD10Fragment}
 `;
@@ -49,7 +49,7 @@ export const OncologyFragment  = gql`
         }
         type
         disorder
-        behaviour
+        behavior
         organSystem
         anatomicSite
     }
@@ -73,7 +73,11 @@ export const RadiationFragment  = gql`
 export const RadiologyFragment  = gql`
     fragment RadiologyInfo on Radiology {
         id
-        CPTcode
+        procedure {
+            id
+            hcpc
+            name
+        }
         tumorSize {
             ...StringUnitsInfo
         }
@@ -96,6 +100,92 @@ export const PathologyFragment  = gql`
      ${StringUnitsFragment}
 `;
 
+export const AllergyFragment  = gql`
+    fragment AllergyInfo on Allergy {
+        id
+        title
+        treatment
+        reaction
+        severity
+        date
+        notes
+    }
+`;
+
+export const HealthChemotherapyFragment  = gql`
+    fragment ChemotherapyInfo on PlanElementChemotherapy {
+        id
+        chemotherapy {
+            id
+            title
+        }
+        cycles
+        days
+        timesPerDay
+    }
+`;
+
+
+
+export const TreatmentElementFragment = gql`
+        fragment TreatmentElementInfo on TreatmentElement {
+            id
+            type
+            description
+            notes
+            element {
+                    ... on PlanElementChecklist {
+                        id
+                        label
+                        options {
+                            value
+                            label
+                        }
+                    }
+                    ... on ClinicalTrialElement {
+                        ...ClinicalTrialElementInfo
+                    }
+                    ... on Oncology {
+                        ...OncologyInfo
+                    }
+                    ... on Radiation {
+                        ...RadiationInfo
+                    }
+                    ... on Radiology {
+                        ...RadiologyInfo
+                    }
+                    ... on Pathology {
+                        ...PathologyInfo
+                    }
+                    ... on PlanElementChemotherapy {
+                        ...ChemotherapyInfo
+                    }
+
+                    
+            }
+             
+        }
+
+        ${OncologyFragment}
+        ${RadiationFragment}
+        ${RadiologyFragment}
+        ${PathologyFragment}
+        ${HealthChemotherapyFragment}
+        ${ClinicalTrialElementFragment}
+`;
+
+export const TreatmentInfoFragment = gql`
+    fragment TreatmentInfo on Treatment {
+          id
+          title
+          elements {
+                ...TreatmentElementInfo
+          }
+    }
+   ${TreatmentElementFragment}
+`;
+
+
 export const HealthElementFragment  = gql`
     fragment HealthElement on HealthRecord {
         id
@@ -103,17 +193,23 @@ export const HealthElementFragment  = gql`
         title
         isActive
         typeText
+        healthTypeTxt
         riskLevel
         isPrimary
+        date
+        notes
         details {
             ... on Diagnosis {
                 ...DiagnosisInfo
+            }
+            ... on Allergy {
+                ...AllergyInfo
             }
              ... on ClinicalTrialElement {
               ...ClinicalTrialElementInfo
             }
             ... on Treatment {
-              ...TreatmentPlanElement
+              ...TreatmentInfo
             }
             ... on Oncology {
               ...OncologyInfo
@@ -127,16 +223,30 @@ export const HealthElementFragment  = gql`
             ... on Pathology {
               ...PathologyInfo
             }
+            ... on PlanElementChemotherapy {
+              ...ChemotherapyInfo
+            }
        }
        createdDate
+       createdBy {
+           ...UserInfo
+       }
     }
     
-    ${ElementTreatmentFragment}
+    
     ${OncologyFragment}
+    
     ${DiagnosisFragment}
+    ${AllergyFragment}
+    ${ClinicalTrialElementFragment}
+    ${TreatmentInfoFragment}
     ${RadiationFragment}
     ${RadiologyFragment}
     ${PathologyFragment}
-    ${ClinicalTrialElementFragment}
+    ${HealthChemotherapyFragment}
+    
+    ${UserInfoFragment}
 `;
+
+
 

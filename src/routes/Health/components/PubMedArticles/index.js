@@ -14,7 +14,7 @@ const PubMedArticles = props => {
         />
         <Divider />
         <List
-    itemLayout="horizontal"
+    itemLayout={'vertical'}
     loading={loading}
     dataSource={articles}
     renderItem={article => (

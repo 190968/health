@@ -7,29 +7,28 @@ import {GET_COMMENTS_LIST} from "./queries";
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux'
 import {withModal, withSpinnerWhileLoading} from "../Modal/index";
+import { withActiveUser } from '../App/app-context';
 
 export const CommentsPure = props => {
-    const {id='', type='', userId='', title="Discussion", openSelect, viewList, messages=[], total=0} = props;
-    return <Card title={title+' '+(total > 0 ? '('+total+')' : '')}
-    extra={(viewList ? <Icon type="up" onClick={props.toggleList} /> : <Icon type="down"  onClick={props.toggleList} /> )}
-    >
-        {viewList && <React.Fragment><CommentAdd tagId={id} tagType={type} userId={userId} />
-        <CommentsList tagId={id} tagType={type} userId={userId} messages={messages} total={total} /></React.Fragment>}
-    </Card>
+    const {id='', type='', user, userId='', messages=[], total=0} = props;
+    return <React.Fragment>
+        <CommentAdd tagId={id} tagType={type} user={user} userId={userId} />
+        <CommentsList tagId={id} tagType={type} user={user} userId={userId} messages={messages} total={total} />
+    </React.Fragment>;
 }
 
 
-
-
-
-
-
-
-
+const CommentsCardPure = props => {
+    const {title="Discussion", ...otherProps} = props;
+    //return <Card title={title+' '+(total > 0 ? '('+total+')' : '')}
+    return <Card title={title} >
+        <CommentsPure {...props} />
+    </Card>
+}
 
 const withQuery = graphql(GET_COMMENTS_LIST, {
     options: (ownProps) => {
-        console.log(ownProps);
+        //console.log(ownProps);
         return {
             variables: {
                 tagId: ownProps.id,
@@ -51,34 +50,27 @@ const withQuery = graphql(GET_COMMENTS_LIST, {
     },
 });
 
-
-const mapStateToProps = (state) => {
-    return {
-        userId: state.user.info.id
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-});
+ 
 
 const enhance = compose(
+    withActiveUser,
     withQuery,
-    connect(mapStateToProps, mapDispatchToProps),
     //branch(props => props.useNumber, withQuery),
     withState('openSelect','openAttachments', false),
-    withState('viewList','setViewList', true),
+    //withState('viewList','setViewList', true),
     withHandlers({
         toggleAttachments: props => () => {
             props.openAttachments(!props.openSelect);
         },
-        toggleList: props => () => {
-            //console.log(props);
-            props.setViewList(!props.viewList);
-        }
+        // toggleList: props => () => {
+        //     //console.log(props);
+        //     props.setViewList(!props.viewList);
+        // }
     }),
 );
 
 export const Comments = enhance(CommentsPure);
+export const CommentsCard = enhance(CommentsCardPure);
 export default Comments;
 
 

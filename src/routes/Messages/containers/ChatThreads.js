@@ -1,7 +1,8 @@
 import ChatThreads from '../components/ChatThreads';
-import { connect } from 'react-redux'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { UserInfoFragment } from '../../User/fragments';
+import { withActiveUserSimple } from '../../../components/App/app-context';
 
 export const GET_CONVERSATIONS = gql`    
     query GET_CONVERSATIONS {
@@ -16,53 +17,47 @@ export const GET_CONVERSATIONS = gql`
                   id
                   text
                   sentAt
+                  sender {
+                    ...UserInfo
+                  }
               }
               participants {
                 totalCount
                 edges {
-                  id
-                  fullName
+                    ...UserInfo
                 }
               }
             }
           }
       }
     }
+    ${UserInfoFragment}
 `;
 
-const ChatThreadsWithQuery = graphql(
+const withQuery = graphql(
     GET_CONVERSATIONS,
     {
         options: () => {
             return {
-                pollInterval: 10000,
-                fetchPolicy: 'network-only'
+                //pollInterval: 10000,
+                //fetchPolicy: 'network-only'
             }
         },
         props: ({ data }) => {
-            if (!data.loading) {
-                const {edges, totalCount} = data.account.inboxConversations;
-                return {
-                    conversations: edges,
-                    totalCount: totalCount,
-                    loading: data.loading,
+            const {inboxConversations} = data.account || {};
+            const {edges=[], totalCount=0} = inboxConversations || {};
+            return {
+                conversations: edges,
+                totalCount: totalCount,
+                loading: data.loading,
+                refetch:data.refetch,
+                reload: () => {
+                    data.refetch();
                 }
-
-            } else {
-                return {loading: data.loading}
             }
         },
     }
-)(ChatThreads);
+);
 
 
-
-const mapStateToProps = (state) => {
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChatThreadsWithQuery);
+export default withActiveUserSimple(withQuery(ChatThreads));

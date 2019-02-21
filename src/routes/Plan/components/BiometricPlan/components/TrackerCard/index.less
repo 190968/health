@@ -1,0 +1,200 @@
+.ant-card-type-trackerCard {
+	.ant-card-body {
+		min-height: 80px;
+		padding: 10px;
+		border-radius: 5px;
+		border-color: #ccc;
+		// padding-bottom: 30px;
+		-moz-transition: all .2s ease-in;
+		-o-transition: all .2s ease-in;
+		-webkit-transition: all .2s ease-in;
+		transition: all .2s ease-in;
+		/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#007bce+0,6b00c4+100 */
+		// background: rgb(0, 123, 206); /* Old browsers */
+		// background: -moz-linear-gradient(-45deg, rgba(0, 123, 206, 1) 0%, rgba(107, 0, 196, 1) 100%); /* FF3.6-15 */
+		// background: -webkit-linear-gradient(
+		// 	-45deg,
+		// 	rgba(0, 123, 206, 1) 0%,
+		// 	rgba(107, 0, 196, 1) 100%
+		// ); /* Chrome10-25,Safari5.1-6 */
+		// background: linear-gradient(
+		// 	135deg,
+		// 	rgba(0, 123, 206, 1) 0%,
+		// 	rgba(107, 0, 196, 1) 100%
+		// ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		// filter: progid:DXImageTransform.Microsoft.gradient(
+		// 		startColorstr='#007bce',
+		// 		endColorstr='#6b00c4',
+		// 		GradientType=1
+		// 	); /* IE6-9 fallback on horizontal gradient */
+	}
+ 
+    
+    &.trackerCardCritical {
+        .ant-card-body {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d62684+0,b20002+100 */
+background: #d62684; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #d62684 0%, #b20002 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #d62684 0%,#b20002 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #d62684 0%,#b20002 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d62684', endColorstr='#b20002',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    }
+}
+
+	.title {
+		font-weight: bold;
+		line-height: 1em;
+		margin-bottom: 15px;
+		line-height: 1em;
+		text-transform: lowercase;
+		// opacity: 0.8;
+		// text-transform: uppercase;
+		&::first-letter {
+			text-transform: uppercase;
+		}
+	}
+
+	.notReported {
+		font-size:14px;
+		text-align: center;
+		color:rgba(0, 0, 0, 0.45);
+		margin-top: 27px;
+		margin-bottom: 5px;
+	}
+	.value {
+		font-size: 2em;
+		font-weight: bold;
+		text-align: center;
+		line-height: 1em;
+		margin-bottom: 10px;
+		margin-top: 10px;
+
+		.valueClickable {
+			//background: #ffffff4f;
+			border-radius: 3px;
+			display: inline-block;
+			width: 100%;
+			position: relative;
+			height: 28px;
+
+			small {
+				opacity: 0.5;
+			}
+
+			.tracker-input-reported {
+				font-size: initial;
+			}
+
+			.ant-input {
+				// background: #ffffff1f;
+				border: none;
+				// color: #fff;
+				width: 150px;
+				font-size: 1.5em;
+				height: 40px;
+
+				&::-webkit-input-placeholder {
+					/* Chrome/Opera/Safari */
+					// color: #ffffffb5;
+				}
+				&::-moz-placeholder {
+					/* Firefox 19+ */
+					// color: #ffffffb5;
+				}
+				&:-ms-input-placeholder {
+					/* IE 10+ */
+					// color: #ffffffb5;
+				}
+				&:-moz-placeholder {
+					/* Firefox 18- */
+					// color: #ffffffb5;
+				}
+			}
+			.ant-input-affix-wrapper .ant-input-suffix {
+				// color: #fff;
+			}
+
+			.valueTxt {
+				opacity: 0.8;
+
+				border: 1px solid transparent;
+				padding: 5px 10px;
+				line-height: 1em;
+				display: block;
+
+				&:hover {
+					opacity: 1;
+					//text-shadow: 0px 0px 50px #fff;
+					// border: 1px dashed #ffffff3d;
+				}
+			}
+		}
+
+		.units {
+			font-size: 0.5em;
+			font-weight: normal;
+			position: absolute;
+			opacity: 0.5;
+			padding-left: 5px;
+		}
+	}
+
+	.reportedOn {
+		font-size: 0.6em;
+		// position: absolute;
+		// bottom: 10px;
+		// left: 15px;
+		min-height: 21px;
+		line-height: 21px;
+		margin-bottom: -7px;
+	}
+
+	.setting {
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+	}
+
+	.graph {
+		// position: absolute;
+		bottom: -6px;
+		left: 0;
+		height: 80px;
+		right: 20px;
+
+		.recharts-xAxis {
+			font-size:0.7em;
+		}
+	}
+
+	.createReport {
+		position: absolute;
+		left: 10px;
+		font-size: 1.7em;
+		opacity: 0.5;
+		-moz-transition: all .2s ease-in;
+		-o-transition: all .2s ease-in;
+		-webkit-transition: all .2s ease-in;
+		transition: all .2s ease-in;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	&.todayNoReport {
+		.valueClickable {
+			opacity:0.5;
+		}
+	}
+
+	// .ant-card-body:hover {
+	// 	-webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	// 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	// 	border-color: rgba(0, 0, 0, 0.3);
+	// 	cursor: pointer;
+	// 	.valueTxt {
+	// 		text-shadow: 0px 0px 50px #fff;
+	// 	}
+	// }
+}

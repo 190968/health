@@ -4,11 +4,78 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
-
+#root {
+  z-index:1;
+  position:relative;
+}
 .full-width {width:100%;}
 
-.ant-card + .ant-card {
-  margin-top:20px;
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none
+  }
+
+  &.grey {
+    color: #ccc;
+  }
+
+  &.drawer:not(.with-icon) {
+    border-bottom:1px dashed #ccc;
+    text-decoration: none;
+    &:hover {
+      border-bottom:none;
+    }
+  }
+  &.drawer.with-icon {
+    text-decoration: none;
+    .link-text {
+      border-bottom:1px dashed;
+    }
+    &:hover {
+      .link-text {
+      border-bottom:none;
+      }
+    }
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.bump {
+  &-r {
+    margin-right:10px;
+  }
+}
+
+
+
+.ant-layout-content {
+  padding: 24px 50px;
+   flex: 1;
+   min-height:auto;
+
+   &.manager {
+     padding:0;
+   }
+
+   &> .tinyBoxAlone {
+      padding: 8% 35% 20px;
+   }
+}
+
+.ant-card-bordered {
+  border-color: #d2d2d2;
+  .ant-card-head {
+    border-color: #d2d2d2;
+  }
+}
+.ant-card + .ant-card, .ant-card + .ant-tabs, .ant-card + .ant-alert, .ant-alert + .ant-card {
+  margin-top:24px;
 }
 
 .ant-card-padding-transition .ant-card-head, .ant-card-padding-transition .ant-card-body {
@@ -17,11 +84,45 @@ body {
    transition: none !important;
 }
 
+.ant-card {
+ 
+
+  .ant-card-body > .ant-divider:first-child {
+    margin-top:0;
+  }
+}
+.userside {
+  .ant-card:not(.transparent) {
+    > .ant-card-body {
+      background: #f0fcff;
+      margin-top: 1px;
+      .ant-card-body {
+        background:#fff;
+      }
+    }
+   
+  }
+}
+.relative {
+  position: relative;
+}
+.dimmed-block {
+  background: #fff;
+  opacity: 0.5;
+  position: absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  z-index:99;
+}
+
 .ant-card-padding-transition .ant-card-head, .ant-card-padding-transition .ant-card-body {
 
 }
 
 .ant-card-type {
+
   &-table {
     > .ant-card-body {
       padding: 0 !important;
@@ -29,11 +130,45 @@ body {
       .ant-table-thead > tr > th:first-child, .ant-table-tbody > tr > td:first-child {
         padding-left: 24px;
       }
+
+      .ant-table-small {
+        .ant-table-thead > tr > th:first-child, .ant-table-tbody > tr > td:first-child {
+          padding-left: 24px !important;
+        }
+      }
+
+      .ant-table-pagination {
+        margin-right:16px;
+      }
+
+      .ant-table-small {
+        border:none;
+      }
+      .ant-list-empty-text {
+        padding:39px;
+      }
+      
+      .ant-card-loading-content {
+        margin: 12px 24px;
+      }
     }
   }
   &-pure {
     > .ant-card-body {
       padding: 0 !important;
+    }
+
+
+
+    &-sider {
+       
+       .ant-card-head {
+        padding:0;
+       }
+
+       .ant-card-body {
+         padding:0;
+       }
     }
   }
 
@@ -63,7 +198,42 @@ body {
   //  }
   //}
 
-  
+  &-list {
+    .ant-list-item:first-child {
+      padding-top:0;
+    }
+    .ant-list-item:last-child {
+      padding-bottom:0;
+    }
+  }
+  &-tabs {
+    .ant-card-head {
+      padding:0;
+     }
+
+     .ant-card-body {
+       padding-top:0;
+
+       .ant-tabs-content {
+
+       }
+     }
+  }
+
+
+  &-blueish  {
+    &> .ant-card-body {
+      background: #f0fcff;
+      margin-top: 1px;
+    }
+  }
+
+  &-greenish  {
+    &> .ant-card-body {
+      background: #f0fff6;
+      margin-top: 1px;
+    }
+  }
 
   
 }
@@ -83,6 +253,7 @@ body {
     background: linear-gradient(180deg,#000,#000 20%,#fff 0,#fff 40%,#000 0,#000 60%,#fff 0,#fff 80%,#000 0,#000);
   }
 }
+
 
 .ant-list-item-action {
   align-self: flex-start;
@@ -117,9 +288,17 @@ body {
   .ant-btn-group > .ant-btn {
     line-height:24px;
   }
-  .anticon {
-    vertical-align: baseline;
+  .anticon + .anticon {
+    margin-left:5px;
+    // vertical-align: baseline;
   }
+
+  .card-split + .card-split {
+    margin-left:10px;
+  }
+}
+.ant-card-type-inner .ant-card-extra {
+  padding: 13.5px 0 !important;
 }
 
 
@@ -161,6 +340,22 @@ body {
     }
     &-title {
       margin-bottom: 4px;
+    }
+  }
+
+  .ant-list-item-meta-content {
+    flex:1
+  }
+
+  .ant-list-item {
+    .ant-list-item-content {
+      margin:0;
+    }
+    .ant-comment-inner {
+      padding:0;
+      .ant-comment-actions {
+        margin:0;
+      }
     }
   }
 }
@@ -240,6 +435,20 @@ body {
 
 }
 
+.ant-card {
+  &.transparent {
+    background:transparent;
+  }
+
+}
+
+.ant-card > {
+  .ant-card-head-title {
+    text-transform: uppercase;
+    // span {text-transform: uppercase;}
+  }
+}
+
 
 
 .ant-table {
@@ -256,6 +465,9 @@ body {
         }
       }
     }
+  }
+  .ant-table-tbody .ant-form-item {
+    margin-bottom:0;
   }
 }
 
@@ -299,4 +511,48 @@ body {
     .ant-checkbox + span {
       padding-left: 0;
     }
+}
+
+
+.ant-popover-inner-content {
+  .infinite-container {
+    overflow: auto;
+    height: 300px;
+  }
+  .demo-loading {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+  }
+}
+
+.topBorderedTab {
+  .ant-tabs-bar {
+      border-bottom:none;
+  }
+   .ant-tabs-ink-bar {
+      bottom: auto;
+      top:0;
+  }
+  .ant-tabs-nav .ant-tabs-tab {
+      padding: 5px 0px;
+      margin-right:0;
+      vertical-align: top;
+  }
+
+  .ant-tabs-tab {
+      -moz-transition: all .2s ease-in;
+      -o-transition: all .2s ease-in;
+      -webkit-transition: all .2s ease-in;
+      transition: all .2s ease-in;
+      background:none;
+      filter:none;
+  }
+  .ant-tabs-tab-active, .ant-tabs-tab:hover  {
+     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#2989d8+0,e5e5e5+99&0.1+0,0+100 */
+background: -moz-linear-gradient(top, rgba(41,137,216,0.1) 0%, rgba(229,229,229,0) 99%, rgba(229,229,229,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(41,137,216,0.1) 0%,rgba(229,229,229,0) 99%,rgba(229,229,229,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(41,137,216,0.1) 0%,rgba(229,229,229,0) 99%,rgba(229,229,229,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a2989d8', endColorstr='#00e5e5e5',GradientType=0 ); /* IE6-9 */
+}
 }

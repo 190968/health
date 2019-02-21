@@ -4,10 +4,10 @@ import { graphql } from 'react-apollo';
 import {HealthElementFragment} from "../components/fragments";
 
 export const GET_USER_DIAGNOSES_QUERY = gql`
-    query GET_USER_DIAGNOSES ($userId: UID!) {
+    query GET_USER_DIAGNOSES ($userId: UID!, $isFamily: Boolean) {
         patient (id: $userId) {
             id
-            healthRecords (type: "diagnosis") {
+            healthRecords (type: "diagnosis", isFamily: $isFamily) {
                 totalCount
                 edges {
                     ...HealthElement
@@ -24,12 +24,13 @@ const DiagnosesWithQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                userId: ownProps.userId,
+                userId: ownProps.user.id,
+                isFamily: ownProps.isFamily
             }
         }),
         props: ({data}) => {
             if (!data.loading) {
-                console.log(data);
+                //console.log(data);
                 return {
                     diagnoses: data.patient.healthRecords.edges,
                     loading: data.loading,

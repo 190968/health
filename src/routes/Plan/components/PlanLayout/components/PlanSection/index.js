@@ -99,7 +99,7 @@ export class PlanSection extends React.Component {
 	};
 
 	render() {
-		const { upid, date, item, isLastSection, isBuilderMode, isPreviewMode, plan, elements = [] } = this.props;
+		const { upid, date, user, item, isLastSection, isBuilderMode, isPreviewMode, plan, elements = [] } = this.props;
 		const footer =
 			!isBuilderMode && (elements !== null && (item.elements.length > 0 || isLastSection))
 				? [
@@ -108,7 +108,7 @@ export class PlanSection extends React.Component {
 							loading={this.state.loading}
 							onClick={(e) => this.saveSection(e, item.id, isLastSection)}
 						>
-							{isLastSection ? 'Finish' : 'Next Section'}
+							{isLastSection ? 'Finish' : 'Next Activity'}
 						</Button>
 					]
 				: [];
@@ -120,7 +120,7 @@ export class PlanSection extends React.Component {
 		}
 
 		return (
-			<Card title={title} bordered={false} actions={footer}>
+			<Card title={title}  actions={footer}>
 				{/* {1 === 5 &&
 				isBuilderMode &&
 				!isPreviewMode && (
@@ -144,6 +144,7 @@ export class PlanSection extends React.Component {
 									mode="section"
 									sectionId={sectionId}
 									plan={plan}
+									user={user}
 									upid={upid}
 									date={date}
 									element={item}

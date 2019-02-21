@@ -71,7 +71,7 @@ const PageHeaderTabsPure = ({ isCollapsed, onChange, onTabChange, activeTab, tab
 
 	return (
 		<Affix onChange={onChange}>
-			<Tabs className={clsString} {...activeKeyProps} onChange={onTabChange} activeKey={activeTab}>
+			<Tabs  className={clsString} {...activeKeyProps} onChange={onTabChange} activeKey={activeTab}>
 				{tabList.map((item) => <TabPane tab={item.tab} key={item.key} />)}
 			</Tabs>
 		</Affix>

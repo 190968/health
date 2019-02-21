@@ -2,36 +2,28 @@ import React from 'react';
 import {Form, Input} from 'antd';
 import {ClinicalTrialSelect} from "../../../../../../components/Autosuggest/containers/ClinicalTrialSelect";
 import {DateField} from "../../../../../../components/FormCustomFields/index";
-import {InputUnits} from "../../../../../../components/FormCustomFields/components/InputUnits/index";
+import {InputUnits, InputUnitsValidator, prepareInputUnitsValue} from "../../../../../../components/FormCustomFields/components/InputUnits/index";
+import DefaultHealthFields from '../DefaultFields';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-export const PathologyForm = ({cancer={}, form, formItemLayout}) => {
+export const PathologyForm = (props) => {
+    const {element={}, form, formItemLayout} = props;
     const {getFieldDecorator} = form;
     //const {title='', code='', stage={}, chemotherapies=[]} = cancer;
+    const {tumorHistology, tumorBehavior, tumorGrade, tumorSize, date} = element || {};
+    console.log(element);
+    
     return <Form>
-        <FormItem
-            {...formItemLayout}
-            label="Date Enrolled"
-        >
-            {getFieldDecorator('date', {
-                //initialValue: title,
-                rules: [{
-                    required: true,
-                    message: "Please select Date",
-                }],
-            })(
-                <DateField />
-            )}
-        </FormItem>
+        
 
         <FormItem
             {...formItemLayout}
             label='Tumor Histology'
         >
             {getFieldDecorator('tumorHistology', {
-                    //initialValue: code,
+                    initialValue: tumorHistology,
                     rules: [{required: true, message: "Select Histology"}],
                 }
             )(
@@ -41,11 +33,11 @@ export const PathologyForm = ({cancer={}, form, formItemLayout}) => {
 
         <FormItem
             {...formItemLayout}
-            label='Tumor Behaviour'
+            label='Tumor Behavior'
         >
             {getFieldDecorator('tumorBehavior', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Select Behaviour"}],
+                    initialValue: tumorBehavior,
+                    rules: [{required: true, message: "Select Behavior"}],
                 }
             )(
                 <Input />
@@ -57,7 +49,7 @@ export const PathologyForm = ({cancer={}, form, formItemLayout}) => {
             label='Tumor Grade'
         >
             {getFieldDecorator('tumorGrade', {
-                    //initialValue: code,
+                    initialValue: tumorGrade,
                     rules: [{required: true, message: "Select Grade"}],
                 }
             )(
@@ -70,13 +62,17 @@ export const PathologyForm = ({cancer={}, form, formItemLayout}) => {
             label='Regional Size'
         >
             {getFieldDecorator('tumorSize', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Enter Tumor size"}],
+                initialValue: prepareInputUnitsValue(tumorSize),
+                rules: [{validator:InputUnitsValidator, required: true, message: "Enter Tumor size"}],
                 }
             )(
                 <InputUnits />
             )}
+
+            
         </FormItem>
+
+        <DefaultHealthFields {...props} />
 
     </Form>
 }
@@ -84,20 +80,20 @@ export const PathologyForm = ({cancer={}, form, formItemLayout}) => {
 export default PathologyForm;
 
 
-export const preparePathologyInput = values => {
-    const {date,
-        tumorHistology,
-        tumorBehavior,
-        tumorGrade,
-        tumorSize} = values;
+// export const preparePathologyInput = values => {
+//     const {date,
+//         tumorHistology,
+//         tumorBehavior,
+//         tumorGrade,
+//         tumorSize} = values;
 
-    return {
-        pathology: {
-            date,
-            tumorHistology,
-            tumorBehavior,
-            tumorGrade,
-            tumorSize
-        }
-    }
-}
+//     return {
+//         pathology: {
+//             date,
+//             tumorHistology,
+//             tumorBehavior,
+//             tumorGrade,
+//             tumorSize
+//         }
+//     }
+// }

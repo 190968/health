@@ -63,4 +63,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 });
 
-export default withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(Discussions)));
+export const CategoryDiscusionsList = withRouter(withMutation(connect(mapStateToProps, mapDispatchToProps)(Discussions)));;
+export default CategoryDiscusionsList;

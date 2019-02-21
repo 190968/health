@@ -5,7 +5,7 @@ import { message } from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import {MedicationPlan_QUERY} from "../../../../../containers";
+import { GET_MEDICATION_PLAN_QUERY } from '../../../../../../../containers/MedicationPlan';
 
 
 const deleteMed = gql`
@@ -23,8 +23,8 @@ const withMutation = graphql(deleteMed, {
                 variables: { uid: uid, id: id },
 
                 refetchQueries: [{
-                    query: MedicationPlan_QUERY,
-                    variables: { user_id: uid, date:date },
+                    query: GET_MEDICATION_PLAN_QUERY,
+                    variables: { userId: uid, date:date },
                 }],
 
                 /*update: (store, { data: { medicationDelete } }) => {

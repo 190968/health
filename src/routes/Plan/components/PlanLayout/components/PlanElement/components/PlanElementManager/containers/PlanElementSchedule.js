@@ -26,7 +26,7 @@ const PlanElementScheduleWithQuery = graphql(
         options: (ownProps) => ({
             skip: !ownProps.schedule,
             variables: {
-                planId: ownProps.planId,
+                planId: ownProps.planId || ownProps.plan.id,
             },
             //fetchPolicy: 'cache-only'
         }),

@@ -1,11 +1,11 @@
-import { connect } from 'react-redux'
-import { PlansList } from '../components/'
-
-import Plan from '../components/Plan';
-
-
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import { connect } from 'react-redux';
+import { PlansList } from '../components/';
+import { PlanCardFragment } from '../../Plan/fragments';
+
+
+
 
 const QUERY = gql`
     query GET_USER_PLANS ($user_id:UID)  {
@@ -16,7 +16,7 @@ const QUERY = gql`
             }
         }
     }
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 
 
@@ -27,7 +27,7 @@ const PlansListWithQuery = graphql(
     //name: 'PlanstorePlans',
     options: (ownProps) => ({
       variables: {
-          user_id:ownProps.user_id,
+          user_id:ownProps.user.id,
           //date:ownProps.date
       },
        // fetchPolicy: 'network-only'
@@ -76,24 +76,6 @@ const PlansListWithQuery = graphql(
     },
   }
 )(PlansList);
+ 
 
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
-
-const mapStateToProps = (state) => {
-
-
-  return {
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlansListWithQuery);
+export default PlansListWithQuery;

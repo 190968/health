@@ -12,7 +12,7 @@ export const Search = props => {
     <div className="custom-filter-dropdown">
                 <Input
                      suffix={suffix}
-                     ref={ele => this.searchInput = ele}
+                    //  ref={ele => this.searchInput = ele}
                      placeholder="Search name"
                      value={searchText}
                      onChange={onSearch}

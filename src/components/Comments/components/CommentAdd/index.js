@@ -46,7 +46,6 @@ const CommentAdd = props => {
 }
 
 const enhance = compose(
-    injectIntl,
     Form.create(),
     withState('attachments','setAttachments', []),
     withState('openUpload','toggleAttachments', false),

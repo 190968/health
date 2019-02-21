@@ -1,336 +1,208 @@
 import { Table, Menu, Dropdown, Icon, Progress } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import InviteButtons from "../../../../../../components/Tables/InviteButton/index";
-import PatientEditButton from "../PatientEditButton";
-import './index.css';
+import InviteButtons from '../../../../../../components/Tables/InviteButton/index';
+import PatientEditButton from '../PatientEditButton';
 import { PatientPasswordButton } from '../PatientPasswordButton';
+import { Loading, LoadingBox } from '../../../../../../components/Loading';
+import moment from 'moment';
+import { TableColumnSearch, TableColumnDates } from '../../../../../../components/Tables/TableColumn';
+import { AdherenceProgress } from '../../../../../../components/Network/UIElements/adherenceProgress';
+import { TableWithMessage } from '../../../../../../components/Tables';
 
-const marks = {
-    0: '0',
-    99: '99'
+export const PatientsTable = (props) => {
+	const {
+		loading,
+		handleTableChange,
+		patients=[],
+		total,
+		selectedCount,
+		openShowButton,
+		hideShowButton,
+		showButton,
+		selectedObj,
+		getPatientsTable
+	} = props;
+
+
+	const {fields=[]} = getPatientsTable || {};
+
+	let tableColumns = fields.map((data) => {
+		const { canSort, type } = data;
+
+		let filters = {};
+		switch (data.field) {
+			case 'full_name':
+				filters = {
+					width: 200,
+					filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => <TableColumnSearch onSearch={props.doSearch} />,
+					filterIcon: <Icon type="search" />
+				};
+				break;
+			case 'adherence':
+			case 'med_adherence':
+				filters = {
+					width: 200,
+					filters: [
+						{
+							text: 'High',
+							value: 'high'
+						},
+						{
+							text: 'Medium',
+							value: 'med'
+						},
+						{
+							text: 'Low',
+							value: 'low'
+						}
+					]
+				};
+				break;
+			default:
+				if (type === 'date') {
+					filters = {
+						width: 150,
+						filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+							<TableColumnDates />
+						),
+						filterIcon: <Icon type="calendar" />
+					};
+				}
+				break;
+		}
+
+		let render = (title, info) => {
+			switch (data.field) {
+				case 'full_name':
+					filters = {
+						filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+							<TableColumnSearch />
+						),
+						filterIcon: <Icon type="search" />
+					};
+					const { id, fullName } = info;
+					return <Link to={'/u/' + id}>{fullName}</Link>;
+					break;
+				case 'adherence':
+				case 'med_adherence':
+					//console.log(title, info);
+					return <AdherenceProgress value={parseInt(title)} size="small" />;
+					break;
+				default:
+					if (type === 'date') {
+						filters = {
+							filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+								<TableColumnDates />
+							),
+							filterIcon: <Icon type="calendar" />
+						};
+						return title && moment(title).format('L');
+					}
+					return title;
+					break;
+			}
+		};
+		console.log(filters);
+		return {
+			title: data.label,
+			dataIndex: data.field,
+			key: data.label,
+			render: render,
+			//sorter: canSort
+			sorter: canSort
+				? (a, b) => {
+						//     // const {getInfoByNetworkTable:infoa} = a;
+						//     // const {getInfoByNetworkTable:infob} = b;
+
+						//     //  console.log(a);
+						//     //  console.log(data.field);
+						//     //  console.log(a[data.field]);
+						return a[data.field] > b[data.field];
+					}
+				: false,
+			...filters
+		};
+	});
+	tableColumns.push({
+		title: '',
+		width: 50,
+		render: (title, user) => {
+			const menu = (
+				<Menu>
+					<Menu.Item key={0}>
+						<PatientEditButton patient={user} asMenuItem />
+					</Menu.Item>
+					<Menu.Item key={1}>
+						<PatientPasswordButton user={user} asMenuItem />
+					</Menu.Item>
+				</Menu>
+			);
+			return (
+				<Dropdown overlay={menu} trigger={[ 'click' ]}>
+					<Icon type="setting" />
+				</Dropdown>
+			);
+		}
+	});
+
+	let dataSource = patients.map((patient) => {
+		const { getInfoByNetworkTable=[], ...otherInfo } = patient;
+		let newPatientData = { ...otherInfo };
+		// prepare info from fields
+		getInfoByNetworkTable.map((data) => {
+			const { code, value } = data;
+
+			switch (code) {
+				default:
+					newPatientData[code] = value;
+					break;
+				case 'full_name':
+					newPatientData[code] = otherInfo.lastName;
+					break;
+				case 'adherence':
+				case 'med_adherence':
+					newPatientData[code] = parseInt(value);//<Progress percent={parseInt(value)} size="small" />;
+					break;
+			}
+			return null;
+		});
+
+		return newPatientData;
+	});
+
+	console.log(tableColumns);
+	console.log(dataSource);
+ 
+	const rowSelection = {
+		onChange: (record, data) => (
+			console.log('rowSelection', data), record.length < 1 ? hideShowButton() : openShowButton(data)
+		),
+		getCheckboxProps: (record) => ({
+			name: record.name
+		})
+	};
+
+	 
+	return (
+		<>
+			<TableWithMessage
+				emptyMessage={'No Patients'}
+				rowKey={'id'}
+				rowSelection={rowSelection}
+				dataSource={dataSource}
+				columns={tableColumns}
+				onChange={handleTableChange}
+				loading={loading}
+				total={total}
+				// pagination={pagination}
+				// ref={(input) => {
+				//     this.table = input;
+				// }}
+			/>
+			{showButton && <InviteButtons selectedCount={selectedCount} selectedObj={selectedObj} />}
+		</>
+	);
 };
 
-
-
-export const PatientsTable = props => {
-    const suffix = props.searchText ? <Icon type="close-circle-o" onClick={props.emitEmpty} /> : <Icon type="search" />
-
-    const { loading, selectedCount, openShowButton, hideShowButton, showButton, selectedObj, getPatientsTable = {} } = props;
-    const testColumns = [];
-    const testData = [];
-    if (loading) {
-        return <div></div>
-    }
-
-    // testColumns.push({
-    //     title: "Name",
-    //     dataIndex: 'fullName',
-    //     key: 'fullName',
-    //     render: (title, info) => {
-    //         return <Link to={'/u/' + info.id}>{title}</Link>;
-    //     },
-    // });
-    getPatientsTable.fields.map((data) => {
-        testColumns.push({
-            title: data.label,
-            dataIndex: data.field,
-            key: data.label,
-        });
-    })
-    testColumns.push({
-        title: '',
-        width: 50,
-        render: (title, user) => {
-            const menu = (
-                <Menu>
-                    <Menu.Item key={0} >
-                        <PatientEditButton user={user} asMenuItem />
-                    </Menu.Item>
-                    <Menu.Item key={1} >
-                        <PatientPasswordButton user={user} asMenuItem />
-                    </Menu.Item>
-                </Menu>
-            );
-            return <Dropdown overlay={menu} trigger={['click']}>
-                <Icon type="setting" />
-            </Dropdown>;
-        }
-    });
-    props.patients.map((data) => {
-        data.getInfoByNetworkTable.map((data) => {
-
-            switch (data.code) {
-                case 'cohorts':
-                    testData.push({ cohorts: data.value });
-                    break;
-                case 'care_manager':
-                    testData.push({ care_manager: data.value });
-                    break;
-                case 'county':
-                    testData.push({ county: data.value });
-                    break;
-                case 'full_name':
-                    testData.push({ fullName: data.fullName });
-                    break;
-            }
-        })
-    });
-    const dataSource = props.patients.map((patient, i) => {
-        const { getInfoByNetworkTable, id, fullName } = patient;
-        let newPatientData = { ...patient };
-
-        getInfoByNetworkTable.map((data) => {
-            const { code, value } = data;
-            switch (code) {
-                default:
-                    newPatientData[code] = value;
-                    break;
-                case 'full_name':
-                    newPatientData[code] = <Link to={'/u/' + id}>{fullName}</Link>;
-                    break;
-                    case 'adherence':
-                    case 'med_adherence':
-
-                        newPatientData[code] = <Progress percent={parseInt(value)}   size="small" />;
-                        break;
-            }
-        })
-
-        return newPatientData;
-    });
-    const rowSelection = {
-
-        onChange: (record, data) => (
-            console.log("rowSelection", data),
-            record.length < 1 ? hideShowButton() : openShowButton(data)
-
-        ),
-        getCheckboxProps: record => ({
-            name: record.name,
-        }),
-    };
-
-    return (
-        <div>
-            <Table rowKey={'id'} rowSelection={rowSelection} dataSource={dataSource} columns={testColumns} pagination={false}
-                onChange={this.handleChange}
-                ref={(input) => {
-                    this.table = input;
-                }} />
-            {showButton && <InviteButtons selectedCount={selectedCount} selectedObj={selectedObj} />}
-        </div>);
-}
-
 export default PatientsTable;
-
-// export default class TableCustom extends React.Component {
-
-//     state = {
-//         // for search
-//         filterDropdownVisible: false,
-//         settingDropdownVisible: false,
-//         searchText: '',
-//         filtered: false,
-//         //
-//         filteredInfo: null,
-//         sortedInfo: {},
-//         data: this.props.patients,
-//         visible: false,
-//         id: null
-//     };
-
-//     static defaultProps = {
-//         plans: [],
-//         plansTotal: 0
-//     }
-
-//     handleChange = (pagination, filters, sorter) => {
-
-//         this.setState({
-//             filteredInfo: filters,
-//             sortedInfo: sorter,
-//         });
-//     }
-
-//     showModal = (id) => {
-//         this.setState({
-//             visible: true,
-//             id: id
-//         });
-//     }
-//     handleCancel = (e) => {
-//         this.setState({
-//             visible: false,
-//         });
-//     }
-
-
-
-//     render() {
-//         const {loading} = this.props;
-//         let {sortedInfo} = this.state;
-//         if (loading) {
-//             return <div></div>
-//         }
-//         const suffix = this.props.searchText ? <Icon type="close-circle-o" onClick={this.props.emitEmpty}/> : <Icon type="search"/> 
-//          const marks = {
-//             0: '0',
-//             99: '99'
-//         };
-//         const {selectedCount,openShowButton,hideShowButton,showButton,selectedObj,getPatientsTable={}} = this.props;
-//         const testColumns = [];
-//         const testData = [];
-//         getPatientsTable.fields.map((data)=>{
-//             testColumns.push({
-//                 title: data.label,
-//                 dataIndex: data.field,
-//                 key: data.label,
-//             });
-//         })
-//         this.props.patients.map((data)=>{
-//             data.getInfoByNetworkTable.map((data)=>{
-
-//                 switch(data.code) {
-//                     case 'cohorts':
-//                     testData.push({cohorts:data.value});
-//                     break;
-//                     case 'care_manager':
-//                     testData.push({care_manager:data.value});
-//                     break;
-//                     case 'county':
-//                     testData.push({county:data.value});
-//                     break;
-//                     case 'full_name':
-//                     testData.push({fullName:data.fullName});
-//                     break;
-//                 }
-//             })            
-//         });
-//         //console.log(testData);
-//         const columns = [
-//             {
-//                 title: "Name",
-//                 dataIndex: 'fullName',
-//                 key: 'fullName',
-//                 render: (title, info) => {
-//                     return <Link to={'/u/' + info.id}>{title}</Link>;
-//                 },
-//                 sorter: (a, b) => sort(a, b, "fullName"),
-//                 filterDropdown: (
-//                         <Input
-//                              suffix={suffix}
-//                             ref={ele => this.searchInput = ele}
-//                             placeholder="Search name"
-//                             value={this.props.searchText}
-//                             onChange={this.props.onSearch}
-//                             onPressEnter={this.props.onSearch}
-//                         />
-//                 ),
-//                 filterIcon: <Icon type="search"/>,
-//             },
-//             {
-//                 title: 'Age',
-//                 dataIndex: 'age',
-//                 key: 'age',
-//                 width:100,
-//                 sorter: (a, b) => a.age - b.age,
-//                 filterDropdown: (
-//                     <div style={{width: 200, height: 60}} className="custom-filter-dropdown">
-//                         <Slider marks={marks} range defaultValue={[20, 50]} onChange={this.props.sliderChange}/>
-//                     </div>
-//                 ),
-//                 filterIcon: <Icon type="filter" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
-//             },
-//             {
-//                 title: 'Gender',
-//                 dataIndex: 'gender',
-//                 key: 'gender',
-//                 width:120,
-//                 render: (gender) => {
-//                     return gender[0].toUpperCase()
-//                 },
-//                 filters: [{
-//                     text: 'male',
-//                     value: 'male',
-//                 }, {
-//                     text: 'female',
-//                     value: 'female',
-//                 }],
-//                 onFilter: (value, record) => record.gender.indexOf(value) === 0,
-//             },
-//             {
-//                 title: 'Dignosis',
-//                 dataIndex: 'getDiagnosis',
-//                 key: 'getDiagnosis',
-//                 //width:200,
-//                 render: (getDiagnosis) => {
-//                     if (getDiagnosis) {
-//                         return <Truncate lines={1}>{getDiagnosis.code.name}</Truncate>
-//                     }
-//                 },
-//             }, {
-//                 title: '',
-//                 width:50,
-//                 render: (info) => {
-//                     const menu = (
-//                         <Menu>
-//                             <Menu.Item onClick={this.showModal.bind(this, info.id)}>
-//                                 <Icon type="edit"/> Edit
-//                             </Menu.Item>
-//                         </Menu>
-//                     );
-//                     return <Dropdown overlay={menu} trigger={['click']}>
-//                         <Icon type="setting"/>
-//                     </Dropdown>;
-//                 }
-//             },
-//         ];
-//         const rowSelection = {
-
-//             onChange: (record,data) => (
-//                 console.log("rowSelection",data),
-//                 record.length < 1 ? hideShowButton() : openShowButton(data)
-
-//             ),
-//             getCheckboxProps: record => ({
-//                 name: record.name,
-//             }),
-//         };
-//         const dataSource = this.props.patients.map((patient, i) => {
-//             const {getInfoByNetworkTable, id, fullName} = patient;
-//             let newPatientData = {...patient};
-
-//             getInfoByNetworkTable.map((data)=>{
-//                 const {code, value} = data;
-//                 switch(code) {
-//                     default:
-//                     newPatientData[code] = value;
-//                     break;
-//                     case 'full_name':
-//                     newPatientData[code] = <Link to={'/u/' + id}>{fullName}</Link>;
-//                     break;
-//                 }
-//             })        
-
-//             return newPatientData;
-//         });
-//         console.log(dataSource);
-//         return (
-//             <div>
-//                 <Modal
-//                     title="Edit user"
-//                     visible={this.state.visible}
-//                     onCancel={this.handleCancel}
-//                 >
-//                     <CustomModal id={this.state.id}/>
-//                 </Modal>
-//                 <Table  id="pasha" rowKey={'id'} rowSelection={rowSelection} dataSource={dataSource} columns={testColumns} pagination={false}
-//                        onChange={this.handleChange}
-//                        ref={(input) => {
-//                            this.table = input;
-//                        }}/>
-//                        {showButton && <InviteButtons selectedCount={selectedCount} selectedObj={selectedObj} />}
-//             </div>);
-//     }
-// }

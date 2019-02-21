@@ -3,17 +3,21 @@ import gql from 'graphql-tag';
 import { withActiveNetwork } from '../components/App/app-context';
 
 
-export const CurrentNetworkInfoFragment = gql`
-       fragment CurrentNetworkInfo on Account {
-            currentNetwork {
+
+export const NetworkInfoFragment = gql`
+       fragment NetworkInfo on Network {
                 id,
                 name,
                 description,
                 logo,
                 modules {
-                    id,
-                    name,
+                    id
+                    name
                     placeholder
+                    settings {
+                        key
+                        value
+                    }
                 }
                 allowSignUp
                 colors {
@@ -24,10 +28,74 @@ export const CurrentNetworkInfoFragment = gql`
                     footerBg
                     footerText
                 }
+
                 labels {
                     key
                     label
                 }
+
+                getNetworkAdherence {
+                    med
+                    high
+                    highColor
+                    medColor
+                    lowColor
+                }
+        }
+`;
+
+export const ProviderInfoFragment = gql`
+    fragment ProviderInfo on Provider {
+        id
+        name
+        logo
+    }
+`;
+
+
+export const CurrentNetworkInfoFragment = gql`
+       fragment CurrentNetworkInfo on Account {
+            currentNetwork {
+                id,
+                name,
+                description,
+                logo,
+                modules {
+                    id
+                    name
+                    placeholder
+                    settings {
+                        key
+                        value
+                    }
+                }
+                allowSignUp
+                colors {
+                    primary
+                    brand
+                    headerBg
+                    headerText
+                    footerBg
+                    footerText
+                }
+
+                labels {
+                    key
+                    label
+                }
+
+                getNetworkAdherence {
+                    med
+                    high
+                    highColor
+                    medColor
+                    lowColor
+                }
+            }
+            currentProvider {
+                id
+                name
+                logo
             }
         }
 `;

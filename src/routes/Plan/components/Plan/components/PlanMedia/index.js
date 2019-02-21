@@ -14,13 +14,10 @@ export default class PlanMedia extends React.PureComponent {
         const {label, mediaType:type, url, embedHtml} = item;
         switch(type) {
             case 'image':
-                return <Card
-                             cover={<img alt={label} src={url} />}
-                ><Card.Meta
-                    avatar={<Icon type="picture" />}
-                    title={label}
-
-                /></Card>;
+                return <>
+                    <img alt={label} src={url} style={{maxWidth: '100%'}} />
+                    <div>{label}</div>
+                </>;
             case 'import':
             case 'audio':
             case 'video':

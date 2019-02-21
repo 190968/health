@@ -6,12 +6,12 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
     "myFamily": {
         "id": "user_family_title",
-        "defaultMessage": "Моя семья",
+        "defaultMessage": "{isSelf, select, true {Моя } false {}} Семья {count,  plural, =0 {} other {({count})}}",
         "description": "Моя семья"
     },
-    "noName": {
-        "id": "user_family_noname",
-        "defaultMessage": "Без имени",
-        "description": "Без имени"
+    "noFamily": {
+        "id": "user_family_empty",
+        "defaultMessage": "Нет Членов семьи",
+        "description": "Нет Членов семьи"
     }
 });

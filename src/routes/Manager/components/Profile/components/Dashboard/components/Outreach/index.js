@@ -3,10 +3,14 @@ import {Card, Table} from 'antd';
 import moment from 'moment';
 import Truncate from 'react-truncate';
 import { Loading } from '../../../../../../../../components/Loading';
+import OutreachManagerButton from './components/Manager/components/Button';
+import {OutreachDeleteButton} from './components/Manager/containers/DeleteButton';
+import SettingsDropdown from '../../../../../../../../components/UI/SettingsDropdown';
+import AvatarList from '../../../../../../../../components/UI/AvatarList';
  
 export const Outreach = props => {
 
-    const {items=[], total=0, loading=false, title="", type} = props;
+    const {items=[], user, total=0, loading=false, title="", type} = props;
 
     if (loading) {
         return  <Loading />
@@ -35,13 +39,21 @@ export const Outreach = props => {
         dataIndex: 'participants',
         key: 'participants',
         render: (participants) => {
-            var users =  participants.map(participant => {
-                return participant.fullName;
-            });//.split(',');
-                //console.log(users);
-            return users.join(', ');
+            return <AvatarList users={participants} />
         },
-    }
+    },
+    {
+        title: '',
+        key: 'act',
+        width:50,
+        render: (info) => {
+            const items = [
+                {key:'edit', content: <OutreachManagerButton user={user} outreach={info} asMenuItem />},
+                {key:'delete', content: <OutreachDeleteButton user={user} outreach={info} onDelete={props.refetch} asMenuItem />}
+            ];
+            return <SettingsDropdown items={items} />
+        }
+    },
     ];
     const dataSource = items.map((items, i) => {
         return {...items, key:i};
@@ -52,7 +64,7 @@ export const Outreach = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="  ant-card-type-table" title={'Outreach '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="table" title={'Outreach '+ (total > 0 ? ' ('+total+')' : '')} extra={<OutreachManagerButton user={user} onCreate={props.refetch} />} >
         <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

@@ -1,130 +1,112 @@
-/**
- * Created by Павел on 20.01.2018.
- */
+import { compose, lifecycle, withHandlers } from 'recompose';
+import { withLoadingButton } from '../../../../components/Loading';
+import { withNotificationsQuery } from '../../../../components/Notifications/queries';
+import { withCurrentUser } from '../../../../queries/user';
+import Notifications from '../components/Notifications';
 
-//import React from 'react'
+// export const NOTIFICATIONS_QUERY  = gql`
+//   query GET_NOTIFICATIONS ($cursors: CursorInput, $criticalOnly: Boolean) {
+//   account {
+//       getNotifications (cursors:$cursors, unread:true, criticalOnly: $criticalOnly) @connection(key: "notifications") {
+//         totalCount
+//         edges {
+//           id
+//           sender {
+//             ...UserInfo
+//           }
+//           patient {
+//             ...UserInfo
+//           }
+//           text
+//           isApproved
+//           isRequest
+//           dateSent
+//           isCritical
+//         }
+//         pageInfo {
+//               endCursor
+//             }
+//       }
+//   }
+// }
+// ${UserInfoFragment}
+// `;
 
-import Notifications from '../components/Notifications/index';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import { UserInfoFragment } from '../../../../routes/User/fragments';
+// const withQuery = graphql(NOTIFICATIONS_QUERY, {
+//     options: (ownProps) => {
+//         return {
+//             fetchPolicy: 'network-only'
+//         }
+
+//     },
+//     props: ({ ownProps, data }) => {
+//         if (!data.loading) {
+//             const {getNotifications={}} = data.account;
+//             const {edges=[], totalCount=0, pageInfo} = getNotifications || {};
+//             const {endCursor=''} = pageInfo || {};
+//             return {
+//                 notifications: edges,
+//                 //endCursor: endCursor,
+//                 loading: data.loading,
+//                 totalCount:totalCount,
+//                 hasMore: edges.length < totalCount,
+//                 loadMore() {
+//                     //console.log('Loading more');
+//                     return data.fetchMore({
+//                         variables: {
+//                             cursors: {before: endCursor, last:10}
+//                         },
+//                         updateQuery: (previousResult, { fetchMoreResult }) => {
+
+//                             //callback();
+//                             if (!fetchMoreResult) { return previousResult; }
+//                             //return previousResult;
+//                             const newMessages = [...previousResult.account.getNotifications.edges, ...fetchMoreResult.account.getNotifications.edges]
+//                             const obj =  Object.assign({}, previousResult, {
+//                                 account: {
+//                                     ...previousResult.account, getNotifications: {
+//                                         ...previousResult.account.getNotifications, getNotifications: {
+//                                             ...previousResult.account.getNotifications,
+//                                             edges: newMessages
+//                                         }
+//                                 }
+//                             }
+//                             });
+//                             return obj;
+//                         },
+//                     });
+//                 }
+//             }
+//         }
+//         else {
+//             return {loading: data.loading, notifications: [], totalCount:0, endCursor:'', hasMore:false}
+//         }
+//     },
+// });
+ 
 
 
-export const NOTIFICATIONS_QUERY  = gql`
-  query GET_NOTIFICATIONS ($cursors: CursorInput) {
-  account {
-      getNotifications (cursors:$cursors, unread:true) @connection(key: "notifications") {
-        totalCount
-        edges {
-          id
-          sender {
-            ...UserInfo
-          }
-          patient {
-            ...UserInfo
-          }
-          text
-          isApproved
-          isRequest
-          dateSent
-          isCritical
+
+
+const enhance = compose(
+    withCurrentUser,
+    withLoadingButton,
+    withNotificationsQuery,
+    
+    withHandlers({
+        handleInfiniteOnLoad: props => () => {
+            props.setLoadingButton(true);
+            props.loadMore();
         }
-        pageInfo {
-              endCursor
-            }
-      }
-  }
-}
-${UserInfoFragment}
-`;
-
-export const withNotificationsQuery = graphql(NOTIFICATIONS_QUERY, {
-    options: (ownProps) => {
-
-        return {
-            variables: {
-                cursors: {after: ''/*ownProps.lastCursor*/}
-            },
-            //notifyOnNetworkStatusChange: true,
-            //pollInterval: 5000,
-            fetchPolicy: 'network-only'
-        }
-
-    },
-    props: ({ ownProps, data }) => {
-        if (!data.loading) {
-            const {getNotifications={}} = data.account;
-            const {edges=[], totalCount=0, pageInfo={}} = getNotifications || {};
-            const {endCursor=''} = pageInfo || {};
-            return {
-                notifications: edges,
-                endCursor: endCursor,
-                loading: data.loading,
-                totalCount:totalCount,
-                hasMore: edges.length < totalCount,
-                loadMore(endCursor, callback) {
-                    //console.log('Loading more');
-                    return data.fetchMore({
-                        variables: {
-                            cursors: {before: endCursor, last:10}
-                        },
-                        updateQuery: (previousResult, { fetchMoreResult }) => {
-
-                            callback();
-                            if (!fetchMoreResult) { return previousResult; }
-                            //return previousResult;
-                            const newMessages = [...previousResult.account.getNotifications.edges, ...fetchMoreResult.account.getNotifications.edges]
-                            const obj =  Object.assign({}, previousResult, {
-                                account: {
-                                    ...previousResult.account, getNotifications: {
-                                        ...previousResult.account.getNotifications, getNotifications: {
-                                            ...previousResult.account.getNotifications,
-                                            edges: newMessages
-                                        }
-                                }
-                            }
-                            });
-                            return obj;
-                        },
-                    });
-                }
-            }
-        }
-        else {
-            return {loading: data.loading, notifications: [], totalCount:0, endCursor:'', hasMore:false}
-        }
-    },
-});
-
-
-const handleNotification_Mutation = gql`
-mutation HandleNotification($id: UID!, $approved: Boolean!) {
-  handleNotification(id: $id, approved: $approved) {
-    id
-    action
-    actionId
-    userId
-    date
-  }
-}
-`;
-
-const withMutation = graphql(handleNotification_Mutation, {
-    props: ({mutate}) => ({
-        handleNotification: (id, approved) => {
-            return mutate({
-                variables: {id:id, approved:approved},
-                refetchQueries: [
-                    {
-                        query: NOTIFICATIONS_QUERY,
-                        variables: {cursors: {after: ''}}
-                    }
-
-
-                ],
-            })
-        },
     }),
-});
+    lifecycle({
+        componentWillReceiveProps(nextProps) {
+            if (!nextProps.loading && nextProps.totalCount !== this.props.totalCount) {
+                if (this.props.handleTotalNewNotifications)
+                    this.props.handleTotalNewNotifications(nextProps.totalCount);
+            }
+        }
+    })
+);
 
-export default withNotificationsQuery(withMutation(Notifications));
+export default enhance(Notifications);

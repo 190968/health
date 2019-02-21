@@ -3,8 +3,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../../../routes/User/fragments';
 
- const PATIENT_TEAM_MEMBERS_QUERY = gql`
-    query GET_CANCERS_LIST ($userId: UID!,$search: String)  {
+ export const PATIENT_TEAM_MEMBERS_QUERY = gql`
+    query GET_PATIENT_TEAM_MEMBERS_LIST ($userId: UID!,$search: String)  {
         patient (id: $userId){
             id
             motivation {
@@ -25,21 +25,23 @@ import { UserInfoFragment } from '../../../../../routes/User/fragments';
 const withQuery = graphql(PATIENT_TEAM_MEMBERS_QUERY,
     {
         options: (ownProps) => {
-            const {user={}} = ownProps;
+            const {user} = ownProps;
+            const {id:userId} = user || {};
             return {
+                skip:!userId,
                 variables: {
-                    userId: user.id,
+                    userId
                 },
             }
         },
         props: ({ data }) => {
-            console.log(data);
             if (!data.loading) {
                 const {patient} = data;
-                const {motivation} = patient;
-                const {careTeam} = motivation;
+                const {motivation} = patient || {};
+                const {careTeam} = motivation || {};
+                const {edges} = careTeam || {};
                 return {
-                    items: careTeam.edges,
+                    items: edges,
                     loading: data.loading,
 
                     // doSearch(search) {

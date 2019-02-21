@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
-const MY_CATEGORIES  = gql`
+const MY_CATEGORIES = gql`
    query GET_MY_CATEGORIES {
         account {
             user {
@@ -39,10 +39,10 @@ const withQuery = graphql(MY_CATEGORIES, {
             }
         }
         else {
-            return {loading: data.loading}
+            return { loading: data.loading }
         }
     },
 });
- 
+
 
 export default withQuery(MyCategories);

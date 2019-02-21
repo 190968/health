@@ -12,28 +12,39 @@ export class Avatar extends React.PureComponent {
         size: 'small',
         src: '',
         useLink: false,
-        info: {},
+       //info: {},
     }
     render() {
-
-        const {src, info, size, useLink, tooltip=false} = this.props;
+        const {user={}} = this.props;
+        const {src, info=user, useLink, tooltip=true} = this.props;
+        let {size} = this.props;
 
         // if we need a realy big avatar(profile page)
-        const extraClass = size === 'huge' ? 'ant-avatar-huge' : '';
+        let extraClass = '';
+        
+        switch(size) {
+            default:
+            extraClass += 'ant-avatar-'+size;
+            break;
+        }
 
         if (src !== '') {
             return <AvatarAntd src={src} className={extraClass} size={size} style={{verticalAlign: 'middle'}} />
         }
 
 
-        const {thumbs={}} = info;
-        const {small='', large='', medium=''} = thumbs;
-        const name = info.firstName ? info.firstName : ((info.fullName && info.fullName !== ' ') ? info.fullName : '');
+        const {id, email, thumbs={}, firstName, fullName, color} = info || {};
+        const {small='', large='', medium=''} = thumbs || {};
+        const name = firstName ? firstName : ((fullName && fullName !== ' ') ? fullName : '');
         //console.log(name);
         let url = '';
 
         switch (size) {
             case 'huge':
+            url = large;
+            size = 100;
+            break;
+            case 'large':
                 url = large;
                 break;
             default:
@@ -41,16 +52,16 @@ export class Avatar extends React.PureComponent {
                 break;
         }
         let avatar =
-                <AvatarAntd src={url} className={extraClass} size={size} style={{verticalAlign: 'middle', backgroundColor: info.color}}>
+                <AvatarAntd src={url} className={extraClass} size={size} style={{verticalAlign: 'middle', border:'1px solid '+color, textTransform: 'uppercase', backgroundColor: color}}>
                     {name ? name[0] :
-                        (info.email ? info.email[0] : 'N/A' )}
+                        (email ? email[0] : 'N/A' )}
                 </AvatarAntd>;
 
                 if (tooltip) {
                     avatar = <Tooltip title={name}>{avatar}</Tooltip>;
                 }
         if (useLink) {
-            avatar = <Link to={'/u/'+info.id}>{avatar}</Link>;
+            avatar = <Link to={'/u/'+id}>{avatar}</Link>;
         }
         return (avatar);
     }

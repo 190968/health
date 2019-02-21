@@ -1,20 +1,20 @@
-import { compose, withHandlers , withProps} from 'recompose';
-import {ClinicalTrialForm, prepareOncologyInput} from "../../../../../../../../../../Health/components/Forms/components/ClinicalTrial/index";
-import {modalHOC} from '../modal';
+import { compose, withHandlers} from 'recompose';
+import {ClinicalTrialForm, prepareClinicalTrialInput}  from '../../../../../../../../../../Health/components/Forms/containers/ClinicalTrial';
+import {withTreatmentItemModal} from '../modal';
 
 const enhance = compose(
-    withProps(props => {
-        // const  {chemotherapyElement=false} = props;
-        // if (chemotherapyElement) {
-        //     return {details:chemotherapyElement};
-        // }
-    }),
     withHandlers({
-        prepareInput: props => values => {
-            return prepareOncologyInput(values);
-        }
+        onSubmit: props => () => {
+            const {form} = props;
+            form.validateFields((err, values) => {
+                if (!err) {
+                    const input = prepareClinicalTrialInput(values);
+                    props.onSubmit(input)
+                }
+            });
+        },
     }),
-    modalHOC
+    withTreatmentItemModal
 )
 const TreatmentClinicalTrialEditor = enhance(ClinicalTrialForm);
 export default TreatmentClinicalTrialEditor;

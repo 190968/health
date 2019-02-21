@@ -8,6 +8,7 @@ import {AvatarWithName} from "../../../../../User/components/AvatarWithName/inde
 import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
 import sort from '../../../../../../components/Tables/sort';
 import TeamManager from './containers/TeamManager';
+import { PhoneFieldView } from '../../../../../../components/FormCustomFields/components/Phone/view';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -23,20 +24,20 @@ export const UserTeamTable = props => {
         render: (user) => {
             return <AvatarWithName user={user}/>
         },
-        sorter: (a, b) => sort(a, b, "name"),
-        filterDropdown: (
-            <div className="custom-filter-dropdown">
-                <Input
-                    suffix={suffix}
-                    ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
-                    value={searchText}
-                    onChange={onSearch}
-                    onPressEnter={onSearch}
-                />
-            </div>
-        ),
-        filterIcon: <Icon type="search"/>,
+        // sorter: (a, b) => sort(a, b, "name"),
+        // filterDropdown: (
+        //     <div className="custom-filter-dropdown">
+        //         <Input
+        //             suffix={suffix}
+        //             ref={ele => this.searchInput = ele}
+        //             placeholder="Search name"
+        //             value={searchText}
+        //             onChange={onSearch}
+        //             onPressEnter={onSearch}
+        //         />
+        //     </div>
+        // ),
+        // filterIcon: <Icon type="search"/>,
     },
         {
             title: 'Role',
@@ -53,14 +54,15 @@ export const UserTeamTable = props => {
             render: (date) => {
                 return moment(date).format('L')
             },
-            sorter: (a, b) => a.joinedDate - b.joinedDate,
+            // sorter: (a, b) => a.joinedDate - b.joinedDate,
         },
         {
             title: 'Phone',
-            dataIndex: 'user',
-            key: 'phoneFormatted',
-            render: (user) => {
-                return user.phoneFormatted;
+            key: 'phone',
+            render: (info) => {
+                const {user} = info || {};
+                const {phone} = user || {};
+                return <PhoneFieldView phone={phone} withType={false} />;
             },
         },
 
@@ -73,7 +75,7 @@ export const UserTeamTable = props => {
         hideOnSinglePage: true
     };
     const actions = <React.Fragment>
-        <RadioGroup defaultValue="active" style={{marginRight: 10}}>
+        <RadioGroup defaultValue="active" style={{marginRight: 10}} defaultValue="active" onChange={props.handleStatus}>
             <RadioButton value="active">Active</RadioButton>
             <RadioButton value="inactive">Inactive</RadioButton>
         </RadioGroup>
@@ -86,7 +88,7 @@ export const UserTeamTable = props => {
                               content=""
                               action={actions}
     >
-        <Card type="j  ant-card-type-table">
+        <Card type="table">
             <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts}
                    loading={loading}/>
         </Card>
@@ -101,6 +103,7 @@ const enhance = compose(
         },
         hideModal: props => () => {
             props.setOpenManager(false);
+            props.refetch();
         }
     })
 );

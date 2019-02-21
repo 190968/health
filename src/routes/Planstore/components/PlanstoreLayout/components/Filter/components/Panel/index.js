@@ -1,42 +1,33 @@
-/**
- * Created by Pavel on 14.12.2017.
- */
 import React from 'react';
 import CheckBoxGroup from '../CheckBoxGroup';
 import CheckComponent from '../CheckBox';
 import SliderComponent from '../Slider';
-import {Card} from 'antd';
-export class PanelComponent extends React.Component {
-    constructor(props){
-        super(props);
-        this.onSuccess = this.onSuccess.bind(this);
-    }
-    onSuccess(code, value) {
-        this.props.onSuccess(code, value);
-    }
-    render() {
-        const{filter, activeFilters} = this.props;
+import {Card, Collapse} from 'antd';
+
+const Panel = Collapse.Panel;
+
+const FilterPanel = props => {
+    const{filter, activeFilters, onSuccess} = props;
 
         return (
-            <Card title={filter.name}>
+            <React.Fragment>
                 {filter.fields.map((field) => {
                     if (field.type === "checkboxGroup") {
                         return <CheckBoxGroup key={field.value}
                                               activeFilters={activeFilters}
-                                              code={filter.code} item={field} onSuccess={this.onSuccess} />
+                                              code={filter.code} item={field} onSuccess={onSuccess} />
                     } else if (field.type === "checkbox") {
                         return <CheckComponent key={field.value}
                                                activeFilters={activeFilters}
-                                               code={filter.code} fields={field} onSuccess={this.onSuccess} />
+                                               code={filter.code} fields={field} onSuccess={onSuccess} />
                     } else if (field.type === "range") {
                         return <SliderComponent key={field.value}
                                                 activeFilters={activeFilters}
-                                                onSuccess={this.onSuccess} code={filter.code} fields={field}/>
+                                                onSuccess={onSuccess} code={filter.code} fields={field}/>
                     }
                     return field;
                 })}
-            </Card>
+            </React.Fragment>
              )
-    }
 }
-export default PanelComponent
+export default FilterPanel

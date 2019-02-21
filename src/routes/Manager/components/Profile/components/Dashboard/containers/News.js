@@ -19,11 +19,11 @@ export const GET_USER_NEWS_QUERY = gql`
 const withQuery = graphql(
     GET_USER_NEWS_QUERY,
     {
-        options: (ownProps) => ({
-            variables: {
-                userId: ownProps.userId,
-            }
-        }),
+        // options: (ownProps) => ({
+        //     variables: {
+        //         userId: ownProps.user.id,
+        //     }
+        // }),
         props: ({data}) => {
             if (!data.loading) {
                 return {

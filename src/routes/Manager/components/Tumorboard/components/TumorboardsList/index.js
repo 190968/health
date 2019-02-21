@@ -7,12 +7,14 @@ import {compose, withState, withHandlers, withStateHandlers, withProps} from 're
 import sort from '../../../../../../components/Tables/sort'
 ////import ChemotherapyManager from './containers/ChemotherapyManager';
 import TumorboardView from '../../containers/TumorboardView';
-import TumorboardAdd from './components/TumorboardAdd';
+import TumorboardAddButton from './components/TumorboardAddButton';
 import TumorboardEdit from './components/TumorboardEdit';
 import {PageHeader} from "../../../../../../components/Layout/PageHeader/index";
 import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
 import {SpinIndicator} from "../../../../../../components/Loading/index";
+import { TableColumnSearch } from '../../../../../../components/Tables/TableColumn';
+import { TableWithMessage } from '../../../../../../components/Tables';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -40,27 +42,20 @@ const enhanceTitle = compose(
 );
 const Title = enhanceTitle(CancerTitlePure);
 
-const TumorobardsListPure = props => {
+
+
+const TumorobardsList= props => {
     const {items = [], total, loading, openManage, addCancer, hideManager} = props;
-    console.log(items);
-    const suffix = props.searchText ? <Icon type="close-circle-o" onClick={props.emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-        sorter: (a, b) => sort(a, b, "title"),
+        sorter: true,//(a, b) => sort(a, b, "title"),
         render: (title, info) => {
             return <Title tumorboard={info}/>;
         },
         filterDropdown: (
-                <Input
-                     suffix={suffix}
-                    ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
-                     value={props.searchText}
-                    onChange={props.onSearch}
-                    onPressEnter={props.onSearch}
-                />
+                <TableColumnSearch  />
         ),
         filterIcon: <Icon type="search"/>,
     },
@@ -69,7 +64,7 @@ const TumorobardsListPure = props => {
             dataIndex: 'lead',
             key: 'lead',
             render: (title, info) => {
-                return <AvatarWithName user={info.lead}/>
+                return <AvatarWithName user={info.lead} widget />
             },
             sorter: (a, b) => sort(a, b, "lead"),
         },
@@ -125,64 +120,29 @@ const TumorobardsListPure = props => {
             ),
         }];
     const dataSource = items.map((cancer, i) => ({...cancer, key: i}));
-        console.log(dataSource);
-    const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}} onChange={props.onChangeStatus}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
-        </RadioGroup>
-        <TumorboardAdd />
-    </React.Fragment>;
+   
     return (<React.Fragment>
         <PageHeaderLayout title={'Tumor Boards ' + (total > 0 ? ' (' + total + ')' : '')}
                           content=""
-            // extraContent={<Input.Search style={{width:200}} />}
-                          action={actions}
+                          action={<TumorboardAddButton />}
         >
             <Card type="table"
             >
-                <Table dataSource={dataSource} columns={columns}
-                       loading={loading ? <SpinIndicator /> : false }
-                       expandedRowRender={info => {
-                           //console.log(info);
-                           return <TumorboardView tumorboard={info}/>;
-                       }}
-                    //onExpand={props.loadDetails}
-                       pagination={false}/>
+            
+                <TableWithMessage
+                 dataSource={dataSource} columns={columns}
+                 loading={loading}
+                 total={total}
+                    expandedRowRender={info => {
+                        //console.log(info);
+                        return <TumorboardView tumorboard={info}/>;
+                    }}
+                />
             </Card>
         </PageHeaderLayout>
     </React.Fragment>);
 }
 
+ 
 
-const enhance = compose(
-    // withState('openManage', 'setOpenManager', false),
-    // withApollo,
-    withHandlers({
-        onChangeStatus: props => (e) => {
-            const status = e.target.value;
-            props.loadByStatus(status);
-        }
-        // loadDetails: props => (expanded, record) => {
-        //     // load info
-        //     if (expanded) {
-        //         TumorobardQueryOptions.variables = {
-        //             id: record.id
-        //         };
-        //         // if expanded, load the info
-        //         props.client.query(TumorobardQueryOptions)
-        //             .then(({data}) => {
-        //             console.log(data);
-        //                 const {getCancerStage = {}} = data;
-        //                 //props.selectStage(getCancerStage);
-        //             });
-        //     }
-        //     console.log(expanded);
-        //     console.log(record);
-        //     //props.setOpenManager(true);
-        // },
-    })
-);
-
-export default enhance(TumorobardsListPure);
+export default TumorobardsList;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import UserPlanEdit from '../../containers/UserPlanEdit';
 import PlanReminders from '../../containers/PlanReminders';
-import {Icon, Avatar, Card,Row, Col, Tooltip ,Popover, Dropdown, Menu, Modal } from 'antd';
+import {Icon, Button, Card,Row, Col, Tooltip ,Popover, Dropdown, Menu, Modal } from 'antd';
 
 import {
     FormattedMessage,
@@ -12,39 +12,12 @@ import {
 import moment from "moment/moment";
 import Motivators from '../../../../../User/containers/motivatorsContainer';
 import { PageHeader } from '../../../../../../components/Layout/PageHeader';
-
+import './index.less';
+import SettingsDropdown from '../../../../../../components/UI/SettingsDropdown';
+import { CardExtraSplit } from '../../../../../../components/Card/components/CardExtraSplit';
 const confirm = Modal.confirm;
 const { Meta } = Card;
 
-
-
-const options = (
-    <Menu onClick={this.handleMenuClick}>
-        <Menu.Item key="motivators">
-            Motivators
-        </Menu.Item>
-        <Menu.SubMenu title="Actions">
-            <Menu.Item key="edit">
-                Edit
-            </Menu.Item>
-            <Menu.Item key="delete">
-                Delete
-            </Menu.Item>
-            <Menu.Item key="complete">
-                Complete
-            </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.Item key="reminders">
-            Reminders
-        </Menu.Item>
-        <Menu.Item key="print" disabled>
-            <a >Print</a>
-        </Menu.Item>
-        <Menu.Item key="export" disabled>
-            <a >Export</a>
-        </Menu.Item>
-    </Menu>
-);
 
 export const PlanHeaderNew = props => {
     const {plan} = props;
@@ -212,43 +185,46 @@ export class PlanHeader extends React.Component {
             </Menu>
         );
 
-        return (
-                <Card
-                    title={plan.title}
-                    bodyStyle={{margin:0, padding:0}}
-                    /*cover={<img alt={plan.title} height={300} src={img} />}*/
-                    actions={[<div><Tooltip title={<FormattedMessage id="plan.prev_day" defaultMessage="Previous day" />}> <Icon type="left" onClick={() => this.showDate('prev')} style={{marginRight:10}} /></Tooltip><FormattedDate
+        // let items = [];
+        //     items.push({key:'edit', content: <Link to={'/pb/'+plan.id}>Edit</Link>});
+        //     items.push( {key:'delete', content: <UserPlanDeleteButton asMenuItem userPlan={info} refetch={refetch} />});
+            let extra = (
+                <React.Fragment>
+                
+                <CardExtraSplit>
+                 <FormattedDate
                         value={moment(this.state.date)}
                         year='numeric'
                         month='long'
                         day='2-digit'
-                    /><Tooltip title={<FormattedMessage id="plan.next_day" defaultMessage="Next day" />}><Icon type="right"  onClick={() => this.showDate('next')} style={{marginLeft:10}} /></Tooltip></div>, <Icon type="info-circle-o"  onClick={this.toggleIntro} />,  <Dropdown overlay={options} trigger={['click']}>
-                        <Icon type="ellipsis" />
-                    </Dropdown>,
-                        <Popover content={<div>Messages here</div>} title="Comments" trigger="click"><Icon type="message" /></Popover>]}
-                >
-                    {11===5 && <Row>
-                        <Col md={16}>
-                            <Meta
-                                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                title={user.firstName + ' '+ user.lastName}
-                                description={<FormattedMessage id="userplan.joined" defaultMessage="From {date}" values={{
-                                    date: <FormattedDate
-                                        value={moment(info.joinDate)}
-                                        year='numeric'
-                                        month='long'
-                                        day='2-digit'
-                                    />
-                                }} description="date for Today" />}
-                            />
-                        </Col>
-                        <Col md={8}>
-                            {/*<RadialBarChart width={400} height={250} innerRadius="10%" outerRadius="80%" data={data} startAngle={180} endAngle={0}>
-        <RadialBar minAngle={15} label={{ fill: '#fff', position: 'insideStart' }} background clockWise={true} dataKey='progress' />
-        <Tooltip />
-    </RadialBarChart>*/}
-                        </Col>
-                    </Row>}
+                        weekday='long'
+                    />
+                </CardExtraSplit>
+                <CardExtraSplit>
+                    <Button.Group>
+                        
+                        <Tooltip title={'Previous day'}>
+                            <Button size="small" onClick={() => this.showDate('prev')}>
+                                <Icon type="left" />
+                            </Button>
+                        </Tooltip>
+                        {/* <Tooltip title={'Select day'}>
+                    <DatePicker  onSelect={props.showDate}/>
+                </Tooltip> */}
+                        <Tooltip title={'Next day'}>
+                            <Button size="small" onClick={() => this.showDate('next')}>
+                                <Icon type="right" />
+                            </Button>
+                        </Tooltip>
+                    </Button.Group>
+                </CardExtraSplit>
+                <CardExtraSplit style={{verticalAlign: 'middle'}}>
+                    <Tooltip title={'Settings'}><Dropdown overlay={options} trigger={['click']}>
+                        <Icon type="setting" />
+                    </Dropdown></Tooltip>
+                </CardExtraSplit>
+                    
+                    
 
                     {this.state.openEditModal &&
                     <UserPlanEdit id={info.id} info={info} plan={plan}
@@ -266,6 +242,22 @@ export class PlanHeader extends React.Component {
                         title={'Motivators'}
                     ><Motivators user_id={user.id} /></Modal>}
 
+                    <CardExtraSplit>
+                        
+                    </CardExtraSplit>
+                </React.Fragment>
+            );
+
+        return (
+                <Card
+                    title={plan.title}
+                    type={'planHeader'}
+                    bodyStyle={{margin:0, padding:0}}
+                    extra={extra}
+                    /*cover={<img alt={plan.title} height={300} src={img} />}*/
+                    // actions={[, <Icon type="info-circle-o"  onClick={this.toggleIntro} />,  ,
+                    //     <Popover content={<div>Messages here</div>} title="Comments" trigger="click"><Icon type="message" /></Popover>]}
+                >
                 </Card>)
     }
 }

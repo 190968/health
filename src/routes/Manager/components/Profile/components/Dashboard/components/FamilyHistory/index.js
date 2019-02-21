@@ -2,11 +2,12 @@ import React from 'react';
 import {Card, Table} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
+import { DiagnosisManagerButton } from '../../../../../../../Health/components/Diagnoses/containers/DiagnosisManagerButton';
 
 export const UserActionPlansTable = props => {
 
 
-    const {items=[], loading=false} = props;
+    const {items=[], loading=false, user} = props;
     const total = items.length;
     const columns = [{
         title: 'Title',
@@ -38,7 +39,7 @@ export const UserActionPlansTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic1  ant-card-type-table" title={'Family History '+ (total > 0 ? ' ('+total+')' : '')} >
+    return (<Card type="basic1  ant-card-type-table" extra={<DiagnosisManagerButton user={user} isFamily />} title={'Family History '+ (total > 0 ? ' ('+total+')' : '')} >
         <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }

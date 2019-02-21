@@ -19,9 +19,4 @@ export default defineMessages({
         "defaultMessage": "Treatments",
         "description": "Treatments"
     },
-    'toolpic': {
-        "id": "p.el.text.toolpic",
-        "defaultMessage": "Icon",
-        "description": "Icon"
-    },
 });

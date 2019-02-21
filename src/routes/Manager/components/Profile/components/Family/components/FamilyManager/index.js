@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, Transfer, Checkbox, Input, Col, Select, Form, DatePicker, Button,} from 'antd';
 import moment from 'moment';
+import AvatarWithName from '../../../../../../../User/components/AvatarWithName';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
@@ -8,18 +9,32 @@ const FormItem = Form.Item;
 const dateFormat = 'YYYY/MM/DD';
 
 
-const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
-
-
+const FamilyManager = (props) => {
+    const {isUpdate=false,form, familyMember, formItemLayout} = props;
+    console.log(props);
     const {getFieldDecorator} = form;
+    const {user, firstName,
+        lastName,
+        email,
+        role,
+        canReport} = familyMember || {};
+        console.log(role, canReport);
     // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     return <Form>
+
+        {user ? <FormItem
+            {...formItemLayout}
+            label="Family Member"
+        >
+            <AvatarWithName user={user} />
+        </FormItem> : <React.Fragment>
         <FormItem
             {...formItemLayout}
             label="First Name"
             required
         >
             {getFieldDecorator('firstName', {
+                 initialValue: firstName,
                 rules: [{required: true, message: "intl.messages.user_first_name_rule", whitespace: true}],
             })(
                 <Input/>
@@ -32,12 +47,15 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
             required
         >
             {getFieldDecorator('lastName', {
+               
+                initialValue: lastName,
                 rules: [{required: true, message: "intl.messages.user_first_name_rule", whitespace: true}],
             })(
                 <Input/>
             )}
 
         </FormItem>
+        </React.Fragment>}
 
         <FormItem
             {...formItemLayout}
@@ -45,6 +63,7 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
 
         >
             {getFieldDecorator('relationship', {
+                initialValue: role,
                 rules: [{required: true, message: "intl.messages.user_gender_rule", whitespace: true}],
             })(
                 <Select style={{width: 120}}>
@@ -64,32 +83,39 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
             label="Reporting"
 
         >
-            {getFieldDecorator('reporting', {})(
+            {getFieldDecorator('canReport', {
+                initialValue: canReport,
+                valuePropName: 'checked'
+            })(
                 <Checkbox>Allow reporting</Checkbox>
             )}
         </FormItem>
 
-        <FormItem
+        {!user && <FormItem
             {...formItemLayout}
             label="Email"
 
-        >{getFieldDecorator('email', {})(
+        >{getFieldDecorator('email', {
+            initialValue:email,
+            rules: [{required: true, message: "Enter email", whitespace: true}],
+           
+        })(
             <Input/>
         )}
-        </FormItem>
-        <FormItem
+        </FormItem>}
+        {/* <FormItem
             {...formItemLayout}
             label="Reporting"
 
         >
-            {getFieldDecorator('reporting', {})(<Col>
+            {getFieldDecorator('communication', {})(<Col>
                     <Checkbox>Email</Checkbox>
                     <Checkbox>Phone</Checkbox>
                     <Checkbox>SMS</Checkbox>
                 </Col>
             )}
-        </FormItem>
+        </FormItem> */}
     </Form>
 }
 
-export default TeamManager;
+export default FamilyManager;

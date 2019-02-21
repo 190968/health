@@ -46,7 +46,7 @@ export default PlanElementChildrenList;
 const AddChildrenButtonPure = props => {
     const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, plan, mode, loading} = props;
     return <React.Fragment>
-        {props.showModal && <Modal title="Select Element" visible={true} onOk={props.toggleModal} onCancel={props.toggleModal}>
+        {props.showModal && <Modal title="Select Element" visible={true} width={850} onOk={props.toggleModal} onCancel={props.toggleModal}>
             <PlanElementChildrenSelect mode={mode} plan={plan} parentId={elementId} parentValue={elementValue} onHide={props.hideModal} onElementAdd={props.onElementAdd} />
         </Modal>}
         <Button onClick={props.toggleModal}>Add First Element</Button>

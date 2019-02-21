@@ -41,7 +41,7 @@ const withMutation = graphql(verifyPhoneConfirm, {
                         fragmentName: 'UserPhoneInfo'
                     });
 
-                    //console.log(userOld);
+                    console.log(userOld, 'userOld');
 
                     notification['success']({
                         message: 'Phone verified',

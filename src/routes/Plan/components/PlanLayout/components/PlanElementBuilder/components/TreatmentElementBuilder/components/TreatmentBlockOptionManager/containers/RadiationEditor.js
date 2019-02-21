@@ -1,20 +1,20 @@
 import { compose, withHandlers , withProps} from 'recompose';
-import {RadiationForm, prepareRadiationInput} from "../../../../../../../../../../Health/components/Forms/components/Radiation/index";
-import {modalHOC} from '../modal';
+import {RadiationForm, prepareRadiationInput} from '../../../../../../../../../../Health/components/Forms/containers/Radiation';
+import {withTreatmentItemModal} from '../modal';
 
 const enhance = compose(
-    withProps(props => {
-        // const  {chemotherapyElement=false} = props;
-        // if (chemotherapyElement) {
-        //     return {details:chemotherapyElement};
-        // }
-    }),
     withHandlers({
-        prepareInput: props => values => {
-            return prepareRadiationInput(values);
-        }
+        onSubmit: props => () => {
+            const {form} = props;
+            form.validateFields((err, values) => {
+                if (!err) {
+                    const input = prepareRadiationInput(values);
+                    props.onSubmit(input)
+                }
+            });
+        },
     }),
-    modalHOC
+    withTreatmentItemModal
 )
 const Enhanced = enhance(RadiationForm);
 export default Enhanced;

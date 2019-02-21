@@ -24,7 +24,7 @@ const enhance = compose(
                     //props.onHide();
                 });
             } else {
-                props.deleteTmpElement(props.option);
+                props.onDeleteElement(props.option);
             }
         }
     })

@@ -3,6 +3,8 @@ import {compose} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {UserInfoFragment} from "../../../../User/fragments";
+import { withDrawer } from '../../../../../components/Modal';
+import Notifications from '../../../../../layouts/components/Header/components/Notifications';
 //import {withNotificationsQuery} from "../../../../../layouts/components/Header/containers/Notifications";
 
 
@@ -60,4 +62,11 @@ const enhance = compose(
     withQuery
 );
 
-export default enhance(Alerts);
+export const ProfileAlerts = enhance(Notifications);
+export default ProfileAlerts;
+
+// const enhanceModal = compose(
+//     withQuery,
+//     withDrawer
+// );
+// export const ProfileAlertsModal = enhanceModal(ProfileAlerts);

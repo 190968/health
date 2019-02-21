@@ -1,32 +1,36 @@
-import { connect } from 'react-redux'
-import TrackerChart from '../components/TrackerChart';
+import TrackerChartPure from '../components/TrackerChart';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { TrackerSummaryReportInfoFragment } from '../../BiometricPlan/fragments';
 
-const TrackerSummaryQuery = gql`    
-    query GetTrackerSummary ($id: UID!, $userId:UID!, $date: Date!)  {
+export const GET_TRACKER_SUMMARY_QUERY = gql`    
+    query GetTrackerSummary ($id: UID!, $userId:UID!, $date: Date)  {
         trackerMeasurement(id: $id) {
             id
+            units {
+                id
+                name
+                getLabels
+            }
             summary (date:$date, userId:$userId)  {
                 date
                 reports {
-                    id
-                    isCritical
-                    value
+                    ...TrackerSummaryReportInfo
                 }
             }
         }
     }
+    ${TrackerSummaryReportInfoFragment}
 `;
 
-const TrackerChartWithQuery = graphql(
-    TrackerSummaryQuery,
+const withQuery = graphql(
+    GET_TRACKER_SUMMARY_QUERY,
     {
         //name: 'PlanstorePlans',
         options: (ownProps) => ({
             variables: {
                 id:ownProps.item.id,
-                userId:ownProps.userId,
+                userId:ownProps.user.id,
                 date:ownProps.date
             },
             fetchPolicy: 'network-only'
@@ -34,29 +38,31 @@ const TrackerChartWithQuery = graphql(
         }),
         props: ({ ownProps, data }) => {
             if (!data.loading) {
-
-                const trackerMeasurement = data.trackerMeasurement;
+                const {trackerMeasurement} = data;
+                const {summary=[], units} = trackerMeasurement || {};
+                //console.log(summary);
                 return {
-                    data: trackerMeasurement.summary,
+                    data: summary,
+                    units: units,
                     //graph: trackerMeasurement.graph,
                     loading: data.loading,
-                    loadMoreEntries() {
+                    // loadMoreEntries() {
 
-                        return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                            variables: {
-                                // We are able to figure out which offset to use because it matches
-                                // the feed length, but we could also use state, or the previous
-                                // variables to calculate this (see the cursor example below)
-                                page: ownProps.page+1,
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
+                    //     return data.fetchMore({
+                    //         // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                    //         variables: {
+                    //             // We are able to figure out which offset to use because it matches
+                    //             // the feed length, but we could also use state, or the previous
+                    //             // variables to calculate this (see the cursor example below)
+                    //             page: ownProps.page+1,
+                    //         },
+                    //         updateQuery: (previousResult, {fetchMoreResult}) => {
+                    //             if (!fetchMoreResult) { return previousResult; }
 
-                                return fetchMoreResult;
-                            },
-                        });
-                    }
+                    //             return fetchMoreResult;
+                    //         },
+                    //     });
+                    // }
                     /*increment() {
                          ownProps.increment(data.plans['actionplans']);
                     },
@@ -71,23 +77,7 @@ const TrackerChartWithQuery = graphql(
             }
         },
     }
-)(TrackerChart);
+);
 
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
-
-const mapStateToProps = (state) => {
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(TrackerChartWithQuery);
+export const TrackerChart = withQuery(TrackerChartPure); 
+export default TrackerChart;

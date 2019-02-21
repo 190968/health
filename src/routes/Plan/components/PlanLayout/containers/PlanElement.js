@@ -3,15 +3,13 @@ import PlanElement from '../components/PlanElement';
 import { List } from 'antd';
 import { PlanContext } from '../../../planContext';
 
-//import Plan from '../../../../Plan/components/Plan';
 export default PlanElement;
-
-//export default PlanElementWithMutation(PlanElement);
 
 export const PlanElementListItem = (props) => {
 	const {
 		i,
 		plan,
+		user,
 		date,
 		item,
 		isPreviewMode = false,
@@ -32,6 +30,7 @@ export const PlanElementListItem = (props) => {
 						<PlanElement
 							i={i}
 							plan={plan}
+							user={user}
 							isDraggable={isDraggable}
 							element={item}
 							mode={mode}

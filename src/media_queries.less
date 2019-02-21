@@ -1,0 +1,26 @@
+@import '~antd/lib/style/themes/default.less';
+  
+
+
+@media screen and (max-width: @screen-lg) {
+  .ant-layout-header {
+    padding: 0 10px;
+  }
+  .ant-layout-content {
+    padding: 10px;
+    &> .tinyBoxAlone {
+      padding: 8% 25% 20px;
+    }
+  }
+}
+@media screen and (max-width: @screen-xs) {
+  .ant-layout-header {
+    padding: 0 5px;
+  }
+  .ant-layout-content {
+    padding: 5px;
+    &> .tinyBoxAlone {
+      padding: 5px;
+    }
+  }
+}

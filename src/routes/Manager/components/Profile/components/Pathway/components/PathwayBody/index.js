@@ -1,10 +1,10 @@
 import React from 'react';
-import {Row, Col, List} from 'antd';
-import {Loading} from "../../../../../../../../components/Loading/index";
-import PathwayBodyElement from "./components/PathwayBodyElement";
-import TimelineElementModal from "../../components/Timeline/containers/TimelineElementModal";
+import {List} from 'antd';
+import {EmptyList} from "../../../../../../../../components/Loading/index";
+import {PathwayBodyElement} from "./containers/PathwayBodyElement";
 import {compose, withState, withHandlers, withProps} from 'recompose';
 import {withSpinnerWhileLoading} from "../../../../../../../Modal/components/index";
+import TimelineElementModal from '../../../TimelineLayout/components/Timeline/containers/TimelineElementModal';
 
 
 
@@ -42,15 +42,17 @@ const TimelineElementModalEnhanced = compose(
 });
 
 
+
+
+
+
 const PathwayBody = props => {
     const {user, pathway = {}, timelineElementToAdd: element, onHide, onDrop, currentInOrder, i, setTimelineElementToAdd} = props;
     const {elements, id} = pathway;
-
-    return (<Row>
+    return (<React.Fragment>
         {props.openTimelineModal &&
         <TimelineElementModalEnhanced user={user} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} {...element} onHide={onHide}/>}
         {elements ?
-            <Col>
                 <List
                     size="small"
                     itemLayout="vertical"
@@ -64,11 +66,9 @@ const PathwayBody = props => {
                                                 onDrop={onDrop}/>
                         </List.Item>
                     }}
-                /></Col>
-            : <Col>
-                <div className="ant-list-empty-text"> No Pathway content</div>
-            </Col>}
-    </Row>)
+                />
+            : <EmptyList>No Pathway content</EmptyList>}
+    </React.Fragment>)
 }
 
 
@@ -78,7 +78,6 @@ const enhance = compose(
     withState('timelineElementToAdd', 'setTimelineElementToAdd', null),
     withHandlers({
         onDrop: props => (element) => {
-            console.log(props, 'Drop');
             props.setOpenTimelineModal(true);
             props.setTimelineElementToAdd(element);
 

@@ -4,7 +4,6 @@ import { withToggleModal } from '../../../../../../components/Modal';
 import CalculatorReport from './containers/CalculatorReport';
 const Search = Input.Search;
 
-
 const CalculatorTitlePure = props => {
     const {calculator, showModal, toggleModal} = props;
     return <React.Fragment>
@@ -58,7 +57,7 @@ const Calculators = props => {
       enterButton
       style={{marginBottom: 16}}
     />
-    <Table dataSource={calculators} rowKey={'id'} columns={columns} />
+    <Table loading={loading} dataSource={calculators} rowKey={'id'} columns={columns} />
     </React.Fragment>
 }
 

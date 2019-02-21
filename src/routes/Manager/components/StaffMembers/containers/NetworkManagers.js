@@ -3,43 +3,65 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {compose,withStateHandlers} from 'recompose';
 import React from 'react';
+import { UserInfoFragment } from '../../../../User/fragments';
+import { withActiveNetwork } from '../../../../../components/App/app-context';
 
 export const GET_NETWORK_MANAGERS_LIST  = gql`
-query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput, $status: RoleStatusEnum) {
-    management {
-      getNetworkStaff(search: $search, role: $role, cursors: $cursors, status: $status) {
-        totalCount
-        edges {
-          id
-          role
-          roleTitle
-          startDate
-          joinedDate
-          lastLoginDate
-          invitedDate
-          accessLevel
-          user {
-            id
-            firstName
-            lastName
-            fullName
-            phone{
-              code
-              number
-            }
+query GET_NETWORKSTAFF($search: String, $role: RoleEnum!, $cursors: CursorInput, $status: RoleStatusEnum, $isProviderLevel: Boolean!) {
+  management {
+    getNetworkStaff(search: $search, role: $role, cursors: $cursors, status: $status) @skip(if: $isProviderLevel) {
+      totalCount
+      edges {
+        id
+        role
+        roleTitle
+        startDate
+        joinedDate
+        lastLoginDate
+        invitedDate
+        accessLevel
+        user {
+          ...UserInfo
+          phone {
+            code
+            number
           }
-          getTotalPatients
         }
+        getTotalPatients
       }
     }
+    getProviderStaff(search: $search, role: $role, cursors: $cursors, status: $status) @include(if: $isProviderLevel) {
+        totalCount
+        edges {
+            id
+            role
+            roleTitle
+            startDate
+            joinedDate
+            lastLoginDate
+            invitedDate
+            accessLevel
+            user {
+                ...UserInfo
+                phone {
+                    code
+                    number
+                }
+            }
+            getTotalPatients
+        }
+    }
   }
-  
+}
+  ${UserInfoFragment}
  `;
 
 const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
     options: (ownProps) => {
+        const {isProviderLevel} = ownProps;
         return{
             variables: {
+                isProviderLevel,
                 search:'',
                 role:'manager',
                 status:'active',  
@@ -48,20 +70,18 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
     },
     props: ({ownProps, data }) => {
         if (!data.loading) {
+            const {isProviderLevel} = ownProps;
+
+            const {management} = data || {};
+            const {getNetworkStaff} = management;
+            const {getProviderStaff} = management;
+            const edges = isProviderLevel ? getProviderStaff.edges : getNetworkStaff.edges;
+            const totalCount = isProviderLevel ? getProviderStaff.totalCount : getNetworkStaff.totalCount;
             return {
-                management: data.management.getNetworkStaff.edges,
-                totalCount: data.management.getNetworkStaff.totalCount,
+                management: edges,
+                totalCount: totalCount,
                 loadByStatus(status) {
-                    return data.fetchMore({
-                        // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                        variables: {
-                            status:status.target.value
-                        },
-                        updateQuery: (previousResult, {fetchMoreResult}) => {
-                            if (!fetchMoreResult) { return previousResult; }
-                            return fetchMoreResult;
-                        },
-                    });
+                    return data.refetch({status:status.target.value});
                 },
                 loading: data.loading,
             }
@@ -74,6 +94,7 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
 });
 
 const enhance = compose(
+    withActiveNetwork,
     withQuery,
     withStateHandlers(
         (props) => ({

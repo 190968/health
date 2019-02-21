@@ -6,10 +6,9 @@ import {Stakeholders} from "./components/Stakeholders/index";
 import {compose, withHandlers} from 'recompose';
 import CancerTreatment from '../Dashboard/containers/CancerTreatment';
 import Outreach from '../Dashboard/containers/Outreach';
-import {asyncProfileDetails, asyncProfileTimeline, asyncProfilePlans, asyncProfileAlerts, asyncProfileDashboard} from './routes';
+import {asyncProfileDetails, asyncProfileTimeline, asyncProfileHealth, asyncProfileCalendar, asyncProfilePlans, asyncProfileAlerts, asyncProfileDashboard} from './routes';
 
 const RouteWithSubRoutes = route => {
-    //console.log(route);
     return (
         <Route
             path={route.path}
@@ -17,7 +16,6 @@ const RouteWithSubRoutes = route => {
             render={props => {
                 //eturn route.component();
                 // pass the sub-routes down to keep nesting
-                console.log(props);
                 return (<route.component {...props} {...route.params} routes={route.routes}/>)
             }}
         />)
@@ -51,15 +49,25 @@ const ProfileContentPure = props => {
                 params: defaultParams
             },
             {
+                path: mainUrl + "/health",
+                component: asyncProfileHealth,
+                params: defaultParams
+            },
+            {
+                path: mainUrl + "/calendar",
+                component: asyncProfileCalendar,
+                params: defaultParams
+            },
+            {
                 path: mainUrl + "/plans",
                 component: asyncProfilePlans,
                 params: defaultParams
             },
-            {
-                path: mainUrl + "/alerts",
-                component: asyncProfileAlerts,
-                params: defaultParams
-            },
+            // {
+            //     path: mainUrl + "/alerts",
+            //     component: asyncProfileAlerts,
+            //     params: defaultParams
+            // },
             {
                 path: mainUrl + "/stakeholders",
                 component: Stakeholders,
@@ -102,7 +110,6 @@ const ProfileContentPure = props => {
                 ]
             }*/
         ];
-
 
 
         return (

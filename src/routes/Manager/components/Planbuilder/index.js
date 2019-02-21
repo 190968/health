@@ -96,7 +96,7 @@ const PlanbuilderLayout = (props) => {
                 <div className="logo" style={{padding: '19px 10px', color:'#fff',  'fontSize': '1.2em'}}>
                     <center>{builderTitle}</center>
                 </div>
-                <Menu theme="dark" onSelect={this.onMenuSelect} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} mode="inline">
+                <Menu theme="dark" onSelect={props.onMenuSelect} defaultSelectedKeys={[selectedItem]} defaultOpenKeys={[openItem]} mode="inline">
 
                     {menuItems.map((menu) => {
                         const {label, key, children=[]} = menu;
@@ -119,7 +119,7 @@ const PlanbuilderLayout = (props) => {
 
                     <Menu.Divider />
                     <Menu.Item key="exit">
-                        <NavLink to={exitURL}> <Icon type="poweroff" /> <span>Exit</span></NavLink>
+                        <NavLink to={exitURL}> <Icon type="poweroff" /> <span>Exit Builder</span></NavLink>
                     </Menu.Item>
 
 
@@ -135,7 +135,7 @@ const PlanbuilderLayout = (props) => {
                     <center><h3>{plan.title}</h3></center>
                     </div>
                 </Header>}
-                <Content style={{margin: '16px'}}>
+                <Content style={{padding:24}}>
                 <PlanbuilderContent {...props} routes={menuItems} type={type} />
                 </Content>
                 <Footer style={{textAlign: 'center', background: 'transparent'}}>

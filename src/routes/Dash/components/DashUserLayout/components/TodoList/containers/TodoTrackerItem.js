@@ -1,6 +1,7 @@
 import TodoTrackerItem from '../components/TodoTrackerItem'
 import { graphql } from 'react-apollo';
 import {BiometricPlanQuery} from '../../../../../../Plan/components/BiometricPlan/containers';
+import { ifModuleExists } from '../../../../../../../components/App/app-context';
 
 
 
@@ -30,4 +31,4 @@ const TodoTrackerItemWithQuery = graphql(
     }
 )(TodoTrackerItem);
 
-export default TodoTrackerItemWithQuery;
+export default ifModuleExists('trackers')(TodoTrackerItemWithQuery);

@@ -190,7 +190,7 @@ export const withAddPathwayMutation = graphql(AddPathwayElementMutation, {
 
 
 const addChildElementMutation = gql`
-    mutation addChildElement($parentId: UID!, $parentValue: UID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!) {
+    mutation addChildElement($parentId: UID!, $parentValue: ID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!) {
         addChildElement(planId: $planId, type:$type, parentId: $parentId, parentValue:$parentValue, input: $input) {
             ...PlanElement
         }

@@ -1,26 +1,18 @@
 import Profile from '../components/Profile';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {CancerFragment} from "../components/Cancers/containers/CancerManager";
 import {compose, branch, withHandlers, withState, withProps} from 'recompose';
+import { PatientInfoFragment } from '../../User/fragments';
+import { withActiveUserSimple } from '../../../components/App/app-context';
 
 const GET_PROFILE  = gql`
  query GET_PROFILE($user_id:UID) {
   patient(id: $user_id) {
-    id
-    fullName
-    thumbs {
-      original
-      small
-      large
-      medium
-      wide
-    }
+      ...PatientInfo
     gender
     genderText
      age
      addressText
-     phoneFormatted
      birthday
      email
      getUserNetwork {
@@ -61,7 +53,7 @@ const GET_PROFILE  = gql`
     
   }
 }
-
+${PatientInfoFragment}
 
 `;
 // health {
@@ -116,7 +108,8 @@ const enhance = compose(
         
             props.history.push(mainUrl+'/'+key);
         }
-    })
+    }),
+    withActiveUserSimple
 );
 
 export default enhance(Profile);

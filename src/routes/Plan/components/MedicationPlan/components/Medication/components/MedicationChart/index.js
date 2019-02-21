@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment';
 
 import {AreaChart, Area, LineChart, Line, BarChart, Bar, XAxis,CartesianGrid, Tooltip} from 'recharts';
+import { EmptyList } from '../../../../../../../../components/Loading';
 
 
 export default class MedicationChart extends React.Component {
@@ -56,7 +57,7 @@ export default class MedicationChart extends React.Component {
 
 
     render() {
-        const {data,loading, width, height, useAxis} = this.props;
+        const {data=[],loading, width, height, useAxis} = this.props;
         const graph = 'area';
 
         if (loading) {
@@ -67,7 +68,7 @@ export default class MedicationChart extends React.Component {
         }
 
         if (data.length  === 0) {
-            return <div>No Data</div>;
+            return <EmptyList>No Reports for This Week</EmptyList>;
         }
         switch (graph) {
             default:

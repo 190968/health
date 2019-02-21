@@ -1,7 +1,7 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import TreatmentBlocksOptions from '../components/TreatmentBlockOptions';
-import {TreatmentElementFragment} from "../../../../../../../../Plan/components/TreatmentElement/components/fragments";
+import { TreatmentElementFragment } from '../../../../../../../../../../Health/components/fragments';
 
 export const GET_TREATMENT_BLOCKS_QUERY = gql`
     query GET_TREATMENT_BLOCKS ($treatmentId: UID!)  {

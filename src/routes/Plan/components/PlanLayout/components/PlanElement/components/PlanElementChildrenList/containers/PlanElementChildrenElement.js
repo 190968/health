@@ -46,7 +46,7 @@ const boxSource = {
     }
 }
 
-const PlanElementDraggable = DragSource('box', boxSource, (connect, monitor) => ({
+const PlanElementDraggable = DragSource('timelineElement', boxSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
 }))(PlanChildElementDraggable);

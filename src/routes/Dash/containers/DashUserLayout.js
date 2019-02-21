@@ -3,16 +3,15 @@ import DashLayout from 'routes/Dash/components/DashUserLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
-import Plan from 'routes/Plan/components/Plan';
-import {MedicationsByType} from 'routes/Plan/components/MedicationPlan/components/Medication/components/fragments';
 import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
 import { withCurrentUser } from '../../../queries/user';
 import {compose,defaultProps} from 'recompose';
+import { PlanCardFragment } from '../../Plan/components/Plan/fragments';
 
 
 // Query for grabbing everything for the dashboard items
 export const DASH_QUERY = gql`
-    query GET_DASH_PLANS ($user_id: UID!, $date: Date, $status: UserPlanStatusEnum)  {
+    query GET_DASH_PLANS ($user_id: UID!,  $status: UserPlanStatusEnum)  {
         user (id:$user_id) {
             id
             plans (status: $status) {
@@ -26,38 +25,9 @@ export const DASH_QUERY = gql`
                 }
             }
         }
-        medicationPlan (userId: $user_id) {
-            id
-            upid
-            isPersonal
-            progress(date: $date)
-            ...MedicationsByType
-            textBefore
-            textAfter
-            
-        }
-        biometricPlan (userId: $user_id) {
-            id
-            upid
-            isPersonal
-            progress(date: $date)
-            columns {
-                id
-                name
-            }
-            trackers (date: $date) {
-                ...BiometricCardInfo
-                columns
-            }
-            startDate
-            endDate
-        }
     }
-   
     
-    ${Plan.fragments.plan}
-    ${MedicationsByType}
-    ${Biometric.fragments.tracker}
+    ${PlanCardFragment}
 `;
  
 

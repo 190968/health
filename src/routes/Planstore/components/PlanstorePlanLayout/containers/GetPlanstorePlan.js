@@ -1,6 +1,4 @@
-import { connect } from 'react-redux'
-
-import GetPlanstorePlan from '../components/GetPlanstorePlan'
+import GetPlanstorePlanPure from '../components/GetPlanstorePlan'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -24,23 +22,6 @@ const withMutation = graphql(getPlanMutation, {
 
     }),
 });
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
 
-const mapStateToProps = (state) => {
-    return {
-        dateFormat: state.user.info.dateFormat
-    };
-};
-
-const mapDispatchToProps = () => {
-    return {
-    }
-};
-
-
-export default withMutation(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(GetPlanstorePlan));
+export const GetPlan = withMutation(GetPlanstorePlanPure);
+export default GetPlan;

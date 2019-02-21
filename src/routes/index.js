@@ -5,7 +5,7 @@ import Loadable from '../components/Loadable';
 
 
 /** Dash **/
-export const asyncDash = () => {
+export const asyncDash = (props) => {
     // if current user is admin
 
     /*if (1==1 && store.getState().network.curret_role == 'user') {// not working
@@ -17,7 +17,7 @@ export const asyncDash = () => {
                     'url': 'Dash/modules/dash',
                     'key': 'dashboard'
                 }
-            }, store)
+            })
         );
     }*/
     return (
@@ -25,12 +25,12 @@ export const asyncDash = () => {
             loader: () => import(/* webpackChunkName: "dashChunk" */'../routes/Dash/containers/DashLayout'),
             modules: ['../routes/Dash/containers/DashLayout'],
             webpack: () => [require.resolveWeak('../routes/Dash/containers/DashLayout')],
-        })
+        }, props)
     );
 }
 
 /** Login **/
-export const asyncLogin = () => {
+export const asyncLogin = (props) => {
     return (
         Loadable({
             loader: () => import(/* webpackChunkName: "loginChunk" */'../routes/User/containers/loginContainer'),
@@ -40,7 +40,7 @@ export const asyncLogin = () => {
                 'url': 'User/modules/login',
                 'key': 'user_login'
             }
-        })
+        }, props)
     );
 }
 
@@ -112,7 +112,7 @@ export const asyncPlanstore = (store) => {
                 'url': 'Planstore/modules',
                 'key': 'planstore'
             }
-        }, store)
+        })
     );
 }
 export const asyncVerifyPhone = () => {
@@ -138,16 +138,16 @@ export const asyncVerifyPhoneConfirm = (store) => {
                 'url': 'User/modules/verifyPhone',
                 'key': 'verifyPhone'
             }
-        }, store)
+        })
     );
 }
 
 export const asyncMessages = () => {
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "messagesChunk" */'../routes/Messages/components'),
-            modules: ['../routes/Messages/components'],
-            webpack: () => [require.resolveWeak('../routes/Messages/components')],
+            loader: () => import(/* webpackChunkName: "messagesChunk" */'../routes/Messages'),
+            modules: ['../routes/Messages'],
+            webpack: () => [require.resolveWeak('../routes/Messages')],
         })
     );
 }
@@ -236,6 +236,18 @@ export const asyncPlan = (store) => {
                     'url': 'PlansList/modules/plan',
                     'key': 'plan'
                 }
-            }, store
+            }
         ))
 }
+
+export const asyncStatic = (store) => {
+    return (
+        Loadable({
+            loader: () => import(/* webpackChunkName: "staticPagesChunk" */'../routes/StaticPages'),
+            modules: ['../routes/StaticPages'],
+            webpack: () => [require.resolveWeak('../routes/StaticPages')],
+        })
+    );
+}
+
+

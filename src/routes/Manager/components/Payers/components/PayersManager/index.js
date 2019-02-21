@@ -7,7 +7,6 @@ const PayersManager = ({form, formItemLayout, targetKeys, selectedKeys, handleCh
 
 
     const {getFieldDecorator} = form;
-    // const {email='', gender='',fullName='',birthday='', phoneFormatted={},addressText={}, chemotherapies=[]} = patient;
     const children = [];
     return <Form layout='vertical'>
         <FormItem

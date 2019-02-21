@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {Checkbox, Card} from 'antd';
+import Loading from '../../../../../Loading';
 const CheckboxGroup = Checkbox.Group;
 
 
@@ -12,9 +13,11 @@ const vertStyle = {
 };
 const TeamMembersList = props =>  {
     
-    const {items=[], simple=false, users=[]} = props;
+    const {items=[], loading, simple=false, users=[]} = props;
 
-
+    if (loading) {
+        return <Loading />;
+    }
     let radioStyle = {};
     if (!simple) {
         radioStyle = vertStyle;

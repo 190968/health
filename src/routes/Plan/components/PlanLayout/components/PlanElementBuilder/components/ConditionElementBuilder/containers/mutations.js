@@ -1,6 +1,6 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {TreatmentElementFragment} from "../../../../../../../../../../Plan/components/TreatmentElement/components/fragments";
+import { TreatmentElementFragment } from '../../../../../../../../Health/components/fragments';
 
 // Delete
 export const GET_TREATMENT_BLOCK_ELEMENTS_QUERY = gql`

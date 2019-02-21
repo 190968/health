@@ -5,6 +5,7 @@ import {compose, withState, withHandlers, withStateHandlers, withProps} from 're
 import sort from '../../../../../../components/Tables/sort'
 import ClinicalTrialView from '../../containers/ClinicalTrialView';
 import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
+import { TableWithMessage } from '../../../../../../components/Tables';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -39,37 +40,37 @@ const ClinicalTrialsListPure = props => {
         dataIndex: 'nctId',
         key: 'nctId',
         width: 140,
-        sorter: (a, b) => a.nctId - b.nctId,
-        filterDropdown: (
-                <Input
-                    suffix={suffix}
-                    ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
-                    value={props.searchText}
-                    onChange={props.onSearch}
-                    onPressEnter={props.onSearch}
-                />
-        ),
-        filterIcon: <Icon type="search"/>,
+        // sorter: (a, b) => a.nctId - b.nctId,
+        // filterDropdown: (
+        //         <Input
+        //             suffix={suffix}
+        //             ref={ele => this.searchInput = ele}
+        //             placeholder="Search name"
+        //             value={props.searchText}
+        //             onChange={props.onSearch}
+        //             onPressEnter={props.onSearch}
+        //         />
+        // ),
+        // filterIcon: <Icon type="search"/>,
     }, {
         title: 'Title',
         dataIndex: 'title',
         key: 'title',
-        sorter: (a, b) => sort(a, b, "title"),
-        render: (title, info) => {
-            return <Title clinicalTrial={info}/>;
-        },
-        filterDropdown: (
-                <Input
-                     suffix={suffix}
-                    ref={ele => this.searchInput = ele}
-                    placeholder="Search name"
-                    // value={searchText}
-                    //onChange={onSearch}
-                    //onPressEnter={onSearch}
-                />
-        ),
-        filterIcon: <Icon type="search"/>,
+        // sorter: (a, b) => sort(a, b, "title"),
+        // render: (title, info) => {
+        //     return <Title clinicalTrial={info}/>;
+        // },
+        // filterDropdown: (
+        //         <Input
+        //              suffix={suffix}
+        //             ref={ele => this.searchInput = ele}
+        //             placeholder="Search name"
+        //             // value={searchText}
+        //             //onChange={onSearch}
+        //             //onPressEnter={onSearch}
+        //         />
+        // ),
+        // filterIcon: <Icon type="search"/>,
     },
 
     ];
@@ -79,24 +80,24 @@ const ClinicalTrialsListPure = props => {
         total: total,
         hideOnSinglePage: true/*, showSizeChanger:true*/
     };
-    const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="all">All</RadioButton>
-            <RadioButton value="open">Open</RadioButton>
-            <RadioButton value="past">Past</RadioButton>
-        </RadioGroup>
-    </React.Fragment>;
+
 
    
     return (<React.Fragment>
         <PageHeaderLayout title={'Clinical Trials ' + (total > 0 ? ' (' + total + ')' : '')}
                           content=""
             // extraContent={<Input.Search style={{width:200}} />}
-                          action={actions}
+                        //   action={actions}
         >
 
             <Card type="table">
-                <Table dataSource={dataSource} columns={columns} pagination={false} ref={props.tableRef} loading={loading}/>
+                <TableWithMessage
+                 dataSource={dataSource} 
+                 columns={columns} 
+                 total={total}
+                 loading={loading}
+                 onChange={props.handleTableChange}
+                 />
             </Card>
         </PageHeaderLayout>
     </React.Fragment>);
@@ -107,7 +108,6 @@ const enhance = compose(
     // withState('openManage', 'setOpenManager', false),
     withHandlers({
         changePage: props => (page) => {
-            console.log(props);
             const {lastCursor} = props;
             props.changePage(lastCursor);
         },

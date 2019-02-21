@@ -1,4 +1,4 @@
-import TrackerSelect from '../components/TrackerSelect';
+import TrackerSelectPure from '../components/TrackerSelect';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -18,8 +18,13 @@ export const TRACKERS_LIST_QUERY = gql`
 
 const withQuery = graphql(TRACKERS_LIST_QUERY,
     {
-        options: () => {
+        options: (ownProps) => {
+            const {user} = ownProps;
+            const {id:userId} = user || {}
             return {
+                variables: {
+                    userId
+                },
                 fetchPolicy: 'network-only'
             }},
         props: ({ data }) => {
@@ -48,4 +53,5 @@ const withQuery = graphql(TRACKERS_LIST_QUERY,
     }
 )
 
-export default withQuery(TrackerSelect);
+export const TrackerSelect = withQuery(TrackerSelectPure);
+export default TrackerSelect;

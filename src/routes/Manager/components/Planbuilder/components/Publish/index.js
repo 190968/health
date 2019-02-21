@@ -1,5 +1,6 @@
 import React from 'react'
 import {Card, Button} from 'antd';
+import AssignPlanButton from './components/AssignPlanButton';
 
 export default class Publish extends React.Component {
 
@@ -26,9 +27,10 @@ export default class Publish extends React.Component {
 
     render() {
         const {type, publish} = this.props;
+        const {plan} = this.props;
 
         return <Card title="You are ready to publish!">
-            <Button type="primary" onClick={this.publish}>Click here to publish</Button>
+            <Button type="primary" onClick={this.publish}>Click here to publish</Button> <AssignPlanButton plan={plan} title={'Plan'} />
         </Card>
     }
 }

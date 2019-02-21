@@ -15,8 +15,11 @@ const TreatmentBlockOptionSelectPure = ({getProperElements, onSelectType}) => {
     //console.log(elements);
     return (<Card gutter={5}>
         {elements.map(info => {
-            return info[1].map(({label, type}) => {
-                        return <Card.Grid style={gridStyle} key={label} span={8} onClick={() => onSelectType(type)}>{label}</Card.Grid>
+            return info[1].map(({label, type, disabled=false}) => {
+
+                        const onClick = disabled ? () => {} : () => onSelectType(type); 
+                        const style = disabled ? {...gridStyle, 'color':'#ccc', cursor:'default'} : gridStyle;
+                        return <Card.Grid style={style} key={label} span={8} onClick={onClick}>{label}</Card.Grid>
                     })
         })}
     </Card>)
@@ -26,28 +29,28 @@ export const getProperElementsConst = () => {
      const mainElements = [
         {type:'chemotherapy', label:'Chemotherapy'},
         {type:'clinical_trial', label:'Clinical Trial'},
-        {type:'medication', label:'Generic drug'},
+        {type:'medication', label:'Generic drug', disabled:true},
         {type:'oncology', label:'Oncology'},
         {type:'radiation', label:'Radiation therapy'},
         {type:'radiology', label:'Imaging/Radiology'},
         {type:'pathology', label:'Pathology'},
-        {type:'radiotherapy', label:'Radiotherapy'},
-        {type:'surgery_reconstruction', label:'Surgery: reconstruction'},
-        {type:'surgical_excision', label:'Surgical excision'},
-        {type:'surgical_resection', label:'Surgical resection'},
-        {type:'surgical_dissection', label:'Surgical dissection'},
-        {type:'intr_chemotherapy', label:'Intravesical chemotherapy'},
-        {type:'biopsy', label:'Biopsy'},
-        {type:'hormone_therapy', label:'Hormone/endocrine therapy'},
-        {type:'chemoradiotherapy', label:'Chemoradiotherapy'},
-        {type:'outpatient_procedure', label:'Outpatient procedure'},
-        {type:'extended_curettage', label:'Extended curettage'},
-        {type:'metastasectomy', label:'Metastasectomy'},
-        {type:'irradiation_therapy', label:'Irradiation therapy'},
-        {type:'chemotherapeutic_agents', label:'Chemotherapeutic agents'},
-        {type:'targeted_therapy', label:'Targeted therapy'},
-        {type:'ablation_therapy', label:'Ablation therapy'},
-        {type:'suppressive_therapy', label:'Suppressive therapy'},
+        {type:'radiotherapy', label:'Radiotherapy', disabled:true},
+        {type:'surgery_reconstruction', label:'Surgery: reconstruction', disabled:true},
+        {type:'surgical_excision', label:'Surgical excision', disabled:true},
+        {type:'surgical_resection', label:'Surgical resection', disabled:true},
+        {type:'surgical_dissection', label:'Surgical dissection', disabled:true},
+        {type:'intr_chemotherapy', label:'Intravesical chemotherapy', disabled:true},
+        {type:'biopsy', label:'Biopsy', disabled:true},
+        {type:'hormone_therapy', label:'Hormone/endocrine therapy', disabled:true},
+        {type:'chemoradiotherapy', label:'Chemoradiotherapy', disabled:true},
+        {type:'outpatient_procedure', label:'Outpatient procedure', disabled:true},
+        {type:'extended_curettage', label:'Extended curettage', disabled:true},
+        {type:'metastasectomy', label:'Metastasectomy', disabled:true},
+        {type:'irradiation_therapy', label:'Irradiation therapy', disabled:true},
+        {type:'chemotherapeutic_agents', label:'Chemotherapeutic agents', disabled:true},
+        {type:'targeted_therapy', label:'Targeted therapy', disabled:true},
+        {type:'ablation_therapy', label:'Ablation therapy', disabled:true},
+        {type:'suppressive_therapy', label:'Suppressive therapy', disabled:true},
     ];
     return mainElements;
 }

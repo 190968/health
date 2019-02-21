@@ -1,43 +1,17 @@
 import PlanLesson from '../components/PlanLesson'
-import {arrayMove, SortableContainer, SortableElement,} from 'react-sortable-hoc';
-import {branch, compose, withHandlers, withProps, withState, lifecycle} from 'recompose';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import {arrayMove, SortableContainer} from 'react-sortable-hoc';
+import {branch, compose, withHandlers, withProps, withState} from 'recompose';
 import {withUpdateOrderMutation} from "../components/PathwayBody/index";
-
-
-const reportOnLesson = gql`
-    mutation lessonReport($id: UID!, $upid: UID!) {
-        lessonComplete(id:$id, upid: $upid) {
-             id
-             completed
-        }
-    }
-`;
-
-
-
-const withMutation = graphql(reportOnLesson, {
-    props: ({ mutate }) => ({
-        lessonReport: (upid, id) => {
-            return mutate({
-                variables: { upid:upid, id: id },
-            })
-        },
-
-    }),
-});
-
-
-
 
 /**
  * Enhance Body
  */
 const builderEnhance = compose(
-    withState('elements2', 'setElements', null),
+    withState('elements', 'setElements', props => {
+        const {elements=[]} = props;
+        return elements;
+    }),
     withProps(props => {
-        console.log(props);
         let propsUpdated = {
             mode:'lesson'
         };
@@ -49,22 +23,12 @@ const builderEnhance = compose(
                     useWindowAsScrollContainer: true
             }}
         }
-
-        const {elements2=null} = props;
-        const {item={}} = props;
-        const {elements=[]} = item;
-
-        propsUpdated.elements = elements2 ? elements2 : elements;
-
         return propsUpdated;
     }),
 
     withUpdateOrderMutation,
-    //branch(props => props.isBuilderMode, withUpdateOrderMutation),
     withHandlers({
         updateOrder: props => elements => {
-            //console.log(props);
-            //console.log(elements);
             const ids = elements.map(element => element.id);
             props.updateElementsOrder(ids, elements);
 
@@ -73,7 +37,6 @@ const builderEnhance = compose(
     withHandlers({
         onSortEnd: props => ({oldIndex, newIndex}) => {
             const newElements = arrayMove(props.elements, oldIndex, newIndex);
-            //console.log(props.elements);
             props.updateOrder(newElements);
         }
     }),
@@ -81,16 +44,15 @@ const builderEnhance = compose(
 );
 
 const enhance = compose(
-    withMutation,
-    branch(props => props.isBuilderMode, builderEnhance),
+    //withMutation,
     withProps(props => {
         const {item={}} = props;
-        const {elements=[]} = item;
-        //console.log(props);
+        const {elements=[]} = item || [];
         return {
-            elements: elements
+            elements
         }
-    })
+    }),
+    branch(props => props.isBuilderMode, builderEnhance),
 )
 
 

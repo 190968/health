@@ -1,14 +1,14 @@
 import React from 'react';
 import { Divider, Modal, Icon, Upload, Alert, Button, Card, Tooltip, Checkbox, Row, Col } from 'antd';
-
+import PlanElementCard from './components/PlanElementCard';
+import ReactFitText from 'react-fittext';
 import Measurement from '../../../../containers/PlanMeasurement';
 import PlanElementActions from '../../containers/PlanElementActions';
+import PlanChoice from '../../../../../Plan/containers/PlanChoiceElement';
 
-import PlanChecklist from '../../../../../Plan/components/Checklist';
-import PlanRadio from '../../../../../Plan/components/Radio';
 import PlanInputText from '../../../../../Plan/components/PlanInputText';
 import PlanScale from '../../../../../Plan/components/PlanScale';
-import PlanDropdown from '../../../../../Plan/components/PlanDropdown';
+
 import PlanMedia from '../../../../../Plan/components/PlanMedia';
 import LinkElement from '../../../../../Plan/components/LinkElement';
 import AliasElement from '../../../../../Plan/components/AliasElement';
@@ -18,9 +18,10 @@ import TreatmentElement from '../../../../../Plan/components/TreatmentElement';
 import DecisionElement, { FootNoteButton } from '../../../../../Plan/components/DecisionElement';
 import ConditionElement from '../../../../../Plan/components/ConditionElement';
 import CalculatorElement from '../../../../../Plan/components/CalculatorElement';
-import { getLabelFromElement } from '../../../PlanElementBuilder/utils';
 import './index.less';
 import { FitIcon } from '../../../../../../../../components/FitIcon/index';
+import TrackerInput from '../../../../../../containers/Tracker';
+import { getTipBoxTypeLabel } from '../../../PlanElementBuilder/components/TipboxElementBuilder';
 
 const PlanElementBox = (props) => {
 	let {
@@ -32,6 +33,7 @@ const PlanElementBox = (props) => {
 		isBuilderMode,
 		isPreviewMode,
 		plan,
+		user,
 		upid,
 		schedule,
 		mode,
@@ -57,37 +59,70 @@ const PlanElementBox = (props) => {
 	let showTitle = true;
 	let titleExtra = false;
 	//console.log(props);
+
+	const defaultProps = {item, disabled:notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode  }
+	
+	
+	
 	switch (itemType) {
 		default:
 			break;
 		case 'measurement_input':
+			// const {reports:trackerReports=[]} = item;
+			// console.log(reports);
 			//showTitle = false;
-			field = <Measurement disabled={notClickable} item={item} date={date} isBuilderMode={isBuilderMode} onChange={props.onChange} />;
+			field = <TrackerInput {...defaultProps} measurement={item} />;
 			break;
 		case 'choice_input':
 		case 'checklist':
-			reportValues = reports && reports.map((report) => report.value);
-			reportValues = reportValues && reportValues[0];
+			// reportValues = reports && reports.map((report) => report.value);
+			// reportValues = reportValues && reportValues[0];
+			//console.log(reports);
 			field = (
-				<PlanChecklist
-					item={item}
-					reports={reportValues}
-					isBuilderMode={isBuilderMode}
-					onChange={props.onChange}
-					disabled={notClickable}
+				<PlanChoice
+					reports={reports}
+					{...defaultProps}
+					isMultiple
 				/>
 			);
 			//const vertically = item.is_vertically;
 			fieldTitle = item.label;
 			break;
 		case 'radio_input':
-			reportValues = reports && reports.map((report) => report.value);
-			reportValues = reportValues && reportValues[0];
-			reportValues = reportValues && reportValues[0];
+			// reportValues = reports && reports.map((report) => report.value);
+			// reportValues = reportValues && reportValues[0];
+			// reportValues = reportValues && reportValues[0];
 			field = (
-				<PlanRadio item={item} reports={reportValues} isBuilderMode={isBuilderMode} disabled={notClickable} onChange={props.onChange} />
+				<PlanChoice
+					reports={reports}
+					{...defaultProps}
+				/>
+				// <PlanRadio reports={reportValues} {...defaultProps} />
 			);
 			fieldTitle = item.label;
+
+			break;
+			case 'dropdown_input':
+				// reportValues = reports && reports.map((report) => report.value);
+				// reportValues = reportValues && reportValues[0];
+				// reportValues = reportValues && reportValues[0];
+				fieldTitle = item.label;
+				if (itemType === 'condition') {
+					addAfter = false;
+				}
+				field = (
+					<PlanChoice
+					reports={reports}
+					{...defaultProps}
+					isDropdown
+					/>
+					// <PlanDropdown
+					// 	showChildren={props.showChildren}
+					// 	hasChildren={hasChildren}
+					// 	reports={reportValues}
+					// 	{...defaultProps}
+					// />
+				);
 
 			break;
 		case 'text_input':
@@ -97,36 +132,13 @@ const PlanElementBox = (props) => {
 			fieldTitle = item.label;
 			field = (
 				<PlanInputText
-					item={item}
 					reports={reportValues}
-					isBuilderMode={isBuilderMode}
-					onChange={props.onChange}
-					disabled={notClickable}
+					{...defaultProps}
 				/>
 			);
 
 			break;
-		case 'dropdown_input':
-			reportValues = reports && reports.map((report) => report.value);
-			reportValues = reportValues && reportValues[0];
-			reportValues = reportValues && reportValues[0];
-			fieldTitle = item.label;
-			if (itemType === 'condition') {
-				addAfter = false;
-			}
-			field = (
-				<PlanDropdown
-					item={item}
-					isBuilderMode={isBuilderMode}
-					showChildren={props.showChildren}
-					hasChildren={hasChildren}
-					reports={reportValues}
-					onChange={props.onChange}
-					disabled={notClickable}
-				/>
-			);
-
-			break;
+		
 		case 'condition':
 			reportValues = reports && reports.map((report) => report.value);
 			reportValues = reportValues && reportValues[0];
@@ -137,12 +149,10 @@ const PlanElementBox = (props) => {
 			}
 			field = (
 				<ConditionElement
-					item={item}
-					isBuilderMode={isBuilderMode}
 					showChildren={props.showChildren}
 					hasChildren={hasChildren}
 					reports={reportValues}
-					onChange={props.onChange}
+					{...defaultProps}
 				/>
 			);
 			break;
@@ -160,16 +170,13 @@ const PlanElementBox = (props) => {
 				<DecisionElement
 					id={id}
 					plan={plan}
-					item={item}
 					mode={mode}
 					isDraggable={isDraggable}
 					onDrop={onDrop}
-					isPreviewMode={isPreviewMode}
-					isBuilderMode={isBuilderMode}
 					showChildren={props.showChildren}
 					hasChildren={hasChildren}
 					reports={reportValues}
-					onChange={props.onChange}
+					{...defaultProps}
 				/>
 			);
 			break;
@@ -181,7 +188,7 @@ const PlanElementBox = (props) => {
 			fieldTitle = item.label;
 
 			field = (
-				<PlanScale item={item} disabled={notClickable} reports={reportValues} isBuilderMode={isBuilderMode} onChange={props.onChange} />
+				<PlanScale  reports={reportValues} {...defaultProps} />
 			);
 
 			break;
@@ -203,7 +210,7 @@ const PlanElementBox = (props) => {
 
 		case 'instruction_embed':
 			fieldTitle = '';
-			field = <TextElement item={item} />;
+			field = <TextElement {...defaultProps} />;
 			break;
 		case 'clinical_note':
 			fieldTitle = null;
@@ -212,11 +219,9 @@ const PlanElementBox = (props) => {
 			const { title, note = '' } = item;
 			field = (
 				<ClinicalNoteElement
-					item={item}
-					isPreviewMode={isPreviewMode}
-					isBuilderMode={isBuilderMode}
 					mode={mode}
 					plan={plan}
+					{...defaultProps}
 				/>
 			); //
 			break;
@@ -229,23 +234,72 @@ const PlanElementBox = (props) => {
 			field = <Divider style={opts} />;
 			break;
 		case 'instruction_tipbox':
-		console.log(item);
-		const {icon} = item;
-		const {id:iconId, url:iconUrl} = icon;
-		let text = '';
-		if (iconId) {
-			
-			text = <Row><Col md={4}><img src={iconUrl} /></Col><Col md={20}><div dangerouslySetInnerHTML={{ __html: item.text }} /></Col></Row>;
-		} else {
-			text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
-		}
+			// console.log(item);
+			const {icon, tipType, color:bgColor, iconAlign} = item;
+			const {id:iconId, url:iconUrl} = icon;
+			let text = '';
+			let tipboxIcon = null;
+			if (iconId) {
+				const tipStyle = {
+					fontWeight:'bold',
+					textTransform: 'uppercase',
+					fontSize: '0.7em'
+				}
+				//tipboxIcon = <img src={iconUrl} style={{maxWidth:80}} />;
+				if (iconAlign == 'right') {
+					text = <div className={'clearfix'}>
+						<div style={{float: 'right', textAlign: 'center', marginLeft:20}}>
+						<img src={iconUrl} style={{maxWidth:80}} /> 
+						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+						</div>
+						<ReactFitText compressor={10.5} minFontSize={16} maxFontSize={28}><div style={{marginRight:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					</div>
+					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
+						
+					// 	</Col>
+					// 	<Col sm={20}></Col>
+					// </Row>;
+
+					// text = <Row>
+					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
+					// 	<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					// 	<img src={iconUrl} style={{maxWidth:80}} /> 
+					// 	</Col>
+					// 	<Col sm={20}><div dangerouslySetInnerHTML={{ __html: item.text }} /></Col>
+					// </Row>;
+				} else {
+					text = <div className={'clearfix'}>
+						<div style={{float: 'left', textAlign: 'center', marginRight:20}}>
+						<img src={iconUrl} style={{maxWidth:80}} /> 
+						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+						</div>
+						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={28}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					</div>
+					// text = <Row>
+					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
+					// 	<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					// 	<img src={iconUrl} style={{maxWidth:80}} /> 
+					// 	</Col>
+					// 	<Col sm={20}><div dangerouslySetInnerHTML={{ __html: item.text }} /></Col>
+					// </Row>;
+				}
+				
+			} else {
+				text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
+			}
+			// console.log(bgColor, 'bgColor');
+		// text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
 			fieldTitle = '';
 			field = (
-				<Alert
-					message="Tipbox"
-					description={text}
-					type="info"
-				/>
+				<div style={{background:bgColor, padding:10, marginBottom:10}}>
+				{text}
+				</div>
+				// 	// message={getTipBoxTypeLabel(tipType)}
+				// 	description={text}
+				// 	// icon={<img src={iconUrl} style={{maxWidth:80}} />}
+				// 	// showIcon = {true}
+				// 	type="info"
+				// />
 			);
 			break;
 		case 'link':
@@ -296,14 +350,11 @@ const PlanElementBox = (props) => {
 			//console.log(itemInfo);
 			field = (
 				<CalculatorElement
-					isPreviewMode={isPreviewMode}
-					date={date}
 					plan={plan}
 					upid={upid}
 					actFieldId={id}
 					element={itemInfo}
-					isBuilderMode={isBuilderMode}
-					onChange={props.onChange}
+					{...defaultProps}
 				/>
 			);
 			break;
@@ -441,36 +492,3 @@ const PlanElementBox = (props) => {
 };
 
 export default PlanElementBox;
-
-const PlanElementCard = ({ children, element, showTitle, isBuilderMode, withCompleteCheckmark=false, isPreviewMode=false, extra = {}, plan={} }) => {
-    const { footnote = '', reference = '' } = element;
-    const {type} = plan;
-    let bordered = true;
-	let hoverable = isBuilderMode && !isPreviewMode;
-	const showType = type !== 'ap';
-    if (type === 'ap') {
-        bordered = false;
-	}
-	//console.log(element);
-	let title = showTitle ? getLabelFromElement(element, { isBuilderMode: isBuilderMode, footnote, showType }) : false; //'Add name of'
-
-	if (title && withCompleteCheckmark) {
-		title = <React.Fragment>
-			<Checkbox style={{marginRight:5}} />
-			{title}
-		</React.Fragment>;
-	}
-	const useExtra = false; //footnote !== '' && reference !== '';
-	return (
-		<Card title={title} bordered={bordered} hoverable={hoverable} type={element.itemType} extra={extra}>
-			{children}
-
-			{useExtra && (
-				<React.Fragment>
-					<Card.Meta description={footnote} />
-					<Card.Meta description={reference} />
-				</React.Fragment>
-			)}
-		</Card>
-	);
-};

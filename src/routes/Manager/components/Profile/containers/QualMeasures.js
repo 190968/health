@@ -1,7 +1,8 @@
 import QualMeasures from '../components/QualMeasures';
-import {compose} from 'recompose';
+import {compose, branch, renderComponent} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { withSpinnerWhileLoading } from '../../../../../components/Modal';
 
 const GET_PROVIDERS_QUERY  = gql`
  query GET_USER_QUAL_MEASURES($user_id:UID) {
@@ -31,18 +32,21 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
     },
     props: ({ data }) => {
 
-        const {patient={}} = data;
-        const {getQualityMeasures={}} = patient;
-        const {edges=[]} = getQualityMeasures;
+        const {patient, refetch} = data;
+        const {getQualityMeasures} = patient || {};
+        const {edges=[], totalCount} = getQualityMeasures || {};
 
-        return {loading: data.loading, qms:edges }
+        return {loading: data.loading, items:edges, total:totalCount, refetch }
     },
 });
 
 
 
 const enhance = compose(
-    withQuery
+    withQuery,
+    withSpinnerWhileLoading,
+    //branch(props => props.noCard, renderComponent(UserQualityMeasuresTablePure))
 );
 
-export default enhance(QualMeasures);
+export const UserQualityMeasures = enhance(QualMeasures);
+export default UserQualityMeasures;

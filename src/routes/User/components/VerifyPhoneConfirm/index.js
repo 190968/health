@@ -46,7 +46,7 @@ class VerifyPhoneConfirmForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         const {intl}=this.props;
         return (
-            <div className="register-form" style={{padding:'8% 35% 20px'}}>
+            <div className="register-form" className={'tinyBoxAlone'} >
                 <Form onSubmit={this.handleSubmit} >
                 <Card
                     title={intl.messages.user_verifyphone_verifyphoneConfirm}

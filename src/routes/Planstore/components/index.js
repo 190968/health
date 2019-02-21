@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom'
 const AsyncIndex = () => {
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "planstoreChunk" */'../../../routes/Planstore/containers/index.js'),
+            loader: () => import(/* webpackChunkName: "planstoreChunk" */'../containers/PlanstoreLayout.js'),
         })
     );
 }

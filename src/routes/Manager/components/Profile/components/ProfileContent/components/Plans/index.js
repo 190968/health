@@ -3,8 +3,8 @@ import {Card} from 'antd';
 import {compose, withState, withHandlers} from 'recompose';
 import ActionPlans from "../../../../components/Dashboard/containers/ActionPlans";
 import CarePlans from "../../../../components/Dashboard/containers/CarePlans";
-import MedicationPlanBody from "../../../../../../../Plan/components/MedicationPlan/containers/index";
-import BiometricPlanBody from "../../../../../../../Plan/components/BiometricPlan/containers/index";
+import MedicationPlanBody from "../../../../../../../Plan/containers/MedicationPlan";
+import BiometricPlanBody from "../../../../../../../Plan/containers/BiometricPlan";
 
 const tabList = [{
     key: 'aps',
@@ -32,10 +32,10 @@ export const StakeholdersPure = props => {
     // ;
 
     const contentList = {
-        aps: <ActionPlans {...props} />,
-        careplans: <CarePlans {...props} />,
-        medications: <MedicationPlanBody {...props} user_id={props.user.id} />,
-        biometric: <BiometricPlanBody {...props}  user_id={props.user.id}  />,
+        aps: <ActionPlans {...props}  user={props.user}  />,
+        careplans: <CarePlans {...props}  user={props.user}  />,
+        medications: <MedicationPlanBody {...props} user={props.user}  />,
+        biometric: <BiometricPlanBody {...props}  user={props.user}  />,
     };
     return <Card
         style={{ width: '100%' }}

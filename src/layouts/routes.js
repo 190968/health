@@ -14,7 +14,8 @@ import {
     asyncRepository,
     asyncForgotPassword,
     asyncCalendar,
-    asyncMessages
+    asyncMessages,
+    asyncStatic,
 } from '../routes';
 
 const NoMatch = ({ location }) => (
@@ -37,20 +38,23 @@ export const BasicRoutes = ({store}) => {
             <Route exact path="/password/reset" component={asyncForgotPassword()}/>
             <PrivateRoute path="/settings" component={asyncSettings()}/>
             {/*<PrivateRoute path="/repository" component={asyncRepository(store)}/>*/}
-            <PrivateRoute path="/messages/:id?" component={asyncMessages()}/>
+            <PrivateRoute path="/messages" component={asyncMessages()}/>
             <PrivateRoute path="/calendar" component={asyncCalendar()}/>
             <PrivateRoute path="/plan/:upid" component={asyncPlan()}/>
+            <PrivateRoute path="/static" component={asyncStatic()}/>
             {/* <Route  component={asyncCalendar(store)}/> */}
         </React.Fragment>
     )
 }
 
-export const  UseRoutes = ({routes=[]}) => {
-    return <Switch>{routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}</Switch>;
+export const  UseRoutes = (props) => {
+    const {routes=[], ...otherProps} = props;
+    // console.log(otherProps, 'otherProps');
+    return <Switch>{routes.map((route, i) => <RouteWithSubRoutes key={i}  {...otherProps} {...route} />)}</Switch>;
 }
 
 const RouteWithSubRoutes = route => {
-    const {path, component, exact=false, isPublic=false} = route;
+    const {path, component, exact=false, isPublic=false, ...otherProps} = route;
     console.log(route);
     if (!isPublic) {
         return <PrivateRoute path={path} 
@@ -58,22 +62,48 @@ const RouteWithSubRoutes = route => {
         component={component} />
     } else {
     return <Route path={path} 
-    exact={exact}
-    component={component}
-    //     render={props => (
-    //     // pass the sub-routes down to keep nesting
-    //     <component {...props} routes={route.routes} />
-    //   )}
+        exact={exact}
+        component={component}
+        // render={props => (
+        //     // pass the sub-routes down to keep nesting
+        //     <component {...props} {...otherProps} routes={route.routes} />
+        // )}
     />
     }
 }
 
-export const CoreRoutes = [
-    {
-      path: "/",
-      component: asyncDash(),
-      exact:true,
-    },
+export const CoreNotAuthorizedRoutesWithProps = props => {
+
+    return [
+        {
+            path: "/login",
+            component: <asyncLogin />,
+            exact:true,
+            isPublic:true,
+        },
+        {
+            path: "/logout",
+            component: asyncLogout(),
+            exact:true,
+            isPublic:true
+        },
+        {
+            path: "/register/:code?",
+            component: asyncRegister(),
+            exact:true,
+            isPublic:true
+        },
+        {
+            path: "/password/reset",
+            component: asyncForgotPassword(),
+            exact:true,
+            isPublic:true
+        },
+         
+        
+      ];
+}
+export const CoreNotAuthorizedRoutes = [
     {
         path: "/login",
         component: asyncLogin(),
@@ -98,17 +128,30 @@ export const CoreRoutes = [
         exact:true,
         isPublic:true
     },
+  ];
+
+export const CoreRoutes = [
+    {
+      path: "/",
+      component: asyncDash(),
+      exact:true,
+    },
+    ...CoreNotAuthorizedRoutes,
     {
         path: "/settings",
         component: asyncSettings(),
     },
     {
-        path: "/messages/:id?",
+        path: "/messages",
         component: asyncMessages(),
     },
     {
         path: "/calendar",
         component: asyncCalendar(),
+    },
+    {
+        path: "/static",
+        component: asyncStatic(),
     },
     {
         path: "/plan/:upid",

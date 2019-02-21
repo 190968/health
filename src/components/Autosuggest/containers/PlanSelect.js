@@ -49,4 +49,5 @@ const PlanSelectWithQuery = graphql(PlansListQUERY,
     }
 )(PlanSelect);
 
-export default PlanSelectWithQuery;
+export const ActionPlanSelect = PlanSelectWithQuery;
+export default ActionPlanSelect;

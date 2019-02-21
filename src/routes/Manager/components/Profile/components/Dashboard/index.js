@@ -12,42 +12,60 @@ import Timeline from "./containers/Timeline";
 import Genomics from "./components/Genomics";
 import FamilyHistory from "./containers/FamilyHistory";
 import Tasks from "./containers/Tasks";
-
+import UserAppointments from '../../../../../Calendar/containers/Appointments';
+import ProfileAdherence from './components/Adherence';
+import ProfileMainInfo from './components/ProfileMainInfo';
+import UserAssessments from '../../containers/Assessments';
+import PatientCohorts from '../../containers/Cohorts';
+import UserPrograms from '../../containers/Programs';
+import UserQualityMeasures from '../../containers/QualMeasures';
 
 const Overview = props => {
     console.log(props);
-    const {user={}} = props;
+    const {user={}, currentUser} = props;
     const {id:userId} = user;
+    const {currentRole} = currentUser || {};
+
+    // if (currentRole === 'advocate') {
+    //     return <ProfileDashRoleAdvocate {...props} />
+    // }
     return <React.Fragment>
-        <Row gutter={16}>
+        <Row gutter={24}>
             <Col xl={17}>
                        
                 <Row  style={{marginBottom:16}}>
                     <Col>
-                    <Tasks user={user} hideOnEmpty />
-                        <Stages userId={userId} />
-                        <Vitals userId={userId} user={user} />
+                        <ProfileMainInfo user={user} />
+                        <Vitals user={user} />
+                        <Tasks user={user} />
+                        <Stages user={user} />
+                        <UserAssessments user={user} />
+                        <UserPrograms user={user} />
+                        <UserQualityMeasures user={user} />
+                        <PatientCohorts user={user} />
                     </Col>
                 </Row>
 
                 <Row gutter={16} style={{marginBottom:16}}>
                     <Col lg={12}>
-                        <HealthItems userId={userId} title="Diagnosis" type="diagnosis" />
-                        <Genomics userId={userId} />
-                        <HealthItems userId={userId} title="Clinical Trials" type="clinical_trial" />
+                        <HealthItems user={user} title="Diagnosis" type="diagnosis" />
+                        <Genomics user={user} />
+                        <HealthItems user={user} title="Clinical Trials" type="clinical_trial" />
                     </Col>
                     <Col lg={12}>
-                        <HealthItems userId={userId} title="Treatments" type="treatment" />
-                        <Tumorboards userId={userId} />
-                        <HealthItems userId={userId}  title="Medications" type="medication" />
+                        <HealthItems user={user} title="Treatments" type="treatment" />
+                        <Tumorboards user={user} />
+                        <HealthItems user={user}  title="Medications" type="medication" />
                         <FamilyHistory user={user} />
                     </Col>
                 </Row>
                  
             </Col>
             <Col xl={7}>
-                <Timeline userId={userId} />
-                <News userId={userId} />
+                <ProfileAdherence user={user} />
+                <Timeline user={user} isWidget />
+                <UserAppointments user={user} />
+                <News user={user} />
             </Col>
         </Row>
     </React.Fragment>

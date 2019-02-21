@@ -35,13 +35,20 @@ const withQuery = graphql(
             }
         }),
         props: ({data}) => {
-            if (!data.loading) {
-                return {
-                    plans: data.patient.getPlans,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
+            const {patient, refetch} = data;
+            const {getPlans=[]} = patient || {};
+            const {status} = data.variables || {};
+
+            return {
+                plans: getPlans,
+                loading: data.loading,
+                status:status,
+                refetch,
+                loadByStatus(status) {
+                    return data.refetch({
+                        status: status
+                    });
+                    },
             }
         },
     }

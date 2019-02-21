@@ -1,4 +1,4 @@
-import MedicationVideo from '../components/MedicationVideo';
+import MedicationVideoPure from '../components/MedicationVideo';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -18,7 +18,7 @@ const MedicationVideoWithQuery = graphql(
         //name: 'PlanstorePlans',
         options: (ownProps) => ({
             variables: {
-                id:ownProps.id,
+                id:ownProps.drug.id,
             },
         }),
         props: ({ data }) => {
@@ -35,6 +35,7 @@ const MedicationVideoWithQuery = graphql(
             }
         },
     }
-)(MedicationVideo);
+)(MedicationVideoPure);
 
-export default MedicationVideoWithQuery;
+export const MedicationVideo = MedicationVideoWithQuery;
+export default MedicationVideo;

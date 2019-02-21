@@ -40,8 +40,8 @@ const AdverseReactionsWithQuery = graphql(GetMedReactionsQuery,
         options: (ownProps) => {
             return   {
                 variables: {
-                    userId: ownProps.userId,
-                    id: ownProps.item.id,
+                    userId: ownProps.user.id,
+                    id: ownProps.medication.id,
                 },
                 //fetchPolicy: 'network-only'
             }},
@@ -66,15 +66,15 @@ const withMutation = graphql(AddMedReactionQuery, {
 
             return mutate({
                 variables: {
-                    medicationId:ownProps.item.id,
-                    userId:ownProps.userId,
+                    medicationId:ownProps.medication.id,
+                    userId:ownProps.user.id,
                     reaction:reaction,
                     severity:severity
                 },
                 refetchQueries: [{
                     query: GetMedReactionsQuery,
-                    variables: { userId: ownProps.userId,
-                        id: ownProps.item.id},
+                    variables: { userId: ownProps.user.id,
+                        id: ownProps.medication.id},
                 }],
             })
         },

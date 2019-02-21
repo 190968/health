@@ -104,7 +104,7 @@ const CalculationReportResult = props => {
     const {report} =props;
     const {result} = report;
     return <Alert message={'Results'}
-    description={'Your score is'+result}
+    description={'Your score is '+result}
     type="success"
     showIcon />
 }

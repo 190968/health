@@ -2,7 +2,7 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import {Card,Icon,Row,Tooltip,List} from 'antd';
+import {Card,Icon,Row,Tooltip,List, Comment} from 'antd';
 import Avatar from '../../../../../../../User/components/Avatar';
 import {withRouter} from "react-router-dom";
 import Replies from '../../../Replies';
@@ -12,6 +12,8 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
+import { ListWithMessage } from '../../../../../../../../components/UI/List';
+import AvatarWithName from '../../../../../../../User/components/AvatarWithName';
 const IconText = ({ type, text }) => (
     <span>
     <Icon type={type} style={{ marginRight: 8 }} />
@@ -19,7 +21,57 @@ const IconText = ({ type, text }) => (
   </span>
 );
 
-class Comment extends React.Component{
+
+const ExampleComment = (comment) => {
+    console.log(comment);
+    /*
+    createdAt: "2015-10-20T20:16:00+00:00"
+date: null
+id: "a757"
+isImportant: null
+replies: {totalCount: 0, edges: Array(0), __typename: "CommentsConnection"}
+text: "sdff"
+unread: true
+*/
+    const {text, author, createdAt, replies} = comment;
+    const {edges=[]} = replies || {};
+    
+    return <Comment
+      actions={[<span>Reply to</span>]}
+      datetime={moment(createdAt).format('lll')}
+      author={<AvatarWithName user={author} onlyName />}
+      avatar={(
+        <Avatar
+         user={author}
+        />
+      )}
+      content={text}
+    >
+      {edges && edges.length > 0 && <List
+            dataSource={edges}
+            header={`${edges.length} ${edges.length > 1 ? 'replies' : 'reply'}`}
+            itemLayout="horizontal"
+            renderItem={props => <ExampleComment {...props} />}
+        />}
+    </Comment>
+};
+
+const DiscussionComment = props => {
+    const {discussion} = props;
+    const {replies} = discussion || {};
+    const {edges=[]} = replies || {};
+
+    return <ListWithMessage
+    emptyMessage={'No Comments'}
+    dataSource={edges}
+    header={`${edges.length} ${edges.length > 1 ? 'replies' : 'reply'}`}
+    itemLayout="horizontal"
+    renderItem={props => <ExampleComment {...props} />}
+  />
+
+}
+
+class DiscussionComment2 extends React.Component{
     state = { visibleReplyModal: false ,id:null,title:""}
 
 
@@ -56,7 +108,7 @@ class Comment extends React.Component{
                         dataSource={edges}
                         renderItem={item => (
                             <List.Item key={item.id}
-                                       actions={[ moment(item.createdAt).format('LLL'),
+                                       actions={[ moment(item.createdAt).format('lll'),
                                            <IconText type="like-o" text="0" />,
                                            <IconText type="message" text={item.replies.totalCount} onClick={this.showModal.bind(this,item.id)} />,
                                            <Tooltip title={'Reply'}><p onClick={this.showModal.bind(this,item.id)} >{intl.formatMessage(messages.reply)}</p></Tooltip>]}
@@ -79,5 +131,5 @@ class Comment extends React.Component{
     }
 
 }
-export default withRouter(injectIntl(Comment));
+export default withRouter(injectIntl(DiscussionComment));
 

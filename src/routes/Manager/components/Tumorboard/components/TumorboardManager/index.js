@@ -21,8 +21,7 @@ export const TumorboardManager = (props) => {
     const {tumorboard={}, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator} = form;
     const {title='', startDate, endDate, startTime, endTime, notes='', location='', video='', lead={}, admin={}} = tumorboard;
-    const {id:leadUid=''} = lead;
-    const {id:adminUid=''} = admin;
+    
     return <Form>
         <FormItem
             {...formItemLayout}
@@ -45,7 +44,7 @@ export const TumorboardManager = (props) => {
             label='Lead'
         >
             {getFieldDecorator('leadUid', {
-                    initialValue: leadUid,
+                    initialValue: lead,
                     rules: [{required: true, message: "Select Lead"}],
                 }
             )(
@@ -58,7 +57,7 @@ export const TumorboardManager = (props) => {
             label='Admin'
         >
             {getFieldDecorator('adminUid', {
-                    initialValue: adminUid,
+                    initialValue: admin,
                     rules: [{required: true, message: "Select Admin"}],
                 }
             )(

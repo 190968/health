@@ -12,7 +12,7 @@ import gql from 'graphql-tag';
 import moment from "moment/moment";
 import {connect} from "react-redux";
 import { withCurrentUser } from '../../queries/user';
-import { ActiveUserContext } from '../App/app-context';
+import { ActiveUserContext, withActiveUser } from '../App/app-context';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
@@ -101,7 +101,10 @@ export class StartEndFormInit extends React.Component{
     }
     disabledEndDate = (endValue) => {
         if (endValue) {
-            const form = this.props.form;
+            //const form = this.props.form;
+            const {form, currentUser} = this.props;
+
+
             //callback();
 
 
@@ -201,7 +204,7 @@ export class StartEndFormInit extends React.Component{
     }
 }
 
-export const StartEndForm = injectIntl(StartEndFormInit);
+export const StartEndForm = withActiveUser(injectIntl(StartEndFormInit));
 
 
 
@@ -272,7 +275,7 @@ class DateFieldInit extends React.Component{
             //console.log(this.state);
             //console.log(Object.assign({}, this.state, changedValue));
             if (asString) {
-                formattedDate = formattedDate.format('YYYY-MM-DD');
+                //formattedDate = formattedDate.format('YYYY-MM-DD');
             }
             onChange(formattedDate);
             //const newValue = Object.assign({}, this.state, changedValue);
@@ -285,20 +288,33 @@ class DateFieldInit extends React.Component{
 
         const {disabledDate, placeholder, currentUser, allowClear } = this.props;
         const {dateFormat} = currentUser || {};
-        //console.log(this.state);
-        return <ActiveUserContext.Consumer>
-        {context => {
-            const {user={},setUser, updateUserInfo} = context || {}
-            return <DatePicker
+        // console.log(this.state);
+        // console.log(moment.locale());
+        // console.log(moment.locale());
+        // console.log(moment._f);
+
+        return <DatePicker
                 placeholder={placeholder}
-                format={user.dateFormat}
+                 format={'L'}
                 disabledDate={disabledDate}
                 allowClear={allowClear}
                 onChange={this.onChange}
                 value={this.state.date}
             />
-        }}
-    </ActiveUserContext.Consumer>
+
+    //     return <ActiveUserContext.Consumer>
+    //     {context => {
+    //         const {user={},setUser, updateUserInfo} = context || {}
+    //         return <DatePicker
+    //             placeholder={placeholder}
+    //              format={user.dateFormat}
+    //             disabledDate={disabledDate}
+    //             allowClear={allowClear}
+    //             onChange={this.onChange}
+    //             value={this.state.date}
+    //         />
+    //     }}
+    // </ActiveUserContext.Consumer>
         
         
         
@@ -310,8 +326,17 @@ export const DateField = (DateFieldInit);
 
 
 export const TimeFieldPure = props => {
-    const {time=undefined,allowClear=true, disabled=false, placeholder='', onChange} = props;
-    return <TimePicker use12Hours value={time}  format="h:mm a" onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} />;
+    const {time=undefined,allowClear=true, disabled=false, placeholder='', onChange, ...otherProps} = props;
+    const locale = moment.locale();
+    let format = {};
+    console.log(locale);
+    console.log(props);
+    if (locale === 'en') {
+        format = {use12Hours:true, format: 'h:mm a'}
+    } else {
+        format = {use12Hours:false, /*format:'LT'*/};
+    }
+    return <TimePicker value={time}  onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} {...otherProps} {...format}  />;
 }
 
 export const TimeField = compose(

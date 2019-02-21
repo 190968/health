@@ -1,3 +1,9 @@
 {
-    "workbench.tree.horizontalScrolling": true
+    "files.exclude": {
+        ".history": true,
+        "public": true,
+    },
+    "git.enabled": false,
+    "search.useGlobalIgnoreFiles":true,
+    "fileTemplates.templates_dir": "/Users/egordmitruk/Work/VSCode/fileTemplates"
 }

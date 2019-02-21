@@ -1,13 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom';
-import ReactPlaceholder from 'react-placeholder';
 import RightMenu from './components/RightMenu';
 import { Row, Col, Menu, Card} from 'antd';
 import {GetGlobalLabel} from "../../../components/App/app-context";
 import { withCurrentUser } from '../../../queries/user';
 import { withCurrentNetwork } from '../../../queries/network';
-
+import './index.less';
 
 
 class Header extends React.Component {
@@ -39,6 +37,8 @@ class Header extends React.Component {
         const location = this.props.location;
 
         const {currentNetwork:network={}} = this.props;
+        //console.log(network);
+        const {networkModuleExists} = network;
         const menu_items = [
             ['Dashboard', '/', 'dashboard'],
             ['Planstore', '/planstore', 'planstore'],
@@ -49,7 +49,11 @@ class Header extends React.Component {
 
             if (item[1] ) {
                 /*<HaveModule module={item[2]}>*/
-
+                if (item[2] === 'planstore' && !networkModuleExists('aps', 'planstore', true)) {
+                    return null;
+                } else if (item[2] === 'community' && !networkModuleExists('community')) {
+                    return null;
+                }
                 return (
                     <Menu.Item  key={item[1]}>
                         <NavLink to={item[1]}><GetGlobalLabel type={item[2]} defaultValue={item[0]} /></NavLink>
@@ -66,7 +70,7 @@ class Header extends React.Component {
 
         const locationPath = '/'+location.pathname.split('/')[1];
 
-        console.log('Loading Header', this.props);
+       // console.log('Loading Header', this.props);
 //{/*customPlaceholder={HeaderPlaceholder}*/}
     //console.log(this.props, 'Loading header');
     if (loading) {
@@ -80,20 +84,20 @@ class Header extends React.Component {
             )
         }
         return (
-                <Row type="flex" justify="space-between" align="middle">
+                <Row type="flex" justify="space-between" align="middle" >
                     <Col md={5}><Link to={'/'}><img alt="" className="logo" style={{height:'50px', marginRight:'5px'}} src={network.logo} /></Link></Col>
-                    <Col>
+                    <Col md={10} style={{textAlign:'center'}}>
                         <Menu
                             onClick={this.handleClick}
                             selectedKeys={[locationPath]}
                             mode="horizontal"
-                            style={{'borderBottom':'none'}}
+                            style={{'borderBottom':'none', 'textTransform': 'uppercase'}}
                         >
                             {menuHtml}
                         </Menu>
                     </Col>
 
-                    <Col md={9}>
+                    <Col md={9} >
                         <RightMenu currentUser={currentUser} updateCurrentUserInfo={updateCurrentUserInfo} />
                     </Col>
 

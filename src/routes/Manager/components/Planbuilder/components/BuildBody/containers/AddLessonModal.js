@@ -34,10 +34,10 @@ const withMutation = graphql(AddPlanLessonMutation, {
     props: ({ ownProps, mutate }) => ({
         submitLesson: (title) => {
             return mutate({
-                variables: {planId: ownProps.planId, title: title},
+                variables: {planId: ownProps.plan.id, title: title},
                 refetchQueries: [{
                     query: PLAN_BODY_LESSONS_QUERY,
-                    variables: { id: ownProps.planId, date:''},
+                    variables: { id: ownProps.plan.id, date:''},
                 }],
             }).then((data) => {
                 ownProps.onHide();

@@ -8,7 +8,6 @@ import {GalleryWide} from "../../../Gallery";
 
 const AttachmentsPure = props => {
     const {openUpload=false, hideButton=false, showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false} = props;
-    console.log(attachments);
     return <React.Fragment>
 
         <AttachmentsList attachments={attachments} showPreview={limit === 1 || showPreview} limit={limit} />
@@ -201,4 +200,18 @@ export const getIconByFileType = ({type, label='', asString=false}) => {
     }
 
     return icon;
+}
+
+
+export const prepareAttachmentsFromSimpleConnection = (items) => {
+    const attachments = items && items.map(item => {
+        
+        const {id, schedule, type, connectionNode} = item;
+        return {
+            id,
+            type: type,
+            object: {...connectionNode, schedule}
+        }
+    });
+    return attachments;
 }

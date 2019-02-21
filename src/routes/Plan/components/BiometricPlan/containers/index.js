@@ -1,9 +1,9 @@
-import { connect } from 'react-redux'
 import BiometricPlanBody from '../components';
 import Biometric from '../components/Biometric/components';
-
+import {compose} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { ifModuleExists } from '../../../../../components/App/app-context';
 // Query for grabbing everything for the dashboard items
 export const BiometricPlanQuery = gql`
     query GET_BIOMETRIC_PLAN ($user_id: UID!, $date: Date)  {
@@ -114,27 +114,7 @@ const withDeleteMutation = graphql(deleteTracker, {
     }),
 });
 
-/* -----------------------------------------
-  Redux
- ------------------------------------------*/
-
-const mapStateToProps = (state) => {
-
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-
-    return {
-        /*increment: (info) => {dispatch(increment(info))},
-        doubleAsync*/
-    }
-};
-
-
-
-export default withDeleteMutation(connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(BiometricPlanBodyWithQuery));
+export default compose(
+    ifModuleExists('trackers', 'patient_trackers', true),
+    withDeleteMutation,
+)(BiometricPlanBodyWithQuery);

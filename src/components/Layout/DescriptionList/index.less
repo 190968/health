@@ -16,14 +16,46 @@
     margin-bottom: 16px;
   }
 
+  &.align-right {
+    .term {
+      text-align: right;
+
+      &:after {
+        margin:0;
+      }
+    }
+
+  }
+
+  &.horizontal .description {
+    display: flex;
+    justify-content: flex-end;
+    .term {
+      flex: 1;
+      white-space: initial;
+    }
+    .detail {
+      flex: 3;
+    }
+  }
+
+  .description.highlight {
+    border: 1px solid #e8e8e8;
+    border-radius: 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #f9f9f9;
+  }
+
   .term {
     // Line-height is 22px IE dom height will calculate error
     line-height: 20px;
     padding-bottom: 16px;
     margin-right: 8px;
     color: @heading-color;
-    white-space: nowrap;
-    display: table-cell;
+     white-space: nowrap;
+     display: table-cell;
+    
 
     &:after {
       content: ':';
@@ -39,7 +71,11 @@
     padding-bottom: 16px;
     color: rgba(0, 0, 0, 0.65);
     display: table-cell;
+    &-line + .detail-line {
+      margin-top:5px;
+    }
   }
+
   &.vertical {
     .term {
       padding-bottom: 8px;

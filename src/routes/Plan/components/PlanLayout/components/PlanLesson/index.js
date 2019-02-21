@@ -6,9 +6,11 @@ import PlanElementsSelectbox from '../../components/PlanElementsSelectbox';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import { EmptyList } from '../../../../../../components/Loading/index';
+import { CardFooter } from '../../../../../../components/Card/components/CardFooter';
 import { SortableElement } from 'react-sortable-hoc';
 
 import { branch, compose, withHandlers, withProps, withState, renderComponent } from 'recompose';
+import { PlanLessonCompleteButton } from './containers/PlanLessonCompleteButton';
 
 // const PlanElementEnhanced = compose(
 //     branch(props => props.isBuilderMode, SortableElement)
@@ -20,8 +22,7 @@ export class PlanLesson extends React.Component {
 		this.state = {
 			isClicked: false,
 			loading: false
-		};
-		this.saveLesson = this.saveLesson.bind(this);
+		}; 
 		this.clearLoading = this.clearLoading.bind(this);
 	}
 
@@ -31,34 +32,7 @@ export class PlanLesson extends React.Component {
 		isBuilderMode: false
 	};
 
-	saveLesson = (e, lessonId, isLastlesson) => {
-		const { upid } = this.props;
-		this.setState({
-			loading: true
-		});
-		this.props
-			.lessonReport(upid, lessonId)
-			.then(({ data }) => {
-				if (isLastlesson) {
-					const { haveSections } = this.props;
-					if (haveSections) {
-						message.success('Last lesson has been completed');
-						this.props.showFirstSection();
-					} else {
-						// do action if no sections.
-						message.success('All Lessons has been completed');
-					}
-					this.clearLoading();
-				} else {
-					this.clearLoading();
-					message.success('Lesson has been completed');
-					this.props.showNextLesson();
-				}
-			})
-			.catch((error) => {
-				message.error(error.message);
-			});
-	};
+
 	clearLoading() {
 		this.setState({
 			loading: false
@@ -110,7 +84,7 @@ export class PlanLesson extends React.Component {
 		`;
 
 		this.timer = setTimeout(
-			function() {
+			function () {
 				client.mutate({ mutation: updateLessonMutation, variables: { id: id, planId: plan.id, title: value } });
 			}.bind(this),
 			500
@@ -166,34 +140,24 @@ export class PlanLesson extends React.Component {
 			isBuilderMode,
 			isPreviewMode,
 			loading,
+			showNextLesson,
+			showFirstSection,
 			elements = []
 		} = this.props;
-		const footer =
-			!isBuilderMode && (elements || isLastLesson)
-				? [
-						<Button
-							type="primary"
-							loading={this.state.loading}
-							onClick={(e) => this.saveLesson(e, item.id, isLastLesson)}
-						>
-							{isLastLesson ? haveSections > 0 ? 'Go to Activities' : 'Finish' : 'Next Lesson'}
-						</Button>
-					]
-				: [];
 
+		const footer = (!isBuilderMode/* && (elements || isLastLesson)*/) && <PlanLessonCompleteButton upid={upid} lesson={item} isLastLesson={isLastLesson} showNextLesson={showNextLesson} showFirstSection={showFirstSection} haveSections={haveSections} label={isLastLesson ? haveSections > 0 ? 'Go to Activities' : 'Finish' : 'Next Lesson'} />;
 		let title = item.title || '';
 		const lessonId = item.id;
 		if (isBuilderMode) {
 			title = <Input defaultValue={item.title} placeholder="Title" onKeyUp={this.updateLabel} />;
 		}
 		//console.log(loading);
-		console.log(this.props);
 
 		return (
-			<Card title={title} bordered={false} actions={footer}>
-				{1 == 5 &&
-				isBuilderMode &&
-				!isPreviewMode && <PlanElementsSelectbox mode="lesson" lessonId={lessonId} plan={plan} />}
+			<Card title={title}>
+				{/* {1 == 5 &&
+					isBuilderMode &&
+					!isPreviewMode && <PlanElementsSelectbox mode="lesson" lessonId={lessonId} plan={plan} />} */}
 				{elements ? (
 					<List
 						size="large"
@@ -219,8 +183,9 @@ export class PlanLesson extends React.Component {
 						}}
 					/>
 				) : (
-					<EmptyResults {...this.props} lessonId={lessonId} />
-				)}
+						<EmptyResults {...this.props} lessonId={lessonId} />
+					)}
+			<CardFooter>{footer}</CardFooter>
 			</Card>
 		);
 	}

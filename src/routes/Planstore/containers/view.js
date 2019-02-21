@@ -2,7 +2,8 @@ import PlanstorPlanLayout from '../components/PlanstorePlanLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import Plan from '../../Plan/components/Plan';
+import { ifPageExists } from '../../../components/App/app-context';
+import { PlanCardFragment } from '../../Plan/components/Plan/fragments';
 
 const PLANSTORE_PLAN = gql`
     query GET_PLANSTORE_PLAN ($id: UID!) {
@@ -15,7 +16,9 @@ const PLANSTORE_PLAN = gql`
             gender,
             elements,
             language,
-            alreadyDownloadedId,
+            alreadyDownloadedUserPlan {
+                id
+            }
             isFixedDated
             categories {
                 id,
@@ -24,7 +27,7 @@ const PLANSTORE_PLAN = gql`
 
         }
     }
-    ${Plan.fragments.plan}
+    ${PlanCardFragment}
 `;
 
 
@@ -39,10 +42,12 @@ const withQuery = graphql(
         }),
         props: ({data }) => {
             if (!data.loading) {
+                const {plan} = data;
+                const {alreadyDownloadedUserPlan} = plan || {};
                 return {
                     plan: data.plan,
-                    alreadyDownloaded: data.plan.alreadyDownloadedId !== '',
-                    alreadyDownloadedId: data.plan.alreadyDownloadedId,
+                    alreadyDownloaded: alreadyDownloadedUserPlan !== null,
+                    alreadyDownloadedUserPlan,
                     loading: data.loading,
                 }
 
@@ -54,4 +59,4 @@ const withQuery = graphql(
 );
 
 
-export default withQuery(PlanstorPlanLayout);
+export default  ifPageExists('aps', 'planstore', false)(withQuery(PlanstorPlanLayout));

@@ -5,6 +5,8 @@ import {compose, branch, withHandlers, withState, withProps} from 'recompose';
 import {Form} from 'antd';
 import gql from 'graphql-tag';
 import {withModal} from "../../../../../components/Modal/index";
+import { PhoneInfoFragment } from '../../../../../components/FormCustomFields/components/Phone/fragments';
+import { AddressInfoFragment } from '../../../../../components/FormCustomFields/components/Address/fragments';
 
 const GET_PROFILE  = gql`
  query GET_PROFILE($user_id:UID) {
@@ -21,8 +23,12 @@ const GET_PROFILE  = gql`
     gender
     genderText
      age
-     addressText
-     phoneFormatted
+     address {
+         ...AddressInfo
+     }
+     phone {
+         ...PhoneInfo
+     }
      birthday
      email
      getUserNetwork {
@@ -56,7 +62,8 @@ const GET_PROFILE  = gql`
     
   }
 }
-
+${PhoneInfoFragment}
+${AddressInfoFragment}
 
 `;
 // health {

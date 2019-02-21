@@ -4,9 +4,12 @@ import Truncate from 'react-truncate';
 import moment from 'moment';
 import {AvatarWithName} from "../../../../../User/components/AvatarWithName/index";
 import sort from '../../../../../../components/Tables/sort';
+import SettingsDropdown from '../../../../../../components/UI/SettingsDropdown';
+import { TableWithMessage } from '../../../../../../components/Tables';
+import TaskAssignButton from '../../../../../../components/Tasks/components/TaskAssignButton';
 export const CohortsTable = props => {
 
-    const {cohorts=[], loading=false} = props;
+    const {cohorts=[], user, loading=false} = props;
     const total = cohorts.length;
     const columns = [
         {
@@ -36,6 +39,14 @@ export const CohortsTable = props => {
             },
             sorter: (a, b) => a.startDate-b.startDate,
         },
+        {
+            title: '',
+            key: 'act',
+            render: (date, info) => {
+                const items = [{key:'assign', content:<TaskAssignButton asMenuItem label={'Assign Assessment'} patient={user} mode={'simple'} refetch={props.refetch} assignObject={{type: 'assessment', cohort:info.cohort}} />}];
+                return <SettingsDropdown items={items} />
+            }
+        },
 
     ];
     const dataSource = cohorts;
@@ -44,8 +55,10 @@ export const CohortsTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic  ant-card-type-table" title={'Cohorts '+ (total > 0 ? ' ('+total+')' : '')} >
-        <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
+    return (<Card type="table" title={'Cohorts '+ (total > 0 ? ' ('+total+')' : '')} >
+        <TableWithMessage
+        emptyMessage={'No Cohorts'}
+        size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
     </Card>)
 }
 

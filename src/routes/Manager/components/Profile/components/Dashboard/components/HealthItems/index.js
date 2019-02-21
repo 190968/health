@@ -2,7 +2,9 @@ import React from 'react';
 import {Card, Table} from 'antd';
 import moment from 'moment';
 import Truncate from 'react-truncate';
-
+import { HealthManagerButton } from '../../../../../../../Health/components/HealthManager/components/Button';
+import { HealthViewButton } from '../../../../../../../Health/components/View/components/Button';
+import { EmptyList } from '../../../../../../../../components/Loading';
 const getTitleByType = type => {
 
     let title = 'Title';
@@ -29,7 +31,7 @@ const getTitleByType = type => {
 }
 export const HealthItemsTable = props => {
 
-    const {items=[], total=0, loading=false, title="", type} = props;
+    const {items=[], total=0, loading=false, title="", type, user} = props;
 
     const colTitle = getTitleByType(type);
     const columns = [{
@@ -37,16 +39,17 @@ export const HealthItemsTable = props => {
         dataIndex: 'title',
         key: 'title',
         render: (title, info) => {
-            return <Truncate  lines={1} >{title}</Truncate>;
+            return <HealthViewButton healthRecord={info} user={user} refetch={props.refetch} label={<Truncate  lines={1} >{title || 'Untitled'}</Truncate>} asText />
+            //return <HealthManagerButton healthRecord={info} user={user} label={<Truncate  lines={1} >{title}</Truncate>} asText />
         },
     },
         {
             title: 'Date',
-            dataIndex: 'createdDate',
+            dataIndex: 'date',
             key: 'createdDate',
             width:100,
-            render: (createdDate) => {
-                return moment(createdDate).format('L')
+            render: (date) => {
+                return date ? moment(date).format('L') : null
             },
         }
 
@@ -60,8 +63,8 @@ export const HealthItemsTable = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="  ant-card-type-table" title={title+' '+ (total > 0 ? ' ('+total+')' : '')} >
-        <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
+    return (<Card type="table" loading={loading} extra={<HealthManagerButton user={user} type={type} onHide={props.refetch} /> /*type == 'diagnosis' && <DiagnosisManagerButton user={user} />*/}  title={title+' '+ (total > 0 ? ' ('+total+')' : '')} >
+        {dataSource.length > 0 ? <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} /> : <EmptyList>No {title}</EmptyList>}
     </Card>)
 }
 

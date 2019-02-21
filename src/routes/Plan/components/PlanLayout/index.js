@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Joyride from 'react-joyride';
 import PlanHeader from './containers/PlanHeader';
 import PlanBody from './containers/PlanBody';
 import { Card } from 'antd';
 import moment from 'moment/moment';
 import { PlanContextProvider } from '../../planContext';
 import { PageHeaderLayout } from '../../../../components/Layout/PageHeaderLayout';
+
+
 
 export class PlanLayout extends React.Component {
 	constructor(props) {
@@ -32,13 +34,13 @@ export class PlanLayout extends React.Component {
 	}
 
 	render() {
-		const { info, plan, user, loading } = this.props;
+		const { info, plan, user, loading, showTour, handleTourCallback } = this.props;
 		if (loading) {
 			//return (<div>Loading...</div>);
 			return <Card loading>aaa</Card>;
 		}
 		return (
-			<div>
+			<div className={'tour-planbody'}>
 				
 				<PlanContextProvider value={{ plan, isBuilderMode: false, isPreviewMode: false }}>
 					<PlanHeader
@@ -49,7 +51,7 @@ export class PlanLayout extends React.Component {
 						setDate={this.setDate}
 					/>
 					<div className="pageContent">
-					<Card>
+					
 						<PlanBody
 							upid={info.id}
 							plan={plan}
@@ -58,8 +60,9 @@ export class PlanLayout extends React.Component {
 							date={this.state.date}
 							showIntro={this.state.infoModal}
 							hideIntro={this.toggleIntro}
+							showTour={showTour}
+							handleTourCallback={handleTourCallback}
 						/>
-					</Card>
 					</div>
 				</PlanContextProvider>
 			</div>

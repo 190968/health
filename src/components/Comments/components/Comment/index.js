@@ -19,7 +19,7 @@ const Comment = props => {
             {showName && !isMe && <span className={'userName'} >{from}</span>}
 
             <span className={'time'}>
-              {moment(message.createdAt).format('LLL')}
+              {moment(message.createdAt).format('lll')}
             </span>
 
         </span>

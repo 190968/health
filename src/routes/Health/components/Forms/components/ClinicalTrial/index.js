@@ -1,40 +1,28 @@
 import React from 'react';
 import {Form, Input} from 'antd';
 import {ClinicalTrialSelect} from "../../../../../../components/Autosuggest/containers/ClinicalTrialSelect";
-import {DateField} from "../../../../../../components/FormCustomFields/index";
+import DefaultHealthFields from '../DefaultFields';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-export const ClinicalTrialForm = ({cancer={}, form, formItemLayout}) => {
+export const ClinicalTrialForm = (props) => {
+    console.log(props);
+    const {element={}, form, formItemLayout} = props;
     const {getFieldDecorator} = form;
-    //const {title='', code='', stage={}, chemotherapies=[]} = cancer;
-    return <Form>
-        <FormItem
-            {...formItemLayout}
-            label="Date Enrolled"
-        >
-            {getFieldDecorator('date', {
-                //initialValue: title,
-                rules: [{
-                    required: true,
-                    message: "Please select Date",
-                }],
-            })(
-                <DateField />
-            )}
-        </FormItem>
+    const {trial,cohort, sponsor, date} = element;
+    return <React.Fragment>
 
         <FormItem
             {...formItemLayout}
             label='Clinical Trial'
         >
             {getFieldDecorator('trial', {
-                    //initialValue: code,
+                    initialValue: trial,
                     rules: [{required: true, message: "Select Trial"}],
                 }
             )(
-                <ClinicalTrialSelect />
+                <ClinicalTrialSelect getFullInfo />
             )}
         </FormItem>
 
@@ -43,6 +31,7 @@ export const ClinicalTrialForm = ({cancer={}, form, formItemLayout}) => {
             label='Clinical Trial Cohort'
         >
             {getFieldDecorator('cohort', {
+                initialValue: cohort,
                 }
             )(
                 <TextArea autosize={{ minRows: 1 }} />
@@ -54,29 +43,15 @@ export const ClinicalTrialForm = ({cancer={}, form, formItemLayout}) => {
             label='Clinical Trial Sponsor'
         >
             {getFieldDecorator('sponsor', {
+                initialValue: sponsor,
                 }
             )(
                 <TextArea autosize={{ minRows: 1 }} />
             )}
         </FormItem>
-    </Form>
+
+        <DefaultHealthFields {...props} />
+        </React.Fragment>
 }
 
 export default ClinicalTrialForm;
-
-
-export const prepareOncologyInput = values => {
-    const {date,
-        trial,
-        cohort,
-        sponsor} = values;
-
-    return {
-        clinicalTrial: {
-            date,
-            trial,
-            cohort,
-            sponsor,
-        }
-    }
-}

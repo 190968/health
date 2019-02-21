@@ -25,7 +25,7 @@ const enhance = compose(
         }
         const modalOpts = {modalTitle:modalTitle};
         if (props.modalFooter) {
-            modalOpts.footer = props.modalFooter();
+            modalOpts.modalFooter = props.modalFooter();
         }
         return {
             ...modalOpts

@@ -2,7 +2,7 @@ import PubMedArticlePure from '../components/PubMedArticle';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import {compose, withProps} from 'recompose';
-import { withModal } from '../../../../../components/Modal';
+import { withDrawer } from '../../../../../components/Modal';
 
 export const GET_PUB_MED_PUBLICATION_QUERY = gql`
     query GET_PUB_MED_ARTICLE ($id: ID!) {
@@ -46,7 +46,7 @@ const enhance = compose(
             modalWidth:700
         }
     }),
-    withModal
+    withDrawer
 );
 export const PubMedArticle = enhance(PubMedArticlePure);
 export default PubMedArticle;

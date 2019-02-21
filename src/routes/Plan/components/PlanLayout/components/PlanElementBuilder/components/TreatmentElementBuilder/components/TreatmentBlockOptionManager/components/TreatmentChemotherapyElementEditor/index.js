@@ -1,11 +1,12 @@
 import React from 'react';
-import {Form, Input} from 'antd';
+import {Form, Input, InputNumber} from 'antd';
 import {ChemotherapySelect} from "../../../../../../../../../../../../components/Autosuggest/containers/ChemotherapySelect";
 import {toNumber} from "../../../../../../../../../../../../utils/main";
+import DefaultHealthFields from '../../../../../../../../../../../Health/components/Forms/components/DefaultFields';
 
 const FormItem = Form.Item;
 
-export const prepareInput = (values) => {
+export const prepareChemotherapyInput = (values) => {
     let element = {...values,
         chemotherapyId: values.chemotherapy.id,
         cycles:parseInt(values.cycles),
@@ -14,9 +15,7 @@ export const prepareInput = (values) => {
         chemotherapy: undefined
     }
     //console.log(values);
-    return {
-        chemotherapyElement:element
-    }
+    return element
 };
 
 const checkChemotherapy = (rule, value, callback) => {
@@ -64,7 +63,7 @@ export const TreatmentChemotherapyElementEditorPure = (props) => {
                     initialValue:cycles,
                     rules: [{required: true, type:'number',  transform: toNumber, message: "Enter Cycles", whitespace: true}],
                 })(
-                    <Input />
+                    <InputNumber />
                 )}
             </FormItem>
             <FormItem
@@ -75,7 +74,7 @@ export const TreatmentChemotherapyElementEditorPure = (props) => {
                     initialValue:days,
                     rules: [{required: true, type:'number',  transform: toNumber, message: "Enter Days", whitespace: true}],
                 })(
-                    <Input />
+                    <InputNumber />
                 )}
             </FormItem>
             <FormItem
@@ -86,9 +85,10 @@ export const TreatmentChemotherapyElementEditorPure = (props) => {
                     initialValue:timesPerDay,
                     rules: [{required: true, type:'number',  transform: toNumber, message: "Enter Times per day", whitespace: true}],
                 })(
-                    <Input />
+                    <InputNumber />
                 )}
             </FormItem>
+            <DefaultHealthFields {...props} />
         </React.Fragment>
     );
 };

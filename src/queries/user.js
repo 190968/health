@@ -1,7 +1,7 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { CurrentUserInfoFragment } from '../routes/User/fragments';
-import { CurrentNetworkInfoFragment } from './network';
+import { NetworkInfoFragment, ProviderInfoFragment } from './network';
 import { withActiveUser } from '../components/App/app-context';
 export const CurrentUserQUERY = gql`
     query GET_CURRENT_USER  {
@@ -17,13 +17,19 @@ export const withCurrentUser = withActiveUser;
 
 export const CurrentUserNetworkQUERY = gql`
 query GET_CURRENT_USER_NETWORK  {
-    account   {
+    account {
         ...CurrentUserInfo
-        ...CurrentNetworkInfo
+    }
+    network {
+        ...NetworkInfo
+    }
+    provider {
+        ...ProviderInfo
     }
 }
 ${CurrentUserInfoFragment}
-${CurrentNetworkInfoFragment}
+${NetworkInfoFragment}
+${ProviderInfoFragment}
 `;
 
 export const withCurrentUserAndNetwork = graphql(CurrentUserNetworkQUERY,
@@ -33,18 +39,19 @@ export const withCurrentUserAndNetwork = graphql(CurrentUserNetworkQUERY,
             return {
                 //fetchPolicy: 'cache-first'
                 //fetchPolicy: 'no-cache'
-                fetchPolicy: 'network-only'
+                //fetchPolicy: 'network-only',
+                //notifyOnNetworkStatusChange: true
             }
         },
         props: ({ ownProps, data }) => {
-            const {account={}, loading} = data;
-            const {user={}, currentRole, currentToken={}, currentNetwork, ...otherProps} = account || {};
-            let {token, isExpired} = currentToken;
+            const {account, loading, network, provider} = data;
+            const {user={}, currentRole, currentToken, ...otherProps} = account || {};
+            let {token, isExpired} = currentToken || {};
             if (isExpired) {
                 token = '';
             }
-            console.log(data, 'loading user network');
-            return {currentNetwork, currentUser:{...user, currentRole, token, ...otherProps}, loading};
+            // console.log(data, 'loading user network');
+            return {currentNetwork:network, currentProvider:provider, currentUser:{...user, currentRole, token, ...otherProps}, loading};
         }
     }
 )

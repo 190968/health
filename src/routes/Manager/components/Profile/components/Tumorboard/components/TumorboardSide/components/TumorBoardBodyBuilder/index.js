@@ -2,7 +2,6 @@ import React from 'react';
 import {Card, Tag, Button} from 'antd';
 import {compose, withState, withHandlers} from 'recompose';
 import { DropTarget } from 'react-dnd';
-import {TimelineElementView} from "../../../../../Pathway/components/Timeline/components/TimelineElement/index";
 import {TumorboardElements} from "../../../../../../../Tumorboard/components/TumorboardView/components/TumorboardElements/index";
 import {EmptyList} from "../../../../../../../../../../components/Loading/index";
 

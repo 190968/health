@@ -10,8 +10,9 @@ import MainCategories from './components/MainCategories'
  import CategoryNews from './components/CategoryNews/containers/CategoryNews'
 import '../../style.css';
 import Motivators from '../../../User/containers/motivatorsContainer';
-import CareTeam from '../../../User/containers/careTeamContainer';
+//import CareTeam from '../../../User/containers/careTeamContainer';
 import Family from '../../../User/containers/familyContainer';
+import DiscussionsList from './components/Discussion/containers/DiscussionsList.js';
 class CommunityLayout extends React.Component{
     render(){
         const {info,loading, user_id} = this.props;
@@ -20,22 +21,18 @@ class CommunityLayout extends React.Component{
                 <Card loading >Loading!!!</Card>
             );
         }
-        return(
-            <React.Fragment>
-                {/*<Col >*/}
-			{/* <Col offset={4} xs={24} md={14} lg={15} xl={17}> */}
+        return <Row gutter={20}>
+               <Col xs={24} md={14} lg={15} xl={17}>
                     <MyCommutinies />
-                    <CategoryNews />
+                    <DiscussionsList />
                     <MainCategories info={info} />
-                {/* </Col> */}
-
-                {/*<Col xs={24} md={10} lg={9} xl={7}>
-                    <Family user_id={user_id} />
-                    <CareTeam user_id={user_id} />
-                    <Motivators user_id={user_id} />
-                </Col>*/}
-            </React.Fragment>
-        )
+               </Col>
+               <Col xs={24} md={10} lg={9} xl={7}>
+                    <CategoryNews />
+                    <Motivators />
+                    <Family  />
+               </Col>
+            </Row>
     }
 }
 export default withApollo(withRouter(CommunityLayout));

@@ -3,85 +3,75 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import React from 'react';
 import {compose,withStateHandlers} from 'recompose';
-export const GET_CANCER_STAGES_QUERY = gql`    
-query GET_ASSESSMENTS {
-    getAssessments {
-      totalCount
-      edges {
-        id
-        name
-        isForm
-        status
-        isPatientReport
-        getTotalAssigns
-        createdDate
-      }
+const GET_ASSESSMENTS_QUERY = gql`    
+query GET_ASSESSMENTS ($status: AssessmentStatusEnum) {
+    management {
+        getAssessments (status: $status) {
+            totalCount
+            edges {
+                id
+                name
+                isForm
+                status
+                isPatientReport
+                getTotalAssigns
+                createdDate
+            }
+        }
     }
-  }
+}
 `;
 
 // 1- add queries:
 const withQuery = graphql(
-    GET_CANCER_STAGES_QUERY,
+    GET_ASSESSMENTS_QUERY,
     {
-        //name: 'PlanstorePlans',
         options: (ownProps) => {
             return {
-                //skip: !ownProps.ready,
-                /*variables: {
-                    user_id: ownProps.user_id,
-                    status: 'active'
-                    //date:ownProps.date
-                },*/
+                // variables: {
+                //     status: null
+                // },
                 fetchPolicy: 'network-only'
             }
-
         },
         props: ({ ownProps, data }) => {
-            if (!data.loading) {
-
-                return {
-                    getAssessments: data.getAssessments.edges,
-                    totalCount: data.getAssessments.totalCount,
-                    loading: data.loading,
-                    loadByStatus(status) {
-                        return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                            variables: {
-                                user_id:ownProps.user_id,
-                                status:status
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
-                                return fetchMoreResult;
-                            },
-                        });
-                    },
-                    loadMoreEntries() {
-
-                        return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                            variables: {
-                                // We are able to figure out which offset to use because it matches
-                                // the feed length, but we could also use state, or the previous
-                                // variables to calculate this (see the cursor example below)
-                                page: ownProps.page+1,
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
-
-                                return fetchMoreResult;
-                                return Object.assign({}, previousResult, {
-                                    // Append the new feed results to the old one
-                                    planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
-                                });
-                            },
-                        });
+            const {getAssessments} = data.management || {};
+            const {status} = data.variables || {};
+            const {edges=[], totalCount=0} = getAssessments || {};
+            return {
+                status,
+                assessments: edges,
+                total: totalCount,
+                loading: data.loading,
+                loadByStatus(status) {
+                    if (status === 'all') {
+                        status = null;
                     }
-                }
+                    return data.refetch({
+                        status: status
+                    });
+                },
+                // loadMoreEntries() {
 
-            } else {
-                return {loading: data.loading}
+                //     return data.fetchMore({
+                //         // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                //         variables: {
+                //             // We are able to figure out which offset to use because it matches
+                //             // the feed length, but we could also use state, or the previous
+                //             // variables to calculate this (see the cursor example below)
+                //             page: ownProps.page+1,
+                //         },
+                //         updateQuery: (previousResult, {fetchMoreResult}) => {
+                //             if (!fetchMoreResult) { return previousResult; }
+
+                //             return fetchMoreResult;
+                //             return Object.assign({}, previousResult, {
+                //                 // Append the new feed results to the old one
+                //                 planstore: {plans: [...previousResult.planstore.plans, ...fetchMoreResult.planstore.plans]},
+                //             });
+                //         },
+                //     });
+                // }
             }
         },
     }

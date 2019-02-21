@@ -1,120 +1,71 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import moment from 'moment';
-import {Link} from 'react-router-dom';
-import {Input, Menu, Dropdown, DatePicker, Table, Button, Icon, Tooltip} from 'antd';
-import sort from '../../../../../../components/Tables/sort'
-import './index.css'
+import { FormattedMessage } from 'react-intl';
+import ActionplansManagerButton from '../Buttons/components/Manage';
+import ActionplansDeleteButton from '../Buttons/containers/Delete';
+// import ActionplansViewButton from '../Buttons/containers/View';
+import SettingsDropdown from '../../../../../../components/UI/SettingsDropdown';
+import { TableWithMessage } from '../../../../../../components/Tables';
+import { getTableDateProps } from '../../../../../../components/Tables/TableColumn';
+import { StatusTag } from '../../../../../../constants/statuses';
+import AvatarWithName from '../../../../../User/components/AvatarWithName';
+ 
 
-const {RangePicker} = DatePicker;
-const dateFormat = 'YYYY/MM/DD';
+ 
+const ActionplansTable = props => {
+    const { plans:dataSource, total, status, loading} = props; 
 
-
-export default class TableCustom extends React.Component {
-    state = {
-        // for search
-        filterDropdownVisible: false,
-        searchText: '',
-        filtered: false,
-        //
-        filteredInfo: null,
-        sortedInfo: {},
-        data: this.props.plans,
-    };
-
-    static defaultProps = {
-        plans: [],
-        plansTotal: 0
-    }
-
-    handleChange = (pagination, filters, sorter) => {
-        this.setState({
-            filteredInfo: filters,
-            sortedInfo: sorter,
-        });
-    }
-    onInputChange = (e) => {
-        this.setState({searchText: e.target.value});
-    }
-
-    render() {
-        const {loading} = this.props;
-        let {sortedInfo} = this.state;
-        const suffix = this.props.searchText ? <Icon type="close-circle" onClick={this.props.emitEmpty}/> :  <Icon type="search"/>
-        console.log(this.props.plans);
-        const columns = [{
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
-            //sorter: (a, b) => a.title.length - b.title.length,
-            render: (title, info) => {
-                return <Link to={'/pb/' + info.id}>{title}</Link>
-            },
-            sorter: (a, b) => sort(a, b, "title"),
-            filterDropdown: (
-                    <Input
-                        suffix={suffix}
-                        ref={ele => this.searchInput = ele}
-                        placeholder="Search name"
-                        value={this.props.searchText}
-                        onChange={this.props.onSearch}
-                        onPressEnter={this.props.onSearch}
-                    />
-            ),
-            filterIcon: <Icon type="search"/>,
-        }, {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (text, info) => {
-                return info.isActive ? 'Active' : 'Inactive'
-            },
-            filters: [
-                {text: 'Active', value: true},
-                {text: 'Inactive', value: false},
-            ],
-            onFilter: (value, record) => {
-                console.log(value, record)
-            },
-        }, {
-            title: 'Date',
-            dataIndex: 'createdAt',
-            key: 'date',
-            render: (info) => moment(info).format('L'),
-            sorter: (a, b) => a.createdAt - b.createdAt,
-            filterDropdown: (
-                <div className="custom-filter-dropdown">
-                   <DatePicker /> 
-                   <DatePicker />
-                </div>
-            ),
-            filterIcon: <Icon type="filter" style={{color: this.state.filtered ? '#108ee9' : '#aaa'}}/>,
-        }, {
-            title: 'Actions',
-
+    let columns = [{
+        title: 'Name',
+        dataIndex: 'title',
+        key: 'name',
+        render: (title, info) => {
+            return <Link to={'/pb/'+info.id} >{title}</Link>
+        }
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+        render: status => <StatusTag status={status} />
+      },
+      {
+            title: 'Created',
+            key: 'createdOn',
+            ...getTableDateProps('createdOn'),
+        },
+        {
+            title: 'By',
+            dataIndex: 'createdBy',
+            key: 'createdBy',
+            render: user => <AvatarWithName user={user} />
+          },
+        {
+            title: '',
+            key: 'act',
+            width:50,
             render: (info) => {
-                const menu = (
-                    <Menu>
-                        <Menu.Item>
-                            <Icon type="edit"/> Edit
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Icon type="delete"/> Delete
-                        </Menu.Item>
-                    </Menu>
-                );
-                return <Dropdown overlay={menu} trigger={['click']}>
-                    <Icon type="setting"/>
-                </Dropdown>;
+                const items = [
+                    {key:'edit', content:  <ActionplansManagerButton  plan={info} />},
+                    {key:'delete', content: <ActionplansDeleteButton  plan={info} refetch={props.refetch} asMenuItem />}
+                ];
+                return <SettingsDropdown items={items} />
             }
-        },];
-console.log(this.props.plans);
-        const dataSource = this.props.plans;
+        }];
 
-        return (
-            <Table dataSource={dataSource} columns={columns} pagination={false} onChange={this.handleChange}
-                   ref={(input) => {
-                       this.table = input;
-                   }}/>
-        )
-    }
+        if (status) {
+            columns = columns.filter(c => c.key !== 'status'); 
+        }
+    return <TableWithMessage
+        emptyMessage={'No Actionplanss added'}
+        dataSource={dataSource} 
+        columns={columns}
+        total={total}
+        onChange={props.handleTableChange}
+        loading={loading}
+        rowKey={'id'}
+        />
 }
+
+export default ActionplansTable;

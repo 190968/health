@@ -1,10 +1,9 @@
-import { connect } from 'react-redux'
-
-
-import MedicationDetails from '../components/MedicationsFullDetails'
+import MedicationFullDetailsPure from '../components/MedicationsFullDetails'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {MedicationSummary, MedicationInfo} from '../components/fragments';
+import { withDrawer, withSpinnerWhileLoading } from '../../../../../../../components/Modal';
+import {compose, withProps} from 'recompose';
 
 const MED_DETAILS = gql`
 query GET_MEDICATION_DETAILS($id:UID!, $userId: UID!, $date: Date) {
@@ -35,14 +34,14 @@ ${MedicationSummary}
 ${MedicationInfo}
 `;
 
-const MedicationDetailsWithQuery = graphql(MED_DETAILS,
+const withQuery = graphql(MED_DETAILS,
     {
         options: (ownProps) => {
             return   {
                 variables: {
-                    userId: ownProps.userId,
+                    userId: ownProps.user.id,
                     date: ownProps.date,
-                    id: ownProps.id,
+                    id: ownProps.medication.id,
                 },
                 fetchPolicy: 'network-only'
             }},
@@ -58,20 +57,21 @@ const MedicationDetailsWithQuery = graphql(MED_DETAILS,
             }
         },
     }
-)(MedicationDetails);
+);
 
-
-const mapStateToProps = (state) => {
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-});
-
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MedicationDetailsWithQuery);
+const enhance = compose(
+    withQuery,
+    withProps(props => {
+        const {medication} = props;
+        const {drug} = medication || {};
+        return {
+            modalTitle: drug.name,
+            modalWidth:600
+        }
+    }),
+    withDrawer,
+    withSpinnerWhileLoading
+    
+)
+export const MedicationFullDetails = enhance(MedicationFullDetailsPure);
+export default MedicationFullDetails;

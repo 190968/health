@@ -2,18 +2,15 @@
  * Created by Pavel on 08.01.2018.
  */
 import React from 'react';
-import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom';
-import {
-    injectIntl,
-    FormattedMessage
-} from 'react-intl';
-import ru from './i18n/ru';
-import en from './i18n/en';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Form,  List, Card,Modal,Input,Button, Tooltip, Icon } from 'antd';
 import AvatarWithName from '../AvatarWithName';
-const FormItem = Form.Item;
+import {
+    FormattedMessage,
+} from 'react-intl';
+import messages from './i18n/en';
+import { ListWithMessage } from '../../../../components/UI/List';
+
 const { TextArea } = Input;
 const formItemLayout = {
     labelCol: {
@@ -57,28 +54,20 @@ class Motivators extends React.Component {
 
     render() {
 
-        const  {info,loading,hasMore} = this.props;
-
-        if (loading) {
-            return  <Card loading title="Motivators">
-                                 Loading</Card>;
-        }
-        const  {motivators} = info;
-        const  {edges,totalCount} = motivators;
-        const { getFieldDecorator } = this.props.form;
-        const { intl } = this.props;
-        const title = intl.messages.user_motivators_title;
-        const count = totalCount > 0 ?  " ("+totalCount+")":"";
+        const  {loading,hasMore} = this.props;
+ 
+        const  {motivators, totalCount=0} = this.props;
     return(
-        <Card title={title+count}>
-                <List
+        <Card loading={loading} title={<FormattedMessage values={{isSelf:true, count:totalCount}} {...messages.myMotivators} />}>
+                 <ListWithMessage
+                    emptyMessage={<FormattedMessage values={{isSelf:true, count:totalCount}} {...messages.noMotivators} />}
                     split={false}
                     loading={loading}
                     grid={{gutter: 10, xs: 3,   md: 1, lg: 2/*, xl: 4*/}}
-                    dataSource={edges}
+                    dataSource={motivators}
                     renderItem={person => (
                         <List.Item key={person.id}>
-                               <AvatarWithName info={person.user} />
+                               <AvatarWithName user={{...person.user, email:person.email}} truncate role={'motivator'} />
                         </List.Item>
                     )}
                      />
@@ -89,5 +78,5 @@ class Motivators extends React.Component {
     }
 }
 
-const WrappedMotivators= Form.create()(Motivators);
-export default withRouter(injectIntl(WrappedMotivators));
+const WrappedMotivators= Motivators;
+export default WrappedMotivators;

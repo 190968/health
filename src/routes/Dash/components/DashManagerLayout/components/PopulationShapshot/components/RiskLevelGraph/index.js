@@ -32,16 +32,17 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export const RiskLevelGraph = props => {
     const {items=[], handleClick} = props
     // console.log(items);
-    return <ResponsiveContainer height={300}  ><PieChart  >
+    return <ResponsiveContainer height={150}  ><PieChart  margin={{ top: 5, right: 5, bottom: 5, left: 5 }} >
         <Pie
             data={items}
             dataKey='value'
             // labelLine={false}
-            outerRadius={90}
+            outerRadius={40}
             fill="#8884d8"
             label={renderCustomizedLabel}
             onClick={handleClick}
-            innerRadius={40}
+            innerRadius={20}
+           
         >
             {
                 items.map((entry, index) => {

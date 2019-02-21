@@ -1,0 +1,1610 @@
+ [
+  {
+    "id": "autosuggest_categoryselect_title",
+    "description": "Medical Repository",
+    "defaultMessage": "Medical Repository",
+    "filepath": "./src/components/Autosuggest/components/CategorySelect/i18n/en.js"
+  },
+  {
+    "id": "team.select.entire",
+    "description": "Entire Team",
+    "defaultMessage": "Entire Team",
+    "filepath": "./src/components/Autosuggest/components/TeamSelect/i18n/en.js"
+  },
+  {
+    "id": "team.select.selected",
+    "description": "Selected Team Members",
+    "defaultMessage": "Selected Team Members",
+    "filepath": "./src/components/Autosuggest/components/TeamSelect/i18n/en.js"
+  },
+  {
+    "id": "reminder",
+    "description": "Reminder",
+    "defaultMessage": "Reminder",
+    "filepath": "./src/components/Reminders/i18n/en.js"
+  },
+  {
+    "id": "reminders",
+    "description": "Reminders",
+    "defaultMessage": "Reminders",
+    "filepath": "./src/components/Reminders/i18n/en.js"
+  },
+  {
+    "id": "reminders.title",
+    "description": "{title} Reminders",
+    "defaultMessage": "{title} Reminders",
+    "filepath": "./src/components/Reminders/i18n/en.js"
+  },
+  {
+    "id": "reminders.empty",
+    "description": "Click + to Set Up Reminders",
+    "defaultMessage": "Click + to Set Up Reminders",
+    "filepath": "./src/components/Reminders/i18n/en.js"
+  },
+  {
+    "id": "reminders.noReminders",
+    "description": "No Reminders",
+    "defaultMessage": "{editableTime, select, true {No Reminders Yet. Click \"New Reminder\" to add first} other {No Reminders Yet}}",
+    "filepath": "./src/components/Reminders/i18n/en.js"
+  },
+  {
+    "id": "reminders.removeConfirm",
+    "description": "Are you sure delete this reminder?",
+    "defaultMessage": "Are you sure delete this reminder?",
+    "filepath": "./src/components/Reminders/i18n/en.js"
+  },
+  {
+    "id": "task.attachments.empty",
+    "description": "No Attachments",
+    "defaultMessage": "No Attachments",
+    "filepath": "./src/components/Tasks/components/Attachments/i18n/en.js"
+  },
+  {
+    "id": "time",
+    "description": "Time",
+    "defaultMessage": "Time",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "yes",
+    "description": "Yes",
+    "defaultMessage": "Yes",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "no",
+    "description": "No",
+    "defaultMessage": "No",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "sms",
+    "description": "Sms",
+    "defaultMessage": "Sms",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "email",
+    "description": "Email",
+    "defaultMessage": "Email",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "notification",
+    "description": "Notification",
+    "defaultMessage": "Notification",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "mobile",
+    "description": "Mobile",
+    "defaultMessage": "Mobile",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "view.info",
+    "description": "View Info",
+    "defaultMessage": "View Info",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "select.time",
+    "description": "Select Time",
+    "defaultMessage": "Select Time",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "select",
+    "description": "Select",
+    "defaultMessage": "Select",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "attachment",
+    "description": "Attachment",
+    "defaultMessage": "Attachment",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "select.something",
+    "description": "Select {title}",
+    "defaultMessage": "Select {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "manage.addEditSomething",
+    "description": "Add/Edit {title}",
+    "defaultMessage": "{edit, select, true {Edit} other {Add}} {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "add.something",
+    "description": "Add {title",
+    "defaultMessage": "Add {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "edit.something",
+    "description": "Edit {title",
+    "defaultMessage": "Edit {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "new.something",
+    "description": "New {title}",
+    "defaultMessage": "New {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "assign.something",
+    "description": "Assign {title",
+    "defaultMessage": "Assign {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "show.something",
+    "description": "Show {title}",
+    "defaultMessage": "Show {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "manage.something",
+    "description": "Manage {title}",
+    "defaultMessage": "Manage {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "confirm.something",
+    "description": "Are you sure you want to delete this {title}",
+    "defaultMessage": "Are you sure you want to delete this {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "accept",
+    "description": "Accept",
+    "defaultMessage": "Accept",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "accept.something",
+    "description": "Accept {title}",
+    "defaultMessage": "Accept  {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "decline",
+    "description": "Decline",
+    "defaultMessage": "Decline",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "decline.something",
+    "description": "Decline {title}",
+    "defaultMessage": "Decline  {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "manage.forward",
+    "description": "Forward",
+    "defaultMessage": "Forward",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "manage.forwardSomething",
+    "description": "Forward {title}",
+    "defaultMessage": "Forward {title}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "todays.something",
+    "description": "Forward {title}",
+    "defaultMessage": "{isToday, select, true {Today's {title}} false {{title} for {date}}}",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "week.summary",
+    "description": "This Week Summary",
+    "defaultMessage": "This Week Summary",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "priority",
+    "description": "Priority",
+    "defaultMessage": "Priority",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "patient",
+    "description": "Patient",
+    "defaultMessage": "Patient",
+    "filepath": "./src/i18n/en.js"
+  },
+  {
+    "id": "points.progress",
+    "description": "Points Progress",
+    "defaultMessage": "{progress, number}%",
+    "filepath": "./src/layouts/components/Header/components/RightMenu/components/HeaderPoints/i18n/en.js"
+  },
+  {
+    "id": "points.points",
+    "description": "You have Points",
+    "defaultMessage": "You have {points, plural, one {1 point} other {{points, number} points}}",
+    "filepath": "./src/layouts/components/Header/components/RightMenu/components/HeaderPoints/i18n/en.js"
+  },
+  {
+    "id": "points.togo",
+    "description": "Points to go",
+    "defaultMessage": "{points, plural, one {1 point} other {{points, number} points}} to {title}",
+    "filepath": "./src/layouts/components/Header/components/RightMenu/components/HeaderPoints/i18n/en.js"
+  },
+  {
+    "id": "points.alert.title",
+    "description": "You received points",
+    "defaultMessage": "You received {points, plural, =1 {1 Point} other {{points, number} Points}}",
+    "filepath": "./src/layouts/components/Header/components/RightMenu/components/HeaderPoints/i18n/en.js"
+  },
+  {
+    "id": "points.alert.description",
+    "description": "You received points",
+    "defaultMessage": "Points descript",
+    "filepath": "./src/layouts/components/Header/components/RightMenu/components/HeaderPoints/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.title",
+    "description": "Request an appointment",
+    "defaultMessage": "Request an appointment",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.send",
+    "description": "Send",
+    "defaultMessage": "Send",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.sent",
+    "description": "Message has been sent",
+    "defaultMessage": "Message has been sent",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.subject",
+    "description": "Title",
+    "defaultMessage": "Title",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.date",
+    "description": "Date",
+    "defaultMessage": "Date",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.time",
+    "description": "Time",
+    "defaultMessage": "Time",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.duration",
+    "description": "Duration",
+    "defaultMessage": "Duration",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.type",
+    "description": "Type",
+    "defaultMessage": "Type",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.message",
+    "description": "Message",
+    "defaultMessage": "Message",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "calendar.event.color",
+    "description": "Color",
+    "defaultMessage": "Color",
+    "filepath": "./src/routes/Calendar/components/AddCalendarEvent/i18n/en.js"
+  },
+  {
+    "id": "user_appointments_title",
+    "description": "My Events",
+    "defaultMessage": "{isSelf, select, true {My } false {{name}}} Upcoming Events {count, plural, =0 {} other {({count})}}",
+    "filepath": "./src/routes/Calendar/components/Calendar/i18n/en.js"
+  },
+  {
+    "id": "user_appointments_empty",
+    "description": "No Upcoming Events",
+    "defaultMessage": "No Upcoming Events",
+    "filepath": "./src/routes/Calendar/components/Calendar/i18n/en.js"
+  },
+  {
+    "id": "add_appointment",
+    "description": "Add Event",
+    "defaultMessage": "Add Event",
+    "filepath": "./src/routes/Calendar/components/Calendar/i18n/en.js"
+  },
+  {
+    "id": "calendar",
+    "description": "Calendar",
+    "defaultMessage": "Calendar",
+    "filepath": "./src/routes/Calendar/components/Calendar/i18n/en.js"
+  },
+  {
+    "id": "view_calendar",
+    "description": "View Calendar",
+    "defaultMessage": "View Calendar",
+    "filepath": "./src/routes/Calendar/components/Calendar/i18n/en.js"
+  },
+  {
+    "id": "user.dash.title",
+    "description": "WELCOME TO YOUR PERSONAL HEALTH DASHBOARD",
+    "defaultMessage": "WELCOME TO YOUR PERSONAL HEALTH DASHBOARD",
+    "filepath": "./src/routes/Dash/components/DashUserLayout/i18n/en.js"
+  },
+  {
+    "id": "user.dash.text",
+    "description": "To start reaching your health goals, visit the Planstore to get an ActionPlan or add medications or trackers.",
+    "defaultMessage": "To start reaching your health goals, visit the Planstore to get an ActionPlan or add medications or trackers.",
+    "filepath": "./src/routes/Dash/components/DashUserLayout/i18n/en.js"
+  },
+  {
+    "id": "allergy",
+    "description": "Allergy",
+    "defaultMessage": "Allergy",
+    "filepath": "./src/routes/Health/components/Forms/components/Allergy/i18n/en.js"
+  },
+  {
+    "id": "allergies",
+    "description": "Allergies",
+    "defaultMessage": "Allergies",
+    "filepath": "./src/routes/Health/components/Forms/components/Allergy/i18n/en.js"
+  },
+  {
+    "id": "allergy.treatment",
+    "description": "Treatment",
+    "defaultMessage": "Treatment",
+    "filepath": "./src/routes/Health/components/Forms/components/Allergy/i18n/en.js"
+  },
+  {
+    "id": "allergy.reaction",
+    "description": "Reaction",
+    "defaultMessage": "Reaction",
+    "filepath": "./src/routes/Health/components/Forms/components/Allergy/i18n/en.js"
+  },
+  {
+    "id": "allergy.date",
+    "description": "date",
+    "defaultMessage": "Date",
+    "filepath": "./src/routes/Health/components/Forms/components/Allergy/i18n/en.js"
+  },
+  {
+    "id": "medication1",
+    "description": "Allergy",
+    "defaultMessage": "Allergy",
+    "filepath": "./src/routes/Health/components/Forms/components/Medication/i18n/en.js"
+  },
+  {
+    "id": "medications",
+    "description": "Allergies",
+    "defaultMessage": "Allergies",
+    "filepath": "./src/routes/Health/components/Forms/components/Medication/i18n/en.js"
+  },
+  {
+    "id": "medication.treatment",
+    "description": "Treatment",
+    "defaultMessage": "Treatment",
+    "filepath": "./src/routes/Health/components/Forms/components/Medication/i18n/en.js"
+  },
+  {
+    "id": "medication.reaction",
+    "description": "Reaction",
+    "defaultMessage": "Reaction",
+    "filepath": "./src/routes/Health/components/Forms/components/Medication/i18n/en.js"
+  },
+  {
+    "id": "health.date",
+    "description": "Reaction",
+    "defaultMessage": "Reaction",
+    "filepath": "./src/routes/Health/components/Forms/components/Medication/i18n/en.js"
+  },
+  {
+    "id": "health.risk",
+    "description": "Severity",
+    "defaultMessage": "Severity",
+    "filepath": "./src/routes/Health/components/Forms/i18n/en.js"
+  },
+  {
+    "id": "health.notes",
+    "description": "Notes",
+    "defaultMessage": "Notes",
+    "filepath": "./src/routes/Health/components/Forms/i18n/en.js"
+  },
+  {
+    "id": "task.type",
+    "description": "Type",
+    "defaultMessage": "Type",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.source",
+    "description": "Source",
+    "defaultMessage": "Source",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.activity",
+    "description": "Activity",
+    "defaultMessage": "Activity",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.guidelines",
+    "description": "Guidelines",
+    "defaultMessage": "Guidelines",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.duedate",
+    "description": "Due Date",
+    "defaultMessage": "Due Date",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.assignTo",
+    "description": "Assign to",
+    "defaultMessage": "Assign to",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.notify",
+    "description": "Notify",
+    "defaultMessage": "Notify",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.attachments",
+    "description": "Attachments",
+    "defaultMessage": "Attachments",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.teamMembers",
+    "description": "Team members",
+    "defaultMessage": "Team members",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.familyMembers",
+    "description": "Family members",
+    "defaultMessage": "Family members",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.provider",
+    "description": "Provider",
+    "defaultMessage": "Provider",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.patient",
+    "description": "Patient",
+    "defaultMessage": "Patient",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.staffMember",
+    "description": "Staff Member",
+    "defaultMessage": "Staff Member",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.error.main",
+    "description": "Select Recipient",
+    "defaultMessage": "Select Recipient",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.error.provider",
+    "description": "Select Provider",
+    "defaultMessage": "Select Provider",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task.error.participants",
+    "description": "Select Participant",
+    "defaultMessage": "Select Participant",
+    "filepath": "./src/routes/Manager/components/Tasks/components/Manager/i18n/en.js"
+  },
+  {
+    "id": "task",
+    "description": "Task",
+    "defaultMessage": "Task",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.view",
+    "description": "View Task",
+    "defaultMessage": "View Task",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.filter.all",
+    "description": "All",
+    "defaultMessage": "All",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.filter.today",
+    "description": "Due Today",
+    "defaultMessage": "Due Today",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.filter.past",
+    "description": "Past Due",
+    "defaultMessage": "Past Due",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.filter.completed",
+    "description": "Completed",
+    "defaultMessage": "Completed",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.filter.future",
+    "description": "Future",
+    "defaultMessage": "Future",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.list",
+    "description": "Tasks {count,  plural, =0 {} other {({count})}}",
+    "defaultMessage": "Tasks {count, plural, =0 {} other {({count})}}",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "task.list.empty",
+    "description": "No Tasks",
+    "defaultMessage": "No {type, select, all {} today {Due Today} future {Future} past {Past Due}} Tasks",
+    "filepath": "./src/routes/Manager/components/Tasks/i18n/en.js"
+  },
+  {
+    "id": "tracker.reportedOn",
+    "description": "Reported on {date}",
+    "defaultMessage": "Reported on {date}",
+    "filepath": "./src/routes/Plan/components/BiometricPlan/components/TrackerCard/i18n/en.js"
+  },
+  {
+    "id": "tracker.lastReport",
+    "description": "Last report: {value} on {date}",
+    "defaultMessage": "Last report: {value} on {date}",
+    "filepath": "./src/routes/Plan/components/BiometricPlan/components/TrackerCard/i18n/en.js"
+  },
+  {
+    "id": "tracker",
+    "description": "Tracker",
+    "defaultMessage": "Tracker",
+    "filepath": "./src/routes/Plan/components/BiometricPlan/i18n/en.js"
+  },
+  {
+    "id": "adverseReaction.emptyText",
+    "description": "Medication",
+    "defaultMessage": "If you experience any adverse reactions or side effects from this medication, please add them here. <br />This Information will be shared with your team.",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/components/Medication/components/MedicationsFullDetails/components/AdverseReactions/i18n/en.js"
+  },
+  {
+    "id": "adverseReaction.report",
+    "description": "Report Adverse Reactions",
+    "defaultMessage": "Report Adverse Reactions",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/components/Medication/components/MedicationsFullDetails/components/AdverseReactions/i18n/en.js"
+  },
+  {
+    "id": "medication",
+    "description": "Medication",
+    "defaultMessage": "Medication",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds",
+    "description": "Medications",
+    "defaultMessage": "Medications",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.title",
+    "description": "My Medications",
+    "defaultMessage": "{title}",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.noMeds",
+    "description": "No Medications",
+    "defaultMessage": "No Medications",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.takehourly",
+    "description": "Take {times} times a day",
+    "defaultMessage": "Take {times} {times, plural, one {time} other {times}} a day",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.takedaily",
+    "description": "Take {quantity} {dosage} {timesPerDay} {timesPerDay, plural, one {time} other {times}} a day",
+    "defaultMessage": "Take {quantity} {dosage} {timesPerDay} {timesPerDay, plural, one {time} other {times}} a day",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.reported",
+    "description": "{progress, plural, =0 {Not Reported Yet} other {You are on {progress}% on Track}",
+    "defaultMessage": "{progress, plural, =0 {Not Reported Yet} other {You are on {progress}% on Track}}",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.button.take",
+    "description": "take button",
+    "defaultMessage": "{isTaken, select, true {Already Taken} false {Take {quantity} {form} Now}}",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.button.untake",
+    "description": "{reported}/{total} reported",
+    "defaultMessage": "Untake",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.button.confirm.untake",
+    "description": "Are you sure You want to Untake this meds?",
+    "defaultMessage": "Are you sure You want to Untake this meds?",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.alongDay",
+    "description": "Along the day",
+    "defaultMessage": "Along the day",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.atTimes",
+    "description": "At Specific Times",
+    "defaultMessage": "At Specific Times",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.asNeeded",
+    "description": "As Needed",
+    "defaultMessage": "As Needed",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.text",
+    "description": "Text",
+    "defaultMessage": "{type, select, as_needed {As Needed} other {Any time}}",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.pills.day",
+    "description": "Text",
+    "defaultMessage": "{pills} {pills, plural, one {pill} other {pills}} per Day",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.details",
+    "description": "Details",
+    "defaultMessage": "Details",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.form",
+    "description": "Form",
+    "defaultMessage": "Form",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.prescription",
+    "description": "Prescription",
+    "defaultMessage": "Prescription",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.period",
+    "description": "Period",
+    "defaultMessage": "Period",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.completed",
+    "description": "Completed",
+    "defaultMessage": "Completed",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.prescriber",
+    "description": "Prescriber",
+    "defaultMessage": "Prescriber",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.directions",
+    "description": "Directions",
+    "defaultMessage": "Directions",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.purpose",
+    "description": "Purpose",
+    "defaultMessage": "Purpose",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.sideEffects",
+    "description": "Side Effects",
+    "defaultMessage": "Side Effects",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.reaction",
+    "description": "Reaction",
+    "defaultMessage": "Reaction",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.severity",
+    "description": "Severity",
+    "defaultMessage": "Severity",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "meds.added",
+    "description": "Added",
+    "defaultMessage": "Added",
+    "filepath": "./src/routes/Plan/components/MedicationPlan/i18n/en.js"
+  },
+  {
+    "id": "user_aps_title",
+    "description": "My Family",
+    "defaultMessage": "{isSelf, select, true {My } false {{name}}} Actionplans {count, plural, =0 {} other {({count})}}",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "user_aps_empty",
+    "description": "No Actionplans",
+    "defaultMessage": "No Actionplans",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "add_ap",
+    "description": "Add ActionPlan",
+    "defaultMessage": "Add ActionPlan",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "plan.status.active",
+    "description": "Show Active",
+    "defaultMessage": "Show Active",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "plan.status.completed",
+    "description": "Show Completed",
+    "defaultMessage": "Show Completed",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "plan.status.elapsed",
+    "description": "Show Elapsed",
+    "defaultMessage": "Show Elapsed",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "plan.status.archived",
+    "description": "Show Archived",
+    "defaultMessage": "Show Archived",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "plan.progress",
+    "description": "{Plan title} Progress",
+    "defaultMessage": "{title} Progress",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "started.on",
+    "description": "Started on",
+    "defaultMessage": "Started on",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "ends.in",
+    "description": "Ends in",
+    "defaultMessage": "Ends in",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "last.reported",
+    "description": "Last Reported",
+    "defaultMessage": "Last Reported",
+    "filepath": "./src/routes/Plan/i18n/en.js"
+  },
+  {
+    "id": "user_careteam_title",
+    "description": "My CareTeam",
+    "defaultMessage": "My CareTeam",
+    "filepath": "./src/routes/User/components/CareTeam/i18n/en.js"
+  },
+  {
+    "id": "user_careteam_noname",
+    "description": "No Name",
+    "defaultMessage": "No Name",
+    "filepath": "./src/routes/User/components/CareTeam/i18n/en.js"
+  },
+  {
+    "id": "user_family_title",
+    "description": "My Family",
+    "defaultMessage": "{isSelf, select, true {My } false {}} Family {count, plural, =0 {} other {({count})}}",
+    "filepath": "./src/routes/User/components/Family/i18n/en.js"
+  },
+  {
+    "id": "user_family_empty",
+    "description": "No Family Members",
+    "defaultMessage": "No Family Members",
+    "filepath": "./src/routes/User/components/Family/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_reset",
+    "description": "Reset Password",
+    "defaultMessage": "Reset Password",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_help",
+    "description": "Please input the Code from your Email",
+    "defaultMessage": "Please input the Code from your Email",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_rules",
+    "description": "Please input the Code from your Email to reset Password!",
+    "defaultMessage": "Please input the Code from your Email to reset Password!",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_code",
+    "description": "Code",
+    "defaultMessage": "Code",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_newrules",
+    "description": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "defaultMessage": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_newpassword",
+    "description": "New password",
+    "defaultMessage": "New password",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_forgot_repeat",
+    "description": "Repeat new password",
+    "defaultMessage": "Repeat new password",
+    "filepath": "./src/routes/User/components/ForgotPassword/i18n/en.js"
+  },
+  {
+    "id": "user_login_title",
+    "description": "Login",
+    "defaultMessage": "Login",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_forgot_question",
+    "description": "Forgot password?",
+    "defaultMessage": "Forgot password?",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_send",
+    "description": "Send",
+    "defaultMessage": "Send",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_rule",
+    "description": "Please enter the email address you registered with to help us locate your Fitango Demo account.",
+    "defaultMessage": "Please enter the email address you registered with to help us locate your Fitango Demo account.",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_forgot_rule",
+    "description": "The input is not valid E-mail!",
+    "defaultMessage": "The input is not valid E-mail!",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_enter_email",
+    "description": "Enter email",
+    "defaultMessage": "Enter email",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_input_email",
+    "description": "Please input valid Email!",
+    "defaultMessage": "Please input valid Email!",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_email",
+    "description": "Email",
+    "defaultMessage": "Email",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_password_rule",
+    "description": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "defaultMessage": "Please input your Password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_passwrod",
+    "description": "Password",
+    "defaultMessage": "Password",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_forgot",
+    "description": "Forgot password",
+    "defaultMessage": "Forgot password",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_or",
+    "description": "Or",
+    "defaultMessage": "Or",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_signup",
+    "description": "Sign up",
+    "defaultMessage": "Sign up",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_login_login",
+    "description": "Log in",
+    "defaultMessage": "Log in",
+    "filepath": "./src/routes/User/components/Login/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_actionplan",
+    "description": "Actionplans",
+    "defaultMessage": "Actionplans",
+    "filepath": "./src/routes/User/components/Motivation/components/AdherenseSummary/components/Actionplans/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_medications",
+    "description": "Medications",
+    "defaultMessage": "Medications",
+    "filepath": "./src/routes/User/components/Motivation/components/AdherenseSummary/components/Medications/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_trackers",
+    "description": "Trackers",
+    "defaultMessage": "Trackers",
+    "filepath": "./src/routes/User/components/Motivation/components/AdherenseSummary/components/Trackers/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_badges_cancel",
+    "description": "Cancel",
+    "defaultMessage": "Cancel",
+    "filepath": "./src/routes/User/components/Motivation/components/Badges/components/BadgesListItem/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_badges",
+    "description": "My Badges",
+    "defaultMessage": "My Badges",
+    "filepath": "./src/routes/User/components/Motivation/components/Badges/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_makecommitment",
+    "description": "Make a Commitment",
+    "defaultMessage": "Make a Commitment",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitments/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_Commitments_cancel",
+    "description": "Cancel",
+    "defaultMessage": "Cancel",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitments/i18n/en.js"
+  },
+  {
+    "id": "user_ModalCommitments_motivation_text",
+    "description": "Select which Plan you would like to make a commitment to.",
+    "defaultMessage": "Select which Plan you would like to make a commitment to.",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitments/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_finish",
+    "description": "Finish",
+    "defaultMessage": "Finish",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_make",
+    "description": "Make a Commitment for",
+    "defaultMessage": "Make a Commitment for",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_complete",
+    "description": "If I do not complete my plan",
+    "defaultMessage": "If I do not complete my plan",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_will",
+    "description": "I will...",
+    "defaultMessage": "I will...",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_pay",
+    "description": "Pay a motivator",
+    "defaultMessage": "Pay a motivator",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_noname",
+    "description": "No name",
+    "defaultMessage": "No name",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_donate",
+    "description": "Donate to a charity",
+    "defaultMessage": "Donate to a charity",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_howmuch",
+    "description": "How much?",
+    "defaultMessage": "How much?",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_other",
+    "description": "Other",
+    "defaultMessage": "Other",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_add",
+    "description": "Add a URL describing your promise",
+    "defaultMessage": "Add a URL describing your promise",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_select",
+    "description": "Please select",
+    "defaultMessage": "Please select",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalMakeCommitmentsFor/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_viewCommitment",
+    "description": "View Commitment",
+    "defaultMessage": "View Commitment",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalView/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_close",
+    "description": "Close",
+    "defaultMessage": "Close",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalView/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_plan",
+    "description": "Action Plan",
+    "defaultMessage": "Action Plan",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalView/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_commitedOn",
+    "description": "Committed On",
+    "defaultMessage": "Committed On",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalView/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_commited",
+    "description": "Committed",
+    "defaultMessage": "Committed",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalView/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_after",
+    "description": "Commit after",
+    "defaultMessage": "Commit after",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/components/ModalView/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_mycommitments",
+    "description": "My Commitments",
+    "defaultMessage": "My Commitments",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_addcommitments",
+    "description": "Add Commitments",
+    "defaultMessage": "Add Commitments",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_noCommitments",
+    "description": "No Commitments",
+    "defaultMessage": "No Commitments",
+    "filepath": "./src/routes/User/components/Motivation/components/Commitments/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_imotivate",
+    "description": "I Motivate",
+    "defaultMessage": "I Motivate",
+    "filepath": "./src/routes/User/components/Motivation/components/IMotivate/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_noimotivate",
+    "description": "No IMotivation",
+    "defaultMessage": "No IMotivation",
+    "filepath": "./src/routes/User/components/Motivation/components/IMotivate/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_earnedPoints",
+    "description": "Earned Points",
+    "defaultMessage": "Earned Points",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_ModalPoints_cancel",
+    "description": "Cancel",
+    "defaultMessage": "Cancel",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_points",
+    "description": "Points",
+    "defaultMessage": "Points",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_receivedFor",
+    "description": "Received For",
+    "defaultMessage": "Received For",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_receivedOn",
+    "description": "Received On",
+    "defaultMessage": "Received On",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/i18n/en.js"
+  },
+  {
+    "id": "user_ModalPoints_motivation_text",
+    "description": "You are currently on the Newbie level. You need 260 more points to reach the Pioneer level. Stay active on the system to advance!",
+    "defaultMessage": "You are currently on the Newbie level. You need 260 more points to reach the Pioneer level. Stay active on the system to advance!",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/components/ModalPointsHistory/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_mypoints",
+    "description": "My Points",
+    "defaultMessage": "My Points",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_pointsNext",
+    "description": "points to next",
+    "defaultMessage": "points to next",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_level",
+    "description": "level",
+    "defaultMessage": "level",
+    "filepath": "./src/routes/User/components/Motivation/components/Points/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_promises",
+    "description": "Promises",
+    "defaultMessage": "Promises",
+    "filepath": "./src/routes/User/components/Motivation/components/Promises/i18n/en.js"
+  },
+  {
+    "id": "user_motivation_nopromises",
+    "description": "No Promises",
+    "defaultMessage": "No Promises",
+    "filepath": "./src/routes/User/components/Motivation/components/Promises/i18n/en.js"
+  },
+  {
+    "id": "user_motivators_title",
+    "description": "My Motivators",
+    "defaultMessage": "{isSelf, select, true {My } false {}} Motivators {count, plural, =0 {} other {({count})}}",
+    "filepath": "./src/routes/User/components/Motivators/i18n/en.js"
+  },
+  {
+    "id": "motivators.no",
+    "description": "No Motivators",
+    "defaultMessage": "No Motivators",
+    "filepath": "./src/routes/User/components/Motivators/i18n/en.js"
+  },
+  {
+    "id": "user_inconsistent",
+    "description": "Two passwords that you enter is inconsistent",
+    "defaultMessage": "Two passwords that you enter is inconsistent",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_first_name",
+    "description": "First name",
+    "defaultMessage": "First name",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_first_name_rule",
+    "description": "Please input your First Name!",
+    "defaultMessage": "Please input your First Name!",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_last_name",
+    "description": "Last name",
+    "defaultMessage": "Last name",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_last_name_rule",
+    "description": "Please input your Last Name!",
+    "defaultMessage": "Please input your Last Name!",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_gender",
+    "description": "Gender",
+    "defaultMessage": "Gender",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_gender_rule",
+    "description": "Please Select your gender",
+    "defaultMessage": "Please Select your gender",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_male",
+    "description": "Male",
+    "defaultMessage": "Male",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_female",
+    "description": "Female",
+    "defaultMessage": "Female",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_birthday",
+    "description": "Birthday",
+    "defaultMessage": "Birthday",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_birthday_rule_type",
+    "description": "Please enter a valid date",
+    "defaultMessage": "Please enter a valid date",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_birthday_rule_required",
+    "description": "Please input your birthday",
+    "defaultMessage": "Please input your birthday",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_email",
+    "description": "Email",
+    "defaultMessage": "Email",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_email_rule_type",
+    "description": "Please enter a valid email address",
+    "defaultMessage": "Please enter a valid email address",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_email_rule_required",
+    "description": "Please input your email",
+    "defaultMessage": "Please input your email",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_password",
+    "description": "Password",
+    "defaultMessage": "Password",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_password_rule",
+    "description": "Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "defaultMessage": "Please input your password! Password must be at least 4 characters, no more than 8 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_confirmPassword",
+    "description": "Confirm Password",
+    "defaultMessage": "Confirm Password",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_confirmPassword_rule",
+    "description": "Please confirm your password",
+    "defaultMessage": "Please confirm your password",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_phone_number",
+    "description": "Phone number",
+    "defaultMessage": "Phone number",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_agreement",
+    "description": "Agreement agree",
+    "defaultMessage": "By signing up I agree to the {terms_of_use} and {privacy_policy}.",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "terms_of_use",
+    "description": "Terms of usee",
+    "defaultMessage": "Terms of use",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "privacy_policy",
+    "description": "Privacy Policy",
+    "defaultMessage": "Privacy Policy",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_sign_up",
+    "description": "Sign Up",
+    "defaultMessage": "Sign Up",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_or",
+    "description": "Or",
+    "defaultMessage": "Or",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_login_now",
+    "description": "Login Now!",
+    "defaultMessage": "Login Now!",
+    "filepath": "./src/routes/User/components/Register/i18n/en.js"
+  },
+  {
+    "id": "user_basic_title",
+    "description": "Title",
+    "defaultMessage": "Title",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_name",
+    "description": "Name",
+    "defaultMessage": "Name",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_middle_name",
+    "description": "Middle name",
+    "defaultMessage": "Middle name",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_address",
+    "description": "Address",
+    "defaultMessage": "Address",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_birthday_novalid",
+    "description": "The input not valid date!",
+    "defaultMessage": "The input not valid date!",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_dateformat",
+    "description": "Date format",
+    "defaultMessage": "Date format",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_birthday_rule",
+    "description": "Please input your birthday",
+    "defaultMessage": "Please input your birthday",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_timezone",
+    "description": "Timezone",
+    "defaultMessage": "Timezone",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_timezone_rule",
+    "description": "Timezone",
+    "defaultMessage": "Select Timezone",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_phonenumber_rule",
+    "description": "Please input your phone number",
+    "defaultMessage": "Please input your phone number",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_language",
+    "description": "Language",
+    "defaultMessage": "Language",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_language_rule",
+    "description": "Please Select your language!",
+    "defaultMessage": "Please Select your language!",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_language_english",
+    "description": "English",
+    "defaultMessage": "English",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_language_russian",
+    "description": "Russian",
+    "defaultMessage": "Russian",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_email_rule",
+    "description": "The input is not valid emal!",
+    "defaultMessage": "The input is not valid emal!",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_submit",
+    "description": "Submit",
+    "defaultMessage": "Submit",
+    "filepath": "./src/routes/User/components/Settings/components/Basic/components/i18n/en.js"
+  },
+  {
+    "id": "user_currentpassword_label",
+    "description": "Current password",
+    "defaultMessage": "Current password",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "user_newpassword_label",
+    "description": "New Password",
+    "defaultMessage": "New Password",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "user_newpassword_help",
+    "description": "Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number",
+    "defaultMessage": "Password must be at least 8 chrs contain at least one capital letter, one lowercase letter, and a number",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "user_newpassword_rule",
+    "description": "Please input your new password",
+    "defaultMessage": "Please input your new password",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "user_confirmnewpassword_label",
+    "description": "Confirm New Password",
+    "defaultMessage": "Confirm New Password",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "user_confirmnewpassword_rule",
+    "description": "Please confirm your New password",
+    "defaultMessage": "Please confirm your New password",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "user_changepassword",
+    "description": "Change password",
+    "defaultMessage": "Change password",
+    "filepath": "./src/routes/User/components/Settings/components/Password/components/i18n/en.js"
+  },
+  {
+    "id": "patient.referrals",
+    "description": "My Motivators",
+    "defaultMessage": "{isSelf, select, true {My } false {}} Referrals {count, plural, =0 {} other {({count})}}",
+    "filepath": "./src/routes/User/components/UserReferrals/i18n/en.js"
+  },
+  {
+    "id": "patient.referrals.empty",
+    "description": "No Referrals",
+    "defaultMessage": "No Referrals",
+    "filepath": "./src/routes/User/components/UserReferrals/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_verifyphone",
+    "description": "Verify Phone",
+    "defaultMessage": "Verify Phone",
+    "filepath": "./src/routes/User/components/VerifyPhone/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_send",
+    "description": "Send",
+    "defaultMessage": "Send",
+    "filepath": "./src/routes/User/components/VerifyPhone/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_phone",
+    "description": "Phone",
+    "defaultMessage": "Phone",
+    "filepath": "./src/routes/User/components/VerifyPhone/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_verifyphoneConfirm",
+    "description": "Verify Phone",
+    "defaultMessage": "Verify Phone",
+    "filepath": "./src/routes/User/components/VerifyPhoneConfirm/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_code",
+    "description": "Code",
+    "defaultMessage": "Code",
+    "filepath": "./src/routes/User/components/VerifyPhoneConfirm/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_rules",
+    "description": "Please input your code",
+    "defaultMessage": "Please input your code",
+    "filepath": "./src/routes/User/components/VerifyPhoneConfirm/i18n/en.js"
+  },
+  {
+    "id": "user_verifyphone_message",
+    "description": "must be 4 digits",
+    "defaultMessage": "must be 4 digits",
+    "filepath": "./src/routes/User/components/VerifyPhoneConfirm/i18n/en.js"
+  }
+]

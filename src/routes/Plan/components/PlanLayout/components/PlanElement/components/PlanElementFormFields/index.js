@@ -3,7 +3,6 @@ import React from 'react';
 import {LoadingModal} from "../../../../../../../../components/Loading/index";
 
 
-import TreatmentElementFormFields, {prepareInput as prepareTreatmentInput} from '../PlanElementFormFields/components/TreatmentElementFormFields';
 import DecisionElementFormFields, {prepareInput as prepareDecisionInput} from '../PlanElementFormFields/components/DecisionElementFormFields';
 import OptionsElementFormFields, {prepareInput as prepareOptionsInput} from '../PlanElementFormFields/components/OptionsElementFormFields';
 //import TextInputElementFormFields, {prepareInput as prepareTextInputInput} from '../PlanElementFormFields/components/TextInputElementFormFields';
@@ -19,6 +18,7 @@ import LineElementFormFields, {prepareInput as prepareLineInput} from '../PlanEl
 import LinkElementFormFields, {prepareInput as prepareLinkInput} from '../PlanElementFormFields/components/LinkElementFormFields';
 // pathway
 import StageElementFormFields, {prepareStageInput} from '../PlanElementFormFields/containers/StageElementFormFields';
+import { TreatmentForm, prepareTreatmentInput } from '../../../../../../../Health/components/Forms/containers/Treatment';
 
 const formItemLayout = {
     labelCol: {span: 6},
@@ -28,6 +28,7 @@ const formTailLayout = {
     labelCol: {span: 6},
     wrapperCol: {span: 20, offset: 4},
 };
+
 
 
 export default class PlanElementFormFields extends React.Component{
@@ -136,7 +137,7 @@ export default class PlanElementFormFields extends React.Component{
                 break;
             case 'treatment':
                 this.prepareInput = prepareTreatmentInput;
-                block = <TreatmentElementFormFields embed {...propsForElement} />;
+                block = <TreatmentForm embed {...propsForElement} />;
                 break;
 
                 // pathway

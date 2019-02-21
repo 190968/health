@@ -4,12 +4,12 @@ import {Form, Input} from 'antd';
 const FormItem = Form.Item;
 
 export const prepareInput = (values) => {
-    const {text, notes} = values;
+    const {text} = values;
 
     return {
         //defaultElement: text
-        description: text,
-        notes:notes
+        //description: text,
+        notes:text
     }
 };
 
@@ -17,7 +17,6 @@ export const TreatmentBlockElementEditorPure = (props) => {
     const {form, details={}, formItemLayout={}, type=''} = props;
     const {getFieldDecorator} = form;
     const {description=''} = details;
-
     return (
         <FormItem
             {...formItemLayout}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {BasicRoutes, CoreRoutes, CoreRoutesEnd} from '../../routes';
 import PrivateRoute from '../../../routes/privateRoute';
-import {asyncProfile, asyncWorkflow, asyncActionplans, asyncPrograms,asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
+import {asyncProfile, asyncWorkflow, asyncActionplans, asyncCohorts, asyncScreenings, asyncCampaigns, asyncPrograms,asyncPatients, asyncPathways, asyncStages, asyncCancers, asyncChemotherapies, asyncTumorboards, asyncClinicalTrials,asyncNetworkManager,asyncSupervisors,asyncCareManager,asyncAnalysts,asyncSupportStaff,asyncProviders,asyncPayers,asyncDoctors,asyncAssessments} from '../../../routes/manager';
 import {asyncLogin} from '../../../routes';
 import {
     Route, Switch
@@ -14,6 +14,9 @@ export const ManagerRoutes = ({store}) => {
             <PrivateRoute path="/u/:id/:tab?/:subtab?" component={asyncProfile(store)}/>
             <PrivateRoute path="/workflow" component={asyncWorkflow(store)}/>
             <PrivateRoute path="/patients" component={asyncPatients(store)}/>
+            <PrivateRoute path="/cohorts" component={asyncCohorts(store)}/>
+            <PrivateRoute path="/screenings" component={asyncScreenings(store)}/>
+            <PrivateRoute path="/campaigns" component={asyncCampaigns(store)}/>
             <PrivateRoute path="/actionplans" component={asyncActionplans(store)}/>
             <PrivateRoute path="/pathways" component={asyncPathways(store)}/>
             <PrivateRoute path="/tumorboards" component={asyncTumorboards(store)}/>

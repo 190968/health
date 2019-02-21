@@ -166,7 +166,7 @@ const enhanceScale = compose(
             uuid: options.length
         }
     }),
-    branch(props=> !props.data.loading, enhaceWithState),
+    branch(props=> !props.loading, enhaceWithState),
 
     withHandlers({
         updateOptions: props => (value) => {

@@ -9,9 +9,11 @@ import {
 } from 'react-intl';
 import ru from './i18n/ru';
 import en from './i18n/en';
-import {Form, Icon, Input, Button, Card } from 'antd';
+import {Link} from 'react-router-dom';
+import {Form, Icon, Input, Button, Card, Layout } from 'antd';
+import { withCurrentNetwork } from '../../../../queries/network';
 const FormItem = Form.Item;
-
+const {Header, Content, Footer} = Layout;
 class NormalForgotForm extends React.Component {
     constructor() {
         super();
@@ -37,7 +39,7 @@ class NormalForgotForm extends React.Component {
         const {intl}=this.props;
         return (
 
-            <div style={{padding:'8% 35% 20px'}}>
+            <div className={'tinyBoxAlone'} >
                 {/*<p>Code: {this.props.match.params.code}</p>*/}
                 <Card
                     title={intl.messages.user_forgot_reset}
@@ -81,5 +83,17 @@ class NormalForgotForm extends React.Component {
     }
 }
 
-const WrappedNormalLoginForm = Form.create()(NormalForgotForm);
-export default injectIntl(WrappedNormalLoginForm);
+
+const ForgotPassword = props => {
+    const {currentNetwork} = props;
+    return <div  style={{height:'100%', display: 'flex', 'minHeight': '100vh', 'flexDirection':'column'}}>
+    <Header style={{background:'#fff', textAlign: 'center'}}>
+       <Link to={'/'}><img alt={currentNetwork.name} className="logo" style={{height:'50px', marginRight:'5px'}} src={currentNetwork.logo} /></Link>
+    </Header>
+    <Content className={'userside'}>
+        <NormalForgotForm {...props} />
+    </Content>
+</div>;
+}
+
+export default injectIntl(withCurrentNetwork(ForgotPassword));

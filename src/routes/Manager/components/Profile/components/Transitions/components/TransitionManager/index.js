@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Select, Input, Radio } from 'antd';
 import { DateField, TimeField } from '../../../../../../../../components/FormCustomFields';
-import { TeamSelect } from '../../../../../../../../components/Autosuggest/containers/TeamSelect';
+import moment from 'moment';
 const formItemLayout = {
     labelCol: {span: 8},
     wrapperCol: {span: 16},
@@ -12,22 +12,24 @@ const Option = Select.Option;
 
  
 const TransitionManager = props => {
-    const {form, transition={}, user} = props;
+    const {form, transition} = props;
     const {getFieldDecorator} = form;
-    const {type, date, time, details, source} = transition;
+    const {transitionType, dateTime, notes, source} = transition || {};
+    console.log(transition);
     return <Form>
         <FormItem
             {...formItemLayout}
             label="Transition Type"
         >
             {getFieldDecorator('type', {
-                 initialValue: type,
+                initialValue: transitionType,
                 rules: [{
                     required: true,
                     message: "Please select Transition Type",
                 }],
             })(
                 <Select >
+                    <Option value="registration">Registration</Option>
                     <Option value="hospitalization">Hospitalization</Option>
                     <Option value="discharge">Discharge</Option>
                     <Option value="surgery">Surgery</Option>
@@ -43,7 +45,7 @@ const TransitionManager = props => {
             label='Date'
         >
             {getFieldDecorator('date', {
-                     initialValue: date,
+                     initialValue: dateTime ? moment(dateTime) : undefined,
                     rules: [{required: true, message: "Select Date"}],
                 }
             )(
@@ -56,7 +58,7 @@ const TransitionManager = props => {
             label='Time'
         >
             {getFieldDecorator('time', {
-                     initialValue: time,
+                     initialValue: dateTime ? moment(dateTime) : undefined,
                     rules: [{required: true, message: "Select Time"}],
                 }
             )(
@@ -69,8 +71,8 @@ const TransitionManager = props => {
             {...formItemLayout}
             label='Details'
         >
-            {getFieldDecorator('details', {
-                    initialValue: details,
+            {getFieldDecorator('notes', {
+                    initialValue: notes,
                 }
             )(
                 <Input />

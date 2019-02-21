@@ -6,7 +6,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
     'myMotivators': {
         "id": "user_motivators_title",
-        "defaultMessage": "Мои мотиваторы",
+        "defaultMessage": "{isSelf, select, true {Мои } false {}} Мотиваторы {count,  plural, =0 {} other {({count})}}",
         "description": "Мои мотиваторы"
     }
 });

@@ -1,7 +1,6 @@
-import Timeline from '../components/Timeline';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import {GET_TIMELINE_QUERY} from "../../Pathway/containers/Timeline";
+import { GET_TIMELINE_QUERY } from '../../TimelineLayout/queries';
+import Timeline from '../../TimelineLayout/components/Timeline';
 
 
 const withQuery = graphql(
@@ -9,7 +8,7 @@ const withQuery = graphql(
     {
         options: (ownProps) => ({
             variables: {
-                userId: ownProps.userId,
+                userId: ownProps.user.id,
                 cursors: { first: 10}
             }
         }),

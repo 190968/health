@@ -2,16 +2,13 @@
 /**
  * Created by Pavel on 10.01.2018.
  */
-//import React from 'react'
-import { connect } from 'react-redux'
 
-
-import CategoryNews from '../components';
-import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import CategoryNews from '../components';
 
 
-const MY_CATEGORIES  = gql`
+const MY_CATEGORIES = gql`
   query GET_MAINCATEGORIESNEWS {
   getMainCategoriesNews{
     totalCount
@@ -21,12 +18,14 @@ const MY_CATEGORIES  = gql`
       text
       createdAt
       thumb
+      sourceTitle
+      sourceUrl
     }
   }
 }
 `;
 
-const withMutation = graphql(MY_CATEGORIES, {
+const withQuery = graphql(MY_CATEGORIES, {
     props: ({ ownProps, data }) => {
         if (!data.loading) {
             return {
@@ -35,19 +34,10 @@ const withMutation = graphql(MY_CATEGORIES, {
             }
         }
         else {
-            return {loading: data.loading}
+            return { loading: data.loading }
         }
     },
 });
 
-const mapStateToProps = (state) => {
-    return {
 
-    };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-
-});
-
-export default withMutation(connect(mapStateToProps, mapDispatchToProps)(CategoryNews));
+export default withQuery(CategoryNews);

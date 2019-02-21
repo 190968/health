@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, Table} from 'antd';
 import moment from 'moment';
+import { EmptyList } from '../../../../../../../../components/Loading';
 
 const Tumorboards = props => {
 
@@ -36,9 +37,11 @@ const Tumorboards = props => {
         total: total,
         hideOnSinglePage: true
     };
-    return (<Card type="basic1  ant-card-type-table" title={'Tumor Boards '+ (total > 0 ? ' ('+total+')' : '')} >
-            <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
-        </Card>)
+    return <Card type="table" title={'Tumor Boards '+ (total > 0 ? ' ('+total+')' : '')} >
+            {total.length > 0 ? (
+            <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />)
+             : <EmptyList>No Tumorboards</EmptyList>}
+        </Card>
 }
 
 export default Tumorboards;

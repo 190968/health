@@ -1,14 +1,18 @@
 import gql from 'graphql-tag';
 
-
+export const DrugInfoFragment = gql`
+fragment DrugInfo on MedicationDrug {
+    name
+                    dosage
+                    id
+                    form
+}
+`;  
 export const MedicationInfo = gql`
             fragment MedicationInfo on Medication {
                 id
                 drug {
-                    name
-                    dosage
-                    id
-                    form
+                    ...DrugInfo
                 }
                 type
                 timesPerDay
@@ -20,19 +24,29 @@ export const MedicationInfo = gql`
                 isPersonal
                 startDate
                 endDate
+                prescription
             }
+            ${DrugInfoFragment}
             `;
+export const MedicationReportInfoFragment = gql`
+fragment MedicationReportInfo on MedicationReport {
+        id
+        time
+        date
+        isTaken
+        order
+        reportedOn
+}
+`;        
 export const MedicationCardInfo = gql`
             fragment MedicationCardInfo on Medication {
                 ...MedicationInfo
-                reports (date: $date) {
-                    id
-                    time
-                    date
-                    isTaken
+                reports (date: $date)  @connection(key: "medReport", filter: ["date"])  {
+                    ...MedicationReportInfo
                 }
             }
             ${MedicationInfo}
+            ${MedicationReportInfoFragment}
             `;
 export const MedicationSummary = gql`  
             fragment MedicationSummary on Medication {

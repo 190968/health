@@ -8,6 +8,7 @@ import { withCurrentUser, CurrentUserQUERY } from '../../../queries/user';
 import { withCurrentNetwork } from '../../../queries/network';
 import { CurrentUserInfoFragment } from '../fragments';
 import { withLoadingButton } from '../../../components/Loading';
+import { withActiveNetwork } from '../../../components/App/app-context';
 
 
 export const UserMainInfo_QUERY = CurrentUserQUERY;
@@ -34,7 +35,6 @@ const withMutation = graphql(loginUser, {
                         query: UserMainInfo_QUERY,
                     });
 
-                    //console.log(data);
 
                     const account = login;
                     const {currentToken={}} = account;
@@ -83,6 +83,7 @@ const withMutation = graphql(loginUser, {
 const enhance = compose(
     Form.create(),
     withLoadingButton,
+    withActiveNetwork,
     withCurrentUser,
     withMutation,
     withHandlers({

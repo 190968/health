@@ -1,39 +1,31 @@
 import React from 'react';
-import {Form, Input} from 'antd';
-import {ClinicalTrialSelect} from "../../../../../../components/Autosuggest/containers/ClinicalTrialSelect";
-import {DateField} from "../../../../../../components/FormCustomFields/index";
-import {InputUnits} from "../../../../../../components/FormCustomFields/components/InputUnits/index";
+import { Form, Input } from 'antd';
+import { ClinicalTrialSelect } from "../../../../../../components/Autosuggest/containers/ClinicalTrialSelect";
+import { DateField } from "../../../../../../components/FormCustomFields/index";
+import { InputUnits, InputUnitsValidator, prepareInputUnitsValue } from "../../../../../../components/FormCustomFields/components/InputUnits/index";
+import DefaultHealthFields from '../DefaultFields';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-export const RadiationForm = ({cancer={}, form, formItemLayout}) => {
-    const {getFieldDecorator} = form;
+export const RadiationForm = (props) => {
+    const { element = {}, form, formItemLayout } = props;
+    const { getFieldDecorator } = form;
     //const {title='', code='', stage={}, chemotherapies=[]} = cancer;
+    const { date, regionalFractions, regionalModality, treatmentAnatomicSite, treatmentTechnique, regionalDose } = element;
+
+
     return <Form>
-        <FormItem
-            {...formItemLayout}
-            label="Date Enrolled"
-        >
-            {getFieldDecorator('date', {
-                //initialValue: title,
-                rules: [{
-                    required: true,
-                    message: "Please select Date",
-                }],
-            })(
-                <DateField />
-            )}
-        </FormItem>
+        
 
         <FormItem
             {...formItemLayout}
             label='Treatment Anatomic Site'
         >
             {getFieldDecorator('treatmentAnatomicSite', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Select Treatment Anatomic Site"}],
-                }
+                initialValue: treatmentAnatomicSite,
+                rules: [{ required: true, message: "Select Treatment Anatomic Site" }],
+            }
             )(
                 <Input />
             )}
@@ -44,9 +36,9 @@ export const RadiationForm = ({cancer={}, form, formItemLayout}) => {
             label='Treatment Technique'
         >
             {getFieldDecorator('treatmentTechnique', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Select Treatment Technique"}],
-                }
+                initialValue: treatmentTechnique,
+                rules: [{ required: true, message: "Select Treatment Technique" }],
+            }
             )(
                 <Input />
             )}
@@ -57,9 +49,9 @@ export const RadiationForm = ({cancer={}, form, formItemLayout}) => {
             label='Regional Modality'
         >
             {getFieldDecorator('regionalModality', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Select Regional Modality"}],
-                }
+                initialValue: regionalModality,
+                rules: [{ required: true, message: "Select Regional Modality" }],
+            }
             )(
                 <Input />
             )}
@@ -69,13 +61,14 @@ export const RadiationForm = ({cancer={}, form, formItemLayout}) => {
             {...formItemLayout}
             label='Regional Dose'
         >
-            {getFieldDecorator('regionalDose', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Enter Regional Dose"}],
+         {getFieldDecorator('regionalDose', {
+                initialValue: prepareInputUnitsValue (regionalDose),
+                rules: [{validator:InputUnitsValidator, required: true, message: "Enter Regional Dos"}],
                 }
             )(
                 <InputUnits placeholderUnits={'units'} />
             )}
+
         </FormItem>
 
         <FormItem
@@ -83,13 +76,15 @@ export const RadiationForm = ({cancer={}, form, formItemLayout}) => {
             label='Regional Fractions'
         >
             {getFieldDecorator('regionalFractions', {
-                    //initialValue: code,
-                    rules: [{required: true, message: "Select Regional Fractions"}],
-                }
+                initialValue: regionalFractions,
+                rules: [{ required: true, message: "Select Regional Fractions" }],
+            }
             )(
                 <Input />
             )}
         </FormItem>
+
+        <DefaultHealthFields {...props} />
 
     </Form>
 }
@@ -97,26 +92,26 @@ export const RadiationForm = ({cancer={}, form, formItemLayout}) => {
 export default RadiationForm;
 
 
-export const prepareRadiationInput = values => {
-    const {date,
-        treatmentAnatomicSite,
-        treatmentTechnique,
-        regionalModality,
-        regionalDose,
-        regionalFractions} = values;
+// export const prepareRadiationInput = values => {
+//     const {date,
+//         treatmentAnatomicSite,
+//         treatmentTechnique,
+//         regionalModality,
+//         regionalDose,
+//         regionalFractions} = values;
 
-    return {
-        radiation: {
-            date,
-            treatmentAnatomicSite,
-            treatmentTechnique,
-            regionalModality,
-            regionalDose,
-            regionalFractions
-        }
-    }
-}
+//     return {
+//         radiation: {
+//             date,
+//             treatmentAnatomicSite,
+//             treatmentTechnique,
+//             regionalModality,
+//             regionalDose,
+//             regionalFractions
+//         }
+//     }
+// }
 
- const propare = () => {
+//  const propare = () => {
 
-}
+// }

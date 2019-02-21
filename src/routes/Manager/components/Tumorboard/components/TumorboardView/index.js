@@ -22,7 +22,7 @@ const TumorCaseCardPure = props => {
         {showModal && <Modal
             title={title}
             visible={true}
-            footer={<Button type="primary" onClick={this.toggleModal}>Close</Button>}
+            footer={<Button type="primary" onClick={props.toggleModal}>Close</Button>}
         >
             {tumorCase.elements.length > 0 ?
                 <TumorboardElements tumorboard={tumorboard} elements={tumorCase.elements} editable={false} />
@@ -49,16 +49,16 @@ export const TumorboardView = props => {
     let items = [
         //['Patient', [<AvatarWithName info={patient} key={1} />, <span style={{verticalAlign:'middle'}} key={2}>, {patient.age+', '+patient.genderText}</span>]],
         ['Title', title],
-        ['Start Time', moment(startTime).format('LLL')],
+        ['Start Time', moment(startTime).format('lll')],
     ];
     if (endTime) {
-        items.push(['End Time', moment(endTime).format('LLL')]);
+        items.push(['End Time', moment(endTime).format('lll')]);
     }
     if (lead) {
-        items.push(['Lead', <AvatarWithName info={lead} />]);
+        items.push(['Lead', <AvatarWithName user={lead} />]);
     }
     if (admin) {
-        items.push(['Admin', <AvatarWithName info={admin} />]);
+        items.push(['Admin', <AvatarWithName user={admin} />]);
     }
 
     if (location !== '') {

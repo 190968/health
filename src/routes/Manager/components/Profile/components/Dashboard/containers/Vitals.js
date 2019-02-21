@@ -1,46 +1,26 @@
 import Vitals from '../components/Vitals';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import {compose, withStateHandlers} from 'recompose';
 import {ElementTrackerFragment, ElementTrackerReportFragment} from "../../../../../../Plan/components/Plan/fragments";
+import { withSpinnerWhileLoading } from '../../../../../../Modal/components';
+import { withUserVitalsQuery } from '../../../../../../Health/components/Vitals/queries';
 
-export const GET_USER_VITALS_QUERY = gql`
-    query GET_USER_VITALS ($userId: UID!) {
-        patient (id: $userId) {
-            id
-            getVitals {
-              ...TrackerElement
-              getLastReport (userId:$userId) {
-                ...TrackerReportFields
-                datetime
-              }
-            }
+
+
+const enhance = compose(
+    withUserVitalsQuery,
+    withSpinnerWhileLoading,
+    withStateHandlers( props => {
+        const {vitals=[]} = props;
+        if (vitals.length > 0) {
+            return {activeTab: vitals[0].id};
         }
-    }
-    ${ElementTrackerFragment}
-    ${ElementTrackerReportFragment}
-`;
-
-const withQuery = graphql(
-    GET_USER_VITALS_QUERY,
-    {
-        options: (ownProps) => ({
-            variables: {
-                userId: ownProps.user.id,
-            }
-        }),
-        props: ({data}) => {
-            if (!data.loading) {
-                return {
-                    vitals: data.patient.getVitals,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
-            }
-        },
-    }
-);
-
-
-
-export default withQuery(Vitals);
+        return {activeTab: null}
+    }, {
+        setActiveTab: state => (tab) => {
+            return {activeTab:tab}
+        }
+    })
+)
+export default enhance(Vitals);

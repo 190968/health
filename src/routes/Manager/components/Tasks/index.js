@@ -1,51 +1,99 @@
 import React from 'react';
-import {Card, Row, Col} from 'antd';
-import EllipsisText from 'react-ellipsis-text';
-import {AvatarWithName} from "../../../User/components/AvatarWithName/index";
+import {Card, List} from 'antd';
+import { TaskManagerButton } from './components/Manager/components/Button';
+import { TaskCard } from './containers/Card';
+import { CardExtraSplit } from '../../../../components/Card/components/CardExtraSplit';
+import { CardQuickFilter } from '../../../../components/Card/components/CardQuickFilter';
+import { withState } from 'recompose';
+import messages from './i18n/en';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { Loading } from '../../../../components/Loading';
+import { ListWithMessage } from '../../../../components/UI/List';
+const today = moment();
 
-const gridStyle = {
-    width: '33%',
-};
+const TasksListPure  = props => {
 
-export const TasksList = props => {
-
-    const {tasks = [], loading = false, hideOnEmpty = false} = props;
-    const total = tasks.length;
-    if (loading) {
-        return <Loading />
-    }
-    if (total === 0 && hideOnEmpty) {
+   
+    const {user, loading = false, hideOnEmpty = false} = props;
+    let {tasks = []} = props;
+    let total = tasks.length;
+    
+    if (!loading && total === 0 && hideOnEmpty) {
         return null;
     }
 
-    return (<Card title={'Tasks ' + (total > 0 ? ' (' + total + ')' : '')}>
-        <Row gutter={8}>
-            {tasks.map((task, i) => {
 
-                let color = '#11B76B';
-                switch (task.priority) {
-                    case 2:
-                        color = '#ff5a5f';
-                        break;
-                    case 1:
-                        color = '#FF8805';
-                        break;
-                }
-                return <Col key={i} md={8} style={{paddingBottom:4, paddingTop:4}}>
-                    <Card bordered={true} bodyStyle={{borderLeft: '3px solid ' + color, padding: 10}}>
-                        <h4>{task.title}</h4>
-                        <AvatarWithName user={task.sender} size={'small'}/>
+    
 
-                        <div style={{fontSize: '0.9em', color: '#ccc', position: 'absolute', top: 10, right: 10}}>
-                            {moment(task.endDate).format('L')}
-                        </div>
-                    </Card>
-                </Col>;
-            })}
-        </Row>
+
+    const filters = [
+		{ value: 'all', label: <FormattedMessage {...messages.filterAll} /> },
+		{ value: 'today', label: <FormattedMessage {...messages.filterToday} /> },
+		{ value: 'future', label: <FormattedMessage {...messages.filterFuture} /> },
+		{ value: 'past', label: <FormattedMessage {...messages.filterPast} /> },
+		{ value: 'closed', label: <FormattedMessage {...messages.filterCompleted} /> }
+	];
+
+    const {taskType} = props;
+    switch(taskType) {
+        case 'today':
+            tasks = tasks.filter(task => moment(task.endDate).isSame(today, 'day'));
+            break;
+        case 'future':
+            tasks = tasks.filter(task => moment(task.endDate).isAfter(today, 'day'));
+            break;
+        case 'past':
+            tasks = tasks.filter(task => moment(task.endDate).isBefore(today, 'day'));
+            break;
+    }
+    if (taskType !== 'all') {
+        let total = tasks.length;
+    }
+     
+	//const groupedMedications = medications.groupBy('type')
+
+	// console.log(medicationType);
+	// console.log(medications);
+	// if (medicationType != 'all') {
+	// 	medications = medications.filter(medication => medication.type === medicationType);
+	// }
+
+	// const types = [{ value: 'at_times', label: <FormattedMessage  {...messages.atTimes} /> },
+	// 	{ value: 'along_day', label: <FormattedMessage  {...messages.alongDay} /> },
+	// 	{ value: 'as_needed', label: <FormattedMessage  {...messages.asNeeded} /> }];
+
+    // console.log(props);
+	const extra = (
+		<React.Fragment>
+            <CardExtraSplit>
+				<CardQuickFilter filters={filters} value={props.taskType} onChange={props.updateTaskStatus} />
+            </CardExtraSplit>
+            <CardExtraSplit>
+            <TaskManagerButton patient={user} />
+            </CardExtraSplit>
+    </React.Fragment>);
+            
+
+
+    return (<Card loading={loading} title={<FormattedMessage values={{count:total}} {...messages.tasksList} />} extra={extra}>
+        <ListWithMessage
+        emptyMessage={<FormattedMessage values={{type:taskType}} {...messages.tasksEmpty} />}
+    itemLayout="vertical"
+    pagination={{
+      pageSize: 9,
+      hideOnSinglePage:true,
+      size:'small'
+    }}
+    dataSource={tasks}
+    grid={{ gutter: 16, xs: 1, sm: 2, md: 3 }}
+    renderItem={(task, i) => {
+        return <List.Item key={i} >
+            <TaskCard task={task} />
+        </List.Item>;
+    }} 
+    />
     </Card>)
 }
+export const TasksList = TasksListPure;
 
 export default TasksList;
