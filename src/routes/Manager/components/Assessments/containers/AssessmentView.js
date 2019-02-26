@@ -13,52 +13,6 @@ query GET_PATIENT_ASSESSMENT($userId: UID!, $id: UID!, $reportId: UID!, $getRepo
     id
     getAssessment (id: $id) {
         ...UserAssessment
-        # id
-        # createdOn
-        # startTime
-        # startDate
-        # endDate
-        # repeatedDays
-        # comments
-        # canReport
-        # user {
-        #     ...UserInfo
-        # }
-        # assessment {
-        #   id
-        #   name
-        #   isAllMandatory
-        #   allowGoBack
-        #   showAllQuestions
-        #   showAllSections
-        #   isForm
-        #   getSections {
-        #     id
-        #     title
-        #     description
-        #     getQuestions {
-        #       id
-        #       title
-        #       description
-        #       type
-        #       isNumeric
-        #       isOpenended
-        #       isMultiple
-        #       getAnswers {
-        #         id
-        #         idForReported
-        #         label
-        #         isCritical
-        #         isValidAnswer
-        #         points
-        #         nextQuestionId
-        #       }
-        #     }
-        #   }
-        # }
-        # getLatestReport @skip(if: $getReport) {
-        #     ...UserAssessmentReport
-        # }
         getReport (id: $reportId) @include(if: $getReport) {
             ...UserAssessmentReport
         }

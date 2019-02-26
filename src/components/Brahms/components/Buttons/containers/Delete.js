@@ -1,6 +1,6 @@
 import Delete from '../components/Delete';
 import {message} from 'antd';
-i//mport { withDeleteBrahmMutation } from '../../../mutations';
+//import { withDeleteBrahmMutation } from '../../../mutations';
 import {compose, withHandlers} from 'recompose';
  
 

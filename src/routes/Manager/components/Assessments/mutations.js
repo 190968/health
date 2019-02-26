@@ -2,6 +2,7 @@
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import { UserAssessmentReportPureFragment, UserAssessmentReportFragment, UserAssessmentFragment } from './fragments';
+import { BrahmsFragment } from '../../../../components/Brahms/fragments';
  
 const DELETE_USER_ASSESSMENT_MUTATION = gql`
     mutation DELETE_USER_ASSESSMENT($id: UID!, $userId:UID!){
@@ -58,12 +59,12 @@ const ASSESSMENT_REPORT_MUTATION = gql`
                 ...UserAssessmentReport
             }
             brahms {
-                id
-                ruleType
+                ...Brahms
             }
         }
     }
     ${UserAssessmentReportFragment}
+    ${BrahmsFragment}
 `;
 
 
@@ -138,11 +139,17 @@ export const withAssessmentReportMutation = graphql(ASSESSMENT_REPORT_MUTATION, 
 
 const ASSESSMENT_COMPLETE_MUTATION = gql`
     mutation ASSESSMENT_COMPLETE($id: UID, $userAssessmentId: UID, $date: Date!){
-        assessmentComplete(id: $id, userAssessmentId:$userAssessmentId, date: $date) {
-            ...UserAssessmentReportPure
+        assessmentCompletePayload(id: $id, userAssessmentId:$userAssessmentId, date: $date) {
+            assessmentUserReport {
+                ...UserAssessmentReportPure
+            }
+            brahms {
+                ...Brahms
+            }
         }
     }
     ${UserAssessmentReportPureFragment}
+    ${BrahmsFragment}
 `;
 
 export const withAssessmentCompleteMutation = graphql(ASSESSMENT_COMPLETE_MUTATION, {

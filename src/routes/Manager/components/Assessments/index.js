@@ -12,6 +12,7 @@ import DefaultI18nEn from '../../../../i18n/en';
 import { CardExtraSplit } from '../../../../components/Card/components/CardExtraSplit';
 import { CardQuickFilter } from '../../../../components/Card/components/CardQuickFilter';
 import { FormattedMessage } from 'react-intl';
+import { AssessmentManagerButton } from './components/Buttons/components/Manager';
 
  
 const filters = [
@@ -73,7 +74,7 @@ const Assessments = props => {
                 const menu = (
                     <Menu>
                         <Menu.Item>
-                            <Icon type="edit"/> Edit
+                            <AssessmentManagerButton assessment={info} />
                         </Menu.Item>
                         <Menu.Item>
                             <Icon type="delete"/> Delete

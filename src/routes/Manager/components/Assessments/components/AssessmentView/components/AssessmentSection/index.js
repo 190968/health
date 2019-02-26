@@ -1,11 +1,15 @@
 import React from 'react';
-import { Card, List, Button } from 'antd';
+import { Card, List, Button, Icon } from 'antd';
 import AssessmentQuestion from '../../containers/AssessmentQuestion';
 import { ListWithMessage } from '../../../../../../../../components/UI/List';
+import { AssessmentSectionManagerButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Section';
+import { AssessmentSectionDeleteButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Section/delete';
+import { AssessmentQuestionManagerButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Question';
+import { AssessmentQuestionDeleteButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Question/delete';
 
 const AssessmentSection = props => {
     const {section, i, sections=[], ...otherProps} = props;
-    const {canReport=false, currentQuestion, currentSection, goPreviousSection, goNextSection, skippedQuestions=[], report} = otherProps;
+    const {isBuilderMode=false, canReport=false, currentQuestion, currentSection, goPreviousSection, goNextSection, skippedQuestions=[], report} = otherProps;
     const {title, description,  getQuestions=[]} = section || {};
     const {assessment} = props;
     const {isCompleted=false, getReportedValues=[]} = report || {};
@@ -15,13 +19,16 @@ const AssessmentSection = props => {
         showAllQuestions,
         showAllSections} = assessment;
 
-    if (isCompleted) {
+    if (isCompleted || isBuilderMode) {
         showAllQuestions = true;
         showAllSections = true;
     }
 
     const totalSections = sections.length;
     const isLastSection = totalSections === i+1;
+    console.log(totalSections, 'totalSections');
+    console.log(i);
+    console.log(isLastSection, 'isLastSection');
     const isFirstSection = i === 0;
     
 
@@ -36,7 +43,7 @@ const AssessmentSection = props => {
     // show finish button if this is the last section and and we show by question or by section
     const showFinishButton = canShowButtons && isLastSection && (!showAllSections && !showAllQuestions);//showAllQuestions || (!showAllQuestions && isLastSection && isLastQuestion);
     // show next button if we show by section only
-    const showNextButton = canShowButtons && !showAllSections && showAllQuestions && !showFinishButton;// || (!showAllSections && isLastQuestion);
+    const showNextButton = canShowButtons && !isLastSection && !showAllSections && showAllQuestions && !showFinishButton;// || (!showAllSections && isLastQuestion);
     const showPreviousButton = canShowButtons && (!showAllSections && allowGoBack && !isFirstSection);//!showAllSections && showAllQuestions && !showFinishButton;// || (!showAllSections && isLastQuestion);
     
     if (!showAllSections) {
@@ -55,8 +62,28 @@ const AssessmentSection = props => {
             return currentQuestion >= i || isPastSection;
         });
     }
+    let cardExtra = [];
+    let cardActions = [];
+
+    if (isBuilderMode) {
+        cardExtra.push(<AssessmentSectionManagerButton key={'edit'} assessment={assessment} section={section} />);
+        cardExtra.push(<Icon type="drag" key={'drag'} />);
+        cardExtra.push(<AssessmentSectionDeleteButton key={'delete'} assessment={assessment} section={section} />);
+        //
+
+        cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} />);
+        cardActions.push(<AssessmentSectionManagerButton key={'addSection'} assessment={assessment} afterSection={section} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
+    }
      
-    return <Card title={title} type={'inner'} >
+    console.log(props, 'SECTION');
+
+    
+
+    return <Card title={title} type={'inner'} extra={cardExtra} 
+    actions={cardActions}
+    >
+
+        
             {sectionIsDimmed && <div className={'dimmed-block'} />}
         <ListWithMessage
             emptyMessage={'No Questions'}
@@ -65,7 +92,14 @@ const AssessmentSection = props => {
             size={'small'}
             
             renderItem={(question, i) => {
-                return <List.Item key={question.id} >
+                let questionCardExtra = [];
+
+                if (isBuilderMode) {
+                    questionCardExtra.push(<AssessmentQuestionManagerButton assessment={assessment} question={question} />);
+                    questionCardExtra.push(<Icon type="drag" />);
+                    questionCardExtra.push(<AssessmentQuestionDeleteButton assessment={assessment} question={question}  />);
+                }
+                return <List.Item key={question.id} extra={questionCardExtra} >
                         <List.Item.Meta
                             title={(i+1)+'. '+question.title}
                             description={question.description}

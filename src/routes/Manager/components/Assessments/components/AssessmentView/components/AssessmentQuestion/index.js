@@ -5,11 +5,12 @@ import AssessmentInput from './containers/AssessmentInput';
 import AssessmentSlider from './containers/AssessmentSlider';
 import {Form, Button} from 'antd';
 import moment from 'moment';
+import { BrahmOutputItem, BrahmsOutputs, BrahmOutputWidget, BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
 
 const FormItem = Form.Item;
 
 const AssessmentQuestion = props => {
-    const {form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection} = props;
+    const {form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules} = props;
     const {title, description, type, isNumeric, isOpenended, isMultiple, getAnswers=[]} = question || {};
 
     const {i, currentQuestion, isPastSection, goPreviousQuestion, goNextQuestion, goNextSection, goPreviousSection} = props;
@@ -22,7 +23,11 @@ const AssessmentQuestion = props => {
     // find values
     const reports = getReportedValues || [];
     const questionReports = reports.filter(report => report.questionId === question.id);
-
+    // get brahms for this questions
+    const {rules:brahms} = brahmRules.find(report => report.question.id === question.id) || {};
+    console.log(question, 'question');
+    console.log(brahmRules, 'brahmRules');
+    console.log(brahms, 'brahms');
     const defaultProps = {disabled:isCompleted || !canReport, onChangeReport:onChange, reports:questionReports};
 
 
@@ -131,9 +136,12 @@ const AssessmentQuestion = props => {
           })(
             field
           )}
+
+            {(brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
         </FormItem>
         
 
+        
         {(!questionIsDimmed && canReport && !showAllQuestions) && <div style={{textAlign:'right', marginTop:5}}>
        
             {showPreviousButton && <span className={'link bump-r grey'} onClick={onPrevClick}>{prevText}</span>}
@@ -144,7 +152,7 @@ const AssessmentQuestion = props => {
 }
 
 export default AssessmentQuestion;
-
+ 
 // const validateQuestion = (rule, value, callback) => {
 //     const {message, type, isMultiple} = rule;
 //     console.log(value);

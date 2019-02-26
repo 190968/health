@@ -25,7 +25,7 @@ String.prototype.prevChar = function(i) {
 	return String.fromCharCode(this.charCodeAt(0) - n);
 }
 
-const AssessmentChoice = props => {
+export const AssessmentAnswerChoice = props => {
     const {answers, value,  isMultiple=false, reports, isDropdown, disabled=false, onChange} = props;
     //const {value} = this.state;
     console.log(value, 'VALUE');
@@ -71,4 +71,4 @@ const AssessmentChoice = props => {
     }
 } 
 
-export default AssessmentChoice;
+export default AssessmentAnswerChoice;

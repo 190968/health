@@ -232,14 +232,14 @@ export const withStepsState = getSteps => WrappedComponent =>  {
 export const withDrawer = (WrappedComponent) => {
 
     const  DrawerWrappeer = props => {
-        const {modalWidth=600, modalFooter=true, closable=true, maskClosable=false, loading=false, loadingButton=false, modalVisible=true, okLabel= 'Save', ...otherProps} = props;
+        const {modalWidth=600, modalFooter=true, closable=true, maskClosable=false, loading=false, destroyOnClose=true, loadingButton=false, modalVisible=true, okLabel= 'Save', ...otherProps} = props;
         let {modalTitle='View', modalOkTitle='Save'} = props;//type === '' ? 'Select Element' : this.props.getTypeName(type);
             // if (this.props.modalTitle) {
             //     modalTitle = ;
             // }
             //console.log(modalVisible);
             //console.log(typeof this.props.modalFooter);
-            const modalOpts = {closable};
+            const modalOpts = {closable, destroyOnClose};
             // if (this.props.modalFooter !== null) {
             //      if (this.props.modalFooter === 'close') {
             //          modalOpts.footer = <Button type="primary" onClick={this.onCancel}>Close</Button>;

@@ -245,6 +245,7 @@ const PlanElementBox = (props) => {
 					textTransform: 'uppercase',
 					fontSize: '0.7em'
 				}
+				const textLength = item.text.length;
 				//tipboxIcon = <img src={iconUrl} style={{maxWidth:80}} />;
 				if (iconAlign == 'right') {
 					text = <div className={'clearfix'}>

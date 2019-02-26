@@ -4,6 +4,7 @@ import {injectIntl} from 'react-intl';
 import { Form, message } from 'antd';
 import moment from 'moment';
 import DefaultI18nEn from '../../../i18n/en';
+import { withDrawer } from '../../Modal';
 // import { withCreateOrUpdateBrahm } from '../mutations.js';
 
 const enhance = compose(
@@ -24,7 +25,7 @@ const enhance = compose(
                         finish = props.createBrahm(input);
                     }
                     finish.then(() => {
-                        messageModal.success('Saved');
+                        message.success('Saved');
                         if (props.onHide) {
                             props.onHide();
                         }

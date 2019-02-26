@@ -18,7 +18,7 @@ const enhance = compose(
             }
             const {id, type, getAnswers=[]} = question || {};
             const inputs = reports;//.map(report => ({questionId:id, ...report}));
-            console.log(inputs, 'inputs');
+            // console.log(inputs, 'inputs');
             if (type === 'yes_no') {
                 // if yes - no, then check on redirect to another section/question;
                 // If we have nextQuestionId, then we should skipp all questions from current one to the question ID
@@ -40,7 +40,7 @@ const enhance = compose(
                     props.setQuestionsToSkip(skipByQuestion, skipSectionQuestion, questionsToSkip);
                 }
             }
-            props.onChange(question.id, inputs, callback);
+            props.onChange(question, inputs, callback);
         },
         /**
          * Go next question. We need to pass the questions and section ID to open
