@@ -6,7 +6,7 @@ import InputField from '../../../../../../../../../../components/FormCustomField
 
 const AssessmentInput = props => {
     const {onChange, reports, disabled=false, isTime=false, isNumber} = props;
-
+    console.log(props, 'props');
     let value = reports.map(report => report.value);
     value = value[0] || null;
 
@@ -19,7 +19,7 @@ const AssessmentInput = props => {
         }
         return <TimeField onChange={onChange} disabled={disabled} value={value} />
     }
-    return <InputField onChange={onChange} isNumber={isNumber} disabled={disabled} defaultValue={value} />
+    return <InputField onChange={onChange} isNumber={isNumber} disabled={disabled} value={value} />
 }
 
 export default AssessmentInput;

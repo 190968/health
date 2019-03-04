@@ -101,7 +101,9 @@ const AssessmentQuestion = props => {
         case 'number':
             value = questionReports.map(report => report.value);
             initialValue = value[0] || null;
+            // console.log(questionReports, 'questionReports');
             // console.log(value);
+            // console.log(initialValue, 'initialValue');
 
             field = <AssessmentInput {...defaultProps} isNumber={type === 'number'} />
             break;

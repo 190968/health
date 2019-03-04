@@ -10,6 +10,7 @@ import {
     arrayMove,
   } from 'react-sortable-hoc';
 import { compose, renderComponent, branch } from 'recompose';
+import { EmptyList } from '../../../../../../../../components/Loading';
 
 /**
  * the process is the following
@@ -58,7 +59,10 @@ const AssessmentSectionSortable = compose(
 
 
 const SectionsListPure = props => {
-    const {sections, getReportedValues} = props;
+    const {sections, getReportedValues, isPreviewMode} = props;
+    if (isPreviewMode && sections.length === 0) {
+        return <EmptyList>Nothing to preview</EmptyList>;
+    }
     return sections.map((section, i) => {
         return <AssessmentSectionSortable key={section.id} collection={'sections'} index={i} sections={sections} i={i} section={section} reportedValues={getReportedValues} {...props} />
     })

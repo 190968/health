@@ -62,11 +62,14 @@ const GET_ASSESSMENT_QUERY = gql`
 export const withAssessmentQuery = graphql(
     GET_ASSESSMENT_QUERY,
     {
+        skip: (props) =>  {
+            const {id} = props.assessment || {};
+            return !id;
+        },
         options: (ownProps) => {
             const {assessment} = ownProps;
             const {id} = assessment || {};
             return {
-                skip:!id,
                 variables: {
                     id,
                 },

@@ -12,8 +12,7 @@ const enhance = compose(
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
-            const { form, assessment } = props;
-
+            const { form,history, assessment } = props;
             form.validateFields((err, values) => {
                 if (!err) {
                     const input = prepareAssessmentInput(values);
@@ -31,11 +30,17 @@ const enhance = compose(
                             const {createAssessment} = data;
                             const {assessment:newAssessment} = createAssessment || {};
                                 
-                            props.setAssessment(newAssessment);
+                            // props.setAssessment(newAssessment);
+
+                            let mainUrl = '/builder/assessment/'+newAssessment.id+'/body';
+                            history.push(mainUrl);
+                        } else {
+                            let mainUrl = '/builder/assessment/'+assessment.id+'/body';
+                            history.push(mainUrl);
                         }
-                        if (props.goNextStep) {
-                            props.goNextStep();
-                        }
+                        // if (props.goNextStep) {
+                        //     props.goNextStep();
+                        // }
                     });
                 }
             });

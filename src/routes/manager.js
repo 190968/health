@@ -58,6 +58,23 @@ export const asyncPlanbuilder = () => {
     );
 }
 
+export const asyncBuilder = () => {
+
+    // return (
+    //     Loadable({
+    //         loader: () => import('../routes/Manager/containers/Planbuilder'),
+    //         modules: ['../routes/Manager/containers/Planbuilder'],
+    //         webpack: () => [require.resolveWeak('../routes/Manager/containers/Planbuilder')],
+    //     })
+    // );
+    return (
+        Loadable({
+            loader: () => import(/* webpackChunkName: "builderChunk" */'../routes/Manager/components/Builder'),
+            modules: ['../routes/Manager/components/Builder'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Builder')],
+        })
+    );
+}
 
 export const asyncConference = () => {
 
