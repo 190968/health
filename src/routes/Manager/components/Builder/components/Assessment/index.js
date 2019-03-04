@@ -18,15 +18,27 @@ const AssessmentBuilderLayout = props => {
     if (loading && !assessment) {
         return <LoadingBox />
     }
+
+   
+
     const {action = 'build'} = match.params;
 
    
     const {id, name} = assessment || {};
+
+    let mainUrl = '/builder/assessment';
+    if (id !== '') {
+        mainUrl += '/'+id;
+    }
+
     let menuItems = [];
-    const selectedItem = action;
+    let selectedItem = action;
     let openItem = action;
-    if (['body', 'settings'].includes(action)) {
+    if (['body', 'settings', 'action'].includes(action)) {
         openItem = 'build';
+        if (action === 'build') {
+            selectedItem = 'settings';
+        }
     }
     console.log(selectedItem);
     console.log(openItem);
@@ -73,12 +85,12 @@ const AssessmentBuilderLayout = props => {
                             >
                                 {children.map(subMenu => {
                                     const {label:subLabel, key:subKey} = subMenu;
-                                    return <Menu.Item key={subKey}><NavLink to={subKey}>{subLabel}</NavLink></Menu.Item>
+                                    return <Menu.Item key={subKey}><NavLink to={mainUrl+'/'+subKey}>{subLabel}</NavLink></Menu.Item>
                                 })}
                             </SubMenu>
                         } else {
                             return <Menu.Item key={key}>
-                                <NavLink to={key}>{label}</NavLink>
+                                <NavLink to={mainUrl+'/'+key}>{label}</NavLink>
                             </Menu.Item>;
                         }
                     })}
