@@ -1,68 +1,72 @@
 import React from 'react';
-import {Form, Input} from 'antd';
+import { Form, Input, Checkbox } from 'antd';
 import AssessmentQuestionFieldsManager from './components/Fields';
-import BrahmsTable from '../../../../../Brahms/components/Table';
-import { BrahmsAsField } from '../../../../../Brahms/components/Manager/containers/Field';
+
+import AssessmentQuestionAnswersFormField from './_answers';
+import AssessmentQuestionBrahmsFormField from './_brahms';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-const formItemLayoutDefault = {
+const formItemLayout = {
     labelCol: {
-        xs: {span: 20},
-        sm: {span: 6},
+        xs: { span: 20 },
+        sm: { span: 5 },
 
     },
     wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 18},
+        xs: { span: 24 },
+        sm: { span: 19 },
     },
 };
 
-const AssessmentQuestionManager = props => {
-    
-        const {question, form, type} = props;
-        const {getFieldDecorator} = form;
-        const {title, description, brahms=[]} = question || {};
-        const  formItemLayout=formItemLayoutDefault;
-        return <Form onSubmit={props.onSubmit}>
-                <FormItem
-                    {...formItemLayout}
-                    label="Name"
-                >
-                    {getFieldDecorator('title', {
-                        initialValue: title,
-                        rules: [{
-                            required: true,
-                            message: "Please enter section title",
-                        }],
-                    })(
-                        <Input />
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="Description"
-                >
-                    {getFieldDecorator('description', {
-                        initialValue: description,
-                    })(
-                        <TextArea autosize={{ minRows: 2, maxRows: 6 }} />
-    
-                    )}
-                </FormItem>
-                <AssessmentQuestionFieldsManager form={form} question={question} type={type} formItemLayout={formItemLayout} />
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 14,
+            offset: 5,
+        },
+    },
+};
+const AssessmentQuestionRadioManager = props => {
 
-                <FormItem
-                    {...formItemLayout}
-                    label="Brahms"
-                >
-                    {getFieldDecorator('brahms', {
-                        initialValue: brahms,
-                    })(
-                    <BrahmsAsField />
-                )}
-                </FormItem>
-            </Form>
+    const { question, form, type, assessment } = props;
+    const { getFieldDecorator, getFieldValue } = form;
+    const { title, description, isNumeric, getAnswers = [], getBrahmsRules = [] } = question || {};
+    const showBrahms = question && type === 'number';
+    return <Form onSubmit={props.onSubmit}>
+        <FormItem
+            {...formItemLayout}
+            label="Name"
+        >
+            {getFieldDecorator('title', {
+                initialValue: title,
+                rules: [{
+                    required: true,
+                    message: "Please enter question title",
+                }],
+            })(
+                <Input />
+            )}
+        </FormItem>
+        <FormItem
+            {...formItemLayout}
+            label="Description"
+        >
+            {getFieldDecorator('description', {
+                initialValue: description,
+            })(
+                <TextArea autosize={{ minRows: 2, maxRows: 6 }} />
+
+            )}
+        </FormItem>
+
+
+        {showBrahms && <AssessmentQuestionBrahmsFormField label={getFieldValue('title')} form={form} type={'number'}  possibleOptions={getFieldValue('answers') || getAnswers} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
+    </Form>
 }
 
-export default AssessmentQuestionManager;
+export default AssessmentQuestionRadioManager;

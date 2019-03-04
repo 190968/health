@@ -279,7 +279,8 @@ export const withDrawer = (WrappedComponent) => {
                     visible={modalVisible}
                     {...modalOpts}
                     style={{
-                        height: 'calc(100% - 55px)',
+                        // height: 'calc(100% - 55px)',
+                        height: '100%',
                         overflow: 'auto',
                         paddingBottom: 53,
                       }}

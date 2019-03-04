@@ -1,18 +1,17 @@
+import { Card, Icon, Tag, Tooltip } from 'antd';
 import React from 'react';
-import {Table,Menu,Tooltip,Button, Dropdown, Radio, Card, Input, Icon, Tag} from 'antd';
-import moment from 'moment';
-import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
-import {PageHeaderLayout} from "../../../../components/Layout/PageHeaderLayout/index";
-import sort from '../../../../components/Tables/sort';
-import AssessmentsEditor from "./containers/AssessmentsEditor";
-import { AssessmentViewButton } from './containers/AssessmentViewButton';
-import { TableWithMessage } from '../../../../components/Tables';
-import { getTableDateProps } from '../../../../components/Tables/TableColumn';
-import DefaultI18nEn from '../../../../i18n/en';
+import Truncate from 'react-truncate';
+import { FormattedMessage } from 'react-intl';
 import { CardExtraSplit } from '../../../../components/Card/components/CardExtraSplit';
 import { CardQuickFilter } from '../../../../components/Card/components/CardQuickFilter';
-import { FormattedMessage } from 'react-intl';
+import { PageHeaderLayout } from "../../../../components/Layout/PageHeaderLayout/index";
+import { TableWithMessage } from '../../../../components/Tables';
+import { getTableDateProps } from '../../../../components/Tables/TableColumn';
+import TaskAssignButton from '../../../../components/Tasks/components/TaskAssignButton';
+import SettingsDropdown from '../../../../components/UI/SettingsDropdown';
+import DefaultI18nEn from '../../../../i18n/en';
 import { AssessmentManagerButton } from './components/Buttons/components/Manager';
+import { AssessmentDeleteButton } from './components/Buttons/containers/Delete';
 
  
 const filters = [
@@ -29,19 +28,27 @@ const Assessments = props => {
     const suffixCode = searchTextCode ? <Icon type="close-circle-o" onClick={emitEmptyCode}/> : <Icon type="search"/> 
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',    
+            title: 'Title',
             key: 'name',
+            render: (info) => <AssessmentManagerButton assessment={info} label={info.name} />
+        },
+        {
+            title: 'Notes',
+            dataIndex: 'description',    
+            key: 'name',
+            width:200,
+            render: (info) => <Truncate width={180}>{info}</Truncate>
         },
         {
             title: 'Status',
             key: 'status',
+            width:100,
             render: assessment => {
-                let color = 'magenta';
+                let color = '';
                 const status = assessment.status;
                 switch(status) {
                     case 'private':
-                        color = 'red';
+                        //color = 'red';
                     break;
                     case 'published':
                         color = 'green';
@@ -63,7 +70,7 @@ const Assessments = props => {
         //     sorter: (a, b) => a.createdDate - b.createdDate,
         // },
         {
-            title: 'Total Assigns',
+            title: '# Prescribed',
             dataIndex: 'getTotalAssigns',    
             key: 'getTotalAssigns',
             width:160,
@@ -71,19 +78,12 @@ const Assessments = props => {
         },
         {
             render: (info) => {
-                const menu = (
-                    <Menu>
-                        <Menu.Item>
-                            <AssessmentManagerButton assessment={info} />
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Icon type="delete"/> Delete
-                        </Menu.Item>
-                    </Menu>
-                );
-                return <Dropdown overlay={menu} trigger={['click']}>
-                    <Icon type="setting"/>
-                </Dropdown>;
+                const items = [
+                    {key:'edit', content:  <AssessmentManagerButton assessment={info} />},
+                    {key:'assign', content:  <TaskAssignButton label={'Prescribe'} asMenuItem size={'default'} mode={'simple'} assignObject={{type: 'assessment', object:info}} />},
+                    {key:'delete', content: <AssessmentDeleteButton assessment={info} refetch={props.refetch} asMenuItem />}
+                ];
+                return <SettingsDropdown items={items} />
             },
             width:50
         }
@@ -94,7 +94,7 @@ const Assessments = props => {
 				<CardQuickFilter size={'default'} filters={filters} value={props.status || 'all'} onChange={props.loadByStatus} />
             </CardExtraSplit>
             <CardExtraSplit>
-            {/* <Tooltip title="Invite"><Button onClick={openModal} type="primary"><Icon type="plus"/></Button></Tooltip> */}
+            <Tooltip title="Invite"><AssessmentManagerButton refetch={props.refetch} /></Tooltip>
             </CardExtraSplit>
     </React.Fragment>;
 
@@ -113,20 +113,19 @@ const Assessments = props => {
                 total={total} 
                 loading={loading}/>
             </Card>
-            {visibleModal && <AssessmentsEditor onHide={hideModal}/>}
         </PageHeaderLayout>
     );
 }
-const enhance = compose(
-    withState('visibleModal', 'setOpenManager', false),
-    withHandlers({
-        openModal: props => () => {
-            props.setOpenManager(true);
-        },
-        hideModal: props => () => {
-            props.setOpenManager(false);
-        }
-    }),
-);
+// const enhance = compose(
+//     withState('visibleModal', 'setOpenManager', false),
+//     withHandlers({
+//         openModal: props => () => {
+//             props.setOpenManager(true);
+//         },
+//         hideModal: props => () => {
+//             props.setOpenManager(false);
+//         }
+//     }),
+// );
 
-export default enhance(Assessments);
+export default (Assessments);

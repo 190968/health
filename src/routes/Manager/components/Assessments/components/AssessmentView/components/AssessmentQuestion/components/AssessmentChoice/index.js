@@ -21,14 +21,15 @@ String.prototype.nextChar = function(i) {
 }
 
 String.prototype.prevChar = function(i) {
-	const n = i || 1;
+    const n = i || 1;
+    // console.log(i,'ABC');
 	return String.fromCharCode(this.charCodeAt(0) - n);
 }
 
 export const AssessmentAnswerChoice = props => {
-    const {answers, value,  isMultiple=false, reports, isDropdown, disabled=false, onChange} = props;
+    const {answers, value, numberAsPrefix=false, isMultiple=false, reports, isDropdown, disabled=false, onChange} = props;
     //const {value} = this.state;
-    console.log(value, 'VALUE');
+    // console.log(props, 'VALUEVALUE');
     var answer_abc_num = 'a';
     if (isMultiple) {
 
@@ -37,7 +38,9 @@ export const AssessmentAnswerChoice = props => {
          return <CheckboxGroup value={value} onChange={onChange} disabled={disabled} >
          {answers.map((option, i) => {
              const {id, label, isCritical, isValidAnswer} = option;
-             const prefix = answer_abc_num.nextChar((i+1));
+            //  console.log(i);
+             const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
+            //  console.log(prefix, prefix);
              return <Checkbox key={id} value={id} style={vertStyle} >{prefix}. {label}</Checkbox>;
          })}
      </CheckboxGroup>
@@ -49,7 +52,7 @@ export const AssessmentAnswerChoice = props => {
         return <Select value={value} disabled={disabled} onChange={onChange} style={{width:'100%'}}>
         {answers.map((option, i) => {
             const {id, label, isCritical, isValidAnswer} = option;
-            const prefix = answer_abc_num.nextChar((i+1));
+            const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
             return <Option key={id} value={id} >{prefix}. {label}</Option>;
         })}
         </Select>;
@@ -63,7 +66,7 @@ export const AssessmentAnswerChoice = props => {
         return <RadioGroup onChange={onChange} value={value} disabled={disabled}>
         {answers.map((option, i) => {
             const {id, idForReported, label, isCritical, isValidAnswer} = option;
-            const prefix = answer_abc_num.nextChar((i+1));
+            const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
             // return <Radio key={id} value={idForReported} style={radioStyle} >{prefix}. {label}</Radio>;
             return <Radio key={id} value={id} style={radioStyle} >{prefix}. {label}</Radio>;
         })}

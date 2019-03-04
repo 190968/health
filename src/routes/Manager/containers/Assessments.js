@@ -1,8 +1,7 @@
 import Assessments from '../components/Assessments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import React from 'react';
-import {compose,withStateHandlers} from 'recompose';
+import {compose} from 'recompose';
 const GET_ASSESSMENTS_QUERY = gql`    
 query GET_ASSESSMENTS ($status: AssessmentStatusEnum) {
     management {
@@ -11,6 +10,7 @@ query GET_ASSESSMENTS ($status: AssessmentStatusEnum) {
             edges {
                 id
                 name
+                description
                 isForm
                 status
                 isPatientReport
@@ -43,6 +43,7 @@ const withQuery = graphql(
                 assessments: edges,
                 total: totalCount,
                 loading: data.loading,
+                refetch: data.refetch,
                 loadByStatus(status) {
                     if (status === 'all') {
                         status = null;
@@ -78,65 +79,6 @@ const withQuery = graphql(
 );
 
 const enhance = compose(
-   withQuery,
-    withStateHandlers(
-        (props) => (
-            {
-            searchText: '',
-            searchTextCode: '',
-        }),
-        {        
-            onSearch: ({searchText},props) =>(value) => (
-                {
-                    searchText: value.target.value,
-                    getAssessments: props.getAssessments.map((record) => {
-                        const match = record.name.match(new RegExp(value.target.value, 'gi'));
-                        if (!match) {
-                            return null;
-                        }                        
-                        return {
-                            ...record,
-                            name: (
-                                <span>
-                      {record.name.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
-                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-                      ))}
-                    </span>
-                            ),
-                        };
-                    }).filter(record => !!record),
-            }),
-            emitEmpty: ({searchText},props) =>(value) => (
-                {
-                    searchText: '',
-                    getAssessments: props.getAssessments
-                     }),
-            onSearchCode: ({searchTextCode},props) =>(value) => (
-                        {
-                            searchTextCode: value.target.value,
-                            getPayers: props.getPayers.map((record) => {
-                                const match = record.code.match(new RegExp(value.target.value, 'gi'));
-                                if (!match) {
-                                    return null;
-                                }                        
-                                return {
-                                    ...record,
-                                    code: (
-                                        <span>
-                              {record.code.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
-                              i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-                              ))}
-                            </span>
-                                    ),
-                                };
-                            }).filter(record => !!record),
-                    }),
-            emitEmptyCode: ({searchTextCode},props) =>(value) => (
-                        {
-                            searchTextCode: '',
-                            getPayers: props.getPayers
-                             })
-            })        
-
+   withQuery
 );
 export default enhance(Assessments);

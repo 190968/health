@@ -1,13 +1,20 @@
 import React from 'react';
-import {Table, Button, Icon} from 'antd';
-import { withToggleModal } from '../../../../../../Modal';
+import { Icon, Popconfirm } from 'antd';
+import { withDeleteAssessmentQuestionMutation } from '../../../../../mutations';
 
-const AssessmentQuestionManagerButtonPure = props => {
-    const {showModal, toggleModal, asButton=true, ...otherProps} = props;
-    // console.log(userAssessment);
-    return <React.Fragment>
-        <Icon type={'delete'} onClick={toggleModal} />
-    </React.Fragment>
+const AssessmentQuestionDeleteButtonPure = props => {
+    return <Popconfirm title={"Delete?"} onConfirm={props.deleteAssessmentQuestion} okText="Yes" cancelText="No">
+    {props.asMenuItem ? <a>Delete</a> : <Icon type="close-circle" theme="outlined" />}
+</Popconfirm>
 }
 
-export const AssessmentQuestionDeleteButton = (AssessmentQuestionManagerButtonPure);
+
+// const AssessmentSectionManagerButtonPure = props => {
+//     const {showModal, deleteAssessmentSection, asButton=true, ...otherProps} = props;
+//     // console.log(userAssessment);
+//     return <React.Fragment>
+//         <Icon type={'delete'} onClick={deleteAssessmentSection} />
+//     </React.Fragment>
+// }
+
+export const AssessmentQuestionDeleteButton = withDeleteAssessmentQuestionMutation(AssessmentQuestionDeleteButtonPure);

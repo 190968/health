@@ -1,8 +1,9 @@
 import React from 'react';
 import AssessmentBody from './containers/AssessmentBody';
 import AssessmentHeader from './components/AssessmentHeader';
-import { Divider, Button } from 'antd';
+import { Card, Divider, Button } from 'antd';
 import { ModalBodyFooter } from '../../../../../../components/Modal';
+import AssessmentSettingsButton from './components/AssessmentSettingsButton';
 
 const AssessementView = props => {
     const {userAssessment, user, date, handleNewReport, ...otherProps} = props;
@@ -15,13 +16,15 @@ const AssessementView = props => {
         assessment = {...assessment, showAllQuestions: true, showAllSections:true};
     }
 
-    return <React.Fragment>
+    const extra = <AssessmentSettingsButton userAssessment={userAssessment} user={user} date={date} />
+
+    return <Card title={assessment.name} extra={extra}>
         <AssessmentHeader userAssessment={userAssessment} user={user} report={report} />
         <Divider />
         {report && <AssessmentBody userAssessment={userAssessment} assessment={assessment} report={report} user={user} date={date} isCompleted={isCompleted} canReport={canReport} {...otherProps} />}
-        {(!report && canReport) && <div style={{textAlign:'center'}}><Button type={'primary'} onClick={handleNewReport} size={'large'} >Start Assessment Now</Button></div>}
-        {(isCompleted && !isOnetime && canReport) && <ModalBodyFooter><Button type={'primary'} onClick={handleNewReport} >New report</Button></ModalBodyFooter>}
-        </React.Fragment>;
+        {(!report && canReport) && <div style={{textAlign:'center'}}><Button type={'primary'} onClick={handleNewReport} size={'large'} icon={"play-circle"} >Start Assessment Now</Button></div>}
+        {(isCompleted && !isOnetime && canReport) && <ModalBodyFooter><Button type={'primary'} icon={'plus'} onClick={handleNewReport} >New Report</Button></ModalBodyFooter>}
+        </Card>;
 }
 
 export default AssessementView;

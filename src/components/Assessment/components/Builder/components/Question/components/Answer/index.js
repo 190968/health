@@ -1,7 +1,8 @@
 import React from 'react';
-import {Form, Input, Checkbox, Row, Col} from 'antd';
+import {Form, Input, Checkbox, InputNumber} from 'antd';
 const FormItem = Form.Item;
-const formItemLayoutDefault = {
+
+const formItemLayout = {
     labelCol: {
         xs: {span: 20},
         sm: {span: 5},
@@ -12,7 +13,6 @@ const formItemLayoutDefault = {
         sm: {span: 16},
     },
 };
-
 const tailFormItemLayout = {
     wrapperCol: {
         xs: {
@@ -21,26 +21,25 @@ const tailFormItemLayout = {
         },
         sm: {
             span: 14,
-            offset: 6,
+            offset: 5,
         },
     },
 };
 const AssessmentQuestionAnswerManager = props => {
-    
-        const {answer, formItemLayout=formItemLayoutDefault} = props;
+        const {answer, showOpenEnded=true} = props;
         const {label, isCritical=false, isOpenEnded=false, isValidAnswer=false, points=0} = answer || {};
         return <>
             <FormItem
                 {...formItemLayout}
                 label={'Label'}
             >
-                <Input value={label} onChange={props.setLabel} />
+                <Input value={label} onChange={props.setLabel}  ref={(input) => input && input.focus()} />
             </FormItem>
-            <FormItem
+            {showOpenEnded && <FormItem
                 {...tailFormItemLayout}
             >
             <Checkbox checked={isOpenEnded} onChange={props.setIsOpenEnded} >This is an open ended answer</Checkbox>
-            </FormItem>
+            </FormItem>}
             <FormItem
                 {...tailFormItemLayout}
             >
@@ -56,7 +55,7 @@ const AssessmentQuestionAnswerManager = props => {
                label={'Points'}
                help={'Points for the answer'}
             >
-            <Input value={points} onChange={props.setPoints} />
+            <InputNumber value={points} onChange={props.setPoints} />
             </FormItem>
         </>
 }

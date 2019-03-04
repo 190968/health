@@ -6,7 +6,7 @@ const enhance = compose(
 		const {isMultiple=false, reports} = props;
         //const {value} = this.state;
         let value;
-        console.log(reports);
+        // console.log(reports);
         if (isMultiple) {
 
             value = reports.map(report => report.answerId);
@@ -25,8 +25,8 @@ const enhance = compose(
             let reports = [];
             let value = e;
             let currentValue = value;
-			console.log(props, 'choice');
-			console.log(e);
+			// console.log(props, 'choice');
+			// console.log(e);
 
 			if (isMultiple) {
 				// create an array of multiple items

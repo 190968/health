@@ -45,3 +45,7 @@ export const formatDateToday = (date, opts) => {
     }
     return formatted;
 }
+
+export const getSQLDateToday = props => {
+    return moment().format('YYYY-MM-DD')
+}

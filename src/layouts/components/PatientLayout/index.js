@@ -1,14 +1,17 @@
 import React from 'react';
 import {Layout, Icon, Dropdown, Menu} from 'antd';
+import {Switch, Route} from 'react-router-dom';
 import LayoutHeader from '../../components/Header';
 import {CoreRoutes, UseRoutes} from '../../routes';
 import {withHandlers} from 'recompose';
 import {PatientRoutesList} from './routes';
-import {Switch} from 'react-router-dom'
 import { withActiveNetwork } from '../../../components/App/app-context';
+
+import { asyncAssessment } from '../../../routes';
+
 const {Header, Content, Footer} = Layout;
 
-const PatientLayout = ({loading, location}) =>  {
+const PatientMainLayout = ({loading, location}) =>  {
     //console.log('Loaded Patient layout');
     console.log(location);
     const {pathname} = location;
@@ -34,6 +37,17 @@ const PatientLayout = ({loading, location}) =>  {
             </div>
         </React.Fragment>
     )}
+
+
+
+const PatientLayout = ({loading, user, store, location}) => {
+    return (
+            <Switch>
+                <Route path="/assessment/:id?" component={asyncAssessment}/>
+                <Route  component={PatientMainLayout} />
+            </Switch>
+    )
+}
 
 export default PatientLayout;
 

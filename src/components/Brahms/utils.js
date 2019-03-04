@@ -57,7 +57,7 @@ export const getNextObjectFromRules = props => {
 }
 
 export const validateBrahms = props => {
-    console.log(props);
+    // console.log(props);
     const {rules=[], value, type, isAnswerBasedQuestion=false} = props;
 
     if (!rules) {
@@ -65,7 +65,7 @@ export const validateBrahms = props => {
     }
     const validatedRules = rules.filter(rule => {
 
-        const {ruleType, ruleTypeValue, ruleValueId, ruleActionType} = rule;
+        const {ruleType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType} = rule;
         if (type) {
             if (Array.isArray(type)) {
                 if (!type.includes(ruleActionType)) {
@@ -79,7 +79,7 @@ export const validateBrahms = props => {
         } else if (ruleActionType == 'goto') {
             return false;
         }
-        const valueToCheck = isAnswerBasedQuestion ? ruleValueId : ruleTypeValue; 
+        const valueToCheck = isAnswerBasedQuestion ? ruleValueId : ruleValue; 
         
         // if (ruleActionType == 'goto') {
         //     if (type !== 'goto') {
@@ -88,21 +88,35 @@ export const validateBrahms = props => {
         //         return ruleTypeValue === value;
         //     }
         // }
-        console.log(valueToCheck);
-        console.log(value);
+        //if (Array.isArray(value)) {
+            // if the value is multiple, check as array
+
+        //}
+        //console.log(value);
         if (isAnswerBasedQuestion) {
             return valueToCheck === value;
         }
+        // console.log(parseFloat(valueToCheck));
+        // console.log(parseFloat(value));
         switch(ruleType) {
-            case 'eq':
+            case 'between':
+                const valueFloat = parseFloat(valueToCheck);
+                return valueFloat >= parseFloat(value) && valueFloat <= parseFloat(ruleValueEnd);
+            case 'equal':
                 return parseFloat(valueToCheck) === parseFloat(value);
             case 'less_than':
                 return parseFloat(valueToCheck) > parseFloat(value);
+            case 'less_eq_than':
+                return parseFloat(valueToCheck) >= parseFloat(value);
             case 'more_than':
                 return parseFloat(valueToCheck) < parseFloat(value);
+            case 'more_eq_than':
+                return parseFloat(valueToCheck) <= parseFloat(value);
         }
         return false;
     });
+
+    // console.log(validatedRules, 'validatedRules');
 
     return validatedRules;
 }

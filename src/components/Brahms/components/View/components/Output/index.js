@@ -35,16 +35,17 @@ export const BrahmsOutputs = props => {
 }
 
 const BrahmsElementOutputPure = props => {
-    const {isToggled, toggleState, showToggler=true, ...otherProps} = props;
+    const {isToggled=true, toggleState, showToggler=true, ...otherProps} = props;
     return <>
-        {showToggler && <div style={{textAlign:'right'}}><Icon type="info-circle" theme={!isToggled && "twoTone"} onClick={toggleState} /></div>}
+        {/* {showToggler && <div style={{textAlign:'right'}}><Icon type="info-circle" theme={!isToggled && "twoTone"} onClick={toggleState} /></div>} */}
         {(isToggled || !showToggler) && <BrahmsElementOutputBody {...otherProps} />}
     </>
 }
 
-export const BrahmsElementOutput = withToggleState(BrahmsElementOutputPure);
+export const BrahmsElementOutput = /*withToggleState*/(BrahmsElementOutputPure);
 
 export const BrahmsElementOutputBody = props => {
+    console.log(props, 'propspropsprops');
     const {rules=[]} = props;
     return rules.map(rule => {
         return <div key={rule.id} style={{marginBottom:5}}><BrahmOutputItem rule={rule} /></div>;

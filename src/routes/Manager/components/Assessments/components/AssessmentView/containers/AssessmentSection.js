@@ -1,7 +1,10 @@
 import AssessmentSectionPure from '../components/AssessmentSection';
 import {compose, branch, withState, withHandlers} from 'recompose';
-import {Form} from 'antd';
-
+import {Form, message} from 'antd';
+import {
+    arrayMove,
+  } from 'react-sortable-hoc';
+import { withUpdateAssessmentQuestionsOrderMutation } from '../../../../../../../components/Assessment/mutations';
 const enhance = compose(
     branch(props => {
         const {showAllSections, showAllQuestions} = props.assessment || {};
@@ -30,6 +33,7 @@ const enhance = compose(
         
         return 0;
     }),
+    withUpdateAssessmentQuestionsOrderMutation,
     withHandlers({
         goNextQuestion: props => (question) => {
             const nextQuestion = props.currentQuestion+1;
@@ -38,7 +42,10 @@ const enhance = compose(
             // check if we have 
             const skippedQuestions = skippedByQuestions[id] || [];
             const nextSectionQuestion = skipSectionQuestion[id] || false;
-            //console.log(nextSectionQuestion, 'NNNNNnextSectionQuestion');
+            console.log(props, 'props');
+            console.log(nextQuestion, 'nextQuestion');
+            console.log(skippedByQuestions, 'skippedByQuestions');
+            console.log(skippedQuestions, 'skippedQuestions');
             props.setSkippedQuestions(skippedQuestions);
             if (nextSectionQuestion) {
                 const {sectionI, nextSectionId, questionI, nextQuestionId} = nextSectionQuestion;
@@ -54,7 +61,11 @@ const enhance = compose(
                         const {getQuestions=[]} = section;
                         nextQuestionIndex = getQuestions.findIndex(question => question.id === nextQuestionId);
                     }
-                })
+                });
+                console.log(props );
+                console.log(question );
+                console.log(nextSectionQuestion, 'nextSectionQuestion' );
+                console.log(nextSectionIndex, 'nextSectionIndex');
                 props.setCurrentSection(nextSectionIndex);
                 props.setCurrentQuestion(nextQuestionIndex);
             } else {
@@ -66,6 +77,20 @@ const enhance = compose(
         },
         goPreviousQuestion: props => (question) => {
             props.setCurrentQuestion(props.currentQuestion-1);
+        },
+        handleUpdateQuestionOrder : props => ({oldIndex, newIndex}) => {
+            const {section} = props;
+            const {getQuestions=[]} = section || {};
+
+            const options = getQuestions.map(q => q.id);
+            //console.log(arrayMove(options, oldIndex, newIndex));
+            const newOptions = arrayMove(options, oldIndex, newIndex);
+            // console.log(newOptions);
+            const hide = message.loading('Saving...');
+            props.updateAssessmentQuestionOrder(newOptions).then(() => {
+                message.success('Order has been updated');
+                hide();
+            });
         }
     })
 );

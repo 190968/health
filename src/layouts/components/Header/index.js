@@ -107,5 +107,5 @@ class Header extends React.Component {
 }
 
  
-
- export default  withCurrentUser(withCurrentNetwork(Header));
+export const LayoutHeader = withCurrentUser(withCurrentNetwork(Header));
+ export default  LayoutHeader;

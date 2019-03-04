@@ -90,6 +90,12 @@ body {
   .ant-card-body > .ant-divider:first-child {
     margin-top:0;
   }
+
+  .ant-card-actions {
+    li {
+      .likeButton {line-height: 32px;}
+    }
+  }
 }
 .userside {
   .ant-card:not(.transparent) {
@@ -344,7 +350,11 @@ body {
   }
 
   .ant-list-item-meta-content {
-    flex:1
+    flex:1;
+
+    .ant-card-extra {
+      padding: 0 !important;
+    }
   }
 
   .ant-list-item {
@@ -505,12 +515,19 @@ body {
     .ant-checkbox {
       position: absolute;
       left: 0;
-      top: 3px;
+      top:0;
+      // top: 3px;
     }
 
     .ant-checkbox + span {
       padding-left: 0;
     }
+}
+
+.ant-checkbox-group {
+  .ant-checkbox {
+    top: 2px;
+  }
 }
 
 

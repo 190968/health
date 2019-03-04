@@ -225,6 +225,11 @@ export const asyncCalendar = () => {
     );
 }
 
+export const asyncAssessment = Loadable({
+    loader: () => import(/* webpackChunkName: "assessmentChunk" */'../routes/Manager/components/Assessments/containers/AssessmentPage'),
+    modules: ['../routes/Manager/components/Assessments/containers/AssessmentPage'],
+    webpack: () => [require.resolveWeak('../routes/Manager/components/Assessments/containers/AssessmentPage')],
+});
 
 export const asyncPlan = (store) => {
     return (

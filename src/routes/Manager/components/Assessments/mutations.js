@@ -3,7 +3,10 @@ import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import { UserAssessmentReportPureFragment, UserAssessmentReportFragment, UserAssessmentFragment } from './fragments';
 import { BrahmsFragment } from '../../../../components/Brahms/fragments';
- 
+ import {withAssessmentQuery} from './queries';
+import { AssessmentFragment } from '../../../../components/Assessment/fragments';
+import { compose, branch } from 'recompose';
+
 const DELETE_USER_ASSESSMENT_MUTATION = gql`
     mutation DELETE_USER_ASSESSMENT($id: UID!, $userId:UID!){
         deleteUserAssessment(id:$id, userId:$userId)
@@ -166,3 +169,82 @@ export const withAssessmentCompleteMutation = graphql(ASSESSMENT_COMPLETE_MUTATI
 });
 
 
+
+
+
+//// builder
+const DELETE_ASSESSMENT_MUTATION = gql`
+    mutation DELETE_ASSESSMENT($id: UID!){
+        deleteCampaign(id:$id)
+    }
+`;
+const CREATE_ASSESSMENT_MUTATION = gql`
+    mutation CREATE_ASSESSMENT($input: AssessmentInput!){
+        createAssessment(input:$input) {
+            assessment {
+                ...Assessment
+            }
+        }
+    }
+    ${ AssessmentFragment }
+`;
+const UPDATE_ASSESSMENT_MUTATION = gql`
+    mutation UPDATE_ASSESSMENT($id: UID!, $input: AssessmentInput!){
+        updateAssessment(id:$id, input: $input) {
+            assessment {
+                ...Assessment
+            }
+        }
+    }
+    ${ AssessmentFragment }
+`;
+
+export const withDeleteCampaignMutation = graphql(DELETE_ASSESSMENT_MUTATION, {
+    props: ({ownProps:{assessment}, mutate }) => ({
+        deleteAssessment: () => {
+            return mutate({variables: { id: assessment.id}});
+        },
+    }),
+});
+
+
+const withCreateAssessmentMutation = graphql(CREATE_ASSESSMENT_MUTATION, {
+    props: ({ownProps, mutate }) => ({
+        createAssessment: (input) => {
+            return mutate({variables: { input }});
+        },
+    }),
+});
+
+const withUpdateAssessmentMutation = graphql(UPDATE_ASSESSMENT_MUTATION, {
+    props: ({ownProps:{assessment}, mutate }) => ({
+        updateAssessment: (input) => {
+            return mutate({variables: { id: assessment.id, input}});
+        },
+    }),
+});
+
+const withUpdateAssessmentMutationQuery = compose(
+    withAssessmentQuery,
+    withUpdateAssessmentMutation
+);
+export const withCreateOrUpdateAssessment = branch(props => props.assessment, withUpdateAssessmentMutationQuery, withCreateAssessmentMutation);
+
+
+const PUBLISH_ASSESSMENT_MUTATION = gql`
+    mutation PUBLISH_ASSESSMENT($id: UID!,$input: AssessmentPublishInput!){
+        publishAssessment(id: $id,input:$input) {
+            assessment {
+                ...Assessment
+            }
+        }
+    }
+    ${ AssessmentFragment }
+`;
+export const withPublishAssessmentMutation = graphql(PUBLISH_ASSESSMENT_MUTATION, {
+    props: ({ownProps:{assessment}, mutate }) => ({
+        publishAssessment: (input) => {
+            return mutate({variables: { id: assessment.id, input}});
+        },
+    }),
+});

@@ -57,8 +57,8 @@ const enhance = compose(
                 answer
             }
         },
-        setPoints: (state, props) => (e) => {
-            const points = parseInt(e.target.value);
+        setPoints: (state, props) => (points) => {
+            // const points = parseInt(e.target.value);
             let {answer} = state;
             answer = {...answer, points};
             // props.onChange(answer);
@@ -69,7 +69,8 @@ const enhance = compose(
     }),
     withHandlers({
         onSubmit: props => () => {
-            // console.log(props);
+            // const {answerIndex} = props;
+            //  console.log(props, 'answer edit props');
             let {answer} = props;
             answer = prepareAssessmentQuestionAnswerInput(answer);
             props.onChange(answer);
@@ -92,4 +93,18 @@ export const AssessmentQuestionAnswerManager = enhance(Answer);
 const prepareAssessmentQuestionAnswerInput = values => {
     const {id, label, descrioton, isOpenEnded, isValidAnswer, isCritical, points} = values;
     return {id, label, descrioton, isOpenEnded, isValidAnswer, isCritical, points:parseInt(points)};
+}
+
+
+
+export const prepareAssessmentQuestionAnswersField = answers => {
+    if (answers) {
+        return  answers.map(a => prepareAssessmentQuestionAnswerField(a));
+    }
+    return [];
+}
+
+export const prepareAssessmentQuestionAnswerField = answer => {
+    const {id, label, descrioton, isOpenEnded, isValidAnswer, isCritical, points} = answer;
+    return {id, label, descrioton, isOpenEnded, isValidAnswer, isCritical, points};
 }

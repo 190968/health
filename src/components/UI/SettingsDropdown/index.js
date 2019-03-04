@@ -33,7 +33,7 @@ const SettingsDropdownPure = props => {
     const menu = (
         <div >
             {items.map(item => {
-                const {key, content} = item;
+                const {key, content, props={}} = item;
                 return <div key={key}>
                     {content}
                 </div>;

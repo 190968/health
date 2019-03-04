@@ -1,10 +1,11 @@
 import React from 'react';
-import { Input } from 'antd';
+// import { Input } from 'antd';
 import { TimeField } from '../../../../../../../../../../components/FormCustomFields';
 import { getMomentFromUTCTime } from '../../../../../../../../../../utils/datetime';
+import InputField from '../../../../../../../../../../components/FormCustomFields/components/InputField';
 
 const AssessmentInput = props => {
-    const {onChange, reports, disabled=false, isTime=false} = props;
+    const {onChange, reports, disabled=false, isTime=false, isNumber} = props;
 
     let value = reports.map(report => report.value);
     value = value[0] || null;
@@ -18,7 +19,7 @@ const AssessmentInput = props => {
         }
         return <TimeField onChange={onChange} disabled={disabled} value={value} />
     }
-    return <Input onKeyUp={onChange} disabled={disabled} defaultValue={value} />
+    return <InputField onChange={onChange} isNumber={isNumber} disabled={disabled} defaultValue={value} />
 }
 
 export default AssessmentInput;

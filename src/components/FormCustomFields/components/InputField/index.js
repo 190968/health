@@ -1,15 +1,24 @@
 
 import React from 'react';
-import {Input} from 'antd';
+import {Input, InputNumber} from 'antd';
 import {compose, withHandlers, withState} from 'recompose';
 
 const InputFieldPure = props => {
-    const {value, onChange, disabled = false} = props; 
-	return <Input
-    value={value}
-    disabled={disabled}
-    onChange={props.onChange}
-/>
+	const {value, onChange, disabled = false, isNumber = false} = props; 
+	if (!isNumber) {
+		return <Input
+			value={value}
+			disabled={disabled}
+			onChange={props.onChange}
+		/>
+	} else {
+		return <InputNumber
+			value={value}
+			disabled={disabled}
+			onChange={props.onChange}
+		/>
+	}
+	
 }
 
 
@@ -24,9 +33,9 @@ const enhance = compose(
 
 		return {
 			onChange: props => (event) => {
-				const { onChange } = props;
+				const { onChange, isNumber=false } = props;
 		
-				let value = event.target.value;
+				let value = isNumber ? event : event.target.value;
 				props.setValue(value);
 				// console.log(value, 'value');
 		

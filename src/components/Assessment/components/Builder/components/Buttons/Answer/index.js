@@ -2,6 +2,7 @@ import React from 'react';
 import {Table, Button, Icon} from 'antd';
 import { withToggleModal } from '../../../../../../Modal';
 import { AssessmentQuestionAnswerManager } from '../../Question/containers/Answer';
+import { compose, branch, withHandlers } from 'recompose';
 
 const AssessmentQuestionAnswerManagerButtonPure = props => {
     const {showModal, toggleModal, asButton=true, ...otherProps} = props;
@@ -9,9 +10,24 @@ const AssessmentQuestionAnswerManagerButtonPure = props => {
     // console.log(userAssessment);
     return <React.Fragment>
         {showModal && <AssessmentQuestionAnswerManager {...otherProps} asModal onHide={toggleModal} />}
-        {answer ? <Icon type={'edit'} onClick={toggleModal} /> : <Button type={'dashed'} onClick={toggleModal}>Add Answer</Button>}
+        {answer ? <Icon type={'edit'} onClick={toggleModal} /> : <Button type={'dashed'} block onClick={toggleModal}>Add Answer</Button>}
     
     </React.Fragment>
 }
 
-export const AssessmentQuestionAnswerManagerButton = withToggleModal(AssessmentQuestionAnswerManagerButtonPure);
+const enhance = compose(
+    branch(props => {
+        const {answer} = props;
+        const {id} = answer || {};
+        return !id || id !== '';
+    }, withHandlers({
+        onChange: props => (value) => {
+            const {onChange, answerIndex} = props;
+            if (onChange) {
+                onChange(value, answerIndex);
+            }
+        }
+    })),
+    withToggleModal
+);
+export const AssessmentQuestionAnswerManagerButton = enhance(AssessmentQuestionAnswerManagerButtonPure);

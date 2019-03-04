@@ -14,7 +14,10 @@ const enhance = withHandlers(({onChange}) => {
                 // console.log(moment.utc(e).format('HH:mm:ss'));
                 value = e && prepareTimeInput(e);
             } else {
-                value = e.target.value;
+                value = e.toString();//.target.value;
+                onChange(value);
+                onChangeReport({value});
+                return;
             }
             onChange(value);
             clearTimeout(timer);

@@ -13,17 +13,16 @@ const enhance = compose(
         // format value
         const { value, mode  } = props;
         if (value) {
-            //return value;
             if (mode === 'multiple') {
 
                 const values = value.map(val => {
-                    const { id, title:name } = val || {};
-                    return { key: id, label: name };
+                    const { id, title } = val || {};
+                    return { key: id, label: title };
                 })
                 //console.log(values);
                 return {value: values};
             }
-
+            //return value;
             const { id, title = '' } = value || {};
             return { value: { key: id, label: title } };
         }

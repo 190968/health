@@ -9,9 +9,9 @@ const { Option, OptGroup } = AntdSelect;
 const SelectPure = props => {
     // console.log(props);
     const { i18n, items = [], disableSelect, loading = false, loadingState=false, mode, group, labelInValue, labelFormat, valueFormat, filterOption=false, ...otherProps} = props;
-    const { value } = props;
+    const { value, disabled=disableSelect } = props;
     let {allowClear} = props;
-    if (disableSelect) {
+    if (disabled) {
         allowClear = true;
     }
     let options = [];
@@ -34,7 +34,7 @@ const SelectPure = props => {
         {...otherProps}
         showSearch
         allowClear={allowClear}
-        disabled={disableSelect}
+        disabled={disabled}
         //optionFilterProp="name"
         onSearch={props.handleSearch}
         // onSelect={props.handleSelect}
@@ -55,9 +55,11 @@ const SelectPure = props => {
 
 
 const withFullValue = compose(
-    withProps(props => ({
-        labelInValue:true
-    })),
+    withProps(props => {
+        return {
+            labelInValue:true,
+        };
+    }),
     // from object to value
     // withProps(props => {
     //     const { value = {} } = props;
@@ -66,8 +68,8 @@ const withFullValue = compose(
     // }),
     withHandlers({
         handleSelect: props => value => {
-            const {labelInValue, items, disableSelect, valueFormat} = props;
-            if (disableSelect) {
+            const {labelInValue, items, disabled, disableSelect, valueFormat} = props;
+            if (disableSelect || disabled) {
                 return;
             }
             let option = undefined;

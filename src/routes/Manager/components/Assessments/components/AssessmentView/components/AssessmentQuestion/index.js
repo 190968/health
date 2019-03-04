@@ -6,12 +6,13 @@ import AssessmentSlider from './containers/AssessmentSlider';
 import {Form, Button} from 'antd';
 import moment from 'moment';
 import { BrahmOutputItem, BrahmsOutputs, BrahmOutputWidget, BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
+import BrahmsAsField, { BrahmsRulesView } from '../../../../../../../../components/Brahms/components/Manager/components/Field';
 
 const FormItem = Form.Item;
 
 const AssessmentQuestion = props => {
-    const {form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules} = props;
-    const {title, description, type, isNumeric, isOpenended, isMultiple, getAnswers=[]} = question || {};
+    const {isPreviewMode=false, isBuilderMode=false, form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules} = props;
+    const {title, description, type, isNumeric, numberAsPrefix=false, isMultiple, getAnswers=[], getBrahmsRules=[]} = question || {};
 
     const {i, currentQuestion, isPastSection, goPreviousQuestion, goNextQuestion, goNextSection, goPreviousSection} = props;
    
@@ -25,17 +26,19 @@ const AssessmentQuestion = props => {
     const questionReports = reports.filter(report => report.questionId === question.id);
     // get brahms for this questions
     const {rules:brahms} = brahmRules.find(report => report.question.id === question.id) || {};
-    console.log(question, 'question');
-    console.log(brahmRules, 'brahmRules');
-    console.log(brahms, 'brahms');
-    const defaultProps = {disabled:isCompleted || !canReport, onChangeReport:onChange, reports:questionReports};
+    // console.log(question, 'question');
+    // console.log(brahmRules, 'brahmRules');
+    // console.log(brahms, 'brahms');
+    // console.log(props, 'propspropspropspropsprops');
+    let defaultProps = {numberAsPrefix, disabled: ((isCompleted || !canReport) && !isPreviewMode), onChangeReport:onChange, reports:questionReports};
 
 
     let {
         isAllMandatory,
         allowGoBack,
         showAllQuestions,
-        showAllSections} = assessment;
+        showAllSections, 
+        showBrahms } = assessment;
         if (isCompleted) {
             showAllQuestions = true;
             showAllSections = true;
@@ -48,9 +51,9 @@ const AssessmentQuestion = props => {
     const isFirstQuestion = i === 0;
     const isPastQuestion = currentQuestion > i;
     const questionIsDimmed = !showAllQuestions && (isPastQuestion || isPastSection);
-    // show buttons is not dimmed and not completed and need to show by one question
+    // show buttons is not dimmed and not completed and need to show by one question or this is a preview
     const canShowButtons = !questionIsDimmed && !isCompleted && !showAllQuestions && !showAllSections ;//isCurrentSection
-
+    // console.log(canShowButtons);
     const showNextButton = canShowButtons;// && !showAllSections;// && (!showAllQuestions);// || (!showAllSections && isLastQuestion);
     let showPreviousButton = canShowButtons && (allowGoBack && !isFirstQuestion);//!showAllSections && showAllQuestions && !showFinishButton;// || (!showAllSections && isLastQuestion);
     
@@ -65,6 +68,8 @@ const AssessmentQuestion = props => {
         nextText = 'Finish';
         onNextClick = props.completeAssessment;
     }
+
+   
     
 
     if (isFirstQuestion && !isFirstSection) {
@@ -78,6 +83,7 @@ const AssessmentQuestion = props => {
     switch(type) {
         case 'yes_no':
         case 'list':
+        case 'radio':
             if (isMultiple) {
                 value = questionReports.map(report => report.answerId);
                 value = value || [];
@@ -88,15 +94,16 @@ const AssessmentQuestion = props => {
                 value = value[0] || '';
                 initialValue = value;
             }
-            console.log(initialValue, 'initialValue');
+            // console.log(initialValue, 'initialValue');
             field = <AssessmentChoice isMultiple={isMultiple} answers={getAnswers} {...defaultProps} />;
             break;
         case 'input':
+        case 'number':
             value = questionReports.map(report => report.value);
             initialValue = value[0] || null;
             // console.log(value);
 
-            field = <AssessmentInput {...defaultProps} />
+            field = <AssessmentInput {...defaultProps} isNumber={type === 'number'} />
             break;
         case 'time':
             value = questionReports.map(report => report.value);
@@ -119,30 +126,33 @@ const AssessmentQuestion = props => {
             break;
     }
     if (field == '') {
-        console.log('No FIELD');
+        console.log(props, 'NO FIELD!');
         return null;
     }
-    // console.log(question, 'question');
-    // console.log(initialValue, 'initialValue');
+    const showBottomButtons = (!questionIsDimmed && (canReport || isPreviewMode) && !showAllQuestions);
+    // console.log(isPreviewMode, 'question');
+    // console.log(showAllQuestions, 'question');
+    // console.log(showBottomButtons, 'question');
+     console.log(initialValue, 'initialValue');
     const {getFieldDecorator} = form;
     return <div className={'relative'}>
         {questionIsDimmed && <div className={'dimmed-block'} />}
 
         <FormItem
         >
-          {getFieldDecorator('field'+question.id, {
+          {getFieldDecorator('question['+question.id+']', {
             initialValue,
             rules: [{ required: isAllMandatory, message: 'Please answer the question' }],
           })(
             field
           )}
-
-            {(brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
+            {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} />}
+            {((showBrahms === 'question' || showBrahms === 'both') && brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
         </FormItem>
         
 
         
-        {(!questionIsDimmed && canReport && !showAllQuestions) && <div style={{textAlign:'right', marginTop:5}}>
+        {showBottomButtons && <div style={{textAlign:'right', marginTop:5}}>
        
             {showPreviousButton && <span className={'link bump-r grey'} onClick={onPrevClick}>{prevText}</span>}
             {showNextButton && <Button type={'primary'} onClick={onNextClick}>{nextText}</Button>}
@@ -152,6 +162,11 @@ const AssessmentQuestion = props => {
 }
 
 export default AssessmentQuestion;
+
+const questionBrahmItem = props => {
+    console.log(props);
+    return <div>111</div>;
+}
  
 // const validateQuestion = (rule, value, callback) => {
 //     const {message, type, isMultiple} = rule;

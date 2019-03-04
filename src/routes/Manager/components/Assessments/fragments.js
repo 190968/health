@@ -11,6 +11,7 @@ export const UserAssessmentReportPureFragment = gql`
         completedDate
         date
         points
+        maxPoints
         completedBy {
             ...UserInfo
         }
@@ -59,4 +60,5 @@ fragment UserAssessment on UserAssessment {
 }
 ${AssessmentFragment}
 ${UserInfoFragment}
+${UserAssessmentReportFragment}
 `;

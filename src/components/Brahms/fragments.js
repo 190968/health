@@ -5,7 +5,8 @@ export const BrahmsFragment = gql`
 fragment Brahms on Brahms {
     id
     ruleType
-    ruleTypeValue
+    ruleValue
+    ruleValueEnd
     ruleValueId
     ruleActionType
     ruleAction {

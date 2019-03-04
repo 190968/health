@@ -3,21 +3,21 @@ import {Form, Input} from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-const formItemLayoutDefault = {
+const formItemLayout = {
     labelCol: {
         xs: {span: 20},
-        sm: {span: 6},
+        sm: {span: 5},
 
     },
     wrapperCol: {
         xs: {span: 24},
-        sm: {span: 16},
+        sm: {span: 19},
     },
 };
 
 const AssessmentSectionManager = props => {
     
-        const {section, form, formItemLayout=formItemLayoutDefault} = props;
+        const {section, form} = props;
         const {getFieldDecorator} = form;
         const {title, description} = section || {};
         return <Form onSubmit={props.onSubmit}>

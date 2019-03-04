@@ -11,6 +11,7 @@ export const AssessmentQuestionFragment = gql`
         isNumeric
         isOpenended
         isMultiple
+        numberAsPrefix
         getAnswers {
             id
             idForReported
@@ -58,11 +59,19 @@ export const AssessmentFragment = gql`
     fragment Assessment on Assessment {
         id
         name
+        description
+        instructions
         isAllMandatory
         allowGoBack
         showAllQuestions
         showAllSections
         isForm
+        showProgress
+        showScore
+        showBrahms
+        showQuestionNumber
+        isPrivate
+        status
         getSections {
             ...AssessmentSection
         }

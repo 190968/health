@@ -9,83 +9,69 @@ import { checkBrahmsOnExecution, validateBrahms, getNextObjectFromRules } from '
 const enhance = compose(
     branch(props => {
         const { showAllSections, showAllQuestions } = props.assessment || {};
-        return showAllSections && showAllQuestions;
+        return !showAllSections;// && showAllQuestions;
     }, Form.create()),
     withStateHandlers((props) => {
+        // prepare skipped questions and sections
         let skippedByQuestions = {};
         let skipSectionQuestion = {};
         let brahmRules = [];
-        const { assessment, report } = props;
-        // find skipped by question
-        const { getSections = [] } = assessment || {}
-        const { getReportedValues = [] } = report || {};
-        // if we have reported values, check if we need to skip questions
-        if (getReportedValues.length > 0) {
-            // find reported questions
-            const reportedQuestions = getReportedValues.map(item => item.questionId);
 
+        const { assessment, report } = props;
+        const { getReportedValues = [] } = report || {};
+
+        // IF we have reported values, check if we need to skip questions
+        if (getReportedValues.length > 0) {
+            const { getSections = [] } = assessment || {}
+            // find reported questions IDs
+            const reportedQuestions = getReportedValues.map(item => item.questionId);
+            // map sections for answers
             getSections.map((section, si) => {
                 const { getQuestions = [] } = section || {};
-
                 // find reported questions
-                const answeredQuestions = getQuestions.filter(question => reportedQuestions.includes(question.id));// can also add question.type == 'yes_no'
+                const answeredQuestions = getQuestions.filter(question => reportedQuestions.includes(question.id));
 
                 // loop reported questions to understand if we need to skip
                 answeredQuestions.map((question, i) => {
-                    const { id, type, getBrahmsRules = [], isAnswerBasedQuestion = false } = question || {};
-                    if (type == 'yes_no') {
-                        // find report for this question
-                        const questionReport = getReportedValues.find(report => report.questionId === question.id);
+                    const { id, getBrahmsRules = [], isAnswerBasedQuestion = false } = question || {};
+                    // if (type == 'yes_no') {
+                    //     // find report for this question
+                    //     const questionReport = getReportedValues.find(report => report.questionId === question.id);
+                    //     const { getAnswers = [] } = question || {};
+                    //     const { answerId } = questionReport || {};
+                    //     // find answer
+                    //     const answer = getAnswers.find(answer => answer.id === answerId);
+                    //     // const answer = getAnswers.find(answer => answer.idForReported === answerId);
+                    //     // console.log(questionReport, 'questionReport');
+                    //     // console.log(answer, 'answer');
+                    //     // prepare skipped questions
+                    //     let { questionsToSkip, skipToSectionQuestion } = prepareAssessmentSkippedQuestions({ i, answer, sections: getSections, section, question, report: questionReport });
+                    //     skippedByQuestions[id] = questionsToSkip;
+                    //     skipSectionQuestion[id] = skipToSectionQuestion;
+                    //     // add selected brahm rules by question
+                    // }
 
-                        const { getAnswers = [] } = question || {};
-                        const { answerId } = questionReport || {};
-                        // find answer
-                        const answer = getAnswers.find(answer => answer.id === answerId);
-                        // const answer = getAnswers.find(answer => answer.idForReported === answerId);
-                        // console.log(questionReport, 'questionReport');
-                        // console.log(answer, 'answer');
-                        // prepare skipped questions
-                        let { questionsToSkip, skipToSectionQuestion } = prepareAssessmentSkippedQuestions({ i, answer, sections: getSections, section, question, report: questionReport });
-
-                        skippedByQuestions[id] = questionsToSkip;
-                        skipSectionQuestion[id] = skipToSectionQuestion;
-                        // add selected brahm rules by question
-
-
-                    }
-                    // if we have go to rules
+                    // if we have reports go to rules
                     const questionReports = getReportedValues.filter(report => report.questionId === question.id);
                     let questionRules = [];
                     questionReports.map(questionReport => {
                         const { answerId, value } = questionReport || {};
 
                         const valueToUse = isAnswerBasedQuestion ? answerId : value;
-
-                        //  console.log(getBrahmsRules, 'getBrahmsRules');
-                        //..getBrahmsRules
+                        // get brahm rules accodring the avalue
                         const rules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion });
+                        // save rules if have for the question
                         if (rules.length > 0) {
                             questionRules = [...questionRules, ...rules];
-                            // brahmRules.push({question, rules});
                         }
-                        console.log(rules, 'rules');
-                        console.log(questionReport, 'questionReport');
-
-
-
-
+                        // get goto brahm rules and execute
                         const goTorules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion, type: 'goto' });
-                        console.log(goTorules, 'goTorules');
                         if (goTorules.length > 0) {
-
-
-                            // find answer
                             // find next skipped item
                             const nextQuestionId = getNextObjectFromRules({ rules: goTorules });
-                            console.log(nextQuestionId, 'nextQuestionIdnextQuestionIdnextQuestionId');
+                            // console.log(nextQuestionId, 'nextQuestionIdnextQuestionIdnextQuestionId');
                             const { questionsToSkip: goToquestionsToSkip, skipToSectionQuestion: goToskipToSectionQuestion } = prepareAssessmentskippedQuestionsByNextId({ getSections, currentQuestionId: id, nextQuestionId })
-                            console.log(goToquestionsToSkip);
-                            console.log(goToskipToSectionQuestion);
+                            // save questions
                             skippedByQuestions[id] = goToquestionsToSkip;
                             skipSectionQuestion[id] = goToskipToSectionQuestion;
                         }
@@ -95,25 +81,23 @@ const enhance = compose(
                     if (questionRules.length > 0) {
                         brahmRules.push({ question, rules: questionRules });
                     }
-
-
                 });
             });
         }
-        //console.log(brahmRules, 'brahmRules');
+        console.log(skippedByQuestions, 'skippedByQuestions FROM INIT');
+        console.log(skipSectionQuestion, 'skipSectionQuestion FROM INIT');
         return {
-            brahmRules,
-            skippedByQuestions,
+            brahmRules,// brahms rules for the entire assessment
+            skippedByQuestions,// skipped questions by question
+            skipSectionQuestion,// skipped sections by question.
+            // not sure this needed
             skippedQuestions: [],
-            skipSectionQuestion,
             activeQuestionBySection: {},// active question for each section(to avoid zeroes)
         }
     },
         {
             setQuestionsToSkip: props => (newSkippedByQuestions, skipSectionQuestion, newSkippedQuestions) => {
                 const { skippedQuestions, skippedByQuestions } = props;
-                // console.log({ ...skippedByQuestions, ...newSkippedByQuestions });
-                // console.log({...skippedByQuestions, ...newSkippedByQuestions}, 'newSkippedByQuestions');
                 return {
                     skippedByQuestions: { ...skippedByQuestions, ...newSkippedByQuestions },
                     skipSectionQuestion,
@@ -129,11 +113,9 @@ const enhance = compose(
                 const { brahmRules = [] } = props;
                 // check if we have sush question
                 const brahmIndex = brahmRules.findIndex(info => info.question.id === question.id);
-                console.log(brahmIndex)
                 // if we have such question, then update it
                 if (brahmIndex > -1) {
                     brahmRules[brahmIndex]['rules'] = rules;
-                    console.log(brahmRules);
                     return {
                         brahmRules
                     }
@@ -141,7 +123,6 @@ const enhance = compose(
                     if (rules.length  === 0) {
                         return {brahmRules}
                     }
-                    console.log([...brahmRules, newBrahms]);
                     return {
                         brahmRules: [...brahmRules, newBrahms]
                     }
@@ -154,7 +135,6 @@ const enhance = compose(
         const { getSections = [] } = assessment || {};
         // filter questions
         const sections = filterSectionsAndQuestions(getSections, skippedByQuestions, !isBuilderMode);
-        // console.log(getSections, 'Initial sections');
         return { sections };
     }),
     withState('currentSection', 'setCurrentSection', props => {
@@ -184,9 +164,21 @@ const enhance = compose(
     }),
     withHandlers({
         goNextSection: props => () => {
+            const {form} = props;
+            console.log(props, 'goNextSection');
             // When we click next section, we should check what section and what question we should show after
             const next = props.currentSection + 1;
-            props.setCurrentSection(next);
+            if (form) {
+                form.validateFields((err, values) => {
+                    if (err) {
+                        return;
+                    }
+                    props.setCurrentSection(next);
+                });
+            } else {
+                props.setCurrentSection(next);
+            }
+
         },
         goPreviousSection: props => () => {
             props.setCurrentSection(props.currentSection - 1);
@@ -197,57 +189,57 @@ const enhance = compose(
             // find skipped by question
             const { getSections = [] } = assessment || {}
 
-            console.log(currentQuestionId, 'currentQuestionId');
-            console.log(nextQuestionId, 'nextQuestionId');
-            // find current and next Question
-            let doCollection = false;
-            let questionsToSkip = [];
-            let skipToSectionQuestion = [];
-            getSections.map(section => {
-                const { getQuestions = [] } = section;
-                console.log(getQuestions, 'getQuestions');
-                getQuestions.map((question, qi) => {
-                    // if this is the current question - start to collect skipped questions
+            // // find current and next Question
+            // let doCollection = false;
+            // let questionsToSkip = [];
+            // let skipToSectionQuestion = [];
+            // getSections.map(section => {
+            //     const { getQuestions = [] } = section;
+            //     getQuestions.map((question, qi) => {
+            //         // if we need to end the collection
+            //         if (question.id === nextQuestionId) {
+            //             doCollection = false;
+            //         }
+
+            //         if (doCollection) {
+            //             // start to collect skipped questions
+            //             questionsToSkip.push(question.id);
+            //         }
+            //         // start with next question
+            //         if (question.id === currentQuestionId) {
+            //             doCollection = true;
+            //         }
+            //     })
+            // })
+
+            // let skipByQuestion = {};
+            // let skipSectionQuestion = {};
+            // skipByQuestion[currentQuestionId] = questionsToSkip;
+            // skipSectionQuestion[currentQuestionId] = skipToSectionQuestion;
+
+            // props.setQuestionsToSkip(skipByQuestion, skipSectionQuestion, questionsToSkip);
+            // ///
 
 
-                    // if we need to end the collection
-                    if (question.id === nextQuestionId) {
-                        doCollection = false;
-                    }
 
-                    if (doCollection) {
-                        // start to collect skipped questions
 
-                        questionsToSkip.push(question.id);
-                    }
-                    // start with next question
-                    if (question.id === currentQuestionId) {
-                        doCollection = true;
-                    }
-                })
-            })
-
-            console.log(questionsToSkip, 'questionsToSkipquestionsToSkip');
-            //let {questionsToSkip, skipToSectionQuestion} = prepareAssessmentSkippedQuestionsByFinalQuestionId({i, answer, sections:getSections, section:questionSection, question, report});
-            // let {questionsToSkip, skipToSectionQuestion} = prepareAssessmentSkippedQuestionsByFinalQuestionId({i, answer, sections:getSections, section:questionSection, question, report});
-            let skipByQuestion = {};
+            const { questionsToSkip: goToquestionsToSkip, skipToSectionQuestion: goToskipToSectionQuestion } = prepareAssessmentskippedQuestionsByNextId({ getSections, currentQuestionId, nextQuestionId })
+            // save questions
+            let skippedByQuestions = {};
             let skipSectionQuestion = {};
-            skipByQuestion[currentQuestionId] = questionsToSkip;
-            skipSectionQuestion[currentQuestionId] = skipToSectionQuestion;
+            skippedByQuestions[currentQuestionId] = goToquestionsToSkip;
+            skipSectionQuestion[currentQuestionId] = goToskipToSectionQuestion;
 
-            props.setQuestionsToSkip(skipByQuestion, skipSectionQuestion, questionsToSkip);
-
-
+            props.setQuestionsToSkip(skippedByQuestions, skipSectionQuestion, goToquestionsToSkip);
         }
-        //setNextQuestionId()
     }),
     withAssessmentReportMutation,
     withAssessmentCompleteMutation,
     withHandlers({
         onChange: props => (question, input, callback) => {
-            const { reportId } = props;
+            const { assessment, reportId } = props;
 
-            props.onSubmit(question.id, input).then(({ data }) => {
+            return props.onSubmit(question.id, input).then(({ data }) => {
                 const { assessmentQuestionReportPayload } = data;
                 const { assessmentUserReport, brahms = [] } = assessmentQuestionReportPayload || {};
 
@@ -260,7 +252,6 @@ const enhance = compose(
                     let skipByQuestion = {};
                     let skipSectionQuestion = {};
                     skipByQuestion[question.id] = [];
-                    //skipSectionQuestion[questionId] = [];
 
                     props.setQuestionsToSkip(skipByQuestion, skipSectionQuestion, []);
                     props.updateBrahmRules({ question, rules:[] });
@@ -283,10 +274,7 @@ const enhance = compose(
             }
             const hide = message.loading('Completing...');
             props.onComplete().then(({ data }) => {
-                const { assessmentCompletePayload } = data;
-                //const { brahms = [] } = assessmentCompletePayload || {};
-                //props.updateBrahmRules({ question: {id: 'score'}, rules:brahms });
-
+                // const { assessmentCompletePayload } = data;
                 hide();
                 message.success('Completed');
                 if (props.refetch) {
@@ -302,32 +290,38 @@ export default AssessmentBody;
 
 
 export const prepareAssessmentskippedQuestionsByNextId = (props) => {
-    // console.log(props);
+    //  console.log(props);
     const { getSections, currentQuestionId, nextQuestionId } = props;
     // find current and next Question
     let doCollection = false;
     let questionsToSkip = [];
-    let skipToSectionQuestion = [];
-    getSections.map(section => {
-        const { getQuestions = [] } = section;
+    let skipToSectionQuestion = false;
+    let isSameSection = false;
+    let startSection;
+    getSections.map((section, si) => {
+        const { id:sectionId, getQuestions = [] } = section;
 
-        getQuestions.map((question, qi) => {
+        // if as same as start section, we need for checking what sections to skip
+        const isSameAsStart = sectionId === startSection;
+        getQuestions.map((question, questionI) => {
             // if this is the current question - start to collect skipped questions
-
-
             // if we need to end the collection
-            if (question.id === nextQuestionId) {
+            if (doCollection && question.id === nextQuestionId) {
                 doCollection = false;
+                if (!isSameAsStart) {
+                    skipToSectionQuestion = { sectionI: si, nextSectionId: section.id, questionI, nextQuestionId };
+                }
             }
 
             if (doCollection) {
                 // start to collect skipped questions
-
+                //
                 questionsToSkip.push(question.id);
             }
             // start with next question
             if (question.id === currentQuestionId) {
                 doCollection = true;
+                startSection = sectionId;
             }
         })
     })
@@ -336,6 +330,7 @@ export const prepareAssessmentskippedQuestionsByNextId = (props) => {
     let skipSectionQuestion = {};
     skipByQuestion[currentQuestionId] = questionsToSkip;
     skipSectionQuestion[currentQuestionId] = skipToSectionQuestion;
+    console.log( { skipByQuestion, skipSectionQuestion, questionsToSkip }, 'SKIPP INFO');
     return { skipByQuestion, skipSectionQuestion, questionsToSkip };
 
 }

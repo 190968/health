@@ -21,7 +21,7 @@ export const AssessmentsTable = (props) => {
 			title: 'Name',
 			key: 'title',
 			render: (info) => {
-				return <AssessmentViewButton userAssessment={info} user={user} date={date} onHide={props.refetch} />; //<Truncate lines={1} >{info.assessment.name}</Truncate>
+				return <AssessmentViewButton userAssessment={info} asLink user={user} date={date} onHide={props.refetch} />; //<Truncate lines={1} >{info.assessment.name}</Truncate>
 			},
 			// sorter: (a, b) => sort(a, b, 'assessment', 'name')
 		},

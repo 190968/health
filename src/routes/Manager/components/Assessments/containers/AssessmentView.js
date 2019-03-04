@@ -1,8 +1,8 @@
 import AssessementViewPure from '../components/AssessmentView';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {compose, withProps, withState, withHandlers} from 'recompose';
-import { withModal } from '../../../../../components/Modal';
+import {compose, withProps, withState, withHandlers, branch} from 'recompose';
+import { withModal, withSpinnerWhileLoading } from '../../../../../components/Modal';
 import { UserInfoFragment } from '../../../../User/fragments';
 import { UserAssessmentReportFragment, UserAssessmentFragment } from '../fragments';
 import { withCreateUserAssessmentMutation } from '../mutations';
@@ -29,16 +29,17 @@ const withQuery = graphql(
     GET_PATIENT_ASSESSMENT_QUERY,
     {
         options: (ownProps) => {
-            const {userAssessment, reportId, date} = ownProps;
+            const {userAssessment, reportId, date, user} = ownProps;
             const {id} = userAssessment || {};
             let getReport = false;
             // const {id:reportId} = userAssessmentReport || {};
             if (reportId && reportId !== '') {
                 getReport = true;
             }
+            const {id:userId} = user || {};
             return {
                 variables: {
-                    userId: ownProps.user.id,
+                    userId,
                     id,
                     reportId,
                     getReport,
@@ -67,6 +68,16 @@ const withQuery = graphql(
     }
 );
 
+const enhanceWithModal = compose(
+    withProps(props => {
+        return {
+            modalTitle: props.userAssessment.assessment.name,
+            modalWidth: 900,
+            modalFooter: false
+        }
+     }),
+     withModal,
+);
 const enhance = compose(
     withState('reportId', 'setReportId', props => {
         const {userAssessment} = props;
@@ -76,14 +87,10 @@ const enhance = compose(
         return id;
     }),
     withQuery,
-    withProps(props => {
-       return {
-           modalTitle: props.userAssessment.assessment.name,
-           modalWidth: 900,
-           modalFooter: false
-       }
-    }),
-    withModal,
+    branch(props => {
+        const {asPage = false} = props;
+        return !asPage;
+    }, enhanceWithModal, withSpinnerWhileLoading),
     withCreateUserAssessmentMutation,
     withHandlers({
         handleNewReport: props => () => {

@@ -336,7 +336,7 @@ export const TimeFieldPure = props => {
     } else {
         format = {use12Hours:false, /*format:'LT'*/};
     }
-    return <TimePicker value={time}  onChange={onChange} allowEmpty={allowClear} disabled={disabled} placeholder={placeholder} {...otherProps} {...format}  />;
+    return <TimePicker value={time}  onChange={onChange} allowClear={allowClear} disabled={disabled} placeholder={placeholder} {...otherProps} {...format}  />;
 }
 
 export const TimeField = compose(

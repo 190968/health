@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
-import { UserInfoFragment } from "../../../User/fragments";
-import { UserAssessmentReportPureFragment, AssessmentFragment } from "./fragments";
+import { UserAssessmentReportPureFragment, AssessmentFragment, UserAssessmentFragment } from "./fragments";
+import { CohortPureFragment } from "../Cohorts/fragments";
 
 const GET_PATIENT_ASSESSMENT_HISTORY_QUERY = gql`    
     query GET_PATIENT_ASSESSMENT_HISTORY($userId: UID!, $id: UID!) {
@@ -66,6 +66,7 @@ export const withAssessmentQuery = graphql(
             const {assessment} = ownProps;
             const {id} = assessment || {};
             return {
+                skip:!id,
                 variables: {
                     id,
                 },
@@ -76,6 +77,81 @@ export const withAssessmentQuery = graphql(
             const {getAssessment} = data || {};
             return {
                 assessment: getAssessment,
+                loading: data.loading,
+            }
+        },
+    }
+);
+
+
+
+const GET_ASSESSMENT_COHORTS_QUERY = gql`    
+    query GET_ASSESSMENT_COHORTS($id: UID!) {
+        getAssessment (id: $id) {
+            id,
+            getCohorts {
+                ...CohortPure
+            }
+        }
+    }
+    ${CohortPureFragment}
+`;
+export const withAssessmentCohortsQuery = graphql(
+    GET_ASSESSMENT_COHORTS_QUERY,
+    {
+        options: (ownProps) => {
+            const {assessment} = ownProps;
+            const {id} = assessment || {};
+            return {
+                variables: {
+                    id,
+                },
+                // fetchPolicy: 'network-only',
+            }
+        },
+        props: ({ ownProps, data }) => {
+            const {assessment} = ownProps;
+            const {getAssessment} = data || {};
+            return {
+                assessment: {...assessment, getAssessment},
+                loading: data.loading,
+            }
+        },
+    }
+);
+
+
+
+
+
+const GET_USER_ASSESSMENT_QUERY = gql`    
+    query GET_USER_ASSESSMENT($id: UID!, $getReport: Boolean = false) {
+        getUserAssessment (id: $id) {
+            ...UserAssessment
+        }
+    }
+    ${UserAssessmentFragment}
+`;
+
+export const withUserAssessmentQuery = graphql(
+    GET_USER_ASSESSMENT_QUERY,
+    {
+        options: (ownProps) => {
+            const {userAssessment} = ownProps;
+            const {id} = userAssessment || {};
+            return {
+                variables: {
+                    id,
+                    getReport:false
+                },
+                fetchPolicy: 'network-only',
+            }
+        },
+        props: ({ ownProps, data }) => {
+
+            const {getUserAssessment} = data || {};
+            return {
+                userAssessment: getUserAssessment,
                 loading: data.loading,
             }
         },

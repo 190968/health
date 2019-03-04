@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form, Input, Checkbox} from 'antd';
 import { AssessmentQuestionAnswersListManager } from '../../containers/AnswersList';
+import { prepareAssessmentQuestionAnswerField } from '../../containers/Answer';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -34,18 +35,7 @@ const AssessmentQuestionFieldsManager = props => {
         const {isNumeric=false, isMultiple=false, numberAsPrefix=false, getAnswers=[], type=typeInit} = question || {};
         if (type === 'input') {
             return <>
-            <FormItem
-                {...tailFormItemLayout}
-            >
-                <span className={'ant-form-text'}>
-                {getFieldDecorator('isNumeric', {
-                    initialValue: isNumeric,
-                    valuePropName: 'checked'
-                })(
-                    <Checkbox>This question can only be answered in a numeric value</Checkbox>
-                )}
-                </span>
-            </FormItem>
+            
             </>;
         } else if (type === 'time') {
             return null
@@ -55,7 +45,7 @@ const AssessmentQuestionFieldsManager = props => {
             label={'Answers'}
             >
                 {getFieldDecorator('answers', {
-                        initialValue: getAnswers,
+                        initialValue: prepareAnswers(getAnswers),
                 })(
                     <AssessmentQuestionAnswersListManager question={question} formItemLayout={formItemLayout} />
                 )}
@@ -93,7 +83,7 @@ const AssessmentQuestionFieldsManager = props => {
         label={'Answers'}
         >
             {getFieldDecorator('answers', {
-                    initialValue: getAnswers,
+                    initialValue: prepareAnswers(getAnswers),
             })(
                 <AssessmentQuestionAnswersListManager question={question} formItemLayout={formItemLayout} />
             )}
@@ -102,3 +92,10 @@ const AssessmentQuestionFieldsManager = props => {
 }
  
 export default AssessmentQuestionFieldsManager;
+
+const prepareAnswers = answers => {
+    if (answers) {
+        return  answers.map(a => prepareAssessmentQuestionAnswerField(a));
+    }
+    return [];
+}
