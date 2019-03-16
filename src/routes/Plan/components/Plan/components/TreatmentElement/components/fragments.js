@@ -19,7 +19,7 @@ fragment StringUnitsInfo on StringUnits {
                         id
                         label
                         options {
-                            value
+                            id
                             label
                         }
                     }

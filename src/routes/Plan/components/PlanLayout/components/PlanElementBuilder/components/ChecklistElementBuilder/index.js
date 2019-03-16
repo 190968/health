@@ -1,9 +1,12 @@
 import React from 'react';
-import {Form, Input, Button, Icon, Checkbox, Tooltip} from 'antd';
+import {Form, Input, Select} from 'antd';
 import { compose, withHandlers, withState, lifecycle} from 'recompose';
 import {injectIntl} from 'react-intl';
 import messages from './messages';
 import {Options} from "../../../../../../../../components/FormCustomFields/components/Options/index";
+import AssessmentQuestionBrahmsFormField from '../../../../../../../../components/Assessment/components/Builder/components/Question/_brahms';
+import PlanElementBrahmsFormField from '../../_brahms';
+import { possiblePlanElementOptionsFormatter } from '../..';
 
 
 const FormItem = Form.Item;
@@ -19,32 +22,14 @@ const formTailLayout = {
 
 
 
-export const prepareInput = (values) => {
-    console.log(values, 'TODO');
-    const {title, schedule, keys=[], ids=[]} = values;
-    let {options=[]} = values;
-    options = keys.map(i => {
-        const id =  ids[i] || '';
-        const label = options[i] || '';
-        return {id, label}
-    });
-    //console.log(options);
-    return {
-        schedule:schedule,
-        optionsElement: {
-            title,
-            options
-        }
-    }
-}
-
-
-
 const ChecklistElementBuilder = (props) => {
     const {form, intl, element={}, formItemLayout=formItemLayoutDefault} = props;
-    const {getFieldDecorator} = form;
-    const {itemInfo={}} = element;
-    const {label:title, options = [blankOption] } = itemInfo;
+    const {getFieldDecorator, getFieldValue} = form;
+    const {id,itemInfo} = element || {};
+    const {label:title, options = [blankOption] } = itemInfo || {};
+    // console.log(props);
+    const showBrahms = id && id !== '';
+    // console.log(props, 'props');
     return (
 
         <React.Fragment>
@@ -57,19 +42,21 @@ const ChecklistElementBuilder = (props) => {
                         rules: [{required: true, message: "Enter Title", whitespace: true}],
                     }
                 )(
-                    <Input/>
+                    <Input  ref={(input) => input && input.focus()} />
                 )}
             </FormItem>
 
             <Options form={form} options={options} title="To Do" formItemLayout={formItemLayout} />
 
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'number'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} /*plan={plan}*/ element={element}  possibleOptionsFormatter={possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
+   
         </React.Fragment>
     );
 }
 
 const blankOption = {id:'', title:''};
 const enhance = compose(
-    injectIntl
+    injectIntl,
 );
 
 export default enhance(ChecklistElementBuilder);

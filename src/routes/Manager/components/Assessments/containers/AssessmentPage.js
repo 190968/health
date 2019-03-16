@@ -1,15 +1,16 @@
 import AssessementViewPure from '../components/Page';
 import {compose, withProps, withState, withHandlers} from 'recompose';
 import { withUserAssessmentQuery } from '../queries';
+import { getSQLDateToday } from '../../../../../components/Other/utils';
  
 
 const enhance = compose(
     withProps(props => {
         console.log(props);
         const {params} = props.match || {};
-        const {id} = params || {};
+        const {id, date=getSQLDateToday()} = params || {};
         // match.params.id,
-        return {userAssessment: {id}, asPage:true}
+        return {userAssessment: {id}, asPage:true, date}
     }),
     withUserAssessmentQuery
 )

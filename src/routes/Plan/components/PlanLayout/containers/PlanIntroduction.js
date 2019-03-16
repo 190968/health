@@ -1,7 +1,7 @@
 import PlanIntroduction from '../components/PlanIntroduction'
 import {arrayMove, SortableContainer, SortableElement,} from 'react-sortable-hoc';
 import {branch, compose, withHandlers, withProps, withState} from 'recompose';
-import {withUpdateOrderMutation} from "../components/PathwayBody/index";
+import { withUpdatePlanElementsOrderMutation } from '../../../../../components/Plan/components/Builder/mutations';
 
 
 
@@ -32,7 +32,7 @@ const builderEnhance = compose(
         return propsUpdated;
     }),
 
-    withUpdateOrderMutation,
+    withUpdatePlanElementsOrderMutation,
     //branch(props => props.isBuilderMode, withUpdateOrderMutation),
     withHandlers({
         updateOrder: props => elements => {

@@ -42,6 +42,7 @@ const MenuBadges = props => {
                     newCursor={newCursor}
                     lastCursor={lastNotificationCursor}
                     updateLastNotification={props.updateLastNotification}
+                    currentUser={currentUser}
                  />
             </Menu.Item>
         </Menu>

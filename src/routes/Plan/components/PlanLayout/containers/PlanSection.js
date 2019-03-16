@@ -3,8 +3,8 @@ import {arrayMove, SortableContainer, SortableElement,} from 'react-sortable-hoc
 import {branch, compose, withHandlers, withProps, withState} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {withUpdateOrderMutation} from "../components/PathwayBody/index";
 import { GET_PATIENT_POINTS_QUERY } from '../../../../../layouts/components/Header/components/RightMenu/containers/HeaderPoints';
+import { withUpdatePlanElementsOrderMutation } from '../../../../../components/Plan/components/Builder/mutations';
 
 
 const reportOnSection_MUTATION = gql`
@@ -69,7 +69,7 @@ const builderEnhance = compose(
         return propsUpdated;
     }),
 
-    withUpdateOrderMutation,
+    withUpdatePlanElementsOrderMutation,
     //branch(props => props.isBuilderMode, withUpdateOrderMutation),
     withHandlers({
         updateOrder: props => elements => {

@@ -10,13 +10,14 @@ const {Header, Content, Footer} = Layout;
 
 const AssessmentPageLayout = props => {
     const {location, loading, userAssessment} = props;
-    console.log(props);
+    // console.log(props);
     if (loading) {
         return <LoadingBox />
     }
-    const {user, startDate, assessment, getLatestReport} = userAssessment;
+    const {user, startDate, assessment, getLatestReport} = userAssessment || {};
     const {name} = assessment || {};
     const {date=getSQLDateToday()} = getLatestReport || {};
+    // console.log(getLatestReport, 'getLatestReport');
     return <>
         <div style={{height:'100%', display: 'flex',
                 'minHeight': '100vh',
@@ -27,8 +28,11 @@ const AssessmentPageLayout = props => {
                 </Header>
                 <Content className={'userside'}>
                     <div style={{margin:'auto'}}>
+
+                    
+       <AssessementView {...props} user={user} date={date} asPage />
+
                         
-                        <AssessementView {...props} user={user} date={date} asPage />
                     </div>
                 </Content>
                 {/* <Footer>

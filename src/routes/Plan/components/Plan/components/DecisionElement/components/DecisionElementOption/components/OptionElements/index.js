@@ -7,6 +7,7 @@ import {SortableContainer, arrayMove} from 'react-sortable-hoc';
 import {EmptyList} from "../../../../../../../../../../components/Loading/index";
 import {PlanElementsSelectbox} from "../../../../../../../PlanLayout/components/PlanElementsSelectbox/index";
 import Option from './option';
+import { PlanElementManagerButton } from '../../../../../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
 
 const OptionsElements = props => {
     const {elements=[]} = props;
@@ -32,35 +33,34 @@ const EmptyResultsPure = (props) => {
 }
 
 
-const PlanElementAddLinePure = (props) => {
+const PlanElementAddLine = (props) => {
     // console.log(props);
     const {parentId, parentValue} = props;
     return <Divider className="element-actions">
-        {props.modalAdd && <Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}><PlanElementsSelectbox mode="decision" plan={props.plan} parentId={parentId} parentValue={parentValue} /></Modal>}
-        <Tooltip title="Add Element" onClick={props.openAddElement} ><Icon type="plus-circle-o" style={{cursor:'pointer'}} /> Add First Element</Tooltip>
+        <PlanElementManagerButton {...props} mode="decision" shape={'round'}  parentId={parentId} parentValue={parentValue} />
     </Divider>;
 }
 
-const PlanElementAddLine = compose(
-    withState('modalAdd', 'setModal', false),
-    withHandlers({
-        openAddElement: props => () => {
-            props.setModal(true);
-        },
-        openHideElement: props => () => {
-            props.setModal(false);
-        }
-    }),
-)(PlanElementAddLinePure);
+// const PlanElementAddLine = compose(
+//     withState('modalAdd', 'setModal', false),
+//     withHandlers({
+//         openAddElement: props => () => {
+//             props.setModal(true);
+//         },
+//         openHideElement: props => () => {
+//             props.setModal(false);
+//         }
+//     }),
+// )(PlanElementAddLinePure);
 
 const EmptyResults = compose(
     branch(props => props.isBuilderMode === true, renderComponent(PlanElementAddLine))
 )(EmptyResultsPure);
 
-const OptionsElementsEnhanced = compose(
-    withProps(props => {
-        console.log(props);
-    }),
+const enhance = compose(
+    // withProps(props => {
+    //     console.log(props);
+    // }),
     // withHandlers({
     //     updateOrder: props => elements => {
     //         //const elements = props.elements;
@@ -82,6 +82,6 @@ const OptionsElementsEnhanced = compose(
         }
     }),
     branch(props => props.isBuilderMode, SortableContainer),
-)(OptionsElements);
+);
 
-export default OptionsElementsEnhanced;
+export default enhance(OptionsElements);

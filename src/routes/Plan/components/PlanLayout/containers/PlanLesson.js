@@ -1,7 +1,7 @@
 import PlanLesson from '../components/PlanLesson'
 import {arrayMove, SortableContainer} from 'react-sortable-hoc';
 import {branch, compose, withHandlers, withProps, withState} from 'recompose';
-import {withUpdateOrderMutation} from "../components/PathwayBody/index";
+import { withUpdatePlanElementsOrderMutation } from '../../../../../components/Plan/components/Builder/mutations';
 
 /**
  * Enhance Body
@@ -26,7 +26,7 @@ const builderEnhance = compose(
         return propsUpdated;
     }),
 
-    withUpdateOrderMutation,
+    withUpdatePlanElementsOrderMutation,
     withHandlers({
         updateOrder: props => elements => {
             const ids = elements.map(element => element.id);

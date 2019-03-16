@@ -5,10 +5,12 @@ import { compose,withStateHandlers, withHandlers } from 'recompose';
 import { ListWithMessage } from '../../../../../../../UI/List';
 
 export const BrahmsRuleActionApPure = props => {
-    const {plans, appendPlan} = props;
+    const {plans=[], appendPlan} = props;
+
+    const plan = plans.length > 0 ? plans[0] : null;
     return <>
-    <ActionPlanSelect onChange={appendPlan} getFullInfo excludePlans={plans} value={null} />
-    <ListWithMessage
+    <ActionPlanSelect onChange={appendPlan} getFullInfo excludePlans={plans} value={plan} />
+    {/* <ListWithMessage
         emptyMessage={false}
         size="small"
         // footer={<ActionPlanSelect onChange={appendRule} />}
@@ -18,7 +20,7 @@ export const BrahmsRuleActionApPure = props => {
             
             return <List.Item key={plan.id}  actions={actions} >{plan.title}</List.Item>;
         }}
-    />
+    /> */}
     
     </>
 }
@@ -47,7 +49,8 @@ const enhance = compose(
     }, {
         appendPlan: (state, props) => (answer) => {
             let {plans=[]} = state;
-            plans = [...plans, answer];
+            // plans = [...plans, answer];
+            plans = [answer];
             // console.log(plans);
             //const input = prepareBrahmsApActionInput(plans);
             props.onChange({plans});

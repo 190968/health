@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Button} from 'antd';
 import { compose, withHandlers, withState, withProps, branch, renderComponent} from 'recompose';
-import ConditionElementBuilder, {prepareInput} from '../components/ConditionElementBuilder';
+import ConditionElementBuilder from '../components/ConditionElementBuilder';
 import ConditionElementOptions  from '../components/ConditionElementBuilder/components/ConditionElementOptions';
 import {modalHOC, withSpinnerWhileLoading} from "../modal";
 
@@ -14,13 +14,13 @@ const enhance = compose(
     // element details???
     withState('element', 'setElement', props => {
         //console.log(props);
-        const {element={}} = props;
+        const {element} = props;
         return element;
     }),
     withProps(props => {
         //console.log(props);
-        const {element={}, details={}} = props;
-        const {itemInfo=details} = element;
+        const {element, details={}} = props;
+        const {itemInfo=details} = element || {};
         return {details:itemInfo};
         }
     ),
@@ -48,7 +48,7 @@ const enhance = compose(
                                 props.setElement(element);
                                 callback();
                             }
-                            props.handleSave({prepareInput:prepareInput, callback: callbackSave} );
+                            props.handleSave({callback: callbackSave} );
                         } else {
                             callback()
                         }
@@ -69,9 +69,9 @@ const enhance = compose(
         },
     }),
     withHandlers({
-        onSubmit: props => event => {
-            props.saveElement(props.onHide);
-        },
+        // onSubmit: props => event => {
+        //     props.saveElement(props.onHide);
+        // },
         next: props => event => {
             const current = props.step + 1;
             props.goTo(current);
@@ -86,32 +86,32 @@ const enhance = compose(
 
 
     }),
-    withHandlers({
-        modalTitle: props => values => {
-            const {step} = props;
-            if (step === 0) {
-                const typeFormatted = props.type === 'condition' ? 'Conditional' : 'Decision';
-                return props.id ? 'Edit ' + typeFormatted : 'Add ' + typeFormatted;
-            } else {
-                return props.element.itemInfo.label;
-            }
-        },
-        /*modalFooter: props => values => {
-            const {step} = props;
-            if (step === 0) {
-                return [
-                    <Button key="cancel" onClick={props.onCancel}>Cancel</Button>,
-                    <Button key="next" type="primary" onClick={props.next}>Next</Button>
-                ]
-            } else if (step === 1) {
-                return [
-                    <Button key="back" onClick={props.prev}>Back</Button>,
-                    <Button key="save" type="primary" onClick={props.onSubmit}>Save</Button>
-                ]
-            }
-        },*/
-    }),
-    modalHOC,
+    // withHandlers({
+    //     modalTitle: props => values => {
+    //         const {step} = props;
+    //         if (step === 0) {
+    //             const typeFormatted = props.type === 'condition' ? 'Conditional' : 'Decision';
+    //             return props.id ? 'Edit ' + typeFormatted : 'Add ' + typeFormatted;
+    //         } else {
+    //             return props.element.itemInfo.label;
+    //         }
+    //     },
+    //     /*modalFooter: props => values => {
+    //         const {step} = props;
+    //         if (step === 0) {
+    //             return [
+    //                 <Button key="cancel" onClick={props.onCancel}>Cancel</Button>,
+    //                 <Button key="next" type="primary" onClick={props.next}>Next</Button>
+    //             ]
+    //         } else if (step === 1) {
+    //             return [
+    //                 <Button key="back" onClick={props.prev}>Back</Button>,
+    //                 <Button key="save" type="primary" onClick={props.onSubmit}>Save</Button>
+    //             ]
+    //         }
+    //     },*/
+    // }),
+    //modalHOC,
     branch(props => {
         return props.step===1;
     }, renderComponent(ConditionElementOptions)),
@@ -119,3 +119,20 @@ const enhance = compose(
 
 )
 export default enhance(ConditionElementBuilder);
+
+
+export const preparePlanElementConditionInput = (values) => {
+    const {title,  keys=[], ids=[], footnote} = values;
+    let {options=[]} = values;
+    // console.log(values);
+    options = options.map(option => {
+        const {label, value} = option;
+        return {id:value, label}
+    });
+
+    return {
+            title,
+            options,
+            footnote
+    }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import {Alert, Collapse, Divider, Card, Col, Row, Icon  } from 'antd';
 import AcceptPlanButton from '../../../../../../routes/Plan/components/AcceptPlan/components/AcceptPlanButton';
 import { withToggleModal, withToggleState } from '../../../../../Modal';
+import { AttachmentsList } from '../../../../../FormCustomFields/components/Attachments';
 const Panel = Collapse.Panel;
 
 const customPanelStyle = {
@@ -45,7 +46,7 @@ const BrahmsElementOutputPure = props => {
 export const BrahmsElementOutput = /*withToggleState*/(BrahmsElementOutputPure);
 
 export const BrahmsElementOutputBody = props => {
-    console.log(props, 'propspropsprops');
+    // console.log(props, 'propspropsprops');
     const {rules=[]} = props;
     return rules.map(rule => {
         return <div key={rule.id} style={{marginBottom:5}}><BrahmOutputItem rule={rule} /></div>;
@@ -58,8 +59,15 @@ export const BrahmOutputItem = props => {
     let output = null;
     switch(ruleActionType) {
         case 'output':
-            const {message} = ruleAction || {};
-            output = <Alert message={message} type="success" />;
+            const {message, attachments=[]} = ruleAction || {};
+            let text;
+            if (attachments.length > 0) {
+                text = <>{message} <AttachmentsList attachments={attachments}  isEditable={false} /> </>;
+            } else {
+                text = message;
+            }
+            
+            output = <Alert message={text} type="success" />;
             break;
         case 'ap':
             // suggest to assign aps.

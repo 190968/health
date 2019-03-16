@@ -7,6 +7,7 @@ import { validateBrahms, getNextObjectFromRules } from '../../../../../../../com
 const enhance = compose(
     branch(props => {
         const {showAllQuestions} = props.assessment || {};
+        console.log(props.assessment);
         return !showAllQuestions;
     }, Form.create()),
     withState('tmpReport', 'keepTmpReport'),
@@ -14,7 +15,7 @@ const enhance = compose(
         // Submit the question
         onChange: props => (reports) => {
             let callback;
-            const {isPreviewMode, i, question, section:questionSection, assessment, canReport=false} = props;
+            const {isPreviewMode, isBuilderMode, i, question, section:questionSection, assessment, canReport=false} = props;
             const {getSections, showAllSections, showAllQuestions} = assessment || {};
             // let showAllQuestions = true;
             if (!showAllQuestions) {
@@ -26,7 +27,7 @@ const enhance = compose(
             console.log(reports, 'reports');
             // return ;
             // DIsable if it view mode or preview
-            if (!canReport || isPreviewMode || !showAllQuestions) {
+            if (!canReport || isPreviewMode || !showAllQuestions || isBuilderMode) {
                 if (isPreviewMode || !showAllQuestions) {
                     // execute brahms
                     const {id, getBrahmsRules=[], isAnswerBasedQuestion} = question || {};
@@ -34,7 +35,7 @@ const enhance = compose(
                     let skipSectionQuestion = {};
                     let questionRules = [];
                     skippedByQuestions[id] = [];
-                    skipSectionQuestion[id] = [];
+                    skipSectionQuestion[id] = false;
 
                     const reportss = [reports];
                     reportss.map(questionReport => {
@@ -53,7 +54,7 @@ const enhance = compose(
                                     questionRules = [...questionRules, ...rules];
                                 }
                                 // goto
-                                const goTorulesFromArray = validateBrahms({ rules: getBrahmsRules, value: valueToUseFromArray, isAnswerBasedQuestion, type: 'goto' });
+                                const goTorulesFromArray = validateBrahms({ rules: getBrahmsRules, value: valueToUseFromArray, isAnswerBasedQuestion, type: ['goto','stop'] });
                                 if (goTorulesFromArray.length > 0) {
                                     goTorules = [...goTorules, ...goTorulesFromArray];
                                 }
@@ -65,7 +66,7 @@ const enhance = compose(
                                 questionRules = [...questionRules, ...rules];
                             }
                             // goto
-                            goTorules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion, type: 'goto' });
+                            goTorules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion, type: ['goto','stop'] });
                         }
                         
                         
@@ -80,9 +81,10 @@ const enhance = compose(
                         }
                     });
 
-                    console.log(skipSectionQuestion, 'skipSectionQuestion');
+                    // console.log(skipSectionQuestion, 'skipSectionQuestion');
                     props.setQuestionsToSkip(skippedByQuestions, skipSectionQuestion, []);
-                    if (showAllQuestions) {
+                    // show brahms in preview and when show all questions
+                    if (isPreviewMode || showAllQuestions) {
                         props.updateBrahmRules({ question, rules:questionRules });
                     }
                     // update state
@@ -123,7 +125,7 @@ const enhance = compose(
          * Go next question. We need to pass the questions and section ID to open
          */
         goNextQuestion: props => () => {
-            const {form, assessment, question} = props;
+            const {form, assessment, question, canReport} = props;
             const {showAllQuestions} = assessment || {};
             // let showAllQuestions = true;
             form.validateFields((err, values) => {
@@ -132,7 +134,7 @@ const enhance = compose(
                 }
                 // console.log(showAllQuestions, 'NEXT Question')
                 // console.log(values, 'values')
-                if (!showAllQuestions) {
+                if (canReport && !showAllQuestions && form.isFieldsTouched()) {
                     // run the callback if all is good, and then go next question
                     let {tmpReport} = props;
                     if (!tmpReport) {
@@ -148,7 +150,7 @@ const enhance = compose(
                         }
                         
                     }
-                    console.log(tmpReport);
+                    // console.log(tmpReport);
                     props.onChange(question, tmpReport).then(() => {
                         props.goNextQuestion(question);
                     });
@@ -159,24 +161,21 @@ const enhance = compose(
             });
         },
         goNextSection: props => (input) => {
-            const {form, assessment} = props;
+            const {form, assessment, canReport} = props;
             const {showAllQuestions} = assessment || {};
             // let showAllQuestions = true;
             form.validateFields((err, values) => {
                 if (err) {
                     return;
                 }
-                console.log(form.isFieldsTouched());
-                if (!form.isFieldsTouched()) {
-                    return;
-                }
-                console.log(showAllQuestions, 'NEXT SECTION')
-                if (!showAllQuestions) {
+                // console.log(form.isFieldsTouched());
+                // console.log(showAllQuestions, 'NEXT SECTION')
+                if (canReport && !showAllQuestions && form.isFieldsTouched()) {
                     // run the callback if all is good, and then go next section
                     // run the callback if all is good, and then go next question
                     const {question, tmpReport} = props;
                     const callback = () => {
-                        console.log(tmpReport, 'kkkkkkkkkkkkkkkkkk')
+                        // console.log(tmpReport, 'kkkkkkkkkkkkkkkkkk')
                         props.goNextSection(input);
                     };
                     props.onChange(question, tmpReport, callback);//.then();
@@ -186,12 +185,29 @@ const enhance = compose(
             });
         },
         completeAssessment: props => (input) => {
-            const {form} = props;
+            const {form, assessment, canReport} = props;
+            const {showAllQuestions} = assessment || {};
             form.validateFields((err, values) => {
                 if (err) {
                     return;
                 }
-                props.completeAssessment(input);
+
+                if (canReport && !showAllQuestions) {
+                    // run the callback if all is good, and then go next section
+                    // run the callback if all is good, and then go next question
+                    const {question, tmpReport} = props;
+                    if (tmpReport) {
+                        const callback = () => {
+                            // console.log(tmpReport, 'kkkkkkkkkkkkkkkkkk')
+                            props.completeAssessment(input);
+                        };
+                        props.onChange(question, tmpReport, callback);//.then();
+                    } else {
+                        props.completeAssessment(input);
+                    }
+                } else {
+                    props.completeAssessment(input);
+                }
             });
         },
         /**

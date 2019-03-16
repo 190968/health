@@ -10,13 +10,13 @@ const ManagerButtonPure = props => {
     const {id} = plan || {};
 
     if (id) {
-        return <Link to={'/pb/'+id}>Edit</Link>;
+        return <Link to={'/builder/ap'+id}>Edit</Link>;
     }
     //  console.log(props);
     const textValues = { title, edit: id && id !== '' };
     const titleButton = <FormattedMessage values={textValues} {...DefaultI18nEn.addEditSomething} />;
     return <React.Fragment>
-        <Link to={'/pb'+(id ? '/'+id : '')}><Button icon={'plus'} type={'primary'} /></Link>
+        <Link to={'/builder/ap'+(id ? '/'+id : '')}><Button icon={'plus'} type={'primary'} /></Link>
     </React.Fragment>
 }
 

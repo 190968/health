@@ -18,17 +18,25 @@ const enhance = compose(
         const {value, assessment} = props;
         const {goToElementId} = value || {};
         const {getSections=[]} = assessment || {};
+       
         let values = [];
-        const section = getSections.find(s => {
-            const {getQuestions=[]} = s;
-            const question = getQuestions.find(s => s.id == goToElementId);
-            if (question) {
-                return true;
-            }
-            return false;
-        });
-        values.push(section.id);
-        values.push(goToElementId);
+        if (assessment && value) {
+       
+            const section = getSections.find(s => {
+                const {getQuestions=[]} = s;
+                const question = getQuestions.find(s => s.id == goToElementId);
+                if (question) {
+                    return true;
+                }
+                return false;
+            });
+            console.log(goToElementId, 'goToElementIdgoToElementId');
+            console.log(value);
+            console.log(section);
+            console.log(getSections);
+            values.push(section.id);
+            values.push(goToElementId);
+        }
         // console.log(section, 'section');
         // goToElementId
         return {value:values};
@@ -37,7 +45,8 @@ const enhance = compose(
             // const value = e.target.value;
             // const input = prepareBrahmsGoToAction(value);
             const goToElementId = value[value.length-1] || null;
-            // console.log(value);
+            console.log(value);
+            console.log(goToElementId, 'goToElementId');
             // console.log(selectedOptions);
             props.onChange({goToElementId});
             return {
@@ -45,7 +54,10 @@ const enhance = compose(
             }
         }
     }),
-     branch(props => props.GoToComponent, renderComponent(({GoToComponent, ...otherProps}) => <GoToComponent {...otherProps} />))
+     branch(props => props.GoToComponent, renderComponent(({GoToComponent, ...otherProps}) => {
+        //  console.log(otherProps, 'otherProps');
+         return <GoToComponent {...otherProps} />;
+     }))
 );
 export const BrahmsRuleActionGoTo = enhance(BrahmsRuleActionGoToPure);
 

@@ -25,7 +25,7 @@ export const PageHeader = (props) => {
 
 	if (isCollapsed) {
 		return (
-			<Card title={title} extra={action} tabList={tabList} onTabChange={onTabChange} bodyStyle={{ padding: 0 }} />
+			<div className="pageHeader"><Card title={title} extra={action} tabList={tabList} onTabChange={onTabChange} bodyStyle={{ padding: 0 }} /></div>
 		);
 	}
 	return (

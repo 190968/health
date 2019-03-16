@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import {Row, Card, Col, Tag, Icon } from 'antd';
-import {FitIcon} from "../../../../../../../../components/FitIcon/index";
+import {Row, Card, Col, Tag, Icon, Tabs } from 'antd';
+import {FitIcon, IconCustom} from "../../../../../../../../components/FitIcon/index";
+
+const TabPane = Tabs.TabPane;
 
 let gridStyle = {
     //width: '50%',
@@ -30,52 +32,52 @@ export default class PlanElementsSelect extends React.Component {
 
     getProperElements = (mode) => {
         let inputElements = [
-            {type:'tracker', label:'Tracker', icon: <FitIcon icon="tracker"/>},
-            {type:'options', label:'Options', icon: <FitIcon icon="select-many"/>},
-            {type:'textInput', label:'Input', icon: <FitIcon icon="openended-text"/>},
-            {type:'scale', label:'Scale', icon: <FitIcon icon="scale-el"/>},
-            {type:'fileInput', label:'File', icon: <FitIcon icon="file"/>},
-            {type:'assessment', label:'Assessment', icon: <FitIcon icon="assessment"/>},
-            {type:'calculator', label:'Calculator', icon: <Icon type="calculator" />},
-            {label:'To Do', type:'checklist', icon: <FitIcon icon="to-do"/>},
+            {type:'tracker', label:'Tracker', icon: <IconCustom type="tracker"/>},
+            {type:'options', label:'Options', icon: <IconCustom type="options"/>},
+            {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
+            {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
+            {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
+            {type:'assessment', label:'Assessment', icon: <IconCustom type="assessment"/>},
+            {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
+            {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},
         ];
 
         const outputElements = [
-            {type:'text', label:'Text', icon: <Icon type="file-text" />},
-            {type:'image', label:'Image', icon:<Icon type="picture" />},
-            {type:'video', label:'Video', icon: <Icon type="video-camera" />},
-            {type:'audio', label:'Audio', icon: <FitIcon icon="audio" />},
-            {type:'document', label:'Document', icon:<Icon type="file" />},
+            {type:'text', label:'Text', icon: <IconCustom type="text" />},
+            {type:'image', label:'Image', icon:<IconCustom type="image" />},
+            {type:'video', label:'Video', icon: <IconCustom type="video" />},
+            {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
+            {type:'document', label:'Document', icon:<IconCustom type="document" />},
         ];
 
         const toolsElements = [
-            {label:'Conditional', type:'condition', icon: <FitIcon icon="conditional"/>},
-            {label:'Go To', type:'alias', icon: <FitIcon icon="goto"/>},
-            {label:'Decision', type:'decision', icon: <Icon type="share-alt" />},
-            {type:'line', label:'Line', icon: <FitIcon icon="line"/>},
-            {type:'tipbox', label:'Tip', icon: <Icon type="bulb" />},
-            {type:'link', label:'Link', icon:<Icon type="link"/>},
-            {type:'embed', label:'Embed', icon: <FitIcon icon="embed"/>},
+            {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
+            // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+            {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
+            {type:'line', label:'Line', icon: <IconCustom type="line"/>},
+            {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
+            {type:'link', label:'Link', icon:<IconCustom type="link"/>},
+            {type:'embed', label:'Embed', icon: <IconCustom type="embed"/>},
         ];
 
         if (mode === 'lesson') {
             inputElements = inputElements.filter(el => el.type !== 'tracker' && el.type !== 'calculator');
         }
 
-
+        // console.log(mode);
         let elements = [];
         if (mode === 'pathway' || mode === 'decision') {
             elements.push(
                 ['Tools', [
                     //{label:'Diagnosis', type:'diagnosis'},
-                    {label:'To Do', type:'checklist', icon: <FitIcon icon="to-do"/>},//
-                    {label:'Decision', type:'decision', icon: <Icon type="share-alt" />},
-                    {label:'Conditional', type:'condition', icon: <FitIcon icon="conditional"/>},
-                    {label:'Clinical Note', type:'clinical_note', icon: <FitIcon icon="clinical-note"/>},
-                    {label:'Treatment', type:'treatment', icon:<FitIcon icon='treatment' />},
-                    {label:'Go To', type:'alias', icon: <FitIcon icon="goto"/>},
-                    {label:'Link', type:'link', icon:<Icon type="link"/>},//
-                    {label:'ActionPlan', type:'ap', icon: <FitIcon icon="actionplan"/>},//
+                    {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},//
+                    {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
+                    {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
+                    {label:'Clinical Note', type:'clinical_note', icon: <IconCustom type="clinical-note"/>},
+                    {label:'Treatment', type:'treatment', icon:<IconCustom type='treatment' />},
+                    // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+                    {label:'Link', type:'link', icon:<IconCustom type="link"/>},//
+                    {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
                 ], 14]
             );
 
@@ -83,10 +85,10 @@ export default class PlanElementsSelect extends React.Component {
                 ['Media', [
                     // separate group
                     
-                    {type:'image', label:'Image', icon:<Icon type="picture" />},
-                    {type:'video', label:'Video', icon: <Icon type="video-camera" />},
-                    {type:'audio', label:'Audio', icon: <FitIcon icon="audio" />},
-                    {type:'document', label:'Document', icon:<Icon type="file" />},
+                    {type:'image', label:'Image', icon:<IconCustom type="image" />},
+                    {type:'video', label:'Video', icon: <IconCustom type="video" />},
+                    {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
+                    {type:'document', label:'Document', icon:<IconCustom type="document" />},
 
                     //{label:'Regimen(TDB)', type:'regimen'},
                     //{label:'Procedure order(TDB)', type:'procedureOrder'},
@@ -137,6 +139,36 @@ export default class PlanElementsSelect extends React.Component {
         //     })}
         // </Row>);
 
+
+        return <Tabs defaultActiveKey={"0"} type="card">
+            {elements.map((info, el_i) => {
+                const size = info[2] || 12;
+                
+                // if (size > 10) {
+                //     curGridStyle = {
+                //         width: '33.3%',
+                //         textAlign: 'center',
+                //         minHeight:50,
+                //         cursor: 'pointer'
+                //     }
+                // } else {
+                //     curGridStyle = {
+                //         width: '50%',
+                //         textAlign: 'center',
+                //         minHeight:50,
+                //         cursor: 'pointer'
+                //     }
+                // }
+                //console.log(gridStyle);
+                return <TabPane tab={info[0]} key={el_i}>
+                    <Card type={'pure'} >
+                    {info[1].map(({label, type, icon}) => {
+                    return <Card.Grid style={gridStyle} key={label}  onClick={() => this.handleSelection(type)}><div className="ant-card-grid--hovered"><div style={{fontSize:'2.6em'}}>{icon}</div> {label}</div></Card.Grid>
+                    })}
+                </Card>
+                </TabPane>
+            })}
+        </Tabs>
         return <Row gutter={16}>
             {elements.map(info => {
                 const size = info[2] || 12;

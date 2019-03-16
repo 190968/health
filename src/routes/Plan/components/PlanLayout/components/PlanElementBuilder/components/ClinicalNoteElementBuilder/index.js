@@ -17,9 +17,11 @@ const formTailLayout = {
 };
 
 const ClinicalNoteElementBuilder = (props) => {
-    const {form, intl,  details={}, attachments=[]} = props;
+    const {form, intl, element, attachments=[]} = props;
     const {getFieldDecorator} = form;
-    const {title='',note=''} = details;
+    const {itemInfo} = element || {};
+    const {title, note} = itemInfo || {};
+    console.log(props, 'props');
 
     getFieldDecorator('attachments', {initialValue: []});
     return (
@@ -33,7 +35,7 @@ const ClinicalNoteElementBuilder = (props) => {
                         rules: [{required: true, message: "Enter Title", whitespace: true}],
                     }
                 )(
-                    <Input />
+                    <Input  ref={(input) => input && input.focus()}  />
                 )}
             </FormItem>
 
@@ -120,15 +122,3 @@ const enhance = compose(
 );
 
 export default enhance(ClinicalNoteElementBuilder);
-
-export const prepareInput = (values) => {
-    const {title, note, attachments=[]} = values;
-
-    return {
-        clinicalNoteElement: {
-            title,
-            note,
-            attachments
-        }
-    }
-};

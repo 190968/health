@@ -3,12 +3,12 @@ import {Modal} from 'antd';
 import PlanElementSchedule from '../PlanElement/components/PlanElementManager/components/PlanElementSchedule';
 import PlanElementAdditions from './components/PlanElementAdditions';
 import {compose, withProps, branch, renderComponent, withState} from 'recompose';
-import {withModal} from "../../../../../../components/Modal/index";
+import {withModal, withDrawer} from "../../../../../../components/Modal/index";
 
 
 const formItemLayout = {
-    labelCol: {span: 5},
-    wrapperCol: {span: 19},
+    labelCol: {span: 4},
+    wrapperCol: {span: 20},
 };
 const formTailLayout = {
     labelCol: {span: 5},
@@ -31,7 +31,7 @@ const enhance = compose(
             ...modalOpts
         }
     }),
-    withModal
+    withDrawer
 );
 
 const modalHOCPure = (WrappedComponent) => {
@@ -63,13 +63,6 @@ const modalHOCPure = (WrappedComponent) => {
             }
         }
         render() {
-            console.log(this.props);
-            //console.log(this.state);
-            const {loading=false, type=''} = this.props;
-            //let {id, details} = this.props;
-
-
-            // Wraps the input component in a container, without mutating it. Good!
             return (
 
                         <React.Fragment>
@@ -82,13 +75,10 @@ const modalHOCPure = (WrappedComponent) => {
         }
     }
 
-    //treatmentModal.displayName = `treatmentModal(${getDisplayName(WrappedComponent)})`;
-
-
     return ModalWrappeer;
 }
 
-export const modalHOC = compose(modalHOCPure, enhance);
+export const modalHOC = compose(modalHOCPure/*, enhance*/);
 
 
 

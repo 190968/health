@@ -14,7 +14,6 @@ const enhance = compose(
         return {};
     }),
     withAssessmentQuery,
-    // withSpinnerWhileLoading,
     branch(props => {
         const {assessment, loading} = props;
         return !assessment && !loading;

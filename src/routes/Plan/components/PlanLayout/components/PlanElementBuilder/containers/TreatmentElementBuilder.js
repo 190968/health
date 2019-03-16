@@ -1,49 +1,28 @@
-import { TreatmentPureForm, prepareTreatmentInput } from "../../../../../../Health/components/Forms/containers/Treatment";
+import { TreatmentPureForm } from "../../../../../../Health/components/Forms/containers/Treatment";
 import { compose, withProps, withHandlers } from "recompose";
-import { withDrawer } from "../../../../../../../components/Modal";
-
-
-
-const prepareInput = value => {
-    console.log(value);
-    let value2 = prepareTreatmentInput(value);
-    console.log(value2);
-    return {treatmentElement:value2};
-}
+ 
 const enhance = compose(
     withProps(props => {
         const {element} = props;
         const {itemInfo} = element || {};
         return {element: itemInfo, hideHealthData:true};
     }),
-    withHandlers({
-        onSubmit: props => callback => {
-            if (1===1 || !props.id || props.form.isFieldsTouched()) {
-                props.handleSave({prepareInput:prepareInput, callback:props.onHide} );
-            } else {
-                props.onHide();
-            }
-        },
-    }),
-    withDrawer
+    // withHandlers({
+    //     onSubmit: props => callback => {
+    //         if (1===1 || !props.id || props.form.isFieldsTouched()) {
+    //             props.handleSave({prepareInput:prepareInput, callback:props.onHide} );
+    //         } else {
+    //             props.onHide();
+    //         }
+    //     },
+    // }),
+    // withDrawer
 );
 export default enhance(TreatmentPureForm);
-// import React from 'react';
-// import { compose, withHandlers, withState, withProps, branch, renderComponent} from 'recompose';
-// import TreatmentElementBuilderPure, {prepareInput} from '../components/TreatmentElementBuilder';
-// import {Form} from 'antd';
-// import {modalHOC, withSpinnerWhileLoading} from "../modal";
-
-
-// const enhancePure = compose(
-//     withState('elements', 'setElements', props => {
-//         const {element} = props;
-//         //const {itemInfo:details={}} = element;
-//         const {elements = []} = element || {};
-//         return elements;
-//     }),
-// );
+ 
  export const TreatmentElementBuilder = TreatmentPureForm;
+
+ export const prepareInput = props => props;
 
 
 

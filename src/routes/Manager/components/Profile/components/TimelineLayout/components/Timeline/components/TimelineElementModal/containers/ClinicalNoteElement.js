@@ -1,6 +1,6 @@
 import {
     ClinicalNoteElementBuilder,
-    enhance
+    //enhance
 } from '../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ClinicalNoteElementBuilder';
 import {modalHOC} from '../modal';
 import {compose, withProps} from 'recompose';
@@ -16,7 +16,7 @@ const enhanceProps = compose(
             showNotes:false
         }
     }),
-    enhance,
+    //enhance,
     modalHOC
 )
 

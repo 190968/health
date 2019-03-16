@@ -39,7 +39,7 @@ const AdvocatesLayout = (props) => {
     console.log(tab);
     console.log(subtab);
 
-    let mainUrl = '/pb';
+    let mainUrl = '/builder/ap';
     if (id !== '') {
         mainUrl += '/'+id;
     }

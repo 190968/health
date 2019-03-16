@@ -16,22 +16,20 @@ const formTailLayout = {
 };
 
 const ApElementBuilder = (props) => {
-    const {form, intl,  details={}} = props;
+    const {form, intl,  details} = props;
     const {getFieldDecorator} = form;
-    console.log(props);
-    const {id:planId=''} = details;
     return (
         <React.Fragment>
             <FormItem
                 {...formItemLayout}
-                label={intl.formatMessage(messages.title)}
+                label={'ActionPlan'}
             >
-                {getFieldDecorator('planId', {
-                        initialValue:planId,
+                {getFieldDecorator('plan', {
+                        initialValue:details,
                         rules: [{required: true, message: "Select ActionPlan"}],
                     }
                 )(
-                    <PlanSelect />
+                    <PlanSelect getFullInfo />
                 )}
             </FormItem>
         </React.Fragment>
@@ -39,11 +37,3 @@ const ApElementBuilder = (props) => {
 }
 
 export default injectIntl(ApElementBuilder);
-
-export const prepareInput = (values) => {
-    const {planId} = values;
-
-    return {
-        apElement: planId
-    }
-}

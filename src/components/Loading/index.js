@@ -10,6 +10,24 @@ export const LoadingBox = props => {
     );
 }
 
+export const LoadingPageSpinner = props => {
+    return <div
+    style={{
+        height: '100%',
+        width: '100%',
+        overflow: 'auto',
+        display: 'flex',
+        top: '50%',
+        position: 'absolute',
+        minHeight: '100vh',
+        flexDirection: 'column'
+    }}
+>
+    <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
+</div>;
+}
+
+
 export const Loading = props => {
     return (
         <div style={{textAlign:'center', padding: '5%'}}><Spin indicator={<SpinIndicator />} /></div>

@@ -50,13 +50,13 @@ export const CalculatorElementBuilder = CalculatorElementBuilderWithQuery;
 export const enhance = compose(
     withState('showTest', 'openTest', false),
     withHandlers({
-        onSubmit: props => callback => {
-            if (!props.id || props.form.isFieldsTouched()) {
-                props.handleSave({prepareInput, callback:props.onHide} );
-            } else {
-                props.onHide();
-            }
-        },
+        // onSubmit: props => callback => {
+        //     if (!props.id || props.form.isFieldsTouched()) {
+        //         props.handleSave({prepareInput, callback:props.onHide} );
+        //     } else {
+        //         props.onHide();
+        //     }
+        // },
         onTest: props => value => {
             props.openTest(true);
         },
@@ -82,7 +82,18 @@ const enhanceWithModal = compose(
 
         },
     }),
-    modalHOC,
+    // modalHOC,
 )
 
 export default enhanceWithModal(CalculatorElementBuilderWithQuery);
+
+
+
+export const preparePlanElementCalculatorInput = (values) => {
+    const {title, formulaString, trackers=[]} = values;
+    return {
+            title,
+            formulaString:toString(formulaString),
+            trackers:trackers
+    }
+}

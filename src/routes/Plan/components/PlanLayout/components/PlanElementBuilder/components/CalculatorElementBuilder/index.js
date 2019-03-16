@@ -138,15 +138,3 @@ const enhance = compose(
 
 
 export default enhance(CalculatorElementBuilder);
-
-export const prepareInput = (values) => {
-    console.log(values);
-    const {title, formulaString, trackers=[]} = values;
-    return {
-        calculatorElement: {
-            title,
-            formulaString:toString(formulaString),
-            trackers:trackers
-        }
-    }
-}

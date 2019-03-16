@@ -87,7 +87,7 @@ const TrackerElementBuilder = (props) => {
                             rules: [{required: true, message: "Select Tracker"}],
                         }
                     )(
-                        <TrackerSelect selectInfo={selectTracker}/>
+                        <TrackerSelect /*selectInfo={selectTracker}*/ />
                     )}
                     <div style={{lineHeight:'1em'}}>Or <a onClick={toggleCustom}>Create your own</a></div>
                 </FormItem>
@@ -159,28 +159,3 @@ const enhance = compose(
 
 
 export default enhance(TrackerElementBuilder);
-
-export const prepareInput = (values) => {
-    //console.log(values);
-    const {
-        isCritical,
-        criticalRangeMax,
-        criticalRangeMin,
-        setRange,
-        normalRangeMin,
-        normalRangeMax,
-
-        isMultiple,
-        showTotals,
-        summary,
-        textAfter,
-        textBefore,
-        treatAs,
-        parentId
-    } = values;
-
-
-    return {
-        trackerElement: values
-    }
-};

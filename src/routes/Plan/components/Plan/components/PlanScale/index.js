@@ -37,7 +37,7 @@ export default class PlanScale extends React.PureComponent {
         let marks = {};
         let selectedMark = undefined;
         options.map((option, i) => {
-            const coid = option.value;
+            const coid = option.id;
             const name = option.label;
 
             if (value === coid) {

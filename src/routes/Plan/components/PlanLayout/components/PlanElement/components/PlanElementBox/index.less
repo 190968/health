@@ -6,17 +6,31 @@
     transition:opacity 0.5s ease;
   }
 
-  .ant-divider-inner-text {
-    border: 1px solid #91d5ff;
-    background-color: #e6f7ff;
-
-    border-radius: 3px;
-    padding: 0 10px;
-
-    i {
-      color: #91d5ff;
-      cursor: pointer;
+  .ant-divider {
+    &:after, &:before {
+      border-top-color: #f2f2f2;
     }
+  }
+  .ant-divider-inner-text {
+    
+    .ant-btn {
+      border: 1px solid #91d5ff;
+      background-color: #effbfe;
+      color: #91d5ff;
+      font-size:12px;
+
+      &:hover {
+        background-color: #e6f7ff;
+      }
+
+    // border-radius: 3px;
+    // padding: 0 10px;
+    }
+
+    // i {
+    //   color: #91d5ff;
+    //   cursor: pointer;
+    // }
   }
   &:hover {
 

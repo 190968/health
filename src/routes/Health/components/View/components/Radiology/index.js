@@ -24,7 +24,7 @@ export const RadiologyView = props => {
         ['metastatic Site', metastaticSites],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1}  />
 }
 
 export default RadiologyView;

@@ -36,6 +36,30 @@ export const TrackerSummaryReportInfoFragment = gql`
             ${UserInfoFragment}
 `;
 
+
+export const TrackerPureFragment = gql`
+            fragment TrackerPure on Tracker {
+                id
+                label
+                units {
+                    id
+                    name
+                    getLabels
+                }
+                inputMask
+                graph
+                criticalRange {
+                    min
+                    max
+                }
+                normalRange {
+                    min
+                    max
+                }
+        }
+`;
+
+
 export const TrackerInfoFragment = gql`
             fragment TrackerInfo on Tracker {
                 id

@@ -53,6 +53,7 @@ export class PlanLayout extends React.Component {
 					<div className="pageContent">
 					
 						<PlanBody
+							userPlan={info}
 							upid={info.id}
 							plan={plan}
 							user={user}

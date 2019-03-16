@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../User/fragments';
 import { TreatmentElementFragment, TreatmentInfoFragment } from '../../../Health/components/fragments';
+import { BrahmsFragment } from '../../../../components/Brahms/fragments';
 
 export const PlanCardFragment = gql`
         fragment PlanCardInfo on Plan {
@@ -139,7 +140,7 @@ export const ElementOptionsFragment = gql`
           label
           isVertical
           options {
-            value
+            id
             label
           }
     }
@@ -151,7 +152,7 @@ export const ElementScaleFragment = gql`
           label
           scaleId
           options {
-            value
+            id
             label
           }
     }
@@ -174,9 +175,9 @@ export const ElementMediaFragment = gql`
 
 export const ElementApFragment = gql`
     fragment ApPlanElement on Plan {
-        id
-        title
+        ...PlanCardInfo
     }
+    ${PlanCardFragment}
 `;
 
 
@@ -307,6 +308,7 @@ export const PlanElementFragment = gql`
             itemType
             type
             typeText
+            isAnswerBasedElement
             hasChildren
             reports (date: $date) {
                 id
@@ -328,7 +330,7 @@ export const PlanElementFragment = gql`
                   label
                   isVertical
                   options {
-                    value
+                    id
                     label
                   }
                 }
@@ -388,18 +390,21 @@ export const PlanElementFragment = gql`
                     ...CalculatorElement
                 }
             }
-             
+            getBrahmsRules {
+                ...Brahms
+            }
         }
-         ${ElementMediaFragment}
-         ${ElementLinkFragment}
-         ${ElementTextFragment}
-         ${ElementClinicalNoteFragment}
-         ${ElementOptionsFragment}
-         ${ElementScaleFragment}
-         ${ElementTreatmentFragment}
-         ${ElementApFragment}
-          ${ElementTrackerFragment}
-          ${ElementCalculatorFragment}
+        ${ElementMediaFragment}
+        ${ElementLinkFragment}
+        ${ElementTextFragment}
+        ${ElementClinicalNoteFragment}
+        ${ElementOptionsFragment}
+        ${ElementScaleFragment}
+        ${ElementTreatmentFragment}
+        ${ElementApFragment}
+        ${ElementTrackerFragment}
+        ${ElementCalculatorFragment}
+        ${BrahmsFragment}
 `;
 
 export const PlanElementPureFragment = gql`
@@ -410,6 +415,7 @@ export const PlanElementPureFragment = gql`
             type
             typeText
             hasChildren
+            isAnswerBasedElement
             schedule {
                 type
                 startDate
@@ -435,7 +441,7 @@ export const PlanElementPureFragment = gql`
                   label
                   isVertical
                   options {
-                    value
+                    id
                     label
                   }
                 }
@@ -491,7 +497,9 @@ export const PlanElementPureFragment = gql`
                     ...CalculatorElement
                 }
             }
-             
+            getBrahmsRules {
+                ...Brahms
+            }
         }
         ${ElementMediaFragment}
         ${ElementLinkFragment}
@@ -503,7 +511,8 @@ export const PlanElementPureFragment = gql`
         ${ElementAliasFragment}
         ${ElementApFragment}
         ${ElementCalculatorFragment}
-         ${ElementTrackerFragment}
+        ${ElementTrackerFragment}
+        ${BrahmsFragment}
 `;
 
 

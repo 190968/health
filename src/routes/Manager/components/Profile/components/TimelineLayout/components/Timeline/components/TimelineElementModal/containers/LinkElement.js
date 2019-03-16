@@ -1,6 +1,6 @@
 import {
     LinkElementBuilder,
-    enhance
+    //linkEnhance
 } from '../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/LinkElementBuilder';
 import {modalHOC} from '../modal';
 import {compose, withProps, withHandlers} from 'recompose';
@@ -16,7 +16,7 @@ const enhanceProps = compose(
             showNotes:false
         }
     }),
-    enhance,
+    //linkEnhance,
     modalHOC
 );
 

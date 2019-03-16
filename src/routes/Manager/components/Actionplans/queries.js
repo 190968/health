@@ -72,10 +72,17 @@ export const withActionplansQuery = graphql(
 
  
 const GET_ACTIONPLAN_QUERY = gql`    
-    query GET_ACTIONPLANS ($id: UID!) {
-        management {
-            getPlan (id: $id) {
-                ...PlanFull
+    query GET_ACTIONPLAN ($id: UID!) {
+        getPlan (id: $id) {
+            ...PlanFull
+            type
+            schedule {
+                type
+                startDate
+                endDate
+                limitStartDow
+                relativeEndDay
+                dows
             }
         }
     }
@@ -96,8 +103,7 @@ export const withActionplanQuery = graphql(
         },
         props: ({ ownProps, data }) => {
             const { plan } = ownProps;
-            const {loading, management} = data;
-            const { getPlan=plan } = management || {};
+            const {loading, getPlan=plan} = data;
             return {
                 plan: getPlan,
                 loading: data.loading,

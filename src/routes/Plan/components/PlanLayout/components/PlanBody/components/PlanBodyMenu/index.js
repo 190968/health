@@ -26,7 +26,7 @@ const menuItem = item => {
         activeTabs.push(currentTab);
     }
     //console.log(currentKey);
-    console.log(activeTabs);
+    // console.log(activeTabs);
     return (
         <React.Fragment>
             <Menu
@@ -136,7 +136,7 @@ const enhance = compose(
                 onClick(currentTab, currentKeyI);
             }
 
-            console.log(currentTab);
+            // console.log(currentTab);
             // if (!activeTabs.includes(currentTab)) {
             //     //activeTabs.push(currentTab);
             // }

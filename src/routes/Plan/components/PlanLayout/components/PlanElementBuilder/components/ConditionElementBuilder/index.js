@@ -5,6 +5,7 @@ import {injectIntl} from 'react-intl';
 import messages from './messages';
 import {Options} from "../../../../../../../../components/FormCustomFields/components/Options/index";
 import AdditionalInfo from './containers/AdditionalInfo';
+import PlanElementBrahmsFormField from '../../_brahms';
 
 const FormItem = Form.Item;
 
@@ -18,36 +19,14 @@ const formTailLayout = {
 };
 
 
-
-export const prepareInput = (values) => {
-    console.log(values);
-    const {title, schedule, keys=[], ids=[], footnote} = values;
-    let {options=[]} = values;
-    options = keys.map(i => {
-        const id =  ids[i] || '';// ? timesPerHour[i]['id'] : '';
-        const label = options[i] || '';
-        //const options = blockOptions[i] || [];
-        return {id, label}
-    });
-
-    return {
-        schedule:schedule,
-        decisionElement: {
-            title,
-            options,
-            footnote
-        }
-    }
-}
-
-
+ 
 
 const ConditionElementBuilder = (props) => {
-    const {form, intl, element={}, keys} = props;
-    const {getFieldDecorator} = form;
-    const {itemInfo={}, footnote=''} = element;
-    const {label:title, options = [blankOption, blankOption] } = itemInfo;
-
+    const {form, intl, element, keys} = props;
+    const {getFieldDecorator, getFieldValue} = form;
+    const {itemInfo={}, footnote=''} = element || {};
+    const {id, label:title, options = [blankOption, blankOption] } = itemInfo || {};
+    const showBrahms = id && id !== '';
     return (
 
         <React.Fragment>
@@ -60,14 +39,16 @@ const ConditionElementBuilder = (props) => {
                         rules: [{required: true, message: "Enter Title", whitespace: true}],
                     }
                 )(
-                    <Input/>
+                    <Input  ref={(input) => input && input.focus()} />
                 )}
             </FormItem>
 
-            <Options form={form} options={options} minLines={2} />
+            <Options form={form} options={options} minLines={2} formItemLayout={formItemLayout} />
 
             <AdditionalInfo form={form} formItemLayout={formItemLayout} footnote={footnote} />
 
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'number'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} /*plan={plan}*/ element={element}  possibleOptionsFormatter={props.possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
+   
         </React.Fragment>
     );
 }

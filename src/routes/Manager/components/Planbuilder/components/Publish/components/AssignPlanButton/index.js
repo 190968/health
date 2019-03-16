@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { TaskManager } from '../../../../../Tasks/containers/Manager';
 import DefaultI18nEn from '../../../../../../../../i18n/en';
 import { withToggleModal } from '../../../../../../../../components/Modal';
+import TaskAssignButton from '../../../../../../../../components/Tasks/components/TaskAssignButton';
 
 const AssignPlanButtonPure = props => {
     const { showModal, toggleModal, title, ...otherProps } = props;
@@ -16,6 +17,9 @@ const AssignPlanButtonPure = props => {
         </Tooltip>
     </React.Fragment>
 }
-
-export const AssignPlanButton = withToggleModal(AssignPlanButtonPure);
+const AssignPlanButtonPure2 = props => {
+    const {plan} = props;
+    return <TaskAssignButton  size={'default'} mode={'simple'} buttonType={'green'} assignObject={{type: 'ap', object:plan}} />
+}
+export const AssignPlanButton = AssignPlanButtonPure2;//withToggleModal(AssignPlanButtonPure);
 export default AssignPlanButton;

@@ -7,14 +7,16 @@ import {PLAN_ELEMENT_CHILDREN_QUERY} from "../../../containers/queries";
 
 const addChildElementMutation = gql`
     mutation addChildElement($parentId: UID!, $parentValue: UID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!) {
-        addChildElement(planId: $planId, type:$type, parentId: $parentId, parentValue:$parentValue, input: $input) {
-            id
+        addPlanChildElement(planId: $planId, type:$type, parentId: $parentId, parentOptionId:$parentValue, input: $input) {
+            planElement {
+                ...PlanElement
+            }
         }
     }
     ${PlanElementPureFragment}
 `;
 
- const withAddChildMutation = graphql(addChildElementMutation, {
+ export const withPlanAddChildElementMutation = graphql(addChildElementMutation, {
     props: ({ ownProps, mutate }) => ({
         addChildElement: (input) => {
             return mutate({
@@ -29,5 +31,4 @@ const addChildElementMutation = gql`
 });
 
 
-
-export default withAddChildMutation(PlanElementChildrenManager);
+export default withPlanAddChildElementMutation(PlanElementChildrenManager);

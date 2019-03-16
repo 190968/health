@@ -47,7 +47,7 @@ export const BrahmsRulesView = props => {
         return null;
     }
     return <Collapse bordered={false} expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
-    <Collapse.Panel header="Brahms" key="1" style={customPanelStyle} >
+    <Collapse.Panel header={<><Icon type="project" /> BRAHMS</>} key="1" style={customPanelStyle} >
         <ListWithMessage
             emptyMessage={false}
             itemLayout="horizontal"
@@ -74,7 +74,7 @@ export const BrahmsRulesView = props => {
     
 const BrahmsRuleManagerItem = props => {
     const {renderRule, ...otherProps} = props;
-    const {rule, possibleOptions=[], formatGoToElement} = otherProps;
+    const {rule, possibleOptions=[], possibleOptionsFormatted, formatGoToElement} = otherProps;
 
     const isAnswredQuestion = possibleOptions.length > 0;
     if (renderRule) {
@@ -88,30 +88,71 @@ const BrahmsRuleManagerItem = props => {
 // ruleTypeValue: 8117
 // ruleValueId: "a8117"
 
-    console.log(props, 'rulerulerulerulerule');
-    let {ruleType, ruleValue, ruleValueId, ruleActionType, ruleAction} = rule || {};
+    // console.log(props, 'rulerulerulerulerule');
+    let {ruleType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType, ruleAction} = rule || {};
     const condition = formatAssessmentRuleCondition(rule);
-    console.log(condition, 'condition');
+    console.log(possibleOptions, 'possibleOptions');
     let string;
     let prefix = condition;
-    if (!isAnswredQuestion && ruleValue) {
-        prefix += ' '+ruleValue;
+    if (!isAnswredQuestion) {
+
+        if (ruleType === 'between') {
+            prefix += ' '+ruleValue + ' & '+ruleValueEnd;
+        } else {
+            prefix += ' '+ruleValue;
+        }
+        
     } else if (ruleValueId) {
-        const answer = possibleOptions.find(a=>a.id === ruleValueId);
+        
         // console.log(possibleOptions, 'possibleOptions');
         // console.log(ruleValueId, 'ruleValueId');
         // console.log(answer, 'answer');
-        const {label} = answer || {};
-        prefix = ' '+label;
+        if (possibleOptionsFormatted) {
+            // console.log('aaaaaaaa');
+            const answerFormatted = possibleOptions.find(a=>{
+                // console.log(possibleOptionsFormatted(a));
+                const {id} = possibleOptionsFormatted(a);
+                return id === ruleValueId
+            });
+            console.log(ruleValueId, 'ruleValueId');
+            console.log(answerFormatted);
+            const {label:optionLabel} = possibleOptionsFormatted(answerFormatted);
+            prefix = ' '+optionLabel;
+        } else {
+            const answer = possibleOptions.find(a=>a.id === ruleValueId);
+            const {label} = answer || {};
+            prefix = ' '+label;
+        }
+       
     }
     switch(ruleActionType) {
         case 'output':
-            const {message:messageInit, outputActionInput} = ruleAction || {};
-             const {message=messageInit} = outputActionInput || {};
-            string = message;
+            const {message:messageInit, attachments:attachmentsInit=[], outputActionInput} = ruleAction || {};
+            const {message=messageInit, attachments=attachmentsInit} = outputActionInput || {};
+            
+            if (attachments.length > 0) {
+                string = <>{message} (<Icon type="paper-clip" /> {attachments.length})</>;
+            } else {
+                string = message;
+            }
+        break;
+        case 'notification':
+            const {text:messageNotificationInit, notificationtActionInput} = ruleAction || {};
+            const {text:messageNotification=messageNotificationInit} = notificationtActionInput || {};
+            string = messageNotification;
+        break;
+        case 'cohorts':
+            // console.log(ruleAction);
+            const {cohorts=[]} = ruleAction || {};
+            // const {plans=plansInit} = apActionInput || {};
+            if (cohorts) {
+                string = cohorts.map(p=> <div>{p.title}</div>);
+            }
+            //prefix = '';
+            ruleActionType = 'Cohorts';
         break;
         case 'ap':
-            console.log(ruleAction);
+            // console.log(ruleAction);
             const {plans=[], apActionInput} = ruleAction || {};
             // const {plans=plansInit} = apActionInput || {};
             if (plans) {
@@ -135,8 +176,3 @@ const BrahmsRuleManagerItem = props => {
 
     return <div><strong>{prefix} {ruleActionType}</strong>: {string}</div>
 }
-
-// const BrahmsRuleManagerItem = branch(props => {
-//     const {renderRule} = props;
-//     return renderRule
-// },  renderComponent())(BrahmsRuleManagerItemPure);

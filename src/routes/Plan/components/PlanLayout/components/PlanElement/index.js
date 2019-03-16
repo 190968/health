@@ -5,10 +5,9 @@ import { compose, withProps, branch, withHandlers, defaultProps, withState } fro
 
 // plan element with children
 const PlanElementPure = (props) => {
-	//console.log(props);
+	console.log(props, 'element props');
 	const {
 		element,
-		date,
 		isDraggable,
 		onDrop,
 		isBuilderMode,

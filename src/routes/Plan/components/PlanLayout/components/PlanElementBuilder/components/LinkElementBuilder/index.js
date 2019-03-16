@@ -73,28 +73,16 @@ const LinkElementBuilder = (props) => {
 
 const enhance = compose(
     injectIntl,
-    withState('showUrl', 'setShowUrl', false),
-    withHandlers({
-        onHTTPChange: props => (e) => {
-            props.setShowUrl(true);
-            //console.log(prefix);
+    // withState('showUrl', 'setShowUrl', false),
+    // withHandlers({
+    //     onHTTPChange: props => (e) => {
+    //         props.setShowUrl(true);
+    //         //console.log(prefix);
 
-            //let url =  props.form.getFieldValue('url');
-            //console.log(e.target.value);
-            props.form.setFieldsValue({url: e.target.value})
-        }
-    })
+    //         //let url =  props.form.getFieldValue('url');
+    //         //console.log(e.target.value);
+    //         props.form.setFieldsValue({url: e.target.value})
+    //     }
+    // })
 );
 export default enhance(LinkElementBuilder);
-
-export const prepareInput = (values) => {
-    const {label, url, description} = values;
-
-    return {
-        linkElement: {
-            label,
-            url,
-            description,
-        }
-    }
-}

@@ -5,11 +5,12 @@ import { withDrawer } from '../../../components/Modal';
 import { withLoadingState } from '../../../components/Loading';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import {withRouter} from 'react-router';
 
  
 const GET_PLAN_MUTATION = gql`
     mutation getPlan($id: UID, $upid: UID, $input:UserPlanInput!){
-        getUserPlan(id:$id, upid:$upid, input:$input) {
+        getPlan(id:$id, upid:$upid, input:$input) {
             id
         }
     }
@@ -44,6 +45,7 @@ const withMutation = branch(props => props.userPlan, withGetUserPlanMutation, wi
 
 
 const enhance = compose(
+    withRouter,
     withProps(props => {
         let {userPlan, plan} = props;
         if (!plan) {
@@ -77,11 +79,14 @@ const enhance = compose(
                         props.setLoadingState(false);
                         hide();
                         const upid = data.getPlan.id;
-                        console.log(upid, 'new UPID');
+                        // console.log(upid, 'new UPID');
                         // this.setState({
                         //     loading: false
                         // });
-                        //history.push('/plan/'+upid)
+                        if (history) {
+                            history.push('/plan/'+upid)
+                        }
+                        //
                     }).catch(() => {
     
                     });

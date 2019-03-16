@@ -138,7 +138,7 @@ export const TreatmentElementFragment = gql`
                         id
                         label
                         options {
-                            value
+                            id
                             label
                         }
                     }

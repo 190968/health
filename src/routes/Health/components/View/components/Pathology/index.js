@@ -19,7 +19,7 @@ export const PathologyView = props => {
         ['Tumor Size', value+' '+units],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1}  />
 }
 
 export default PathologyView;

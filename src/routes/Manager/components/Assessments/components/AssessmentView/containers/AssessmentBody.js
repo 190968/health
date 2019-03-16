@@ -1,6 +1,7 @@
 import AssessmentBodyPure from '../components/AssessmentBody';
 import { branch, compose, withHandlers, withState, withStateHandlers, withProps } from 'recompose';
 import { message, Form } from 'antd';
+import Scroll from 'react-scroll';
 import { withAssessmentReportMutation, withAssessmentCompleteMutation } from '../../../mutations';
 import { checkBrahmsOnExecution, validateBrahms, getNextObjectFromRules } from '../../../../../../../components/Brahms/utils';
 
@@ -9,7 +10,7 @@ import { checkBrahmsOnExecution, validateBrahms, getNextObjectFromRules } from '
 const enhance = compose(
     branch(props => {
         const { showAllSections, showAllQuestions } = props.assessment || {};
-        return !showAllSections;// && showAllQuestions;
+        return showAllSections && showAllQuestions;
     }, Form.create()),
     withStateHandlers((props) => {
         // prepare skipped questions and sections
@@ -65,7 +66,7 @@ const enhance = compose(
                             questionRules = [...questionRules, ...rules];
                         }
                         // get goto brahm rules and execute
-                        const goTorules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion, type: 'goto' });
+                        const goTorules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion, type: ['goto','stop'] });
                         if (goTorules.length > 0) {
                             // find next skipped item
                             const nextQuestionId = getNextObjectFromRules({ rules: goTorules });
@@ -229,7 +230,7 @@ const enhance = compose(
             let skipSectionQuestion = {};
             skippedByQuestions[currentQuestionId] = goToquestionsToSkip;
             skipSectionQuestion[currentQuestionId] = goToskipToSectionQuestion;
-
+            console.log(skipSectionQuestion, 'skipSectionQuestion');
             props.setQuestionsToSkip(skippedByQuestions, skipSectionQuestion, goToquestionsToSkip);
         }
     }),
@@ -253,6 +254,7 @@ const enhance = compose(
                     let skipSectionQuestion = {};
                     skipByQuestion[question.id] = [];
 
+                    console.log(skipSectionQuestion, 'skipSectionQuestion');
                     props.setQuestionsToSkip(skipByQuestion, skipSectionQuestion, []);
                     props.updateBrahmRules({ question, rules:[] });
                 }
@@ -277,6 +279,13 @@ const enhance = compose(
                 // const { assessmentCompletePayload } = data;
                 hide();
                 message.success('Completed');
+                // scroll to the block
+                Scroll.scroller.scrollTo('completedBlock', {
+                    duration: 1500,
+                    delay: 100,
+                    smooth: true,
+                  });
+
                 if (props.refetch) {
                     props.refetch();
                 }

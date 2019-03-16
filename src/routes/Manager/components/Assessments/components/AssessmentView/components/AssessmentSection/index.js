@@ -63,9 +63,14 @@ const AssessmentSection = props => {
     let questionsToShow = getQuestions;
     // If we show question by question, do not show next questions.
     if (!showAllQuestions) {
+        console.log(section, 'section');
+        console.log(isPastSection, 'isPastSection');
+        console.log(currentQuestion, 'currentQuestion');
+        console.log(questionsToShow, 'currentQuestion');
         questionsToShow = questionsToShow.filter((question, i) => {
             return currentQuestion >= i || isPastSection;
         });
+        console.log(questionsToShow, 'questionsToShow');
     }
 
     // Prepare section Buttons
@@ -73,11 +78,11 @@ const AssessmentSection = props => {
     let cardActions = [];
     if (isBuilderMode) {
         cardExtra.push(<AssessmentSectionManagerButton key={'edit'} assessment={assessment} section={section} />);
-        cardExtra.push(<DragHandle key={'drag'} style={{marginLeft:5}} />);
+        // cardExtra.push(<DragHandle key={'drag'} style={{marginLeft:5}} />);
         cardExtra.push(<AssessmentSectionDeleteButton key={'delete'} assessment={assessment} section={section} />);
 
         cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} />);
-        cardActions.push(<AssessmentSectionManagerButton key={'addSection'} assessment={assessment} afterSection={section} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
+        cardActions.push(<AssessmentSectionManagerButton key={'addSection'} buttonType={'dashed'} assessment={assessment} afterSection={section} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
     } else if (showBottomButtons) {
 
         if (showPreviousButton)
@@ -123,9 +128,9 @@ const AssessmentQuestionsListPure = props => {
     dataSource={questionsToShow}
     itemLayout={'vertical'}
     size={'small'}
-    
+    split={false}
     renderItem={(question, i) => {
-        return <AssessmentQuestionCurrent {...otherProps} index={i} collection={'section-'+section.id} question={question} i={i} key={`item-${i}`} />;
+        return <AssessmentQuestionCurrent {...otherProps} index={i} collectionaa={'section-'+section.id} question={question} i={i} key={`item-${i}`} />;
     }}
 />;
 }
@@ -139,12 +144,12 @@ const AssessmentQuestionBody = ({isBuilderMode, assessment, section, question, i
     // return <li>oooooooo <DragHandle /></li>;
     let questionCardExtra = [];
     if (isBuilderMode) {
-        questionCardExtra.push(<AssessmentQuestionManagerButton assessment={assessment} section={section} question={question} />);
+        questionCardExtra.push(<AssessmentQuestionManagerButton key={'manager'} assessment={assessment} section={section} question={question} />);
         questionCardExtra.push(<DragHandle key="drag" style={{marginLeft:5}} />);
-        questionCardExtra.push(<AssessmentQuestionDeleteButton assessment={assessment} section={section} question={question} />);
+        questionCardExtra.push(<AssessmentQuestionDeleteButton  key={'delete'}  assessment={assessment} section={section} question={question} />);
     }
     return <List.Item key={question.id}>
-        <List.Item.Meta title={<div>{(showQuestionNumber ? (i + 1) + '. ' : '') + question.title} <div className={'ant-card-extra'} style={{ float: 'right', padding: '0 !important' }}>{questionCardExtra}</div></div>} description={question.description} />
+        <List.Item.Meta title={<div><strong>{(showQuestionNumber ? (i + 1) + '. ' : '') + question.title}</strong> <div className={'ant-card-extra'} style={{ float: 'right', padding: '0 !important' }}>{questionCardExtra}</div></div>} description={question.description} />
         <AssessmentQuestion key={question.id} i={i}   question={question} isPastSection={isPastSection} isLastSection={isLastSection} isFirstSection={isFirstSection} showAllQuestions={showAllQuestions} section={section} {...otherProps} />
     </List.Item>;
 }

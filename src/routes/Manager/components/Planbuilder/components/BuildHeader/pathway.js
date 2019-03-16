@@ -52,7 +52,7 @@ class BuildHeader extends React.Component{
 
         this.stopLoading();
 
-        let mainUrl = '/pb/'+plan.id+'/build/body';
+        let mainUrl = '/builder/pathway/'+plan.id+'/body';
         history.push(mainUrl);
     }
 

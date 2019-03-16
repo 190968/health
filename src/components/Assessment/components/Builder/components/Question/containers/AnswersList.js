@@ -12,6 +12,7 @@ const enhance = compose(
     }),
     withStateHandlers( props => {
         const {value=[]} = props;
+        console.log(value, 'answersvalue');
         return {answers:value};
     }, {
         updateAnswers: (state, props) => (answer) => {
@@ -39,8 +40,9 @@ const enhance = compose(
             console.log(answers);
             if (id) {
                 // find answer
+                const answerExisted = answers.find(a => a.id ===id);
                 const answerIndex = answers.findIndex(a => a.id ===id);
-                answers[answerIndex] = answer;
+                answers[answerIndex] = {...answerExisted, ...answer};
             } else if (index >= 0) {
                 answers[index] = answer;
             }

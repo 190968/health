@@ -2,6 +2,8 @@ import React from 'react';
 import {Form, Input} from 'antd';
 import AssessmentSelect from '../../../../../Autosuggest/containers/AssessmentSelect';
 import { SelectAssessmentQuestion } from '../../containers/SelectAssessmentQuestion';
+import { compose, withState, withHandlers } from 'recompose';
+import AssessmentQuestionManagerPure from './index';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -19,12 +21,16 @@ const formItemLayoutDefault = {
 
 const AssessmentQuestionExistingQuestionManager = props => {
     
-        const {question, form, type:typeInit, assessment} = props;
+        const {question, form, type:typeInit, assessment, parentQuestion} = props;
         const {getFieldDecorator, getFieldValue} = form;
         const {title, description, type=typeInit, getAnswers=[], getBrahmsRules=[]} = question || {};
         const  formItemLayout=formItemLayoutDefault;
         const isTypeTime = type == 'time';
         const showBrahms = !isTypeTime && question;
+
+        // if (parentQuestion) {
+        //     return <AssessmentQuestionManager />;
+        // }
         return <Form onSubmit={props.onSubmit}>
                 <FormItem
                     {...formItemLayout}
@@ -48,7 +54,6 @@ const AssessmentQuestionExistingQuestionManager = props => {
             </Form>
 }
 
-
-
-export default AssessmentQuestionExistingQuestionManager;
+ 
+export default (AssessmentQuestionExistingQuestionManager);
 

@@ -3,10 +3,11 @@ import { TimeField } from '../../../../../../../../components/FormCustomFields';
 import AssessmentChoice from './containers/AssessmentChoice';
 import AssessmentInput from './containers/AssessmentInput';
 import AssessmentSlider from './containers/AssessmentSlider';
-import {Form, Button} from 'antd';
+import {Form, Button, Alert} from 'antd';
 import moment from 'moment';
 import { BrahmOutputItem, BrahmsOutputs, BrahmOutputWidget, BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
 import BrahmsAsField, { BrahmsRulesView } from '../../../../../../../../components/Brahms/components/Manager/components/Field';
+import { TrackerInput } from '../../../../../../../Plan/components/Tracker';
 
 const FormItem = Form.Item;
 
@@ -38,7 +39,8 @@ const AssessmentQuestion = props => {
         allowGoBack,
         showAllQuestions,
         showAllSections, 
-        showBrahms } = assessment;
+        showBrahms,
+        showValidAnswer } = assessment;
         if (isCompleted) {
             showAllQuestions = true;
             showAllSections = true;
@@ -56,7 +58,6 @@ const AssessmentQuestion = props => {
     // console.log(canShowButtons);
     const showNextButton = canShowButtons;// && !showAllSections;// && (!showAllQuestions);// || (!showAllSections && isLastQuestion);
     let showPreviousButton = canShowButtons && (allowGoBack && !isFirstQuestion);//!showAllSections && showAllQuestions && !showFinishButton;// || (!showAllSections && isLastQuestion);
-    
     let nextText = 'Next Question';
     let onNextClick = goNextQuestion;
     let prevText = 'Previous Question';
@@ -69,15 +70,17 @@ const AssessmentQuestion = props => {
         onNextClick = props.completeAssessment;
     }
 
-   
+    const {getFieldDecorator, getFieldValue} = form;
     
 
-    if (isFirstQuestion && !isFirstSection) {
+    if (isFirstQuestion && !isFirstSection && allowGoBack) {
         //prevText = 'Previous Section';
         onPrevClick = goPreviousSection;
         showPreviousButton = true;
     }
 
+    let showQuestionValidAnswer = (showValidAnswer === 'question' || (isCompleted && showValidAnswer === 'summary'));
+    
     let initialValue = null;
     let value = null;
     switch(type) {
@@ -96,6 +99,13 @@ const AssessmentQuestion = props => {
             }
             // console.log(initialValue, 'initialValue');
             field = <AssessmentChoice isMultiple={isMultiple} answers={getAnswers} {...defaultProps} />;
+            break;
+        case 'tracker':
+            const {getTracker} = question;
+            value = questionReports.map(report => report.value);
+            initialValue = value[0] || null;
+
+            field = <AssessmentInput {...defaultProps} isTracker tracker={getTracker} />
             break;
         case 'input':
         case 'number':
@@ -131,16 +141,39 @@ const AssessmentQuestion = props => {
         console.log(props, 'NO FIELD!');
         return null;
     }
+    if (showQuestionValidAnswer) {
+        // check if we have report
+        // console.log(initialValue, 'initialValue');
+        // console.log(getFieldValue('question['+question.id+']'));
+       
+        // let haveReport = false;
+        if (isPreviewMode) {
+            let reportFromForm =  getFieldValue('question['+question.id+']');
+            console.log(reportFromForm, 'reportFromForm');
+            showQuestionValidAnswer = reportFromForm && ((isMultiple && Array.isArray(reportFromForm) && reportFromForm.length > 0) || (!isMultiple));
+        } else {
+            showQuestionValidAnswer = questionReports.length > 0;
+            //  = haveReport;// && questionReports.length > 0;
+        }
+       
+        // console.log(reportFromForm);
+        // console.log(haveReport);
+        // console.log(showQuestionValidAnswer);
+    }
     const showBottomButtons = (!questionIsDimmed && (canReport || isPreviewMode) && !showAllQuestions);
     // console.log(isPreviewMode, 'question');
     // console.log(showAllQuestions, 'question');
     // console.log(showBottomButtons, 'question');
-     console.log(initialValue, 'initialValue');
-    const {getFieldDecorator} = form;
+    //  console.log(initialValue, 'initialValue');
+   
     return <div className={'relative'}>
+
+
+        <div className={'relative'}>
         {questionIsDimmed && <div className={'dimmed-block'} />}
 
         <FormItem
+        style={{marginBottom:0}}
         >
           {getFieldDecorator('question['+question.id+']', {
             initialValue,
@@ -148,10 +181,12 @@ const AssessmentQuestion = props => {
           })(
             field
           )}
-            {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} />}
+           </FormItem>
+        </div>
+        {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} />}
             {((showBrahms === 'question' || showBrahms === 'both') && brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
-        </FormItem>
         
+        {showQuestionValidAnswer && <AssessmentQuestionValidAnswers answers={getAnswers} />}
 
         
         {showBottomButtons && <div style={{textAlign:'right', marginTop:5}}>
@@ -164,6 +199,33 @@ const AssessmentQuestion = props => {
 }
 
 export default AssessmentQuestion;
+
+export const AssessmentQuestionValidAnswers = props => {
+    const {answers=[], sections=[]} = props;
+    let answersValid = [];
+    if (sections.length > 0) {
+        sections.map(s => {
+            const {getQuestions=[]} = s;
+            getQuestions.map(q => {
+                const {getAnswers=[]} = q;
+                answersValid += getAnswers;
+            })
+        });
+        answersValid = answersValid.filter(a =>a.isValidAnswer);
+    } else {
+        // find proper answers
+        answersValid = answers.filter(a =>a.isValidAnswer);
+    }
+    if (answersValid.length > 0) {
+        return <Alert
+        message="Valid Answers:"
+        description={answersValid.map(a => (<div key={a.id}>{a.label}</div>))}
+        type="success"
+        showIcon
+    />;
+    }
+    return null;
+}
 
 const questionBrahmItem = props => {
     console.log(props);

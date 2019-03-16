@@ -29,23 +29,28 @@ const Assessments = props => {
     const columns = [
         {
             title: 'Title',
+            dataIndex: 'name',    
             key: 'name',
-            render: (info) => <AssessmentManagerButton assessment={info} label={info.name} />
+            sorter:true,
+            render: (title, info) => <AssessmentManagerButton assessment={info} label={info.name} />
         },
         {
             title: 'Notes',
             dataIndex: 'description',    
-            key: 'name',
-            width:200,
-            render: (info) => <Truncate width={180}>{info}</Truncate>
+            key: 'notes',
+            width:300,
+            render: (info) => <Truncate width={280}>{info}</Truncate>
         },
         {
             title: 'Status',
             key: 'status',
+            dataIndex: 'status',    
             width:100,
-            render: assessment => {
+            sorter:true,
+            render: (status, assessment) => {
                 let color = '';
-                const status = assessment.status;
+                // const status = assessment.status;
+                return status;
                 switch(status) {
                     case 'private':
                         //color = 'red';
@@ -61,6 +66,7 @@ const Assessments = props => {
             title: 'Created',
             key: 'createdDate',
             ...getTableDateProps('createdDate'),
+            width:100
         },
         // {
         //     title: 'Created Date',
@@ -73,8 +79,9 @@ const Assessments = props => {
             title: '# Prescribed',
             dataIndex: 'getTotalAssigns',    
             key: 'getTotalAssigns',
-            width:160,
-            sorter: (a, b) => a.getTotalAssigns - b.getTotalAssigns,
+            width:110,
+            align: 'right',
+            // sorter: (a, b) => a.getTotalAssigns - b.getTotalAssigns,
         },
         {
             render: (info) => {
@@ -110,6 +117,7 @@ const Assessments = props => {
                 dataSource={assessments} 
                 rowKey={'id'} 
                 columns={columns}
+                onChange={props.handleTableChange}
                 total={total} 
                 loading={loading}/>
             </Card>

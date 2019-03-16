@@ -23,7 +23,7 @@ export const RadiationView = props => {
         ['Regiona Fractions', regionalFractions],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1}  />
 }
 
 export default RadiationView;

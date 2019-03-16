@@ -3,7 +3,7 @@ import {Modal, Spin, Icon, Card, Button, Drawer, message, Popconfirm } from 'ant
 import {compose, branch, renderComponent, withState, withHandlers, withStateHandlers} from  'recompose';
 import './index.less';
 
-const formItemLayout = {
+const formItemLayoutDefault = {
     labelCol: {span: 8},
     wrapperCol: {span: 16},
 };
@@ -40,7 +40,7 @@ export const withModal = (WrappedComponent) => {
         render() {
             //console.log(this.props);
             //console.log(this.state);
-            const {loadingButton = false} = this.props;// in case we use withLoadingButton
+            const {loadingButton = false, formItemLayout=formItemLayoutDefault} = this.props;// in case we use withLoadingButton
             const {loading=false, modalVisible=true, destroyOnClose=true, modalOKText='Save'} = this.props;
             let modalTitle = this.props.modalTitle;//type === '' ? 'Select Element' : this.props.getTypeName(type);
             // if (this.props.modalTitle) {
@@ -230,10 +230,10 @@ export const withStepsState = getSteps => WrappedComponent =>  {
 
 
 export const withDrawer = (WrappedComponent) => {
-
+    // console.log(WrappedComponent, 'WrappedComponent');
     const  DrawerWrappeer = props => {
         const {modalWidth=600, modalFooter=true, closable=true, maskClosable=false, loading=false, destroyOnClose=true, loadingButton=false, modalVisible=true, okLabel= 'Save', ...otherProps} = props;
-        let {modalTitle='View', modalOkTitle='Save'} = props;//type === '' ? 'Select Element' : this.props.getTypeName(type);
+        let {modalTitle='View', modalOkTitle='Save', formItemLayout=formItemLayoutDefault} = props;//type === '' ? 'Select Element' : this.props.getTypeName(type);
             // if (this.props.modalTitle) {
             //     modalTitle = ;
             // }

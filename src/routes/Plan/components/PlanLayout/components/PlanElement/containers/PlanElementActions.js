@@ -4,110 +4,17 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {Modal, message} from 'antd';
 import {PlanElementPureFragment} from "../../../../Plan/fragments";
-import PlanElementChildrenSelect from '../../../../PlanLayout/components/PlanElement/components/PlanElementChildrenList/components/PlanElementChildrenSelect/index.js';
-
-
-const deletePlanElement = gql`
-    mutation deletePlanElement($id: UID!, $planId: UID!) {
-        deletePlanElement(id:$id, planId: $planId)
-    }
-`;
-
-const pathwayFragment =  gql`
-   fragment PathwayElements on Pathway {
-        id
-        elements {
-            ...PlanElement,
-        }
-   }
-    ${PlanElementPureFragment}
- `;
-
-const planElementChildrenFragment =  gql`
-   fragment PlanBodyElements on PlanBodyElement {
-        id
-        childrenElements {
-            id
-        }
-   }
-    ${PlanElementPureFragment}
- `;
+// import PlanElementChildrenSelect from '../../../../PlanLayout/components/PlanElement/components/PlanElementChildrenList/components/PlanElementChildrenSelect/index.js';
 
 
 
-export const withMutation = graphql(deletePlanElement, {
-    props: ({ ownProps, mutate }) => ({
-        deleteElement: (id) => {
-            console.log(ownProps);
-            return mutate({
-                variables: { planId:ownProps.plan.id, id: id},
-                update: (client, { data: { planElementReport } }) => {
-                    const {mode, plan, parentId} = ownProps;
-                    console.log(ownProps);
-                    if (parentId) {
-                        // update element
-                        let pathway = client.readFragment({
-                            id: 'PlanBodyElement:' + parentId, // `id` is any id that could be returned by `dataIdFromObject`.
-                            fragment: planElementChildrenFragment,
-                            fragmentName: "PlanBodyElements",
-                        });
-
-                        //console.log(pathway);
-                        // let {childrenElements:elements} = pathway;
-                        // elements = elements.filter(element => element.id !== id);
-                        // elements = elements.length > 0 ? elements : [];
-                        //
-                        // client.writeFragment({
-                        //     id: 'PlanBodyElement:' + parentId, // `id` is any id that could be returned by `dataIdFromObject`.
-                        //     fragment: planElementChildrenFragment,
-                        //     fragmentName: "PlanBodyElements",
-                        //     data: {
-                        //         ...pathway,
-                        //         childrenElements: elements,
-                        //         __typename: 'PlanBodyElement'
-                        //     },
-                        // });
-
-                    } else {
-                        if (mode === 'pathway') {
-                            // if it's pathway - remov
-                            let pathway = client.readFragment({
-                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
-                                fragment: pathwayFragment,
-                                fragmentName: "PathwayElements",
-                            });
-
-                            let {elements} = pathway;
-                            elements = elements.filter(element => element.id !== id);
-                            elements = elements.length > 0 ? elements : [];
-
-                            client.writeFragment({
-                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
-                                fragment: pathwayFragment,
-                                fragmentName: "PathwayElements",
-                                data: {
-                                    ...pathway,
-                                    elements: elements,
-                                    __typename: 'Pathway'
-                                },
-                            });
-                        } else {
-
-                        }
-                    }
-                },
-            })
-        },
-
-    }),
-});
 
 
 
 
 
 const enhanceInner = compose(
-    withMutation,
+    // withMutation,
     withState('order', 'setOrder', null),
     withState('openEditElement', 'showEditElement', false),
     defaultProps({

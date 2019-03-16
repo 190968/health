@@ -36,6 +36,6 @@ const enhance = compose(
             return props.id ? 'Edit '+type : 'Add '+type;
         },
     }),
-    modalHOC,
+    // modalHOC,
 )
-export default Form.create()(enhance(BlankElementBuilder));
+export default  enhance(BlankElementBuilder);

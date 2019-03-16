@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Input, InputNumber, Row, Col, Checkbox} from 'antd';
 import { BrahmsAsField, prepareBrahmsRulesField } from '../../../../../Brahms/components/Manager/containers/Field';
 import {SelectAssessmentQuestion} from '../../containers/SelectAssessmentQuestion';
+import AssessmentQuestionBrahmsFormField from './_brahms';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -39,10 +40,16 @@ const AssessmentQuestionYesNoManager = props => {
        
         console.log(yesInfo, 'yesInfo');
 
+        getFieldDecorator('yes[id]', {
+            initialValue: yesInfo.id,
+        });
+        getFieldDecorator('no[id]', {
+            initialValue: noInfo.id,
+        });
         return <Form onSubmit={props.onSubmit}>
                 <FormItem
                     {...formItemLayout}
-                    label="Name"
+                    label="Question"
                 >
                     {getFieldDecorator('title', {
                         initialValue: title,
@@ -114,16 +121,19 @@ const AssessmentQuestionYesNoManager = props => {
 
                 {/* <AssessmentQuestionFieldsManager form={form} question={question} type={type} formItemLayout={formItemLayout} /> */}
 
-                {showBrahms && <FormItem
+
+{showBrahms && <AssessmentQuestionBrahmsFormField form={form} possibleOptions={answers} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
+            
+                {/* {showBrahms && <FormItem
                     {...formItemLayout}
-                    label="Brahms"
+                    label="BRAHMS"
                 >
                     {getFieldDecorator('brahms', {
                         initialValue: prepareBrahmsRulesField(getBrahmsRules),
                     })(
                     <BrahmsAsField form={form}  possibleOptions={answers} assessment={assessment} question={question} GoToComponent={SelectAssessmentQuestion} formatGoToElement={props.formatGoToElement} />
                 )}
-                </FormItem>}
+                </FormItem>} */}
             </Form>
 }
 

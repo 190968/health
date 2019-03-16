@@ -21,14 +21,18 @@ const SelectAssessmentQuestion = props => {
       */
      const {getSections=[]} = assessment || {};
 
-     const options = getSections.map(s => {
+     let options = getSections.map(s => {
         const {id, title, getQuestions=[]} = s;
-        const children = getQuestions.map(q => {
+        let children = getQuestions.map(q => {
             const {id, title} = q;
             return {value: id, label: title};
         });
+        children.unshift({value:null, label: 'Select Question', disabled:true});
        return {value:id, label:title, children } 
-     })
+     });
+     // add first item as disabled
+    //  disabled: true,
+     options.unshift({value:null, label: 'Select Section', disabled:true});
 
     return <Cascader options={options} onChange={onChange} defaultValue={value} style={{width:'100%'}} />
 }

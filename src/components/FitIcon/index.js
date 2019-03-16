@@ -1,6 +1,10 @@
 import React from 'react';
+import {Icon} from 'antd';
 import iconPaths from '../../assets/icons/selection';
+import iconSet from '../../assets/icons/selection.json';
 import  '../../assets/icons/style.css';
+
+import IcomoonReact, {iconList} from 'icomoon-react'
 
 function getPath(iconName) {
     const icon = iconPaths.icons.find(icon => icon.properties.name === iconName);
@@ -33,4 +37,20 @@ export const FitIcon = props => {
     //const className = 'fitango-moo'+type;
     // return <svg class={'icon '+type}><use xlink:href={'#'+type}></use></svg>;
     // return <i className={className} ></i>;
+}
+
+
+
+const IcoMoon = props => {
+    const {type} = props;
+    // console.log(props);
+    return <IcomoonReact iconSet={iconSet} color="#444" size={'1em'} icon={type} />;
+}
+export const IconCustom = props => {
+    const {type} = props;
+    // console.log(props);
+    const component = <IcoMoon type={type} />;
+    return component;
+    return <Icon component={component} {...props} />
+    // return <IcomoonReact iconSet={iconSet} color="#444" size={100} icon={type} />;
 }

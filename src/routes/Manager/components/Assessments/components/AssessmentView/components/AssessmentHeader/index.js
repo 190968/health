@@ -5,6 +5,8 @@ import DescriptionList from '../../../../../../../../components/Layout/Descripti
 import moment from 'moment';
 import { AvatarWithName } from '../../../../../../../User/components/AvatarWithName';
 import AssessmentViewButton from '../../../../containers/AssessmentViewButton';
+import { compose, withProps } from 'recompose';
+import { withDrawer } from '../../../../../../../../components/Modal';
 
 const AssessementHeader = props => {
 
@@ -44,4 +46,10 @@ const AssessementHeader = props => {
     return <DescriptionList col={1} details={descriptionDetails} />
 }
 
-export default AssessementHeader;
+const enhance = compose(
+    withProps(props => {
+        return {modalTitle:'Info'};
+    }),
+    withDrawer
+)
+export default enhance(AssessementHeader);

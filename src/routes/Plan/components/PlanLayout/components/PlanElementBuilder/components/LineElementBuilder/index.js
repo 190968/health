@@ -65,14 +65,3 @@ const enhance = compose(
 
 export default enhance(LineElementBuilder);
 
-
-export const prepareInput = (values) => {
-    const {height, color:{color}} = values;
-
-    return {
-        lineElement: {
-            height,
-            color,
-        }
-    }
-}

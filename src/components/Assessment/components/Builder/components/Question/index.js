@@ -40,7 +40,7 @@ const AssessmentQuestionRadioManager = props => {
     return <Form onSubmit={props.onSubmit}>
         <FormItem
             {...formItemLayout}
-            label="Name"
+            label="Question"
         >
             {getFieldDecorator('title', {
                 initialValue: title,

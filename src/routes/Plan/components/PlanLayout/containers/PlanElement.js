@@ -1,46 +1,48 @@
 import React from 'react';
-import PlanElement from '../components/PlanElement';
+import PlanElementPure from '../components/PlanElement';
 import { List } from 'antd';
 import { PlanContext } from '../../../planContext';
 
-export default PlanElement;
+export default PlanElementPure;
+export const PlanElement = PlanElementPure;
 
 export const PlanElementListItem = (props) => {
-	const {
-		i,
-		plan,
-		user,
-		date,
-		item,
-		isPreviewMode = false,
-		isBuilderMode = false,
-		isDraggable,
-		mode,
-		schedule = false,
-		lessonId,
-		sectionId,
-		upid
-	} = props;
+	// const {
+	// 	i,
+	// 	plan,
+	// 	user,
+	// 	date,
+	// 	item,
+	// 	isPreviewMode = false,
+	// 	isBuilderMode = false,
+	// 	isDraggable,
+	// 	mode,
+	// 	schedule = false,
+	// 	lessonId,
+	// 	sectionId,
+	// 	upid
+	// } = props;
 	//console.log(props);
 	return (
-		<List.Item key={item.id}>
+		<List.Item >
 			<PlanContext.Consumer>
-				{(props) => {
+				{(ownProps) => {
 					return (
 						<PlanElement
-							i={i}
-							plan={plan}
-							user={user}
-							isDraggable={isDraggable}
-							element={item}
-							mode={mode}
-							isPreviewMode={isPreviewMode}
-							isBuilderMode={isBuilderMode}
-							schedule={schedule}
-							lessonId={lessonId}
-							sectionId={sectionId}
-							date={date}
-							upid={upid}
+							{...props}
+							// i={i}
+							// plan={plan}
+							// user={user}
+							// isDraggable={isDraggable}
+							// element={item}
+							// mode={mode}
+							// isPreviewMode={isPreviewMode}
+							// isBuilderMode={isBuilderMode}
+							// schedule={schedule}
+							// lessonId={lessonId}
+							// sectionId={sectionId}
+							// date={date}
+							// upid={upid}
 						/>
 					);
 				}}

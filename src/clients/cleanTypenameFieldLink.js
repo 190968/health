@@ -11,6 +11,7 @@ export const cleanTypenameLink = new ApolloLink((operation, forward) => {
   })
 
 const omitDeep = (obj, key)  => {
+  // console.log(obj);
   const keys = Object.keys(obj)
   const newObj = {}
   keys.forEach((i) => {

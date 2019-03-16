@@ -17,8 +17,8 @@ const enhance = compose(
     // }),
     withStateHandlers( props => {
         const {answer} = props;
-        const {label, isValidAnswer=false, isOpenEnded=false, isCritical=false, points=0} = answer || {};
-        return {answer: {label, isValidAnswer, isOpenEnded, isCritical, points}};
+        const {id, label, isValidAnswer=false, isOpenEnded=false, isCritical=false, points=0} = answer || {};
+        return {answer: {id, label, isValidAnswer, isOpenEnded, isCritical, points}};
     }, {
         setLabel: (state, props) => (e) => {
             const label = e.target.value;
@@ -91,8 +91,9 @@ const enhance = compose(
 export const AssessmentQuestionAnswerManager = enhance(Answer);
 
 const prepareAssessmentQuestionAnswerInput = values => {
-    const {id, label, descrioton, isOpenEnded, isValidAnswer, isCritical, points} = values;
-    return {id, label, descrioton, isOpenEnded, isValidAnswer, isCritical, points:parseInt(points)};
+    const {id, label, description, isOpenEnded, isValidAnswer, isCritical, points} = values;
+    // console.log(values, 'valuesvaluesvalues');
+    return {id, label, description, isOpenEnded, isValidAnswer, isCritical, points:parseInt(points)};
 }
 
 

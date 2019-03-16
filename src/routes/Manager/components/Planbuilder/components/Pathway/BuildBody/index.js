@@ -1,21 +1,8 @@
-import React from 'react'
+// import React from 'react'
+// import PathwayElements from '../../../../../../Plan/components/PlanLayout/components/PathwayBody';
 
-import PathwayElements from '../../../../../../Plan/components/PlanLayout/components/PathwayBody';
+// export const PathwayBodyBuilder = props => {
+//     return <PathwayElements {...props} isBuilderMode mode='pathway' />
+// }
 
-export class BuildBody extends React.Component {
-
-    static defaultProps = {
-        isBuilderMode:true,
-        elements:[],
-        planId:''
-    }
-    render() {
-        const {elements, planId, isBuilderMode} = this.props;
-        return (<PathwayElements {...this.props} isBuilderMode mode='pathway' />
-        )
-    }
-}
-
-
-
-export default BuildBody
+// export default PathwayBodyBuilder

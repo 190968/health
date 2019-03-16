@@ -5,7 +5,7 @@ import messages from './messages';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-const formItemLayout = {
+const formItemLayoutDefault = {
     labelCol: {span: 5},
     wrapperCol: {span: 19},
 };
@@ -15,9 +15,9 @@ const formTailLayout = {
 };
 
 const TextInputElementBuilder = (props) => {
-    const {form, intl,  details={}} = props;
+    const {form, intl, formItemLayout=formItemLayoutDefault, details} = props;
     const {getFieldDecorator} = form;
-    const {label=''} = details;
+    const {label=''} = details || {};
     return (
         <React.Fragment>
             <FormItem
@@ -45,14 +45,3 @@ const TextInputElementBuilder = (props) => {
 }
 
 export default injectIntl(TextInputElementBuilder);
-
-export const prepareInput = (values) => {
-    const {title, isBlog} = values;
-
-    return {
-        textInputElement: {
-            title,
-            isBlog,
-        }
-    }
-};

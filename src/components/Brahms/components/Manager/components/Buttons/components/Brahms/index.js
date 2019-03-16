@@ -10,7 +10,7 @@ const BrahmsRuleManagerButtonPure = props => {
     // console.log(userAssessment);
     return <React.Fragment>
         {showModal && <BrahmsRuleManager {...otherProps} onHide={toggleModal} />}
-        {rule ? <Icon type={icon} onClick={toggleModal} /> : <Button type={'dashed'} block onClick={toggleModal}>Add Rule</Button>}
+        {rule ? <Icon type={icon} onClick={toggleModal} /> : <Button type={'dashed'} icon={'plus-circle'} block onClick={toggleModal}>Add Rule</Button>}
     
     </React.Fragment>
 }

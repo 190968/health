@@ -78,7 +78,7 @@ const enhance = compose(
                         break;
                     case 'goPlanBuilderPlan':
                         // 'description' => 'Go to plan builder plan by Plan ID'
-                        history.push('/pb/' + actionId);
+                        history.push('/builder/ap' + actionId);
                         break;
                     case 'getPlan':
                         // 'description' => 'Get Plan by Plan ID.  REQUEST ID IS MANDATORY TO PASS'

@@ -178,7 +178,7 @@ const renderGallery = props => {
                 key={i}
                 onClick={(e) => props.openLightbox(i, e)}
             >
-                <img src={obj.thumbnail} style={{width:'100%', height:'auto', marginBottom:5}} />
+                <img src={obj.thumbnail} style={{maxWidth:'100%', height:'auto', marginBottom:5}} />
             </a>
         );
     });

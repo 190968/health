@@ -1,11 +1,19 @@
 
 import React from 'react';
 import {Input, InputNumber} from 'antd';
-import {compose, withHandlers, withState} from 'recompose';
-
+import {compose, branch,withHandlers, withState, renderComponent} from 'recompose';
+const TextArea = Input.TextArea;
 const InputFieldPure = props => {
-	const {value, onChange, disabled = false, isNumber = false} = props; 
+	const {value, asTextArea=false, onChange, disabled = false, isNumber = false} = props; 
 	if (!isNumber) {
+		if (asTextArea) {
+			return <TextArea
+			value={value}
+			disabled={disabled}
+			onChange={props.onChange}
+			autosize={{minRows:1}}
+		/>
+		}
 		return <Input
 			value={value}
 			disabled={disabled}
@@ -18,12 +26,57 @@ const InputFieldPure = props => {
 			onChange={props.onChange}
 		/>
 	}
-	
 }
 
+const InputFieldPureNoStatePure = props => {
+	const {value, asTextArea=false, onChange, disabled = false, isNumber = false} = props; 
+	if (!isNumber) {
+		if (asTextArea) {
+			return <TextArea
+			defaultValue={value}
+			disabled={disabled}
+			onChange={props.onChange}
+			autosize={{minRows:1}}
+		/>
+		}
+		return <Input
+			defaultValue={value}
+			disabled={disabled}
+			onChange={props.onChange}
+		/>
+	} else {
+		return <InputNumber
+			defaultValue={value}
+			disabled={disabled}
+			onChange={props.onChange}
+		/>
+	}
+}
 
+const InputFieldPureNoState = withHandlers(({onChange}) => {
+	let timer = null
+
+	return {
+		onChange: props => (event) => {
+			const { onChange, isNumber=false, timeout=1000 } = props;
+			let value = isNumber ? event : event.target.value;
+	
+			clearTimeout(timer);
+	
+			if (typeof onChange === 'function') {
+				timer = setTimeout(
+					function() {
+						onChange(value);
+					}.bind(this),
+					timeout
+				);
+			}
+		}
+	}
+})(InputFieldPureNoStatePure);
 
 const enhance = compose(
+	branch(props => props.noState, renderComponent(InputFieldPureNoState)),
 	withState('value', 'setValue', props => {
 		let { value } = props;
 		return value;
@@ -33,7 +86,7 @@ const enhance = compose(
 
 		return {
 			onChange: props => (event) => {
-				const { onChange, isNumber=false } = props;
+				const { onChange, isNumber=false, timeout=1000 } = props;
 		
 				let value = isNumber ? event : event.target.value;
 				props.setValue(value);
@@ -46,7 +99,7 @@ const enhance = compose(
 						function() {
 							onChange(value);
 						}.bind(this),
-						1000
+						timeout
 					);
 				}
 			}

@@ -11,24 +11,32 @@ const TabPane = Tabs.TabPane;
 
 const NotificationsBadges = props => {
     const {isToggled, toggleState, activeTab, setActiveTab} = props;
-    const {criticalTotal=0, notCriticalTotal=0} = props;
+    const {criticalTotal=0, notCriticalTotal=0, currentUser} = props;
     const notificationsTotal = notCriticalTotal +  criticalTotal;
+    const {currentRole} = currentUser || {};
     // const unreadNotifications = this.state.totalNewNotifications;
     //console.log(newNotificationsNum);
-
-    const content = (
-        <Tabs activeKey={activeTab || 'alerts'} onChange={setActiveTab} size={'small'} style={{width: 336}} tabBarGutter={0} tabPosition="top">
-            <TabPane tab={<>Critical <Badge count={criticalTotal} /></>} key="alerts">
-                {(!activeTab || activeTab === 'alerts') && <Notifications criticalOnly  /*lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications}*/ />}
-            </TabPane>
-            <TabPane tab={<>Notifications <Badge count={notCriticalTotal} /></>} key="notf">
-                {activeTab == 'notf' && <Notifications excludeCritical /*lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications}*/ />}
-            </TabPane>
-            <TabPane tab="Tasks" key="tasks">
-                {activeTab == 'tasks' && <AccountTasks />}
-            </TabPane>
-        </Tabs>
-    );
+    let content;
+    if (currentRole === 'patient') {
+        content = (<div style={{width: 336}}>
+            <Notifications excludeCritical /*lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications}*/ />
+            </div>);
+    } else {
+        content = (
+            <Tabs activeKey={activeTab || 'alerts'} onChange={setActiveTab} size={'small'} style={{width: 336}} tabBarGutter={0} tabPosition="top">
+                <TabPane tab={<>Critical <Badge count={criticalTotal} /></>} key="alerts">
+                    {(!activeTab || activeTab === 'alerts') && <Notifications criticalOnly  /*lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications}*/ />}
+                </TabPane>
+                <TabPane tab={<>Notifications <Badge count={notCriticalTotal} /></>} key="notf">
+                    {activeTab == 'notf' && <Notifications excludeCritical /*lastCursor={this.props.lastCursor} handleTotalNewNotifications={this.handleTotalNewNotifications}*/ />}
+                </TabPane>
+                <TabPane tab="Tasks" key="tasks">
+                    {activeTab == 'tasks' && <AccountTasks />}
+                </TabPane>
+            </Tabs>
+        );
+    }
+    
 
     return (
         <Popover placement="bottomRight" content={content} getPopupContainer={triggerNode => triggerNode.parentNode} 

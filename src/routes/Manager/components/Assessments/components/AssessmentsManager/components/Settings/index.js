@@ -34,9 +34,9 @@ const tailFormItemLayout = {
 const AssessmentsManagerSettings = props => {
     const {assessment, form} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {name, description, instructions, showProgress=true, showScore=false, showAllSections=true,showAllQuestions=true, allowGoBack=true, isAllMandatory=false,showQuestionNumber=false, showValidAnswer=1, showBrahms, getBrahmsRules=[]} = assessment || {};
-    console.log(props, 'props');
-    console.log(showAllSections, 'showAllSections');
+    const {name, description, instructions, showProgress=true, showScore=false, showAllSections=true,showAllQuestions=true, allowGoBack=true, isAllMandatory=false,showQuestionNumber=false, showValidAnswer, showBrahms, getBrahmsRules=[]} = assessment || {};
+    // console.log(props, 'props');
+    // console.log(showAllSections, 'showAllSections');
     return <React.Fragment>
         <Form>
             <FormItem
@@ -169,27 +169,14 @@ const AssessmentsManagerSettings = props => {
                      
                 })(
                     <Select>
-                        <Option value={1}>Show user correct answer after each question is completed</Option>
-                        <Option value={0}>Don't show the right answer</Option>
-                        <Option value={2}>Show user correct answers when assessment is completed</Option>
+                        <Option value={'question'}>Show user correct answer after each question is completed</Option>
+                        <Option value={'hide'}>Don't show the right answer</Option>
+                        <Option value={'summary'}>Show user correct answers when assessment is completed</Option>
                     </Select>
                 )}
             </FormItem>
 
-            <FormItem
-                {...formItemLayout}
-                label="Show Brahms"
-            >
-                {getFieldDecorator('showBrahms', {
-                    initialValue: showBrahms,
-                })(
-                    <Select>
-                        <Option value={'question'}>Right after the question</Option>
-                        <Option value={'summary'}>Upon completion (as a summary)</Option>
-                        <Option value={'both'}>Right after the question and Upon completion (as a summary)</Option>
-                    </Select>
-                )}
-            </FormItem>
+           
 
             <Divider>Grade</Divider>
             <FormItem
@@ -204,10 +191,24 @@ const AssessmentsManagerSettings = props => {
                 )}
                 </span>
             </FormItem>
+            <FormItem
+                {...formItemLayout}
+                label="Show BRAHMS"
+            >
+                {getFieldDecorator('showBrahms', {
+                    initialValue: showBrahms,
+                })(
+                    <Select>
+                        <Option value={'question'}>Right after the question</Option>
+                        <Option value={'summary'}>Upon completion (as a summary)</Option>
+                        <Option value={'both'}>Right after the question and Upon completion (as a summary)</Option>
+                    </Select>
+                )}
+            </FormItem>
 
             {getFieldValue('showScore') && <FormItem
                     {...formItemLayout}
-                    label="Brahms"
+                    label="BRAHMS"
                 >
                     {getFieldDecorator('brahms', {
                         initialValue: prepareBrahmsRulesField(getBrahmsRules),

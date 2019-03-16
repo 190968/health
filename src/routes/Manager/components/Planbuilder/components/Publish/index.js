@@ -30,7 +30,7 @@ export default class Publish extends React.Component {
         const {plan} = this.props;
 
         return <Card title="You are ready to publish!">
-            <Button type="primary" onClick={this.publish}>Click here to publish</Button> <AssignPlanButton plan={plan} title={'Plan'} />
+            <Button type="primary" onClick={this.publish}>Click here to publish</Button> <AssignPlanButton plan={plan} />
         </Card>
     }
 }

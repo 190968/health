@@ -198,19 +198,3 @@ const enhanceScale = compose(
 export default enhanceScale(ScaleElementBuilder);
 
 
-export const prepareInput = (values) => {
-    const {scaleId, title, ids} = values;
-    //console.log(values);
-    let {options} = values;
-    options = options.map((option, i) => {
-        const id = ids[i] || '';//timesPerHour[i] ? timesPerHour[i]['id'] : '';
-        return {id, 'label': option}
-    });
-    return {
-        scaleElement: {
-            title:title,
-            scaleId:scaleId,
-            options:options
-        }
-    }
-}

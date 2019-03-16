@@ -13,7 +13,7 @@ const AttachmentsPure = props => {
         <AttachmentsList attachments={attachments} showPreview={limit === 1 || showPreview} limit={limit} />
         {!hideButton && <Button onClick={toggleLoader}>{attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload'}</Button>}
 
-        <Upload {...uploadOpts} maxNumberOfFiles={limit}  template={template} /*allowedFileTypes={allowedFileTypes}*/ open={showLoader} onClose={toggleLoader} onComplete={props.onRequestCloseModal} />
+        <div><Upload {...uploadOpts} maxNumberOfFiles={limit}  template={template} /*allowedFileTypes={allowedFileTypes}*/ open={showLoader} onClose={toggleLoader} onComplete={props.onRequestCloseModal} /></div>
     </React.Fragment>
 }
 

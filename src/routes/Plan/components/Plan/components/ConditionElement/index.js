@@ -54,7 +54,7 @@ export default class ConditionElement extends React.PureComponent {
             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
         >
             {options.map((option, i) => {
-                const coid = option.value;
+                const coid = option.id;
                 const name = option.label;
                 //const description = option.description;
                 return <Option key={i} value={coid}>{name}</Option>;

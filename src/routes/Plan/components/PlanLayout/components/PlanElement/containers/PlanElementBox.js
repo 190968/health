@@ -2,92 +2,39 @@ import PlanElementBox from '../components/PlanElementBox';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from 'antd';
-import { compose,  withHandlers } from 'recompose';
+import { compose,  withHandlers, branch } from 'recompose';
 import { PlanElementFragment } from '../../../../Plan/fragments';
-import { GET_PATIENT_POINTS_QUERY } from '../../../../../../../layouts/components/Header/components/RightMenu/containers/HeaderPoints';
+import { collectExecutedBrahms } from '../../../../../../../components/Brahms/utils';
+import { prepareSkippedPlanElementsByNextId, getPlanElementLabelFromElement } from '../../../../../../../components/Plan/utils';
 
 const PLAN_FIELD_REPORT_MUTATION = gql`
     mutation planFieldReport($id: UID!, $date: Date!, $input: [String]!, $upid: UID!) {
-        planElementReport(id:$id, upid: $upid, date: $date, value: $input) {
+        planElementReportPayload(id:$id, upid: $upid, date: $date, value: $input) {
+            planElement {
                 ...PlanElementWithReports
+            }
         }
     }
     ${PlanElementFragment}
 `;
 
-// const GET_USER_PLAN_PROGRESS_QUERY = gql`
-// mutation planFieldReport($id: UID!, $date: Date!, $input: [String]!, $upid: UID!) {
-//     planElementReport(id:$id, upid: $upid, date: $date, value: $input) {
-//             ...PlanElementWithReports
-//     }
-// }
-// ${PlanElementFragment}
-// `;
-
-
 
 export const PlanElementWithMutation = graphql(PLAN_FIELD_REPORT_MUTATION, {
     props: ({ ownProps, mutate }) => ({
-        makeReport: (upid, id, date, input) => {
-            let refetchQueries = [];
-            const {user} = ownProps;
-            if (user) {
-                refetchQueries.push({
-                    query: GET_PATIENT_POINTS_QUERY,
-                    variables: {
-                        userId: ownProps.user.id,
-                    }
-                });
-            }
+        makeReport: ( input) => {
+
+            const {upid, element, date} = ownProps;
+            const {id} = element;
+           
             return mutate({
-                variables: { upid:upid, id: id, date, input},
-                refetchQueries:refetchQueries
-                // refetchQueries: [{
-                //     query: GET_USER_PLAN_PROGRESS_QUERY,
-                //     variables: {tagId, tagType, parentId},
-                // }],
-                // update: (store, { data: { planFieldReport } }) => {
-
-                //     /*store.writeFragment({
-                //         id: 'PlanBodyElement:'+id,
-                //         fragment: Plan.fragments.element,
-                //         data: {
-                //             reports: planElementReport.reports,
-                //         },
-                //     });*/
-
-                //     // find ins PlanBodyElement:178368. and replace reports date
-                //     /*// Read the data from our cache for this query.
-                //     const data = store.readQuery({
-                //         query: medication,
-                //         variables: {
-                //             id: id,
-                //             user_id: uid
-                //         }
-                //     });
-                //     if (id) {
-                //         // add new to the list
-                //     }
-
-
-                //     // Add our comment from the mutation to the end.
-                //     //data = medicationUpdate;
-                //     // Write our data back to the cache.
-                //     store.writeQuery({
-                //         query: medication,
-                //         data: {medication: medicationUpdate},
-                //         variables: {
-                //             id: id,
-                //             user_id: uid
-                //         }});*/
-                // },
+                variables: { upid, id, date, input},
             })
         },
 
     }),
 });
 
-const enhance = compose(
+const enhanceWithReport = compose(
     PlanElementWithMutation,
     withHandlers({
         onChange: props => (value) => {
@@ -98,10 +45,9 @@ const enhance = compose(
             if (!date) {
                 return;// plug for now
             }
-            //console.log(props,'Making a report');
             const hide = message.loading('Saving in progress..', 0);
   
-            props.makeReport(upid, element.id, date, value).then(() => {
+            props.makeReport(value).then(() => {
                 hide();
                 message.success('Saved');
             });
@@ -109,6 +55,65 @@ const enhance = compose(
     })
 );
 
+const enhanceFakeReport =  withHandlers({
+    onChange: props => (value) => {
+        
+        const {element, elements, isPreviewMode} = props;
+        // execute
+        if (!isPreviewMode) {
+            return;
+        }
 
+        const valueToUse = value;
+
+        const {id, isAnswerBasedElement, getBrahmsRules} = element || {};
+        const {nextElementId, elementRules} = collectExecutedBrahms({valueToUse, getBrahmsRules, isAnswerBasedElement})
+        
+        let skippedByQuestions = {/*id:[]*/};
+        if (nextElementId) {
+            const { elementsToSkip } = prepareSkippedPlanElementsByNextId({ elements, currentId:id, nextId: nextElementId })
+            // console.log(elementsToSkip, 'elementsToSkip');
+            skippedByQuestions = elementsToSkip;
+        } else {
+            skippedByQuestions[id] = [];
+        }
+        console.log(skippedByQuestions, 'skippedByQuestions');
+        props.updateSkippedElements(skippedByQuestions);
+
+        // add brahms rules
+        if (isPreviewMode) {
+            props.updateBrahmRules({ element, rules:elementRules });
+        }
+         
+    },
+    formatGoToElement: props => elementId => {
+        const {plan} = props;
+        const {elements} = plan || {};
+
+        const element = elements.find(q => q.id === elementId);
+        // console.log(elements);
+        // console.log(elementId);
+        // console.log(element);
+        // if (question) {
+        //     elementObj = question;
+        //     return true;
+        // }
+        // return false;
+        // console.log(element);
+
+        // const {title:sectionTitle} = section || {};
+        // const {title} = elementObj || {};
+        return getPlanElementLabelFromElement(element);
+    },
+})
+
+const enhance = compose(
+    branch( props => {
+        const {isBuilderMode, isPreviewMode} = props;
+        const canReport = false;
+        return !isBuilderMode && !isPreviewMode && canReport;
+    }, enhanceWithReport, enhanceFakeReport)
+
+)
 
 export default enhance(PlanElementBox);

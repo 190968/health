@@ -106,7 +106,7 @@ export const prepareTreatmentElementObjectInput = record => {
 }
 
 export const prepareTreatmentElementInput = record => {
-    console.log(element,'elementInit');
+    console.log(record,'elementInit');
     const {id, type,element} = record;
     const object = prepareTreatmentElementObjectInput({type, element});
     console.log(object);

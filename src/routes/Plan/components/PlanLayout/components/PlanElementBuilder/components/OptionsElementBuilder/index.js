@@ -4,11 +4,13 @@ import { compose, withHandlers, withState} from 'recompose';
 import ScaleElementOptions from './options';
 import messages from './messages';
 import {injectIntl} from 'react-intl';
+import AssessmentQuestionBrahmsFormField from '../../../../../../../../components/Assessment/components/Builder/components/Question/_brahms';
+import Options from '../../../../../../../../components/FormCustomFields/components/Options';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-const formItemLayoutDefault = {
+const formItemLayout = {
     labelCol: {span: 4},
     wrapperCol: {span: 20},
 };
@@ -19,9 +21,11 @@ const formTailLayout = {
 
 const OptionsElementBuilder = (props) => {
     console.log(props);
-    const {form, loading, intl, scales=[], formItemLayout=formItemLayoutDefault, details={}} = props;
+    const {form, loading, intl, scales=[],  details={}} = props;
     const {getFieldDecorator, getFieldValue} = form;
     const {label, options=[], isDropdown=false, isMultiple=false, isVertical=false, hasLine=false} = details;
+    const showBrahms = details;
+    // const formItemLayout=formItemLayoutDefault, formTailLayout=formTailLayoutDefault,
     return (
         <React.Fragment>
             <FormItem
@@ -37,7 +41,9 @@ const OptionsElementBuilder = (props) => {
                 )}
             </FormItem>
 
-            <ScaleElementOptions options={options} form={form} />
+            <Options form={form} options={options} formItemLayout={formItemLayout} />
+
+            {/* <ScaleElementOptions options={options} form={form} /> */}
 
             <FormItem {...formTailLayout}>
                 {getFieldDecorator('isDropdown', {
@@ -94,31 +100,11 @@ const OptionsElementBuilder = (props) => {
                 </FormItem>}
             </React.Fragment>
             }
+
+            {showBrahms && <AssessmentQuestionBrahmsFormField form={form} type={'number'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} /*plan={plan}element={itemInfo}*/ formatGoToElement={props.formatGoToElement} />}
+   
         </React.Fragment>
     );
 };
 
 export default OptionsElementBuilder;
-
-
-export const prepareInput = (values) => {
-    const { title, isDropdown, isMultiple, isVertical, hasLines} = values;
-    let { keys,options, ids} = values;
-    console.log(keys);
-    options = keys.map(i => {
-        const id = ids[i] || '';
-        const label = options[i] || '';
-        return {id, label}
-    });
-
-    return {
-        optionsElement: {
-            title,
-            isDropdown,
-            isMultiple,
-            hasLines,
-            isVertical,
-            options
-        }
-    }
-}

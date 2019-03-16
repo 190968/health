@@ -7,6 +7,7 @@ import sort from '../../../../../../components/Tables/sort';
 import { PathwayFlowButton } from './components/Buttons';
 import './index.css';
 import AvatarWithName from '../../../../../User/components/AvatarWithName';
+import { PathwayManagerButton } from '../Buttons/components/Manager';
 
 const {RangePicker} = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -16,8 +17,9 @@ const PathwayTable = props => {
         const {pathways, loading, total} = props;
         const columns = [{
             title: 'Title',
-            dataIndex: 'title',
+            // dataIndex: 'title',
             key: 'title',
+            render: plan => <PathwayManagerButton pathway={plan} label={plan.title} />
         },
             {
                 title: 'Cancer',
@@ -57,7 +59,7 @@ const PathwayTable = props => {
                     const menu = (
                         <Menu>
                             <Menu.Item>
-                                <Icon type="edit"/> Edit
+                                <PathwayManagerButton pathway={info} />
                             </Menu.Item>
                             <Menu.Item>
                                 <PathwayFlowButton pathway={info} />

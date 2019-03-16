@@ -36,7 +36,7 @@ const TreatmentForm = (props) => {
                         initialValue: title,
                         rules: [{required: true, message: "Enter Title", whitespace: true}],
                     }
-                )(<Input/>)}
+                )(<Input ref={(input) => input && input.focus()} />)}
             </FormItem>
             <FormItem
                 {...formItemLayout}

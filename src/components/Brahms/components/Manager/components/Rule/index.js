@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Input, Select} from 'antd';
-import {BrahmsRuleActions} from './containers/RuleActions';
+import {BrahmsRuleActions, prepareBrahmsRuleActionsField} from './containers/RuleActions';
 import { InputWithConditionField } from '../../../../../FormCustomFields/components/InputWithCondition';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -32,11 +32,13 @@ const tailFormItemLayout = {
 };
 
 const OPTIONS = [
-    {key: 'output', label: 'Output'},
-    {key: 'ap', label: 'Suggest ActionPlan'},
+    {key: 'output', label: 'Display'},
+    {key: 'ap', label: 'ActionPlan'},
     {key: 'goto', label: 'Go To'},
+    {key: 'notification', label: 'Notification'},
+    {key: 'cohorts', label: 'Put into Cohort(s)'},
+    {key: 'stop', label: 'Finish'},
 ];
-
 export const OPTIONS_CONDITIONAL = [
     {key: 'equal', label: 'Equal'},
     {key: 'less_than', label: 'Less Than'},
@@ -48,8 +50,8 @@ export const OPTIONS_CONDITIONAL = [
 
 
 const BrahmsRuleManager = props => {
-        console.log(props, 'BrahmsRuleManager');
-        const {label, rule, form, possibleOptions=[], onSubmit, assessment, ...otherProps } = props;
+        // console.log(props, 'BrahmsRuleManager');
+        const {label, rule, form, possibleOptions=[], possibleOptionsFormatter, GoToComponent, onSubmit, assessment, ...otherProps } = props;
         const {excludeActions=[]} = otherProps;
         const {getFieldDecorator, getFieldValue} = form;
 
@@ -60,7 +62,7 @@ const BrahmsRuleManager = props => {
 
             {isValueType &&  <FormItem
                 {...formItemLayout}
-                label={label}
+                label={'Value'}
             >
             <InputWithConditionField form={form} value={{condition:ruleType, min:ruleValue, max:ruleValueEnd}} conditionKey={'ruleType'} />
             </FormItem>}
@@ -93,7 +95,11 @@ const BrahmsRuleManager = props => {
                     initialValue:ruleValueId
                     })(
                         <Select style={{width:'100%'}} >
-                        {possibleOptions.map(option => <Option key={option.id} value={option.id}>{option.label}</Option>)}
+                        {possibleOptions.map(option => {
+
+                            const {id, label} = possibleOptionsFormatter ? possibleOptionsFormatter(option) : option;
+                            return <Option key={id} value={id}>{label}</Option>
+                        })}
                     </Select>
                     )}
             </FormItem>}
@@ -111,14 +117,14 @@ const BrahmsRuleManager = props => {
                     )}
             </FormItem>
 
-            {getFieldValue('ruleActionType') && <FormItem
+            {(getFieldValue('ruleActionType') && getFieldValue('ruleActionType')!== 'stop') && <FormItem
                 {...formItemLayout}
-                label={'Action'}
+                label={formatAssessmentRuleAction(getFieldValue('ruleActionType'))}
             >
                 {getFieldDecorator('ruleAction', {
                     initialValue: ruleAction
                 })(
-                    <BrahmsRuleActions rule={rule} assessment={assessment} type={getFieldValue('ruleActionType')} />
+                    <BrahmsRuleActions rule={rule} assessment={assessment} type={getFieldValue('ruleActionType')} formItemLayout={formItemLayout} GoToComponent={GoToComponent} />
                 )}
             </FormItem>}
         </>
@@ -128,11 +134,14 @@ export default BrahmsRuleManager;
 
 export const formatAssessmentRuleCondition = rule => {
     const {ruleType='equal'} = rule || {};
-
     const item = OPTIONS_CONDITIONAL.find(o=>o.key == ruleType);
-    console.log(rule);
-    console.log(OPTIONS_CONDITIONAL);
-    console.log(item);
+    
+    const {label} = item || {};
+    return label
+}
+
+const formatAssessmentRuleAction = ruleActionType => {
+    const item = OPTIONS.find(o=>o.key == ruleActionType);
     const {label} = item || {};
     return label
 }

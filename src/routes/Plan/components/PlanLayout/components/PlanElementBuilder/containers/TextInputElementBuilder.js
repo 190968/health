@@ -1,31 +1,19 @@
 import React from 'react';
 import {compose, withHandlers} from 'recompose';
-import TextInputElementBuilderPure, {prepareInput} from '../components/TextInputElementBuilder';
+import TextInputElementBuilderPure from '../components/TextInputElementBuilder';
 import {modalHOC} from "../modal";
 
 
 export const TextInputElementBuilder = TextInputElementBuilderPure;
+ 
 
-export const enhance = compose(
-    withHandlers({
-        onSubmit: props => callback => {
-            if (!props.id || props.form.isFieldsTouched()) {
-                props.handleSave({prepareInput:prepareInput, callback:props.onHide} );
-            } else {
-                props.onHide();
-            }
-        },
-    }),
-);
+export default (TextInputElementBuilderPure);
 
-const enhanceWithModal = compose(
-    enhance,
-    withHandlers({
-        modalTitle: props => values => {
-            return props.id ? 'Edit Text' : 'Add Text';
-        },
-    }),
-    modalHOC,
-);
+export const preparePlanElementTextInputInput = (values) => {
+    const {title, isBlog} = values;
 
-export default enhanceWithModal(TextInputElementBuilderPure);
+    return {
+        title,
+        isBlog,
+    }
+}

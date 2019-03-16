@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 import { PlanCardFragment } from '../../routes/Plan/components/Plan/fragments';
+import { CohortPureFragment } from '../../routes/Manager/components/Cohorts/fragments';
+import { PlanFragment } from '../Plan/fragments';
 
 export const BrahmsFragment = gql`
 fragment Brahms on Brahms {
@@ -12,18 +14,34 @@ fragment Brahms on Brahms {
     ruleAction {
         ... on BrahmsActionOutput {
             message
+            attachments {
+                id
+                type
+                label
+                url
+                size
+            }
         }
         ... on BrahmsActionGoTo {
             goToElementId
         }
         ... on BrahmsActionAp {
             plans {
-                ...PlanCardInfo
+                ...Plan
+            }
+        }
+        ... on BrahmsActionNotification {
+            text
+        }
+        ... on BrahmsActionCohorts {
+            cohorts {
+                ...CohortPure
             }
         }
     }
 }
-${PlanCardFragment}
+${PlanFragment}
+${CohortPureFragment}
 `;
 export const BrahmFragment = gql`
     fragment Brahm on Brahm {

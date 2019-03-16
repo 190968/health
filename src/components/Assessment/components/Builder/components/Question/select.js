@@ -12,7 +12,8 @@ const items = [
     {'id': 'number', label: 'Number'},
     {'id': 'time', label: 'Time'},
     {'id': 'range', label: 'Range'},
-    //{'id': 'question', label: 'Existing Question'},
+    {'id': 'tracker', label: 'Tracker'},
+    {'id': 'question', label: 'Existing Question'},
 ];
 const AssessmentQuestionSelect = props => {
     return <SelectFromList items={items} onSelect={props.setType}/>

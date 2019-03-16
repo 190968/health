@@ -200,16 +200,3 @@ const enhance = compose(
 );
 
 export default enhance(MediaElementBuilder);
-
-export const prepareInput = (values) => {
-    //console.log(values);
-    const {label, file, type, attachment=null} = values;
-
-    return {
-        mediaElement: {
-            label,
-            type,
-            attachment
-        }
-    }
-}

@@ -1,4 +1,4 @@
-import {ChecklistElementBuilder, enhance} from '../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ChecklistElementBuilder';
+import {ChecklistElementBuilder} from '../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ChecklistElementBuilder';
 import {modalHOC} from '../modal';
 import { compose, branch, renderComponent, withProps, withHandlers, defaultProps, mapProps} from 'recompose';
 
@@ -26,7 +26,7 @@ const enhanceProps = compose(
     }
 
 }),
-    enhance,
+    //enhance,
     modalHOC
 )
 

@@ -33,28 +33,27 @@ const RouteWithSubRoutes = route => {
 
 
 const PlanbuilderContent = props => {
- 
-        const {match, location, plan={}, loading, type} = props;
+        console.log(props);
+        const {match, location, plan={}, loading, type, mainUrl} = props;
 
         if (loading) {
             return <Loading/>
         }
-        /*console.log(props);
-        console.log(location);
-        console.log(plan);*/
 
         const {id, tab = 'build', subtab = 'header'} = match.params;
+        // const {pathname} = location;
 
-        const selectedItem = subtab || tab;
-        const openItem = tab;
+        // const selectedItem = subtab || tab;
+        // const openItem = tab;
 
 
-        let mainUrl = '/pb';
-        if (id) {
-            mainUrl += '/' + id;
-        }
+        // let mainUrl = mainUrl;
+        // if (id) {
+        //     //mainUrl += '/' + id;
+        // }
         const isPathway = type === 'pathway';
 
+        // console.log(mainUrl);
         const params = {plan, type};
         const routes = [
 
@@ -73,12 +72,12 @@ const PlanbuilderContent = props => {
                 component: Build,
                 routes: [
                     {
-                        path: mainUrl + "/build/header",
+                        path: mainUrl + "/header",
                         component: isPathway ? BuildHeaderPathway : BuildHeader,
                         params
                     },
                     {
-                        path: mainUrl + "/build/body",
+                        path: mainUrl + "/body",
                         component: isPathway ? BuildBodyPathway : BuildBody,
                         params
                     },
@@ -93,8 +92,7 @@ const PlanbuilderContent = props => {
 
         ];
 
-
-
+        // console.log(routes);
         return (
             <Switch>
                 {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route}  />)}

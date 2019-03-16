@@ -24,7 +24,7 @@ const AssessmentQuestionBrahmsFormField = props => {
         const { getBrahmsRules=[]} = question || {};
         return  <FormItem
         {...formItemLayout}
-        label="Brahms"
+        label="BRAHMS"
     >
         {getFieldDecorator('brahms', {
             initialValue: prepareBrahmsRulesField(getBrahmsRules),

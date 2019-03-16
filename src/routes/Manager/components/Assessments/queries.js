@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
-import { UserAssessmentReportPureFragment, AssessmentFragment, UserAssessmentFragment } from "./fragments";
+import { UserAssessmentReportPureFragment, AssessmentFragment, UserAssessmentFragment, UserAssessmentPureFragment, UserAssessmentReportFragment } from "./fragments";
 import { CohortPureFragment } from "../Cohorts/fragments";
 
 const GET_PATIENT_ASSESSMENT_HISTORY_QUERY = gql`    
@@ -128,24 +128,29 @@ export const withAssessmentCohortsQuery = graphql(
 
 
 const GET_USER_ASSESSMENT_QUERY = gql`    
-    query GET_USER_ASSESSMENT($id: UID!, $getReport: Boolean = false) {
+    query GET_USER_ASSESSMENT($id: UID!, $date: Date) {
         getUserAssessment (id: $id) {
-            ...UserAssessment
+            ...UserAssessmentPure
+            getLatestReport (date: $date) {
+                ...UserAssessmentReport
+            }
         }
     }
-    ${UserAssessmentFragment}
+    ${UserAssessmentPureFragment}
+    ${UserAssessmentReportFragment}
 `;
 
 export const withUserAssessmentQuery = graphql(
     GET_USER_ASSESSMENT_QUERY,
     {
         options: (ownProps) => {
-            const {userAssessment} = ownProps;
+            const {userAssessment, date} = ownProps;
             const {id} = userAssessment || {};
             return {
                 variables: {
                     id,
-                    getReport:false
+                    date,
+                    // getReport:false
                 },
                 fetchPolicy: 'network-only',
             }

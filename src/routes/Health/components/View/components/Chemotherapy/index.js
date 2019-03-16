@@ -17,7 +17,7 @@ export const ChemotherapyView = props => {
         ['Times Per Day', timesPerDay],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1} />
 }
 
 export default ChemotherapyView;

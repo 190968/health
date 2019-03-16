@@ -22,6 +22,10 @@ import './index.less';
 import { FitIcon } from '../../../../../../../../components/FitIcon/index';
 import TrackerInput from '../../../../../../containers/Tracker';
 import { getTipBoxTypeLabel } from '../../../PlanElementBuilder/components/TipboxElementBuilder';
+import AcceptPlanButton from '../../../../../AcceptPlan/components/AcceptPlanButton';
+import { BrahmsRulesView } from '../../../../../../../../components/Brahms/components/Manager/components/Field';
+import { BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
+import { possiblePlanElementOptionsFormatter } from '../../../PlanElementBuilder';
 
 const PlanElementBox = (props) => {
 	let {
@@ -47,7 +51,7 @@ const PlanElementBox = (props) => {
 		notClickable=false
 	} = props;
 
-	const { id, itemType, type, itemInfo, reports, hasChildren = false } = element;
+	const { id, itemType, type, itemInfo, reports, hasChildren = false, getBrahmsRules } = element || {};
 	const item = itemInfo;
 
 	let field = itemType;
@@ -61,9 +65,10 @@ const PlanElementBox = (props) => {
 	//console.log(props);
 
 	const defaultProps = {item, disabled:notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode  }
+	const {brahmRules=[]} = props;
+	const {rules:brahms} = brahmRules.find(report => report.element.id === element.id) || {};
 	
-	
-	
+	let possibleOptions;
 	switch (itemType) {
 		default:
 			break;
@@ -83,10 +88,14 @@ const PlanElementBox = (props) => {
 					reports={reports}
 					{...defaultProps}
 					isMultiple
+					idInsteadValue
 				/>
 			);
 			//const vertically = item.is_vertically;
 			fieldTitle = item.label;
+			const {options} = item;
+			possibleOptions = options;
+
 			break;
 		case 'radio_input':
 			// reportValues = reports && reports.map((report) => report.value);
@@ -96,11 +105,13 @@ const PlanElementBox = (props) => {
 				<PlanChoice
 					reports={reports}
 					{...defaultProps}
+					idInsteadValue
 				/>
 				// <PlanRadio reports={reportValues} {...defaultProps} />
 			);
+			
 			fieldTitle = item.label;
-
+			
 			break;
 			case 'dropdown_input':
 				// reportValues = reports && reports.map((report) => report.value);
@@ -115,6 +126,7 @@ const PlanElementBox = (props) => {
 					reports={reports}
 					{...defaultProps}
 					isDropdown
+					idInsteadValue
 					/>
 					// <PlanDropdown
 					// 	showChildren={props.showChildren}
@@ -253,7 +265,7 @@ const PlanElementBox = (props) => {
 						<img src={iconUrl} style={{maxWidth:80}} /> 
 						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
 						</div>
-						<ReactFitText compressor={10.5} minFontSize={16} maxFontSize={28}><div style={{marginRight:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+						<ReactFitText compressor={10.5} minFontSize={16} maxFontSize={18}><div style={{marginRight:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
 					</div>
 					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
 						
@@ -274,7 +286,7 @@ const PlanElementBox = (props) => {
 						<img src={iconUrl} style={{maxWidth:80}} /> 
 						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
 						</div>
-						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={28}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
 					</div>
 					// text = <Row>
 					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
@@ -292,7 +304,7 @@ const PlanElementBox = (props) => {
 		// text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
 			fieldTitle = '';
 			field = (
-				<div style={{background:bgColor, padding:10, marginBottom:10}}>
+				<div style={{background1:bgColor, padding:10, marginBottom:10}}>
 				{text}
 				</div>
 				// 	// message={getTipBoxTypeLabel(tipType)}
@@ -337,12 +349,13 @@ const PlanElementBox = (props) => {
 			);
 			break;
 		case 'ap':
-			fieldTitle = itemInfo.title;
-			if (isBuilderMode || isPreviewMode) {
-				field = <Button disabled>Get Plan</Button>;
-			} else {
-				field = ''; //<Button>Get Plan</Button>;
-			}
+			const {thumb, title:planTitle} = itemInfo || {};
+			const {medium=''} = thumb || {};
+			fieldTitle = planTitle;
+				
+		field = <AcceptPlanButton disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Card cover={<img src={medium} />} hoverable>
+		<Card.Meta title={planTitle} /> 
+		</Card>} />;
 
 			break;
 		case 'calculator':
@@ -378,7 +391,7 @@ const PlanElementBox = (props) => {
 			addBeforeEl = (
 				<PlanElementActions
 					element={element}
-					id={id}
+					// id={id}
 					i={i}
 					lessonId={lessonId}
 					sectionId={sectionId}
@@ -395,7 +408,7 @@ const PlanElementBox = (props) => {
 			addAfterEl = (
 				<PlanElementActions
 					element={element}
-					id={id}
+					// id={id}
 					i={i}
 					lessonId={lessonId}
 					sectionId={sectionId}
@@ -464,6 +477,7 @@ const PlanElementBox = (props) => {
 				extra={
 					isBuilderMode && !isPreviewMode ? (
 						<PlanElementActions
+							element={element}
 							id={id}
 							i={i}
 							lessonId={lessonId}
@@ -481,10 +495,14 @@ const PlanElementBox = (props) => {
 				}
 			>
 				{field}
+
+				{(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} possibleOptions={possibleOptions} possibleOptionsFormatted={possiblePlanElementOptionsFormatter} /*renderRule={questionBrahmItem} possibleOptions={getAnswers}*/ formatGoToElement={props.formatGoToElement} />}
+				{(brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
+        
 			</PlanElementCard>
 			{showAdd &&
 			addAfter && (
-				<Divider className="element-actions" style={{ marginBottom: -15 }}>
+				<Divider className="element-actions" style={{ marginBottom: mode!=='diagnosis' ? 10 : -15 }}>
 					{addAfterEl}
 				</Divider>
 			)}

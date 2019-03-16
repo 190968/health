@@ -4,11 +4,13 @@ import AssessmentSettings  from '../AssessmentSettings';
 import SettingsDropdown from '../../../../../../../../components/UI/SettingsDropdown';
 import { UserAssessmentDeleteButton } from '../../../Buttons/containers/Delete';
 import { AssessmentHistoryButton } from '../../../Buttons/components/History';
+import { AssessmentUserInfoButton } from '../../../Buttons/components/Info';
 const AssessmentSettingsButton = props => {
     const {showModal, toggleModal, userAssessment, asButton=true, ...otherProps} = props;
     const {canReport} = userAssessment;
     const items = [];
 
+    items.push({key:'info', content: <AssessmentUserInfoButton userAssessment={userAssessment} asMenuItem {...otherProps} />});
     items.push({key:'history', content: <AssessmentHistoryButton  userAssessment={userAssessment} asMenuItem {...otherProps} />});
     
     if (canReport) {

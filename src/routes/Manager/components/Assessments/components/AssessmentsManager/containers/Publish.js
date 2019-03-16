@@ -12,7 +12,7 @@ const enhance = compose(
     Form.create(),
     withHandlers({
         onSubmit: props => () => {
-            const { form, assessment } = props;
+            const { form, assessment, history } = props;
 
             form.validateFields((err, values) => {
                 if (!err) {
@@ -20,12 +20,14 @@ const enhance = compose(
                     props.publishAssessment(input).then(({data}) => {
 
                         message.success('Published');
-                        if (props.onHide) {
-                            props.onHide();
-                        }
-                        if (props.refetch) {
-                            props.refetch();
-                        }
+
+                        history.push('/assessments');
+                        // if (props.onHide) {
+                        //     props.onHide();
+                        // }
+                        // if (props.refetch) {
+                        //     props.refetch();
+                        // }
                     });
                 }
             });

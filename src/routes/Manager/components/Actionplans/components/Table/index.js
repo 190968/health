@@ -21,7 +21,7 @@ const ActionplansTable = props => {
         dataIndex: 'title',
         key: 'name',
         render: (title, info) => {
-            return <Link to={'/pb/'+info.id} >{title}</Link>
+            return <Link to={'/builder/ap/'+info.id} >{title}</Link>
         }
       },
       {

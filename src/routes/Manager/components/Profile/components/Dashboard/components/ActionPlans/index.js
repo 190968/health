@@ -101,7 +101,7 @@ export const UserActionPlansTable = props => {
         render: (title, info) => {
             const {id, plan} = info;
             let items = [];
-            items.push({key:'edit', content: <Link to={'/pb/'+plan.id}>Edit</Link>});
+            items.push({key:'edit', content: <Link to={'/builder/ap/'+plan.id}>Edit</Link>});
             items.push( {key:'delete', content: <UserPlanDeleteButton asMenuItem userPlan={info} refetch={refetch} />});
 
             return <SettingsDropdown items={items}  />

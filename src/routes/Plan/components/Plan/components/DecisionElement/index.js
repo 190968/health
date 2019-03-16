@@ -1,7 +1,5 @@
 import React from 'react';
 import {Divider, Modal, Icon} from 'antd';
-
-
 import {withHandlers, compose} from 'recompose';
 import DecisionElementOption from './containers/DecisionElementOption';
 import './index.less';
@@ -9,6 +7,7 @@ import './index.less';
 
 
 const DecisionElement = (props) => {
+    console.log(props);
     const {id, item, plan, isDraggable, onDrop, isPreviewMode, isBuilderMode, mode} = props;
     const {options} = item;
     const blocksTotal = options.length;
@@ -22,10 +21,7 @@ const DecisionElement = (props) => {
     });
 }
 
-
-
 export default DecisionElement;
-
 
 
 export const FootNoteButtonPure = ({showInfo}) => {

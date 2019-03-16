@@ -13,7 +13,7 @@ export const GET_PLAN_ELEMENT_QUERY = gql`
 `;
 
 export const PLAN_ELEMENT_CHILDREN_QUERY = gql`
-    query GET_PLAN_ELEMENT_CHILDREN ($id: UID!, $planId: UID!, $elementValue: ID) {
+    query GET_PLAN_ELEMENT_CHILDREN ($id: UID!, $planId: UID!, $elementValue: UID) {
         planElement (id: $id, planId: $planId) {
             id
             childrenElements (elementValue:$elementValue) {

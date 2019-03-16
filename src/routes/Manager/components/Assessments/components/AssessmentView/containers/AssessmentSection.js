@@ -47,6 +47,11 @@ const enhance = compose(
             console.log(skippedByQuestions, 'skippedByQuestions');
             console.log(skippedQuestions, 'skippedQuestions');
             props.setSkippedQuestions(skippedQuestions);
+            console.log(skippedQuestions);
+            console.log(skippedQuestions);
+            console.log(nextQuestion, 'nextQuestion');
+            console.log(skipSectionQuestion, 'skipSectionQuestion');
+           
             if (nextSectionQuestion) {
                 const {sectionI, nextSectionId, questionI, nextQuestionId} = nextSectionQuestion;
                 // find question ID
@@ -66,14 +71,12 @@ const enhance = compose(
                 console.log(question );
                 console.log(nextSectionQuestion, 'nextSectionQuestion' );
                 console.log(nextSectionIndex, 'nextSectionIndex');
+                console.log(nextQuestionIndex, 'nextQuestionIndex');
                 props.setCurrentSection(nextSectionIndex);
                 props.setCurrentQuestion(nextQuestionIndex);
             } else {
                 props.setCurrentQuestion(nextQuestion);
             }
-            
-           
-            
         },
         goPreviousQuestion: props => (question) => {
             props.setCurrentQuestion(props.currentQuestion-1);

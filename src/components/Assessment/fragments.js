@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { BrahmsFragment } from '../Brahms/fragments';
+import { TrackerPureFragment } from '../../routes/Plan/components/BiometricPlan/fragments';
 
 
 export const AssessmentQuestionFragment = gql`
@@ -29,8 +30,12 @@ export const AssessmentQuestionFragment = gql`
         getBrahmsRules {
             ...Brahms
         }
+        getTracker {
+            ...TrackerPure
+        }
     }
     ${BrahmsFragment}
+    ${TrackerPureFragment}
 `;
 
 export const AssessmentSectionPureFragment = gql`
@@ -70,6 +75,7 @@ export const AssessmentFragment = gql`
         showScore
         showBrahms
         showQuestionNumber
+        showValidAnswer
         isPrivate
         status
         getSections {

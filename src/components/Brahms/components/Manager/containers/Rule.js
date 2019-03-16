@@ -6,6 +6,8 @@ import { injectIntl } from 'react-intl';
 import DefaultI18nEn from '../../../../../i18n/en';
 import { prepareBrahmsApActionInput } from '../components/Rule/components/RuleActions/ap';
 import { prepareBrahmsOutputActionInput } from '../components/Rule/components/RuleActions/output';
+import { prepareBrahmsNotificationActionInput } from '../components/Rule/components/RuleActions/notification';
+import { prepareBrahmsCohortsActionInput } from '../components/Rule/components/RuleActions/cohorts';
 
 
 const enhance = compose(
@@ -31,7 +33,7 @@ const enhance = compose(
         const { id } = answer || {};
         const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title: 'Rule' })
         return {
-            modalTitle: title
+            modalTitle: title,
         }
     }),
     withDrawer
@@ -42,6 +44,7 @@ export const prepareBrahmsRuleInput = rule => {
     // console.log(rule, 'rulerulerule');
     const {id,ruleType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType, ruleAction} = rule;
     const value = ruleValue ? parseFloat(ruleValue) : null;
+    const valueEnd = ruleValueEnd ? parseFloat(ruleValueEnd) : null;
     let action = {};
     //console.log(ruleActionType);
     if (ruleActionType === "ap") {
@@ -57,14 +60,19 @@ export const prepareBrahmsRuleInput = rule => {
         action.outputActionInput = prepareBrahmsOutputActionInput(ruleAction);
     } else if (ruleActionType === "goto") {
         action.gotoActionInput = ruleAction;//prepareBrahmsOutputActionInput(ruleAction);
+    } else if (ruleActionType === "notification") {
+        action.notificationActionInput = prepareBrahmsNotificationActionInput(ruleAction);
+    } else if (ruleActionType === "cohorts") {
+        action.cohortsActionInput = prepareBrahmsCohortsActionInput(ruleAction);
     } else {
         action = ruleAction;
     }
-    return {id, ruleType, ruleValue:value, ruleValueEnd, ruleValueId, ruleActionType, ruleAction:action};
+    return {id, ruleType, ruleValue:value, ruleValueEnd:valueEnd, ruleValueId, ruleActionType, ruleAction:action};
 }
 
 
 export const prepareBrahmsRuleField = rule => {
+    return rule;
     const {ruleActionType, ruleAction} = rule;
         let ruleActionInput = {};
         switch(ruleActionType) {

@@ -17,7 +17,7 @@ export const ClinicalTrialView = props => {
         ['Sponsor', sponsor],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1}  />
 }
 
 export default ClinicalTrialView;

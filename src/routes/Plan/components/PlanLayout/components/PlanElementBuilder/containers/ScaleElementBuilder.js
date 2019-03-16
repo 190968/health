@@ -1,4 +1,4 @@
-import ScaleElementBuilder, {prepareInput} from '../components/ScaleElementBuilder';
+import ScaleElementBuilder  from '../components/ScaleElementBuilder';
 import { compose, withHandlers} from 'recompose';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
@@ -45,20 +45,38 @@ const enhance = compose(
     injectIntl,
     withQuery,
     withSpinnerWhileLoading,
-    withHandlers({
-        saveElement: props => callback => {
-            props.handleSave({prepareInput, callback} );
-        }
-    }),
+    // withHandlers({
+    //     saveElement: props => callback => {
+    //         props.handleSave({prepareInput, callback} );
+    //     }
+    // }),
 
-    withHandlers({
-        onSubmit: props => event => {
-            props.saveElement(props.onHide);
-        },
-        modalTitle: props => values => {
-            return props.id ? 'Edit Scale' : 'Add Scale';
-        },
-    }),
-    modalHOC,
+    // withHandlers({
+    //     onSubmit: props => event => {
+    //         props.saveElement(props.onHide);
+    //     },
+    //     modalTitle: props => values => {
+    //         return props.id ? 'Edit Scale' : 'Add Scale';
+    //     },
+    // }),
+    // modalHOC,
 )
-export default Form.create()(enhance(ScaleElementBuilder));
+export default (enhance(ScaleElementBuilder));
+
+
+
+export const preparePlanElementScaleInput = (values) => {
+    const {scaleId, title, ids} = values;
+    //console.log(values);
+    let {options=[]} = values;
+    // console.log(values);
+    options = options.map(option => {
+        const {label, id} = option;
+        return {id, label}
+    });
+    return {
+            title:title,
+            scaleId:scaleId,
+            options:options
+    }
+}

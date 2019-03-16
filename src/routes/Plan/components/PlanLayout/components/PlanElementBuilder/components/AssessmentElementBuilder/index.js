@@ -1,23 +1,14 @@
 import React from 'react';
 import {Form, Select} from 'antd';
 import messages from './messages';
+import AssessmentSelect from '../../../../../../../../components/Autosuggest/containers/AssessmentSelect';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
 
-export const prepareInput = (values) => {
-    const {assessmentId} = values;
-
-    return {
-        assessmentElement: {
-            assessmentId,
-        }
-    }
-}
-
 const AssessmentElementBuilder = (props) => {
-    const {form, loading, intl, assessments=[], formItemLayout, details={}} = props;
+    const {form, loading, intl,  formItemLayout, details={}} = props;
     const {getFieldDecorator} = form;
     const {id=''} = details;
     return (
@@ -31,9 +22,7 @@ const AssessmentElementBuilder = (props) => {
                         rules: [{required: true, message: "Select Assessment"}],
                     }
                 )(
-                    <Select placeholder={loading? 'Loading Assessments' : 'Select'} style={{width:'100%'}}>
-                        {assessments.map(assessment => <Option key={assessment.id} >{assessment.name}</Option>)}
-                    </Select>
+                    <AssessmentSelect />
                 )}
             </FormItem>
         </React.Fragment>

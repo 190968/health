@@ -38,6 +38,29 @@ export const UserAssessmentReportFragment = gql`
 
 
 export const AssessmentFragment = AssessmentFragmentInit;
+
+export const UserAssessmentPureFragment = gql`
+fragment UserAssessmentPure on UserAssessment {
+    id
+    createdOn
+    startTime
+    startDate
+    endDate
+    repeatedDays
+    comments
+    canReport
+    user {
+        ...UserInfo
+    }
+    assessment {
+        ...Assessment
+    }
+}
+${AssessmentFragment}
+${UserInfoFragment}
+`;
+
+
 export const UserAssessmentFragment = gql`
 fragment UserAssessment on UserAssessment {
     id

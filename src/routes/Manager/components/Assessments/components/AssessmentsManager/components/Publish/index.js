@@ -68,7 +68,7 @@ const AssessmentsManagerSettings = props => {
         </Form>
 
         <div style={{textAlign:'right'}}>
-            <Button disabled >Print</Button> <TaskAssignButton label={'Prescribe'} size={'default'} mode={'simple'} assignObject={{type: 'assessment', object:assessment}} /> <Button  type={'primary'} onClick={props.onSubmit}>Publish</Button>
+            <Button disabled >Print</Button> <TaskAssignButton label={'Prescribe'} size={'default'} mode={'simple'} buttonType={'green'} assignObject={{type: 'assessment', object:assessment}} /> <Button  type={'primary'} onClick={props.onSubmit}>Publish</Button>
         </div>
 
         </React.Fragment>

@@ -16,7 +16,7 @@ export const DiagnosisView = props => {
         ['Current', isActive ? <Icon type={'check-circle'} /> : null],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1}  />
 }
 
 export default DiagnosisView;

@@ -189,39 +189,40 @@ export const withAddPathwayMutation = graphql(AddPathwayElementMutation, {
 });
 
 
-const addChildElementMutation = gql`
-    mutation addChildElement($parentId: UID!, $parentValue: ID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!) {
-        addChildElement(planId: $planId, type:$type, parentId: $parentId, parentValue:$parentValue, input: $input) {
-            ...PlanElement
-        }
-    }
-    ${PlanElementPureFragment}
-`;
+// const addChildElementMutation = gql`
+//     mutation addChildElement($parentId: UID!, $parentValue: UID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!) {
+//         addPlanChildElement(planId: $planId, type:$type, parentId: $parentId, parentOptionId:$parentValue, input: $input) {
+//             ...PlanElement
+//         }
+//     }
+//     ${PlanElementPureFragment}
+// `;
 
-const withAddChildMutation = graphql(addChildElementMutation, {
-    props: ({ ownProps, mutate }) => ({
-        addChildElement: (input, type) => {
-            const {order=null} = ownProps;
-            const inputOrder = {...input, order};
-            return mutate({
-                variables: {planId:ownProps.plan.id, type:type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:inputOrder},
-                refetchQueries: [{
-                    query: PLAN_ELEMENT_CHILDREN_QUERY,
-                    variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}
-                }]
-            })
-        },
-    }),
-});
+// const withAddChildMutation = graphql(addChildElementMutation, {
+//     props: ({ ownProps, mutate }) => ({
+//         addChildElement: (input, type) => {
+//             const {order=null} = ownProps;
+//             const inputOrder = {...input, order};
+//             return mutate({
+//                 variables: {planId:ownProps.plan.id, type:type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:inputOrder},
+//                 refetchQueries: [{
+//                     query: PLAN_ELEMENT_CHILDREN_QUERY,
+//                     variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}
+//                 }]
+//             })
+//         },
+//     }),
+// });
 
-const addMutations = compose(
-    branch(props => props.mode === 'pathway', withAddPathwayMutation),
-    branch(props => props.mode === 'lesson', withAddLessonMutation),
-    branch(props => props.mode === 'section', withAddSectionMutation),
-    branch(props => props.mode === 'introduction', withAddIntroMutation),
-);
+// const addMutations = compose(
+//     branch(props => props.mode === 'pathway', withAddPathwayMutation),
+//     branch(props => props.mode === 'lesson', withAddLessonMutation),
+//     branch(props => props.mode === 'section', withAddSectionMutation),
+//     branch(props => props.mode === 'introduction', withAddIntroMutation),
+// );
 
 // if this is a child - then add children
-export const withAddMutation = compose(
-    branch(props => props.parentId !== '', withAddChildMutation, addMutations),
-);
+// export const withAddMutation = compose(
+//     branch(props => props.parentId && props.parentId !== '', withAddChildMutation, addMutations),
+// );
+

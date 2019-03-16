@@ -23,9 +23,16 @@ String.prototype.prevChar = function(i) {
 }
 const answer_abc_num = 'a';
 export const ChoiceElement = props => {
-    const {options=[], mode, value, isMultiple=false, isDropdown=false, disabled=false, showPrefix=false, prefixAsNumber=false, onChange} = props;
-    //const {options=[]} = item;
-    
+    const { mode, value, idInsteadValue=false, isMultiple=false, isDropdown=false, disabled=false, showPrefix=false, prefixAsNumber=false, onChange} = props;
+    let {options=[]} = props;
+    if (idInsteadValue) {
+        console.log(options);
+        options = options.map(o => {
+            const {id, label} = o;
+            return {value:id, label};
+        });
+        console.log(options);
+    }
     if (isMultiple || mode == 'multiple') {
 
         

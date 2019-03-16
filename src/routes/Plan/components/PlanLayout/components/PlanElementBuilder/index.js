@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form} from 'antd';
+import {Select} from 'antd';
 import { compose, branch, renderComponent, withProps, withHandlers, defaultProps, mapProps} from 'recompose';
 import ConditionElementBuilder from './containers/ConditionElementBuilder';
 import TreatmentElementBuilder from './containers/TreatmentElementBuilder';
@@ -23,18 +23,15 @@ import TipboxElementBuilder from "./containers/TipboxElementBuilder";
 import EmbedElementBuilder from "./containers/EmbedElementBuilder";
 import TrackerElementBuilder from "./containers/TrackerElementBuilder";
 import MediaElementBuilder from "./containers/MediaElementBuilder";
+import { conditionalWhenThen } from '../../../../../../utils/main';
+import { prepareBrahmsInput } from '../../../../../../components/Brahms/components/Manager/containers/Field';
+import { valueFromNode } from 'apollo-utilities';
+import PlanBuilderElementSelect from '../../../../../../components/Plan/components/Builder/components/ElementSelect';
+import { getPlanElementLabelFromElement } from '../../../../../../components/Plan/utils';
 
 
 
-const debug = withProps(console.log);
-
-const conditionalRender = (states) =>
-    compose(...states.map(state =>
-        branch(state.when, renderComponent(state.then))
-    ));
-
-
-export const withPlanElementUnion = conditionalRender([
+export const withPlanElementUnion = conditionalWhenThen([
         { when: ({type}) => type === 'condition', then: ConditionElementBuilder },
         { when: ({type}) => type === 'decision', then: ConditionElementBuilder },
         { when: ({type}) => type === 'treatment', then: TreatmentElementBuilder },
@@ -65,94 +62,48 @@ export const withPlanElementUnion = conditionalRender([
     ]);
 
 const enhance = compose(
-    debug, // print out the props here
+    // branch(props => props.element, PlanElementWithQuery),
+    // branch(props => props.element, withMutation, withAddMutation),
+    // mapProps(props => {
+    //     let newProps = {...props};
 
-    branch(props => props.id && props.id !== '', PlanElementWithQuery),
-    branch(props => props.id && props.id !== '', withMutation, withAddMutation),
-    mapProps(props => {
-        let newProps = {...props};
+    //     const type = props.type;
 
-        const type = props.type;
+    //     switch(type) {
+    //         case 'image':
+    //         case 'video':
+    //         case 'audio':
+    //         case 'document':
+    //             newProps.typeMedia = type;
+    //             newProps.type = 'media';
 
-        switch(type) {
-            case 'image':
-            case 'video':
-            case 'audio':
-            case 'document':
-                newProps.typeMedia = type;
-                newProps.type = 'media';
-
-                break;
-        }
-        const {element=null} = props;
-        //console.log(props);
-        //console.log(element);
-        if (element) {
-            const {itemInfo = null} = element;
-            //console.log(itemInfo);
-            if (itemInfo) {
-                newProps = {...newProps, details:itemInfo, element: props.element};
-            }
-        }
-        return newProps;
-    }),
-    Form.create(),
+    //             break;
+    //     }
+    //     const {element=null} = props;
+    //     //console.log(props);
+    //     //console.log(element);
+    //     if (element) {
+    //         const {itemInfo = null} = element;
+    //         //console.log(itemInfo);
+    //         if (itemInfo) {
+    //             newProps = {...newProps, details:itemInfo, element: props.element};
+    //         }
+    //     }
+    //     return newProps;
+    // }),
+    // Form.create(),
     withHandlers({
-        handleSave: props => ({prepareInput, callback}) => {
-            console.log(props, 'Props before input');
-            const {type} = props;
-            //console.log(input);
-            props.form.validateFields((err, values) => {
-                //console.log(err);
-                //console.log(values);
-                if (!err) {
-                    let input = prepareInput(values);
-                    // add schedule
-                    input.schedule = values.schedule || null;
-                    //input.extra = values.extra || null;
-                    // add additional info
-
-                    // if schedule - add schedule
-                    console.log(input, 'Element Input');
-                    if (props.addPathwayElement) {
-                        props.addPathwayElement(input, type).then(({data}) => {
-                            if (callback) {
-                                callback(data.addPathwayElement);
-                            }
-                        });
-                    } else if (props.addLessonElement) {
-                        props.addLessonElement(input, type).then(({data}) => {
-                            if (callback) {
-                                callback(data.addLessonElement);
-                            }
-                        });
-                    } else if (props.addActivityElement) {
-                        props.addActivityElement(input, type).then(({data}) => {
-                            if (callback) {
-                                callback(data.addActivityElement);
-                            }
-                        });
-                    }  else if (props.addIntroElement) {
-                        props.addIntroElement(input, type).then(({data}) => {
-                            if (callback) {
-                                callback(data.addIntroductionElement);
-                            }
-                        });
-                    } else if (props.addChildElement) {
-                        props.addChildElement(input, type).then(({data}) => {
-                            if (callback) {
-                                callback(data.addChildElement);
-                            }
-                        });
-                    } else if (props.updateElement) {
-                        props.updateElement(input).then(({data}) => {
-                            if (callback) {
-                                callback(data.updatePlanElement);
-                            }
-                        });
-                    }
-                }
-            });
+        formatGoToElement: props => elementId => {
+            const {plan} = props;
+            const {elements} = plan || {};
+            const element = elements.find(q => q.id === elementId);
+            
+            return getPlanElementLabelFromElement(element);
+        },
+        GoToComponent: props => (propsFromComponent) => {
+            const {onChange} = propsFromComponent;
+            const {plan} = props;
+            return <PlanBuilderElementSelect plan={plan} onChange={onChange} />;//1111</div>;
         }
     }),
     withPlanElementUnion,
@@ -161,3 +112,18 @@ const enhance = compose(
 
 
 export default enhance(BlankElementBuilder);
+
+
+export const possiblePlanElementOptionsFormatter = props => {
+    // console.log(1111);
+    // console.log(props);
+    const {id, label} = props || {};
+    return {id, label};//<Select.Option key={value} value={value}>{label}</Select.Option>
+}
+
+
+export const possiblePlanElementOptionsSelectFormatter = props => {
+    const {value, label} = props || {};
+    console.log(props, 'propspropspropsprops');
+    return <Select.Option key={value} value={value}>{label}</Select.Option>
+}

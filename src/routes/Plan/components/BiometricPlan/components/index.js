@@ -207,7 +207,7 @@ export class BiometricPlanBody extends React.Component {
                           <Tooltip title="Settings"><Dropdown overlay={menu}   >
                               <Button size="small" ><Icon type="setting" /></Button>
                           </Dropdown></Tooltip>
-                          <Tooltip title={<FormattedMessage id="tracker.add" defaultMessage="Add Tracker" />} placement={'top'}><Popover content={<TrackerSelect userId={user_id} onSelect={this.addTracker} />} title="Add Tracker" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
+                          <Tooltip title={<FormattedMessage id="tracker.add" defaultMessage="Add Tracker" />} placement={'top'}><Popover content={<TrackerSelect userId={user_id} onChange={this.addTracker} />} title="Add Tracker" trigger="click" placement={'bottom'} ><Button size={"small"} ><Icon type="plus"  /></Button></Popover></Tooltip>
                       </Button.Group>
                   </div>}>
 

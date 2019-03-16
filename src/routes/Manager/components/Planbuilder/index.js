@@ -28,7 +28,7 @@ const PlanbuilderLayout = (props) => {
     type = plan && plan.id ? type : typefromUrl;
 
 
-    let mainUrl = '/pb';
+    let mainUrl = '/builder/ap';
     if (id !== '') {
         mainUrl += '/'+id;
     }

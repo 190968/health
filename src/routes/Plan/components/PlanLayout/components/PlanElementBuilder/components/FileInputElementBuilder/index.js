@@ -37,13 +37,3 @@ const FileInputElementBuilder = (props) => {
 }
 
 export default injectIntl(FileInputElementBuilder);
-
-export const prepareInput = (values) => {
-    const {title} = values;
-
-    return {
-        fileInputElement: {
-            title,
-        }
-    }
-};

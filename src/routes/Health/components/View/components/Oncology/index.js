@@ -21,7 +21,7 @@ export const OncologyView = props => {
         ['Anatomic Site', anatomicSite],
         ...defaultHealthRecordDetails(healthRecord)
     ]
-    return <DescriptionList details={dtls} />
+    return <DescriptionList details={dtls} col={1}  />
 }
 
 export default OncologyView;

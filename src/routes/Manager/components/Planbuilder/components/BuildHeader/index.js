@@ -52,7 +52,7 @@ class BuildHeader extends React.Component{
 
         this.stopLoading();
 
-        let mainUrl = '/pb/'+plan.id+'/build/body';
+        let mainUrl = '/builder/pathway/'+plan.id+'/body';
         history.push(mainUrl);
     }
 
@@ -148,6 +148,8 @@ const BuildHeaderForm = Form.create({
         if (!plan) {
             return;
         }
+        console.log(plan, 'plan');
+        const {schedule} = plan || {};
         //console.log('mapPropsToFields', props);
         //console.log(plan.schedule);
         //console.log(typeof plan.schedule.limitStartDow);
@@ -161,26 +163,26 @@ const BuildHeaderForm = Form.create({
             }),
             // schedule
             'schedule[type]': createFormField({
-                value: plan.schedule.type,
+                value: schedule.type,
             }),
             'schedule[limitStartDow]': createFormField({
-                value: plan.schedule.limitStartDow,
+                value: schedule.limitStartDow,
             }),
             'schedule[limitDow]': createFormField({
-                value: !!plan.schedule.limitStartDow,
+                value: !schedule.limitStartDow,
             }),
             'schedule[dows]': createFormField({
-                value: plan.schedule.dows,
+                value: schedule.dows,
             }),
             'schedule[relativeEndDay]': createFormField({
-                value: plan.schedule.relativeEndDay,
+                value: schedule.relativeEndDay,
             }),
 
             'schedule[startDate]': createFormField({
-                value: plan.schedule.startDate ? moment(plan.schedule.startDate) : moment(),
+                value: schedule.startDate ? moment(schedule.startDate) : moment(),
             }),
             'schedule[endDate]': createFormField({
-                value: plan.schedule.endDate ? moment(plan.schedule.endDate) : undefined,
+                value: schedule.endDate ? moment(schedule.endDate) : undefined,
             }),
         };
     }

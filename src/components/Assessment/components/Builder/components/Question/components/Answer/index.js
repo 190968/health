@@ -26,12 +26,12 @@ const tailFormItemLayout = {
     },
 };
 const AssessmentQuestionAnswerManager = props => {
-        const {answer, showOpenEnded=true} = props;
+        const {answer, showOpenEnded=false} = props;
         const {label, isCritical=false, isOpenEnded=false, isValidAnswer=false, points=0} = answer || {};
         return <>
             <FormItem
                 {...formItemLayout}
-                label={'Label'}
+                label={'Answer'}
             >
                 <Input value={label} onChange={props.setLabel}  ref={(input) => input && input.focus()} />
             </FormItem>

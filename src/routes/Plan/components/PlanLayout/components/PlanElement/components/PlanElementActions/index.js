@@ -4,9 +4,13 @@ import {
     SortableHandle,
 } from 'react-sortable-hoc';
 import PlanElementBuilder from '../../../../containers/PlanElementBuilder';
-import {Icon, Tooltip, Modal} from 'antd';
+import {Icon, Tooltip, Button} from 'antd';
 import './index.less'
-import PlanElementsSelectbox from '../../../../components/PlanElementsSelectbox';
+import PlanElementsSelectboxPure from '../../../../components/PlanElementsSelectbox';
+import { withToggleModal, withDrawer } from '../../../../../../../../components/Modal';
+import { compose, defaultProps } from 'recompose';
+import { PlanElementManagerButton } from '../../../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
+import { PlanElementDeleteButton } from '../../../../../../../../components/Plan/components/Builder/components/Buttons/containers/DeleteElement';
 
 
 const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler"></span></Tooltip>);
@@ -14,36 +18,47 @@ const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="s
 
 const PlanElementActions = (props) => {
     //console.log(props);
-    let {order = null, openEditElement, toggleEditElement, deleteElement, addAfterElement, hideOrder, buttons=[]} = props;
+    let {element, i:order, openEditElement, toggleEditElement, deleteElement, addAfterElement, hideOrder, buttons=[]} = props;
     // let button =
-    if (order !== null ) {
-        return <React.Fragment>
-            <Modal title="Select Element" visible={true} width={850} footer={false} onCancel={hideOrder}><PlanElementsSelectbox {...props} id="" type="" onHide={hideOrder} /></Modal>
-            {openEditElement && <PlanElementBuilder {...props} onHide={toggleEditElement} />}
-        </React.Fragment>
-    } else if (openEditElement) {
-        return <PlanElementBuilder {...props} onHide={toggleEditElement} />;
-    }
+    // console.log(openEditElement, 'openEditElement');
+    // if (order !== null ) {
+    //     return <React.Fragment>
+    //         <PlanElementsSelectbox {...props} id="" type="" onHide={hideOrder} />
+    //         {openEditElement && <PlanElementBuilder {...props} onHide={toggleEditElement} />}
+    //     </React.Fragment>
+    // } else if (openEditElement) {
+    //     return <PlanElementBuilder {...props} onHide={toggleEditElement} />;
+    // }
     if (buttons.length > 0) {
         return buttons.map((button, i) => {
             switch(button) {
                 case 'addBefore':
                     return <React.Fragment key={i}>
-                        <Tooltip key={i} title="Add First Element" onClick={props.addBeforeElement} ><Icon type="plus" /></Tooltip>
+                        <Tooltip key={i} title="Add First Element"  ><PlanElementManagerButton {...props} element={null} order={0} shape="round"  label={'Add First Element'} /></Tooltip>
                     </React.Fragment>
                     break;
                 case 'addAfter':
+                    // const {order} = element || {};
                     return <React.Fragment key={i}>
-                        <Tooltip key={i} title="Add Element Here" onClick={props.addAfterElement} ><Icon type="plus" /></Tooltip>
+                        <Tooltip key={i} title="Add Element Here" onClick={props.addAfterElement} ><PlanElementManagerButton {...props}  element={null} order={order+1} shape="round"  label={'Add Element Here'} /></Tooltip>
                     </React.Fragment>
                     break;
             }
         })
     }
     return (<div>
-        <DragHandle /> <Tooltip title="Edit"><Icon type="edit" onClick={toggleEditElement} style={{marginRight:5}} /></Tooltip> <Tooltip title="Delete"><Icon type="delete" onClick={deleteElement} /></Tooltip>
+        <DragHandle /> <PlanElementManagerButton {...props} /> <PlanElementDeleteButton  {...props}  />
     </div>)
 
 }
 
 export default PlanElementActions;
+
+
+const enhance = compose(
+    defaultProps({
+        modalTitle: 'Select Element'
+    }),
+    withDrawer
+);
+const PlanElementsSelectbox = enhance(PlanElementsSelectboxPure);

@@ -6,7 +6,7 @@ import {Form} from 'antd';
 import {modalHOC, withSpinnerWhileLoading} from "../modal";
 import {PathwayBodyWithQuery} from "../components/AliasElementBuilder/containers/queries";
 import {PLAN_ELEMENT_CHILDREN_QUERY} from "../../PlanElement/containers/queries";
-import {getLabelFromElement} from '../utils';
+import { getPlanElementLabelFromElement } from '../../../../../../../components/Plan/utils';
 
 let queryOptions = {
     query: PLAN_ELEMENT_CHILDREN_QUERY,
@@ -37,7 +37,7 @@ const enhance = compose(
         let options = elements.map(element => {
 
             const isLeaf = checkIfLeaf(element.type);
-            const label = getLabelFromElement(element);
+            const label = getPlanElementLabelFromElement(element);
             return {
                 key: element.id,
                 value: element.id,
@@ -126,7 +126,7 @@ const enhance = compose(
                                 return {
                                     key: element.id,
                                     value: element.id,
-                                    label: getLabelFromElement(element),
+                                    label: getPlanElementLabelFromElement(element),
                                     type: element.type,
                                     isLeaf: isLeaf,
                                 }

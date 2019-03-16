@@ -19,7 +19,7 @@ const AssessmentInput = props => {
         }
         return <TimeField onChange={onChange} disabled={disabled} value={value} />
     }
-    return <InputField onChange={onChange} isNumber={isNumber} disabled={disabled} value={value} />
+    return <InputField onChange={onChange} isNumber={isNumber} asTextArea disabled={disabled} value={value} />
 }
 
 export default AssessmentInput;

@@ -8,7 +8,7 @@ const AttachmentItemAp = props => {
     const {object:plan} = attachment || {};
     const {thumb, title, schedule} = plan || {};
     const {medium=''} = thumb || {};
-    const {startDate, endDate} = schedule;
+    const {startDate, endDate} = schedule || {};
 
     return <List.Item.Meta
     avatar={<Avatar src={medium} />}

@@ -15,7 +15,7 @@ export const AssessmentManagerSteps = [
     {key: 'publish'},
 ];
 const AssessmentsManager = props => {
-    const {match, assessment, activeStep, setActiveStep, onHide, refetch} = props;
+    const {match, assessment, history, activeStep, setActiveStep, onHide, refetch} = props;
     const disabled = !assessment;
     const {params} = match || {};
     const {action} = params || {};
@@ -29,7 +29,7 @@ const AssessmentsManager = props => {
         case 'body':
             return <AssessmentBody assessment={assessment} isBuilderMode />;
         case 'publish':
-            return <Card title={'Publish'}><AssessmentsManagerPublish assessment={assessment} /></Card>;
+            return <Card title={'Publish'}><AssessmentsManagerPublish assessment={assessment} history={history} /></Card>;
         default:
             return <Card title="Settings"><AssessmentsManagerSettings  {...props} /></Card>;
     }

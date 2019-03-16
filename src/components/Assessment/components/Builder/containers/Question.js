@@ -2,6 +2,7 @@ import AssessmentQuestionManagerPure from '../components/Question';
 import AssessmentQuestionSelect from '../components/Question/select';
 import AssessmentQuestionExistingQuestionManager from '../components/Question/existing';
 import AssessmentQuestionYesNoManager from '../components/Question/yes_no';
+import AssessmentQuestionTrackerManager from '../components/Question/tracker';
 import AssessmentQuestionRadioManager from '../components/Question/options';
 import {injectIntl} from 'react-intl';
 import {Form, message} from 'antd';
@@ -12,6 +13,13 @@ import { withCreateOrUpdateAssessmentQuestion } from '../../../mutations';
 import { prepareBrahmsInput } from '../../../../Brahms/components/Manager/containers/Field';
 import { formatAssessmentGoToElement } from '../../../../../routes/Manager/components/Assessments/components/AssessmentView/containers/AssessmentQuestion';
 
+
+
+export const withAssessmentQuestionTypes = compose(
+    branch(({type}) => type === 'yes_no', renderComponent(AssessmentQuestionYesNoManager)),
+    branch(({type}) => type === 'tracker', renderComponent(AssessmentQuestionTrackerManager)),
+    branch(({type}) => (type === 'radio' || type === 'dropdown' || type === 'list' || type === 'range'), renderComponent(AssessmentQuestionRadioManager)),
+);
 const enhance = compose(
     injectIntl,
     Form.create(),
@@ -65,27 +73,38 @@ const enhance = compose(
     }),
     withDrawer,
     branch(({question,type}) => !question && type === 'question', renderComponent(AssessmentQuestionExistingQuestionManager)),
-    branch(({type}) => type === 'yes_no', renderComponent(AssessmentQuestionYesNoManager)),
-    branch(({type}) => (type === 'radio' || type === 'dropdown' || type === 'list' || type === 'range'), renderComponent(AssessmentQuestionRadioManager)),
+    withAssessmentQuestionTypes
 );
 export const AssessmentQuestionManager = enhance(AssessmentQuestionManagerPure);
 
 
 const prepareAssessmentQuestionInput = (values, type) => {
-    console.log(values,'valuesvaluesvalues');
-    const {title, description, answers=[], brahms} = values;
+    // console.log(values,'valuesvaluesvalues');
+    const {title,  description, parentQuestionId, answers=[], brahms} = values;
 
     const brahmsInput = prepareBrahmsInput(brahms);
-    let input = {title, description, type, brahms:brahmsInput};
+    let input = {title, description, parentQuestionId, type, brahms:brahmsInput};
     if (type === 'input') {
         const {isNumeric} = values;
         input.openEndedInput = {isNumeric};
     } else if (type === 'time') {
+    } else if (type === 'tracker') {
+        const {tracker} = values;
+        const {id} = tracker || {};
+       
+        input.trackerInput = {amid:id};
     } else if (type === 'question') {
+        const {assessment, question} = values
+        // const {id} = assessment || {};
+        const questionId = question.length > 0 ? question[question.length-1] : null;
+        // console.log(values, 'questionquestionquestion');
+        // const {id} = question || {};
+
+        input.parentQuestionId = questionId;//{assessmentId:id, questionId:questionId};
+        // console.log(values, 'values');
     } else if (type === 'yes_no') {
         const {yes, no} = values;
         input.yesNoInput = {yes, no};
-        //input.parentQuestionId = quest
     } else {
         const {isMultiple, numberAsPrefix} = values;
         input.optionsInput = {isMultiple, numberAsPrefix, answers};

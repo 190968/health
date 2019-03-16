@@ -46,14 +46,3 @@ const TextElementBuilder = (props) => {
 
 
 export default injectIntl((TextElementBuilder));
-
-export const prepareInput = (values) => {
-    const {text, icon} = values;
-    //console.log(values);
-    return {
-        textElement: {
-            text,
-            icon
-        }
-    }
-}
