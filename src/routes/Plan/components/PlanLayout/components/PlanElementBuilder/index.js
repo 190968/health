@@ -4,8 +4,8 @@ import { compose, branch, renderComponent, withProps, withHandlers, defaultProps
 import ConditionElementBuilder from './containers/ConditionElementBuilder';
 import TreatmentElementBuilder from './containers/TreatmentElementBuilder';
 import AliasElementBuilder from './containers/AliasElementBuilder';
-import {PlanElementWithQuery} from "../../components/PlanElement/containers/PlanElementManager";
-import {withMutation, withAddMutation } from '../../components/PlanElementBuilder/mutations';
+// import {PlanElementWithQuery} from "../../components/PlanElement/containers/PlanElementManager";
+// import {withMutation, withAddMutation } from '../../components/PlanElementBuilder/mutations';
 import ChecklistElementBuilder from "./containers/ChecklistElementBuilder";
 import BlankElementBuilder from "./containers/BlankElementBuilder";
 import LinkElementBuilder from "./containers/LinkElementBuilder";
@@ -24,8 +24,9 @@ import EmbedElementBuilder from "./containers/EmbedElementBuilder";
 import TrackerElementBuilder from "./containers/TrackerElementBuilder";
 import MediaElementBuilder from "./containers/MediaElementBuilder";
 import { conditionalWhenThen } from '../../../../../../utils/main';
-import { prepareBrahmsInput } from '../../../../../../components/Brahms/components/Manager/containers/Field';
-import { valueFromNode } from 'apollo-utilities';
+// import { prepareBrahmsInput } from '../../../../../../components/Brahms/components/Manager/containers/Field';
+// import { valueFromNode } from 'apollo-utilities';
+
 import PlanBuilderElementSelect from '../../../../../../components/Plan/components/Builder/components/ElementSelect';
 import { getPlanElementLabelFromElement } from '../../../../../../components/Plan/utils';
 
@@ -109,21 +110,18 @@ const enhance = compose(
     withPlanElementUnion,
 );
 
-
+// 
 
 export default enhance(BlankElementBuilder);
 
 
 export const possiblePlanElementOptionsFormatter = props => {
-    // console.log(1111);
-    // console.log(props);
     const {id, label} = props || {};
-    return {id, label};//<Select.Option key={value} value={value}>{label}</Select.Option>
+    return {id, label};
 }
 
 
 export const possiblePlanElementOptionsSelectFormatter = props => {
     const {value, label} = props || {};
-    console.log(props, 'propspropspropsprops');
     return <Select.Option key={value} value={value}>{label}</Select.Option>
 }

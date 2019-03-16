@@ -133,7 +133,7 @@ const enhance = compose(
             modalTitle: title
         }
     }),
-    // withDrawer
+    withDrawer
 );
 
 // const enhance2 = compose(
