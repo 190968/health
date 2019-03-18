@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Checkbox, Radio, Select} from 'antd';
+import {Checkbox, Radio, Select, Icon, Tooltip} from 'antd';
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
@@ -27,21 +27,23 @@ String.prototype.prevChar = function(i) {
 }
 
 export const AssessmentAnswerChoice = props => {
-    const {answers, value, numberAsPrefix=false, isMultiple=false, reports, isDropdown, disabled=false, onChange} = props;
-    //const {value} = this.state;
-    // console.log(props, 'VALUEVALUE');
+    const {answers, value, numberAsPrefix=false, isMultiple=false, reports, isDropdown, disabled=false, onChange, showCorrect=false} = props;
+    // const {value} = props;
+    //  console.log(props, 'VALUEVALUE');
+    
     var answer_abc_num = 'a';
     if (isMultiple) {
-
-        
          // if it's multiple, check use checkboxes
          return <CheckboxGroup value={value} onChange={onChange} disabled={disabled} >
          {answers.map((option, i) => {
              const {id, label, isCritical, isValidAnswer} = option;
             //  console.log(i);
              const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
-            //  console.log(prefix, prefix);
-             return <Checkbox key={id} value={id} style={vertStyle} >{prefix}. {label}</Checkbox>;
+
+             const hasReported = Array.isArray(value) && value.includes(id);
+             let correctIcon = (showCorrect && isValidAnswer && hasReported) && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>
+                //  console.log(prefix, prefix);
+             return <Checkbox key={id} value={id} style={vertStyle} >{prefix}. {label} {correctIcon}</Checkbox>;
          })}
      </CheckboxGroup>
         
@@ -53,7 +55,10 @@ export const AssessmentAnswerChoice = props => {
         {answers.map((option, i) => {
             const {id, label, isCritical, isValidAnswer} = option;
             const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
-            return <Option key={id} value={id} >{prefix}. {label}</Option>;
+            const hasReported = value && value === id;
+            let correctIcon = (showCorrect && isValidAnswer && hasReported) && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>
+
+            return <Option key={id} value={id} >{prefix}. {label} {correctIcon}</Option>;
         })}
         </Select>;
     } else {
@@ -62,13 +67,17 @@ export const AssessmentAnswerChoice = props => {
         // if ( isVertical) {
         //     radioStyle = vertStyle;
         // }
-       
+    //    console.log(value, 'valuevaluevalue');
         return <RadioGroup onChange={onChange} value={value} disabled={disabled}>
         {answers.map((option, i) => {
             const {id, idForReported, label, isCritical, isValidAnswer} = option;
             const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
+
+            const hasReported = value && value === id;
+            let correctIcon = (showCorrect && isValidAnswer && hasReported) && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>
+
             // return <Radio key={id} value={idForReported} style={radioStyle} >{prefix}. {label}</Radio>;
-            return <Radio key={id} value={id} style={radioStyle} >{prefix}. {label}</Radio>;
+            return <Radio key={id} value={id} style={radioStyle} >{prefix}. {label} {correctIcon}</Radio>;
         })}
         </RadioGroup>
     }

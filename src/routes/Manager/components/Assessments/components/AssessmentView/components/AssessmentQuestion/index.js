@@ -7,7 +7,7 @@ import {Form, Button, Alert} from 'antd';
 import moment from 'moment';
 import { BrahmOutputItem, BrahmsOutputs, BrahmOutputWidget, BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
 import BrahmsAsField, { BrahmsRulesView } from '../../../../../../../../components/Brahms/components/Manager/components/Field';
-import { TrackerInput } from '../../../../../../../Plan/components/Tracker';
+// import { TrackerInput } from '../../../../../../../Plan/components/Tracker';
 
 const FormItem = Form.Item;
 
@@ -80,7 +80,10 @@ const AssessmentQuestion = props => {
     }
 
     let showQuestionValidAnswer = (showValidAnswer === 'question' || (isCompleted && showValidAnswer === 'summary'));
-    
+    // console.log(isCompleted);
+    // console.log(showValidAnswer);
+    // console.log(showQuestionValidAnswer);
+    defaultProps.showCorrect = showQuestionValidAnswer;
     let initialValue = null;
     let value = null;
     switch(type) {
@@ -147,14 +150,14 @@ const AssessmentQuestion = props => {
         // console.log(getFieldValue('question['+question.id+']'));
        
         // let haveReport = false;
-        if (isPreviewMode) {
-            let reportFromForm =  getFieldValue('question['+question.id+']');
-            console.log(reportFromForm, 'reportFromForm');
-            showQuestionValidAnswer = reportFromForm && ((isMultiple && Array.isArray(reportFromForm) && reportFromForm.length > 0) || (!isMultiple));
-        } else {
-            showQuestionValidAnswer = questionReports.length > 0;
-            //  = haveReport;// && questionReports.length > 0;
-        }
+        // if (isPreviewMode) {
+        //     let reportFromForm =  getFieldValue('question['+question.id+']');
+        //     console.log(reportFromForm, 'reportFromForm');
+        //     showQuestionValidAnswer = reportFromForm && ((isMultiple && Array.isArray(reportFromForm) && reportFromForm.length > 0) || (!isMultiple));
+        // } else {
+        //     showQuestionValidAnswer = questionReports.length > 0;
+        //     //  = haveReport;// && questionReports.length > 0;
+        // }
        
         // console.log(reportFromForm);
         // console.log(haveReport);
@@ -186,7 +189,7 @@ const AssessmentQuestion = props => {
         {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} />}
             {((showBrahms === 'question' || showBrahms === 'both') && brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
         
-        {showQuestionValidAnswer && <AssessmentQuestionValidAnswers answers={getAnswers} />}
+        {/* {showQuestionValidAnswer && <AssessmentQuestionValidAnswers answers={getAnswers} />} */}
 
         
         {showBottomButtons && <div style={{textAlign:'right', marginTop:5}}>

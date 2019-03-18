@@ -4,6 +4,7 @@ import { PlanElementPureFragment } from '../../../../routes/Plan/components/Plan
 import { withAddIntroMutation, withAddSectionMutation, withAddLessonMutation, withAddPathwayMutation } from '../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/mutations';
 import {compose, branch } from 'recompose';
 import { withPlanAddChildElementMutation } from '../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementChildrenList/containers/PlanElementChildrenManager';
+import { PLAN_ELEMENT_CHILDREN_QUERY } from '../../../../routes/Plan/components/PlanLayout/components/PlanElement/containers/queries';
 // import { PathwayElementsFragment, PlanSectionElementsFragment, PlanLessonElementsFragment, PlanIntroElementsFragment } from '../../fragments';
 
 
@@ -273,11 +274,23 @@ const deletePlanElement = gql`
 export const withDeletePlanElementMutation = graphql(deletePlanElement, {
     props: ({ ownProps, mutate }) => ({
         deletePlanElement: () => {
-             const {plan, element} = ownProps;
+             const {plan, element, parentId, parentValue} = ownProps;
              const {id:planId} = plan || {};
              const {id} = element || {};
+             let refetchQueries = [];
+             if (parentId) {
+                 console.log(ownProps);
+                refetchQueries.push({
+                    query: PLAN_ELEMENT_CHILDREN_QUERY,
+                    variables: {id:parentId, planId, elementValue:parentValue}
+                });
+            }
+
             return mutate({
                 variables: { planId, id},
+
+                refetchQueries,
+
                 update: (client, { data: { planElementReport } }) => {
                     const {mode, plan, parentId} = ownProps;
                     console.log(parentId);

@@ -12,7 +12,7 @@ const SelectPure = props => {
     const { value, disabled=disableSelect } = props;
     let {allowClear} = props;
     if (disabled) {
-        allowClear = true;
+        allowClear = false;
     }
     let options = [];
     if (group) {

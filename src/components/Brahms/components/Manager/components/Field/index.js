@@ -5,6 +5,7 @@ import { BrahmsRuleManagerButton } from '../Buttons/components/Brahms';
 import { BrahmsRuleDeleteButton } from '../Buttons/components/Brahms/delete';
 import { branch, renderComponent } from 'recompose';
 import { formatAssessmentRuleCondition } from '../Rule';
+import { IconCustom } from '../../../../../FitIcon';
 
  
 const BrahmsAsField = props => {
@@ -47,7 +48,7 @@ export const BrahmsRulesView = props => {
         return null;
     }
     return <Collapse bordered={false} expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
-    <Collapse.Panel header={<><Icon type="project" /> BRAHMS</>} key="1" style={customPanelStyle} >
+    <Collapse.Panel header={<><IconCustom type="brahms" style={{marginLeft:-5}} /> BRAHMS</>} key="1" style={customPanelStyle} >
         <ListWithMessage
             emptyMessage={false}
             itemLayout="horizontal"
@@ -159,7 +160,7 @@ const BrahmsRuleManagerItem = props => {
                 string = plans.map(p=>p.title);
             }
             //prefix = '';
-            ruleActionType = 'ActionPlans';
+            ruleActionType = 'ActionPlan';
         break;
         case 'goto':
             const {goToElementId} = ruleAction || {};
@@ -169,10 +170,14 @@ const BrahmsRuleManagerItem = props => {
             } else {
                 string = goToElementId;
             }
+            ruleActionType = 'Go To';
         break;
     }
 
     ;
 
-    return <div><strong>{prefix} {ruleActionType}</strong>: {string}</div>
+    return <div>
+        <div><strong>Answer:</strong>  {prefix}</div> 
+        <div><strong>{ruleActionType}:</strong> {string}</div> 
+        </div>
 }

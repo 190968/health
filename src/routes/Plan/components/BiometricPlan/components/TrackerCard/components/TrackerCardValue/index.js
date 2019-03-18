@@ -7,7 +7,7 @@ import { TrackerInput } from '../../../../../Tracker';
 export const formatTrackerValue = props => {
     const {measurement, withUnits=false} = props;
     const {inputMask, units} = measurement || {};
-    const {name:unitsName=''} = units;
+    const {name:unitsName=''} = units || {};
     let {report} = props;
     let {value} = props;
     //console.log(report);

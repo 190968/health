@@ -39,7 +39,7 @@ export const OPTIONS_CONDITIONAL = [
 
 
 const InputFieldPure = props => {
-    const { form, conditionKey = 'condition' } = props;
+    const { form, conditionKey = 'condition', renderInput } = props;
     const { getFieldDecorator, getFieldValue } = form;
     const { condition='equal', min, max, disabled = false } = props;
 
@@ -55,7 +55,7 @@ const InputFieldPure = props => {
         {getFieldDecorator('ruleValue', {
             initialValue:min
         })(
-            <Input style={{ width: 100 }} placeholder={getFieldValue(conditionKey) === 'between' ? 'From' : 'Value'} />
+            renderInput ? renderInput() : <Input style={{ width: 100 }} placeholder={getFieldValue(conditionKey) === 'between' ? 'From' : 'Value'} />
         )}
 
         {getFieldValue(conditionKey) === 'between' && <>

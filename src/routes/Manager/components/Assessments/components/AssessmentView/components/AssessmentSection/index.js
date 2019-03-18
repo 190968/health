@@ -149,7 +149,7 @@ const AssessmentQuestionBody = ({isBuilderMode, assessment, section, question, i
         questionCardExtra.push(<AssessmentQuestionDeleteButton  key={'delete'}  assessment={assessment} section={section} question={question} />);
     }
     return <List.Item key={question.id}>
-        <List.Item.Meta title={<div><strong>{(showQuestionNumber ? (i + 1) + '. ' : '') + question.title}</strong> <div className={'ant-card-extra'} style={{ float: 'right', padding: '0 !important' }}>{questionCardExtra}</div></div>} description={question.description} />
+        <List.Item.Meta title={<div><strong style={{fontSize: '1.1em'}}>{(showQuestionNumber ? (i + 1) + '. ' : '') + question.title}</strong> <div className={'ant-card-extra'} style={{ float: 'right', padding: '0 !important' }}>{questionCardExtra}</div></div>} description={question.description} />
         <AssessmentQuestion key={question.id} i={i}   question={question} isPastSection={isPastSection} isLastSection={isLastSection} isFirstSection={isFirstSection} showAllQuestions={showAllQuestions} section={section} {...otherProps} />
     </List.Item>;
 }

@@ -37,7 +37,7 @@ export default class PlanElementsSelect extends React.Component {
             {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
             {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
             {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
-            {type:'assessment', label:'Assessment', icon: <IconCustom type="assessment"/>},
+            // {type:'assessment', label:'Assessment', icon: <IconCustom type="assessment"/>},
             {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
             {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},
         ];

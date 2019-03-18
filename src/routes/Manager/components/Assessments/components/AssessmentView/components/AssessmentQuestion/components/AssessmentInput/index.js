@@ -3,13 +3,19 @@ import React from 'react';
 import { TimeField } from '../../../../../../../../../../components/FormCustomFields';
 import { getMomentFromUTCTime } from '../../../../../../../../../../utils/datetime';
 import InputField from '../../../../../../../../../../components/FormCustomFields/components/InputField';
+import {TrackerInput} from '../../../../../../../../../Plan/components/Tracker';
 
 const AssessmentInput = props => {
-    const {onChange, reports, disabled=false, isTime=false, isNumber} = props;
-    console.log(props, 'props');
+    const {onChange, reports, disabled=false, isTime=false, isTracker=false, isNumber} = props;
+    // console.log(props, 'props');
     let value = reports.map(report => report.value);
     value = value[0] || null;
 
+
+    if (isTracker) {
+        return <TrackerInput onChange={onChange} disabled={disabled} value={value} measurement={props.tracker} />;
+    }
+    
     if (isTime) {
 
         if (value !== '') {

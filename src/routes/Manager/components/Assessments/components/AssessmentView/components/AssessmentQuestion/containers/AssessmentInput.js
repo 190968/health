@@ -8,7 +8,7 @@ const enhance = withHandlers(({onChange}) => {
     return {
         onChange: props => (e) => {
             const {onChangeReport, onChange, isTime=false} = props;
-            //console.log(value);
+            console.log(value);
             let value;
             if (isTime) {
                 // console.log(moment.utc(e).format('HH:mm:ss'));

@@ -1,24 +1,27 @@
 import React from 'react';
-import {  Slider } from 'antd';
+import {  Slider, Icon, Tooltip } from 'antd';
 
 const AssessmentSlider = props => {
-    const {answers=[], reports, disabled, onChange} = props;
+    const {answers=[], value, reports, disabled, onChange, showCorrect=false} = props;
 
     let selectedMark = undefined;
     let marks = {};
 
-    let value = reports.map(report => report.answerId);
-    value = value[0] || null;
+    // let value = reports.map(report => report.answerId);
+    // value = value[0] || null;
     
     answers.map((option, i) => {
-        const coid = option.id;
-        const name = option.label;
-
-        if (value === coid) {
+        const {id, label, isValidAnswer} = option;
+        const coid = id;
+        const name = label;
+        const hasReported = value === coid;//Array.isArray(value) && value.includes(id);
+        
+        if (hasReported) {
             selectedMark = i;
         }
-
-        marks[i] = {label:name};
+        let correctIcon = (showCorrect && isValidAnswer && hasReported) && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>
+        
+        marks[i] = {label:<>{name} {correctIcon}</>};
         return option;
     });
      

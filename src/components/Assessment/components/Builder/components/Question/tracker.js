@@ -5,6 +5,8 @@ import AssessmentQuestionFieldsManager from './components/Fields';
 import AssessmentQuestionAnswersFormField from './_answers';
 import AssessmentQuestionBrahmsFormField from './_brahms';
 import TrackerSelect from '../../../../../Autosuggest/containers/TrackerSelect';
+import { withHandlers } from 'recompose';
+import { TrackerInput } from '../../../../../../routes/Plan/components/Tracker';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -32,13 +34,22 @@ const tailFormItemLayout = {
         },
     },
 };
+
+const AssessmentQuestionBrahmsFormFieldEnhanced = withHandlers({
+    renderInputValue: props => () => {
+        const {tracker, value} = props;
+        // console.log(props);
+        return <TrackerInput value={value} measurement={tracker} />
+    }
+})(AssessmentQuestionBrahmsFormField);
 const AssessmentQuestionTrackerManager = props => {
 
     const { question, form, type, assessment } = props;
     const { getFieldDecorator, getFieldValue } = form;
-    const { getTracker } = question || {};
+    const { id, getTracker } = question || {};
+    const {label} = getTracker || {};
     const showBrahms = question;
-    console.log(getTracker, 'getTracker');
+    // console.log(getTracker, 'getTracker');
     return <Form onSubmit={props.onSubmit}>
         <FormItem
             {...formItemLayout}
@@ -51,13 +62,13 @@ const AssessmentQuestionTrackerManager = props => {
                     message: "Please select tracker",
                 }],
             })(
-                <TrackerSelect />
+                <TrackerSelect disabled={id && id != ''} />
             )}
         </FormItem>
         
 
 
-        {showBrahms && <AssessmentQuestionBrahmsFormField label={getFieldValue('title')} form={form} type={'number'} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
+        {/* {showBrahms && <AssessmentQuestionBrahmsFormFieldEnhanced tracker={getFieldValue('tracker')} form={form} type={'tracker'} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />} */}
     </Form>
 }
 

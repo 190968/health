@@ -9,7 +9,7 @@ import {compose, withState, withHandlers, withProps} from 'recompose';
 
 const TrackerPure = props => {
 
-	const { measurement, placeholder, value, canReport=true } = props;
+	const { measurement, placeholder, value, disabled=false, canReport=true } = props;
 	let { suffix } = props;
 	console.log(props, 'trackerProps');
 	const { units = {}, label} = measurement || {};
@@ -23,7 +23,7 @@ const TrackerPure = props => {
 			value={value}
 			autoFocus
 			onClick={props.onClick}
-			disabled={!canReport}
+			disabled={disabled || !canReport}
 			placeholder={label}
 			onChange={props.onChange}
 			suffix={suffix}

@@ -16,8 +16,10 @@ const formTailLayout = {
 };
 
 const ApElementBuilder = (props) => {
-    const {form, intl,  details} = props;
+    const {form, intl,  element} = props;
     const {getFieldDecorator} = form;
+    const {itemInfo} = element || {};
+    const plan = itemInfo || {};
     return (
         <React.Fragment>
             <FormItem
@@ -25,7 +27,7 @@ const ApElementBuilder = (props) => {
                 label={'ActionPlan'}
             >
                 {getFieldDecorator('plan', {
-                        initialValue:details,
+                        initialValue:plan,
                         rules: [{required: true, message: "Select ActionPlan"}],
                     }
                 )(

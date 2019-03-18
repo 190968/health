@@ -51,43 +51,17 @@ export const OPTIONS_CONDITIONAL = [
 
 const BrahmsRuleManager = props => {
         // console.log(props, 'BrahmsRuleManager');
-        const {label, rule, form, possibleOptions=[], possibleOptionsFormatter, GoToComponent, onSubmit, assessment, ...otherProps } = props;
+        const {label, type, renderInputValue, rule, form, possibleOptions=[], possibleOptionsFormatter, GoToComponent, onSubmit, assessment, ...otherProps } = props;
         const {excludeActions=[]} = otherProps;
         const {getFieldDecorator, getFieldValue} = form;
 
         const {ruleType, ruleValue,ruleValueEnd, ruleValueId,ruleActionType, ruleAction} = rule || {};
 
-        const isValueType = possibleOptions.length === 0;
+        let isAnswerBased = possibleOptions.length > 0;
         return <>
 
-            {isValueType &&  <FormItem
-                {...formItemLayout}
-                label={'Value'}
-            >
-            <InputWithConditionField form={form} value={{condition:ruleType, min:ruleValue, max:ruleValueEnd}} conditionKey={'ruleType'} />
-            </FormItem>}
-                {/* <FormItem
-                {...formItemLayout}
-                label={'Condition'}
-            >
-                {getFieldDecorator('ruleType', {
-                    })(
-                        <Select style={{width:'100%'}} >
-                            {OPTIONS_CONDITIONAL.map(option => <Option key={option.key} value={option.key}>{option.label}</Option>)}
-                        </Select>
-                    )}
-            </FormItem>
-            <FormItem
-                {...formItemLayout}
-                label={'Value'}
-            >
-                {getFieldDecorator('ruleValue', {
-                    })(
-                        <Input />
-                    )}
-            </FormItem>
-            </>} */}
-            {possibleOptions.length > 0 && <FormItem
+             
+            {isAnswerBased > 0 ? <FormItem
                 {...formItemLayout}
                 label={'If'}
             >
@@ -102,6 +76,11 @@ const BrahmsRuleManager = props => {
                         })}
                     </Select>
                     )}
+            </FormItem> : <FormItem
+                {...formItemLayout}
+                label={'Value'}
+            >
+            <InputWithConditionField form={form} value={{condition:ruleType, min:ruleValue, max:ruleValueEnd}} renderInput={renderInputValue} conditionKey={'ruleType'} />
             </FormItem>}
 
             <FormItem
