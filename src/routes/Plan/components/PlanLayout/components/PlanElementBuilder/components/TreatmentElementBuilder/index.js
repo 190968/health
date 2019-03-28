@@ -40,10 +40,10 @@ export const prepareInput = (values) => {
 
 const TreatmentElementBuilder = (props) => {
     //console.log(props);
-    const {form, intl, element={}, user} = props;
+    const {form, intl, details={}, user} = props;
     const {getFieldDecorator} = form;
     //const {itemInfo={}} = element;
-    const {id, title, elements=[]} = element || {};
+    const {id, title, elements=[]} = details || {};
     //console.log(elements);
     //const keys =  [];//getFieldValue('keys', {initialValue:[]});
     //console.log(elements.map(option => prepareElementForMutation(option)));

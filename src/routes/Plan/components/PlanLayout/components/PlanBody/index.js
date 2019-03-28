@@ -1,8 +1,8 @@
 import React from 'react'
 import Joyride from 'react-joyride';
-import PlanElement from '../../containers/PlanElement'
-import PlanLesson from '../../containers/PlanLesson';
-import PlanSection from '../../containers/PlanSection';
+// import PlanElement from '../../containers/PlanElement'
+// import PlanLesson from '../../containers/PlanLesson';
+// import PlanSection from '../../containers/PlanSection';
 import PlanIntroduction from '../../containers/PlanIntroduction';
 import PlanBodyMenu from './components/PlanBodyMenu';
 import './index.less';
@@ -13,6 +13,8 @@ import { Modal, BackTop, List, Affix, Card, Row, Col, message} from 'antd';
 import { compose, withState, withStateHandlers, withHandlers, branch, renderComponent } from 'recompose';
 import { withSpinnerWhileLoading } from '../../../../../../components/Modal';
 import PlanBodyVideo from './components/Video';
+import {PlanLessons} from './containers/PlanLessons';
+import {PlanSections} from './containers/PlanSections';
 
 
 const menuStyle = {
@@ -61,10 +63,14 @@ const PlanBodyPure = props => {
 
     // menu handlers
     const {setCurrentView, currentTab, currentKeyI} = props;
+    console.log(props);
     // lessons, activities, intro
     const {lessons=[], activities=[], intro=[]} = props;
     const lessonsNum = lessons.length;
     const activitiesNum = activities.length;
+
+    // filter things
+    // const filteredElements = filterSkippedPlanElements(elements, skippedElementsByRef);
 
     const showEmptyBlock = isBuilderMode && currentKeyI === -1;
  
@@ -105,35 +111,10 @@ const PlanBodyPure = props => {
                     <PlanIntroduction {...defaultProps} elements={intro} />
                 </Col>
             </Row>}
-            {(currentTab === 'lessons' && lessonsNum > 0) && lessons.map((section, i) =>{
+            {(currentTab === 'lessons' && lessonsNum > 0) && <PlanLessons {...defaultProps} currentKeyI={currentKeyI} upid={upid} date={date} items={lessons} haveSections={activitiesNum > 0} showNextLesson={props.showNextLesson} showFirstSection={props.showFirstSection} />}
+            
 
-                if (currentKeyI === i) {
-                    const isLastLesson = i===lessonsNum-1;
-                    const list = <Row key={section.id}>
-                        <Col xs={24}>
-                            <PlanLesson {...defaultProps} upid={upid} item={section} isLastLesson={isLastLesson} haveSections={activitiesNum > 0} showNextLesson={props.showNextLesson} showFirstSection={props.showFirstSection} />
-                        </Col>
-                    </Row>;
-
-                    return list;
-                }
-                return null;
-            })}
-
-            {(currentTab === 'activities' && activitiesNum > 0) && activities.map((section, i) => {
-
-                if (currentKeyI === i) {
-                    const isLastSection = i===activitiesNum-1;
-                    const list = <Row key={section.id}>
-                        <Col xs={24}>
-                            <PlanSection {...defaultProps}  upid={upid} date={date} item={section} isLastSection={isLastSection} showNextSection={props.showNextSection} />
-                        </Col>
-                    </Row>;
-
-                    return list;
-                }
-                return null;
-            })}
+            {(currentTab === 'activities' && activitiesNum > 0) && <PlanSections {...defaultProps} currentKeyI={currentKeyI} upid={upid} date={date} items={activities} showNextSection={props.showNextSection} />}
 
             {showEmptyBlock && <div className="empty-builder-text">Please add Introduction and Lesson or Activity</div>}
         </Col>

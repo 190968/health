@@ -10,7 +10,7 @@ const AssessmentQuestionAnswerManagerButtonPure = props => {
     // console.log(userAssessment);
     return <React.Fragment>
         {showModal && <AssessmentQuestionAnswerManager {...otherProps} asModal onHide={toggleModal} />}
-        {answer ? <Icon type={'edit'} onClick={toggleModal} /> : <Button type={'dashed'} icon={'plus'} block onClick={toggleModal}>Add Answer</Button>}
+        {answer ? <Icon type={'edit'} onClick={toggleModal} /> : <Button type={'dashed'} icon={'plus'} block onClick={toggleModal}>Add an Answer</Button>}
     
     </React.Fragment>
 }

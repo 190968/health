@@ -5,8 +5,8 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export const GET_PATHWAYS_QUERY = gql`    
-    query GET_PATHWAYS {
-        getPathways (status: "all") {
+    query GET_PATHWAYS ($search: String, $status: PlanStatusEnum) {
+        getPathways (status: $status, search: $search) {
             totalCount
             edges {
                 id
@@ -35,22 +35,27 @@ const withQuery = graphql(
         options: (ownProps) => {
             return {
                 //skip: !ownProps.ready,
-                /*variables: {
-                    user_id: ownProps.user_id,
-                    status: 'active'
+                variables: {
+                    search: null,
+                    status: null
                     //date:ownProps.date
-                },*/
+                },
                 fetchPolicy: 'network-only'
             }
 
         },
         props: ({ ownProps, data }) => {
-            if (!data.loading) {
-
+                const {getPathways, variables} = data;
+                const {edges, totalCount} = getPathways || {};
+                const {search} = variables || {};
+                const filterUsed = search !== '';
                 return {
-                    pathways: data.getPathways.edges,
-                    total: data.getPathways.totalCount,
+                    pathways: edges,
+                    total: totalCount,
                     loading: data.loading,
+                    search,
+                    filterUsed:filterUsed,
+                    refetch:data.refetch,
                     loadByStatus(status) {
                         return data.fetchMore({
                             // query: ... (you can specify a different query. FEED_QUERY is used by default)
@@ -63,6 +68,9 @@ const withQuery = graphql(
                                 return fetchMoreResult;
                             },
                         });
+                    },
+                    doSearch(search) {
+                        return data.refetch({search});
                     },
                     loadMoreEntries() {
 
@@ -87,9 +95,6 @@ const withQuery = graphql(
                     }
                 }
 
-            } else {
-                return {loading: data.loading}
-            }
         },
     }
 );

@@ -11,6 +11,7 @@ import moment from 'moment';
 
 import { EmptyList } from '../../../../../../components/Loading/index';
 import { branch, compose, withHandlers, withProps, withState, renderComponent } from 'recompose';
+import { PlanElementManagerButton } from '../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
 
 const updateSectionMutation = gql`
 			mutation updateActivityTitle($id: UID!, $planId: UID!, $title: String!) {
@@ -99,7 +100,7 @@ export class PlanSection extends React.Component {
 	};
 
 	render() {
-		const { upid, date, user, item, isLastSection, isBuilderMode, isPreviewMode, plan, elements = [] } = this.props;
+		const { upid, date, user, item, isLastSection, isBuilderMode, isPreviewMode, plan, elements = [], ...otherProps } = this.props;
 		const footer =
 			!isBuilderMode && (elements !== null && (item.elements.length > 0 || isLastSection))
 				? [
@@ -126,7 +127,7 @@ export class PlanSection extends React.Component {
 				!isPreviewMode && (
 					<PlanElementsSelectbox mode="section" sectionId={sectionId} plan={plan} schedule={true} />
 				)} */}
-				{elements.length > 0 ? (
+				{elements && elements.length > 0 ? (
 					<List
 						size="large"
 						itemLayout="vertical"
@@ -149,6 +150,7 @@ export class PlanSection extends React.Component {
 									date={date}
 									element={item}
 									schedule
+									{...otherProps}
 								/>
 							);
 						}}
@@ -164,38 +166,40 @@ export class PlanSection extends React.Component {
 /**
  * Enhance Plan element
  */
-const PlanElementEnhanced = compose(branch((props) => props.isBuilderMode, SortableElement))(PlanElementListItem);
+const PlanElementEnhanced = compose(branch((props) => props.isBuilderMode && !props.isPreviewMode, SortableElement))(PlanElementListItem);
 
 const EmptyResultsPure = (props) => {
 	return <EmptyList>No elements have been added yet</EmptyList>;
 };
 
-const PlanElementAddLinePure = (props) => {
+const PlanElementAddLine = (props) => {
 	return (
 		<Divider className="element-actions">
-			{props.modalAdd && (
+			{/* {props.modalAdd && (
 				<Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}>
 					<PlanElementsSelectbox mode="section" sectionId={props.item.id} plan={props.plan} plan={props.plan} />
 				</Modal>
-			)}
-			<Tooltip title="Add Element" onClick={props.openAddElement}>
+			)} */}
+
+			<PlanElementManagerButton mode="section" buttonType={'primary'} label={'Add First Element'} shape={'round'} sectionId={props.item.id} plan={props.plan} />
+			{/* <Tooltip title="Add Element" onClick={props.openAddElement}>
 				<Icon type="plus-circle-o" style={{ cursor: 'pointer' }} /> Add First Element
-			</Tooltip>
+			</Tooltip> */}
 		</Divider>
 	);
 };
 
-const PlanElementAddLine = compose(
-	withState('modalAdd', 'setModal', false),
-	withHandlers({
-		openAddElement: (props) => () => {
-			props.setModal(true);
-		},
-		openHideElement: (props) => () => {
-			props.setModal(false);
-		}
-	})
-)(PlanElementAddLinePure);
+// const PlanElementAddLine = compose(
+// 	withState('modalAdd', 'setModal', false),
+// 	withHandlers({
+// 		openAddElement: (props) => () => {
+// 			props.setModal(true);
+// 		},
+// 		openHideElement: (props) => () => {
+// 			props.setModal(false);
+// 		}
+// 	})
+// )(PlanElementAddLinePure);
 
 const EmptyResults = compose(branch((props) => props.isBuilderMode === true, renderComponent(PlanElementAddLine)))(
 	EmptyResultsPure

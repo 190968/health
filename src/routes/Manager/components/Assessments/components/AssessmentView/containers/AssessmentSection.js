@@ -1,10 +1,11 @@
 import AssessmentSectionPure from '../components/AssessmentSection';
-import {compose, branch, withState, withHandlers} from 'recompose';
+import {compose, branch, withState, withHandlers, withStateHandlers} from 'recompose';
 import {Form, message} from 'antd';
 import {
     arrayMove,
   } from 'react-sortable-hoc';
 import { withUpdateAssessmentQuestionsOrderMutation } from '../../../../../../../components/Assessment/mutations';
+import { withToggleState } from '../../../../../../../components/Modal';
 const enhance = compose(
     branch(props => {
         const {showAllSections, showAllQuestions} = props.assessment || {};
@@ -94,6 +95,11 @@ const enhance = compose(
                 message.success('Order has been updated');
                 hide();
             });
+        }
+    }),
+    withStateHandlers(props => ({openBrahms:false}), {
+        toggleBrahms: props => () => {
+            return {openBrahms: !props.openBrahms}
         }
     })
 );

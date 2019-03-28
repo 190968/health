@@ -17,7 +17,7 @@ const formTailLayout = {
 const FileInputElementBuilder = (props) => {
     const {form, intl,  details={}} = props;
     const {getFieldDecorator} = form;
-    const {label=''} = details;
+    const {label=''} = details || {};
     return (
         <React.Fragment>
             <FormItem

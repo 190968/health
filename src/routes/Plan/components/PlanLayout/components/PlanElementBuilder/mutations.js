@@ -94,7 +94,16 @@ const PATHWAY_ELEMENTS_QUERY = gql`
 export const AddLessonElementMutation = gql`
     mutation addLessonElement($planId: UID!, $type:PlanElementEnum!, $lessonId: UID!, $input:PlanBodyElementInput!) {
         addLessonElement(planId: $planId, type:$type, lessonId: $lessonId, input: $input) {
-            ...PlanElement
+            plan {
+                id
+                lessons {
+                    id
+                    title
+                    elements {
+                        ...PlanElement
+                    }
+                }
+            }
         }
     }
     ${PlanElementPureFragment}
@@ -106,10 +115,10 @@ export const withAddLessonMutation = graphql(AddLessonElementMutation, {
             const inputOrder = {...input, order};
             return mutate({
                 variables: {planId:ownProps.plan.id, type:type, lessonId:ownProps.lessonId, input:inputOrder},
-                refetchQueries: [{
-                    query: PLAN_PLAN_LESSONS_QUERY,
-                    variables: {id:ownProps.plan.id}
-                }],
+                // refetchQueries: [{
+                //     query: PLAN_PLAN_LESSONS_QUERY,
+                //     variables: {id:ownProps.plan.id}
+                // }],
             })
         },
     }),
@@ -118,7 +127,16 @@ export const withAddLessonMutation = graphql(AddLessonElementMutation, {
 export const AddSectionElementMutation = gql`
     mutation addActivityElement($planId: UID!, $type:PlanElementEnum!, $activityId: UID!, $input:PlanBodyElementInput!) {
         addActivityElement(planId: $planId, type:$type, activityId: $activityId, input: $input) {
-            ...PlanElement
+            plan {
+                id
+                activities {
+                    id
+                    title
+                    elements {
+                        ...PlanElement
+                    }
+                }
+            }
         }
     }
     ${PlanElementPureFragment}
@@ -142,7 +160,16 @@ export const withAddSectionMutation = graphql(AddSectionElementMutation, {
 export const AddIntroElementMutation = gql`
     mutation addIntroElement($planId: UID!, $type:PlanElementEnum!, $input:PlanBodyElementInput!) {
         addIntroductionElement(planId: $planId, type:$type, input: $input) {
-            ...PlanElement
+            plan {
+                id
+                intro {
+                    id
+                    title
+                    elements {
+                        ...PlanElement
+                    }
+                }
+            }
         }
     }
     ${PlanElementPureFragment}
@@ -163,11 +190,14 @@ export const withAddIntroMutation = graphql(AddIntroElementMutation, {
     }),
 });
 
-
+// the right one!
 export const AddPathwayElementMutation = gql`
     mutation addPathwayElement($planId: UID!, $type:PlanElementEnum!, $input:PlanBodyElementInput!) {
         addPathwayElement(planId: $planId, type:$type, input: $input) {
-            ...PlanElement
+            id
+            elements {
+                ...PlanElement
+            }
         }
     }
     ${PlanElementPureFragment}

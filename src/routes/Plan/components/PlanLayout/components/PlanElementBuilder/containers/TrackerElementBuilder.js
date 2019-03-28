@@ -36,8 +36,8 @@ export const preparePlanElementTrackerInput = (values) => {
      const {
         parentId
     } = values;
-    const {id} = parentId;
-
+    const {id} = parentId || {};
+    console.log(values);
     return {...values, 
         parentId:id
 

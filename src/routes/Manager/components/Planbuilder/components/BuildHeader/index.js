@@ -52,7 +52,7 @@ class BuildHeader extends React.Component{
 
         this.stopLoading();
 
-        let mainUrl = '/builder/pathway/'+plan.id+'/body';
+        let mainUrl = '/builder/ap/'+plan.id+'/body';
         history.push(mainUrl);
     }
 
@@ -149,40 +149,40 @@ const BuildHeaderForm = Form.create({
             return;
         }
         console.log(plan, 'plan');
-        const {schedule} = plan || {};
+        const {title, description, schedule} = plan || {};
         //console.log('mapPropsToFields', props);
         //console.log(plan.schedule);
         //console.log(typeof plan.schedule.limitStartDow);
-        //const {type} =  plan.schedule;
+        const {type,limitStartDow=false,dows,relativeEndDay,startDate,endDate} =  schedule || {};
         return {
             title: createFormField({
-                value: plan.title,
+                value: title,
             }),
             description: createFormField({
-                value: plan.description,
+                value: description,
             }),
             // schedule
             'schedule[type]': createFormField({
-                value: schedule.type,
+                value: type,
             }),
             'schedule[limitStartDow]': createFormField({
-                value: schedule.limitStartDow,
+                value: limitStartDow,
             }),
             'schedule[limitDow]': createFormField({
-                value: !schedule.limitStartDow,
+                value: limitStartDow || false,
             }),
             'schedule[dows]': createFormField({
-                value: schedule.dows,
+                value: dows,
             }),
             'schedule[relativeEndDay]': createFormField({
-                value: schedule.relativeEndDay,
+                value: relativeEndDay,
             }),
 
             'schedule[startDate]': createFormField({
-                value: schedule.startDate ? moment(schedule.startDate) : moment(),
+                value: startDate ? moment(startDate) : moment(),
             }),
             'schedule[endDate]': createFormField({
-                value: schedule.endDate ? moment(schedule.endDate) : undefined,
+                value: endDate ? moment(endDate) : undefined,
             }),
         };
     }

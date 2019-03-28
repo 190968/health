@@ -92,6 +92,10 @@ const GET_ACTIONPLAN_QUERY = gql`
 export const withActionplanQuery = graphql(
     GET_ACTIONPLAN_QUERY,
     {
+        skip: (props) =>  {
+            const {id} = props.plan || {};
+            return !id;
+        },
         options: (ownProps) => {
             const {id} = ownProps.plan || {};
             return {

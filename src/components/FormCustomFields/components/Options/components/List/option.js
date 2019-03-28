@@ -6,11 +6,12 @@ import {withHandlers} from 'recompose';
 import {InputField} from '../../../InputField';
 import { DragHandle } from '../..';
 const FormItem = Form.Item;
+const TextArea = Input.TextArea;
 
 const OptionItem = SortableElement((props) => {
-    const {form, option, i:index, options=[], remove, updateOption, minOptions} = props;
+    const {form, option, i:index, options=[], remove, updateOption, minOptions, timeout=0} = props;
     // const {getFieldDecorator} = form;
-    const block = option || {};
+    // const block = option || {};
     const {label} = option || {};
     // form.setFieldsValue({
     //     ['aaaaaaaa']: 'aaa'
@@ -40,12 +41,13 @@ const OptionItem = SortableElement((props) => {
                         message: "Please enter option "+((index+1))+" or delete this line.",
                     }],
                 })( */}
-                <InputField noState asTextArea value={label} onChange={props.onChange} placeholder={"Option "+(index+1)} autosize={{ minRows: 1, maxRows: 6 }} style={{ width: '100%', marginRight: 8 }} timeout={500} />
+                {/* <TextArea  onChange={props.onChange} autosize={{minRows:1}} /> */}
+                <InputField noState asTextArea value={label} onChange={props.onChange} placeholder={"Option "+(index+1)} autosize={{ minRows: 1, maxRows: 6 }} style={{ width: '100%', marginRight: 8 }} timeout={timeout} />
                 {/* )} */}
             </FormItem>
         </div>
         <div style={{position:'absolute', right:0, top:3}}>
-        <DragHandle />
+        {/* <DragHandle /> */}
         {options.length > minOptions ? (
             <Tooltip title="Remove Option"><Icon
                 className="dynamic-delete-button"
@@ -63,7 +65,9 @@ const OptionItem = SortableElement((props) => {
 
 export default withHandlers({
     onChange: props => value => {
-        // console.log(value);
+        // const value = e.target.value;
+        //  console.log(e);
+        //  console.log(value);
         const {i, updateOption} = props;
         if (updateOption) {
             updateOption(value, i);

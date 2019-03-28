@@ -44,7 +44,7 @@ export const withQuery = graphql(
 const enhance = compose(
     injectIntl,
     withQuery,
-    withSpinnerWhileLoading,
+    //withSpinnerWhileLoading,
     // withHandlers({
     //     saveElement: props => callback => {
     //         props.handleSave({prepareInput, callback} );
@@ -69,7 +69,7 @@ export const preparePlanElementScaleInput = (values) => {
     const {scaleId, title, ids} = values;
     //console.log(values);
     let {options=[]} = values;
-    // console.log(values);
+     console.log(values);
     options = options.map(option => {
         const {label, id} = option;
         return {id, label}

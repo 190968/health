@@ -14,6 +14,6 @@ export const AssessmentBodyScore = props => {
     const message = 'You scored '+points+' out of '+maxPoints+' points';
     return <>
         {points > 0 && <Alert message={message} type="info" showIcon style={{marginBottom:5}} />}
-        {(brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} isToggled showToggler={false} /> }
+        {(brahms && brahms.length > 0) && <div style={{marginTop:10}}><BrahmsElementOutput rules={brahms} isToggled showToggler={false} /></div> }
     </>;
 }

@@ -34,7 +34,7 @@ const tailFormItemLayout = {
 const AssessmentsManagerSettings = props => {
     const {assessment, form} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {name, description, instructions, showProgress=true, showScore=false, showAllSections=true,showAllQuestions=true, allowGoBack=true, isAllMandatory=false,showQuestionNumber=false, showValidAnswer, showBrahms, getBrahmsRules=[]} = assessment || {};
+    const {name, description, instructions, showProgress=true, showScore=false, showAllSections=true,showAllQuestions=true, allowGoBack=true, isAllMandatory=false,showQuestionNumber=false, showValidAnswer='question', showBrahms='question', getBrahmsRules=[]} = assessment || {};
     // console.log(props, 'props');
     // console.log(showAllSections, 'showAllSections');
     return <React.Fragment>
@@ -78,41 +78,14 @@ const AssessmentsManagerSettings = props => {
                 )}
             </FormItem>
 
-            <FormItem
-                {...tailFormItemLayout}
-            >
-                <span className={'ant-form-text'}>
-                {getFieldDecorator('showProgress', {
-                    initialValue: showProgress,
-                    valuePropName: 'checked'
-                })(
-                    <Checkbox>Show Progress</Checkbox>
-                )}
-                </span>
-            </FormItem>
+           
 
             <FormItem
                 {...formItemLayout}
-                label="Section display"
-            >
-                {getFieldDecorator('showAllSections', {
-                    initialValue: showAllSections,
-                     
-                })(
-                    <Select>
-                        <Option value={true}>Show all sections at once</Option>
-                        <Option value={false}>Show next section only after completing current section</Option>
-                    </Select>
-                )}
-            </FormItem>
-
-            <FormItem
-                {...formItemLayout}
-                label="Section display"
+                label="Question Display"
             >
                 {getFieldDecorator('showAllQuestions', {
                     initialValue: showAllQuestions,
-                     
                 })(
                     <Select>
                         <Option value={true}>Show all questions at once</Option>
@@ -120,9 +93,9 @@ const AssessmentsManagerSettings = props => {
                     </Select>
                 )}
             </FormItem>
-
             {(getFieldValue('showAllSections') === false || getFieldValue('showAllQuestions') === false) && <FormItem
                 {...tailFormItemLayout}
+                className={'single-line'}
             >
                 <span className={'ant-form-text'}>
                 {getFieldDecorator('allowGoBack', {
@@ -135,34 +108,27 @@ const AssessmentsManagerSettings = props => {
             </FormItem>}
 
             <FormItem
-                {...tailFormItemLayout}
+                {...formItemLayout}
+                label="Section Display"
             >
-                <span className={'ant-form-text'}>
-                {getFieldDecorator('isAllMandatory', {
-                    initialValue: isAllMandatory,
-                    valuePropName: 'checked'
+                {getFieldDecorator('showAllSections', {
+                    initialValue: showAllSections,
+                     
                 })(
-                    <Checkbox>User must answer all the questions</Checkbox>
+                    <Select>
+                        <Option value={true}>Show all sections at once</Option>
+                        <Option value={false}>Show next section only after completing current section</Option>
+                    </Select>
                 )}
-                </span>
             </FormItem>
 
-            <FormItem
-                {...tailFormItemLayout}
-            >
-                <span className={'ant-form-text'}>
-                {getFieldDecorator('showQuestionNumber', {
-                    initialValue: showQuestionNumber,
-                    valuePropName: 'checked'
-                })(
-                    <Checkbox>Show question number</Checkbox>
-                )}
-                </span>
-            </FormItem>
+           
+
+            
 
             <FormItem
                 {...formItemLayout}
-                label="Show answer"
+                label="Answer Display"
             >
                 {getFieldDecorator('showValidAnswer', {
                     initialValue: showValidAnswer,
@@ -176,24 +142,9 @@ const AssessmentsManagerSettings = props => {
                 )}
             </FormItem>
 
-           
-
-            <Divider>Grade</Divider>
-            <FormItem
-                {...tailFormItemLayout}
-            >
-                <span className={'ant-form-text'}>
-                {getFieldDecorator('showScore', {
-                    initialValue: showScore,
-                    valuePropName: 'checked'
-                })(
-                    <Checkbox>Show user score at the end of assessment</Checkbox>
-                )}
-                </span>
-            </FormItem>
             <FormItem
                 {...formItemLayout}
-                label="Show BRAHMS"
+                label="BRAHMS Display"
             >
                 {getFieldDecorator('showBrahms', {
                     initialValue: showBrahms,
@@ -205,17 +156,78 @@ const AssessmentsManagerSettings = props => {
                     </Select>
                 )}
             </FormItem>
+            <FormItem
+                {...tailFormItemLayout}
+                className={'single-line'}
+            >
+                <span className={'ant-form-text'}>
+                {getFieldDecorator('showProgress', {
+                    initialValue: showProgress,
+                    valuePropName: 'checked'
+                })(
+                    <Checkbox>Show User Progress</Checkbox>
+                )}
+                </span>
+            </FormItem>
 
-            {getFieldValue('showScore') && <FormItem
+            <FormItem
+                {...tailFormItemLayout}
+                className={'single-line'}
+            >
+                <span className={'ant-form-text'}>
+                {getFieldDecorator('isAllMandatory', {
+                    initialValue: isAllMandatory,
+                    valuePropName: 'checked'
+                })(
+                    <Checkbox>User must answer all the questions</Checkbox>
+                )}
+                </span>
+            </FormItem>
+
+            <FormItem
+                {...tailFormItemLayout}
+                className={'single-line'}
+            >
+                <span className={'ant-form-text'}>
+                {getFieldDecorator('showQuestionNumber', {
+                    initialValue: showQuestionNumber,
+                    valuePropName: 'checked'
+                })(
+                    <Checkbox>Show question number</Checkbox>
+                )}
+                </span>
+            </FormItem>
+
+           
+
+           
+
+            {/* <Divider>Grade</Divider> */}
+            <FormItem
+                {...tailFormItemLayout}
+                className={'single-line'}
+            >
+                <span className={'ant-form-text'}>
+                {getFieldDecorator('showScore', {
+                    initialValue: showScore,
+                    valuePropName: 'checked'
+                })(
+                    <Checkbox>Show user score at the end of assessment</Checkbox>
+                )}
+                </span>
+            </FormItem>
+           
+
+            <FormItem
                     {...formItemLayout}
-                    label="BRAHMS"
+                    label="BRAHMS - End of Assessment"
                 >
                     {getFieldDecorator('brahms', {
                         initialValue: prepareBrahmsRulesField(getBrahmsRules),
                     })(
-                    <BrahmsAsField label={'Score'} type={'input'} excludeActions={['goto']} />
+                    <BrahmsAsField label={'Score'} type={'number'} excludeActions={['goto']} />
                 )}
-                </FormItem>}
+                </FormItem>
 
         </Form>
 

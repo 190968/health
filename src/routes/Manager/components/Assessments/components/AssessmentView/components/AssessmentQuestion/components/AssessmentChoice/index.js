@@ -27,9 +27,11 @@ String.prototype.prevChar = function(i) {
 }
 
 export const AssessmentAnswerChoice = props => {
-    const {answers, value, numberAsPrefix=false, isMultiple=false, reports, isDropdown, disabled=false, onChange, showCorrect=false} = props;
+    const {answers, value, numberAsPrefix=false, isMultiple=false, reports:reportsInit=[], isDropdown, disabled=false, onChange, showCorrect=false} = props;
     // const {value} = props;
     //  console.log(props, 'VALUEVALUE');
+    // console.log(reports, 'reports');
+    const reports = reportsInit.map(r=>r.answerId);
     
     var answer_abc_num = 'a';
     if (isMultiple) {
@@ -40,7 +42,7 @@ export const AssessmentAnswerChoice = props => {
             //  console.log(i);
              const prefix = numberAsPrefix ? (i+1) : answer_abc_num.nextChar((i));
 
-             const hasReported = Array.isArray(value) && value.includes(id);
+             const hasReported = Array.isArray(reports) && reports.includes(id);
              let correctIcon = (showCorrect && isValidAnswer && hasReported) && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>
                 //  console.log(prefix, prefix);
              return <Checkbox key={id} value={id} style={vertStyle} >{prefix}. {label} {correctIcon}</Checkbox>;

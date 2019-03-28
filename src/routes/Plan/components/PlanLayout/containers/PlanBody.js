@@ -2,6 +2,9 @@ import PlanBody from '../components/PlanBody';
 import {PlanCardFragment, PlanElementFragment, PlanElementPureFragment} from '../../../../Plan/components/Plan/fragments';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { compose } from 'recompose';
+// import { validateBrahms, getNextObjectFromRules } from '../../../../../components/Brahms/utils';
+// import { prepareSkippedPlanElementsByNextId } from '../../../../../components/Plan/utils';
 
 
 
@@ -45,7 +48,7 @@ export const PLAN_BODY_QUERY = gql`
 
 
 // 1- add queries:
-const PlanBodyWithQuery = graphql(
+const injectPlanBodyQuery = graphql(
     PLAN_BODY_QUERY,
     {
         options: (ownProps) => {
@@ -86,4 +89,12 @@ const PlanBodyWithQuery = graphql(
         },
     }
 );
-export default PlanBodyWithQuery(PlanBody);
+
+
+// const enhance = compose(
+//     ,
+// );
+export default injectPlanBodyQuery(PlanBody);
+
+
+

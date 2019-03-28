@@ -6,7 +6,7 @@ export const PlansListQUERY = gql`
     query GET_CANCERS_LIST ($search: String)  {
         health {
             getCancersList (search: $search) {
-                id,
+                id
                 title
             }
         }
@@ -17,13 +17,13 @@ const CancerSelectWithQuery = graphql(PlansListQUERY,
     {
         options: () => {
             return {
-                //fetchPolicy: 'network-only'
+                fetchPolicy: 'network-only'
             }
         },
         props: ({ data }) => {
-            if (!data.loading) {
+            const {getCancersList} = data.health || {};
                 return {
-                    items: data.health.getCancersList,
+                    items: getCancersList,
                     loading: data.loading,
 
                     doSearch(search) {
@@ -38,9 +38,6 @@ const CancerSelectWithQuery = graphql(PlansListQUERY,
                         });
                     }
                 }
-            } else {
-                return {loading: data.loading}
-            }
         },
 
     }

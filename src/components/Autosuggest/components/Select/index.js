@@ -3,6 +3,7 @@ import { Select as AntdSelect, Spin, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import { compose, withHandlers, withState, branch, withProps, defaultProps } from 'recompose';
 import { withLoadingState } from '../../../Loading';
+import { withSpinnerWhileLoading } from '../../../Modal';
 
 const { Option, OptGroup } = AntdSelect;
 
@@ -93,7 +94,7 @@ const withFullValue = compose(
             } else {
                 let key = value;
                 
-                if (labelInValue) {
+                if (value && labelInValue) {
                     key = value.key || {};
                 }
     
@@ -143,8 +144,11 @@ const enhance = compose(
         labelInValue:false ,
         disableSelect:false
     }),
-    withState('value', 'setValue', props => props.value || undefined),
-    withLoadingState,
+    // withSpinnerWhileLoading,
+    branch(props => !props.loading, withState('value', 'setValue', props =>  {
+        // console.log(props, 'vaaaaal');
+        return props.value || undefined;
+    })),
     withHandlers({
         labelFormat: props => (d) => {
             const {labelFormat} = props;

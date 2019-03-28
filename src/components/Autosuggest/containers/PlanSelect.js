@@ -5,8 +5,8 @@ import {PlanCardFragment} from "../../../routes/Plan/components/Plan/fragments";
 
 export const PlansListQUERY = gql`
     query GET_PLANS_LIST ($search: String)  {
-        planstore {
-            plans (search: $search) {
+        management {
+            getPlans (search: $search) {
                 totalCount
                 edges {
                     ...PlanCardInfo
@@ -17,16 +17,18 @@ export const PlansListQUERY = gql`
     ${PlanCardFragment}
 `;
 
-const PlanSelectWithQuery = graphql(PlansListQUERY,
+export const withPlansSelectQuery = graphql(PlansListQUERY,
     {
         options: () => {
             return {
                 fetchPolicy: 'network-only'
             }},
         props: ({ data }) => {
-            if (!data.loading) {
+            const {getPlans} = data.management || {};
+            const {edges=[], totalCount=0} = getPlans || {};
                 return {
-                    items: data.planstore.plans.edges,
+                    items: edges,
+                    total: totalCount,
                     loading: data.loading,
 
                     doSearch(search) {
@@ -41,13 +43,10 @@ const PlanSelectWithQuery = graphql(PlansListQUERY,
                         });
                     }
                 }
-            } else {
-                return {loading: data.loading}
-            }
         },
 
     }
-)(PlanSelect);
+);
 
-export const ActionPlanSelect = PlanSelectWithQuery;
+export const ActionPlanSelect = withPlansSelectQuery(PlanSelect);
 export default ActionPlanSelect;

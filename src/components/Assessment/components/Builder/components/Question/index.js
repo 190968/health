@@ -31,12 +31,12 @@ const tailFormItemLayout = {
         },
     },
 };
-const AssessmentQuestionRadioManager = props => {
+const AssessmentQuestionInputManager = props => {
 
     const { question, form, type, assessment } = props;
     const { getFieldDecorator, getFieldValue } = form;
     const { title, description, isNumeric, getAnswers = [], getBrahmsRules = [] } = question || {};
-    const showBrahms = question && type === 'number';
+    const showBrahms = type === 'number';
     return <Form onSubmit={props.onSubmit}>
         <FormItem
             {...formItemLayout}
@@ -69,4 +69,4 @@ const AssessmentQuestionRadioManager = props => {
     </Form>
 }
 
-export default AssessmentQuestionRadioManager;
+export default AssessmentQuestionInputManager;

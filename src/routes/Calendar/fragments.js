@@ -7,6 +7,8 @@ export const CalendarEventInfoFragment = gql`
             id
             title
             dateTime
+            date
+            time
             duration
             type
             typeTxt

@@ -3,6 +3,7 @@ import { compose, withProps, mapProps, withStateHandlers, branch, withHandlers }
 import { withDrawer } from '../../../../../../components/Modal';
 import { withPatientsSearchQuery } from '../../../../../../components/Autosuggest/containers/PatientSelect';
 import { withPeopleSearchQuery } from '../../../../../../components/Autosuggest/containers/PeopleSelect';
+import { withPlansSelectQuery } from '../../../../../../components/Autosuggest/containers/PlanSelect';
 
 const withPeopleSearchQueryMap = compose(
 	withProps((props) => {
@@ -10,6 +11,13 @@ const withPeopleSearchQueryMap = compose(
 		return { role: type };
 	}),
 	withPeopleSearchQuery
+);
+
+const withPlansSearchQuery = compose(
+	withPlansSelectQuery,
+	// withProps(props => {
+	// 	const {items} = props;
+	// })
 );
 
 const enhance = compose(
@@ -37,7 +45,8 @@ const enhance = compose(
 		}
 	),
 	branch((props) => props.type === 'patient', withPatientsSearchQuery),
-	branch((props) => props.type != 'patient', withPeopleSearchQueryMap),
+	branch((props) => props.type === 'aps', withPlansSearchQuery),
+	branch((props) => props.type != 'patient' && props.type != 'aps', withPeopleSearchQueryMap),
 	withHandlers({
 		onSearch: (props) => (value) => {
 			props.updateSearch(value);

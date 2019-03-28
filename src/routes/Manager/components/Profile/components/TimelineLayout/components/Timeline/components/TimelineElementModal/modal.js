@@ -3,9 +3,9 @@ import {DateField} from "../../../../../../../../../../components/FormCustomFiel
 import {injectIntl} from 'react-intl';
 import messages from './messages';
 import {compose, branch, renderComponent, withProps, withState} from 'recompose';
-import {Modal, message, Form, Input, Divider, Switch} from 'antd';
+import { Form, Input, Divider, Switch} from 'antd';
 import moment from 'moment';
-import {withModal} from "../../../../../../../../../../components/Modal/index";
+import { withDrawer} from "../../../../../../../../../../components/Modal/index";
 
 const formItemLayoutDefault = {
     labelCol: {span: 4},
@@ -39,10 +39,10 @@ const enhance = compose(
         }
     }),
     withState('modalVisible', 'setModalVisible', true),
-    withModal
+    withDrawer
 );
 
-export const modalHOCPure = (WrappedComponent) => {
+const modalHOCPure = (WrappedComponent) => {
     class ModalWrappeer extends React.Component {
 
         onOk = () => {

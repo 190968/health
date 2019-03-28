@@ -69,3 +69,8 @@ export const ChoiceElement = props => {
 } 
 
 export default ChoiceElement;
+
+
+export const RadioFormField = props => {
+    return <ChoiceElement {...props} />
+}

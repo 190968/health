@@ -52,7 +52,9 @@ body {
   }
 }
 
-
+.ib {
+  display:inline-block;
+}
 
 .ant-layout-content {
   padding: 24px 50px;
@@ -271,12 +273,12 @@ body {
 
 .ant-btn-green {
   color: #fff !important;
-  background-color: #389e0d !important;
-  border-color: #389e0d !important;
+  background-color: #8dc800 !important;
+  border-color: #7fb304 !important;
   &:hover {
     color: #fff !important;
-    background-color: #52c41a !important;
-    border-color: #52c41a !important;
+    background-color: #9bd809 !important;
+    border-color: #9bd809 !important;
   }
 }
 .ant-btn-orange {
@@ -493,7 +495,21 @@ body {
     margin-bottom:0;
   }
 }
+.ant-form-item {
+  &.single-line {
+    .ant-form-item-label {
+      line-height: 1.5em;
+    }
+    .ant-form-item-control {
+      line-height:1em;
+    }
+  }
 
+
+  .ant-form-explain {
+    font-size: 0.9em;
+  }
+}
 
 
 .ant-tabs.no-margin {

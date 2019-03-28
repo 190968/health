@@ -5,6 +5,7 @@ import {
 } from 'react-intl';
 import messages from './messages';
 import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
+import { SelectFromList } from '../../../../../../../../../../components/UI/SelectFromList';
 const Option = Select.Option;
 
 
@@ -63,14 +64,7 @@ class TimelineElementSelect extends React.PureComponent {
 
         const elements = getTimelineElementsConst();
         return (
-            <Card type={'pure'} bordered={false}>
-            {elements.map((info, i) => {
-                return <Card.Grid key={i} style={gridStyle} onClick={() => this.setType(info.type)}>
-                <div style={{fontSize:'2em'}}>{info.icon}</div> <span>{info.name}</span>
-                </Card.Grid>
-            })}
-            </Card>
-            
+            <SelectFromList cols={2} items={elements} onSelect={this.setType} labelKey={'name'} rowKey={'type'}/>
         );
     }
 }

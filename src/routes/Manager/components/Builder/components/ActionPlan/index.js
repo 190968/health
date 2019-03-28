@@ -66,10 +66,10 @@ const ActionPlanBuilderLayout = props => {
     // }
 
     const menu = {
-        mainUrl, exitUrl:'/pathways', menuItems, selectedItem, openItem
+        mainUrl, exitUrl:'/actionplans', menuItems, selectedItem, openItem
     }
 
-    return <BuilderLayout logo={<center>Pathway Builder</center>} header={title} menu={menu} >
+    return <BuilderLayout logo={<center>ActionPlan Builder</center>} header={title} menu={menu} >
         <PlanbuilderContent {...props} routes={menuItems} mainUrl={mainUrl}  />
     </BuilderLayout>
 }

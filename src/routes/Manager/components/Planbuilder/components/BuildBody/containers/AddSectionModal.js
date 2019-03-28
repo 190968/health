@@ -41,7 +41,7 @@ const withMutation = graphql(AddPlanLessonMutation, {
                 }],
             }).then((data) => {
                 ownProps.onHide();
-                message.success('Action has been Added');
+                message.success('Activity has been Added');
             })},
     }),
 });

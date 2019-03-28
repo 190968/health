@@ -102,9 +102,9 @@ export const asyncStages = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "stagesChunk" */'../routes/Manager/containers/Stages'),
-            modules: ['../routes/Manager/containers/Stages'],
-            webpack: () => [require.resolveWeak('../routes/Manager/containers/Stages')],
+            loader: () => import(/* webpackChunkName: "stagesChunk" */'../routes/Manager/components/Cancers/containers/Stages'),
+            modules: ['../routes/Manager/components/Cancers/containers/Stages'],
+            webpack: () => [require.resolveWeak('../routes/Manager/components/Cancers/containers/Stages')],
         })
     );
 }

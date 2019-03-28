@@ -1,5 +1,5 @@
 import React from 'react';
-import {compose, withHandlers} from 'recompose';
+import {compose, withHandlers, withProps} from 'recompose';
 import {injectIntl} from 'react-intl';
 import {Form, Input, Slider} from 'antd';
 import ColorPicker from 'rc-color-picker';
@@ -17,10 +17,14 @@ const formTailLayout = {
     wrapperCol: {span: 19, offset: 5},
 };
 
+const ColorPickerEnhanced = withProps(props => ({
+    defaultColor: props.value
+}))(ColorPicker);
 const LineElementBuilder = (props) => {
     const {form, intl,  details={}} = props;
     const {getFieldDecorator} = form;
-    const {height, color} = details;
+    const {height, color} = details || {};
+    console.log(details);
     return (
         <React.Fragment>
             <FormItem
@@ -45,7 +49,7 @@ const LineElementBuilder = (props) => {
                         rules: [{required: true, message: "Choose Color"}],
                     }
                 )(
-                    <ColorPicker animation="slide-up"  enableAlpha={false} />
+                    <ColorPickerEnhanced animation="slide-up"  enableAlpha={false} />
                 )}
                 </div>
             </FormItem>

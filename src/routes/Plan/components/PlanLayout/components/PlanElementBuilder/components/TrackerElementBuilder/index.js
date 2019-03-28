@@ -27,12 +27,12 @@ const radioStyle = {
 const TrackerElementBuilder = (props) => {
     const {selectTracker, advanced, toggleAdvanced, measurement={}, customTracker=false, toggleCustom} = props;
 
-    const {form, intl,  details={}} = props;
+    const {form, intl,  details} = props;
 
     const {getFieldDecorator, getFieldValue} = form;
     //console.log(details);
-    const {parentId, textBefore='', description='', label='', units={}} = details;
-    console.log(units);
+    const {parentId, textBefore='', description='', label='', units={}} = details || {};
+    // console.log(units);
     return (
         <React.Fragment>
 

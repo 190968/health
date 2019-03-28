@@ -40,7 +40,7 @@ const TreatmentForm = (props) => {
             </FormItem>
             <FormItem
                 {...formItemLayout}
-                label={'Elements'}
+                label={'Treatment'}
                 required={true}
             >
                     {getFieldDecorator(`elements`, {

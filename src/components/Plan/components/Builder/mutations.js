@@ -5,6 +5,8 @@ import { withAddIntroMutation, withAddSectionMutation, withAddLessonMutation, wi
 import {compose, branch } from 'recompose';
 import { withPlanAddChildElementMutation } from '../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementChildrenList/containers/PlanElementChildrenManager';
 import { PLAN_ELEMENT_CHILDREN_QUERY } from '../../../../routes/Plan/components/PlanLayout/components/PlanElement/containers/queries';
+import { GET_PLAN_LESSON_ELEMENTS_QUERY, GET_PLAN_SECTION_ELEMENTS_QUERY } from '../../queries';
+import { message } from 'antd';
 // import { PathwayElementsFragment, PlanSectionElementsFragment, PlanLessonElementsFragment, PlanIntroElementsFragment } from '../../fragments';
 
 
@@ -38,7 +40,9 @@ const UpdatePlanElementsOrder_QUERY = gql`
 export const UPDATE_PLANE_ELEMENT_MUTATION = gql`
     mutation updatePlanElement($id: UID!, $planId: UID!, $input:PlanBodyElementInput!) {
         updatePlanElement(id:$id, planId: $planId, input: $input) {
+            planElement {
             ...PlanElement
+            }
         }
     }
     ${PlanElementPureFragment}
@@ -100,11 +104,11 @@ export const withCreateOrUpdatePlanElement = branch(props => props.element, with
 export const PathwayElementsFragment =  gql`
    fragment PathwayElements on Pathway {
         id
-        # elements {
-        #     ...PlanElement,
-        # }
+        elements {
+            ...PlanElement,
+        }
    }
-    # ${PlanElementPureFragment}
+    ${PlanElementPureFragment}
  `;
 export const PlanLessonElementsFragment =  gql`
    fragment PlanLessonElements on PlanBodyLesson {
@@ -138,7 +142,7 @@ export const PlanIntroElementsFragment =  gql`
 export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrder_QUERY, {
     props: ({ownProps, mutate}) => ({
         updateElementsOrder: (ids, elements) => {
-            //console.log(ownProps);
+            console.log(ownProps);
             const {item, plan, mode} = ownProps;
             const {id=null} = item || {};
             const {id:planId} = plan || {};
@@ -152,7 +156,7 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
                 },
                 update: (client, { data: { planElementReport } }) => {
                     const {mode, plan} = ownProps;
-                    // console.log(ownProps);
+                    console.log(elements, mode);
                     if (mode === 'pathway') {
                         // if it's pathway - remov
                         let pathway = client.readFragment({
@@ -161,7 +165,13 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
                             fragmentName: "PathwayElements",
                         });
 
-
+                        const newPathway = {
+                            ...pathway,
+                            elements: elements,
+                            __typename:'Pathway'
+                        }
+                        console.log(pathway);
+                        console.log(newPathway);
                         client.writeFragment({
                             id: 'Pathway:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
                             fragment: PathwayElementsFragment,
@@ -274,10 +284,11 @@ const deletePlanElement = gql`
 export const withDeletePlanElementMutation = graphql(deletePlanElement, {
     props: ({ ownProps, mutate }) => ({
         deletePlanElement: () => {
-             const {plan, element, parentId, parentValue} = ownProps;
+             const {plan, element, parentId, parentValue, mode} = ownProps;
              const {id:planId} = plan || {};
              const {id} = element || {};
              let refetchQueries = [];
+             console.log(ownProps);
              if (parentId) {
                  console.log(ownProps);
                 refetchQueries.push({
@@ -285,7 +296,24 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
                     variables: {id:parentId, planId, elementValue:parentValue}
                 });
             }
+            switch(mode) {
+                case 'lesson':
+                refetchQueries.push({
+                    query: GET_PLAN_LESSON_ELEMENTS_QUERY,
+                    variables: {id:planId, lessonId:ownProps.lessonId}
+                });
+                break;
+                case 'activity':
+                refetchQueries.push({
+                    query: GET_PLAN_SECTION_ELEMENTS_QUERY,
+                    variables: {id:planId, activityId:ownProps.sectionId}
+                });
+                
+                break;
+            }
+            // console.log(ownProps);
 
+            const hide = message.loading('Deleting...');
             return mutate({
                 variables: { planId, id},
 
@@ -293,7 +321,8 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
 
                 update: (client, { data: { planElementReport } }) => {
                     const {mode, plan, parentId} = ownProps;
-                    console.log(parentId);
+                    hide();
+                    // console.log(parentId);
                     if (parentId) {
                         // update element
                         let pathway = client.readFragment({

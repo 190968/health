@@ -15,28 +15,27 @@ const elementDows = [
     {value:'fri', label:'Fri'},
     {value:'sat', label:'Sat'},
 ]
-class DowScheduling extends React.PureComponent{
+const DowScheduling = props => {
 
-    render(){
 
-        const { intl, form, formItemLayout, planSchedule, element} = this.props;
+        const { intl, form, formItemLayout, planSchedule, element} = props;
         const { getFieldDecorator } = form;
 
 
-        const {type, dows:planDows} = planSchedule;
+        const {type, dows:planDows} = planSchedule || {};
         const isDow = type === 'dow';
 
-        const {schedule} = element;
-        const {dows=[]} = schedule;
-        console.log(isDow);
-        console.log(planDows);
+        const {schedule} = element || {};
+        const {dows=[]} = schedule || {};
+        // console.log(isDow);
+        // console.log(planDows);
 
         let dowOptions = [];
         elementDows.map((option) => {
             const value = option.value;
             const label = option.label;
-            console.log(value);
-            console.log(planDows.indexOf(value));
+            // console.log(value);
+            // console.log(planDows.indexOf(value));
 
             const isDisabled = isDow && planDows.indexOf(value) < 0;// ? false:true;
 
@@ -61,7 +60,6 @@ class DowScheduling extends React.PureComponent{
                     )}
                 </FormItem>
         );
-    }
 
 }
 

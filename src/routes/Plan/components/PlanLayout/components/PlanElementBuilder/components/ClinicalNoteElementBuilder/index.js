@@ -17,11 +17,9 @@ const formTailLayout = {
 };
 
 const ClinicalNoteElementBuilder = (props) => {
-    const {form, intl, element, attachments=[]} = props;
+    const {form, intl, details, attachments=[]} = props;
     const {getFieldDecorator} = form;
-    const {itemInfo} = element || {};
-    const {title, note} = itemInfo || {};
-    console.log(props, 'props');
+    const {title, note} = details || {};
 
     getFieldDecorator('attachments', {initialValue: []});
     return (

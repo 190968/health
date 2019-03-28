@@ -36,7 +36,7 @@ const AssessementView = props => {
         {/* <AssessmentHeader userAssessment={userAssessment} user={user} report={report} /> */}
         {/* <Divider /> */}
         {report && <AssessmentBody userAssessment={userAssessment} assessment={assessment} report={report} user={user} date={date} isCompleted={isCompleted} canReport={canReport} {...otherProps} />}
-        {(!report && canReport) && <div style={{textAlign:'center'}}><Button type={'primary'} onClick={handleNewReport} size={'large'} icon={"play-circle"} >Start Assessment Now</Button></div>}
+        {(!report && canReport) && <div style={{textAlign:'center'}}><Button type={'green'} onClick={handleNewReport} size={'large'} icon={"play-circle"} >Begin Assessment</Button></div>}
         {(isCompleted && !isOnetime && canReport) && <ModalBodyFooter><Button type={'primary'} icon={'plus'} onClick={handleNewReport} >New Report</Button></ModalBodyFooter>}
        
 </PageHeaderLayout>

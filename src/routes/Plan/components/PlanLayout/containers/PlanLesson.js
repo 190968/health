@@ -7,10 +7,10 @@ import { withUpdatePlanElementsOrderMutation } from '../../../../../components/P
  * Enhance Body
  */
 const builderEnhance = compose(
-    withState('elements', 'setElements', props => {
-        const {elements=[]} = props;
-        return elements;
-    }),
+    // withState('elements', 'setElements', props => {
+    //     const {elements=[]} = props;
+    //     return elements;
+    // }),
     withProps(props => {
         let propsUpdated = {
             mode:'lesson'
@@ -46,13 +46,13 @@ const builderEnhance = compose(
 const enhance = compose(
     //withMutation,
     withProps(props => {
-        const {item={}} = props;
-        const {elements=[]} = item || [];
+        const {item} = props;
+        const {elements=[]} = item || {};
         return {
             elements
         }
     }),
-    branch(props => props.isBuilderMode, builderEnhance),
+    branch(props => props.isBuilderMode && !props.isPreviewrMode, builderEnhance),
 )
 
 

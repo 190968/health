@@ -8,18 +8,25 @@ import { PathwayFlowButton } from './components/Buttons';
 import './index.css';
 import AvatarWithName from '../../../../../User/components/AvatarWithName';
 import { PathwayManagerButton } from '../Buttons/components/Manager';
+import SettingsDropdown from '../../../../../../components/UI/SettingsDropdown';
+import PathwayDeleteButton from '../Buttons/containers/Delete';
+import { TableColumnSearch } from '../../../../../../components/Tables/TableColumn';
 
 const {RangePicker} = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
 
 const PathwayTable = props => {
      
-        const {pathways, loading, total} = props;
+        const {pathways, loading, total, filterUsed, search} = props;
+
+        const showEmpty = total ===0 && !filterUsed;
         const columns = [{
             title: 'Title',
             // dataIndex: 'title',
             key: 'title',
-            render: plan => <PathwayManagerButton pathway={plan} label={plan.title} />
+            render: plan => <PathwayManagerButton pathway={plan} label={plan.title} />,
+            filterDropdown: (props) => <TableColumnSearch   onSearch={props.doSearch} search={search} />,
+			filterIcon: <Icon type="search" />
         },
             {
                 title: 'Cancer',
@@ -55,25 +62,15 @@ const PathwayTable = props => {
                 // sorter: (a, b) => sort(a, b, "creator"),
             }, {
                 className: 'action',
+                width:50,
                 render: (info) => {
-                    const menu = (
-                        <Menu>
-                            <Menu.Item>
-                                <PathwayManagerButton pathway={info} />
-                            </Menu.Item>
-                            <Menu.Item>
-                                <PathwayFlowButton pathway={info} />
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Icon type="delete"/> Delete
-                            </Menu.Item>
-                        </Menu>
-                    );
-                    return <Dropdown overlay={menu} trigger={['click']}>
-                        <Icon type="setting"/>
-                    </Dropdown>;
-                },                
-            width:50
+                    const items = [
+                        {key:'edit', content:  <PathwayManagerButton pathway={info} />},
+                        {key:'flow', content:  <PathwayFlowButton pathway={info} />},
+                        {key:'delete', content: <PathwayDeleteButton pathway={info} refetch={props.refetch} asMenuItem />}
+                    ];
+                    return <SettingsDropdown items={items} />
+                }
             },
         ];
 
@@ -83,6 +80,7 @@ const PathwayTable = props => {
         dataSource={pathways} 
         loading={loading} 
         columns={columns} 
+        showEmpty={showEmpty}
         />
     )
 

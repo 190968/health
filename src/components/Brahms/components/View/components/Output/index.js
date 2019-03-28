@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Collapse, Divider, Card, Col, Row, Icon  } from 'antd';
+import {Alert, Collapse, Divider, Card, Col, Row, Button  } from 'antd';
 import AcceptPlanButton from '../../../../../../routes/Plan/components/AcceptPlan/components/AcceptPlanButton';
 import { withToggleModal, withToggleState } from '../../../../../Modal';
 import { AttachmentsList } from '../../../../../FormCustomFields/components/Attachments';
@@ -67,7 +67,7 @@ export const BrahmOutputItem = props => {
                 text = message;
             }
             
-            output = <Alert message={text} type="success" />;
+            output = <Alert message={text} type="info" />;
             break;
         case 'ap':
             // suggest to assign aps.
@@ -80,10 +80,11 @@ export const BrahmOutputItem = props => {
                 const {medium=''} = thumb || {};
            
                 // return <div key={title}>  <AcceptPlanButton plan={plan} label={<Card cover={medium} ><Avatar shape="square" src={medium} /> {title}</>} /> </div>;
-                return <Col span={8} key={title}>  
-                <AcceptPlanButton plan={plan} label={<Card cover={<img src={medium} />} hoverable>
+                return <Col span={8} key={title}> 
+                <Card cover={<img src={medium} />} actions={[ <AcceptPlanButton plan={plan} label={<Button type={'orange'}>Get ActionPlan</Button>} />]} >
                 <Card.Meta title={title} /> 
-                </Card>} /> </Col>;
+                </Card> 
+                </Col>;
             });
             output = <Row gutter={16}>{output}</Row>;
             output = <Alert message={'Suggested ActionPlan'} description={output} type="info" />

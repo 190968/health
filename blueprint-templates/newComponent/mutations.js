@@ -13,7 +13,7 @@ const DELETE_{{upperCase $moduleName}}_MUTATION = gql`
 const CREATE_{{upperCase $moduleName}}_MUTATION = gql`
     mutation CREATE_{{upperCase $moduleName}}($input: {{pascalCase $moduleName}}Input!){
         create{{pascalCase $moduleName}}(input:$input) {
-            ...{{pascalCase $moduleName}}Pure
+            ...{{pascalCase $moduleName}}
         }
     }
     ${ {{pascalCase $moduleName}}Fragment }
@@ -21,7 +21,7 @@ const CREATE_{{upperCase $moduleName}}_MUTATION = gql`
 const UPDATE_{{upperCase $moduleName}}_MUTATION = gql`
     mutation UPDATE_{{upperCase $moduleName}}($id: UID!, $input: {{pascalCase $moduleName}}Input!){
         update{{pascalCase $moduleName}}(id:$id, input: $input) {
-            ...{{pascalCase $moduleName}}Pure
+            ...{{pascalCase $moduleName}}
         }
     }
     ${ {{pascalCase $moduleName}}Fragment }

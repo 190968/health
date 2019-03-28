@@ -4,6 +4,7 @@ import AssessmentQuestionFieldsManager from './components/Fields';
 
 import AssessmentQuestionAnswersFormField from './_answers';
 import AssessmentQuestionBrahmsFormField from './_brahms';
+import { RadioFormField } from '../../../../../FormCustomFields/components/ChoiceElement';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -35,8 +36,9 @@ const AssessmentQuestionRadioManager = props => {
     
         const {question, form, type, assessment} = props;
         const {getFieldDecorator, getFieldValue} = form;
-        const {title, description, numberAsPrefix, getAnswers=[], getBrahmsRules=[]} = question || {};
-        const showBrahms = question;
+        const {title, description, numberAsPrefix=false, getAnswers=[], getBrahmsRules=[]} = question || {};
+        const showBrahms = true;//question;
+        // console.log(numberAsPrefix, 'numberAsPrefix');
         return <Form onSubmit={props.onSubmit}>
                 <FormItem
                     {...formItemLayout}
@@ -65,21 +67,24 @@ const AssessmentQuestionRadioManager = props => {
                 </FormItem>
 
                 {type !== 'range' && <FormItem
-                    {...tailFormItemLayout}
+                    {...formItemLayout}
+                    label="Choice Display"
+                    className={'single-line'}
                 >
                     <span className={'ant-form-text'}>
                     {getFieldDecorator('numberAsPrefix', {
-                        initialValue: numberAsPrefix,
-                        valuePropName: 'checked'
+                        initialValue: numberAsPrefix === true ? 1 : 0,
+                        // valuePropName: 'checked'
                     })(
-                        <Checkbox>Use numbers as choice prefix</Checkbox>
+                        <RadioFormField options={[{label: 'Use Letters', value: 0}, {label: 'Use Numbers', value: 1}]} />
+                        // <Checkbox>Use numbers as choice prefix</Checkbox>
                     )}
                     </span>
                 </FormItem>}
 
                 <AssessmentQuestionAnswersFormField form={form} showOpenEnded={type != 'range' && type != 'dropdown'} question={question} />
 
-                {showBrahms && <AssessmentQuestionBrahmsFormField form={form} possibleOptions={getFieldValue('answers') || getAnswers} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
+                {showBrahms && <AssessmentQuestionBrahmsFormField form={form} type={'optionId'} possibleOptions={getFieldValue('answers') || getAnswers} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
             </Form>
 }
 

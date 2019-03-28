@@ -4,8 +4,8 @@ import { compose, withHandlers, withState} from 'recompose';
 import ScaleElementOptions from './options';
 import messages from './messages';
 import {injectIntl} from 'react-intl';
-import AssessmentQuestionBrahmsFormField from '../../../../../../../../components/Assessment/components/Builder/components/Question/_brahms';
 import Options from '../../../../../../../../components/FormCustomFields/components/Options';
+import PlanElementBrahmsFormField from '../../_brahms';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -21,10 +21,10 @@ const formTailLayout = {
 
 const OptionsElementBuilder = (props) => {
     console.log(props);
-    const {form, loading, intl, scales=[],  details={}} = props;
+    const {form, loading, intl, scales=[], details, plan, mode, element} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {label, options=[], isDropdown=false, isMultiple=false, isVertical=false, hasLine=false} = details;
-    const showBrahms = details;
+    const {id, label, options=[], isDropdown=false, isMultiple=false, isVertical=false, hasLine=false} = details || {};
+    const showBrahms = plan;// && id;
     // const formItemLayout=formItemLayoutDefault, formTailLayout=formTailLayoutDefault,
     return (
         <React.Fragment>
@@ -45,7 +45,7 @@ const OptionsElementBuilder = (props) => {
 
             {/* <ScaleElementOptions options={options} form={form} /> */}
 
-            <FormItem {...formTailLayout}>
+            <FormItem {...formTailLayout} className={'single-line'} >
                 {getFieldDecorator('isDropdown', {
                     initialValue: isDropdown,
                     valuePropName: 'checked'
@@ -59,7 +59,7 @@ const OptionsElementBuilder = (props) => {
             </FormItem>
             {!getFieldValue('isDropdown') &&
             <React.Fragment>
-                <FormItem {...formTailLayout}>
+                <FormItem {...formTailLayout}  className={'single-line'}>
                     {getFieldDecorator('isMultiple', {
                         initialValue: isMultiple,
                         valuePropName: 'checked'
@@ -72,7 +72,7 @@ const OptionsElementBuilder = (props) => {
                     )}
                 </FormItem>
 
-                <FormItem {...formTailLayout}>
+                <FormItem {...formTailLayout}  className={'single-line'}>
                     {getFieldDecorator('isVertical', {
                             initialValue: isVertical,
                             valuePropName: 'checked'
@@ -86,7 +86,7 @@ const OptionsElementBuilder = (props) => {
                     )}
                 </FormItem>
                 {getFieldValue('isVertical') &&
-                <FormItem {...formTailLayout}>
+                <FormItem {...formTailLayout}  className={'single-line'}>
                     {getFieldDecorator('hasLine', {
                         initialValue: hasLine,
                         valuePropName: 'checked'
@@ -100,8 +100,7 @@ const OptionsElementBuilder = (props) => {
                 </FormItem>}
             </React.Fragment>
             }
-
-            {showBrahms && <AssessmentQuestionBrahmsFormField form={form} type={'number'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} /*plan={plan}element={itemInfo}*/ formatGoToElement={props.formatGoToElement} />}
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} element={element} plan={plan} mode={mode} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
    
         </React.Fragment>
     );

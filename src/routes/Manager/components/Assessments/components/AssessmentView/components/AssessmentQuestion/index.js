@@ -7,13 +7,16 @@ import {Form, Button, Alert} from 'antd';
 import moment from 'moment';
 import { BrahmOutputItem, BrahmsOutputs, BrahmOutputWidget, BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
 import BrahmsAsField, { BrahmsRulesView } from '../../../../../../../../components/Brahms/components/Manager/components/Field';
+import { formatTimeForField } from '../../../../../../../../components/Other/utils';
 // import { TrackerInput } from '../../../../../../../Plan/components/Tracker';
 
 const FormItem = Form.Item;
 
 const AssessmentQuestion = props => {
-    const {isPreviewMode=false, isBuilderMode=false, form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules} = props;
+    const {isPreviewMode=false, isBuilderMode=false, form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules, openBrahms=false} = props;
     const {title, description, type, isNumeric, numberAsPrefix=false, isMultiple, getAnswers=[], getBrahmsRules=[]} = question || {};
+    
+    const haveBrahmsAndToExecute = props.ifValidateOnBrahms(true);
 
     const {i, currentQuestion, isPastSection, goPreviousQuestion, goNextQuestion, goNextSection, goPreviousSection} = props;
    
@@ -56,8 +59,12 @@ const AssessmentQuestion = props => {
     // show buttons is not dimmed and not completed and need to show by one question or this is a preview
     const canShowButtons = !questionIsDimmed && !isCompleted && !showAllQuestions && !showAllSections ;//isCurrentSection
     // console.log(canShowButtons);
+
     const showNextButton = canShowButtons;// && !showAllSections;// && (!showAllQuestions);// || (!showAllSections && isLastQuestion);
     let showPreviousButton = canShowButtons && (allowGoBack && !isFirstQuestion);//!showAllSections && showAllQuestions && !showFinishButton;// || (!showAllSections && isLastQuestion);
+    // let runBrahms = getBrahmsRules && getBrahmsRules.length > 0;
+    // console.log(fieldChanged, 'fieldChanged');
+    let buttonType = 'primary';
     let nextText = 'Next Question';
     let onNextClick = goNextQuestion;
     let prevText = 'Previous Question';
@@ -68,6 +75,11 @@ const AssessmentQuestion = props => {
     } else if (isLastQuestion && isLastSection) {
         nextText = 'Finish';
         onNextClick = props.completeAssessment;
+        buttonType = 'green';
+    }
+    if (haveBrahmsAndToExecute) {
+        nextText = 'Continue';
+        buttonType = 'primary';
     }
 
     const {getFieldDecorator, getFieldValue} = form;
@@ -83,7 +95,7 @@ const AssessmentQuestion = props => {
     // console.log(isCompleted);
     // console.log(showValidAnswer);
     // console.log(showQuestionValidAnswer);
-    defaultProps.showCorrect = showQuestionValidAnswer;
+    defaultProps.showCorrect = showQuestionValidAnswer && !haveBrahmsAndToExecute;
     let initialValue = null;
     let value = null;
     switch(type) {
@@ -123,7 +135,7 @@ const AssessmentQuestion = props => {
         case 'time':
             value = questionReports.map(report => report.value);
             initialValue = value[0] || null;
-            initialValue = initialValue && moment(initialValue);
+            initialValue = initialValue && formatTimeForField(initialValue, {isUTC:true});
 
             field = <AssessmentInput isTime  {...defaultProps} />
             break;
@@ -186,8 +198,8 @@ const AssessmentQuestion = props => {
           )}
            </FormItem>
         </div>
-        {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} />}
-            {((showBrahms === 'question' || showBrahms === 'both') && brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
+        {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} openBrahms={openBrahms} />}
+            {((showBrahms === 'question' || showBrahms === 'both') && brahms && (brahms.length > 0 && !haveBrahmsAndToExecute)) && <BrahmsElementOutput rules={brahms} /> }
         
         {/* {showQuestionValidAnswer && <AssessmentQuestionValidAnswers answers={getAnswers} />} */}
 
@@ -195,7 +207,7 @@ const AssessmentQuestion = props => {
         {showBottomButtons && <div style={{textAlign:'right', marginTop:5}}>
        
             {showPreviousButton && <span className={'link bump-r grey'} onClick={onPrevClick}>{prevText}</span>}
-            {showNextButton && <Button type={'primary'} onClick={onNextClick}>{nextText}</Button>}
+            {showNextButton && <Button type={buttonType} onClick={onNextClick}>{nextText}</Button>}
        
        </div>}
     </div>

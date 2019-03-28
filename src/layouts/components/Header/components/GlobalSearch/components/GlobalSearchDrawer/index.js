@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { Radio, Divider, Input, Button, List } from 'antd';
 import { DrawerFooter } from '../../../../../../../components/Modal';
 import { EmptyList } from '../../../../../../../components/Loading';
@@ -6,7 +7,7 @@ import {AvatarWithName} from '../../../../../../../routes/User/components/Avatar
 const Search = Input.Search;
 const GlobalSearchDrawer = (props) => {
 	console.log(props);
-	const {loading, type, onSearch, items = {}, search = '' , updateSearchType} = props;
+	const {loading, type, onSearch, items = [], search = '' , updateSearchType} = props;
 	return (
 		<React.Fragment>
 			<Search
@@ -23,7 +24,7 @@ const GlobalSearchDrawer = (props) => {
 					<Radio.Button value="patient">Patients</Radio.Button>
 					<Radio.Button value="manager">Managers</Radio.Button>
 					<Radio.Button value="cm">Care Managers</Radio.Button>
-					<Radio.Button value="aps" disabled>
+					<Radio.Button value="aps">
 						ActionPlans
 					</Radio.Button>
 				</Radio.Group>
@@ -36,7 +37,7 @@ const GlobalSearchDrawer = (props) => {
 					dataSource={items}
 					renderItem={(item) => (
 						<List.Item>
-                            <AvatarWithName user={item} widget />
+							{type === 'aps' ? <Link to={'/builder/ap/'+item.id} >{item.title}</Link> : <AvatarWithName user={item} widget />}
 						</List.Item>
 					)}
 				/>

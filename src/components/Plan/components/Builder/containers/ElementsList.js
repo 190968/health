@@ -1,8 +1,21 @@
 import {compose, withHandlers, withProps, withStateHandlers, defaultProps} from 'recompose';
-import {arrayMove, SortableContainer } from 'react-sortable-hoc';
+import {SortableContainer } from 'react-sortable-hoc';
+import {message} from 'antd';
+import arrayMove from 'array-move';
 import { withUpdatePlanElementsOrderMutation } from '../mutations';
 
 export const PlanElementsListBuilderEnhancer = compose(
+    // withStateHandlers(props => {
+    //     const {elements} = props;
+    //     return elements;
+    // }, {
+    //     updateElements: (state, props) => elements => {
+    //         // const elements = props.elements;
+    //         return {
+    //             elements
+    //         }
+    //     }
+    // }),
     withUpdatePlanElementsOrderMutation,
     // withProps(props => {
     //     let propsUpdated = {};
@@ -30,7 +43,11 @@ export const PlanElementsListBuilderEnhancer = compose(
             const elements = arrayMove(props.elements, oldIndex, newIndex);
 
             const ids = elements.map(element => element.id);
-            props.updateElementsOrder(ids, elements);
+            const hide = message.loading('Saving...');
+            props.updateElementsOrder(ids, elements).then(() => {
+                hide();
+                // props.updateElements(elements);
+            });
             
             // props.updateOrder(elements);
         }

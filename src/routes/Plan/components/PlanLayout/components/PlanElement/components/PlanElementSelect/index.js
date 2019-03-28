@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import {Row, Card, Col, Tag, Icon, Tabs } from 'antd';
 import {FitIcon, IconCustom} from "../../../../../../../../components/FitIcon/index";
+import { SelectFromList } from '../../../../../../../../components/UI/SelectFromList';
 
 const TabPane = Tabs.TabPane;
 
@@ -12,6 +13,43 @@ let gridStyle = {
     cursor: 'pointer'
 };
 
+const PLAN_ELEMENT_TYPES = [
+    {type:'tracker', label:'Tracker', icon: <IconCustom type="tracker"/>},
+    {type:'options', label:'Options', icon: <IconCustom type="options"/>},
+    {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
+    {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
+    {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
+    // {type:'assessment', label:'Assessment', icon: <IconCustom type="assessment"/>},
+    {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
+    {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},
+    //
+    {type:'text', label:'Text', icon: <IconCustom type="text" />},
+    {type:'image', label:'Image', icon:<IconCustom type="image" />},
+    {type:'video', label:'Video', icon: <IconCustom type="video" />},
+    {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
+    {type:'document', label:'Document', icon:<IconCustom type="document" />},
+    //
+    {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
+    // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+    {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
+    {type:'line', label:'Line', icon: <IconCustom type="line"/>},
+    {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
+    {type:'link', label:'Link', icon:<IconCustom type="link"/>},
+    {type:'embed', label:'Embed', icon: <Icon type="code" />},
+
+    {label:'Clinical Note', type:'clinical_note', icon: <IconCustom type="clinical-note"/>},
+    {label:'Treatment', type:'treatment', icon:<IconCustom type='treatment' />},
+    // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+    {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
+]
+
+export const formatPlanElementByTitle = props => {
+    const {type} = props;
+    const aa = PLAN_ELEMENT_TYPES.find(f => f.type === type);
+    const {label} = aa;
+    return label;
+}
+
 export default class PlanElementsSelect extends React.Component {
 
     static propTypes = {
@@ -21,9 +59,9 @@ export default class PlanElementsSelect extends React.Component {
     }
 
 
-    handleSelection = (type) => {
-        this.props.onSelect(type);
-    }
+    // handleSelection = (type) => {
+    //     this.props.onSelect(type);
+    // }
 
     printButton = ({type, label, size=12}) => {
         return <Col key={type} md={size} onClick={() => this.handleSelection(type)}><Tag  style={{width:'100%', textAlign:'center', 'marginBottom':5}} >{label}</Tag></Col>;
@@ -57,7 +95,7 @@ export default class PlanElementsSelect extends React.Component {
             {type:'line', label:'Line', icon: <IconCustom type="line"/>},
             {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
             {type:'link', label:'Link', icon:<IconCustom type="link"/>},
-            {type:'embed', label:'Embed', icon: <IconCustom type="embed"/>},
+            {type:'embed', label:'Embed', icon: <Icon type="code" />},
         ];
 
         if (mode === 'lesson') {
@@ -121,12 +159,12 @@ export default class PlanElementsSelect extends React.Component {
 
     render() {
 
-        const {mode, view = false, parentId} = this.props;
+        const {mode, view = false, parentId, onSelect} = this.props;
         //console.log(this.props);
         const elements = this.getProperElements(view || mode );
 
-        const span = parentId ? 24 : Math.ceil(24/elements.length);
-        let size = elements.length > 1 ? 12 : 6;
+        // const span = parentId ? 24 : Math.ceil(24/elements.length);
+        // let size = elements.length > 1 ? 12 : 6;
         // return (<Row gutter={16} >
         //     {elements.map(info => {
         //         return <Col key={info[0]} md={span}>{info[0] !== '' && <h4>{info[0]}</h4>}
@@ -161,11 +199,12 @@ export default class PlanElementsSelect extends React.Component {
                 // }
                 //console.log(gridStyle);
                 return <TabPane tab={info[0]} key={el_i}>
-                    <Card type={'pure'} >
+                <SelectFromList cols={2} items={info[1]} onSelect={onSelect} rowKey={'type'}/>
+                    {/* <Card type={'pure'} >
                     {info[1].map(({label, type, icon}) => {
                     return <Card.Grid style={gridStyle} key={label}  onClick={() => this.handleSelection(type)}><div className="ant-card-grid--hovered"><div style={{fontSize:'2.6em'}}>{icon}</div> {label}</div></Card.Grid>
                     })}
-                </Card>
+                </Card> */}
                 </TabPane>
             })}
         </Tabs>

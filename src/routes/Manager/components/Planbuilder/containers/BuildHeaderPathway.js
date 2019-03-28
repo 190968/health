@@ -10,6 +10,7 @@ export const ActionPlans_QUERY = gql`
                 ...PathwayCardInfo
                 cancer {
                     id
+                    title
                 }
             }
     }
@@ -28,7 +29,7 @@ const withQuery = graphql(
                 variables: {
                     id: id,
                 },
-                //fetchPolicy: 'network-only'
+                fetchPolicy: 'network-only'
             }
 
         },
@@ -52,6 +53,7 @@ const PlanUpdateMutation = gql`
             ...PathwayCardInfo
             cancer {
                     id
+                    title
                 }
         }
     }

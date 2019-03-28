@@ -3,11 +3,11 @@ import {Table} from 'antd';
 import { EmptyList } from '../Loading';
 
 export const TableWithMessage = props => {
-    const {emptyMessage='Nothing has been added', buttons, ...otherProps } = props;
+    const {emptyMessage='Nothing has been added', buttons, showEmpty=true, ...otherProps } = props;
     const {dataSource=[], loading, total, rowSelection} = otherProps;
     let {pagination={}} = otherProps;
     const {selectedRowKeys=[]} = rowSelection || {};
-
+    // console.log(props);
 
     if (pagination !== false) {
         pagination.hideOnSinglePage = true;
@@ -27,7 +27,7 @@ export const TableWithMessage = props => {
     // console.log(dataSource);
     // console.log(loading, 'loading');
 
-    if (dataSource.length == 0 && !loading) {
+    if (dataSource.length == 0 && !loading && showEmpty) {
         if (!emptyMessage) {
             return null;
         }

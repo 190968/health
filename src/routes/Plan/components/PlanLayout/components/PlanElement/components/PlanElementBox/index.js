@@ -111,6 +111,8 @@ const PlanElementBox = (props) => {
 			);
 			
 			fieldTitle = item.label;
+			const {options:radioOptions} = item;
+			possibleOptions = radioOptions;
 			
 			break;
 			case 'dropdown_input':
@@ -135,6 +137,8 @@ const PlanElementBox = (props) => {
 					// 	{...defaultProps}
 					// />
 				);
+				const {options:dropdownOptions} = item;
+				possibleOptions = dropdownOptions;
 
 			break;
 		case 'text_input':
@@ -167,6 +171,8 @@ const PlanElementBox = (props) => {
 					{...defaultProps}
 				/>
 			);
+			const {options:condiOptions} = item;
+			possibleOptions = condiOptions;
 			break;
 		case 'decision':
 			reportValues = reports && reports.map((report) => report.value);
@@ -259,14 +265,22 @@ const PlanElementBox = (props) => {
 				}
 				const textLength = item.text.length;
 				//tipboxIcon = <img src={iconUrl} style={{maxWidth:80}} />;
-				if (iconAlign == 'right') {
-					text = <div className={'clearfix'}>
-						<div style={{float: 'right', textAlign: 'center', marginLeft:20}}>
-						<img src={iconUrl} style={{maxWidth:80}} /> 
+				if (iconAlign === 'right') {
+					// text = <div className={'clearfix'}>
+					// 	<div style={{float: 'right', textAlign: 'center', marginLeft:20}}>
+					// 	<img src={iconUrl} style={{maxWidth:80}} /> 
+					// 	<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					// 	</div>
+					// 	<ReactFitText compressor={10.5} minFontSize={16} maxFontSize={18}><div style={{marginRight:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					// </div>
+
+					text = <div style={{display: 'flex', alignItems:'center'}}>
+					<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginRight:10}} className={'ib'} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					<div className={'ib'} style={{textAlign:'center'}}>
 						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
-						</div>
-						<ReactFitText compressor={10.5} minFontSize={16} maxFontSize={18}><div style={{marginRight:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+						<img src={iconUrl} style={{maxWidth:80}} /> 
 					</div>
+					</div>;
 					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
 						
 					// 	</Col>
@@ -281,20 +295,22 @@ const PlanElementBox = (props) => {
 					// 	<Col sm={20}><div dangerouslySetInnerHTML={{ __html: item.text }} /></Col>
 					// </Row>;
 				} else {
-					text = <div className={'clearfix'}>
-						<div style={{float: 'left', textAlign: 'center', marginRight:20}}>
-						<img src={iconUrl} style={{maxWidth:80}} /> 
-						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
-						</div>
-						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
-					</div>
-					// text = <Row>
-					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
-					// 	<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					// text = <div className={'clearfix'}>
+					// 	<div style={{float: 'left', textAlign: 'center', marginRight:20}}>
 					// 	<img src={iconUrl} style={{maxWidth:80}} /> 
-					// 	</Col>
-					// 	<Col sm={20}><div dangerouslySetInnerHTML={{ __html: item.text }} /></Col>
-					// </Row>;
+					// 	<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					// 	</div>
+					// 	<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					// </div>
+
+{/* <Row  > */}
+					text = <div style={{display: 'flex', alignItems:'center'}}>
+						<div className={'ib'} style={{textAlign:'center'}}>
+							<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+							<img src={iconUrl} style={{maxWidth:80}} /> 
+						</div>
+						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:10}} className={'ib'} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+						</div>;
 				}
 				
 			} else {
@@ -353,9 +369,18 @@ const PlanElementBox = (props) => {
 			const {medium=''} = thumb || {};
 			fieldTitle = planTitle;
 				
-		field = <AcceptPlanButton disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Card cover={<img src={medium} />} hoverable>
-		<Card.Meta title={planTitle} /> 
-		</Card>} />;
+                // return <div key={title}>  <AcceptPlanButton plan={plan} label={<Card cover={medium} ><Avatar shape="square" src={medium} /> {title}</>} /> </div>;
+			field = <Row gutter={16}>
+				<Col span={8} key={title}> 
+                <Card cover={<img src={medium} />} actions={[ <AcceptPlanButton  disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Button type={'orange'}>Get ActionPlan</Button>} />]} >
+                <Card.Meta title={planTitle} /> 
+                </Card> 
+                </Col>
+			</Row>;
+			
+		// field = <AcceptPlanButton disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Card cover={<img src={medium} />} hoverable>
+		// <Card.Meta title={planTitle} /> 
+		// </Card>} />;
 
 			break;
 		case 'calculator':
@@ -397,7 +422,7 @@ const PlanElementBox = (props) => {
 					sectionId={sectionId}
 					plan={plan}
 					type=""
-					view="decision"
+					//view="decision"
 					mode={mode}
 					schedule={schedule}
 					buttons={[ 'addBefore' ]}
@@ -414,7 +439,7 @@ const PlanElementBox = (props) => {
 					sectionId={sectionId}
 					plan={plan}
 					type=""
-					view="decision"
+					//view="decision"
 					mode={mode}
 					schedule={schedule}
 					buttons={[ 'addAfter' ]}

@@ -22,7 +22,7 @@ const TextElementBuilder = (props) => {
     console.log(props);
     const {form, intl,  details={}, editorState} = props;
     const {getFieldDecorator} = form;
-    const {text=''} = details;
+    const {text=''} = details || {};
     return (
         <React.Fragment>
             <FormItem

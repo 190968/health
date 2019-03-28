@@ -60,6 +60,15 @@ export const AssessmentSectionFragment = gql`
 
 
 
+export const AssessmentSimpleFragment = gql`
+    fragment AssessmentSimple on Assessment {
+        id
+        name
+        isPrivate
+        status
+    }
+`;
+
 export const AssessmentFragment = gql`
     fragment Assessment on Assessment {
         id

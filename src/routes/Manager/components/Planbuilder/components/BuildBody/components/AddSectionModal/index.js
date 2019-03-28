@@ -32,7 +32,7 @@ class AddSectionModal extends React.Component{
                 title={intl.formatMessage(messages.modalTitle)}
                 visible={true}
                 onCancel={this.props.onHide}
-                okText={intl.formatMessage(messages.send)}
+                // okText={intl.formatMessage(messages.send)}
                 onOk={this.handleModalSubmit}
             >
                 <Form>

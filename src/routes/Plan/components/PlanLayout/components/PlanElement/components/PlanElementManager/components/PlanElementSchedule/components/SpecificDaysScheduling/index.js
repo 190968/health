@@ -87,13 +87,13 @@ class SpecificDaysScheduling extends React.Component{
         const { intl, form, formItemLayout, formTailLayout, planSchedule, element} = this.props;
         const {getFieldDecorator, getFieldValue} = form;
 
-        const {type} = planSchedule;
+        const {type} = planSchedule || {};
         const isPlanFixed = type === 'fixed';
 
-        const {schedule:elementSchedule} = element;
+        const {schedule:elementSchedule} = element || {};
         //const isPlanFixed = true;
 
-        console.log(elementSchedule);
+        // console.log(elementSchedule);
 
 
 

@@ -52,7 +52,7 @@ const enhance = compose(
     injectPathwayBodyQuery,
     withSpinnerWhileLoading,
     withStateHandlers(props => {
-        const {elements=[]} = props;
+        const {elements=[],  plan, mode} = props;
         const getReportedValues = [];
         let skippedElementsByRef = {};
         let brahmRules = [];
@@ -83,7 +83,7 @@ const enhance = compose(
                         if (goTorules.length > 0) {
                             // find next skipped item
                             const nextId = getNextObjectFromRules({ rules: goTorules });
-                            const { elementsToSkip} = prepareSkippedPlanElementsByNextId({ elements, currentId: id, nextId })
+                            const { elementsToSkip} = prepareSkippedPlanElementsByNextId({ elements, currentId: id, nextId,  plan, mode })
                             // save questions
                             skippedElementsByRef[id] = elementsToSkip;
                         }

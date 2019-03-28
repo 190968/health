@@ -5,7 +5,7 @@ import {message} from 'antd';
 import { compose,  withHandlers, branch } from 'recompose';
 import { PlanElementFragment } from '../../../../Plan/fragments';
 import { collectExecutedBrahms } from '../../../../../../../components/Brahms/utils';
-import { prepareSkippedPlanElementsByNextId, getPlanElementLabelFromElement } from '../../../../../../../components/Plan/utils';
+import { prepareSkippedPlanElementsByNextId, getPlanElementLabelFromElement, formatPlanGoToElement } from '../../../../../../../components/Plan/utils';
 
 const PLAN_FIELD_REPORT_MUTATION = gql`
     mutation planFieldReport($id: UID!, $date: Date!, $input: [String]!, $upid: UID!) {
@@ -38,10 +38,11 @@ const enhanceWithReport = compose(
     PlanElementWithMutation,
     withHandlers({
         onChange: props => (value) => {
+            console.log(props);
             if (props.isBuilderMode || props.isPreviewMode) {
                 return;
             }
-            const {upid, element, date} = props;
+            const {upid, plan, mode, element, elements, date} = props;
             if (!date) {
                 return;// plug for now
             }
@@ -50,6 +51,31 @@ const enhanceWithReport = compose(
             props.makeReport(value).then(() => {
                 hide();
                 message.success('Saved');
+
+
+                const valueToUse = value;
+
+                const {id, isAnswerBasedElement, getBrahmsRules} = element || {};
+                const {nextElementId, elementRules} = collectExecutedBrahms({valueToUse, getBrahmsRules, isAnswerBasedElement})
+                
+                let skippedByQuestions = {/*id:[]*/};
+                let skippedSeectionsByQuestions = {};
+                if (nextElementId) {
+                    const { elementsToSkip, sectionsByElementsToSkip } = prepareSkippedPlanElementsByNextId({ elements, currentId:id, nextId: nextElementId,  plan, mode })
+                    // console.log(elementsToSkip, 'elementsToSkip');
+                    skippedByQuestions = elementsToSkip;
+                    skippedSeectionsByQuestions = sectionsByElementsToSkip;
+                } else {
+                    skippedByQuestions[id] = [];
+                    skippedSeectionsByQuestions[id] = false;
+                }
+                // console.log(props);
+                // console.log(skippedByQuestions, 'skippedByQuestions');
+                props.updateSkippedElements(skippedByQuestions, skippedSeectionsByQuestions);
+
+                // add brahms rules
+                props.updateBrahmRules({ element, rules:elementRules });
+                
             });
         }
     })
@@ -57,8 +83,8 @@ const enhanceWithReport = compose(
 
 const enhanceFakeReport =  withHandlers({
     onChange: props => (value) => {
-        
-        const {element, elements, isPreviewMode} = props;
+        console.log('fake report');
+        const {element, elements, isPreviewMode, plan, mode} = props;
         // execute
         if (!isPreviewMode) {
             return;
@@ -70,15 +96,19 @@ const enhanceFakeReport =  withHandlers({
         const {nextElementId, elementRules} = collectExecutedBrahms({valueToUse, getBrahmsRules, isAnswerBasedElement})
         
         let skippedByQuestions = {/*id:[]*/};
+        let skippedSeectionsByQuestions = {};
         if (nextElementId) {
-            const { elementsToSkip } = prepareSkippedPlanElementsByNextId({ elements, currentId:id, nextId: nextElementId })
+            const { elementsToSkip, sectionsByElementsToSkip } = prepareSkippedPlanElementsByNextId({ elements, currentId:id, nextId: nextElementId,  plan, mode })
             // console.log(elementsToSkip, 'elementsToSkip');
             skippedByQuestions = elementsToSkip;
+            skippedSeectionsByQuestions = sectionsByElementsToSkip;
         } else {
             skippedByQuestions[id] = [];
+            skippedSeectionsByQuestions[id] = false;
         }
-        console.log(skippedByQuestions, 'skippedByQuestions');
-        props.updateSkippedElements(skippedByQuestions);
+        // console.log(props);
+        // console.log(skippedByQuestions, 'skippedByQuestions');
+        props.updateSkippedElements(skippedByQuestions, skippedSeectionsByQuestions);
 
         // add brahms rules
         if (isPreviewMode) {
@@ -87,31 +117,15 @@ const enhanceFakeReport =  withHandlers({
          
     },
     formatGoToElement: props => elementId => {
-        const {plan} = props;
-        const {elements} = plan || {};
-
-        const element = elements.find(q => q.id === elementId);
-        // console.log(elements);
-        // console.log(elementId);
-        // console.log(element);
-        // if (question) {
-        //     elementObj = question;
-        //     return true;
-        // }
-        // return false;
-        // console.log(element);
-
-        // const {title:sectionTitle} = section || {};
-        // const {title} = elementObj || {};
-        return getPlanElementLabelFromElement(element);
+        return formatPlanGoToElement(elementId, props);
     },
 })
 
 const enhance = compose(
     branch( props => {
         const {isBuilderMode, isPreviewMode} = props;
-        const canReport = false;
-        return !isBuilderMode && !isPreviewMode && canReport;
+        // const canReport = false;
+        return !isBuilderMode && !isPreviewMode;// && canReport;
     }, enhanceWithReport, enhanceFakeReport)
 
 )

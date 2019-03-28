@@ -33,7 +33,7 @@ export const getTipBoxTypeLabel = tipbox => {
 const TextElementBuilder = (props) => {
     const {form, intl,  details={}} = props;
     const {getFieldDecorator} = form;
-    const {text='', icon, tipType, iconAlign} = details;
+    const {text='', icon, tipType, iconAlign} = details || {};
     const {id:iconId} = icon || {};
     return (
         <React.Fragment>

@@ -5,12 +5,16 @@ import {Modal} from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {PlanElementPureFragment} from "../../../../../../../../../../../../../Plan/fragments";
+// import { PathwayElementsFragment } from '../../../../../../../../../../../../../../components/Plan/components/Builder/mutations';
 
 
 export const AddPathwayElementMutation = gql`
     mutation addPathwayElement($planId: UID!, $type:PlanElementEnum!, $input:PlanBodyElementInput!) {
         addPathwayElement(planId: $planId, type:$type, input: $input) {
-            ...PlanElement
+            id
+            elements {
+                ...PlanElement
+            }
         }
     }
     ${PlanElementPureFragment}

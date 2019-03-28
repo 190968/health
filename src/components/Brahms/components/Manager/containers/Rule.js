@@ -8,6 +8,8 @@ import { prepareBrahmsApActionInput } from '../components/Rule/components/RuleAc
 import { prepareBrahmsOutputActionInput } from '../components/Rule/components/RuleActions/output';
 import { prepareBrahmsNotificationActionInput } from '../components/Rule/components/RuleActions/notification';
 import { prepareBrahmsCohortsActionInput } from '../components/Rule/components/RuleActions/cohorts';
+import moment from 'moment';
+import { formatTimeForInput } from '../../../../Other/utils';
 
 
 const enhance = compose(
@@ -42,10 +44,37 @@ export const BrahmsRuleManager = enhance(Rule);
 
 export const prepareBrahmsRuleInput = rule => {
     // console.log(rule, 'rulerulerule');
-    const {id,ruleType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType, ruleAction} = rule;
-    const value = ruleValue ? parseFloat(ruleValue) : null;
-    const valueEnd = ruleValueEnd ? parseFloat(ruleValueEnd) : null;
+    const {id, ruleElementType, ruleType, ruleValue, ruleValueEnd, ruleActionType, ruleAction} = rule;
+    let { ruleValueId } = rule;
+    let value;
+    let valueEnd;
     let action = {};
+
+    if (ruleElementType !== 'optionId') {
+        // reset value it
+        ruleValueId = null;
+        switch(ruleElementType) {
+            case 'time':
+                if (moment.isMoment(ruleValue)) {
+                    value = formatTimeForInput(ruleValue);
+                    valueEnd = ruleValueEnd ? formatTimeForInput(ruleValueEnd) : null;
+                } else {
+                    value = ruleValue
+                    valueEnd = ruleValueEnd || null;
+                }
+                break;
+            case 'tracker':
+                value = ruleValue;
+                valueEnd = ruleValueEnd || null;
+                break;
+            default:
+                value = ruleValue ? parseFloat(ruleValue) : null;
+                valueEnd = ruleValueEnd ? parseFloat(ruleValueEnd) : null;
+                break;
+        }
+    }
+    // if
+    
     //console.log(ruleActionType);
     if (ruleActionType === "ap") {
         //console.log(ruleAction, rule);
@@ -67,7 +96,7 @@ export const prepareBrahmsRuleInput = rule => {
     } else {
         action = ruleAction;
     }
-    return {id, ruleType, ruleValue:value, ruleValueEnd:valueEnd, ruleValueId, ruleActionType, ruleAction:action};
+    return {id, ruleElementType, ruleType, ruleValue:value, ruleValueEnd:valueEnd, ruleValueId, ruleActionType, ruleAction:action};
 }
 
 

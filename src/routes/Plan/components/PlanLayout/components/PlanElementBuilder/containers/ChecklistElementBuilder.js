@@ -4,7 +4,7 @@ import ChecklistElementBuilderPure  from '../components/ChecklistElementBuilder'
 import {modalHOC, withSpinnerWhileLoading} from "../modal";
 
 export const ChecklistElementBuilder = ChecklistElementBuilderPure;
-
+ 
 export default (ChecklistElementBuilderPure);
 
 

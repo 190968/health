@@ -85,12 +85,16 @@ const enhance = compose(
                     props.toggleSectionEditor();
                     return;
                     break;
+                    default:
+
+                    break;
             }
             const {onClick} = props;
     
             const {keyPath} = e;
-            const currentTab = keyPath[1];
-    
+            const currentTab = keyPath.length > 1 ? keyPath[1] : keyPath[0];
+            // console.log(e);
+            // console.log(currentTab);
             onClick(currentTab, e.item.props.index);
         }
     }),

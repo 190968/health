@@ -1,9 +1,10 @@
 import React from 'react';
 import { Input, Icon, Tooltip, Badge } from 'antd';
 import { DateField } from '../../FormCustomFields';
-import { withStateHandlers } from 'recompose';
+import { withStateHandlers, withHandlers } from 'recompose';
 import moment from 'moment';
 import './index.less';
+import { compose } from 'react-apollo';
 const TableColumnSearchPure = (props) => {
 	const { search, onSearch, onClear, placeholder = 'Search' } = props;
 	const suffix = search ? <Tooltip title={'Reset'}><Icon type="close-circle" onClick={onClear} className={'pointer'} /></Tooltip> : <Icon type="search" />;
@@ -14,41 +15,56 @@ const TableColumnSearchPure = (props) => {
 				suffix={suffix}
 				//ref={(ele) => (this.searchInput = ele)}
 				placeholder={placeholder}
-				value={search}
+				defaultValue={search}
 				onChange={onSearch}
 				onPressEnter={onSearch}
+				// allowClear
 			/>
 		</div>
 	);
 	//,
 };
 
-export const TableColumnSearch = withStateHandlers(
-	(props) => {
-		return { search: props.search };
-	}, ({onSearch, onClear}) =>
-	{
-		let timer = null;
-		return {
-			onSearch: (state, props) => (e) => {
-				const { value } = e.target;
-				clearTimeout(timer);
-				timer = setTimeout(() => {
-					if (props.onSearch) {
-						props.onSearch(value);
-					}
-				}, 500);
-				return {search: value};
-			},
-			onClear: (state, props) => () => {
-				if (props.onSearch) {
-					props.onSearch('');
-				}
-				return {search: ''}
+const enh = compose(
+	withHandlers({
+		onSearch: props => (value) => {
+			console.log(props);
+			console.log(value.target.value);
+			if (props.onSearch) {
+				props.onSearch(value.target.value);
 			}
 		}
-	}
-)(TableColumnSearchPure);
+	}),
+	// withStateHandlers(
+	// 	(props) => {
+	// 		return { search: props.search };
+	// 	}, () =>
+	// 	{
+	// 		let timer = null;
+	// 		return {
+	// 			onSearch: (state, props) => (e) => {
+	// 				const { value } = e.target;
+	// 				console.log(e);
+	// 				console.log(value);
+	// 				clearTimeout(timer);
+	// 				timer = setTimeout(() => {
+	// 					if (props.onSearch) {
+	// 						props.onSearch(value);
+	// 					}
+	// 				}, 500);
+	// 				return {search: value};
+	// 			},
+	// 			onClear: (state, props) => () => {
+	// 				if (props.onSearch) {
+	// 					props.onSearch('');
+	// 				}
+	// 				return {search: ''}
+	// 			}
+	// 		}
+	// 	}
+	// )
+);
+export const TableColumnSearch = enh(TableColumnSearchPure);
 
 export const TableColumnDates = (props) => {
 	return (

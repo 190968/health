@@ -15,11 +15,11 @@ class BetweenDaysScheduling extends React.PureComponent{
         const { intl, form, formItemLayout,  planSchedule, element} = this.props;
         const {getFieldDecorator, getFieldValue} = form;
 
-        const {type} = planSchedule;
+        const {type} = planSchedule || {};
         const isPlanFixed = type === 'fixed';
 
-        const {schedule} = element;
-        const {startDate, endDate} = schedule;
+        const {schedule} = element || {};
+        const {startDate, endDate} = schedule || {};
         return(
                 <FormItem
                     {...formItemLayout}

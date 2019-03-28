@@ -1,8 +1,9 @@
 import React from 'react';
 import {Form, Select, Input, Icon, Tooltip, Button} from 'antd';
-import { compose, withHandlers, withState, withProps, branch} from 'recompose';
+import { compose, withHandlers, withState, withProps, branch, withStateHandlers} from 'recompose';
 import messages from './messages';
 import {injectIntl} from 'react-intl';
+import Options from '../../../../../../../../components/FormCustomFields/components/Options';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -104,9 +105,9 @@ const ScaleElementOptions = enhance(ScaleElementOptionsPure);
 
 
 const ScaleElementBuilder = (props) => {
-    const {form, loading, intl, scales=[], formItemLayout=formItemLayoutDefault, details={}, updateOptions, options=[], keys=[], uuid=0 /*options=[]*/} = props;
+    const {form, loading, intl, scales=[], formItemLayout=formItemLayoutDefault, details={}, updateOptions, options=[], keys=[], uuid=0, plan, mode /*options=[]*/} = props;
     const {getFieldDecorator} = form;
-    const {scaleId='', label=''/*, options:options = []*/} = details;
+    const {scaleId='', label=''/*, options:options = []*/} = details || {};
 
     //console.log(form.getFieldValue('options'));
     //console.log(keys);//
@@ -127,7 +128,7 @@ const ScaleElementBuilder = (props) => {
                 )}
             </FormItem>
 
-            <FormItem
+            {/* <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.scale)}
             >
@@ -140,9 +141,13 @@ const ScaleElementBuilder = (props) => {
                         {scales.map(scale => <Option key={scale.id} value={scale.id}>{scale.name}</Option>)}
                     </Select>
                 )}
-            </FormItem>
+            </FormItem> */}
 
-            <ScaleElementOptions options={options} setUUID={props.setUUID} setKeys={props.setKeys} keys={keys} uuid={uuid} form={form} />
+
+            <Options form={form} options={options} formItemLayout={formItemLayout} />
+            {/* <ScaleElementOptions options={options} setUUID={props.setUUID} setKeys={props.setKeys} keys={keys} uuid={uuid} form={form} /> */}
+            {/* {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options}   element={element}  possibleOptionsFormatter={possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />} */}
+   
         </React.Fragment>
     );
 };
@@ -156,45 +161,49 @@ const enhaceWithState = compose(
 );
 
 const enhanceScale = compose(
-    withProps(props => {
-        const {details={}} = props;
-        const{options=[]} = details;
+    withStateHandlers(props => {
+        const {details} = props;
+        const{options=[]} = details || {};
         //console.log(options);
         return {
             options,
-            keys: Object.keys(options),
-            uuid: options.length
+            // keys: Object.keys(options),
+            // uuid: options.length
         }
-    }),
-    branch(props=> !props.loading, enhaceWithState),
-
-    withHandlers({
-        updateOptions: props => (value) => {
-            const {scales, form} =props;
+    }, {
+        updateOptions: (state, props) => (value) => {
+            let {options=[]} = state;
+            const {scales} = props;
             const selectedScale = scales.filter(scale => {
                 return scale.id === value;
             });
             //console.log(scales);
             //console.log(selectedScale);
             if (selectedScale.length > 0) {
-                const {options=[]} = selectedScale[0];
+                const {options:scaleOptions=[]} = selectedScale[0];
                 //console.log(props);
                // props.setKeys(Object.keys(options));
                // props.setUUID(options.length);
                  /*form.setFieldsValue({
                      options: options,
                  });*/
-                 props.setOptions(options.map(option => {
-                     return {value:'', label:option};
-                 }));
-                props.setKeys(Object.keys(options));
-                props.setUUID(options.length);
+                 options = scaleOptions.map(option => {
+                         return {id:'', label:option};
+                     })
+                //  props.setOptions(options.map(option => {
+                //      return {value:'', label:option};
+                //  }));
+                // props.setKeys(Object.keys(options));
+                // props.setUUID(options.length);
             }
+            console.log(options);
+            return {options}
         }
     })
 )
 
 
+// export default (ScaleElementBuilder);
 export default enhanceScale(ScaleElementBuilder);
 
 

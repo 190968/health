@@ -3,6 +3,7 @@ import {Form, Input, Select, Checkbox, Button, Divider} from 'antd';
 import { prepareBrahmsRulesField, BrahmsAsField } from '../../../../../../../../components/Brahms/components/Manager/containers/Field';
 import CohortSelect from '../../../../../../../../components/Autosuggest/containers/CohortSelect';
 import TaskAssignButton from '../../../../../../../../components/Tasks/components/TaskAssignButton';
+import { RadioFormField } from '../../../../../../../../components/FormCustomFields/components/ChoiceElement';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 const Option = Select.Option;
@@ -36,18 +37,22 @@ const tailFormItemLayout = {
 const AssessmentsManagerSettings = props => {
     const {assessment, form, loading} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {id, isPrivate=false, getCohorts} = assessment || {};
+    const {id, isPrivate=false, getCohorts, status} = assessment || {};
     return <React.Fragment>
         <Form>
         <FormItem
-                {...tailFormItemLayout}
+                {...formItemLayout}
+                label="Assessment Privacy"
+                className={'single-line'}
             >
                 <span className={'ant-form-text'}>
                 {getFieldDecorator('isPrivate', {
-                    initialValue: isPrivate,
-                    valuePropName: 'checked'
+                    initialValue: isPrivate ? 1 : 0,
+                    // valuePropName: 'checked'
                 })(
-                    <Checkbox>Make this assessmet private</Checkbox>
+                    <RadioFormField options={[{label: 'Public (open to network)', value: 0}, {label: 'Private (just for me)', value: 1}]} />
+                        
+                    // <Checkbox>Make this assessmet private</Checkbox>
                 )}
                 </span>
             </FormItem>
@@ -68,7 +73,7 @@ const AssessmentsManagerSettings = props => {
         </Form>
 
         <div style={{textAlign:'right'}}>
-            <Button disabled >Print</Button> <TaskAssignButton label={'Prescribe'} size={'default'} mode={'simple'} buttonType={'green'} assignObject={{type: 'assessment', object:assessment}} /> <Button  type={'primary'} onClick={props.onSubmit}>Publish</Button>
+            <Button disabled >Print</Button>{/* <TaskAssignButton label={'Prescribe'} size={'default'} mode={'simple'} buttonType={'green'} assignObject={{type: 'assessment', object:assessment}} disabled={status != 'published'} />*/} <Button  type={'primary'} onClick={props.onSubmit}>Publish</Button>
         </div>
 
         </React.Fragment>

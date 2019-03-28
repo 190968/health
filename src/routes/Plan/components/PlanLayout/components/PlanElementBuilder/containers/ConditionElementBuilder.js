@@ -126,8 +126,8 @@ export const preparePlanElementConditionInput = (values) => {
     let {options=[]} = values;
     // console.log(values);
     options = options.map(option => {
-        const {label, value} = option;
-        return {id:value, label}
+        const {label, id} = option;
+        return {id, label}
     });
 
     return {

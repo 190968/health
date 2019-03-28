@@ -28,6 +28,7 @@ const withQuery = graphql(
             return {
                 events: getCalendarEvents,
                 loading,
+                refetch:refetch,
                 handleChangeType(types) {
                     console.log(types);
                     return data.refetch({

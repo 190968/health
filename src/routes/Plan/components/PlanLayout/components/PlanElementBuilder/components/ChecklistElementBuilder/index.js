@@ -11,7 +11,7 @@ import { possiblePlanElementOptionsFormatter } from '../..';
 
 const FormItem = Form.Item;
 
-const formItemLayoutDefault = {
+const formItemLayout = {
     labelCol: {span: 4},
     wrapperCol: {span: 20},
 };
@@ -21,15 +21,19 @@ const formTailLayout = {
 };
 
 
+// const blankOption = {id:'', label:''};
 
 const ChecklistElementBuilder = (props) => {
-    const {form, intl, element={}, formItemLayout=formItemLayoutDefault} = props;
+    const {form, intl, details={}, /*formItemLayout=formItemLayoutDefault,*/ plan, mode, element} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {id,itemInfo} = element || {};
-    const {label:title, options = [blankOption] } = itemInfo || {};
+    const {id, label:title, options = [{id:'', label:''}] } = details || {};
     // console.log(props);
-    const showBrahms = id && id !== '';
-    // console.log(props, 'props');
+    const showBrahms = plan;// && id && id !== '';
+    //  console.log(blankOption, 'Checklist blankOption');
+    //  console.log(props, 'Checklist Props');
+    //  console.log(details, 'Checklist details');
+    //  console.log(options, 'Checklist options');
+    //  console.log(getFieldValue('options'), 'Checklist options');
     return (
 
         <React.Fragment>
@@ -48,13 +52,14 @@ const ChecklistElementBuilder = (props) => {
 
             <Options form={form} options={options} title="To Do" formItemLayout={formItemLayout} />
 
-            {showBrahms && <PlanElementBrahmsFormField form={form} type={'number'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} /*plan={plan}*/ element={element}  possibleOptionsFormatter={possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} element={element} plan={plan} mode={mode} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
+   
+            {/* {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} plan={plan} mode={mode} element={details}  possibleOptionsFormatter={possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />} */}
    
         </React.Fragment>
     );
 }
 
-const blankOption = {id:'', title:''};
 const enhance = compose(
     injectIntl,
 );

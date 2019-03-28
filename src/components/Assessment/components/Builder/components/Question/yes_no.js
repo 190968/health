@@ -25,7 +25,7 @@ const AssessmentQuestionYesNoManager = props => {
         const {title, description, type=typeInit, getAnswers=[], getBrahmsRules=[]} = question || {};
         const  formItemLayout=formItemLayoutDefault;
         const isTypeTime = type == 'time';
-        const showBrahms = !isTypeTime && question;
+        const showBrahms = !isTypeTime;// && question;
 
         let answers = [
             {label:'Yes', isCritical:false, points:0},
@@ -121,8 +121,8 @@ const AssessmentQuestionYesNoManager = props => {
 
                 {/* <AssessmentQuestionFieldsManager form={form} question={question} type={type} formItemLayout={formItemLayout} /> */}
 
-
-{showBrahms && <AssessmentQuestionBrahmsFormField form={form} possibleOptions={answers} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
+                {showBrahms && <AssessmentQuestionBrahmsFormField form={form} type={'optionId'} possibleOptions={answers} assessment={assessment} question={question} formatGoToElement={props.formatGoToElement} />}
+            
             
                 {/* {showBrahms && <FormItem
                     {...formItemLayout}

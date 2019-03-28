@@ -136,7 +136,7 @@ const AddCalendarEvent = props => {
                     label={<FormattedMessage {...messages.time} />}
                 >
                     {getFieldDecorator('time', {
-                        initialValue: date && moment(),
+                        // initialValue: null,
                         rules: [{ required: true, message: "Select Time" }],
                     }
                     )(

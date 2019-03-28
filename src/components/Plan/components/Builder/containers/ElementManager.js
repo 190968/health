@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import PlanElementBuilderSelect from '../components/SelectElementType';
 import PlanElementBuilderPure from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder';
 import { compose, withProps, renderComponent, withState, branch, withHandlers } from 'recompose';
@@ -27,6 +27,8 @@ import { preparePlanElementAssessmentInput } from '../../../../../routes/Plan/co
 import { getPlanElementLabelFromElement } from '../../../utils';
 import DefaultI18nEn from '../../../../../i18n/en';
 import { prepareTreatmentInput } from '../../../../../routes/Health/components/Forms/containers/Treatment';
+import PlanElementSchedule from '../../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementManager/components/PlanElementSchedule';
+import { formatPlanElementByTitle } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementSelect';
 
 
 const enhance = compose(
@@ -45,23 +47,35 @@ const enhance = compose(
     withHandlers({
         onSubmit: props => ({ callback }) => {
             // console.log(props, 'Props before input');
-            const { type, order } = props;
-            //console.log(input);
+            let { type, order } = props;
+            // console.log(props);
             props.form.validateFields((err, values) => {
                 //console.log(err);
                 //console.log(values);
                 if (!err) {
+                    // prepare
+                    switch(type) {
+                        case 'image':
+                        case 'video':
+                        case 'audio':
+                        case 'document':
+                            // newProps.typeMedia = type;
+                            type = 'media';
+                            break;
+                    }
                     let input = preparePlanElementInput({ values, order, type });
 
                     //input.extra = values.extra || null;
                     // add additional info
 
                     // if schedule - add schedule
-                    console.log(values, 'Element values');
-                    console.log(input, 'Element Input');
-                    console.log(props, 'props');
+                    // console.log(values, 'Element values');
+                    // console.log(input, 'Element Input');
+                    // console.log(props, 'props');
+                    const hide = message.loading('Saving...');
                     if (props.addPathwayElement) {
                         props.addPathwayElement(input, type).then(({ data }) => {
+                            hide();
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -71,6 +85,7 @@ const enhance = compose(
                         });
                     } else if (props.addLessonElement) {
                         props.addLessonElement(input, type).then(({ data }) => {
+                            hide();
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -80,6 +95,7 @@ const enhance = compose(
                         });
                     } else if (props.addActivityElement) {
                         props.addActivityElement(input, type).then(({ data }) => {
+                            hide();
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -89,6 +105,7 @@ const enhance = compose(
                         });
                     } else if (props.addIntroElement) {
                         props.addIntroElement(input, type).then(({ data }) => {
+                            hide();
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -98,6 +115,7 @@ const enhance = compose(
                         });
                     } else if (props.addChildElement) {
                         props.addChildElement(input, type).then(({ data }) => {
+                            hide();
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -107,6 +125,7 @@ const enhance = compose(
                         });
                     } else if (props.updateElement) {
                         props.updateElement(input).then(({ data }) => {
+                            hide();
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -125,10 +144,10 @@ const enhance = compose(
     }),
     withProps(props => {
         // console.log(props);
-        const { intl, element } = props;
+        const { intl, element, type } = props;
         const { id } = element || {};
-        const elementTitle = getPlanElementLabelFromElement(element);
-        const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title:elementTitle })
+        const elementTitle = id ? getPlanElementLabelFromElement(element) : formatPlanElementByTitle({type});
+        const title = intl.formatMessage(DefaultI18nEn.addEditSomething, { edit: (id && id !== ''), title:elementTitle })
         return {
             modalTitle: title
         }
@@ -146,22 +165,25 @@ const enhance = compose(
 //     withDrawer
 // );
 
-// const managerDrawerHoc = WrappedComponent => {
-//     const aaaa = props => {
-//         return <WrappedComponent {...props} />
-//     }
+ const managerDrawerHoc = WrappedComponent => {
+     const aaaa = props => {
+         return <>
+         <WrappedComponent {...props} />
+         <PlanElementSchedule {...props}   />
+         </>
+     }
 
-//     return enhance2(aaaa);
-// }
+     return enhance(aaaa);
+ }
 
-export const PlanElementBuilder = enhance(PlanElementBuilderPure);
+export const PlanElementBuilder = managerDrawerHoc(PlanElementBuilderPure);
 
 
 const preparePlanElementInput = ({ order, values, type }) => {
     const { brahms, schedule, ...otherProps } = values;
     let input = { schedule, order };
     input.brahms = prepareBrahmsInput(brahms);
-    // console.log(type, 'type');
+    console.log(type, 'type');
     console.log(otherProps, 'otherProps');
     switch (type) {
         case 'checklist':
@@ -183,7 +205,7 @@ const preparePlanElementInput = ({ order, values, type }) => {
         case 'decision':
             input.decisionElement = preparePlanElementConditionInput(otherProps);
             break;
-        case 'file_input':
+        case 'fileInput':
             input.fileInputElement = preparePlanElementFileInputInput(otherProps);
             break;
         case 'line':
@@ -204,7 +226,7 @@ const preparePlanElementInput = ({ order, values, type }) => {
         case 'text':
             input.textElement = preparePlanElementTextInput(otherProps);
             break;
-        case 'text_input':
+        case 'textInput':
             input.textInputElement = preparePlanElementTextInputInput(otherProps);
             break;
         case 'tipbox':

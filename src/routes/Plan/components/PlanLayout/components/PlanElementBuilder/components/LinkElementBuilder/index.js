@@ -25,7 +25,7 @@ const radioStyle = {
 const LinkElementBuilder = (props) => {
     const {form, intl,  details={}, showUrl=true} = props;
     const {getFieldDecorator} = form;
-    const {label='', url='', description=''} = details;
+    const {label='', url='', description=''} = details || {};
     return (
         <React.Fragment>
             <FormItem

@@ -23,7 +23,7 @@ const enhance = compose(
                         finish = props.create{{pascalCase $moduleName}}(input);
                     }
                     finish.then(() => {
-                        messageModal.success('Saved');
+                        message.success('Saved');
                         if (props.onHide) {
                             props.onHide();
                         }

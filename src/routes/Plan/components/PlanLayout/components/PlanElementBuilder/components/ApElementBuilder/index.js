@@ -16,10 +16,9 @@ const formTailLayout = {
 };
 
 const ApElementBuilder = (props) => {
-    const {form, intl,  element} = props;
+    const {form, intl,  details} = props;
     const {getFieldDecorator} = form;
-    const {itemInfo} = element || {};
-    const plan = itemInfo || {};
+    const plan = details || {};
     return (
         <React.Fragment>
             <FormItem

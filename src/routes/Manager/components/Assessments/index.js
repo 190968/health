@@ -12,6 +12,7 @@ import SettingsDropdown from '../../../../components/UI/SettingsDropdown';
 import DefaultI18nEn from '../../../../i18n/en';
 import { AssessmentManagerButton } from './components/Buttons/components/Manager';
 import { AssessmentDeleteButton } from './components/Buttons/containers/Delete';
+import AssessmentReportsSummaryButton from './components/Buttons/components/ReportsSummary';
 
  
 const filters = [
@@ -35,17 +36,17 @@ const Assessments = props => {
             render: (title, info) => <AssessmentManagerButton assessment={info} label={info.name} />
         },
         {
-            title: 'Notes',
+            title: 'Description',
             dataIndex: 'description',    
             key: 'notes',
-            width:300,
+            width:400,
             render: (info) => <Truncate width={280}>{info}</Truncate>
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',    
-            width:100,
+            width:150,
             sorter:true,
             render: (status, assessment) => {
                 let color = '';
@@ -77,10 +78,14 @@ const Assessments = props => {
         // },
         {
             title: '# Prescribed',
-            dataIndex: 'getTotalAssigns',    
+            // dataIndex: 'getTotalAssigns',    
             key: 'getTotalAssigns',
             width:110,
             align: 'right',
+            render: info => {
+                const {getTotalAssigns} = info;
+                return <AssessmentReportsSummaryButton assessment={info} label={getTotalAssigns} />;
+            }
             // sorter: (a, b) => a.getTotalAssigns - b.getTotalAssigns,
         },
         {
@@ -88,6 +93,7 @@ const Assessments = props => {
                 const items = [
                     {key:'edit', content:  <AssessmentManagerButton assessment={info} />},
                     {key:'assign', content:  <TaskAssignButton label={'Prescribe'} asMenuItem size={'default'} mode={'simple'} assignObject={{type: 'assessment', object:info}} />},
+                    {key:'reports', content:  <AssessmentReportsSummaryButton assessment={info} />},
                     {key:'delete', content: <AssessmentDeleteButton assessment={info} refetch={props.refetch} asMenuItem />}
                 ];
                 return <SettingsDropdown items={items} />

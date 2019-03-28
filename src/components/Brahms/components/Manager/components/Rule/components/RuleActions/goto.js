@@ -15,7 +15,8 @@ const BrahmsRuleActionGoToPure = props => {
 
 const enhance = compose(
     withStateHandlers( props => {
-        const {value, assessment} = props;
+        const {value, assessment, plan, mode} = props;
+        console.log(props);
         const {goToElementId} = value || {};
         const {getSections=[]} = assessment || {};
        
@@ -30,12 +31,40 @@ const enhance = compose(
                 }
                 return false;
             });
-            console.log(goToElementId, 'goToElementIdgoToElementId');
-            console.log(value);
-            console.log(section);
-            console.log(getSections);
-            values.push(section.id);
-            values.push(goToElementId);
+            if (section) {
+                // console.log(goToElementId, 'goToElementIdgoToElementId');
+                // console.log(value);
+                // console.log(section);
+                // console.log(getSections);
+                values.push(section.id);
+                values.push(goToElementId);
+            }
+        } else if (plan) {
+            const {type} = plan;
+            if (type === 'ap') {
+                const {lessons, activities} = plan || {};
+                let items = mode === 'lesson' ? lessons : activities;
+                // work with sections
+
+                const section = items.find(s => {
+                    const {elements=[]} = s;
+                    const question = elements.find(s => s.id == goToElementId);
+                    if (question) {
+                        return true;
+                    }
+                    return false;
+                });
+                if (section) {
+                    // console.log(goToElementId, 'goToElementId');
+                    // console.log(items, 'items');
+                    // console.log(section);
+                    values.push(section.id);
+                    values.push(goToElementId);
+                }
+            } else {
+                values = goToElementId;
+            }
+           
         }
         // console.log(section, 'section');
         // goToElementId

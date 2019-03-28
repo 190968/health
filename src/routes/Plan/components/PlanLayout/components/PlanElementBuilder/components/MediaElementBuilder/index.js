@@ -66,7 +66,7 @@ const MediaElementBuilder = (props) => {
     //console.log(props);
     const {form, intl,  details={}, showLoader, typeMedia, tmpMedia, attachments=[]} = props;
     const {getFieldDecorator} = form;
-    const {label='', url='', description='', mediaType=''} = details;
+    const {label='', url='', description='', mediaType=''} = details || {};
     //let template = '';
     //let note = '';
     //let allowedFileTypes = ['application/*'];

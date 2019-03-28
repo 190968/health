@@ -6,11 +6,30 @@
         &:first-child {
             margin-top:0;
         }
+
+        &.tour-planmenu-activities {
+            .ant-menu-submenu-title {
+                background: #1da1ff;
+            }
+        }
+
+        &.tour-planmenu-lessons {
+            .ant-menu-item:hover {
+                color: #8dc800;
+            }
+            .ant-menu-item-selected {
+                color: #8dc800;
+                &::after {
+                    border-right-color: #8dc800;
+                }
+            }
+        }
+        
     }
     .ant-menu-submenu-title {
         text-transform: uppercase;
         color: #fff;
-        background: #a5cb37;
+        background: #8dc800;
         margin-top:0;
         margin-bottom:0;
         text-align: center;
@@ -22,6 +41,8 @@
                 background: #fff;
             }
         }
+
+       
     }
 
     .ant-menu-submenu-selected {

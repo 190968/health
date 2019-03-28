@@ -3,29 +3,30 @@ import Select from '../Select';
 import {compose, withHandlers, branch, withProps} from 'recompose';
 
 const ChemotherapySelect = ({loading, items, doSearch, onChange, value=undefined, mode=null}) => {
-    return <Select value={value} i18n={{placeholder:"Select Chemotherapy"}} loading={loading} mode={mode} items={items} doSearch={doSearch} onChange={onChange} />;
+    return <Select value={value} getFullInfo i18n={{placeholder:"Select Chemotherapy"}} loading={loading} mode={mode} items={items} doSearch={doSearch} onChange={onChange} />;
 };
 
 
-const fullValue = compose(
+const enhance = compose(
     withProps(props => {
-        const {value={}} = props;
-        const {id} = value;
-        return {value:id};
-    }),
-    withHandlers({
-        onChange: props => value => {
-            let option = props.items.filter(item => item.id === value);
-            if(option.length > 0) {
-                option = option[0];
+        // format value
+        const { value, mode  } = props;
+        // console.log(props);
+        if (value) {
+            if (mode === 'multiple') {
+
+                const values = value.map(val => {
+                    const { id, title } = val || {};
+                    return { key: id, label: title };
+                })
+                //console.log(values);
+                return {value: values};
             }
-            // console.log(option);
-            props.onChange(option);
+            //return value;
+            const { id, title = '' } = value || {};
+            return { value: { key: id, label: title } };
         }
-    })
+    }),
 )
-const enhance = branch(({getFullInfo=false}) => getFullInfo,
-    fullValue
-);
 
 export default enhance(ChemotherapySelect);

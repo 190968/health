@@ -5,7 +5,7 @@ import messages from './messages';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
-const formItemLayoutDefault = {
+const formItemLayout = {
     labelCol: {span: 5},
     wrapperCol: {span: 19},
 };
@@ -15,7 +15,7 @@ const formTailLayout = {
 };
 
 const TextInputElementBuilder = (props) => {
-    const {form, intl, formItemLayout=formItemLayoutDefault, details} = props;
+    const {form, intl, /*formItemLayout=formItemLayoutDefault,*/ details} = props;
     const {getFieldDecorator} = form;
     const {label=''} = details || {};
     return (

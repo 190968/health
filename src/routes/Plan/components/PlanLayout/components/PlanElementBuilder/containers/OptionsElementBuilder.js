@@ -5,22 +5,22 @@ import {modalHOC, withSpinnerWhileLoading} from "../modal";
 import {injectIntl} from 'react-intl';
 
 
-const enhance = compose(
-    withSpinnerWhileLoading,
-    injectIntl,
-    withState('element', 'setElement', props => {
-        //console.log(props);
-        const {element={}} = props;
-        return element;
-    }),
-    withProps(props => {
-        const {element={}, details={}} = props;
-        const {itemInfo=details} = element;
-        return {details:itemInfo};
-        }
-    )
-)
-export default enhance(OptionsElementBuilder);
+// const enhance = compose(
+//     withSpinnerWhileLoading,
+//     injectIntl,
+//     withState('element', 'setElement', props => {
+//         //console.log(props);
+//         const {element={}} = props;
+//         return element;
+//     }),
+//     withProps(props => {
+//         const {element, details={}} = props;
+//         const {itemInfo=details} = element || {};
+//         return {details:itemInfo};
+//         }
+//     )
+// )
+export default (OptionsElementBuilder);
 
 
 

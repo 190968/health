@@ -1,8 +1,9 @@
 import AssessmentQuestionManagerPure from '../components/Question';
-import AssessmentQuestionSelect from '../components/Question/select';
+import AssessmentQuestionSelect, { formatAssessmentQuestionType } from '../components/Question/select';
 import AssessmentQuestionExistingQuestionManager from '../components/Question/existing';
 import AssessmentQuestionYesNoManager from '../components/Question/yes_no';
 import AssessmentQuestionTrackerManager from '../components/Question/tracker';
+import AssessmentQuestionTimeManager from '../components/Question/time';
 import AssessmentQuestionRadioManager from '../components/Question/options';
 import {injectIntl} from 'react-intl';
 import {Form, message} from 'antd';
@@ -18,6 +19,7 @@ import { formatAssessmentGoToElement } from '../../../../../routes/Manager/compo
 export const withAssessmentQuestionTypes = compose(
     branch(({type}) => type === 'yes_no', renderComponent(AssessmentQuestionYesNoManager)),
     branch(({type}) => type === 'tracker', renderComponent(AssessmentQuestionTrackerManager)),
+    branch(({type}) => type === 'time', renderComponent(AssessmentQuestionTimeManager)),
     branch(({type}) => (type === 'radio' || type === 'dropdown' || type === 'list' || type === 'range'), renderComponent(AssessmentQuestionRadioManager)),
 );
 const enhance = compose(
@@ -64,11 +66,13 @@ const enhance = compose(
     }),
     withProps(props => {
 
-        const { intl, question } = props;
-        const { id } = question || {};
-        const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title: 'Question' })
+        const { intl, question, type } = props;
+        const { id, title } = question || {};
+        const label = formatAssessmentQuestionType(type);
+        let modalTitle = id && id !== '' ? ' a Question - '+title : ' a Question - '+label;
+        modalTitle = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title: modalTitle })
         return {
-            modalTitle: title
+            modalTitle: modalTitle
         }
     }),
     withDrawer,
@@ -107,7 +111,7 @@ const prepareAssessmentQuestionInput = (values, type) => {
         input.yesNoInput = {yes, no};
     } else {
         const {isMultiple, numberAsPrefix} = values;
-        input.optionsInput = {isMultiple, numberAsPrefix, answers};
+        input.optionsInput = {isMultiple, numberAsPrefix: numberAsPrefix === 1, answers};
     }
     return input;
 }

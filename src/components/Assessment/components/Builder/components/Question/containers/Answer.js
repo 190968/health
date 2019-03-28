@@ -81,7 +81,7 @@ const enhance = compose(
 
         const { intl, answer } = props;
         const { id } = answer || {};
-        const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title: 'Asnwer' })
+        const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title: 'an Answer' })
         return {
             modalTitle: title
         }

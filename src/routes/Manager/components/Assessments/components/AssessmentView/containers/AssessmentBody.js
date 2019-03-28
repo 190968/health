@@ -239,8 +239,9 @@ const enhance = compose(
     withHandlers({
         onChange: props => (question, input, callback) => {
             const { assessment, reportId } = props;
-
+            // const hide = message.loading('Saving...');
             return props.onSubmit(question.id, input).then(({ data }) => {
+                // hide();
                 const { assessmentQuestionReportPayload } = data;
                 const { assessmentUserReport, brahms = [] } = assessmentQuestionReportPayload || {};
 

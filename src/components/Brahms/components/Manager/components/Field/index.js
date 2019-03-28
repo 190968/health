@@ -6,6 +6,7 @@ import { BrahmsRuleDeleteButton } from '../Buttons/components/Brahms/delete';
 import { branch, renderComponent } from 'recompose';
 import { formatAssessmentRuleCondition } from '../Rule';
 import { IconCustom } from '../../../../../FitIcon';
+import { formatTimeForRender } from '../../../../../Other/utils';
 
  
 const BrahmsAsField = props => {
@@ -43,11 +44,12 @@ const customPanelStyle = {
     overflow: 'hidden',
   };
 export const BrahmsRulesView = props => {
-    const {rules=[], renderRule, ...otherProps} = props;
-    if (!rules || rules.lenght == 0) {
+    const {rules=[], renderRule, openBrahms=false, ...otherProps} = props;
+    if (!rules || rules.length == 0) {
         return null;
     }
-    return <Collapse bordered={false} expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
+    const defaultActiveKey = openBrahms ? ['1'] : null;
+    return <Collapse bordered={false} defaultActiveKey={defaultActiveKey} expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
     <Collapse.Panel header={<><IconCustom type="brahms" style={{marginLeft:-5}} /> BRAHMS</>} key="1" style={customPanelStyle} >
         <ListWithMessage
             emptyMessage={false}
@@ -75,7 +77,7 @@ export const BrahmsRulesView = props => {
     
 const BrahmsRuleManagerItem = props => {
     const {renderRule, ...otherProps} = props;
-    const {rule, possibleOptions=[], possibleOptionsFormatted, formatGoToElement} = otherProps;
+    const {rule, possibleOptions=[], possibleOptionsFormatted, formatGoToElement, label} = otherProps;
 
     const isAnswredQuestion = possibleOptions.length > 0;
     if (renderRule) {
@@ -90,20 +92,26 @@ const BrahmsRuleManagerItem = props => {
 // ruleValueId: "a8117"
 
     // console.log(props, 'rulerulerulerulerule');
-    let {ruleType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType, ruleAction} = rule || {};
+    let {ruleType, ruleElementType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType, ruleAction} = rule || {};
     const condition = formatAssessmentRuleCondition(rule);
     console.log(possibleOptions, 'possibleOptions');
+    console.log(props, 'props');
+    console.log(ruleValueId, 'ruleValueId');
     let string;
     let prefix = condition;
-    if (!isAnswredQuestion) {
+    // if it's not option ID
+    if (/*!isAnswredQuestion*/ ruleElementType !== 'optionId') {
 
+        if (ruleElementType == 'time') {
+            ruleValue = formatTimeForRender(ruleValue);
+        }
         if (ruleType === 'between') {
             prefix += ' '+ruleValue + ' & '+ruleValueEnd;
         } else {
             prefix += ' '+ruleValue;
         }
         
-    } else if (ruleValueId) {
+    } else if (ruleValueId || ruleValueId === 0) {
         
         // console.log(possibleOptions, 'possibleOptions');
         // console.log(ruleValueId, 'ruleValueId');
@@ -115,12 +123,20 @@ const BrahmsRuleManagerItem = props => {
                 const {id} = possibleOptionsFormatted(a);
                 return id === ruleValueId
             });
-            console.log(ruleValueId, 'ruleValueId');
+            // console.log(ruleValueId, 'ruleValueId');
             console.log(answerFormatted);
             const {label:optionLabel} = possibleOptionsFormatted(answerFormatted);
             prefix = ' '+optionLabel;
         } else {
-            const answer = possibleOptions.find(a=>a.id === ruleValueId);
+             let answer;
+              console.log(Number.isInteger(ruleValueId));
+            if (Number.isInteger(ruleValueId)) {
+                // if number - then it's index.
+                answer = possibleOptions.find((a, i)=> i === ruleValueId);
+            } else {
+                answer = possibleOptions.find(a=>a.id === ruleValueId);
+            }
+             console.log(answer);
             const {label} = answer || {};
             prefix = ' '+label;
         }
@@ -132,22 +148,26 @@ const BrahmsRuleManagerItem = props => {
             const {message=messageInit, attachments=attachmentsInit} = outputActionInput || {};
             
             if (attachments.length > 0) {
-                string = <>{message} (<Icon type="paper-clip" /> {attachments.length})</>;
+                string = <>{message} ({attachments.length} {attachments.lengt > 1 ? 'attachments' : 'attachment'} <Icon type="paper-clip" /> {attachments.length})</>;
             } else {
                 string = message;
             }
+            ruleActionType = 'Display';
         break;
         case 'notification':
             const {text:messageNotificationInit, notificationtActionInput} = ruleAction || {};
             const {text:messageNotification=messageNotificationInit} = notificationtActionInput || {};
             string = messageNotification;
+            ruleActionType = 'Notification';
         break;
         case 'cohorts':
             // console.log(ruleAction);
             const {cohorts=[]} = ruleAction || {};
             // const {plans=plansInit} = apActionInput || {};
             if (cohorts) {
-                string = cohorts.map(p=> <div>{p.title}</div>);
+                const names = cohorts.map(p=> p.title);
+                // console.log(names);
+                string = names.join(', ');
             }
             //prefix = '';
             ruleActionType = 'Cohorts';
@@ -177,7 +197,7 @@ const BrahmsRuleManagerItem = props => {
     ;
 
     return <div>
-        <div><strong>Answer:</strong>  {prefix}</div> 
+        <div><strong>{label || 'Answer'}:</strong>  {prefix}</div> 
         <div><strong>{ruleActionType}:</strong> {string}</div> 
         </div>
 }

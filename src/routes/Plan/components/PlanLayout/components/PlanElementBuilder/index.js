@@ -28,7 +28,7 @@ import { conditionalWhenThen } from '../../../../../../utils/main';
 // import { valueFromNode } from 'apollo-utilities';
 
 import PlanBuilderElementSelect from '../../../../../../components/Plan/components/Builder/components/ElementSelect';
-import { getPlanElementLabelFromElement } from '../../../../../../components/Plan/utils';
+import { getPlanElementLabelFromElement, formatPlanGoToElement } from '../../../../../../components/Plan/utils';
 
 
 
@@ -65,6 +65,24 @@ export const withPlanElementUnion = conditionalWhenThen([
 const enhance = compose(
     // branch(props => props.element, PlanElementWithQuery),
     // branch(props => props.element, withMutation, withAddMutation),
+    withProps(props => {
+        let newProps = {...props};
+        const {element, type, details={}} = props;
+        const {itemInfo=details} = element || {};
+        newProps.details = itemInfo;
+        switch(type) {
+            case 'image':
+            case 'video':
+            case 'audio':
+            case 'document':
+                newProps.typeMedia = type;
+                newProps.type = 'media';
+
+                break;
+        }
+        // console.log(newProps);
+        return newProps;
+    }),
     // mapProps(props => {
     //     let newProps = {...props};
 
@@ -92,19 +110,16 @@ const enhance = compose(
     //     }
     //     return newProps;
     // }),
+// )
     // Form.create(),
     withHandlers({
         formatGoToElement: props => elementId => {
-            const {plan} = props;
-            const {elements} = plan || {};
-            const element = elements.find(q => q.id === elementId);
-            
-            return getPlanElementLabelFromElement(element);
+            return formatPlanGoToElement(elementId, props);
         },
         GoToComponent: props => (propsFromComponent) => {
-            const {onChange} = propsFromComponent;
-            const {plan} = props;
-            return <PlanBuilderElementSelect plan={plan} onChange={onChange} />;//1111</div>;
+            const {onChange, value} = propsFromComponent;
+            const {plan, mode} = props;
+            return <PlanBuilderElementSelect value={value} plan={plan} onChange={onChange} mode={mode} />;//1111</div>;
         }
     }),
     withPlanElementUnion,

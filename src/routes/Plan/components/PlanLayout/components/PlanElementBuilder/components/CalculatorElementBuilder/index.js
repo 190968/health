@@ -56,7 +56,7 @@ const getSuggestion = (tracker) => {
 const CalculatorElementBuilder = (props) => {
     const {form, intl,  details={}, loading, trackers=[], onTest, showTest, validateFormula} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {title='', formulaString=''} = details;
+    const {title='', formulaString=''} = details || {};
 
     const suggestions = trackers.map(tracker => getSuggestion(tracker));
 

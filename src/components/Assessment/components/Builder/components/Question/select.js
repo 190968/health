@@ -10,12 +10,18 @@ const items = [
     {'id': 'dropdown', label: 'Dropdown', icon:<IconCustom type="dropdown"/>},
     {'id': 'yes_no', label: 'Yes/No', icon:<IconCustom type="yes-no"/>},
     {'id': 'input', label: 'Open Ended', icon:<IconCustom type="open-ended"/>},
-    {'id': 'number', label: 'Number', icon:<IconCustom type="number"/>},
+    {'id': 'number', label: 'Value', icon:<IconCustom type="number"/>},
     {'id': 'time', label: 'Time', icon:<IconCustom type="time"/>},
-    {'id': 'range', label: 'Range', icon:<IconCustom type="range"/>},
+    {'id': 'range', label: 'Slider', icon:<IconCustom type="range"/>},
     {'id': 'tracker', label: 'Tracker', icon:<IconCustom type="tracker"/>},
-    {'id': 'question', label: 'Existing Question', icon:<IconCustom type="options"/>},
+    {'id': 'question', label: 'Global Question', icon:<IconCustom type="options"/>},
 ];
+
+export const formatAssessmentQuestionType = type => {
+    const object = items.find(i => i.id === type);
+    const {label} = object || {};
+    return label;
+}
 const AssessmentQuestionSelect = props => {
     return <SelectFromList cols={2} items={items} onSelect={props.setType}/>
 }

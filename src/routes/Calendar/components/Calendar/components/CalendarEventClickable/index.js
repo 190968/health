@@ -7,7 +7,7 @@ const CalendarAppointmentButton = props => {
     const {event} = otherProps;
     const {title, dateTime} = event || {};
     return <React.Fragment>
-        {showModal && <AppointmentView {...otherProps}onHide={toggleModal} />}
+        {showModal && <AppointmentView {...otherProps} onHide={toggleModal} />}
         <span onClick={toggleModal} ><small>{moment(dateTime).format('LT')}</small>: {title}</span>
     </React.Fragment>
 }

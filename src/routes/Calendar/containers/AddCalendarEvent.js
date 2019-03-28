@@ -11,6 +11,7 @@ import { withDrawer } from '../../../components/Modal';
 import { withActiveUserSimple } from '../../../components/App/app-context';
 import { CalendarI18nEn } from '../components/Calendar/i18n/en';
 import { FormattedMessage } from 'react-intl';
+import { prepareDateInput, prepareDateTimeInput, prepareTimeInput } from '../../../utils/datetime';
 
 export const CALENDAR_EVENT_QUERY = gql`
     query GET_EVENT_INFO {
@@ -116,16 +117,24 @@ const enhance = compose(
             const { saveEvent, form } = props;
            
             form.validateFields((err, values) => {
-               
+                // console.log(values);
                 //console.log(err);
+               
                 if (!err) {
-                    //console.log(values);
+                    // console.log(values);
+                   
+                    // console.log(date, 'date');
+                    // console.log(time, 'time');
                     const {participants=[], date, time, ...otherValues} = values;
+                    const dateTime = prepareDateTimeInput(date, time);
+                    
                     const input = {...otherValues,
-                        date: moment.utc(date).format('YYYY-MM-DD'),
-                        time: moment.utc(time).format('HH:mm:ss'),
+                        date: prepareDateInput(dateTime, {utc:true}),
+                        time: prepareTimeInput(dateTime),
                         participants:participants.map(participant => participant.id)};
                     const hide = message.loading('Saving...');
+                    // console.log(input);
+                    // return;
                     return saveEvent(input).then(() => {
                         hide();
                         message.success('Saved');

@@ -9,28 +9,28 @@ import { withUpdatePlanElementsOrderMutation } from '../../../../../components/P
  * Enhance Body
  */
 const builderEnhance = compose(
-    withState('elements2', 'setElements', null),
-    withProps(props => {
-        console.log(props);
-        let propsUpdated = {
-            mode:'introduction'
-        };
-        if (props.isBuilderMode && !props.isPreviewMode) {
-            propsUpdated = {...propsUpdated, ...{
-                useDragHandle: true,
-                lockAxis: 'y',
-                onSortEnd: props.onSortEnd,
-                useWindowAsScrollContainer: true
-            }}
-        }
+    // withState('elements2', 'setElements', null),
+    // withProps(props => {
+    //     console.log(props);
+    //     let propsUpdated = {
+    //         mode:'introduction'
+    //     };
+    //     if (props.isBuilderMode && !props.isPreviewMode) {
+    //         propsUpdated = {...propsUpdated, ...{
+    //             useDragHandle: true,
+    //             lockAxis: 'y',
+    //             onSortEnd: props.onSortEnd,
+    //             useWindowAsScrollContainer: true
+    //         }}
+    //     }
 
-        const {elements2=null} = props;
-        const {elements=[]} = props;
+    //     const {elements2=null} = props;
+    //     const {elements=[]} = props;
 
-        propsUpdated.elements = elements2 ? elements2 : elements;
+    //     propsUpdated.elements = elements2 ? elements2 : elements;
 
-        return propsUpdated;
-    }),
+    //     return propsUpdated;
+    // }),
 
     withUpdatePlanElementsOrderMutation,
     //branch(props => props.isBuilderMode, withUpdateOrderMutation),
@@ -54,14 +54,14 @@ const builderEnhance = compose(
 
 const enhance = compose(
     branch(props => props.isBuilderMode, builderEnhance),
-    withProps(props => {
-        const {item={}} = props;
-        const {elements=[]} = item;
-        //console.log(props);
-        return {
-            elements: elements
-        }
-    })
+    // withProps(props => {
+    //     const {item={}} = props;
+    //     const {elements=[]} = item;
+    //     //console.log(props);
+    //     return {
+    //         elements: elements
+    //     }
+    // })
 )
 
 

@@ -26,6 +26,7 @@ const withQuery = graphql(GET_ASSESSMENTS_QUERY,
                 variables: {
                     // userId:userId,
                     cohortId:cohortId,
+                    search:null,
                 }
             }
         },
@@ -37,6 +38,7 @@ const withQuery = graphql(GET_ASSESSMENTS_QUERY,
                     loading: data.loading,
 
                     doSearch(search) {
+                        console.log(search);
                         return data.refetch({
                             search: search
                         });

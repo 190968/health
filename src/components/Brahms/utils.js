@@ -1,5 +1,6 @@
 
 import { notification } from 'antd';
+import { formatTimeForField } from '../Other/utils';
 
 
 
@@ -60,16 +61,17 @@ export const getNextObjectFromRules = props => {
 }
 
 export const validateBrahms = props => {
-    // console.log(props);
+     console.log(props, 'validateBrahms');
     const {isAnswerBasedElement=false} = props;
     const {rules=[], value, type, isAnswerBasedQuestion=isAnswerBasedElement} = props;
 
     if (!rules) {
         return [];
     }
+    let reportedValue = parseFloat(value);
     const validatedRules = rules.filter(rule => {
 
-        const {ruleType, ruleValue, ruleValueEnd, ruleValueId, ruleActionType} = rule;
+        const {ruleType, ruleValue, ruleElementType, ruleValueEnd, ruleValueId, ruleActionType} = rule;
         if (type) {
             if (Array.isArray(type)) {
                 if (!type.includes(ruleActionType)) {
@@ -85,27 +87,56 @@ export const validateBrahms = props => {
         } else if (ruleActionType == 'stop') {
             return false;
         }
-        const valueToCheck = isAnswerBasedQuestion ? ruleValueId : ruleValue; 
+        let valueToCheck;// = isAnswerBasedQuestion ? ruleValueId : ruleValue; 
         
        
         // console.log(isAnswerBasedQuestion);
-        if (isAnswerBasedQuestion) {
-            return valueToCheck === value;
+        // if this is answer based, then just to compare if equal
+        if (ruleElementType === 'optionId') {
+            return ruleValueId === value;
         }
         // console.log(ruleType);
         // console.log(parseFloat(valueToCheck));
         // console.log(parseFloat(value));
         // console.log(parseFloat(ruleValueEnd));
-        const valueStartFloat = parseFloat(valueToCheck);
-        const reportedValue = parseFloat(value);
+        let valueStartFloat;
+        let valueEndFloat;
+        switch(ruleElementType) {
+            case 'time':
+                // if it's time, then convert to unix
+                // initial
+                if (value) {
+                    const timeInitialObject = formatTimeForField(value, {isUTC:true});
+                    reportedValue = timeInitialObject.unix();
+                } else {
+                    reportedValue = null;
+                }
+
+                const timeObject = formatTimeForField(ruleValue);
+                valueStartFloat = timeObject.unix();
+
+                if (ruleValueEnd) {
+                    const timeEndObject = formatTimeForField(ruleValueEnd);
+                    valueEndFloat = timeEndObject.unix();
+                }
+                break;
+            default:
+                // valueToCheck = ruleValue;
+                valueStartFloat = parseFloat(ruleValue);
+                valueEndFloat = ruleValueEnd && parseFloat(ruleValueEnd);
+                break;
+
+        }
+        
+        
         console.log(valueStartFloat);
-        console.log(ruleType);
+        // console.log(ruleType);
         console.log(reportedValue);
 
         switch(ruleType) {
             case 'between':
-                const valueEndFloat = parseFloat(ruleValueEnd);
-                console.log(valueEndFloat);
+                
+                // console.log(valueEndFloat);
                 // console.log(valueFloat >= parseFloat(value) && valueFloat <= parseFloat(ruleValueEnd));
                 return reportedValue >= valueStartFloat && reportedValue <= valueEndFloat;
             case 'equal':

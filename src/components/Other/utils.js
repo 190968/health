@@ -12,6 +12,24 @@ export const formatDateTimeToday = (date, opts) => {
     }
     return formatDateToday(date, {...opts, format, todayTime:true})
 }
+
+export const formatTimeForInput = (time) => {
+
+    return moment.utc(time).format('HH:mm:ss');
+}
+
+
+export const formatTimeForField = (time, props) => {
+    const {isUTC=false} = props || {};// if the value us in UTC
+    if (isUTC) {
+        return time && moment.utc(time, 'HH:mm');
+    }
+    return time && moment(time, 'HH:mm');
+}
+export const formatTimeForRender = (time) => {
+
+    return formatTimeForField(time).format('LT');
+}
 // easy mode shows time if today, and date if not today
 export const formatDateToday = (date, opts) => {
     if (!date) {

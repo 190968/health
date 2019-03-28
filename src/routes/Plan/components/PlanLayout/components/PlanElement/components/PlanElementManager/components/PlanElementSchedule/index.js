@@ -48,9 +48,9 @@ class PlanElementSchedule extends React.Component {
         }
 
 
-        const {schedule:elementSchedule} = element;
+        const {schedule:elementSchedule} = element || {};
 
-        const {type=''} = elementSchedule;// element schedule
+        const {type=''} = elementSchedule || {};// element schedule
 
 
         /*const {type,
@@ -64,7 +64,8 @@ class PlanElementSchedule extends React.Component {
         console.log(this.props);*/
 
 
-        const scheduleType = getFieldValue('schedule[type]');
+        const scheduleType = getFieldValue('schedule[type]') || type;
+        // console.log(scheduleType);
         let scheduleBox ='';
         switch (scheduleType) {
 

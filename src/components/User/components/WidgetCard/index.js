@@ -6,7 +6,7 @@ import DescriptionList from '../../../Layout/DescriptionList/DescriptionList';
 import  './index.less';
 import { PhoneFieldView } from '../../../FormCustomFields/components/Phone/view';
 
-const GenderIcon = ({gender}) => {
+export const GenderIcon = ({gender}) => {
     switch(gender) {
         case 'male':
             return <Tooltip title={'Male'}><Icon type="man" theme="outlined" /></Tooltip>;

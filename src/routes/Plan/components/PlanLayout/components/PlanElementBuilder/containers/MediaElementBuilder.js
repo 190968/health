@@ -16,6 +16,9 @@ const SelectMediaTypePure = ({onChange}) => <RadioGroup onChange={onChange}>
     <RadioButton value="audio">Audio</RadioButton>
     <RadioButton value="document">Document</RadioButton>
 </RadioGroup>;
+
+
+
  const enhanceIfNoType = compose(
      withProps(props => {
          return {modalFooter:false};
@@ -49,7 +52,7 @@ const  enhance = compose(
     // modalHOC,
 );
 
-export default enhance(SelectMediaType);
+export default enhance(MediaElementBuilder);
 
 
 export const preparePlanElementMediaInput = (values) => {

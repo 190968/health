@@ -15,6 +15,8 @@ const enhance = compose(
     withStateHandlers( props => {
         const {value} = props;
         const options = value || [];
+        console.log(props);
+        console.log(options, 'optionsoptionsoptions');
         return {options};
     }, {
         add: (state, props) => () => {
@@ -71,7 +73,7 @@ const enhance = compose(
             const options = state.options || [];
             const newOptions = arrayMove(options, oldIndex, newIndex);
             props.onChange(newOptions);
-            console.log(newOptions);
+            // console.log(newOptions);
             return {
                 options:newOptions
             }

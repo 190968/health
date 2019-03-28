@@ -5,17 +5,6 @@ import { PlanElementsListBuilderEnhancer } from '../../Builder/containers/Elemen
  
 
 const enhance = compose(
-    // withStateHandlers(props => {
-    //     const {elements} = props;
-    //     return elements;
-    // }, {
-    //     updateOrder: (state, props) => elements => {
-    //         //const elements = props.elements;
-    //         return {
-    //             elements
-    //         }
-    //     }
-    // }),
     branch(props => props.isBuilderMode, PlanElementsListBuilderEnhancer)
 );
 export const PlanElementsList = enhance(List);

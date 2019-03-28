@@ -4,7 +4,7 @@ import {List, Icon, Tooltip, Badge, Radio, Checkbox} from 'antd';
 import { ListWithMessage } from '../../../../../../../UI/List';
 import { AssessmentQuestionAnswerManagerButton } from '../../../Buttons/Answer';
 import { AssessmentQuestionAsnwerDeleteButton } from '../../../Buttons/Answer/delete';
-
+import './index.less';
 const AssessmentQuestionAnswersListManager = props => {
     
         const {answers=[], question, ...otherProps } = props;
@@ -38,7 +38,7 @@ export default AssessmentQuestionAnswersListManager;
 const AssessmentQuestionAnswerManagerView = props => {
     const {answer, question} = props;
     const {label, isCritical, isValidAnswer, points} = answer;
-    return <div>{label} {<Tooltip title={'Points'} ><Badge count={points} style={{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }} /></Tooltip>} {isCritical && <Tooltip title={'Critical'} ><Icon type="warning" style={{color:'red', verticalAlign:'middle'}} /></Tooltip>} {isValidAnswer && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>}  </div>
+    return <div><span className={'assessment-answer-placeholder'}>{isValidAnswer && <Tooltip title={'Correct'} ><Icon type="check-circle" style={{color:'green', verticalAlign:'middle'}} /></Tooltip>}</span> {label} {<Tooltip title={'Points'} ><Badge count={points} style={{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }} /></Tooltip>} {isCritical && <Tooltip title={'Critical'} ><Icon type="warning" style={{color:'red', verticalAlign:'middle'}} /></Tooltip>}   </div>
 }
 
  

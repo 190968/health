@@ -1,4 +1,4 @@
-import { Button, Card, List, Progress } from 'antd';
+import { Button, Card, List, Icon } from 'antd';
 import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { branch, compose } from 'recompose';
@@ -9,11 +9,11 @@ import { AssessmentSectionDeleteButton } from '../../../../../../../../component
 import { DragHandle } from '../../../../../../../../components/FormCustomFields/components/Options';
 import { ListWithMessage } from '../../../../../../../../components/UI/List';
 import AssessmentQuestion from '../../containers/AssessmentQuestion';
-
+import './index.less';
 
 const AssessmentSection = props => {
     const {section, i, sections=[], ...otherProps} = props;
-    const {isBuilderMode=false, isPreviewMode=false, canReport=false, currentQuestion, currentSection, goPreviousSection, goNextSection, report} = otherProps;
+    const {isBuilderMode=false, isPreviewMode=false, canReport=false, currentQuestion, currentSection, goPreviousSection, goNextSection, report, openBrahms=false} = otherProps;
     const {title,  getQuestions=[]} = section || {};
     const {assessment} = props;
     const {isCompleted=false, getReportedValues=[]} = report || {};
@@ -80,7 +80,9 @@ const AssessmentSection = props => {
         cardExtra.push(<AssessmentSectionManagerButton key={'edit'} assessment={assessment} section={section} />);
         // cardExtra.push(<DragHandle key={'drag'} style={{marginLeft:5}} />);
         cardExtra.push(<AssessmentSectionDeleteButton key={'delete'} assessment={assessment} section={section} />);
+        // cardExtra.push(openBrahms ? <Icon type="eye" onClick={props.toggleBrahms} /> : <Icon type="eye-invisible" onClick={props.toggleBrahms} />);
 
+        // toggleState
         cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} />);
         cardActions.push(<AssessmentSectionManagerButton key={'addSection'} buttonType={'dashed'} assessment={assessment} afterSection={section} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
     } else if (showBottomButtons) {
@@ -89,7 +91,7 @@ const AssessmentSection = props => {
         cardActions.push(<a className={'likeButton grey'} onClick={goPreviousSection}>Previous Section</a>);
 
         if (showFinishButton) 
-        cardActions.push(<Button type={'primary'} onClick={props.completeAssessment}>Finish</Button>);
+        cardActions.push(<Button type={'green'} onClick={props.completeAssessment}>Finish</Button>);
 
         if (showNextButton) 
         cardActions.push(<Button type={'primary'} onClick={goNextSection}>Next</Button>);
@@ -101,8 +103,8 @@ const AssessmentSection = props => {
     // end Prepare section buttons
      
     
-    const opts = {isBuilderMode, assessment, section,  isPastSection, isLastSection, isFirstSection, showAllQuestions, otherProps};
-    return <Card title={title} type={'inner'} extra={cardExtra} 
+    const opts = {isBuilderMode, assessment, section,  isPastSection, isLastSection, isFirstSection, showAllQuestions, otherProps, openBrahms};
+    return <Card title={title} className={'assessment-section'} type={'inner'} extra={cardExtra} 
     actions={cardActions}
     // extra={(!isBuilderMode || isPreviewMode) ? <div style={{width:200}}><Progress /*type="circle" showInfo={false} width={20} strokeWidth={20}*/ percent={progress} /></div> : null}
     >
@@ -144,6 +146,11 @@ const AssessmentQuestionBody = ({isBuilderMode, assessment, section, question, i
     // return <li>oooooooo <DragHandle /></li>;
     let questionCardExtra = [];
     if (isBuilderMode) {
+        const {getBrahmsRules=[]} = question || {};
+        const haveBrahms = getBrahmsRules && getBrahmsRules.length > 0;
+        if (!haveBrahms) {
+            questionCardExtra.push(<AssessmentQuestionManagerButton key={'brahms'} icon={'brahms'} assessment={assessment} section={section} question={question} />);
+        }
         questionCardExtra.push(<AssessmentQuestionManagerButton key={'manager'} assessment={assessment} section={section} question={question} />);
         questionCardExtra.push(<DragHandle key="drag" style={{marginLeft:5}} />);
         questionCardExtra.push(<AssessmentQuestionDeleteButton  key={'delete'}  assessment={assessment} section={section} question={question} />);

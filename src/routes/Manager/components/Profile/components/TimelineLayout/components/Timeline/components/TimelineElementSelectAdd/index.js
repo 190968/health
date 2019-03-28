@@ -2,7 +2,7 @@ import React from 'react';
 import {Popover, Tooltip, Button} from 'antd';
 import {compose, withState, withHandlers, withProps} from 'recompose';
 import TimelineElementSelect from '../TimelineElementSelect';
-import { withModal } from '../../../../../../../../../../components/Modal';
+import { withDrawer } from '../../../../../../../../../../components/Modal';
 
 
 const TimelineElementSelectModal = compose(
@@ -11,7 +11,7 @@ const TimelineElementSelectModal = compose(
         modalFooter:false,
         modalWidth:700
     })),
-    withModal
+    withDrawer
 )(TimelineElementSelect)
 
 

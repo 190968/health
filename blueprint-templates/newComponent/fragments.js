@@ -14,7 +14,7 @@ export const {{pascalCase $moduleName}}FullFragment = gql`
 `;
 
 export const {{pascalCase $moduleName}}ManageFragment = gql`
-    fragment ProviderManage on Provider {
+    fragment {{pascalCase $moduleName}}Manage on {{pascalCase $moduleName}} {
         ...{{pascalCase $moduleName}}
     }
     ${ {{pascalCase $moduleName}}Fragment }

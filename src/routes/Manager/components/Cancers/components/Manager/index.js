@@ -1,15 +1,29 @@
 import React from 'react';
-import {Form, Input, Select} from 'antd';
-import {DiagnosisSelect} from "../../../../../../components/Autosuggest/containers/DiagnosisSelect";
-import {CancerStageSelect} from "../../../../../../components/Autosuggest/containers/CancerStageSelect";
-import {ChemotherapySelect} from "../../../../../../components/Autosuggest/containers/ChemotherapySelect";
+import {Form, Input} from 'antd';
+import { DiagnosisSelect } from '../../../../../../components/Autosuggest/containers/DiagnosisSelect';
+import { CancerStageSelect } from '../../../../../../components/Autosuggest/containers/CancerStageSelect';
+import ChemotherapySelect from '../../../../../../components/Autosuggest/containers/ChemotherapySelect';
 
 const FormItem = Form.Item;
 
-const CancerManager = ({cancer={}, form, formItemLayout}) => {
-    const {getFieldDecorator} = form;
-    const {title='', code='', stage={}, chemotherapies=[]} = cancer;
-    // console.log(cancer);
+const formItemLayoutDefault = {
+    labelCol: {
+        xs: {span: 20},
+        sm: {span: 6},
+
+    },
+    wrapperCol: {
+        xs: {span: 24},
+        sm: {span: 16},
+    },
+};
+
+const CancerManager = props => {
+    const { cancer, form, formItemLayout=formItemLayoutDefault} = props;
+    const {getFieldDecorator, getFieldValue} = form;
+    // const {title='', getCohorts=[], getAssessments=[], executeDate, canBeEdited=false} = cancer || {};
+    const {title='', code='', stage, chemotherapies=[]} = cancer;
+    console.log(props);
     return <Form>
         <FormItem
             {...formItemLayout}
@@ -35,7 +49,7 @@ const CancerManager = ({cancer={}, form, formItemLayout}) => {
                     rules: [{required: true, message: "Select Diagnosis"}],
                 }
             )(
-                <DiagnosisSelect codeAsId />
+                <DiagnosisSelect codeAsId getFullInfo={false} />
             )}
         </FormItem>
 
@@ -43,8 +57,8 @@ const CancerManager = ({cancer={}, form, formItemLayout}) => {
             {...formItemLayout}
             label='Select Stage'
         >
-            {getFieldDecorator('stageId', {
-                    initialValue: stage.id || '',
+            {getFieldDecorator('stage', {
+                    initialValue: stage,
                     rules: [{required: true, message: "Select Stage"}],
                 }
             )(
@@ -57,20 +71,14 @@ const CancerManager = ({cancer={}, form, formItemLayout}) => {
             {...formItemLayout}
             label='Chemotherapies'
         >
-            {getFieldDecorator('chemotherapyIds', {
-                    initialValue: chemotherapies.map(info => info.id),
+            {getFieldDecorator('chemotherapies', {
+                    initialValue: chemotherapies,
                     rules: [{required: true, message: "Select Chemotherapy"}],
                 }
             )(
                 <ChemotherapySelect mode="multiple" />
             )}
         </FormItem>
-
-
-
-
-
-
     </Form>
 }
 

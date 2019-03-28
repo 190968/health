@@ -6,6 +6,7 @@ import {SortableElement} from 'react-sortable-hoc';
 export const PlanElementBuilderEnhancer = compose(
     withProps(props => {
         const {i} = props;
+        console.log(props);
         return {
             index:i,
             key: 'item-'+i

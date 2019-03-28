@@ -329,10 +329,12 @@ export const TimeFieldPure = props => {
     const {time=undefined,allowClear=true, disabled=false, placeholder='', onChange, ...otherProps} = props;
     const locale = moment.locale();
     let format = {};
-    console.log(locale);
-    console.log(props);
+    // console.log(locale);
+    // console.log(props);
+    // console.log(time, 'time');
     if (locale === 'en') {
         format = {use12Hours:true, format: 'h:mm a'}
+        // format = {use12Hours:false};
     } else {
         format = {use12Hours:false, /*format:'LT'*/};
     }
@@ -347,10 +349,11 @@ export const TimeField = compose(
             //     this.setState({ time });
             // }
             //console.log(props);
-            //console.log(time);
-            props.onChange(time);
-            //console.log(time);
+            // console.log(time);
             props.setTime(time);
+            // console.log(time);
+            props.onChange(time);
+           
 
         }
     }),

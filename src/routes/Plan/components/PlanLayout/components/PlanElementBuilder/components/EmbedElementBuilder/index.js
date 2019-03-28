@@ -17,7 +17,7 @@ const formTailLayout = {
 const TextElementBuilder = (props) => {
     const {form, intl,  details={}} = props;
     const {getFieldDecorator} = form;
-    const {text=''} = details;
+    const {text=''} = details || {};
     return (
         <React.Fragment>
             <FormItem

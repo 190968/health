@@ -8,7 +8,7 @@ const enhance = withHandlers(({onChange}) => {
     return {
         onChange: props => (e) => {
             const {onChangeReport, onChange, isTime=false} = props;
-            console.log(value);
+            // console.log(e);
             let value;
             if (isTime) {
                 // console.log(moment.utc(e).format('HH:mm:ss'));
@@ -20,12 +20,14 @@ const enhance = withHandlers(({onChange}) => {
                 onChangeReport({value});
                 return;
             }
+            console.log(value);
             onChange(value);
             clearTimeout(timer);
             timer = setTimeout(function () {
                 let reports = null;
                 if (isTime) {
-                    reports = {time: value};
+                    // reports = {time: value};
+                    reports = {value: value};
                 } else {
                     reports = {value};
                 }

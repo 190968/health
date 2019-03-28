@@ -33,27 +33,30 @@ const AssessmentQuestionAnswerManager = props => {
                 {...formItemLayout}
                 label={'Answer'}
             >
-                <Input value={label} onChange={props.setLabel}  ref={(input) => input && input.focus()} />
+                <Input value={label} onChange={props.setLabel}  /*ref={(input) => input && input.focus()}*/ />
             </FormItem>
             {showOpenEnded && <FormItem
                 {...tailFormItemLayout}
+                className={'single-line'}
             >
             <Checkbox checked={isOpenEnded} onChange={props.setIsOpenEnded} >This is an open ended answer</Checkbox>
             </FormItem>}
             <FormItem
                 {...tailFormItemLayout}
+                className={'single-line'}
             >
             <Checkbox checked={isValidAnswer} onChange={props.setIsValid} >This is a correct answer</Checkbox>
             </FormItem>
             <FormItem
                 {...tailFormItemLayout}
+                className={'single-line'}
             >
             <Checkbox checked={isCritical} onChange={props.setIsCritical} >This is a critical answer</Checkbox>
             </FormItem>
             <FormItem
                {...formItemLayout}
                label={'Points'}
-               help={'Points for the answer'}
+               help={'Points for this answer'}
             >
             <InputNumber value={points} onChange={props.setPoints} />
             </FormItem>

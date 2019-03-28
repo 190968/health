@@ -19,9 +19,16 @@ import ApElement from './containers/ApElement';
 import TreatmentPlanBuilder from './containers/TreatmentPlanBuilder';
 import BlankElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/BlankElementBuilder";
 // import ApElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder";
-import MediaElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
+import MediaElementBuilder, { preparePlanElementMediaInput } from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
 import { TransitionManager } from '../../../../../Transitions/containers/TransitionManager';
 import { HealthManager } from '../../../../../../../../../Health/containers/HealthManager';
+import { preparePlanElementChecklistInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ChecklistElementBuilder';
+import { preparePlanElementApInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder';
+import { preparePlanElementAssessmentInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/AssessmentElementBuilder';
+import { preparePlanElementClinicalNoteInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ClinicalNoteElementBuilder';
+import { preparePlanElementLinkInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/LinkElementBuilder';
+import { prepareTreatmentInput } from '../../../../../../../../../Health/components/Forms/containers/Treatment';
+import { prepareDateInput } from '../../../../../../../../../../utils/datetime';
 
 
 
@@ -46,7 +53,7 @@ const conditionalRender = (states) =>
     ));
 
 const enhance = compose(
-    debug, // print out the props here
+    // debug, // print out the props here
 
     //branch(props => props.id !== '', PlanElementWithQuery),
     //branch(props => props.id !== '', withMutation, withAddMutation),
@@ -64,21 +71,20 @@ const enhance = compose(
     }),
     Form.create(),
     withHandlers({
-        handleSave: props => ({prepareInput, input, callback}) => {
+        onSubmit: props => ({input, callback}) => {
             //
+            const {type, form} = props;
             //console.log(input);
-            props.form.validateFields((err, values) => {
+            form.validateFields((err, values) => {
 
                 if (!err) {
                     const {element = {}} = props;
                     const {id:elementId=''} = element;
 
-                    const {timeline={}, ...otherValues} = values;
-                    const {notes='', date, isCritical=false} = timeline;
-
-                    console.log(otherValues, 'values');
+                  
+                    // console.log(otherValues, 'values');
                     //const datetime = moment(values.date).format('L');
-                    const inputFromElement = prepareInput(otherValues);
+                    const inputFromElement = prepareTimelineInput({values, type});
                     //console.log(values);
                     console.log(inputFromElement, 'inputFromElement');
                     let sourceInfo = {};
@@ -88,7 +94,7 @@ const enhance = compose(
                         sourceInfo['id'] = props.pathway.id;
                         sourceInfo['elementId'] = elementId;
                     }
-                    const input = {...inputFromElement, notes, sourceInfo, isCritical, date: moment(date).format('YYYY-MM-DD')}
+                    const input = {...inputFromElement, sourceInfo}
                     //console.log(input);
                     props.submitTimelineElement(input).then(() => {
                         if (elementId !== '') {
@@ -104,8 +110,8 @@ const enhance = compose(
         },
         modalTitle: props => () => {
             //console.log(props);
-            const {type, element={}} = props;
-            const {id} = element;
+            const {type, element} = props;
+            const {id} = element || {};
             if (id) {
                 return 'Edit '+getTimelineElementTitle(type);
             }
@@ -156,4 +162,39 @@ const enhance = compose(
 
 
 export default enhance(BlankElementBuilder);
+
+const prepareTimelineInput = ({values, type}) => {
+    const { timeline, ...otherProps } = values;
+    const {notes, date, isCritical=false} = timeline || {};
+
+    let input = {  notes, isCritical, date: prepareDateInput(date) };
+    // input.brahms = prepareBrahmsInput(brahms);
+    // console.log(type, 'type');
+    // console.log(otherProps, 'otherProps');
+    switch (type) {
+        case 'checklist':
+            input.optionsElement = preparePlanElementChecklistInput(otherProps);
+            break;
+        case 'ap':
+            input.apElement = preparePlanElementApInput(otherProps);
+            break;
+        case 'assessment':
+            input.assessmentElement = preparePlanElementAssessmentInput(otherProps);
+            break;
+        case 'clinical_note':
+            input.clinicalNoteElement = preparePlanElementClinicalNoteInput(otherProps);
+            break;
+        case 'link':
+            input.linkElement = preparePlanElementLinkInput(otherProps);
+            break;
+        case 'media':
+            input.mediaElement = preparePlanElementMediaInput(otherProps);
+            break;
+        case 'treatment':
+            input.treatmentElement = prepareTreatmentInput(otherProps);
+            break;
+    }
+    console.log(input, 'input');
+    return input;
+}
 

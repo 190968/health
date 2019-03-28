@@ -26,7 +26,7 @@ const AssessmentSlider = props => {
     });
      
 
-    return <div style={{padding:'0 20px'}}><Slider disabled={disabled} onChange={onChange} marks={marks} max={answers.length-1} defaultValue={selectedMark} /></div>;//<Slider marks={marks}    />
+    return <div style={{padding:'0 20px'}}><Slider disabled={disabled} onChange={onChange} marks={marks} max={answers.length-1} defaultValue={selectedMark} tipFormatter={null} /></div>;//<Slider marks={marks}    />
 
 }
 

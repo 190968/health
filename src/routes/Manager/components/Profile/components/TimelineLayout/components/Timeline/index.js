@@ -35,7 +35,7 @@ const TimelinePure = props => {
     return <Card title="Timeline" bodyStyle={{overflowY:'auto',background:(canDrop ? '#f6ffed':'transparent'), height:'100vh', backgroundColor:'#f9f9f9', 'marginTop':1}}
               extra={extra}
         >
-        {props.openAddElement && <TimelineElementModal userId={userId}  user={user} type={props.elementType} onHide={props.hideTimelineElement} />}
+        {props.openAddElement && <TimelineElementModal user={user} type={props.elementType} onHide={props.hideTimelineElement} />}
         
             {canDrop && <div style={{position:'absolute', top:0, left:0, height:'100%', background: '#fff', opacity:'0.7', 'width':'100%', zIndex:999, paddingTop:'20%'}}><center><Tag color="#87d068">{isActive ? 'Release to drop' : 'Drop a box here'}</Tag></center></div>}
 

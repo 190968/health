@@ -12,11 +12,11 @@ const createFormField = Form.createFormField;
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
-        md: { span: 4 },
+        md: { span: 6 },
     },
     wrapperCol: {
         xs: { span: 24 },
-        md: { span: 12 },
+        md: { span: 16 },
     },
 };
 const tailFormItemLayout = {
@@ -62,16 +62,19 @@ class BuildHeader extends React.Component{
         this.props.form.validateFields((err, values) => {
             //console.log(err);
 
-            //console.log(values);
+            // console.log(values);
             //return;
             if (!err) {
+
+                let { cancer,...input} = values;
+                input = {...input, cancerId:cancer.id};
                 this.setState({loading:true});
                 if (plan && plan.id) {
-                    return onUpdateSubmit(values, this.submitCallback);/*.then(({data}) => {
+                    return onUpdateSubmit(input, this.submitCallback);/*.then(({data}) => {
                         this.submitCallback(data.planUpdate);
                     });*/
                 } else {
-                    return onCreateSubmit(values, this.submitCallback);/*(.then(({data}) => {
+                    return onCreateSubmit(input, this.submitCallback);/*(.then(({data}) => {
                         this.submitCallback(data.planCreate);
                     });*/
                 }
@@ -92,12 +95,14 @@ class BuildHeader extends React.Component{
     render(){
         const { intl,form, plan, type } = this.props;
         const { getFieldDecorator } = form;
+        const {cancer} = plan || {};
+        const {id:cancerId} = cancer || {};
 
         return(
             <React.Fragment>
 
             <Form onSubmit={this.handleSubmit}>
-            <Card title="Pathway Basic Information" >
+            <Card title="Settings" >
 
                 <FormItem
                     {...formItemLayout}
@@ -123,9 +128,10 @@ class BuildHeader extends React.Component{
                     {...formItemLayout}
                     label="Cancer"
                 >
-                    {getFieldDecorator('cancerId',{
-                        rules: [{ required: true, message:"Select Cancer" , whitespace: true }],
-                        validateTrigger: ['onChange', 'onSelect'],
+                    {getFieldDecorator('cancer',{
+                        initialValue: cancer ,
+                        rules: [{ required: true, message:"Select Cancer"  }],
+                        // validateTrigger: ['onChange', 'onSelect'],
                     })(
                         <CancerSelect />
                     )}
@@ -178,7 +184,7 @@ const BuildHeaderForm = Form.create({
         if (!plan) {
             return;
         }
-        const {cancer={}} = plan;
+        const {cancer} = plan;
         //console.log('mapPropsToFields', props);
         //console.log(plan.schedule);
         //console.log(typeof plan.schedule.limitStartDow);
@@ -190,9 +196,9 @@ const BuildHeaderForm = Form.create({
             description: createFormField({
                 value: plan.description,
             }),
-            cancerId: createFormField({
-                value: cancer.id || undefined
-            }),
+            // cancer: createFormField({
+            //     value: cancer
+            // }),
             version: createFormField({
                 value: plan.version
             }),

@@ -39,6 +39,6 @@ export const AssessmentsManagerPublish = enhance(PublishPure);
 
 
 const prepareAssessmentPublishInput = values => {
-    const {cohorts=[], ...otherProps} = values;
-    return {...otherProps, cohorts:cohorts.map(c=>c.id)};
+    const {cohorts=[], isPrivate, ...otherProps} = values;
+    return {...otherProps, isPrivate:isPrivate===1, cohorts:cohorts.map(c=>c.id)};
 }
