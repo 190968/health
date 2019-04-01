@@ -35,6 +35,7 @@ const draggableHoc = (ComponentBeingWrapped) => {
 
     function Layout(props) {
         const {connectDragSource} = props;//isDraggable, preventCardDraggable, isDragging,
+        // console.log(props, 'aaaaaaaaa');
         return connectDragSource(<div><ComponentBeingWrapped {...props} /></div>);
     }
 
@@ -43,7 +44,7 @@ const draggableHoc = (ComponentBeingWrapped) => {
 
 const boxSource = {
     beginDrag(props) {
-        //console.log(props);
+        console.log(props, 'beginDrag');
         return {
             //element: props.element,
             elements: props.elements,
@@ -53,7 +54,7 @@ const boxSource = {
     endDrag(props, monitor) {
         const item = monitor.getItem()
         const dropResult = monitor.getDropResult();
-        //console.log(item);
+        console.log(item, 'bebinDrop');
         if (dropResult) {
             props.onDrop(item);
         }
@@ -63,7 +64,7 @@ const boxSource = {
     //return props.element.type !== 'decision' && props.element.type !== 'condition';
     //}
 }
-const PlanElementDraggableHOC = DragSource('box', boxSource, (connect, monitor) => ({
+const PlanElementDraggableHOC = DragSource('timelineElement', boxSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
 }));
@@ -86,6 +87,8 @@ const enhance = compose(
         const {elements=[]} = props;
         const preventDraggable = elements.filter(element => element.type==='decision' || element.type==='condition');
         const preventCardDraggable = elements.length === 0 || preventDraggable.length > 0;
+        console.log(props, 'preventCardDraggable');
+        console.log(preventCardDraggable, 'preventCardDraggable');
         return {preventCardDraggable};
     }),
     withHandlers({

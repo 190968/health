@@ -16,14 +16,14 @@ export default class PlanMedia extends React.PureComponent {
             case 'image':
                 return <>
                     <img alt={label} src={url} style={{maxWidth: '100%'}} />
-                    <div>{label}</div>
+                    {/* <div>{label}</div> */}
                 </>;
             case 'import':
             case 'audio':
             case 'video':
                 if (embedHtml === '') {
-                    return <Card
-                        cover={<video width="100%" controls>
+                    return <Card style={{maxWidth:'70%'}}
+                        cover={<video controls>
                             <source src={url} />
                             Your browser does not support HTML5 video.
                         </video>}

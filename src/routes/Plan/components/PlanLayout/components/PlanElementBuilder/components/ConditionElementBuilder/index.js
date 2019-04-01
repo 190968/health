@@ -25,8 +25,8 @@ const ConditionElementBuilder = (props) => {
     const {form, intl, details, keys, plan, mode, element} = props;
     const {getFieldDecorator, getFieldValue} = form;
     // const {itemInfo={}, footnote=''} = element || {};
-    const blankOption = {id:'', label:''};
-    const {id, label:title, options = [blankOption, blankOption] } = details || {};
+    // const blankOption = ;
+    const {id, label:title, options = [{id:'', label:''}, {id:'', label:''}] } = details || {};
     // console.log(blankOption);
     const showBrahms = plan;// && id && id !== '';
     return (

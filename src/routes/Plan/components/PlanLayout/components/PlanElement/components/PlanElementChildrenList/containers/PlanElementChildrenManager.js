@@ -18,9 +18,9 @@ const addChildElementMutation = gql`
 
  export const withPlanAddChildElementMutation = graphql(addChildElementMutation, {
     props: ({ ownProps, mutate }) => ({
-        addChildElement: (input) => {
+        addChildElement: (input, type) => {
             return mutate({
-                variables: {planId:ownProps.plan.id, type:ownProps.type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:input},
+                variables: {planId:ownProps.plan.id, type:type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:input},
                 refetchQueries: [{
                     query: PLAN_ELEMENT_CHILDREN_QUERY,
                     variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}

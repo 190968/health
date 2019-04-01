@@ -9,12 +9,11 @@ import {injectIntl} from 'react-intl';
 import LinkElement from '../../../../../../../../../Plan/components/Plan/components/LinkElement';
 import MediaElement from '../../../../../../../../../Plan/components/Plan/components/PlanMedia';
 import ClinicalNoteElement from '../../../../../../../../../Plan/components/Plan/components/ClinicalNoteElement';
-import Checklist from '../../../../../../../../../Plan/components/Plan/components/Checklist';
 import CancerStage from '../../../../../../../../../Plan/components/Plan/components/CancerStage/view';
 import './styles.less';
 import TreatmentElement from "../../../../../../../../../Plan/components/Plan/components/TreatmentElement/index";
 import { DragSource } from 'react-dnd'
-import {branch, compose, renderComponent} from 'recompose';
+import {branch, compose, renderComponent, withHandlers} from 'recompose';
 import TumorboardView from "../../../../../../../Tumorboard/containers/TumorboardView";
 import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
 import {CommentsModalFromIcon, Comments} from "../../../../../../../../../../components/Comments/index";
@@ -24,6 +23,7 @@ import { TreatmentPlanBody } from '../../../../../../../../../Plan/containers/Tr
 import TransitionDetails from '../../../../../Transitions/components/TransitionDetails';
 import VisitDetails from '../../../../../Visits/components/VisitDetails';
 import { HealthViewNoModal } from '../../../../../../../../../Health/containers/View';
+import { TimelineElementChecklist } from './containers/Checklist';
 
 export const getTimelineElementCardTitle = (item) => {
     // console.log(item, 'item');
@@ -106,7 +106,7 @@ const getColor = type => {
 
 
 export const TimelineElementView = (item, props={}) => {
-    const {handleReport=false} = props;
+    const {handleReport=false, getOnlyActivity=false} = props;
 
     const {activity, type, getReport={}} = item;
     //const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}} = props;
@@ -162,7 +162,7 @@ export const TimelineElementView = (item, props={}) => {
         case 'clinical_note':
             icon = <FitIcon icon='clinical-note' />;
             activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
-            if (activity.note !== '') {
+            if (!getOnlyActivity && activity.note !== '') {
                 body.push(activity.note);
             }
 
@@ -192,8 +192,8 @@ export const TimelineElementView = (item, props={}) => {
             activityText = <TreatmentElement item={treatmentDetails} handleReport={handleReport} />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
             break;
         case 'checklist':
-            const {value:reportValues=[]} = getReport || {};
-            activityText = <Checklist item={activity} handleReport={handleReport} reports={reportValues}  />;
+            const {optionId:reportValues=[]} = getReport || {};
+            activityText = <TimelineElementChecklist item={activity} handleReport={handleReport} reports={reportValues}  />;
             const total = activity.options.length || 0;
             if (reportValues.length > 0) {
                 // let reported = 0;
@@ -209,7 +209,7 @@ export const TimelineElementView = (item, props={}) => {
                 }
             }
             progress = <React.Fragment>
-                <Checklist item={activity} handleReport={handleReport} reports={reportValues} simple={false}  />
+                {!getOnlyActivity && <TimelineElementChecklist item={activity} handleReport={handleReport} reports={reportValues} simple={false}  />}
                 <Progress percent={percent} />
                 </React.Fragment>;
             group = 'todo';
@@ -282,114 +282,34 @@ export const TimelineElementView = (item, props={}) => {
 
     return {body, color, activityText, image, icon, progress, title};
 }
-class TimelineElement extends React.PureComponent {
 
-    render() {
 
-        console.log(this.props,' Element props');
-        const {key, item, user, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false} = this.props;
-        const {id: telid, activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
+const TimelineElement = props => {
+
+        const {item, user, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false} = props;
+        const {id: telid, isCritical, notes,  createdAt, creator = {}, source=''} = item;
         const {id, fullName} = creator;
         const {id:activeElementId} = activeElement || {};
-        //console.log(item);
-        //console.log(activity);
-        //let activityText = '';//'Unknown Activity';
-       // let extra = {};
-        //let body = [];
-        //let image = '';
-        //let color = '';
-        //let progress = '';
-        //let description = notes;
-        //let icon = 'api';
-
-        // switch (type) {
-        //     case 'basic':
-        //         activityText = activity.text;
-        //         body.push(activity.text);
-        //         break;
-        //     case 'link':
-        //         activityText = <LinkElement item={activity} />;
-        //         icon = 'link';
-        //         color = 'red';
-        //         body.push( activity.description || '');
-        //         break;
-        //     case 'clinical_note':
-        //         color = '#orange';
-        //         icon = 'file-text';
-        //         activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
-        //         if (activity.note !== '') {
-        //             body.push(activity.note);
-        //         }
-        //
-        //         const {attachments = []} = activity;
-        //         let imageData2 = attachments.filter(item => item.type === 'image');
-        //          imageData2 = imageData2.map(image => image.url);
-        //         //console.log(imageData2);
-        //
-        //         if (imageData2.length > 4) {
-        //             imageData2 = imageData2.slice(0, 4);
-        //         }
-        //         console.log(imageData2);
-        //         //ReactPhotoGrid
-        //         if (imageData2.length > 0) {
-        //             image = <div style={{width: 200, height: 200, overflow: 'hidden'}}><ReactPhotoGrid
-        //                 gridSize="200x200"
-        //                 data={imageData2}/>
-        //
-        //             </div>;
-        //         }
-        //         break;
-        //     case 'treatment':
-        //         color = '2db7f5';
-        //         icon = 'appstore-o';
-        //         progress = <Progress percent={0} />;
-        //         activityText = <TreatmentElement item={activity}  />;//<Card type="timeline ant-card-type-treatment" bordered={false} title="Treatment" extra={extra} >
-        //         break;
-        //     case 'checklist':
-        //         activityText = <Checklist item={activity}  />;
-        //         progress = <Progress percent={0} />;
-        //         color = '#f56a00';
-        //         break;
-        //     case 'cancer_stage':
-        //         color = '#87d068';
-        //         activityText = <CancerStage item={activity}  />;
-        //         break;
-        //     case 'health_record':
-        //         activityText = activity.title;
-        //         color = '#f56a00';
-        //         icon = 'medicine-box';
-        //         break;
-        //     default:
-        //         activityText = activity.text;
-        //         color = '#108ee9';
-        //         body.push(activity.text);
-        //         break;
-        // }
-        const {body, color, activityText, image, icon, progress, title} = TimelineElementView(item, {handleReport});
+         
+        const {body, color, activityText, image, icon, progress, title} = TimelineElementView(item, {handleReport, getOnlyActivity});
 
         let boxTitle = title;
         //activityText = <Card type="timeline" title={} extra={extra} >{activityText}</Card>;
         if (notes !== '') {
-            body.push(<div style={{fontSize:'0.9em',color:'#ccc'}}>{notes}</div>);
+            body.push(<div key={'notes'} style={{fontSize:'0.9em',color:'#ccc'}}>{notes}</div>);
         }
 
         if (getOnlyActivity) {
-
-            console.log(item);
-            // if (1===1) {
-            //     extra = [
-            //
-            //    ];
-            // }
+ 
             return <React.Fragment>
                 <Card title={title}
                          extra={[<TimelineElementEdit key={'edit'} item={item} user={user} />, <TimelineElementDelete  key={'delete'} item={item} user={user} />]}
             >
                 {activityText}
-                    {body && <div>{body}</div>}
-
-                <div className="ant-card-comments">
-                    {/* <Comments type="timeline" id={telid} title="Notes" /> */}
+                {body && <div>{body}</div>}
+                {progress}
+                <div className="ant-card-comments" style={{padding:10}}>
+                    <Comments type="timeline" id={telid} title="Notes" />
                 </div>
             </Card>
 
@@ -402,6 +322,7 @@ class TimelineElement extends React.PureComponent {
             <Tooltip title="Created" key={1}><div><Icon type="clock-circle-o" style={{marginRight:5}} />{moment(createdAt).format('lll')}</div></Tooltip>
             ];
 
+            let sourceText;
         if (source) {
             // infoContent.push(<Tooltip title="Source">
             //     <div>
@@ -420,17 +341,17 @@ class TimelineElement extends React.PureComponent {
             // </Tooltip>);
 
 
-            boxTitle = <React.Fragment>
-                {boxTitle} <Tooltip title={source}>
+            sourceText = <React.Fragment>
+                <Tooltip title={source}>
                 <div style={{
-                    marginRight:5,
-                    border: '1px solid #51ade2',
-                    borderRadius: '50% 50%',
-                    lineHeight: '1.3em',
-                    'textAlign': 'center',
-                    height: 20,
-                    width: 20,
-                    fontWeight: 'normal',
+                    // marginRight:5,
+                    // border: '1px solid #51ade2',
+                    // borderRadius: '50% 50%',
+                    // lineHeight: '1.3em',
+                    // 'textAlign': 'center',
+                    // height: 20,
+                    // width: 20,
+                    // fontWeight: 'normal',
                     display: 'inline-block',
                     color:'#51ade2'
                 }}>P</div>
@@ -440,8 +361,8 @@ class TimelineElement extends React.PureComponent {
         }
 
 
-        const html =  <Card type={"timeline"+ (activeElementId === item.id ? ' active-element' : '')} hoverable onClick={() => showElement(item)}  >
-            {isCritical && <span style={{position:'absolute', top:0, right:2, lineHeight:'1em'}} ><Tooltip title="Critical"><Badge dot /></Tooltip></span>}
+        const html =  <Card type={"timeline "+(isCritical && 'critical') + (activeElementId === item.id ? ' active-element' : '')} hoverable onClick={showElement}  >
+            {/* {isCritical && <span style={{position:'absolute', top:0, right:2, lineHeight:'1em'}} ><Tooltip title="Critical"><Badge dot /></Tooltip></span>} */}
             <div className={"timeline-icon"} style={{backgroundColor: color}}>
                 {icon}
             </div>
@@ -451,7 +372,7 @@ class TimelineElement extends React.PureComponent {
                         <CommentsModalFromIcon type="timeline" id={telid} />
                    <Popover key="1" title={[<Icon type="user" key="user" style={{marginRight:5}}  />, <span key="fullname">{fullName}</span>]} content={infoContent} trigger="hover"><Icon type="info-circle-o" style={{marginLeft:5}} /></Popover>
                 </div>
-                <div className="timeline-date"><Icon type="clock-circle-o" style={{marginRight:5, display:'none'}} />{moment(createdAt).format('L')}</div>
+                <div className="timeline-date">{sourceText}{/*<Icon type="clock-circle-o" style={{marginRight:5, display:'none'}} />{moment(createdAt).format('L')}*/}</div>
 
                 {image && <div className="timeline-image">{image}</div>}
                 <h4 style={{margin:0}}>{boxTitle}</h4>
@@ -460,9 +381,8 @@ class TimelineElement extends React.PureComponent {
             </div>
         </Card>;
         return html;
-    }
 }
-
+ 
 
 
 export const canBeDraggable = (element) => {
@@ -488,7 +408,7 @@ const boxSource = {
         }
     },
     canDrag(props, monitor) {
-        console.log(props);
+        // console.log(props);
         return canBeDraggable(props.element);
     }
 }
@@ -506,7 +426,15 @@ const TimelineElementDraggable = DragSource('box', boxSource, (connect, monitor)
 
 const enhance = compose(
     injectIntl,
-    branch(props => props.draggable, renderComponent(TimelineElementDraggable))
+    branch(props => props.draggable, renderComponent(TimelineElementDraggable)),
+    withHandlers({
+        showElement: props => () => {
+            const {showElement, item} = props;
+            if (showElement) {
+                showElement(item);
+            }
+        }
+    })
 );
 
 export default enhance(TimelineElement);

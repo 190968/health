@@ -15,6 +15,10 @@ const TimelineElementModalSingle = props => {
 }
 
 const TimelineElementModalEnhanced = compose(
+    withProps(props => {
+        console.log(props);
+        return props;
+    }),
     // withState('elements', 'setElements', (props => {
     //     const {elements=[]} = props;
     //     console.log(props,'ELEMENRS');
@@ -34,7 +38,7 @@ const TimelineElementModalEnhanced = compose(
 )(props => {
     const {elements = []} = props;
     // if we have multiple elements - we need to show tabs for every element
-    //console.log(props);
+    // console.log(props, 'propsprops');
     if (elements.length > 0) {
         return elements.map(element => <TimelineElementModalSingle {...props} element={element}/>);
     }
@@ -50,8 +54,7 @@ const PathwayBody = props => {
     const {user, pathway = {}, timelineElementToAdd: element, onHide, onDrop, currentInOrder, i, setTimelineElementToAdd} = props;
     const {elements, id} = pathway;
     return (<React.Fragment>
-        {props.openTimelineModal &&
-        <TimelineElementModalEnhanced user={user} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} {...element} onHide={onHide}/>}
+        {props.openTimelineModal && <TimelineElementModalEnhanced user={user} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} {...element} onHide={onHide}/>}
         {elements ?
                 <List
                     size="small"
@@ -78,11 +81,14 @@ const enhance = compose(
     withState('timelineElementToAdd', 'setTimelineElementToAdd', null),
     withHandlers({
         onDrop: props => (element) => {
+             console.log(element, 'element');
             props.setOpenTimelineModal(true);
             props.setTimelineElementToAdd(element);
 
             let currentInOrder = parseInt(props.currentInOrder);
             props.setCurrentInOrder(currentInOrder+1);
+            // save the element
+            
         },
         onHide: props => () => {
             props.setOpenTimelineModal(false);

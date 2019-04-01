@@ -1,10 +1,10 @@
 import React from 'react';
 import { Select, Card, Icon, Menu, Dropdown, Tooltip } from 'antd';
 import PathwayBody from '../../containers/PathwayBody';
-import PathwaySelect from './containers/PathwaySelect';
 import keydown from 'react-keydown';
 import {compose, lifecycle, withState} from 'recompose';
 import { PathwayFlowButton } from '../../../../../Pathways/components/Table/components/Buttons';
+import { PathwaySelect } from '../../../../../../../../components/Autosuggest/containers/PathwaySelect';
 
 
 
@@ -22,9 +22,19 @@ class PathwayContent extends React.Component {
     }
  
     setPathway = (pathway) => {
-        //console.log(value);
+        // console.log(pathway);
         this.setState({pathway});
     }
+    selectPathway = (value) => {
+        // console.log(this);
+        // console.log(this.props);
+        const {joinPathway} = this.props;
+        joinPathway(value).then(({data}) => {
+            const {pathway} = data.joinPathway || {};
+            this.setPathway(pathway);
+        });
+    }
+
     setCurrent = (current) => {
         if (current === 'next') {
             this.setCurrent(this.state.current+1) ;
@@ -100,7 +110,7 @@ class PathwayContent extends React.Component {
 
         return (
             <Card title={title} loading={loading} extra={<Icon type="setting" />} bodyStyle={{overflowY:'auto', height:'100vh'}}>
-                    <PathwaySelect userId={userId} user={user} onSelect={this.setPathway} />
+                    <PathwaySelect user={user} onChange={this.selectPathway} />
             </Card>);
     }
 }

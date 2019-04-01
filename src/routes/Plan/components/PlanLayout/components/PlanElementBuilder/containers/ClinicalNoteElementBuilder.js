@@ -3,6 +3,7 @@ import { compose, withHandlers, withProps} from 'recompose';
 import ClinicalNoteElementBuilderPure from '../components/ClinicalNoteElementBuilder';
 import {Form} from 'antd';
 import {modalHOC, withSpinnerWhileLoading} from "../modal";
+import { prepareAttachmentsInput } from '../../../../../../../components/FormCustomFields/components/Attachments';
 
 export const ClinicalNoteElementBuilder = ClinicalNoteElementBuilderPure;
 
@@ -16,7 +17,7 @@ export const preparePlanElementClinicalNoteInput = (values) => {
     return {
             title,
             note,
-            attachments
+            attachments: prepareAttachmentsInput(attachments)
             // attachments: attachments.map(a=>prepareFileAtta)
     }
 }

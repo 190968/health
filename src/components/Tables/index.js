@@ -13,7 +13,7 @@ export const TableWithMessage = props => {
         pagination.hideOnSinglePage = true;
         pagination.showSizeChanger = true;
         // pagination.pageSize = dataSource.length;
-        pagination.showTotal= (total, range) => `${range[0]}-${range[1]} of ${total} patients`;
+        pagination.showTotal= (total, range) => `${range[0]}-${range[1]} of ${total} `;
         pagination.size = "small";
         if (total) {
             pagination.total = total;

@@ -3,19 +3,25 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const GET_PATHWAYS_QUERY  = gql`
- query GET_PATHWAYS {
-  getPathways(status:"published") {
+ query GET_PATHWAYS ($status: PlanStatusEnum) {
+  getPathways(status:$status) {
     edges {
         id
         title
     }
   }
 }
-
-
 `;
 
 const withQuery = graphql(GET_PATHWAYS_QUERY, {
+    options: (ownProps) => {
+        return {
+            variables: {
+                status: "published"
+            },
+            fetchPolicy: 'network-only'
+        }
+    },
     props: ({ data }) => {
         if (!data.loading) {
             const {edges} = data.getPathways;

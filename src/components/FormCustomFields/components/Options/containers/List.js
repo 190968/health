@@ -7,7 +7,7 @@ const enhance = compose(
     withHandlers({
         onChange: props => (rules) => {
             if (props.onChange) {
-                console.log(rules);
+                // console.log(rules.target.value);
                 props.onChange(rules);
             }
         }
@@ -15,8 +15,8 @@ const enhance = compose(
     withStateHandlers( props => {
         const {value} = props;
         const options = value || [];
-        console.log(props);
-        console.log(options, 'optionsoptionsoptions');
+        // console.log(props);
+        // console.log(options, 'optionsoptionsoptions');
         return {options};
     }, {
         add: (state, props) => () => {
@@ -47,7 +47,7 @@ const enhance = compose(
             } else if (index >= 0) {
                 options[index]['label'] = rule;
             }
-            console.log(options);
+            // console.log(options);
             props.onChange(options);
             return {
                 options
@@ -57,12 +57,14 @@ const enhance = compose(
             let {options=[]} = state;
 
             const {id} = rule || {};
-            
+            // console.log(rule);
+            // console.log(index);
             if (id) {
                 options = options.filter(a => a.id !== id);
             } else if (index >= 0) {
                 options = options.filter((a,i) => i !== index);
             }
+            // console.log(options);
             props.onChange(options);
             return {
                 options

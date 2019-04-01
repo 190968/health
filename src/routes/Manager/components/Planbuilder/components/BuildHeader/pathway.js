@@ -6,6 +6,8 @@ import moment from 'moment';
 import messages from './messages';
 import Scheduling from './components/Scheduling';
 import CancerSelect from '../../../../../../components/Autosuggest/containers/CancerSelect';
+import AssessmentSelect from '../../../../../../components/Autosuggest/containers/AssessmentSelect';
+import { LoadingBox } from '../../../../../../components/Loading';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const createFormField = Form.createFormField;
@@ -93,11 +95,12 @@ class BuildHeader extends React.Component{
 
 
     render(){
-        const { intl,form, plan, type } = this.props;
+        const { intl,form, plan, loading } = this.props;
         const { getFieldDecorator } = form;
         const {cancer} = plan || {};
-        const {id:cancerId} = cancer || {};
-
+        if (loading) {
+            return <LoadingBox />
+        }
         return(
             <React.Fragment>
 

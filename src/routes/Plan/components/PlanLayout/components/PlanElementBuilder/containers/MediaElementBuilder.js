@@ -38,7 +38,16 @@ const SelectMediaTypePure = ({onChange}) => <RadioGroup onChange={onChange}>
 
 const  enhance = compose(
     // enhance,
-    withState('typeMedia', 'setType', props => props.typeMedia),
+    withState('typeMedia', 'setType', props => {
+         console.log(props);
+        const {details, typeMedia} = props;
+        const {mediaType=typeMedia} = details || {};
+        // console.log(props);
+        // console.log(details);
+        //  console.log(typeMedia);
+         console.log(mediaType);
+        return mediaType;
+    }),
     branch(props => !props.typeMedia, renderComponent(SelectMediaType)),
     // withHandlers({
     //     modalTitle: props => values => {
@@ -57,11 +66,12 @@ export default enhance(MediaElementBuilder);
 
 export const preparePlanElementMediaInput = (values) => {
     //console.log(values);
-    const {label, file, type, attachment=null} = values;
+    const {label, file, type, embedHtml, attachment=null} = values;
 
     return {
             label,
             type,
-            attachment
+            attachment,
+            embedHtml
     }
 }

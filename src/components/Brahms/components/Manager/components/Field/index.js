@@ -194,9 +194,8 @@ const BrahmsRuleManagerItem = props => {
         break;
     }
 
-    ;
 
-    return <div>
+    return <div style={{flex: '1 0'}}>
         <div><strong>{label || 'Answer'}:</strong>  {prefix}</div> 
         <div><strong>{ruleActionType}:</strong> {string}</div> 
         </div>

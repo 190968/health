@@ -72,7 +72,7 @@ class StageManager extends React.Component {
             return (
                 
                 <Form>
-                    <Steps current={current} size="small" progressDot>
+                    <Steps current={current}  progressDot>
                         {steps.map((item, i) => <Step key={item.title} title={item.title} onClick={() => this.goTo(i)} />)}
                     </Steps>
                     {steps.map((item, i) => <div key={item.title} className="steps-content" style={{display:(this.state.current === i ? '' : 'none')}}>{item.content}</div>)}

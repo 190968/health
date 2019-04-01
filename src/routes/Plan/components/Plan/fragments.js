@@ -89,6 +89,7 @@ export const FieldReportFragment = gql`
         fieldId
         fieldType
         value
+        optionId
     }
 `;
 
@@ -164,9 +165,9 @@ export const ElementMediaFragment = gql`
         label
         description
         mediaType:type
-        mediaType:type
         source
         url
+        urlConverted
         embedHtml
         filename
         filesize

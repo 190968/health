@@ -43,7 +43,7 @@ const ActionPlanBuilderLayout = props => {
     const disabled = !id || id === '';
     // if (id) {
         children = [
-            { label: 'Header', key: 'header', disabled },
+            { label: 'Settings', key: 'header', disabled },
             { label: 'Body', key: 'body', disabled },
             {label: 'Options', key: 'options', disabled:true}
         ];

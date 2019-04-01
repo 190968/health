@@ -4,7 +4,7 @@ import {Button} from 'antd'
 import OptionItem from './option';
 const OptionsList = (props) => {
     const {options=[], form, remove, minOptions} = props;
-    // console.log(options);
+     console.log(options);
     return <>
         {options.length > 0 && <ul style={{listStyle: 'none',
             marginLeft: 0,

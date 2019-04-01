@@ -19,11 +19,11 @@ const formItemLayout = {
     },
 };
 const TreatmentForm = (props) => {
-    const {form,  element, user} = props;
+    const {form, details, element, user} = props;
     const {getFieldDecorator} = form;
 
-
-    const {title, elements=[]} = element || {};
+    console.log(props);
+    const {title, elements=[]} = details || {};
 
 
     return (

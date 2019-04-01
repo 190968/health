@@ -62,7 +62,7 @@ export default class PlanChecklist extends React.Component {
         var options = item.options;
         let plainOptions = [];
         options.map((option) => {
-            const coid = option.value;
+            const coid = option.id;
             const name = option.label;
 
             plainOptions.push(<Checkbox key={coid} value={coid} style={radioStyle} >{name}</Checkbox>);

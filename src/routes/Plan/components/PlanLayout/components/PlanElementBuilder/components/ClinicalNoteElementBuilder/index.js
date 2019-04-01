@@ -2,7 +2,7 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import {Form, Input} from 'antd';
 import {compose, withHandlers, withState, withProps} from 'recompose';
-import {Attachments} from "../../../../../../../../components/FormCustomFields/components/Attachments/index";
+import {Attachments, prepareAttachmentsForForm} from "../../../../../../../../components/FormCustomFields/components/Attachments/index";
 import messages from './messages';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -21,7 +21,10 @@ const ClinicalNoteElementBuilder = (props) => {
     const {getFieldDecorator} = form;
     const {title, note} = details || {};
 
-    getFieldDecorator('attachments', {initialValue: []});
+    // getFieldDecorator('attachments', {initialValue: []});
+    console.log(prepareAttachmentsForForm(attachments));
+    getFieldDecorator('attachments', {initialValue: prepareAttachmentsForForm(attachments)});
+    
     return (
         <React.Fragment>
             <FormItem

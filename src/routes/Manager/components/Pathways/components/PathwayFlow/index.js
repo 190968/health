@@ -36,7 +36,7 @@ const convertElementsToCode = (elements, props) => {
 				let todoHtml = '';
 				const {options:todoOptions=[]} = itemInfo;
 				todoOptions.map(option => {
-						const {label, value} = option;
+						const {label} = option;
 						console.log(label);
 						todoHtml += label+' \n';
 						return null;
@@ -45,16 +45,52 @@ const convertElementsToCode = (elements, props) => {
 				data['text'] = todoHtml;
 				break;
 			case 'decision':
+			// console.log(itemInfo);
 				const { options = [] } = itemInfo;
 				data.bgColor = '#5ac6c4';
 				data.color = '#b7eb8f';
 				options.map((option) => {
-					const { label, value } = option;
-					nodeDataArray.push({ key: 'opt' + value, name: label, color: 'green' });
+					const { label, id:value } = option;
+					nodeDataArray.push({ key: 'opt' + value, name: label, color: 'green', bgColor: '#5ac6c4' });
 					linkDataArray.push({ from: id, to: 'opt' + value });
+
+					//
+					const childrenElements = getConnectedElements.filter(connectedElement => {
+						return connectedElement.parentId === id && connectedElement.parentValue === value;
+					})
+					console.log(getConnectedElements, 'getConnectedElements');
+					console.log(childrenElements, 'childrenElements');
+					if (childrenElements) {
+
+						//const childrenElement = childrenElements[value] || [];
+						//const childrenElement = [];
+						
+						//console.log(childrenElement);
+						if (childrenElements.length > 0) {
+							// append children
+							const childrenElement = childrenElements.map(child => child.element);
+							const childrenCodes = convertElementsToCode(childrenElement, props);
+							console.log(childrenCodes);
+							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
+
+							extraData = [...extraData, ...childrenNodeDataArray];
+							linkDataArray = [...linkDataArray, ...childrenLinkDataArray];
+							//console.log(childrenNodeDataArray);
+							// add connection as well
+							if (childrenNodeDataArray[0]) {
+								const {key:childrenID} = childrenNodeDataArray[0];
+								//console.log(childrenID, 'childrenID');
+								//nodeDataArray.push(childrenNodeDataArray[1]);
+								linkDataArray.push({ from:  'opt' + value , to:childrenID });
+							}
+						}
+					} else {
+						//props.loadChildren(id, value);
+					}
+
 					return null;
 				});
-				haveConnection = false;
+				//haveConnection = false;
 				break;
 			case 'treatment':
 				let treatHtml = '';
@@ -76,26 +112,23 @@ const convertElementsToCode = (elements, props) => {
 				data.color = '#fff1f0';
 				let condItems = [];
 				condOption.map((option) => {
-					const { label, value } = option;
+					const { label, id:value } = option;
 					extraData.push({ key: 'cond' + value, name: label, color: 'blue', bgColor: '#5ac6c4' });
 					linkDataArray.push({ from: id, to: 'cond' + value });
 					//console.log(childrenElements);
 					const childrenElements = getConnectedElements.filter(connectedElement => {
 						return connectedElement.parentId === id && connectedElement.parentValue === value;
 					})
-					console.log(getConnectedElements, 'getConnectedElements');
-					console.log(childrenElements, 'childrenElements');
+					// console.log(getConnectedElements, 'getConnectedElements');
+					// console.log(childrenElements, 'childrenElements');
 					if (childrenElements) {
 
-						//const childrenElement = childrenElements[value] || [];
-						//const childrenElement = [];
-						
-						//console.log(childrenElement);
+					 
 						if (childrenElements.length > 0) {
 							// append children
 							const childrenElement = childrenElements.map(child => child.element);
 							const childrenCodes = convertElementsToCode(childrenElement, props);
-							console.log(childrenCodes);
+							// console.log(childrenCodes);
 							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
 
 							extraData = [...extraData, ...childrenNodeDataArray];
@@ -149,7 +182,8 @@ const convertElementsToCode = (elements, props) => {
 		//console.log(nodeDataArray);
 		if (i > 0 && haveConnection) {
 			// if this is not the fist item
-			const { id: prevId } = prevElement;
+			const { id: prevId, itemType:prevItemType } = prevElement;
+			if (prevItemType !== 'decision')
 			linkDataArray.push({ from: prevId, to: id });
 		}
 
@@ -341,7 +375,7 @@ const enhance = compose(
 				// 	)
 				// ) // end Table Panel
 
-				$(go.Shape, 'RoundedRectangle', { strokeWidth: 0, fill: "white" }, new go.Binding('fill', 'bgColor'), new go.Binding('stroke', 'color')),
+				$(go.Shape, 'RoundedRectangle', { strokeWidth: 1, fill: "black" }, new go.Binding('fill', 'bgColor'), new go.Binding('stroke', 'color')),
 				$(
 					go.Panel,
 					'Table',

@@ -14,7 +14,10 @@ const PlanElementPure = (props) => {
 		isPreviewMode,
 		plan,
 		mode,
-		notClickable = false
+		notClickable = false,
+		updateSkippedElements,
+		updateBrahmRules,
+		brahmRules
 	} = props;
 	const { id } = element;
 	return (
@@ -41,6 +44,9 @@ const PlanElementPure = (props) => {
 						mode={mode}
 						elementValue={props.elementValue}
 						notClickable={notClickable}
+						updateSkippedElements={updateSkippedElements}
+						updateBrahmRules={updateBrahmRules}
+						brahmRules={brahmRules}
 					/>
 				</div>
 			)}

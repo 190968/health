@@ -11,6 +11,7 @@ import { withToggleModal, withDrawer } from '../../../../../../../../components/
 import { compose, defaultProps } from 'recompose';
 import { PlanElementManagerButton } from '../../../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
 import { PlanElementDeleteButton } from '../../../../../../../../components/Plan/components/Builder/components/Buttons/containers/DeleteElement';
+import { getPlanElementLabelFromElement } from '../../../../../../../../components/Plan/utils';
 
 
 const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler"></span></Tooltip>);
@@ -19,6 +20,9 @@ const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="s
 const PlanElementActions = (props) => {
     //console.log(props);
     let {element, i:order, openEditElement, toggleEditElement, deleteElement, addAfterElement, hideOrder, buttons=[]} = props;
+    const {getBrahmsRules} = element || {};
+    const elementLabel = getPlanElementLabelFromElement(element/*, { isBuilderMode: isBuilderMode, footnote, showType }*/);
+    // console.log(elementLabel, 'elementLabel');
     // let button =
     // console.log(openEditElement, 'openEditElement');
     // if (order !== null ) {
@@ -34,19 +38,23 @@ const PlanElementActions = (props) => {
             switch(button) {
                 case 'addBefore':
                     return <React.Fragment key={i}>
-                        <Tooltip key={i} title="Add First Element"  ><PlanElementManagerButton {...props} element={null} order={0} shape="round"  label={'Add First Element'} /></Tooltip>
+                        <Tooltip key={i} title={"Add First Element"}  ><PlanElementManagerButton {...props} element={null} order={0} shape="round"  label={'Add Element before '+elementLabel} /></Tooltip>
                     </React.Fragment>
                     break;
                 case 'addAfter':
                     // const {order} = element || {};
                     return <React.Fragment key={i}>
-                        <Tooltip key={i} title="Add Element Here" onClick={props.addAfterElement} ><PlanElementManagerButton {...props}  element={null} order={order+1} shape="round"  label={'Add Element Here'} /></Tooltip>
+                        <Tooltip key={i} title={"Add Element Here"} onClick={props.addAfterElement} ><PlanElementManagerButton {...props}  element={null} order={order+1} shape="round"  label={'Add Element After '+elementLabel} /></Tooltip>
                     </React.Fragment>
                     break;
             }
         })
     }
+
+    const haveBrahms = getBrahmsRules && getBrahmsRules.length > 0;
     return (<div>
+
+        {!haveBrahms && <PlanElementManagerButton {...props} icon={'brahms'} />}
         <DragHandle /> <PlanElementManagerButton {...props} /> <PlanElementDeleteButton  {...props}  />
     </div>)
 

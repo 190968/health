@@ -164,9 +164,9 @@ const enhance = compose(
 
         handleSearch: props => (value) => {
             if (props.doSearch) {
-                props.setLoadingState(true);
+               // props.setLoadingState(true);
                 props.doSearch(value).then(() => {
-                    props.setLoadingState(false);
+                  //  props.setLoadingState(false);
                 });
             }
         },

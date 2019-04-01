@@ -1,7 +1,7 @@
 import React from 'react';
-import {Tag, Card, Button, Tooltip, Timeline} from 'antd';
+import {Tag, Card, Button, Tooltip, Timeline, Icon} from 'antd';
 import TimelineElementModal from './containers/TimelineElementModal';
-import TimelineElement, { TimelineElementView } from './components/TimelineElement';
+import TimelineElement  from './containers/TimelineElement';
 import TimelineElementWidget from './components/TimelineElement/widget';
 import {EmptyList} from "../../../../../../../../components/Loading/index";
 import TimelineElementSelectAdd from "./components/TimelineElementSelectAdd/index";
@@ -32,25 +32,25 @@ const TimelinePure = props => {
             </React.Fragment>;
     }
 
-    return <Card title="Timeline" bodyStyle={{overflowY:'auto',background:(canDrop ? '#f6ffed':'transparent'), height:'100vh', backgroundColor:'#f9f9f9', 'marginTop':1}}
-              extra={extra}
-        >
-        {props.openAddElement && <TimelineElementModal user={user} type={props.elementType} onHide={props.hideTimelineElement} />}
+    return <Card title="Timeline" bodyStyle={{overflowY:'auto',background:(canDrop ? '#f6ffed':'transparent'), height:'100vh', backgroundColor:'#f9f9f9', 'marginTop':1}} extra={extra} >
+            {props.openAddElement && <TimelineElementModal user={user} type={props.elementType} onHide={props.hideTimelineElement} />}
         
             {canDrop && <div style={{position:'absolute', top:0, left:0, height:'100%', background: '#fff', opacity:'0.7', 'width':'100%', zIndex:999, paddingTop:'20%'}}><center><Tag color="#87d068">{isActive ? 'Release to drop' : 'Drop a box here'}</Tag></center></div>}
 
             {!filters || filters.length > 0 ?
                 <Timeline>
                     {items.map((item, i) => {
-                        const {isClinical=false, createdAt} = item;
+                        const {isClinical=false, createdAt, isCritical} = item;
                         // const {icon} = TimelineElementView(item);
-
+                        const icon = isCritical && <Icon type="exclamation-circle" style={{color: 'red'}} />;
                         return <Timeline.Item color={isClinical ? "green" : undefined}
-                        // dot={icon}
+                        key={i}
+                        dot={icon}
                         >
                         <div style={{color:'#ccc', fontSize: '0.8em'}}>{moment(createdAt).format('lll')}</div>
-                        <TimelineElement key={i} item={item} user={user} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} /
-                        ></Timeline.Item>;
+                        <TimelineElement item={item} user={user} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} />
+                        
+                        </Timeline.Item>;
                     })}
                 </Timeline>
                 :

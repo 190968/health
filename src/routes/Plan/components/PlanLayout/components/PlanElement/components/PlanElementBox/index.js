@@ -175,6 +175,9 @@ const PlanElementBox = (props) => {
 			possibleOptions = condiOptions;
 			break;
 		case 'decision':
+		const {updateSkippedElements,
+			updateBrahmRules,
+			brahmRules} = props;
 			reportValues = reports && reports.map((report) => report.value);
 			reportValues = reportValues && reportValues[0];
 			reportValues = reportValues && reportValues[0];
@@ -194,6 +197,9 @@ const PlanElementBox = (props) => {
 					showChildren={props.showChildren}
 					hasChildren={hasChildren}
 					reports={reportValues}
+					updateSkippedElements={updateSkippedElements}
+					updateBrahmRules={updateBrahmRules}
+					brahmRules={brahmRules}
 					{...defaultProps}
 				/>
 			);

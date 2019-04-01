@@ -17,15 +17,18 @@ const formItemLayoutDefault = {
 };
 
 export const TaskManagerAttachmentSelectAp = props => {
-    const {onContinue, form, formItemLayout=formItemLayoutDefault, date} = props;
+    const {onContinue, form, formItemLayout=formItemLayoutDefault, date, assignObject} = props;
     const {getFieldDecorator, getFieldValue} = form;
+    const {object} = assignObject || {};
     return <React.Fragment>
 
         <FormItem
             {...formItemLayout}
             label="Select ActionPlan"
         >
-            {getFieldDecorator('plan', {})(
+            {getFieldDecorator('plan', {
+                initialValue:object
+            })(
                 <ActionPlanSelect /*onChange={onChange}*/ getFullInfo />
                 )}
         </FormItem>

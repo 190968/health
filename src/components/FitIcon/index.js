@@ -42,11 +42,11 @@ export const FitIcon = props => {
 
 
 const IcoMoon = props => {
-    const {type, onClick} = props;
+    const {type, onClick, style} = props;
     // console.log(props);
     let icon = <IcomoonReact iconSet={iconSet} color="#444" size={'1em'} icon={type} />;
     if (onClick) {
-        return <span className={'anticon pointer'} style={{verticalAlign:'middle'}} onClick={onClick}>{icon}</span>;
+        return <span className={'anticon pointer'} style={{verticalAlign:'middle', ...style}} onClick={onClick}>{icon}</span>;
     }
     return icon;
 }

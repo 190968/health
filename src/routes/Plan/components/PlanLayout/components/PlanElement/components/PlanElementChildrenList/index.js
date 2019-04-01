@@ -11,7 +11,7 @@ import { PlanElementManagerButton } from '../../../../../../../../components/Pla
 
 const PlanElementChildrenList = (props) => {
     //console.log(props);
-    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, notClickable=false, plan, mode, loading} = props;
+    const {elementId, elementValue, elements=[], isDraggable, onDrop, isBuilderMode, isPreviewMode, notClickable=false, plan, mode, loading, ...otherProps} = props;
     return (<React.Fragment>
 
         {elements.length > 0 ?
@@ -24,7 +24,7 @@ const PlanElementChildrenList = (props) => {
                     return <List.Item
                         id={'field' + item.id}
                         key={item.id}>
-                        <PlanElementChildrenElement i={i} isDraggable={isDraggable} onDrop={onDrop} element={item} plan={plan} mode={mode} isBuilderMode={isBuilderMode}
+                        <PlanElementChildrenElement {...otherProps} i={i} isDraggable={isDraggable} onDrop={onDrop} element={item} plan={plan} mode={mode} isBuilderMode={isBuilderMode}
                                                     parentId={elementId} parentValue={elementValue}
                                                      isPreviewMode={isPreviewMode}
                                                      notClickable={notClickable}

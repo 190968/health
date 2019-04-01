@@ -18,7 +18,7 @@ const enhanceProps = compose(
                 ...details,
                 id: '',
             },
-            showNotes:false,
+            // showNotes:false,
             useTimeline:false,
         }
     }),

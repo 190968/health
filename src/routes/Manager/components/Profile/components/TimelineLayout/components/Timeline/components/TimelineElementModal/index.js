@@ -12,6 +12,7 @@ import ClinicalNoteElement from './containers/ClinicalNoteElement';
 import ClinicalTrialElement from './containers/ClinicalTrialElement';
 import LinkElement from './containers/LinkElement';
 import ChecklistElement from './containers/ChecklistElement';
+import MediaElement from './containers/MediaElement';
 import CancerStageElement from './containers/CancerStageElement';
 import DiagnosisElement from './containers/DiagnosisElement';
 import ApElement from './containers/ApElement';
@@ -19,7 +20,7 @@ import ApElement from './containers/ApElement';
 import TreatmentPlanBuilder from './containers/TreatmentPlanBuilder';
 import BlankElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/BlankElementBuilder";
 // import ApElementBuilder from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder";
-import MediaElementBuilder, { preparePlanElementMediaInput } from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
+import { preparePlanElementMediaInput } from "../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder";
 import { TransitionManager } from '../../../../../Transitions/containers/TransitionManager';
 import { HealthManager } from '../../../../../../../../../Health/containers/HealthManager';
 import { preparePlanElementChecklistInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/ChecklistElementBuilder';
@@ -58,7 +59,7 @@ const enhance = compose(
     //branch(props => props.id !== '', PlanElementWithQuery),
     //branch(props => props.id !== '', withMutation, withAddMutation),
     mapProps(props => {
-
+        console.log(props);
         if (props.element) {
             const details = props.element.itemInfo;
             return {...props, details, type:props.element.itemType, resetInitInfo:true};
@@ -71,7 +72,7 @@ const enhance = compose(
     }),
     Form.create(),
     withHandlers({
-        onSubmit: props => ({input, callback}) => {
+        onSubmit: props => ({callback}) => {
             //
             const {type, form} = props;
             //console.log(input);
@@ -141,7 +142,21 @@ const enhance = compose(
 
         }
     )),
-
+    withProps(props => {
+        let {type} = props;
+        switch(type) {
+            case 'image':
+            case 'video':
+            case 'audio':
+            case 'document':
+                // newProps.typeMedia = type;
+                type = 'media';
+                break;
+        }
+        console.log(props, 'propstype');
+        console.log(type);
+        return {type}
+    }),
     conditionalRender([
         {when: ({type}) => type === 'treatment', then: TreatmentElement},
         {when: ({type}) => type === 'checklist', then: ChecklistElement},
@@ -153,7 +168,7 @@ const enhance = compose(
         {when: ({type}) => type === 'health', then: HealthManager},
         {when: ({type}) => type === 'ap', then: ApElement},
         {when: ({type}) => type === 'treatment_plan', then: TreatmentPlanBuilder},
-        {when: ({type}) => type === 'media', then: MediaElementBuilder },
+        {when: ({type}) => type === 'media', then: MediaElement },
         {when: ({type}) => type === 'new_transition', then: TransitionManager },
 
     ]),

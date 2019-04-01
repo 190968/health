@@ -18,7 +18,7 @@ const OptionItem = SortableElement((props) => {
     // });
 
 // console.log(block);
-// console.log(options);
+// console.log(option);
     //console.log(form.getFieldsValue(), 'Values');
     //console.log(options);
     // const optionError = form.getFieldError(`options[${index}]`);
@@ -41,8 +41,8 @@ const OptionItem = SortableElement((props) => {
                         message: "Please enter option "+((index+1))+" or delete this line.",
                     }],
                 })( */}
-                {/* <TextArea  onChange={props.onChange} autosize={{minRows:1}} /> */}
-                <InputField noState asTextArea value={label} onChange={props.onChange} placeholder={"Option "+(index+1)} autosize={{ minRows: 1, maxRows: 6 }} style={{ width: '100%', marginRight: 8 }} timeout={timeout} />
+                {/* <TextArea  value={label}  onChange={props.onChange} autosize={{minRows:1}} /> */}
+                <InputField asTextArea value={label} onChange={props.onChange} placeholder={"Option "+(index+1)} autosize={{ minRows: 1, maxRows: 6 }} style={{ width: '100%', marginRight: 8 }} timeout={timeout} />
                 {/* )} */}
             </FormItem>
         </div>

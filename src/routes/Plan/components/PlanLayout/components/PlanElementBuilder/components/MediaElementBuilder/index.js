@@ -1,7 +1,7 @@
 import React from 'react';
 import {injectIntl} from 'react-intl';
 import {compose, withHandlers, withState} from 'recompose';
-import {Form, Input, Button} from 'antd';
+import {Form, Input, Radio, Button} from 'antd';
 import messages from './messages';
 import Upload from '../../../../../../../../components/FormCustomFields/upload';
 import MediaPreview from './components/MediaPreview';
@@ -9,6 +9,8 @@ import {Attachments, prepareAttachmentsForForm} from "../../../../../../../../co
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 
 const formItemLayout = {
     labelCol: {span: 5},
@@ -58,19 +60,22 @@ export const getMediaTypeInfo = (type) => {
             template = 'pdf';
             break;
     }
-console.log({name, template, note, allowedFileTypes});
+// console.log({name, template, note, allowedFileTypes});
     return {name, template, note, allowedFileTypes};
 }
 
 const MediaElementBuilder = (props) => {
     //console.log(props);
-    const {form, intl,  details={}, showLoader, typeMedia, tmpMedia, attachments=[]} = props;
-    const {getFieldDecorator} = form;
-    const {label='', url='', description='', mediaType=''} = details || {};
+    const {form, intl,  details, showLoader, typeMedia, tmpMedia, attachments=[]} = props;
+    const {getFieldDecorator, getFieldValue} = form;
+    const {label='', urlConverted, description='', embedHtml, mediaType=''} = details || {};
     //let template = '';
     //let note = '';
     //let allowedFileTypes = ['application/*'];
     let type = mediaType !== '' ? mediaType : typeMedia;
+    if (typeMedia === 'import') {
+        type = 'video';
+    }
     //console.log(typeMedia);
     // switch(type) {
     //     case 'document':
@@ -127,7 +132,38 @@ const MediaElementBuilder = (props) => {
                     <Input />
                 )}
             </FormItem>
-            <FormItem
+
+            {type === 'video' && <FormItem
+                {...formTailLayout}
+                // label={'Load type'}
+            >
+                {getFieldDecorator('uploadType', {
+                        initialValue: urlConverted !=='' ? 'embed' : 'upload',
+                        // rules: [{required: true, message: "Enter Title", whitespace: true}],
+                    }
+                )(
+                    <RadioGroup >
+                        <RadioButton value="upload">Upload</RadioButton>
+                        <RadioButton value="embed">Embed</RadioButton>
+                    </RadioGroup>
+                )}
+            </FormItem>}
+
+            {(type === 'video' && getFieldValue('uploadType') === 'embed') && <FormItem
+                {...formItemLayout}
+                label={'Url'}
+            >
+                {getFieldDecorator('embedHtml', {
+                        initialValue:urlConverted,
+                        // rules: [{required: true, message: "Enter Title", whitespace: true}],
+                    }
+                )(
+                    <TextArea autosize />
+                )}
+            </FormItem> }
+            
+            
+            {(type != 'video' || (type === 'video' && getFieldValue('uploadType') === 'upload')) && <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.upload)}
             >
@@ -137,7 +173,7 @@ const MediaElementBuilder = (props) => {
                             }
                              template={template}
                 />
-            </FormItem>
+            </FormItem>}
         </React.Fragment>
     );
 }

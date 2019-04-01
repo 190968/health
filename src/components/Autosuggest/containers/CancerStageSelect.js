@@ -2,7 +2,7 @@ import CancerSelectPure from '../components/CancerSelect';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
-export const PlansListQUERY = gql`
+const PlansListQUERY = gql`
     query GET_CANCER_STAEGES_LIST    {
         getCancerStages   {
             totalCount

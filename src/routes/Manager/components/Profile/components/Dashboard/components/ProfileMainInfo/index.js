@@ -56,7 +56,7 @@ const ProfileMainInfo = props => {
 
 
     const demographicDetails = [
-        ['Member ID', 'sdfsdfsdfsdfs'],
+        ['Member ID', memberId],
         ['Gender', genderText],
         ['Age', age],
         // ['Medication Adherence', ],

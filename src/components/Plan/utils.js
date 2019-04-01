@@ -1,12 +1,15 @@
 
 import { compose, withStateHandlers } from 'recompose';
 import { validateBrahms, getNextObjectFromRules } from '../Brahms/utils';
+import { formatPlanElementByTitle } from '../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementSelect';
 
 export const getPlanElementLabelFromElement = (element, props={}) => {
     const {itemInfo:item={}, type, typeText} = element || {};
     const {itemType = type} = element || {};
     const {isBuilderMode=false, showType=true} = props;
     let fieldTitle = '';
+    console.log(type);
+    let prefix = itemType !== 'media' ? formatPlanElementByTitle({type}) : '';
     //console.log(element, item);
     switch(itemType) {
         default: break;
@@ -62,7 +65,9 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             fieldTitle = item.label;
             break;
         case 'media':
-            fieldTitle = item.label;
+            const {mediaType, label} = item;
+            fieldTitle = label;
+            prefix = formatPlanElementByTitle({type:mediaType});
             break;
         case 'treatment':
             fieldTitle = item.title;
@@ -86,7 +91,7 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
 
     }
     if (showType && isBuilderMode) {
-        fieldTitle = typeText+(fieldTitle !== '' ? ' – ' : '')+ fieldTitle;
+        fieldTitle = prefix+(fieldTitle !== '' ? ' – ' : '')+ fieldTitle;
     }
 
     return fieldTitle;

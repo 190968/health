@@ -33,7 +33,7 @@ const tailFormItemLayout = {
 
 const OPTIONS = [
     {key: 'output', label: 'Display'},
-    {key: 'ap', label: 'Suggest ActionPlan'},
+    {key: 'ap', label: 'Suggest ActionPlan', labelSimple: 'ActionPlan'},
     {key: 'goto', label: 'Go To'},
     {key: 'notification', label: 'Send Notification'},
     {key: 'cohorts', label: 'Add to Cohort(s)'},
@@ -101,7 +101,7 @@ const BrahmsRuleManager = props => {
 
             {(getFieldValue('ruleActionType') && getFieldValue('ruleActionType')!== 'stop') && <FormItem
                 {...formItemLayout}
-                label={formatAssessmentRuleAction(getFieldValue('ruleActionType'))}
+                label={formatAssessmentRuleAction(getFieldValue('ruleActionType'), true)}
             >
                 {getFieldDecorator('ruleAction', {
                     initialValue: ruleAction
@@ -122,8 +122,12 @@ export const formatAssessmentRuleCondition = rule => {
     return label
 }
 
-const formatAssessmentRuleAction = ruleActionType => {
+const formatAssessmentRuleAction = (ruleActionType, showSimpleLabel = false) => {
     const item = OPTIONS.find(o=>o.key == ruleActionType);
     const {label} = item || {};
+    if (showSimpleLabel) {
+        const {labelSimple=label} =  item || {};
+        return labelSimple;
+    }
     return label
 }

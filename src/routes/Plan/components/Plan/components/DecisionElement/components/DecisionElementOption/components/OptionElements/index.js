@@ -35,9 +35,10 @@ const EmptyResultsPure = (props) => {
 
 const PlanElementAddLine = (props) => {
     // console.log(props);
-    const {parentId, parentValue} = props;
+    const {option, parentId, parentValue} = props;
+    const {label} = option || {};
     return <Divider className="element-actions">
-        <PlanElementManagerButton {...props} mode="decision" shape={'round'}  parentId={parentId} parentValue={parentValue} />
+        <PlanElementManagerButton {...props} label={'Add Element to '+label} mode="decision" shape={'round'}  parentId={parentId} parentValue={parentValue} />
     </Divider>;
 }
 

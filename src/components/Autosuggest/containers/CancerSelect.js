@@ -21,7 +21,7 @@ const CancerSelectWithQuery = graphql(PlansListQUERY,
             }
         },
         props: ({ data }) => {
-            const {getCancersList} = data.health || {};
+            const {getCancersList=[]} = data.health || {};
                 return {
                     items: getCancersList,
                     loading: data.loading,

@@ -12,14 +12,15 @@ const enhanceProps = compose(
         return {
             details: {
                 ...details,
-                id: '',
+                // id: '',
             },
             showNotes:false,
             useTimeline:false,
 
             patient:user,
             mode: 'simple',
-            assignObject:{type: 'ap'}
+            assignObject:{type: 'ap', object: details}
+            // ={{type: 'ap', object:plan}}
         }
     }),
     // withHandlers({

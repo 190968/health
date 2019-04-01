@@ -106,7 +106,7 @@ const modalHOCPure = (WrappedComponent) => {
 
                                 {showNotes && <FormItem
                                     {...formItemLayout}
-                                    label={intl.formatMessage(messages.notes)}
+                                    label={'Comments'}
                                 >
                                     {getFieldDecorator('timeline[notes]', {
                                             rules: [{message: "Enter Notes", whitespace: true}],

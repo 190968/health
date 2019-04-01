@@ -10,7 +10,7 @@ const TabPane = Tabs.TabPane;
 
 const TimelineLayoutSider = (props) => {
     const {onChange, onEdit, activeTab, panes, activeElement, user, showPathway=false} = props;
-    const tabTitleLength = panes.length > 3 ? 20 : 25;
+    const tabTitleLength = panes.length > 2 ? 100 : 0;
     //console.log(props);
     let activeKey = activeTab || 'item_'+activeElement.id;
     if (activeTab === 'pathway' && !showPathway) {
@@ -25,7 +25,7 @@ const TimelineLayoutSider = (props) => {
         className={'no-margin'}
     >
         {panes.map(pane => {
-            const tabTitle = <Truncate  width={tabTitleLength} >{pane.title}</Truncate>;//<Tooltip text={pane.title}></Tooltip>
+            const tabTitle = <Truncate width={tabTitleLength} >{pane.title}</Truncate>;//<Tooltip text={pane.title}></Tooltip>
             if (pane.key === 'pathway') {
                 return <TabPane tab={tabTitle} key={pane.key} closable={pane.closable}>{pane.content}</TabPane>
             }

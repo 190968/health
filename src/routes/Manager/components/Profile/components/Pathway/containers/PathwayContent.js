@@ -2,7 +2,7 @@ import PathwayContentPure from '../components/PathwayContent';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {compose} from 'recompose';
-const GET_USER_PATHWAY_QUERY  = gql`
+export const GET_USER_PATHWAY_QUERY  = gql`
  query GET_USER_PATHWAY ($userId: UID!) {
   getUserPathway (userId: $userId) {
         id
@@ -44,7 +44,7 @@ const withQuery = graphql(GET_USER_PATHWAY_QUERY, {
 
 
 
-const JoinPathwayMutation = gql`
+const LeavePathwayMutation = gql`
     mutation LeavePathway($userId: UID!, $id:UID!){
         leavePathway(userId:$userId, id:$id)
     }
@@ -52,7 +52,7 @@ const JoinPathwayMutation = gql`
 
 
 
-const withMutation = graphql(JoinPathwayMutation, {
+const withMutation = graphql(LeavePathwayMutation, {
     props: ({ ownProps, mutate }) => ({
         leavePathway: (id) => {
             return mutate({
@@ -63,9 +63,39 @@ const withMutation = graphql(JoinPathwayMutation, {
     }),
 });
 
+//
+
+
+const JOIN_PATHWAY_MUTATION = gql`
+    mutation JoinPathway($userId: UID!, $id:UID!){
+        joinPathway(userId:$userId, id:$id) {
+            id
+            pathway {
+                id
+                title
+            }
+        }
+    }
+`;
+
+
+
+const withJoinMutation = graphql(JOIN_PATHWAY_MUTATION, {
+    props: ({ ownProps, mutate }) => ({
+        joinPathway: (pathway) => {
+            const {id} = pathway;
+            return mutate({
+                variables: { userId: ownProps.user.id, id}
+            })
+        },
+
+    }),
+});
+
 const enhance = compose(
     withQuery,
-    withMutation
+    withMutation,
+    withJoinMutation
 );
 
 const PathwayContent = enhance(PathwayContentPure);

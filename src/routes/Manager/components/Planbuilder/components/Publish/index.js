@@ -13,11 +13,11 @@ export default class Publish extends React.Component {
 
 
     publish = () => {
-        const {plan} = this.props;
+        const {plan, type} = this.props;
         this.props.publish().then(({data}) => {
             // show message
             //console.log(this.props);
-            if (plan.type === 'pathway') {
+            if (type === 'pathway') {
                 this.props.history.push('/pathways');
             } else {
                 this.props.history.push('/actionplans');
@@ -30,7 +30,7 @@ export default class Publish extends React.Component {
         const {plan} = this.props;
 
         return <Card title="You are ready to publish!">
-            <Button type="primary" onClick={this.publish}>Click here to publish</Button> <AssignPlanButton plan={plan} />
+            <Button type="primary" onClick={this.publish}>Click here to publish</Button> {type !== 'pathway' && <AssignPlanButton plan={plan} />}
         </Card>
     }
 }

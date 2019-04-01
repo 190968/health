@@ -79,6 +79,7 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
 
         {files.length > 0 && <List
             size="small"
+            itemLayout="vertical"
             // header={<div>Header</div>}
             // footer={<div>Footer</div>}
             //bordered
@@ -96,10 +97,10 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
                 if (showPreview) {
                     switch(type) {
                         case 'video':
-                            element = <video width="100%" controls>
+                            element = <div><video width="100%" controls>
                                 <source src={attachment.url} /*type="video/mp4"*/ />
                                 Your browser does not support HTML5 video.
-                            </video>;
+                            </video></div>;
                             break;
                         // case 'image':
                         //     element = <img src={attachment.url} alt={label} style={{width:'100%'}} />;
@@ -112,12 +113,16 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
                     //     element = {element};
                     // } else {
                         element = <List.Item>
-                            <List.Item.Meta
+                            {/* <List.Item.Meta
                                 avatar={<div>{icon}</div>}
                                 title={label}
                                 description={formatBytes(size,2)}
-                            />
-                             {element}</List.Item>;
+                            /> */}
+                             {element}
+                             <div>
+                             {label} {formatBytes(size,2)}
+                             </div>
+                             </List.Item>;
                         // element = <Col /*sm={8} md={12} lg={8}*/  key={i}><Card key={i} type="inner" style={{marginBottom:16}} cover={image}
                         //                                                         title={} extra = {actions}>
                            // {}
@@ -139,6 +144,20 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
             }}
         />}
     </React.Fragment>;
+}
+
+
+
+
+
+export const prepareAttachmentsInput = attachments => {
+    return attachments.map(a=> {
+        const {id} = a;
+        if (id) {
+            return {existedId:id}
+        }
+        return {transloadit:a};
+    });
 }
 
 

@@ -81,11 +81,17 @@ export const enhanceTreatmentElement = compose(
                 props.setElement(element);
                 callback();
             }
-            props.handleSave({prepareInput:prepareInput, callback:callbackSave} );
+            props.onSubmit({callback:callbackSave} );
         }
     }),
     withHandlers({
-        onSubmit: props => event => {
+        onSubmit: props => callback => {
+            // console.log(props);
+            // const callbackSave = (element) => {
+            //     // save the new info
+            //     props.setElement(element);
+            //     callback();
+            // }
             props.saveElement(props.onHide);
         },
     }),

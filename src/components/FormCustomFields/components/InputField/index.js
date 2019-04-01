@@ -4,6 +4,7 @@ import {Input, InputNumber} from 'antd';
 import {compose, branch,withHandlers, withState, renderComponent} from 'recompose';
 const TextArea = Input.TextArea;
 const InputFieldPure = props => {
+	console.log(props);
 	const {value, asTextArea=false, onChange, disabled = false, isNumber = false} = props; 
 	if (!isNumber) {
 		if (asTextArea) {
@@ -33,20 +34,20 @@ const InputFieldPureNoStatePure = props => {
 	if (!isNumber) {
 		if (asTextArea) {
 			return <TextArea
-			defaultValue={value}
+			value={value}
 			disabled={disabled}
 			onChange={props.onChange}
 			autosize={{minRows:1}}
 		/>
 		}
 		return <Input
-			defaultValue={value}
+			value={value}
 			disabled={disabled}
 			onChange={props.onChange}
 		/>
 	} else {
 		return <InputNumber
-			defaultValue={value}
+			value={value}
 			disabled={disabled}
 			onChange={props.onChange}
 		/>

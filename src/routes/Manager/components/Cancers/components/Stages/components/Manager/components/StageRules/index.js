@@ -133,6 +133,15 @@ class StageLetters extends React.Component {
                     required={false}
                     key={k}
                 >
+                 {stage_keys.length > 1 && (
+                        <Icon
+                            className="dynamic-delete-button"
+                            type="minus-circle-o"
+                            style={{float:'right', marginTop:10}}
+                            disabled={stage_keys.length === 1}
+                            onClick={() => this.remove(k)}
+                        />
+                    )}
                     {getFieldDecorator(`rules[${k}]`, {
                         validateTrigger: ['onChange', 'onBlur'],
                         rules: [{
@@ -143,14 +152,7 @@ class StageLetters extends React.Component {
                     })(
                         <StageRule form={this.props.form} letters={letters}/>
                     )}
-                    {stage_keys.length > 1 ? (
-                        <Icon
-                            className="dynamic-delete-button"
-                            type="minus-circle-o"
-                            disabled={stage_keys.length === 1}
-                            onClick={() => this.remove(k)}
-                        />
-                    ) : null}
+                   
                 </FormItem>
             );
         });

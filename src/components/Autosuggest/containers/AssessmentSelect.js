@@ -38,7 +38,7 @@ const withQuery = graphql(GET_ASSESSMENTS_QUERY,
                     loading: data.loading,
 
                     doSearch(search) {
-                        console.log(search);
+                        // console.log(search);
                         return data.refetch({
                             search: search
                         });

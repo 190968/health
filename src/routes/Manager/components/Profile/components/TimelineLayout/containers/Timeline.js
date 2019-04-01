@@ -67,7 +67,8 @@ const withQuery = graphql(GET_TIMELINE_QUERY, {
 
 /** START DROPPABLE */
 const droppableTimeline = props => {
-    const {connectDropTarget} = props;
+	const {connectDropTarget} = props;
+	console.log(props, 'dddrrrrop');
     //const isActive = canDrop && isOver;
     return connectDropTarget(<div><TimelinePure {...props} /></div>);
 }
@@ -122,6 +123,7 @@ const enhance = compose(
 			},
 
 			onSelectElement: (props) => (type) => {
+				// console.log(type,'onSelectElement');
 				return { openAddElement: true, elementType: type };
 			}
 		}

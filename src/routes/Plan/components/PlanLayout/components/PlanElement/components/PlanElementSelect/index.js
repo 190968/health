@@ -45,8 +45,14 @@ const PLAN_ELEMENT_TYPES = [
 
 export const formatPlanElementByTitle = props => {
     const {type} = props;
+    if (type === 'import') {
+        return 'Embed';
+    }
+    // console.log(props);
+    // console.log(PLAN_ELEMENT_TYPES);
     const aa = PLAN_ELEMENT_TYPES.find(f => f.type === type);
-    const {label} = aa;
+    // console.log(aa);
+    const {label} = aa || {};
     return label;
 }
 

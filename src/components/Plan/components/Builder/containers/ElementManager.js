@@ -52,6 +52,8 @@ const enhance = compose(
             props.form.validateFields((err, values) => {
                 //console.log(err);
                 //console.log(values);
+                console.log(props);
+                console.log(type);
                 if (!err) {
                     // prepare
                     switch(type) {
@@ -63,6 +65,7 @@ const enhance = compose(
                             type = 'media';
                             break;
                     }
+                    console.log(type);
                     let input = preparePlanElementInput({ values, order, type });
 
                     //input.extra = values.extra || null;
@@ -146,7 +149,7 @@ const enhance = compose(
         // console.log(props);
         const { intl, element, type } = props;
         const { id } = element || {};
-        const elementTitle = id ? getPlanElementLabelFromElement(element) : formatPlanElementByTitle({type});
+        const elementTitle =   formatPlanElementByTitle({type});
         const title = intl.formatMessage(DefaultI18nEn.addEditSomething, { edit: (id && id !== ''), title:elementTitle })
         return {
             modalTitle: title
