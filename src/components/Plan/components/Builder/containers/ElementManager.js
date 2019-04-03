@@ -170,6 +170,7 @@ const enhance = compose(
 
  const managerDrawerHoc = WrappedComponent => {
      const aaaa = props => {
+         console.log(props);
          return <>
          <WrappedComponent {...props} />
          <PlanElementSchedule {...props}   />

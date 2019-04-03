@@ -2,12 +2,12 @@ import { compose, withProps, mapProps, withHandlers , defaultProps, withState} f
 import PlanElement from "../../../../../../../../../../Plan/components/PlanLayout/components/PlanElement";
 
 
-const enhance = compose(
-    withHandlers({
-        makeReport: props => () => {
-            console.log(props);
-        }
-    })
-);
+// const enhance = compose(
+//     withHandlers({
+//         makeReport: props => () => {
+//             console.log(props);
+//         }
+//     })
+// );
 
-export default enhance(PlanElement);
+export default (PlanElement);

@@ -43,11 +43,11 @@ const TimelinePure = props => {
                         const {isClinical=false, createdAt, isCritical} = item;
                         // const {icon} = TimelineElementView(item);
                         const icon = isCritical && <Icon type="exclamation-circle" style={{color: 'red'}} />;
-                        return <Timeline.Item color={isClinical ? "green" : undefined}
+                        return <Timeline.Item color={'#ccc'} /*color={isClinical ? "green" : undefined}*/
                         key={i}
                         dot={icon}
                         >
-                        <div style={{color:'#ccc', fontSize: '0.8em'}}>{moment(createdAt).format('lll')}</div>
+                        <div style={{color:'#ccc', fontSize: '0.8em', paddingTop:3}}>{moment(createdAt).format('lll')}</div>
                         <TimelineElement item={item} user={user} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} />
                         
                         </Timeline.Item>;

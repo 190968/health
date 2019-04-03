@@ -73,8 +73,9 @@ class PathwayContent extends React.Component {
     componentWillReceiveProps (nextProps) {
         if (!nextProps.loading) {
             const {pathway} = nextProps;
+            const {id} = pathway || {};
             //console.log(nextProps, 'willreceiveprops');
-            if (pathway.id) {
+            if (id) {
 
                 this.setPathway(pathway);
             }

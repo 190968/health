@@ -26,13 +26,13 @@ ${PlanElementPureFragment}
 `;
 
 const GET_PATHWAY_QUERY  = gql`
- query GET_PATHWAY ($id: UID!) {
+ query GET_PATHWAY ($id: UID!, $userId: UID!) {
   getPathway (id:$id) {
     id
     title
     elements {
         ...PlanElement
-        reports {
+        reports (user_id: $userId) {
             id
             value
             date
@@ -61,48 +61,50 @@ ${PlanElementPureFragment}
 
 const withQuery = graphql(GET_PATHWAY_QUERY, {
     options: (ownProps) => {
+        const {pathway, user} = ownProps;
+        const {id} = pathway || {};
+        const {id:userId} = user || {};
         return {
             variables: {
-                id: ownProps.pathway.id,
+                id,
+                userId
             },
         }
     },
     props: ({ data }) => {
-        if (!data.loading) {
-            return {
-                pathway: data.getPathway,
-                loading: data.loading
-            }
-        }
-        else {
-            return {loading: data.loading}
+        return {
+            pathway: data.getPathway || {},
+            loading: data.loading
         }
     },
 });
 
 
-// const PATHWAY_REPORT_MUTATION = gql`
-//  mutation PATHWAY_REPORT($userId: UID, $parentId: UID, $tagId: UID!, $tagType: String!, $message: String!, $attachments: [Json]) {
-//         reportOnPathway(userId: $userId, parentId: $parentId, tagId: $tagId, tagType: $tagType, message: $message, attachments:$attachments) {
-//              id
-//         }
-//     }
-// `;
+const PATHWAY_REPORT_MUTATION = gql`
+    mutation PATHWAY_REPORT($userId: UID!, $id: UID!) {
+        reportOnPathway(userId: $userId, id: $id) {
+             id
+        }
+    }
+`;
 
 
-// const withMutation = graphql(PATHWAY_REPORT_MUTATION, {
-//     props: ({mutate}) => ({
-//         sendMessage: ({userId, tagId, tagType, message, parentId, attachments}) => {
-//             return mutate({
-//                 variables: {userId, tagId, tagType, message, parentId, attachments},
-//                 refetchQueries: [{
-//                     query: GET_COMMENTS_LIST,
-//                     variables: {tagId, tagType, parentId},
-//                 }],
-//             })
-//         },
-//     }),
-// });
+export const withPathwayElementReportMutation = graphql(PATHWAY_REPORT_MUTATION, {
+    props: ({ ownProps, mutate }) => ({
+        makeReport: (input) => {
+
+            const {plan, element, user} = ownProps;
+            const {id} = plan || {};
+            const {id:elementId} = element || {};
+            const {id:userId} = user || {};
+           
+            return mutate({
+                variables: { id, elementId, userId, input},
+            })
+        },
+
+    }),
+});
 
 const enhance = compose(
     withQuery,

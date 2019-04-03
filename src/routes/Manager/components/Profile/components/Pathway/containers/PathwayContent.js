@@ -28,10 +28,12 @@ const withQuery = graphql(GET_USER_PATHWAY_QUERY, {
         }
     },
     props: ({ data }) => {
+        const userPathway =  data.getUserPathway || {};
+        const {pathway} = userPathway || {};
         if (data.getUserPathway || !data.loading) {
             return {
-                userPathway: data.getUserPathway,
-                pathway: data.getUserPathway.pathway,
+                userPathway: userPathway,
+                pathway,
                 //pathwayId: data.getUserPathway.pathway.id,
                 loading: data.loading
             }
