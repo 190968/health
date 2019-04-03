@@ -22,6 +22,12 @@ export default class ConditionElement extends React.PureComponent {
         }
     }
 
+    componentDidMount() {
+        if (this.state.value) {
+            this.props.showChildren(this.state.value);
+        }
+    }
+
     onChange = (value) => {
         this.setState({value:value});
         this.props.onChange(value, 'dropdown');
@@ -30,7 +36,6 @@ export default class ConditionElement extends React.PureComponent {
             this.loadChildren(value);
         }
     }
-
     loadChildren = (value) => {
         this.props.showChildren(value);
     }

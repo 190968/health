@@ -7,12 +7,12 @@ const enhance = compose(
         let value;
         //console.log(reports);
         if (isMultiple) {
-            value = reports && reports.map(report => report.value);
+            value = reports && reports.map(report => report.valueId);
             value = value && value[0];
             value = value || [];
             return value;
         } else {
-            value = reports && reports.map(report => report.value);
+            value = reports && reports.map(report => report.valueId);
             value = value && value[0];
             value = value && value[0];
             //console.log(value);

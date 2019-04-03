@@ -302,6 +302,15 @@ element {
  */
 
 
+export const PlanElementReportFragment = gql`
+        fragment PlanElementReport on PlanBodyElementReport {
+            id
+            value
+            valueId
+            date
+        }
+`;
+
 export const PlanElementFragment = gql`
             fragment PlanElementWithReports on PlanBodyElement {
             id
@@ -312,9 +321,7 @@ export const PlanElementFragment = gql`
             isAnswerBasedElement
             hasChildren
             reports (date: $date) {
-                id
-                value
-                date
+                ...PlanElementReport
             }
             footnote
             reference
@@ -406,6 +413,7 @@ export const PlanElementFragment = gql`
         ${ElementTrackerFragment}
         ${ElementCalculatorFragment}
         ${BrahmsFragment}
+        ${PlanElementReportFragment}
 `;
 
 export const PlanElementPureFragment = gql`

@@ -1,7 +1,7 @@
 import PathwayBody from '../components/PathwayBody';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {PlanElementPureFragment} from "../../../../../../Plan/components/Plan/fragments";
+import {PlanElementPureFragment, PlanElementReportFragment} from "../../../../../../Plan/components/Plan/fragments";
 import { compose } from 'recompose';
 
 
@@ -33,9 +33,7 @@ const GET_PATHWAY_QUERY  = gql`
     elements {
         ...PlanElement
         reports (user_id: $userId) {
-            id
-            value
-            date
+            ...PlanElementReport
         }
     }
     cancer {
@@ -57,6 +55,7 @@ const GET_PATHWAY_QUERY  = gql`
   }
 }
 ${PlanElementPureFragment}
+${PlanElementReportFragment}
 `;
 
 const withQuery = graphql(GET_PATHWAY_QUERY, {
@@ -79,32 +78,6 @@ const withQuery = graphql(GET_PATHWAY_QUERY, {
     },
 });
 
-
-const PATHWAY_REPORT_MUTATION = gql`
-    mutation PATHWAY_REPORT($userId: UID!, $id: UID!) {
-        reportOnPathway(userId: $userId, id: $id) {
-             id
-        }
-    }
-`;
-
-
-export const withPathwayElementReportMutation = graphql(PATHWAY_REPORT_MUTATION, {
-    props: ({ ownProps, mutate }) => ({
-        makeReport: (input) => {
-
-            const {plan, element, user} = ownProps;
-            const {id} = plan || {};
-            const {id:elementId} = element || {};
-            const {id:userId} = user || {};
-           
-            return mutate({
-                variables: { id, elementId, userId, input},
-            })
-        },
-
-    }),
-});
 
 const enhance = compose(
     withQuery,

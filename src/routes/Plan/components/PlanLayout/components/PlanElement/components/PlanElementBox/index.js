@@ -67,7 +67,7 @@ const PlanElementBox = (props) => {
 	const defaultProps = {item, disabled:notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode  }
 	const {brahmRules=[]} = props;
 	const {rules:brahms} = brahmRules.find(report => report.element.id === element.id) || {};
-	
+	const hasReports = reports && reports.length > 0;
 	let possibleOptions;
 	switch (itemType) {
 		default:
@@ -156,7 +156,7 @@ const PlanElementBox = (props) => {
 			break;
 		
 		case 'condition':
-			reportValues = reports && reports.map((report) => report.value);
+			reportValues = reports && reports.map((report) => report.valueId);
 			reportValues = reportValues && reportValues[0];
 			reportValues = reportValues && reportValues[0];
 			fieldTitle = item.label;
@@ -178,7 +178,7 @@ const PlanElementBox = (props) => {
 		const {updateSkippedElements,
 			updateBrahmRules,
 			brahmRules} = props;
-			reportValues = reports && reports.map((report) => report.value);
+			reportValues = reports && reports.map((report) => report.valueId);
 			reportValues = reportValues && reportValues[0];
 			reportValues = reportValues && reportValues[0];
 
@@ -205,7 +205,7 @@ const PlanElementBox = (props) => {
 			);
 			break;
 		case 'scale_input':
-			reportValues = reports && reports.map((report) => report.value);
+			reportValues = reports && reports.map((report) => report.valueId);
 			reportValues = reportValues && reportValues[0];
 			reportValues = reportValues && reportValues[0];
 
@@ -488,9 +488,12 @@ const PlanElementBox = (props) => {
 	} else {
 		showAdd = false;
 	}
-
+	const {type:planType} = plan;
+	const isPathway = planType === 'pathway';
 	return (
 		<div className={className} style={{ position: 'relative', width: '100%' }}>
+
+		{(isPathway && hasReports) && <div className={'dimmed-block'}></div>}
 			{showAdd &&
 			i === 0 && (
 				<Divider className="element-actions" style={{ marginTop: -10 }}>

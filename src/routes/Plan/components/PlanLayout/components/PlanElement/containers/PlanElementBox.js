@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import {message} from 'antd';
 import { compose,  withHandlers, branch } from 'recompose';
-import { PlanElementFragment } from '../../../../Plan/fragments';
+import { PlanElementFragment, PlanElementPureFragment, PlanElementReportFragment } from '../../../../Plan/fragments';
 import { collectExecutedBrahms } from '../../../../../../../components/Brahms/utils';
 import { prepareSkippedPlanElementsByNextId, getPlanElementLabelFromElement, formatPlanGoToElement } from '../../../../../../../components/Plan/utils';
 
@@ -19,7 +19,7 @@ const PLAN_FIELD_REPORT_MUTATION = gql`
 `;
 
 
-export const PlanElementWithMutation = graphql(PLAN_FIELD_REPORT_MUTATION, {
+ const withPlanElementReportMutation = graphql(PLAN_FIELD_REPORT_MUTATION, {
     props: ({ ownProps, mutate }) => ({
         makeReport: ( input) => {
 
@@ -34,15 +34,71 @@ export const PlanElementWithMutation = graphql(PLAN_FIELD_REPORT_MUTATION, {
     }),
 });
 
-const enhanceWithReport = compose(
-    PlanElementWithMutation,
+// pathway
+
+const PATHWAY_REPORT_MUTATION = gql`
+    mutation PATHWAY_REPORT($userId: UID!, $id: UID!, $elementId: UID!, $input: PathwayElementReportInput!) {
+        reportOnPathway(userId: $userId, id: $id, elementId: $elementId, input: $input) {
+             id
+             elements {
+                ...PlanElement
+                reports (user_id: $userId) {
+                    ...PlanElementReport
+                }
+            }
+        }
+    }
+    ${PlanElementPureFragment}
+    ${PlanElementReportFragment}
+`;
+
+
+const withPathwayElementReportMutation = graphql(PATHWAY_REPORT_MUTATION, {
+    props: ({ ownProps, mutate }) => ({
+        makeReport: (input) => {
+
+            const {plan, element, user} = ownProps;
+            const {id} = plan || {};
+            const {id:elementId} = element || {};
+            const {id:userId} = user || {};
+           
+            return mutate({
+                variables: { id, elementId, userId, input},
+            })
+        },
+
+    }),
+});
+
+
+const enhancePathwayWithReport = compose(
+    withPathwayElementReportMutation,
+    withHandlers({
+        onChange: props => (value) => {
+            if (props.isBuilderMode || props.isPreviewMode) {
+                return;
+            }
+            
+            const hide = message.loading('Saving in progress..', 0);
+  
+            props.makeReport({optionId:value}).then(() => {
+                hide();
+                message.success('Saved');
+            });
+        }
+    })
+);
+
+const enhancePlanWithReport = compose(
+    withPlanElementReportMutation,
     withHandlers({
         onChange: props => (value) => {
             console.log(props);
             if (props.isBuilderMode || props.isPreviewMode) {
                 return;
             }
-            const {upid, plan, mode, element, elements, date} = props;
+            const {plan, mode, element, elements, date} = props;
+            const {type:planType} = plan;
             if (!date) {
                 return;// plug for now
             }
@@ -53,32 +109,42 @@ const enhanceWithReport = compose(
                 message.success('Saved');
 
 
-                const valueToUse = value;
+                // pathays doesn't have go to elements 
+                if (planType !== 'pathway') {
+                    const valueToUse = value;
 
-                const {id, isAnswerBasedElement, getBrahmsRules} = element || {};
-                const {nextElementId, elementRules} = collectExecutedBrahms({valueToUse, getBrahmsRules, isAnswerBasedElement})
-                
-                let skippedByQuestions = {/*id:[]*/};
-                let skippedSeectionsByQuestions = {};
-                if (nextElementId) {
-                    const { elementsToSkip, sectionsByElementsToSkip } = prepareSkippedPlanElementsByNextId({ elements, currentId:id, nextId: nextElementId,  plan, mode })
-                    // console.log(elementsToSkip, 'elementsToSkip');
-                    skippedByQuestions = elementsToSkip;
-                    skippedSeectionsByQuestions = sectionsByElementsToSkip;
-                } else {
-                    skippedByQuestions[id] = [];
-                    skippedSeectionsByQuestions[id] = false;
+                    const {id, isAnswerBasedElement, getBrahmsRules} = element || {};
+                    const {nextElementId, elementRules} = collectExecutedBrahms({valueToUse, getBrahmsRules, isAnswerBasedElement})
+                    
+                    let skippedByQuestions = {/*id:[]*/};
+                    let skippedSeectionsByQuestions = {};
+                    if (nextElementId) {
+                        const { elementsToSkip, sectionsByElementsToSkip } = prepareSkippedPlanElementsByNextId({ elements, currentId:id, nextId: nextElementId,  plan, mode })
+                        // console.log(elementsToSkip, 'elementsToSkip');
+                        skippedByQuestions = elementsToSkip;
+                        skippedSeectionsByQuestions = sectionsByElementsToSkip;
+                    } else {
+                        skippedByQuestions[id] = [];
+                        skippedSeectionsByQuestions[id] = false;
+                    }
+                    // console.log(props);
+                    // console.log(skippedByQuestions, 'skippedByQuestions');
+                    props.updateSkippedElements(skippedByQuestions, skippedSeectionsByQuestions);
+
+                    // add brahms rules
+                    props.updateBrahmRules({ element, rules:elementRules });
                 }
-                // console.log(props);
-                // console.log(skippedByQuestions, 'skippedByQuestions');
-                props.updateSkippedElements(skippedByQuestions, skippedSeectionsByQuestions);
-
-                // add brahms rules
-                props.updateBrahmRules({ element, rules:elementRules });
                 
             });
         }
     })
+);
+const enhanceWithReport = compose(
+    branch(props => {
+        const {plan} = props;
+        const {type} = plan || {};
+        return type === 'pathway';
+    }, enhancePathwayWithReport, enhancePlanWithReport),
 );
 
 const enhanceFakeReport =  withHandlers({
