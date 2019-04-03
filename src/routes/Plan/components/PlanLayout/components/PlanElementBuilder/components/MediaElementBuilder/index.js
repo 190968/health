@@ -109,17 +109,17 @@ const MediaElementBuilder = (props) => {
     let {note, template, allowedFileTypes} = getMediaTypeInfo(type);
 
     getFieldDecorator('attachment', {initialValue: prepareAttachmentsForForm(attachments, true)});
+
+    getFieldDecorator('file', {
+        initialValue:'',
+    });
+
+    getFieldDecorator('type', {
+        initialValue: type,
+    })
     return (
         <React.Fragment>
 
-            {getFieldDecorator('file', {
-                    initialValue:'',
-                }
-            )}
-            {getFieldDecorator('type', {
-                    initialValue: type,
-                }
-            )}
             <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.title)}
@@ -158,7 +158,7 @@ const MediaElementBuilder = (props) => {
                         // rules: [{required: true, message: "Enter Title", whitespace: true}],
                     }
                 )(
-                    <TextArea autosize />
+                    <TextArea autosize={{ minRows: 2, maxRows: 6 }}  />
                 )}
             </FormItem> }
             
