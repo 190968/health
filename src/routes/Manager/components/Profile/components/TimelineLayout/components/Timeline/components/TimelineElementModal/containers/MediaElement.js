@@ -1,6 +1,6 @@
 import {modalHOC} from '../modal';
 import { compose, branch, renderComponent, withProps, withHandlers, defaultProps, mapProps} from 'recompose';
-import { MediaElementBuilder } from '../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder';
+import  MediaElementBuilder  from '../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/MediaElementBuilder';
 
 const enhanceProps = compose(
 //     withProps(props => {
