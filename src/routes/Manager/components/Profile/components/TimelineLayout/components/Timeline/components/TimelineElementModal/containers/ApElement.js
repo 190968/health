@@ -8,7 +8,7 @@ const enhanceProps = compose(
     ////<TaskAssignWizzard asPlusIcon patient={user} mode={'simple'} assignObject={{type: 'ap'}} />
     withProps(props => {
         const {details, user} = props;
-        //console.log(props);
+        console.log(props, ' AP PROPS');
         return {
             details: {
                 ...details,
@@ -23,11 +23,15 @@ const enhanceProps = compose(
             // ={{type: 'ap', object:plan}}
         }
     }),
-    // withHandlers({
-    //     modalWidth: props => () => {
-    //         return 800;
-    //     }
-    // }),
+    withHandlers({
+        refetch: props => () => {
+            const {refetchTimeline} = props;
+            if (refetchTimeline) {
+                refetchTimeline();
+            }
+        //    props.refetchTimeline();
+        }
+    }),
     //enhance,
     // withHandlers({
     //     onSubmit: props => callback => {

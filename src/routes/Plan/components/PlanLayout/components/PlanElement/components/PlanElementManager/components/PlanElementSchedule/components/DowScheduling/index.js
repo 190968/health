@@ -2,6 +2,8 @@ import React from 'react';
 import { Form, Checkbox} from 'antd';
 import {injectIntl} from 'react-intl';
 import messages from './messages';
+import { compose, withState } from 'recompose';
+import { CheckboxAsButton, validateCheckboxAsButton } from '../../../../../../../../../../../../components/FormCustomFields/containers/CheckboxAsButton';
 
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
@@ -15,6 +17,7 @@ const elementDows = [
     {value:'fri', label:'Fri'},
     {value:'sat', label:'Sat'},
 ]
+
 const DowScheduling = props => {
 
 
@@ -30,18 +33,18 @@ const DowScheduling = props => {
         // console.log(isDow);
         // console.log(planDows);
 
-        let dowOptions = [];
-        elementDows.map((option) => {
-            const value = option.value;
-            const label = option.label;
-            // console.log(value);
-            // console.log(planDows.indexOf(value));
+        // let dowOptions = [];
+        // elementDows.map((option) => {
+        //     const value = option.value;
+        //     const label = option.label;
+        //     // console.log(value);
+        //     // console.log(planDows.indexOf(value));
 
-            const isDisabled = isDow && planDows.indexOf(value) < 0;// ? false:true;
+        //     const isDisabled = isDow && planDows.indexOf(value) < 0;// ? false:true;
 
-            dowOptions.push(<Checkbox key={value} value={value} disabled={isDisabled} >{label}</Checkbox>);
-            return option;
-        });
+        //     dowOptions.push(<Checkbox key={value} value={value} disabled={isDisabled} >{label}</Checkbox>);
+        //     return option;
+        // });
 
 
 
@@ -53,10 +56,10 @@ const DowScheduling = props => {
                     {getFieldDecorator('schedule[dows]', {
                         initialValue: dows,
                         rules: [{
-                            required: true, message: 'Please Select',
+                            validator: validateCheckboxAsButton, required: true, message: 'Please Select',
                         }],
                     })(
-                        <CheckboxGroup  >{dowOptions}</CheckboxGroup>
+                        <CheckboxAsButton options={elementDows}  />
                     )}
                 </FormItem>
         );

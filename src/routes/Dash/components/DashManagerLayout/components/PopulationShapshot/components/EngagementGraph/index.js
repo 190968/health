@@ -21,7 +21,7 @@ export const RiskLevelGraph = props => {
             </linearGradient>
         </defs>
 
-        <XAxis dataKey="date" tickFormatter={formatAxis} tickCount={1} minTickGap={50} />
+        <XAxis dataKey="date" tickFormatter={formatAxis} tickCount={7}   />
         <YAxis width={30} domain={[ 0, 100 ]} ticks={[ 0, 50, 100 ]} />
         <Tooltip 
             labelFormatter={(value) => moment(value).format('L')}
@@ -35,7 +35,7 @@ export const RiskLevelGraph = props => {
             stroke="#48a5dc"
             fill="url(#colorUv)"
             strokeWidth={1}
-            name="Adhrence"
+            name="Adherence"
             dot={{ stroke: '#48a5dc', strokeWidth: 1, r: 2, fill: 'white' }}
             onClick={handleClick}
         />

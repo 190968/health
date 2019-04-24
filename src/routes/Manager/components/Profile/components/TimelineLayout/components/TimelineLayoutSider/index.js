@@ -3,7 +3,7 @@ import { Tabs, Tooltip } from 'antd';
 import Truncate  from 'react-truncate';
 
 //import {getTimelineElementCardTitle} from "../Timeline/components/TimelineElement";
-import TimelineElement from '../Timeline/containers/TimelineElement';
+import {TimelineElement} from '../Timeline/containers/TimelineElement';
 
 const TabPane = Tabs.TabPane;
 

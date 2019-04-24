@@ -7,6 +7,7 @@ import sort from '../../../../../../components/Tables/sort';
 import SettingsDropdown from '../../../../../../components/UI/SettingsDropdown';
 import { TableWithMessage } from '../../../../../../components/Tables';
 import TaskAssignButton from '../../../../../../components/Tasks/components/TaskAssignButton';
+import {CohortDeleteUserButton} from '../../../Cohorts/components/Buttons/components/DeleteUser';
 export const CohortsTable = props => {
 
     const {cohorts=[], user, loading=false} = props;
@@ -43,7 +44,10 @@ export const CohortsTable = props => {
             title: '',
             key: 'act',
             render: (date, info) => {
-                const items = [{key:'assign', content:<TaskAssignButton asMenuItem label={'Assign Assessment'} patient={user} mode={'simple'} refetch={props.refetch} assignObject={{type: 'assessment', cohort:info.cohort}} />}];
+                const items = [
+                    {key:'assign', content:<TaskAssignButton asMenuItem label={'Assign Assessment'} patient={user} mode={'simple'} refetch={props.refetch} assignObject={{type: 'assessment', cohort:info.cohort}} />},
+                    {key:'delete', content:  <CohortDeleteUserButton cohortUser={info} button={false} label={'Edit'} refetch={props.refetch} asMenuItem />},
+                ];
                 return <SettingsDropdown items={items} />
             }
         },

@@ -20,8 +20,8 @@ const formTailLayout = {
 };
 
 const OptionsElementBuilder = (props) => {
-    console.log(props);
-    const {form, loading, intl, scales=[], details, plan, mode, element} = props;
+    // console.log(props);
+    const {form, type, intl, scales=[], details, plan, mode, element} = props;
     const {getFieldDecorator, getFieldValue} = form;
     const {id, label, options=[], isDropdown=false, isMultiple=false, isVertical=false, hasLine=false} = details || {};
     const showBrahms = plan;// && id;
@@ -45,7 +45,7 @@ const OptionsElementBuilder = (props) => {
 
             {/* <ScaleElementOptions options={options} form={form} /> */}
 
-            <FormItem {...formTailLayout} className={'single-line'} >
+            {/* <FormItem {...formTailLayout} className={'single-line'} >
                 {getFieldDecorator('isDropdown', {
                     initialValue: isDropdown,
                     valuePropName: 'checked'
@@ -56,8 +56,8 @@ const OptionsElementBuilder = (props) => {
                     </Tooltip>
                     </Checkbox>
                 )}
-            </FormItem>
-            {!getFieldValue('isDropdown') &&
+            </FormItem> */}
+            {/* {type !== 'dropdown' &&
             <React.Fragment>
                 <FormItem {...formTailLayout}  className={'single-line'}>
                     {getFieldDecorator('isMultiple', {
@@ -97,10 +97,10 @@ const OptionsElementBuilder = (props) => {
                         </Tooltip>
                         </Checkbox>
                     )}
-                </FormItem>}
-            </React.Fragment>
-            }
-            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} element={element} plan={plan} mode={mode} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
+                </FormItem>} */}
+            {/* </React.Fragment> */}
+            {/* } */}
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} element={{type, ...element}} plan={plan} mode={mode} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
    
         </React.Fragment>
     );

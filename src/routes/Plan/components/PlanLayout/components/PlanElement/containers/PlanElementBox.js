@@ -78,12 +78,35 @@ const enhancePathwayWithReport = compose(
             if (props.isBuilderMode || props.isPreviewMode) {
                 return;
             }
-            
+            const {plan, mode, element, elements} = props;
             const hide = message.loading('Saving in progress..', 0);
-  
-            props.makeReport({optionId:value}).then(() => {
+            // console.log(value, 'value');
+            props.makeReport({value}).then(() => {
                 hide();
-                message.success('Saved');
+                //message.success('Saved');
+
+                const valueToUse = value;
+
+                const {id, isAnswerBasedElement, getBrahmsRules} = element || {};
+                const {nextElementId, elementRules} = collectExecutedBrahms({valueToUse, getBrahmsRules, isAnswerBasedElement})
+                
+                let skippedByQuestions = {/*id:[]*/};
+                let skippedSeectionsByQuestions = {};
+                if (nextElementId) {
+                    const { elementsToSkip, sectionsByElementsToSkip } = prepareSkippedPlanElementsByNextId({ elements:plan.elements, currentId:id, nextId: nextElementId,  plan, mode })
+                    // console.log(elementsToSkip, 'elementsToSkip');
+                    skippedByQuestions = elementsToSkip;
+                    skippedSeectionsByQuestions = sectionsByElementsToSkip;
+                } else {
+                    skippedByQuestions[id] = [];
+                    skippedSeectionsByQuestions[id] = false;
+                }
+                // console.log(props);
+                // console.log(skippedByQuestions, 'skippedByQuestions');
+                props.updateSkippedElements(skippedByQuestions, skippedSeectionsByQuestions);
+
+                // add brahms rules
+                props.updateBrahmRules({ element, rules:elementRules });
             });
         }
     })
@@ -93,7 +116,7 @@ const enhancePlanWithReport = compose(
     withPlanElementReportMutation,
     withHandlers({
         onChange: props => (value) => {
-            console.log(props);
+            // console.log(props);
             if (props.isBuilderMode || props.isPreviewMode) {
                 return;
             }
@@ -192,8 +215,15 @@ const enhance = compose(
         const {isBuilderMode, isPreviewMode} = props;
         // const canReport = false;
         return !isBuilderMode && !isPreviewMode;// && canReport;
-    }, enhanceWithReport, enhanceFakeReport)
-
+    }, enhanceWithReport, enhanceFakeReport),
+    withHandlers({
+        updateCurrentElement: props => () => {
+            const {i} = props;
+            if (props.updateCurrentElement) {
+                props.updateCurrentElement(i);
+            }
+        }
+    })
 )
 
 export default enhance(PlanElementBox);

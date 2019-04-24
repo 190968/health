@@ -52,7 +52,9 @@ const enhance = compose(
 export const ProgramManager = enhance(Manager);
 
 const prepareProgramInput = values => {
-    const {address, ...otherValues} = values;
-    const addressInput = prepareAddressInput(address)
-    return {...otherValues, address:addressInput};
+    const {address, logo, ...otherValues} = values;
+    const addressInput = prepareAddressInput(address);
+    const logoInput = logo;//prepareFileAtt(address);
+
+    return {...otherValues, address:addressInput, logo:logoInput};
 }

@@ -78,7 +78,7 @@ const enhance = compose(
                 return false;
             }
             if (tags.length === selectedTags.length) {
-                props.updateFilters([]);
+                props.updateFilters(null);
             } else {
                 props.updateFilters(selectedTags);
             }

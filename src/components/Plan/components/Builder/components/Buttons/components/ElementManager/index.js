@@ -6,9 +6,9 @@ import { PlanElementBuilder } from '../../../../containers/ElementManager';
 import { IconCustom } from '../../../../../../../FitIcon';
 
 const PlanElementManagerButtonPure = props => {
-    const {showModal, toggleModal, label, shape, buttonType='dashed', icon, asButton=true, ...otherProps} = props;
+    const {showModal, toggleModal, label, asButton=true, shape, buttonType='dashed', icon,  ...otherProps} = props;
     const {element, mode} = props;
-    // console.log(userAssessment);
+    // console.log(props, 'props111');
     const isLesson = mode === 'lesson';
     let buttonColor = buttonType;
     if (isLesson) {
@@ -16,7 +16,7 @@ const PlanElementManagerButtonPure = props => {
     }
     return <React.Fragment>
         {showModal && <PlanElementBuilder {...otherProps} asModal onHide={toggleModal} />}
-        {element ? (icon === 'brahms' ? <IconCustom type={'brahms'} onClick={toggleModal} style={{marginRight:5}} /> : <Icon type={'edit'} onClick={toggleModal} />) : <Button type={buttonColor} shape={shape} icon={'plus'}  onClick={toggleModal}>{label || 'Add Element'}</Button>}
+        {element ? (icon === 'brahms' ? <IconCustom type={'brahms'} onClick={toggleModal} style={{marginRight:5}} /> : <Icon type={'edit'} onClick={toggleModal} />) : (asButton ? <Button type={buttonColor} shape={shape} icon={'plus'}  onClick={toggleModal}>{label || 'Add Element'}</Button> : <span onClick={toggleModal}>{label}</span>)}
     
     </React.Fragment>
 }

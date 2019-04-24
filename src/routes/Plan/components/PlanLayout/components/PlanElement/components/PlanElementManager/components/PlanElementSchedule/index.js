@@ -11,12 +11,12 @@ const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
 const formItemLayout = {
-    labelCol: {span: 4},
-    wrapperCol: {span: 20},
+    labelCol: {span: 5},
+    wrapperCol: {span: 19},
 };
 const formTailLayout = {
-    labelCol: {span: 4},
-    wrapperCol: {span: 20, offset: 4},
+    labelCol: {span: 5},
+    wrapperCol: {span: 19, offset: 4},
 };
 
 

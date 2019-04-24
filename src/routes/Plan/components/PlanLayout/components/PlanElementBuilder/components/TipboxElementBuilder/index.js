@@ -60,7 +60,7 @@ const TextElementBuilder = (props) => {
                     }
                 )(
                     <Select style={{width:250}}>
-                        {options.map(o => <Option value={o.value}>{o.label}</Option>)}
+                        {options.map(o => <Option key={o.value} value={o.value}>{o.label}</Option>)}
                     </Select>
                 )}
             </FormItem>

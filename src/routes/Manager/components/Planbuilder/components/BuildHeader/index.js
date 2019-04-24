@@ -5,6 +5,7 @@ import {injectIntl} from 'react-intl';
 import moment from 'moment';
 import messages from './messages';
 import Scheduling from './components/Scheduling';
+import PlanBuilderThumbnails from './components/Thumbnails';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const {Header, Content} = Layout;
@@ -121,11 +122,12 @@ class BuildHeader extends React.Component{
                         <TextArea placeholder="Description" autosize={{ minRows: 2}} />
                     )}
                 </FormItem>
-
-
-
-
             </Card>
+
+            {getFieldDecorator('thumbs')(
+                <PlanBuilderThumbnails />
+            )}
+            
 
                 {needScheduling && <Scheduling form={form} formItemLayout={formItemLayout} tailFormItemLayout={tailFormItemLayout} />}
 
@@ -149,17 +151,22 @@ const BuildHeaderForm = Form.create({
             return;
         }
         console.log(plan, 'plan');
-        const {title, description, schedule} = plan || {};
+        const {title, description, schedule, thumb} = plan || {};
         //console.log('mapPropsToFields', props);
         //console.log(plan.schedule);
         //console.log(typeof plan.schedule.limitStartDow);
         const {type,limitStartDow=false,dows,relativeEndDay,startDate,endDate} =  schedule || {};
+        // const {thumb} = plan || {};
+        const {large} = thumb || {};
         return {
             title: createFormField({
                 value: title,
             }),
             description: createFormField({
                 value: description,
+            }),
+            thumbs: createFormField({
+                value: large,
             }),
             // schedule
             'schedule[type]': createFormField({

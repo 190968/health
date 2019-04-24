@@ -1,7 +1,7 @@
 import React from 'react';
 import DescriptionList from '../../../../../../components/Layout/DescriptionList';
 import { defaultHealthRecordDetails } from '../../utils';
-
+import {formatOncologyType, formatOncologyDisorder, formatOncologyBehavior} from './utils';
 export const OncologyView = props => {
     const {healthRecord, element} = props;
     const {
@@ -14,9 +14,9 @@ export const OncologyView = props => {
     const {code, name} = diagnosis || {};
     let dtls = [
         ['Diagnosis', code+' '+name],
-        ['Diagnosis Type', type],
-        ['Disorder', disorder],
-        ['Behavior', behavior],
+        ['Diagnosis Type', formatOncologyType(type)],
+        ['Disorder', formatOncologyDisorder(disorder)],
+        ['Behavior', formatOncologyBehavior(behavior)],
         ['Organ System', organSystem],
         ['Anatomic Site', anatomicSite],
         ...defaultHealthRecordDetails(healthRecord)

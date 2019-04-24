@@ -11,7 +11,7 @@ const PlanElementCard = props => {
     let bordered = showType;
 	let hoverable = isBuilderMode && !isPreviewMode;
 	let title = showTitle ? getPlanElementLabelFromElement(element, { isBuilderMode: isBuilderMode, footnote, showType }) : false; //'Add name of'
-
+	console.log(title, 'title');
 	if (title && withCompleteCheckmark) {
 		title = <React.Fragment>
 			<Checkbox style={{marginRight:5}} />
@@ -20,7 +20,7 @@ const PlanElementCard = props => {
 	}
     //const useExtra = false; //footnote !== '' && reference !== '';
 
-    const showAsPure = (element.type === 'text' || element.type === 'tipbox') && !isBuilderMode || (isBuilderMode && isPreviewMode);
+    const showAsPure = (element.type === 'text' || element.type === 'tipbox') && !isBuilderMode;// || (isBuilderMode && isPreviewMode);
     
 
     // show pure element

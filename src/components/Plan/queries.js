@@ -34,7 +34,7 @@ export const withPathwayMainQuery = graphql(
         props: ({ ownProps, data }) => {
             const {getPathway} = data || {};
             return {
-                plan: getPathway,
+                plan: {...getPathway, type:'pathway'},
                 loading: data.loading,
             }
         },

@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import {Card, Icon, Tooltip} from 'antd';
+import { SideToSide } from '../../../../../../components/Layout/Flexbox';
+import { formatFileName } from '../../../../../../components/FormCustomFields/components/Attachments';
 
 
 export default class PlanMedia extends React.PureComponent {
@@ -38,7 +40,6 @@ export default class PlanMedia extends React.PureComponent {
                     avatar={<Icon type="play-circle-o" />}
                     title={label}
                 /></Card>;
-                break;
             default:
                 let icon = '';
                 if (type === 'presentation') {
@@ -46,11 +47,15 @@ export default class PlanMedia extends React.PureComponent {
                 } else {
                     icon = <Icon type="file-pdf" />;
                 }
-                return <Card hoverable ><a href={item.url} target="_blank"><Card.Meta
-                    avatar={icon}
-                    title={<Tooltip title="Will be pened in a new tab">{item.label}</Tooltip>}
-                    description="Will be opened in a new tab"
-                /></a></Card>;//<Slider marks={marks}    />
+                const {label, filesize} = item || {};
+                console.log(item);
+                return <SideToSide>
+                    <div style={{fontSize:'3em', paddingRight:10}}>{icon}</div>
+                    <Card hoverable ><a href={item.url} target="_blank"><Card.Meta
+                    title={<Tooltip title="Will be pened in a new tab">{label}</Tooltip>}
+                    description={formatFileName(item)}
+                /></a></Card>
+                </SideToSide>
         }
 
 

@@ -26,8 +26,9 @@ export default class PlanScale extends React.PureComponent {
         const {item} = this.props;
         var options = item.options;
         const option = options[value];
-        this.setState({value:option.value});
-        this.props.onChange(option.value, 'scale');
+        this.setState({value:option.id});
+        // console.log(option);
+        this.props.onChange(option.id, 'scale');
     }
 
     render() {

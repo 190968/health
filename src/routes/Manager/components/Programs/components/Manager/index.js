@@ -2,6 +2,8 @@ import React from 'react';
 import {Form, Input, Select} from 'antd';
 import AddressField from '../../../../../../components/FormCustomFields/components/Address';
 import PhoneField from '../../../../../../components/FormCustomFields/components/Phone';
+import { SimpleUpload } from '../../../../../../components/FormCustomFields/components/Attachments/upload';
+import { prepareUrlForForm } from '../../../../../../components/FormCustomFields/components/Attachments';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -21,13 +23,13 @@ const formItemLayoutDefault = {
 const ProgramManager = props => {
     const { program, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {title, description, website, address, type, bussinessHours} = program || {};
+    const {title, logo, description, website, address, type, businessHours} = program || {};
     return <Form>
         <FormItem
             {...formItemLayout}
             label="Name"
         >
-            {getFieldDecorator('name', {
+            {getFieldDecorator('title', {
                 initialValue: title,
                 rules: [{
                     required: true,
@@ -55,6 +57,16 @@ const ProgramManager = props => {
             {...formItemLayout}
             label="Logo"
         >
+        {getFieldDecorator('logo', {
+            initialValue: prepareUrlForForm(logo),
+            rules: [{
+                required: true,
+                // message: "Please enter name",
+            }],
+        })(
+            <SimpleUpload template='network_logo' />
+        )}
+        
              
         </FormItem>
          <FormItem
@@ -125,8 +137,8 @@ const ProgramManager = props => {
             {...formItemLayout}
             label="Business hours"
         >
-            {getFieldDecorator('bussinessHours', {
-                initialValue: bussinessHours,
+            {getFieldDecorator('businessHours', {
+                initialValue: businessHours,
             })(
                 <Input />
             )}

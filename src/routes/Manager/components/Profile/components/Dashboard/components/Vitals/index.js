@@ -7,13 +7,16 @@ import {TrackerChart} from '../../../../../../../Plan/components/Tracker/contain
 import VMasker from 'vanilla-masker';
 import { TrackerChartPopup } from '../../../../../../../Plan/components/Tracker/components/TrackerChartPopup';
 import { formatTrackerValue } from '../../../../../../../Plan/components/BiometricPlan/components/TrackerCard/components/TrackerCardValue';
+import { TrackerReportModalButton } from '../../../../../../../Plan/components/Tracker/components/Buttons/components/ReportModal';
+import { getSQLDateToday } from '../../../../../../../../components/Other/utils';
 const { TabPane } = Tabs;
 export const Vitals = (props) => {
 	// console.log(props);
 	const {loading, activeTab, setActiveTab, vitals = [], user = {} } = props;
 	if (vitals.length === 0) {
 		return null;
-    }
+	}
+	const date = getSQLDateToday();
 
 	// const limit = 3;
 	// const slidesToShow = limit; //vitals.length >= limit ? limit : vitals.length;
@@ -70,7 +73,7 @@ export const Vitals = (props) => {
 			bodyStyle={{ padding: '0 0 32px 0' }}
 		>
         <Tabs activeKey={activeTab} className={'topBorderedTab'} onChange={props.setActiveTab}>
-                {vitals.map(tracker => <TabPane tab={<CustomTab tracker={tracker} />} key={tracker.id}>
+                {vitals.map(tracker => <TabPane tab={<CustomTab tracker={tracker} user={user} date={date} />} key={tracker.id}>
                 <div style={{height:200}}>
                 <TrackerChart item={tracker} user={user} fullWidth />
                 </div>
@@ -124,7 +127,7 @@ export const Vitals = (props) => {
 export default Vitals;
 
 
-const CustomTab = ({ tracker}) =>  {
+const CustomTab = ({ user, tracker, date}) =>  {
     const { label = '', units = {}, inputMask = '', getLastReport } = tracker;
     const { name: unitsName } = units;
     const { datetime = '', isCritical = false } = getLastReport || {};
@@ -145,7 +148,7 @@ const CustomTab = ({ tracker}) =>  {
     
     const isUp = !isCritical ? <Icon type="caret-up" theme="outlined" style={{color: '#0bd230', fontSize: '0.7em'}} /> : <Icon type="caret-down" theme="outlined" style={{color: 'red', fontSize: '0.7em'}} />;
     return <Card type="pure" bordered={false} className={"vital "+ (isCritical ? 'vital-critical' : '')}>
-        <div className="icon"><Tooltip title={'Report '+label}><Icon type="plus-circle" theme="outlined" /></Tooltip>{/*<Icon type="reconciliation" theme="outlined" />*/}</div>
+        <div className="icon"><TrackerReportModalButton measurement={tracker} date={date} user={user} label={<Tooltip title={'Report '+label}><Icon type="plus-circle" theme="outlined" /></Tooltip>} />{/*<Icon type="reconciliation" theme="outlined" />*/}</div>
         <div className="title">{isCritical && <Badge status="error" />}{label}</div>
 			<div className="value">{value} {value !== 'N/A' && <span className="units">{unitsName}</span>} {isUp}</div>
         <div className="date">{datetime && moment(datetime).format('l')}</div>

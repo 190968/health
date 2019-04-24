@@ -7,10 +7,18 @@ import sort from '../../../../../../components/Tables/sort';
 import StaffMemberInviteButton from '../../containers/StaffMemberInviteButton';
 import { TableFooterButtons } from '../../../../../../components/Tables/TableFooterButtons';
 import { TableWithMessage } from '../../../../../../components/Tables';
+import { FormattedMessage } from 'react-intl';
+import DefaultI18nEn from '../../../../../../i18n/en';
+import { CardExtraItems } from '../../../../../../components/Card/components/CardExtraSplit';
+import { CardQuickFilter } from '../../../../../../components/Card/components/CardQuickFilter';
 
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
 
+const filters = [
+    { value: 'active', label: <FormattedMessage {...DefaultI18nEn.filterActive} /> },
+    { value: 'pending', label: <FormattedMessage {...DefaultI18nEn.filterPending} /> },
+    { value: 'suspended', label: <FormattedMessage {...DefaultI18nEn.filterSuspended} /> },
+    { value: 'archived', label: <FormattedMessage {...DefaultI18nEn.filterArchived} /> }
+];
 
 const Supervisors = props => {
     const {management = [],loadByStatus,totalCount,selectedObj, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, hideModal, loading = false} = props;
@@ -70,13 +78,14 @@ const Supervisors = props => {
         total: totalCount,
         hideOnSinglePage: true
     };
-    const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight: 10}}>
-            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
-            <RadioButton value="pending" onClick={loadByStatus}>Pending</RadioButton>
-        </RadioGroup>
-        <StaffMemberInviteButton role={'supervisor'} />
-    </React.Fragment>;
+    
+
+
+const actions = <CardExtraItems>
+<CardQuickFilter size={'default'} filters={filters} value={props.status || 'active'} onChange={props.loadByStatus} />
+<StaffMemberInviteButton role={'supervisor'} />
+</CardExtraItems>
+
     const rowSelection = {
         onChange: record => (
             record.length < 1 ? hideShowButton() : openShowButton(record)

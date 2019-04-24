@@ -31,9 +31,9 @@ const enhance = compose(
     }),
     withProps(props => {
 
-        const {intl, screening} = props;
-        const {id} = screening || {};
-        const title = 'Add User';//intl.formatMessage(DefaultI18nEn.createUpdateSomething, {isUpdate: (id && id !== ''), title: 'Patient'})
+        const {intl, cohort, role} = props;
+        const {id} = cohort || {};
+        const title = role == 'member' ? 'Add Team Member' : 'Add User';//intl.formatMessage(DefaultI18nEn.createUpdateSomething, {isUpdate: (id && id !== ''), title: 'Patient'})
         return {
             modalTitle: title
         }

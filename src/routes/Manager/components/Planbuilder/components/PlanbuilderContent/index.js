@@ -10,8 +10,8 @@ import BuildBodyPathway from '../../containers/BuildBodyPathway';
 import {Loading} from "../../../../../../components/Loading";
 
 const Build = (props) => {
-    console.log(props);
-    const { routes, plan } = props;
+    // console.log(props);
+    const { routes } = props;
     return (<Switch>
         {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
     </Switch>);
@@ -33,14 +33,14 @@ const RouteWithSubRoutes = route => {
 
 
 const PlanbuilderContent = props => {
-        console.log(props);
-        const {match, location, plan={}, loading, type, mainUrl} = props;
+        // console.log(props);
+        const {plan={}, loading, type, mainUrl} = props;
 
         if (loading) {
             return <Loading/>
         }
 
-        const {id, tab = 'build', subtab = 'header'} = match.params;
+        // const {id, tab = 'build', subtab = 'header'} = match.params;
         // const {pathname} = location;
 
         // const selectedItem = subtab || tab;
@@ -53,7 +53,7 @@ const PlanbuilderContent = props => {
         // }
         const isPathway = type === 'pathway';
 
-        // console.log(mainUrl);
+        // console.log(plan,'planplanplan');
         const params = {plan, type};
         const routes = [
 

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import {PlanElementPureFragment} from "../../../../Plan/fragments";
+import {PlanElementPureFragment, PlanElementReportFragment} from "../../../../Plan/fragments";
 
 
 export const GET_PLAN_ELEMENT_QUERY = gql`
@@ -13,15 +13,19 @@ export const GET_PLAN_ELEMENT_QUERY = gql`
 `;
 
 export const PLAN_ELEMENT_CHILDREN_QUERY = gql`
-    query GET_PLAN_ELEMENT_CHILDREN ($id: UID!, $planId: UID!, $elementValue: UID) {
+    query GET_PLAN_ELEMENT_CHILDREN ($id: UID!, $planId: UID!, $userId: UID, $elementValue: UID) {
         planElement (id: $id, planId: $planId) {
             id
             childrenElements (elementValue:$elementValue) {
-                ...PlanElement,
+                ...PlanElement
+                reports (user_id: $userId)  {
+                    ...PlanElementReport
+                }
             }
         }
     }
     ${PlanElementPureFragment}
+    ${PlanElementReportFragment}
 `;
 
 
@@ -31,20 +35,26 @@ export const PLAN_ELEMENT_CHILDREN_QUERY = gql`
 export const PlanElementChildrenListWithQuery = graphql(
     PLAN_ELEMENT_CHILDREN_QUERY,
     {
-        options: (ownProps) => ({
-            variables: {
-                id: ownProps.elementId,
-                planId: ownProps.plan.id,
-                elementValue: ownProps.elementValue
-            },
-            fetchPolicy: 'network_only'
-        }),
+        options: (ownProps) => {
+            const {user, plan} = ownProps;
+            const {id:planId} = plan || {};
+            const {id:userId} = user || {};
+            return {
+                variables: {
+                    id: ownProps.elementId,
+                    planId,
+                    userId,
+                    elementValue: ownProps.elementValue
+                },
+                fetchPolicy: 'network-only'
+            }
+        },
         props: ({ownProps,  data }) => {
             console.log(ownProps);
             console.log(data);
             if (!data.loading) {
-                const planElement = data.planElement;
-                const {childrenElements=[]} = planElement;
+                const planElement = data.planElement || {};
+                const {childrenElements=[]} = planElement || {};
 
                 return {
                     //upid: data.plan.upid,

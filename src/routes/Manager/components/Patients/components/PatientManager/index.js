@@ -6,10 +6,10 @@ const TabPane = Tabs.TabPane;
 const PatientManager = props => {
     const { getProfileForm=[], ...otherProps } = props;
     const {patient, activeStep} = props;
-    console.log(props, 'Form Props');
+    // console.log(props, 'Form Props');
     const activeKey = activeStep || getProfileForm[0].id;
-    console.log(activeStep);
-    console.log(activeKey);
+    // console.log(activeStep);
+    // console.log(activeKey);
     return <Tabs activeKey={activeKey} onChange={props.setActiveStep}>
         {getProfileForm.map((section, i) => {
             const isLastSection = getProfileForm.length-1 === i;

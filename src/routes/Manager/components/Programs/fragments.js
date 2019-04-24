@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { AddressInfoFragment } from '../../../../components/FormCustomFields/components/Address/fragments';
 
 export const ProgramFragment = gql`
     fragment Program on NetworkProgram {
@@ -9,13 +10,17 @@ export const ProgramFragment = gql`
             id
             name
         }
+        address {
+            ...AddressInfo
+        }
         description
         phone
         fax
         website
-        bussinessHours
-        
+        businessHours
+        logo
     }
+    ${AddressInfoFragment}
 `;
 
 export const ProgramFullFragment = gql`

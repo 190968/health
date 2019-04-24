@@ -7,7 +7,7 @@ import AvatarWithName from '../../../../../User/components/AvatarWithName';
 import { Tag } from 'antd';
 const ProgramView = props => {
     const {program} = props;
-    const {title, description, categories, phone, fax, address, website, type, bussinessHours, createdOn, createdBy} = program || {};
+    const {title, description, categories, phone, fax, address, website, type, businessHours, createdOn, createdBy} = program || {};
 
     let details = [
         ['Name', title],
@@ -17,7 +17,7 @@ const ProgramView = props => {
         ['Fax', fax && <PhoneFieldView phone={fax} />],
         ['Address', address && <AddressFieldView address={address} />],
         ['Website', website],
-        ['Bussiness Hours', bussinessHours],
+        ['Business Hours', businessHours],
         ['Created', createdOn && moment(createdOn).format('lll')],
         ['Created By', createdBy && <AvatarWithName user={createdBy} />],
     ]

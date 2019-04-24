@@ -18,8 +18,8 @@ const AssignPlanButtonPure = props => {
     </React.Fragment>
 }
 const AssignPlanButtonPure2 = props => {
-    const {plan} = props;
-    return <TaskAssignButton  size={'default'} mode={'simple'} buttonType={'green'} assignObject={{type: 'ap', object:plan}} />
+    const {plan, label} = props;
+    return <TaskAssignButton  size={'default'} mode={'simple'} buttonType={'green'} label={label} assignObject={{type: 'ap', object:plan}} />
 }
 export const AssignPlanButton = AssignPlanButtonPure2;//withToggleModal(AssignPlanButtonPure);
 export default AssignPlanButton;

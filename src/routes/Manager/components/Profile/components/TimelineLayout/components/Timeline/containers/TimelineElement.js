@@ -1,8 +1,9 @@
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import TimelineElement from '../components/TimelineElement';
+import TimelineElementPure from '../components/TimelineElement';
 import {FieldReportFragment} from "../../../../../../../../Plan/components/Plan/fragments";
 import { TimelineElementFragment } from '../../../timeline_fragments';
+import { compose } from 'recompose';
 
 const FIELD_REPORT_MUTATION = gql`
     mutation fieldReport($reportId: UID, $fieldId: UID!, $fieldType: String!, $optionId: [UID], $value: [String], $userId: UID) {
@@ -47,4 +48,35 @@ const withMutation = graphql(FIELD_REPORT_MUTATION, {
     }),
 });
 
-export default withMutation(TimelineElement);
+export default withMutation(TimelineElementPure);
+
+
+
+
+const withTimelineElementQuery = graphql(GET_TIMELINE_ELEMENT_QUERY, {
+	options: (ownProps) => {
+        console.log(ownProps);
+        const {user, item} = ownProps;
+        const {id:userId} = user || {};
+        const {id} = item || {};
+		return {
+			variables: {
+				userId,
+				id
+			}
+            //fetchPolicy: 'network-only',
+            //notifyOnNetworkStatusChange: false
+		}
+	},
+	props: ({ ownProps, data }) => {
+            const {item} = ownProps;
+            const { getTimelineElement=item, loading } = data || {};
+            return {item:getTimelineElement, loading};
+	}
+});
+
+const enhance = compose(
+    withTimelineElementQuery,
+    withMutation
+);
+export const TimelineElement = enhance(TimelineElementPure);

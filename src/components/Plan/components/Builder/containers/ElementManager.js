@@ -35,8 +35,8 @@ const enhance = compose(
     injectIntl,
     Form.create(),
     withState('type', 'setType', props => {
-        const { element } = props;
-        const { type } = element || {};
+        const { element, type:typeElement } = props;
+        const { type=typeElement } = element || {};
         return type
     }),
     branch(props => {
@@ -45,7 +45,7 @@ const enhance = compose(
     }, renderComponent(PlanElementBuilderSelect)),
     withCreateOrUpdatePlanElement,
     withHandlers({
-        onSubmit: props => ({ callback }) => {
+        onSubmit: props => ({ callback:callbackInput }) => {
             // console.log(props, 'Props before input');
             let { type, order } = props;
             // console.log(props);
@@ -68,6 +68,15 @@ const enhance = compose(
                     console.log(type);
                     let input = preparePlanElementInput({ values, order, type });
 
+                    const callback = () => {
+                        if (props.increaseCurrentElement) {
+                            props.increaseCurrentElement();
+
+                        }
+                        if (callbackInput) {
+                            callbackInput();
+                        }
+                    }
                     //input.extra = values.extra || null;
                     // add additional info
 
@@ -222,6 +231,9 @@ const preparePlanElementInput = ({ order, values, type }) => {
             input.mediaElement = preparePlanElementMediaInput(otherProps);
             break;
         case 'options':
+        case 'dropdown':
+        case 'radio_input':
+        case 'choice_input':
             input.optionsElement = preparePlanElementOptionsInput(otherProps);
             break;
         case 'scale':

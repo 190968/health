@@ -34,7 +34,7 @@ export const RiskLevelGraph = (props) => {
 					stroke="#48a5dc"
 					fill="url(#colorUv)"
 					strokeWidth={1}
-					name="Adhrence"
+					name="Adherence"
 					dot={{ stroke: '#48a5dc', strokeWidth: 1, r: 2, fill: 'white' }}
 					onClick={handleClick}
 				/>

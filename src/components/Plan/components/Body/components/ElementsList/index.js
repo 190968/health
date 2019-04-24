@@ -1,10 +1,11 @@
 import React from 'react'
-import {Card, message, Modal, Divider, Tooltip, Icon} from 'antd';
+import {Card, Affix, message, Modal, Divider, Tooltip, Icon} from 'antd';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {PlanElement} from '../../containers/Element';
 import { ListWithMessage } from '../../../../../UI/List';
 import { PlanElementManagerButton } from '../../../Builder/components/Buttons/components/ElementManager';
+import PlanbuilderElementSelect from '../../../Builder/components/SelectElementType/inline';
 // import { PlanElementManagerButton } from '../../../../../../routes/Manager/components/Planbuilder/components/Buttons/components/PlanElementManager';
 // // import {EmptyList} from "../../../../../../components/Loading/index";
 // import {PlanElementListItem} from '../../containers/PlanElement';
@@ -20,8 +21,12 @@ import { PlanElementManagerButton } from '../../../Builder/components/Buttons/co
 
 const PlanElementsList = (props) => {
     const {elements=[], isBuilderMode, plan, updateSkippedElements, updateBrahmRules, brahmRules, isPreviewMode, isDraggable, date, ...otherProps} = props;
-    console.log(elements, 'elements');
-    return (<Card bordered={false}>
+    // console.log(props, 'propspropspropsprops');
+    return (<>
+     <Affix>
+        <PlanbuilderElementSelect {...props} />
+    </Affix>
+    <Card bordered={false}>
     <ListWithMessage
         emptyMessage={<EmptyResultsPure plan={plan} isPreviewMode={isPreviewMode} />}
         itemLayout="vertical"
@@ -29,6 +34,7 @@ const PlanElementsList = (props) => {
         split={false}
         dataSource={elements}
         renderItem={(element, i) => <PlanElement 
+            {...otherProps}
             key={'item' + i} 
             mode="pathway" 
             i={i}
@@ -45,7 +51,7 @@ const PlanElementsList = (props) => {
             />
     }
     />
-    </Card>)
+    </Card></>)
 }
 
 export default PlanElementsList;
@@ -54,6 +60,10 @@ export default PlanElementsList;
 const EmptyResultsPure = ({plan, isPreviewMode}) => {
     if (isPreviewMode) {
         return 'No elements have been added yet';
+    }
+    const {type} = plan;
+    if (type === 'pathway') {
+        return 'To Begin building your Pathway, select from one of the elements above.';
     }
     return <>{/*<div>No elements have been added yet</div>*/} <PlanElementManagerButton plan={plan} buttonType={'primary'} mode={'pathway'} shape={'round'} label={'Add First Element'} /></>;
 }

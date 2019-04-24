@@ -37,11 +37,11 @@ const withQuery = graphql(GET_PROVIDERS_QUERY, {
     },
     props: ({ data }) => {
 
-        const {patient={}} = data;
-        const {getCohorts={}} = patient;
-        const {edges=[]} = getCohorts;
+        const {patient, refetch} = data;
+        const {getCohorts} = patient || {};
+        const {edges=[]} = getCohorts || {};
 
-        return {loading: data.loading, cohorts:edges }
+        return {loading: data.loading, cohorts:edges, refetch }
     },
 });
 

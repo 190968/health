@@ -71,6 +71,7 @@ const FormField = props => {
 
     let fieldName =  'field['+id+']';
     let noFieldDecorator = false;// do not show fieldDecorator
+    let className;
     
     
     //console.log(props);
@@ -112,16 +113,18 @@ const FormField = props => {
             break;
         case 'gender':
         case 'radio':
-                if (type === 'radio') {
-                    initialValue = initialValueId;
-                }
-                field = <Radio.Group>
-                    {options.map((option, i) => {
-                        const value = option.id || option.key;
-                        return <Radio key={i} style={radioStyle} value={value}>{option.label}</Radio>;
-                    })}
-                </Radio.Group>
-                    break;
+            className = 'single-line';
+            if (type === 'radio') {
+                initialValue = initialValueId;
+            }
+            field = <span className={'ant-form-text'}>
+            <Radio.Group>
+                {options.map((option, i) => {
+                    const value = option.id || option.key;
+                    return <Radio key={i} style={radioStyle} value={value}>{option.label}</Radio>;
+                })}
+            </Radio.Group></span>;
+                break;
         case 'cohorts':
         case 'checkbox':
             if (reports && reports.length > 0) {
@@ -176,6 +179,7 @@ const FormField = props => {
         return <FormItem {...formItemLayout}
         label={label}
         required={required}
+        className={className}
         >
         {getFieldDecorator(fieldName, {initialValue})(
             field

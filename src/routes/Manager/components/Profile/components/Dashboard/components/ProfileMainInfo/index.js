@@ -76,8 +76,8 @@ const ProfileMainInfo = props => {
 
     return <Card >
         <Row>
-            <Col md={6}><Avatar info={user} size="huge" /></Col>
-            <Col md={18}>
+            {/* <Col md={6}><Avatar info={user} size="huge" /></Col> */}
+            <Col>
                 <Row>
                     <Col md={12}>
                     <DescriptionList col={1} row={6} aligh={'right'} details={demographicDetails} />

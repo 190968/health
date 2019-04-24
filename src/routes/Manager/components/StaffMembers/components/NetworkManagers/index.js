@@ -7,10 +7,17 @@ import sort from '../../../../../../components/Tables/sort';
 import StaffMemberInviteButton from '../../containers/StaffMemberInviteButton';
 import { TableFooterButtons } from '../../../../../../components/Tables/TableFooterButtons';
 import { PatientPasswordButton } from '../../../Patients/components/PatientPasswordButton';
+import DefaultI18nEn from '../../../../../../i18n/en';
+import { CardExtraItems } from '../../../../../../components/Card/components/CardExtraSplit';
+import { CardQuickFilter } from '../../../../../../components/Card/components/CardQuickFilter';
+import { FormattedMessage } from 'react-intl';
 
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-
+const filters = [
+    { value: 'active', label: <FormattedMessage {...DefaultI18nEn.filterActive} /> },
+    { value: 'pending', label: <FormattedMessage {...DefaultI18nEn.filterPending} /> },
+    { value: 'suspended', label: <FormattedMessage {...DefaultI18nEn.filterSuspended} /> },
+    { value: 'archived', label: <FormattedMessage {...DefaultI18nEn.filterArchived} /> }
+];
 
 const NetworkManagers = props => {
     const {management = [],loadByStatus,selectedObj,totalCount, openModal,searchText,onSearch,emitEmpty, selectedCount, showButton, openShowButton, hideShowButton, visibleModal, visibleInviteModal, openInviteModal, hideInviteModal, hideModal, loading = false} = props;
@@ -115,15 +122,20 @@ const NetworkManagers = props => {
             name: record.name,
         }),
     };
-    const actions = <React.Fragment>
-        <RadioGroup defaultValue="active" style={{marginRight: 10}}  onClick={loadByStatus} >
-            <RadioButton value="active"  >Active</RadioButton>
-            <RadioButton value="pending" >Pending</RadioButton>
-            <RadioButton value="suspended" >Suspended</RadioButton>
-            <RadioButton value="archived" >Archived</RadioButton>
-        </RadioGroup>
-        <StaffMemberInviteButton role={'manager'} />
-    </React.Fragment>;
+    // const actions = <React.Fragment>
+    //     <RadioGroup defaultValue="active" style={{marginRight: 10}}  onClick={loadByStatus} >
+    //         <RadioButton value="active"  >Active</RadioButton>
+    //         <RadioButton value="pending" >Pending</RadioButton>
+    //         <RadioButton value="suspended" >Suspended</RadioButton>
+    //         <RadioButton value="archived" >Archived</RadioButton>
+    //     </RadioGroup>
+        
+    // </React.Fragment>;
+
+const actions = <CardExtraItems>
+<CardQuickFilter size={'default'} filters={filters} value={props.status || 'active'} onChange={props.loadByStatus} />
+<StaffMemberInviteButton role={'manager'} />
+</CardExtraItems>
 
     return (
         <PageHeaderLayout title={'Network Managers ' + (totalCount > 0 ? ' (' + totalCount + ')' : '')}

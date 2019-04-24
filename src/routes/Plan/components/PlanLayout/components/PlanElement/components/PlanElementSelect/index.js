@@ -16,6 +16,10 @@ let gridStyle = {
 const PLAN_ELEMENT_TYPES = [
     {type:'tracker', label:'Tracker', icon: <IconCustom type="tracker"/>},
     {type:'options', label:'Options', icon: <IconCustom type="options"/>},
+    {type:'choice_input', label:'Multiple Choice', icon: <IconCustom type="multiple-choice"/>},
+    {type:'radio_input', label:'Select One', icon: <IconCustom type="select-one-alt"/>},
+    {type:'dropdown', label:'Dropdown', icon: <IconCustom type="dropdown"/>},
+    
     {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
     {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
     {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
@@ -42,17 +46,118 @@ const PLAN_ELEMENT_TYPES = [
     // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
     {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
 ]
+export const getPlanElementsList = mode => {
+
+    let inputElements = [
+        {type:'tracker', label:'Tracker', icon: <IconCustom type="tracker"/>},
+        {type:'options', label:'Options', icon: <IconCustom type="options"/>},
+        {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
+        {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
+        {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
+        // {type:'assessment', label:'Assessment', icon: <IconCustom type="assessment"/>},
+        {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
+        {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},
+    ];
+
+    const outputElements = [
+        {type:'text', label:'Text', icon: <IconCustom type="text" />},
+        {type:'image', label:'Image', icon:<IconCustom type="image" />},
+        {type:'video', label:'Video', icon: <IconCustom type="video" />},
+        {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
+        {type:'document', label:'Document', icon:<IconCustom type="document" />},
+    ];
+
+    const toolsElements = [
+        {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
+        // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+        {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
+        {type:'line', label:'Line', icon: <IconCustom type="line"/>},
+        {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
+        {type:'link', label:'Link', icon:<IconCustom type="link"/>},
+        {type:'embed', label:'Embed', icon: <Icon type="code" />},
+    ];
+
+    if (mode === 'lesson') {
+        inputElements = inputElements.filter(el => el.type !== 'tracker' && el.type !== 'calculator');
+    }
+
+    // console.log(mode);
+    let elements = [];
+    if (mode === 'pathway' || mode === 'decision') {
+        elements.push(
+            ['Tools', [
+                //{label:'Diagnosis', type:'diagnosis'},
+                {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},//
+                {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
+                {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
+                {label:'Clinical Note', type:'clinical_note', icon: <IconCustom type="clinical-note"/>},
+                {label:'Treatment', type:'treatment', icon:<IconCustom type='treatment' />},
+                // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+                {label:'Link', type:'link', icon:<IconCustom type="link"/>},//
+                {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
+            ], 14]
+        );
+
+        elements.push(
+            ['Media', [
+                // separate group
+                
+                {type:'image', label:'Image', icon:<IconCustom type="image" />},
+                {type:'video', label:'Video', icon: <IconCustom type="video" />},
+                {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
+                {type:'document', label:'Document', icon:<IconCustom type="document" />},
+
+                //{label:'Regimen(TDB)', type:'regimen'},
+                //{label:'Procedure order(TDB)', type:'procedureOrder'},
+                //{label:'Reminder)', type:'reminder (TBD)'},
+                //{label:'Evaluation(TDB)', type:'evaluation'},
+                //{label:'Care Plan(TDB)', type:'discharge'}
+            ], 10]
+        );
+        //
+        elements.push(
+            ['Output', [
+                {type:'choice_input', label:'Multiple Choice', icon: <IconCustom type="multiple-choice"/>},
+                {type:'radio_input', label:'Select One', icon: <IconCustom type="select-one-alt"/>},
+                {type:'dropdown', label:'Dropdown', icon: <IconCustom type="dropdown"/>},
+                {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
+            ], 10]
+        );
+    // } else if (mode === 'decision') {
+    //     elements.push(
+    //         ['', [
+    //             {label:'Treatment', type:'treatment'},
+    //             {label:'To Do', type:'checklist'},
+    //             {label:'Clinical Note', type:'clinical_note'},
+    //         ]]
+    //     );
+    } else {
+        let width = 12;
+
+        if (mode !== 'introduction') {
+            width = 8;
+            elements.push(['Input', inputElements, width]);
+        }
+        elements.push(['Output', outputElements, width]);
+        elements.push(['Tools', toolsElements, width]);
+    }
+    // console.log(elements);
+    return elements;
+}
 
 export const formatPlanElementByTitle = props => {
     const {type} = props;
-    if (type === 'import') {
-        return 'Embed';
+    switch(type) {
+        case 'import':
+            return 'Embed';
+        case 'media':
+            return 'Media';
     }
-    // console.log(props);
-    // console.log(PLAN_ELEMENT_TYPES);
+    
     const aa = PLAN_ELEMENT_TYPES.find(f => f.type === type);
     // console.log(aa);
     const {label} = aa || {};
+    // console.log(label);
     return label;
 }
 
@@ -74,100 +179,12 @@ export default class PlanElementsSelect extends React.Component {
     }
 
 
-    getProperElements = (mode) => {
-        let inputElements = [
-            {type:'tracker', label:'Tracker', icon: <IconCustom type="tracker"/>},
-            {type:'options', label:'Options', icon: <IconCustom type="options"/>},
-            {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
-            {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
-            {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
-            // {type:'assessment', label:'Assessment', icon: <IconCustom type="assessment"/>},
-            {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
-            {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},
-        ];
-
-        const outputElements = [
-            {type:'text', label:'Text', icon: <IconCustom type="text" />},
-            {type:'image', label:'Image', icon:<IconCustom type="image" />},
-            {type:'video', label:'Video', icon: <IconCustom type="video" />},
-            {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
-            {type:'document', label:'Document', icon:<IconCustom type="document" />},
-        ];
-
-        const toolsElements = [
-            {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
-            // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
-            {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
-            {type:'line', label:'Line', icon: <IconCustom type="line"/>},
-            {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
-            {type:'link', label:'Link', icon:<IconCustom type="link"/>},
-            {type:'embed', label:'Embed', icon: <Icon type="code" />},
-        ];
-
-        if (mode === 'lesson') {
-            inputElements = inputElements.filter(el => el.type !== 'tracker' && el.type !== 'calculator');
-        }
-
-        // console.log(mode);
-        let elements = [];
-        if (mode === 'pathway' || mode === 'decision') {
-            elements.push(
-                ['Tools', [
-                    //{label:'Diagnosis', type:'diagnosis'},
-                    {label:'To Do', type:'checklist', icon: <IconCustom type="to-do"/>},//
-                    {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
-                    {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
-                    {label:'Clinical Note', type:'clinical_note', icon: <IconCustom type="clinical-note"/>},
-                    {label:'Treatment', type:'treatment', icon:<IconCustom type='treatment' />},
-                    // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
-                    {label:'Link', type:'link', icon:<IconCustom type="link"/>},//
-                    {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
-                ], 14]
-            );
-
-            elements.push(
-                ['Media', [
-                    // separate group
-                    
-                    {type:'image', label:'Image', icon:<IconCustom type="image" />},
-                    {type:'video', label:'Video', icon: <IconCustom type="video" />},
-                    {type:'audio', label:'Audio', icon: <IconCustom type="audio" />},
-                    {type:'document', label:'Document', icon:<IconCustom type="document" />},
-
-                    //{label:'Regimen(TDB)', type:'regimen'},
-                    //{label:'Procedure order(TDB)', type:'procedureOrder'},
-                    //{label:'Reminder)', type:'reminder (TBD)'},
-                    //{label:'Evaluation(TDB)', type:'evaluation'},
-                    //{label:'Care Plan(TDB)', type:'discharge'}
-                ], 10]
-            );
-        // } else if (mode === 'decision') {
-        //     elements.push(
-        //         ['', [
-        //             {label:'Treatment', type:'treatment'},
-        //             {label:'To Do', type:'checklist'},
-        //             {label:'Clinical Note', type:'clinical_note'},
-        //         ]]
-        //     );
-        } else {
-            let width = 12;
-
-            if (mode !== 'introduction') {
-                width = 8;
-                elements.push(['Input', inputElements, width]);
-            }
-            elements.push(['Output', outputElements, width]);
-            elements.push(['Tools', toolsElements, width]);
-        }
-        console.log(elements);
-        return elements;
-    }
-
+    
     render() {
 
         const {mode, view = false, parentId, onSelect} = this.props;
         //console.log(this.props);
-        const elements = this.getProperElements(view || mode );
+        const elements = getPlanElementsList(view || mode );
 
         // const span = parentId ? 24 : Math.ceil(24/elements.length);
         // let size = elements.length > 1 ? 12 : 6;

@@ -51,16 +51,7 @@ const withQuery = graphql(GET_PROFILE, {
                 totalCount: data.management.getNetworkStaff.totalCount,
                 loading: data.loading,
                 loadByStatus(status) {
-                    return data.fetchMore({
-                        // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                        variables: {
-                            status:status.target.value
-                        },
-                        updateQuery: (previousResult, {fetchMoreResult}) => {
-                            if (!fetchMoreResult) { return previousResult; }
-                            return fetchMoreResult;
-                        },
-                    });
+                    return data.refetch({status});
                 },
             }
         }

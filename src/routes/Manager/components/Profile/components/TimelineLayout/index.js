@@ -9,7 +9,7 @@ import PathwayContent from '../Pathway/containers/PathwayContent';
 // import TimelineElementDetails from './components/Timeline/containers/TimelineElementDetails';
 
 const TimelineLayout = (props) => {
-	const { user, showElement, activeElement, openElements, showPathway=false } = props;
+	const { user, items=[],loading,loadFiltered,showElement, activeElement, openElements, showPathway=false, refetchTimeline } = props;
 	// const showPathway = this.state.showPathway;
 	// const showElement = this.state.showElement;
 	// const elementsDetails = this.state.elementsDetails;
@@ -21,7 +21,11 @@ const TimelineLayout = (props) => {
 			<Row>
 				<Col span={span} style={{ marginRight: '-1px' }}>
 					<Timeline
+						useQuery={false}
 						user={user}
+						items={items}
+						loading={loading}
+						loadFiltered={loadFiltered}
 						droppable
 						togglePathway={props.togglePathway}
 						showPathway={showPathway}
@@ -45,7 +49,7 @@ const TimelineLayout = (props) => {
 				) : (
 					showPathway && (
 						<Col span={span}>
-							<PathwayContent user={user} /*pathway={this.state.pathway} setPathway={this.setPathway}*/ />
+							<PathwayContent user={user} refetchTimeline={refetchTimeline} /*pathway={this.state.pathway} setPathway={this.setPathway}*/ />
 						</Col>
 					)
 				)}

@@ -14,7 +14,7 @@ const NotificationListItem = props => {
         if (isRequest) {
             actions = <Col xs={12}><Popconfirm title="Are you sure decline this request?" getPopupContainer={triggerNode => triggerNode.parentNode}
                     onConfirm={onDecline}
-                ><Button size='small' type="dashed" >Decline</Button></Popconfirm> <Button size='small' type="primary" ghost onClick={onAccept}>Approve</Button></Col>
+                ><Button size='small' type="dashed" >Ignore</Button></Popconfirm> <Button size='small' type="primary" ghost onClick={onAccept}>View</Button></Col>
         } else if (isCritical) {
             actions = <ButtonGroup>
                 <Tooltip title={'Claim'}><Button size='small' type="primary" ghost onClick={onAccept}>Claim</Button></Tooltip>

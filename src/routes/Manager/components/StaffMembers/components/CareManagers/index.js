@@ -5,10 +5,17 @@ import {AvatarWithName} from "../../../../../User/components/AvatarWithName/inde
 import sort from '../../../../../../components/Tables/sort';
 import StaffMemberInviteButton from '../../containers/StaffMemberInviteButton';
 import { TableFooterButtons } from '../../../../../../components/Tables/TableFooterButtons';
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
+import { FormattedMessage } from 'react-intl';
+import DefaultI18nEn from '../../../../../../i18n/en';
+import { CardExtraItems } from '../../../../../../components/Card/components/CardExtraSplit';
+import { CardQuickFilter } from '../../../../../../components/Card/components/CardQuickFilter';
 
-
+const filters = [
+    { value: 'active', label: <FormattedMessage {...DefaultI18nEn.filterActive} /> },
+    { value: 'pending', label: <FormattedMessage {...DefaultI18nEn.filterPending} /> },
+    { value: 'suspended', label: <FormattedMessage {...DefaultI18nEn.filterSuspended} /> },
+    { value: 'archived', label: <FormattedMessage {...DefaultI18nEn.filterArchived} /> }
+];
 
 const CareManager = props => {
     const {management=[],totalCount,selectedObj,loadByStatus, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton ,visibleModal,hideModal,loading=false} = props;
@@ -60,13 +67,12 @@ const CareManager = props => {
         total: totalCount,
         hideOnSinglePage: true
     };
-        const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight:10}} >
-            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
-            <RadioButton value="pending" onClick={loadByStatus}>Pending</RadioButton>
-        </RadioGroup>
-        <StaffMemberInviteButton role={'cm'} />
-    </React.Fragment>;
+
+const actions = <CardExtraItems>
+<CardQuickFilter size={'default'} filters={filters} value={props.status || 'active'} onChange={props.loadByStatus} />
+<StaffMemberInviteButton role={'cm'} />
+</CardExtraItems>
+
   const rowSelection = {
     onChange: (record,data) => (
         record.length < 1 ? hideShowButton() : openShowButton(data)

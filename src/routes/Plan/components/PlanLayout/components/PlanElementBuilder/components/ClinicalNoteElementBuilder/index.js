@@ -22,7 +22,7 @@ const ClinicalNoteElementBuilder = (props) => {
     const {title, note} = details || {};
 
     // getFieldDecorator('attachments', {initialValue: []});
-    console.log(prepareAttachmentsForForm(attachments));
+    // console.log(prepareAttachmentsForForm(attachments));
     getFieldDecorator('attachments', {initialValue: prepareAttachmentsForForm(attachments)});
     
     return (

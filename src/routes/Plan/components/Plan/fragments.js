@@ -79,6 +79,7 @@ export const PathwayCardFragment = gql`
             title,
             description
             version
+            versionNote
         }
 `;
 

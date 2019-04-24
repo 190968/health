@@ -37,7 +37,7 @@ const filters = [
 const Patients = props => {
 
         //const { loading } = this.props;
-        console.log(props);
+        // console.log(props);
         const { onSearch, patients, emitEmpty, selectedObj, searchText, selectedCount, visibleModal, openShowButton, hideShowButton, openModal, hideModal, showButton, sliderChange, hideModalReset, ...otherProps } = props;
         const actions = <CardExtraItems>
                         <Tooltip title={props.showFilters ? 'Hide Filters' : 'Show Filters'}> <Switch checkedChildren="Filters" unCheckedChildren="Filters" style={{marginRight:10, marginTop:5}} onChange={props.toggleFilters} defaultChecked={props.showFilters} /></Tooltip> 

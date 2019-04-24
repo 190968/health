@@ -176,8 +176,9 @@ const BrahmsRuleManagerItem = props => {
             // console.log(ruleAction);
             const {plans=[], apActionInput} = ruleAction || {};
             // const {plans=plansInit} = apActionInput || {};
-            if (plans) {
-                string = plans.map(p=>p.title);
+            // console.log(ruleAction);
+            if (plans && plans.length > 0) {
+                string = plans.map(p=>p.title || '');
             }
             //prefix = '';
             ruleActionType = 'ActionPlan';

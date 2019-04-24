@@ -48,6 +48,7 @@ const BasicLayout = (props) => {
     if (id !== '') {
         mainUrl += '/'+id;
     }
+    const isRoleManager = isUserRole('manager');
 
     return (
         <Layout style={{minHeight: '100vh'}}>
@@ -84,7 +85,7 @@ const BasicLayout = (props) => {
                             key="staff"
                             title={<span><Icon type="team" /><span>Staff</span></span>}
                         >
-                            {isUserRole('manager') && <Menu.Item key="admins"><NavLink to="/staff/admins">Managers</NavLink></Menu.Item>}
+                            {isRoleManager && <Menu.Item key="admins"><NavLink to="/staff/admins">Managers</NavLink></Menu.Item>}
                             <Menu.Item key="supervisors"><NavLink to="/staff/supervisors">Supervisors</NavLink></Menu.Item>
                             <Menu.Item key="ncms"><NavLink to="/staff/ncm">Care Managers</NavLink></Menu.Item>
                             <Menu.Item key="analysts"><NavLink to="/staff/analysts">Analysts</NavLink></Menu.Item>
@@ -124,21 +125,28 @@ const BasicLayout = (props) => {
                         </Menu.Item>
 
                         <SubMenu
-                            key="other"
-                            title={<span><Icon type="appstore"/><span>Other</span></span>}
+                            key="builders"
+                            title={<span><Icon type="build"/><span>Builders</span></span>}
                         >
                             {/* <Menu.Item key="workflow"><NavLink to="/workflow">Workflow</NavLink></Menu.Item> */}
                             <Menu.Item key="actionplans"><NavLink to="/actionplans">ActionPlans</NavLink></Menu.Item>
-                            <Menu.Item key="pathways"><NavLink to="/pathways">Pathways</NavLink></Menu.Item>
-                            <Menu.Item key="tumorboards"><NavLink to="/tumorboards">Tumor Boards</NavLink></Menu.Item>
-                            {isUserRole('manager') && <SubMenu key="manage" title="Manage">
-                                <Menu.Item key="stages"><NavLink to="/stages">Stages</NavLink></Menu.Item>
-                                <Menu.Item key="cancers"><NavLink to="/cancers">Cancers</NavLink></Menu.Item>
-                                <Menu.Item key="chemotherapies"><NavLink to="/chemotherapies">Chemotherapies</NavLink></Menu.Item>
-                                <Menu.Item key="payers"><NavLink to="/payers">Payers</NavLink></Menu.Item>
-                                <Menu.Item key="doctors"><NavLink to="/doctors">Doctors</NavLink></Menu.Item>
-                            </SubMenu>}
                             <Menu.Item key="assessments"><NavLink to="/assessments">Assessments</NavLink></Menu.Item>
+                            <Menu.Item key="pathways"><NavLink to="/pathways">Pathways</NavLink></Menu.Item>
+                            </SubMenu> 
+                        <SubMenu
+                            key="advanced"
+                            title={<span><Icon type="appstore"/><span>Advanced Tools</span></span>}
+                        >
+                           
+                            <Menu.Item key="tumorboards"><NavLink to="/tumorboards">Tumor Boards</NavLink></Menu.Item>
+                            <Menu.Item key="clinicaltrials"><NavLink to="/clinicaltrials">Clinical Trials</NavLink></Menu.Item>
+
+                            {isRoleManager &&  <Menu.Item key="stages"><NavLink to="/stages">Stages</NavLink></Menu.Item>}
+                            {isRoleManager &&  <Menu.Item key="cancers"><NavLink to="/cancers">Cancers</NavLink></Menu.Item>}
+                            {isRoleManager &&  <Menu.Item key="chemotherapies"><NavLink to="/chemotherapies">Chemotherapies</NavLink></Menu.Item>}
+                            {isRoleManager &&  <Menu.Item key="payers"><NavLink to="/payers">Payers</NavLink></Menu.Item>}
+                            {isRoleManager &&  <Menu.Item key="doctors"><NavLink to="/doctors">Doctors</NavLink></Menu.Item>}
+                            
                             <Menu.Item key="checklists" disabled><NavLink to="/checklists">Checklists</NavLink></Menu.Item>
                             <Menu.Item key="protocols" disabled><NavLink to="/protocols">Protocols</NavLink></Menu.Item>
                             <SubMenu key="dme" title="DME" disabled>
@@ -150,7 +158,7 @@ const BasicLayout = (props) => {
                                 <Menu.Item key="dme/worklist"><NavLink to="/dme/worklist">Worklist</NavLink></Menu.Item>
                             </SubMenu>
                             <Menu.Item key="claims" disabled><NavLink to="/claims">Claims</NavLink></Menu.Item>
-                            <Menu.Item key="clinicaltrials"><NavLink to="/clinicaltrials">Clinical Trials</NavLink></Menu.Item>
+                           
 
                         </SubMenu>
                     </Menu>

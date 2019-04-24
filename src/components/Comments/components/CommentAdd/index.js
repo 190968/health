@@ -23,7 +23,7 @@ const formItemLayout = {
 const CommentAdd = props => {
     const {form, intl, openUpload=false, attachments=[]} = props;
     const {getFieldDecorator} = form;
-
+    getFieldDecorator('attachments', {initialValue: []})
     return <Form onSubmit={props.handleSubmit} >
 
         <div
@@ -35,7 +35,6 @@ const CommentAdd = props => {
                 <TextArea autosize={{ minRows: 1 }}  />
             )}
         </div>
-        {getFieldDecorator('attachments', {initialValue: []})}
         <Attachments showLoader={openUpload} attachments={attachments} setShowLoader={props.toggleAttachments} hideButton onClose={props.onCloseAttachments} />
         <div
             style={{textAlign:'right', marginTop:5}}

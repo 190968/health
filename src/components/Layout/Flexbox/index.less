@@ -1,0 +1,13 @@
+.flexbox-wrap {
+    display: flex; /* or inline-flex */
+    justify-content: flex-end;
+    align-items: center;
+    .flexbox-item.fi-0 {
+        // flex: 1 0;
+    }
+
+    .flexbox-item:not(.fi-0) {
+        flex: 2 1;
+    }
+
+  }

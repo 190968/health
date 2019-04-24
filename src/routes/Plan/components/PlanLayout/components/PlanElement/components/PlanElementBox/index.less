@@ -42,17 +42,35 @@
     }
   }
 
-  .ant-card {
-    &:hover {
-      border-color: #91d5ff !important;
-      box-shadow: 0px 0px 4px 1px #90d5ff;
-    }
-  }
+  // .ant-card {
+  //   &:hover {
+  //     border-color: #91d5ff !important;
+  //     box-shadow: 0px 0px 4px 1px #90d5ff;
+  //   }
+  // }
 // }
 
 
 .plan-elements {
+
+
+  .ant-list-item:first-child {
+    padding-top:0;
+  }
   .ant-list-item-content-single {
     margin-bottom:0;
   }
+  .element {
+    .ant-card-extra {display:none;}
+    &:hover {
+      .ant-card-extra {display:block;}
+      box-shadow: 0px 0px 4px 1px #90d5ff;
+    }
+  }
+  .element.active-element {
+    box-shadow: 0px 0px 4px 1px #90d5ff;
+    .ant-card-extra {display:block;}
+  }
+
+  
 }

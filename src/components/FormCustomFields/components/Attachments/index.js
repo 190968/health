@@ -7,11 +7,11 @@ import {GalleryWide} from "../../../Gallery";
 
 
 const AttachmentsPure = props => {
-    const {openUpload=false, hideButton=false, showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false} = props;
+    const {openUpload=false, hideButton=false, showLoader, toggleLoader, onRequestCloseModal, attachments=[], showPreview=false, uploadOpts, template='attachments', limit=false, buttonLabel} = props;
     return <React.Fragment>
 
         <AttachmentsList attachments={attachments} showPreview={limit === 1 || showPreview} limit={limit} />
-        {!hideButton && <Button onClick={toggleLoader}>{attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload'}</Button>}
+        {!hideButton && <Button onClick={toggleLoader}>{buttonLabel || (attachments.length > 0 ? (limit === 1 ? 'Change' : 'Upload more') : 'Upload')}</Button>}
 
         <div><Upload {...uploadOpts} maxNumberOfFiles={limit}  template={template} /*allowedFileTypes={allowedFileTypes}*/ open={showLoader} onClose={toggleLoader} onComplete={props.onRequestCloseModal} /></div>
     </React.Fragment>
@@ -151,8 +151,12 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
 
 
 export const prepareAttachmentsInput = attachments => {
+    // console.log(attachments, 'attachments');
     return attachments.map(a=> {
-        const {id} = a;
+        const {id, existedId} = a;
+        if (existedId) {
+            return {existedId};
+        }
         if (id) {
             return {existedId:id}
         }
@@ -160,6 +164,11 @@ export const prepareAttachmentsInput = attachments => {
     });
 }
 
+
+
+export const prepareUrlForForm = (url) => {
+    return {url};
+}
 
 export const prepareAttachmentsForForm = (attachments, single) => {
     const existedAttachments = attachments.map(attachment => {
@@ -172,8 +181,9 @@ export const prepareAttachmentsForForm = (attachments, single) => {
     return existedAttachments;
 }
 
-export const formatFileName = (item, {showSize=true}) => {
-    const {filename='', filesize=0} = item;
+export const formatFileName = (item, props) => {
+    const {showSize=true} = props || {};
+    const {filename='', filesize=0} = item || {};
 
     return filename +(showSize ? ' '+formatBytes(filesize, 2) : '');
 }

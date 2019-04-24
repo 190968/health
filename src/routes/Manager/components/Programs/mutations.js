@@ -7,12 +7,12 @@ import { withProgramManageQuery } from './queries';
 
 const DELETE_PROGRAM_MUTATION = gql`
     mutation DELETE_PROGRAM($id: UID!){
-        deleteProgram(id:$id)
+        deleteNetworkProgram(id:$id)
     }
 `;
 const CREATE_PROGRAM_MUTATION = gql`
     mutation CREATE_PROGRAM($input: ProgramInput!){
-        createProgram(input:$input) {
+        createNetworkProgram(input:$input) {
             ...Program
         }
     }
@@ -20,7 +20,7 @@ const CREATE_PROGRAM_MUTATION = gql`
 `;
 const UPDATE_PROGRAM_MUTATION = gql`
     mutation UPDATE_PROGRAM($id: UID!, $input: ProgramInput!){
-        updateProgram(id:$id, input: $input) {
+        updateNetworkProgram(id:$id, input: $input) {
             ...Program
         }
     }

@@ -25,7 +25,7 @@ module.exports = function override(config, env) {
                   "@menu-dark-color": "#fff",
                   "@menu-dark-bg": "#3882C3",
                   "@menu-dark-item-active-bg": "#3271A9",//5AC2C4
-                  "@menu-dark-highlight-color": "#5BC5C5",
+                  "@menu-dark-highlight-color": "#6cdcee",
                   "@menu-dark-submenu-bg": "#3782c3",
                   "@layout-footer-background": "#303030",
                   

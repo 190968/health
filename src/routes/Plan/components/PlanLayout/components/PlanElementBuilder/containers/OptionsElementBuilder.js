@@ -35,10 +35,10 @@ export const preparePlanElementOptionsInput = (values) => {
 
     return {
             title,
-            isDropdown,
-            isMultiple,
-            hasLines,
-            isVertical,
+            // isDropdown,
+            // isMultiple,
+            // hasLines,
+            // isVertical,
             options
     }
 }

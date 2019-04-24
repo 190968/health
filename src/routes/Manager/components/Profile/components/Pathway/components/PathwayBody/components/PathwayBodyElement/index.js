@@ -5,15 +5,15 @@ import { pathwayElementCanBeDraggable } from '../../containers/PathwayBodyElemen
 
 
  const PathwayBodyElement  = props => {
-        const {i, element, plan, onDrop, currentInOrder, user} = props;
+        const {i, element, plan, onDrop, currentInOrder, user, ...otherProps} = props;
 
         const { isDragging, connectDragSource } = props
         const opacity = isDragging ? 0.4 : 1
 
         if (pathwayElementCanBeDraggable(element)) {
-            return connectDragSource(<div className={"pathway-el-dnd"} style={{opacity}}><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} user={user} notClickable /></div>);
+            return connectDragSource(<div className={"pathway-el-dnd"} style={{opacity}}><PathwayElement {...otherProps} i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} user={user} notClickable1 /></div>);
         } else {
-            return <div className={element.type === 'condition' ? 'red-card-wrap' : {}} ><PathwayElement i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} user={user} notClickable /></div>;
+            return <div className={element.type === 'condition' ? 'red-card-wrap' : {}} ><PathwayElement {...otherProps} i={i} isDraggable onDrop={onDrop} currentInOrder={currentInOrder} element={element} plan={plan} user={user} notClickable1 /></div>;
         }
 }
 

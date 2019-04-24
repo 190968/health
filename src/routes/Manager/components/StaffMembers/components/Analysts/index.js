@@ -6,9 +6,20 @@ import sort from '../../../../../../components/Tables/sort';
 import StaffMemberInviteButton from '../../containers/StaffMemberInviteButton';
 import { PageHeaderLayout } from '../../../../../../components/Layout/PageHeaderLayout';
 import { TableFooterButtons } from '../../../../../../components/Tables/TableFooterButtons';
+import { CardExtraItems } from '../../../../../../components/Card/components/CardExtraSplit';
+import { CardQuickFilter } from '../../../../../../components/Card/components/CardQuickFilter';
+import DefaultI18nEn from '../../../../../../i18n/en';
+import { FormattedMessage } from 'react-intl';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
+
+const filters = [
+    { value: 'active', label: <FormattedMessage {...DefaultI18nEn.filterActive} /> },
+    { value: 'pending', label: <FormattedMessage {...DefaultI18nEn.filterPending} /> },
+    { value: 'suspended', label: <FormattedMessage {...DefaultI18nEn.filterSuspended} /> },
+    { value: 'archived', label: <FormattedMessage {...DefaultI18nEn.filterArchived} /> }
+];
 
 const Analysts = props => {
     const {management=[],totalCount,loadByStatus,selectedObj, openModal,searchText,onSearch,emitEmpty,selectedCount,showButton,openShowButton,hideShowButton, visibleModal,hideModal,loading=false} = props;
@@ -67,13 +78,13 @@ const Analysts = props => {
             name: record.name,
         }),
     };
-        const actions = <React.Fragment>
-        <RadioGroup defaultValue="all" style={{marginRight:10}} >
-            <RadioButton value="active" onClick={loadByStatus}>Active</RadioButton>
-            <RadioButton value="pending" onClick={loadByStatus}>Pending</RadioButton>
-        </RadioGroup>
-        <StaffMemberInviteButton role={'analyst'} />
-    </React.Fragment>;
+       
+
+
+const actions = <CardExtraItems>
+<CardQuickFilter size={'default'} filters={filters} value={props.status || 'active'} onChange={props.loadByStatus} />
+<StaffMemberInviteButton role={'analyst'} />
+</CardExtraItems>
  
         return (
                 <PageHeaderLayout title={'Analysts '+ (totalCount > 0 ? ' ('+totalCount+')' : '')}

@@ -9,7 +9,7 @@ import { CohortPatientsButtons } from './containers/Buttons';
 import CohortUserManagerButton from '../Buttons/components/ManageUser';
 
 const CohortPatients = props => {
-    console.log(props);
+    // console.log(props);
     const {cohortUsers=[], cohort, total, loading, showAdd=true} = props;
 
 

@@ -81,7 +81,7 @@ const withQuery = graphql(GET_NETWORK_MANAGERS_LIST, {
                 management: edges,
                 totalCount: totalCount,
                 loadByStatus(status) {
-                    return data.refetch({status:status.target.value});
+                    return data.refetch({status});
                 },
                 loading: data.loading,
             }

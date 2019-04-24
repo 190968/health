@@ -5,7 +5,8 @@ import { compose, withProps, branch, withHandlers, defaultProps, withState } fro
 
 // plan element with children
 const PlanElementPure = (props) => {
-	console.log(props, 'element props');
+	// if (props.showChildren)
+	//  console.log(props, 'element-----props');
 	const {
 		element,
 		isDraggable,
@@ -17,7 +18,8 @@ const PlanElementPure = (props) => {
 		notClickable = false,
 		updateSkippedElements,
 		updateBrahmRules,
-		brahmRules
+		brahmRules,
+		user
 	} = props;
 	const { id } = element;
 	return (
@@ -47,6 +49,7 @@ const PlanElementPure = (props) => {
 						updateSkippedElements={updateSkippedElements}
 						updateBrahmRules={updateBrahmRules}
 						brahmRules={brahmRules}
+						user={user}
 					/>
 				</div>
 			)}

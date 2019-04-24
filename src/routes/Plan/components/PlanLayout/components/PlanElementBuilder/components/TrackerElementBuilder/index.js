@@ -24,6 +24,8 @@ const radioStyle = {
     lineHeight: '30px',
 };
 
+const customUnitId = process.env.NODE_ENV === 'production' ? 'MQ' : 'a1';
+
 const TrackerElementBuilder = (props) => {
     const {selectTracker, advanced, toggleAdvanced, measurement={}, customTracker=false, toggleCustom} = props;
 
@@ -43,6 +45,7 @@ const TrackerElementBuilder = (props) => {
                     <FormItem
                         {...formItemLayout}
                         label="Tracker name"
+                        help={<div style={{marginBottom:5}}>Or <a onClick={toggleCustom}>Select from global trackers</a></div>}
                     >
                         <Row gutter={5}>
                             <Col lg={10}>
@@ -63,7 +66,7 @@ const TrackerElementBuilder = (props) => {
                                     <TrackerUnitsSelect />
                                 )}
                             </Col>
-                            {getFieldValue('unitId') === 'a1' &&
+                            {getFieldValue('unitId') === customUnitId &&
                             <Col lg={5}>
                                 {getFieldDecorator('unitName', {
                                         initialValue: units.name || '',
@@ -74,13 +77,13 @@ const TrackerElementBuilder = (props) => {
                                 )}
                             </Col>}
                         </Row>
-                        <div style={{lineHeight:'1em'}}>Or <a onClick={toggleCustom}>Select from global trackers</a></div>
                     </FormItem>
                 </React.Fragment>
                 :
                 <FormItem
                     {...formItemLayout}
                     label="Select Tracker"
+                    help={<div style={{marginBottom:5}}>Or <a onClick={toggleCustom}>Create your own</a></div>}
                 >
                     {getFieldDecorator('parentId', {
                             initialValue: parentId,
@@ -89,7 +92,7 @@ const TrackerElementBuilder = (props) => {
                     )(
                         <TrackerSelect /*selectInfo={selectTracker}*/ />
                     )}
-                    <div style={{lineHeight:'1em'}}>Or <a onClick={toggleCustom}>Create your own</a></div>
+                    
                 </FormItem>
 
             }
@@ -102,7 +105,7 @@ const TrackerElementBuilder = (props) => {
                         initialValue:textBefore,
                     }
                 )(
-                    <TextArea autosize={{ minRows: 1, maxRows: 6 }} />
+                    <TextArea autosize={{ minRows: 2, maxRows: 6 }} />
                 )}
             </FormItem>
             <FormItem
@@ -113,12 +116,12 @@ const TrackerElementBuilder = (props) => {
                         initialValue:description,
                     }
                 )(
-                    <TextArea autosize={{ minRows: 1, maxRows: 6 }} />
+                    <TextArea autosize={{ minRows: 2, maxRows: 6 }} />
                 )}
             </FormItem>
 
-            {advanced ?  <TrackerAdvanced form={form} measurement={measurement} details={details} /> : <a onClick={toggleAdvanced}>Show Advanced</a> }
-
+            {/* {advanced ?  <TrackerAdvanced form={form} measurement={measurement} details={details} /> : <a onClick={toggleAdvanced}>Show Advanced</a> } */}
+            <TrackerAdvanced form={form} measurement={measurement} details={details} />
             {/*<FormItem {...formTailLayout}>
                 {getFieldDecorator('isBlog')(
                     <Checkbox>

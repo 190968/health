@@ -5,7 +5,7 @@ import React from 'react';
 import { compose, withState, branch, withHandlers, withStateHandlers, withProps } from 'recompose';
 import { Form } from 'antd';
 import gql from 'graphql-tag';
-import { withModal, withStepsState } from "../../../../../components/Modal/index";
+import { withDrawer, withStepsState } from "../../../../../components/Modal/index";
 import { GET_PROFILE_DETAILS_QUERY } from '../../Profile/components/Details/containers/GeneralInfo';
  
 const withQuery = graphql(GET_PROFILE_DETAILS_QUERY, {
@@ -37,7 +37,7 @@ const enhance = compose(
           modalWidth:800
       };
   }),
-  withModal,
+  withDrawer,
   branch(props => !props.patient, withState('patient', 'setPatient')),
   withStepsState(props => props.getProfileForm.map(item => item.id))
 );

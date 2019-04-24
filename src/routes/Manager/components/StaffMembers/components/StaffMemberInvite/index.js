@@ -1,7 +1,7 @@
 import React from 'react';
 import {Input, Select, Form,} from 'antd';
 const FormItem = Form.Item;
-
+const { TextArea } = Input;
 
 const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChange, handleSelectChange}) => {
 
@@ -19,6 +19,7 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
                     mode="tags"
                     style={{width: '100%'}}
                     tokenSeparators={[',']}
+                    notFoundContent={false}
                 >
                 </Select>
             )}
@@ -27,7 +28,7 @@ const TeamManager = ({form, formItemLayout, targetKeys, selectedKeys, handleChan
             label="Optional Message to Recipients(s)"
         >
             {getFieldDecorator('message', {})(
-                <Input />
+                <TextArea autosize={{ minRows: 2, maxRows: 6 }} />
             )}
         </FormItem>
     </Form>

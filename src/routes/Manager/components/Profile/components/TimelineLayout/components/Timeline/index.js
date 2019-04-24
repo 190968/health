@@ -15,7 +15,7 @@ const TimelinePure = props => {
     const {filters=null, updateFilters, toggleFilter} = props;
     const {togglePathway, showPathway, onDrop} = props;
     let extra = '';
-
+    console.log(items,' timeline items');
     const filttersOpts = {filters, updateFilters, /*loadFiltered,*/ toggleFilter};
     if (isWidget) {
         return <Card title="Timeline" >

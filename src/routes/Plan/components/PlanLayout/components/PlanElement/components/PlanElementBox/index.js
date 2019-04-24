@@ -26,6 +26,7 @@ import AcceptPlanButton from '../../../../../AcceptPlan/components/AcceptPlanBut
 import { BrahmsRulesView } from '../../../../../../../../components/Brahms/components/Manager/components/Field';
 import { BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
 import { possiblePlanElementOptionsFormatter } from '../../../PlanElementBuilder';
+import { SideToSide } from '../../../../../../../../components/Layout/Flexbox';
 
 const PlanElementBox = (props) => {
 	let {
@@ -48,7 +49,9 @@ const PlanElementBox = (props) => {
 		parentValue,
 		showElementsAsCard = false,
 		withCompleteCheckmark = false,
-		notClickable=false
+		notClickable=false,
+		// currentInOrder:0}
+        updateCurrentElement
 	} = props;
 
 	const { id, itemType, type, itemInfo, reports, hasChildren = false, getBrahmsRules } = element || {};
@@ -63,8 +66,9 @@ const PlanElementBox = (props) => {
 	let showTitle = true;
 	let titleExtra = false;
 	//console.log(props);
-
-	const defaultProps = {item, disabled:notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode  }
+	const {type:planType} = plan;
+	const isPathway = planType === 'pathway';
+	let defaultProps = {item, disabled:notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode  }
 	const {brahmRules=[]} = props;
 	const {rules:brahms} = brahmRules.find(report => report.element.id === element.id) || {};
 	const hasReports = reports && reports.length > 0;
@@ -76,10 +80,20 @@ const PlanElementBox = (props) => {
 			// const {reports:trackerReports=[]} = item;
 			// console.log(reports);
 			//showTitle = false;
-			field = <TrackerInput {...defaultProps} measurement={item} />;
+			const {description, textBefore} = item || {};
+			field = <>
+			{textBefore && <div style={{marginBottom:5}}>{textBefore}</div>}
+			<TrackerInput {...defaultProps} measurement={item} />
+			{description && <div  style={{marginTop:5}}>{description}</div>}
+			</>;
 			break;
 		case 'choice_input':
 		case 'checklist':
+
+			if (itemType === 'checklist' && isPathway) {
+				// if it's pathway and the checklist - always disabled
+				defaultProps.disabled=true;
+			}
 			// reportValues = reports && reports.map((report) => report.value);
 			// reportValues = reportValues && reportValues[0];
 			//console.log(reports);
@@ -121,7 +135,7 @@ const PlanElementBox = (props) => {
 				// reportValues = reportValues && reportValues[0];
 				fieldTitle = item.label;
 				if (itemType === 'condition') {
-					addAfter = false;
+					//addAfter = false;
 				}
 				field = (
 					<PlanChoice
@@ -158,10 +172,12 @@ const PlanElementBox = (props) => {
 		case 'condition':
 			reportValues = reports && reports.map((report) => report.valueId);
 			reportValues = reportValues && reportValues[0];
+			// console.log(reportValues, 'CONDIreportValues');
+			// need the second as well
 			reportValues = reportValues && reportValues[0];
 			fieldTitle = item.label;
 			if (itemType === 'condition') {
-				addAfter = false;
+				//addAfter = false;
 			}
 			field = (
 				<ConditionElement
@@ -280,13 +296,13 @@ const PlanElementBox = (props) => {
 					// 	<ReactFitText compressor={10.5} minFontSize={16} maxFontSize={18}><div style={{marginRight:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
 					// </div>
 
-					text = <div style={{display: 'flex', alignItems:'center'}}>
-					<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginRight:10}} className={'ib'} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
-					<div className={'ib'} style={{textAlign:'center'}}>
-						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					text = <SideToSide>
+					<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div  dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					<div style={{textAlign:'center', paddingLeft:10}}>
 						<img src={iconUrl} style={{maxWidth:80}} /> 
+						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
 					</div>
-					</div>;
+			</SideToSide>
 					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
 						
 					// 	</Col>
@@ -309,14 +325,14 @@ const PlanElementBox = (props) => {
 					// 	<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
 					// </div>
 
-{/* <Row  > */}
-					text = <div style={{display: 'flex', alignItems:'center'}}>
-						<div className={'ib'} style={{textAlign:'center'}}>
-							<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+				text = <SideToSide>
+						<div style={{textAlign:'center', paddingRight:10}}>
 							<img src={iconUrl} style={{maxWidth:80}} /> 
+							<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
 						</div>
-						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:10}} className={'ib'} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
-						</div>;
+						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div  dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+				</SideToSide>
+				 
 				}
 				
 			} else {
@@ -326,7 +342,7 @@ const PlanElementBox = (props) => {
 		// text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
 			fieldTitle = '';
 			field = (
-				<div style={{background1:bgColor, padding:10, marginBottom:10}}>
+				<div style={{background1:bgColor, padding:'10px 0', marginBottom:10}}>
 				{text}
 				</div>
 				// 	// message={getTipBoxTypeLabel(tipType)}
@@ -488,12 +504,14 @@ const PlanElementBox = (props) => {
 	} else {
 		showAdd = false;
 	}
-	const {type:planType} = plan;
-	const isPathway = planType === 'pathway';
+	if (isPathway) {
+		showAdd = false;
+	}
+	// showAdd = false;
 	return (
-		<div className={className} style={{ position: 'relative', width: '100%' }}>
+		<div className={className} style={{ position: 'relative', width: '100%' }} onClick={updateCurrentElement}>
 
-		{(isPathway && hasReports) && <div className={'dimmed-block'}></div>}
+		{/* {(isPathway && hasReports) && <div className={'dimmed-block'}></div>} */}
 			{showAdd &&
 			i === 0 && (
 				<Divider className="element-actions" style={{ marginTop: -10 }}>

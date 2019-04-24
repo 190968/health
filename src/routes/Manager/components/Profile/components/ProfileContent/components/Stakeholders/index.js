@@ -8,12 +8,11 @@ import Team from '../../../../containers/Team';
 import Advocates from '../../../../containers/Advocates';
 
 const tabList = [{
+    key: 'team',
+    tab: 'Care Team',
+},{
     key: 'family',
     tab: 'Family Members',
-    },
-    {
-        key: 'team',
-        tab: 'Care Team',
     },
     {
         key: 'providers',
@@ -29,8 +28,8 @@ export const StakeholdersPure = props => {
     // ;
 
     const contentList = {
-        family: <Family {...props} />,
         team: <Team {...props} />,
+        family: <Family {...props} />,
         providers: <Providers {...props} />,
         advocates: <Advocates {...props} />,
     };
@@ -49,8 +48,7 @@ export const StakeholdersPure = props => {
 
 const enhance = compose(
     withState('activeTab', 'setTab', props => {
-        console.log(props);
-        const {subtab = 'family'} = props.match.params;
+        const {subtab = 'team'} = props.match.params;
         return subtab;
     }),
     withHandlers({

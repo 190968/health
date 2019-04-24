@@ -60,7 +60,7 @@ query GET_PROGRAM ($id: UID!, $userId: UID!) {
         address {
             ...AddressInfo
         }
-        bussinessHours
+        businessHours
         email
         icon
         #filters

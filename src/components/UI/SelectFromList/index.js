@@ -21,17 +21,24 @@ export const SelectFromList = props => {
 
 const SelectItemItemPure = props => {
     const {item, cols=1, labelKey} = props;
-    let {label, icon} = item || {};
+    let {label, icon, disabled=false} = item || {};
     if (labelKey) {
         label = item[labelKey] || label;
     }
-    const style = cols > 1 ? gridStyle : {width: '100%', cursor:'pointer'};
-    return <Card.Grid style={style} onClick={props.onSelect}>{icon && <div className={'icon'}>{icon}</div>}{label}</Card.Grid>;
+    let style = cols > 1 ? gridStyle : {width: '100%', cursor:'pointer'};
+    if (disabled) {
+        style.cursor = 'not-allowed';
+    }
+    return <Card.Grid style={style} className={disabled && 'disabled'} onClick={props.onSelect}>{icon && <div className={'icon'}>{icon}</div>}{label}</Card.Grid>;
 }
 
 const SelectItemItem = withHandlers({
     onSelect: props => () => {
         const {item, rowKey='id', onSelect} = props;
+        const {disabled} = item;
+        if (disabled) {
+            return;
+        }
         onSelect(item[rowKey]);
     }
 })(SelectItemItemPure);

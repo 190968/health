@@ -48,15 +48,15 @@ const Overview = props => {
 
                 <Row gutter={16} style={{marginBottom:16}}>
                     <Col lg={12}>
-                        <HealthItems user={user} title="Diagnosis" type="diagnosis" />
-                        <Genomics user={user} />
+                        {/* <HealthItems user={user} title="Diagnosis" type="diagnosis" /> */}
+                        {/* <Genomics user={user} /> */}
                         <HealthItems user={user} title="Clinical Trials" type="clinical_trial" />
                     </Col>
                     <Col lg={12}>
                         <HealthItems user={user} title="Treatments" type="treatment" />
                         <Tumorboards user={user} />
-                        <HealthItems user={user}  title="Medications" type="medication" />
-                        <FamilyHistory user={user} />
+                        {/* <HealthItems user={user}  title="Medications" type="medication" /> */}
+                        {/* <FamilyHistory user={user} /> */}
                     </Col>
                 </Row>
                  

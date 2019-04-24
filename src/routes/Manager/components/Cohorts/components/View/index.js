@@ -77,7 +77,7 @@ const CohortView = props => {
         action={<React.Fragment>
             Created on {createdOn && moment(createdOn).format('l')} <CohortManagerButton cohort={cohort}  refetch={props.refetch} icon={'edit'} />
         </React.Fragment>}
-        content={<DescriptionList details={details} />}
+        content={<DescriptionList details={details} layout={'horizontal-free'} />}
 
         tabList={tabList}
         activeTab={tab}

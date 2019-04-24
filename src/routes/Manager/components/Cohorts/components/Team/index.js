@@ -3,9 +3,10 @@ import {Card} from 'antd';
 import { TableWithMessage } from '../../../../../../components/Tables';
 import moment from 'moment';
 import AvatarWithName from '../../../../../User/components/AvatarWithName';
+import CohortUserManagerButton from '../Buttons/components/ManageUser';
 
 const CohortTeam = props => {
-    const {cohortTeam=[], total, loading} = props;
+    const {cohortTeam=[], cohort, total, loading} = props;
 
 
     const columns = [
@@ -49,14 +50,18 @@ const CohortTeam = props => {
         }),
     };
     
-    return  <Card type="table">
+    return  <>
+        <div style={{textAlign:'right', marginBottom:10}}>
+        <CohortUserManagerButton cohort={cohort} role={'member'} type={'ghost'} refetch={props.refetch} label={'Add Team Member'} icon={'plus'} />
+        </div>
+    <Card type="table">
     <TableWithMessage
         emptyMessage={'No Team Members in this Cohort'}
         rowSelection={rowSelection} 
         columns={columns} dataSource={cohortTeam} 
         loading={loading}
     />
-</Card>;
+</Card></>;
 }
 
 export default CohortTeam;

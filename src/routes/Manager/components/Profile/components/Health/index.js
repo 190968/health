@@ -3,6 +3,7 @@ import {Row, Col, Card} from 'antd';
 import HealthItems from "../Dashboard/containers/HealthItems";
 import Genomics from "../Dashboard/components/Genomics";
 import HealthSideBar from './components/SideBar';
+import FamilyHistory from '../Dashboard/containers/FamilyHistory';
 
 const Overview = props => {
     const {user={}} = props;
@@ -12,6 +13,7 @@ const Overview = props => {
                 <Row gutter={16} style={{marginBottom:16}}>
                     <Col lg={12}>
                         <HealthItems user={user} title="Diagnosis" type="diagnosis" />
+                        <HealthItems user={user} title="Conditions" type="condition" />
                         <Genomics user={user} />
                         <HealthItems user={user} title="Clinical Trials" type="clinical_trial" />
                         <HealthItems user={user} title="Oncology" type="oncology" />
@@ -27,7 +29,7 @@ const Overview = props => {
                         <HealthItems user={user} title="Radiology" type="radiology" />
                         <HealthItems user={user} title="Radiation" type="radiation" />
                         <HealthItems user={user} title="Pathology" type="pathology" />
-                        
+                        <FamilyHistory user={user} />
                         
                     </Col>
                 </Row>

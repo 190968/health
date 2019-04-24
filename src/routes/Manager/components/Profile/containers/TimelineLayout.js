@@ -1,8 +1,10 @@
 import TimelineLayoutPure from '../components/TimelineLayout';
 import {compose, withState, withHandlers, withStateHandlers} from 'recompose';
+import { withTimelineQuery } from '../components/TimelineLayout/queries';
 
 
 const enhance = compose(
+    withTimelineQuery,
     withStateHandlers(props => {
         return {
             openElements: [],

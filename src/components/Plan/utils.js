@@ -10,7 +10,8 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
     let fieldTitle = '';
     console.log(type);
     let prefix = itemType !== 'media' ? formatPlanElementByTitle({type}) : '';
-    //console.log(element, item);
+    console.log(prefix, 'prefix');
+    console.log(element, item);
     switch(itemType) {
         default: break;
         case 'measurement_input':
@@ -90,12 +91,36 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             break;
 
     }
+    console.log(showType, 'showType');
+    console.log(isBuilderMode, 'isBuilderMode');
     if (showType && isBuilderMode) {
         fieldTitle = prefix+(fieldTitle !== '' ? ' – ' : '')+ fieldTitle;
     }
-
+    console.log(fieldTitle, 'fieldTitle');
     return fieldTitle;
 }
+
+
+const PLAN_ELEMENT_TYPES_BRAHMS = [
+    // 'measurement_input',
+
+        'options',
+        'choice_input',
+        'checklist',
+        'radio_input',
+        'dropdown',
+        'condition',
+        //'decision',
+        'scale_input',
+        'scale'
+];
+export const planElementCanHaveBrahms = ({element}) => {
+    const {type} = element || {};
+    // console.log(element);
+    // console.log(PLAN_ELEMENT_TYPES_BRAHMS.includes(type), 'canhavebrahms');
+    return PLAN_ELEMENT_TYPES_BRAHMS.includes(type);
+}
+
 
 
 
@@ -133,7 +158,7 @@ export const withPlanElementSkippedElements = compose(
             //         // if we have reports go to rules
                     const questionReports = reports || [];//getReportedValues.filter(report => report.questionId === question.id);
                     let questionRules = [];
-                    // console.log(question);
+                    console.log(questionReports);
                     questionReports.map(questionReport => {
                         const { answerId, value } = questionReport || {};
                         let goTorules = [];
@@ -311,7 +336,7 @@ export const prepareSkippedPlanElementsByNextId = (props) => {
 
 
     } else {
-   
+        console.log(props);
         elements.map((question, questionI) => {
             // if this is the current question - start to collect skipped questions
             // if we need to end the collection

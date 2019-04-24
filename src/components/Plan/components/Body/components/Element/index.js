@@ -9,13 +9,13 @@ import { PlanElement } from '../../../../../../routes/Plan/components/PlanLayout
 const PlanElementItem = (props) => {
     const {element, isBuilderMode, ...otherProps} = props;
     
-    let questionCardExtra = [];
-    if (isBuilderMode) {
-        const {plan} = props;
-        // questionCardExtra.push(<AssessmentQuestionManagerButton key={'manager'} assessment={assessment} section={section} question={question} />);
-        questionCardExtra.push(<DragHandle key="drag" style={{marginLeft:5}} />);
-        questionCardExtra.push(<PlanElementDeleteButton  key={'delete'}  plan={plan} element={element} />);
-    }
+    // let questionCardExtra = [];
+    // if (isBuilderMode) {
+    //     const {plan} = props;
+    //     // questionCardExtra.push(<AssessmentQuestionManagerButton key={'manager'} assessment={assessment} section={section} question={question} />);
+    //     questionCardExtra.push(<DragHandle key="drag" style={{marginLeft:5}} />);
+    //     questionCardExtra.push(<PlanElementDeleteButton  key={'delete'}  plan={plan} element={element} />);
+    // }
 
     return <List.Item key={element.id}>
     <PlanElement {...props} />

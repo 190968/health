@@ -59,7 +59,7 @@ const enhance = compose(
     //branch(props => props.id !== '', PlanElementWithQuery),
     //branch(props => props.id !== '', withMutation, withAddMutation),
     mapProps(props => {
-        console.log(props);
+        // console.log(props);
         if (props.element) {
             const details = props.element.itemInfo;
             return {...props, details, type:props.element.itemType, resetInitInfo:true};
@@ -98,11 +98,11 @@ const enhance = compose(
                     const input = {...inputFromElement, sourceInfo}
                     //console.log(input);
                     props.submitTimelineElement(input).then(() => {
-                        if (elementId !== '') {
-                            message.success('Updated');
-                        } else {
-                            message.success('Added');
-                        }
+                        // if (elementId !== '') {
+                        //     message.success('Updated');
+                        // } else {
+                            message.success('Added to the Timeline');
+                        // }
 
                         props.onHide();
                     });

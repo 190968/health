@@ -187,7 +187,7 @@ const BuildHeaderForm = Form.create({
         if (!plan) {
             return;
         }
-        const {cancer} = plan;
+        const {versionNote=''} = plan;
         //console.log('mapPropsToFields', props);
         //console.log(plan.schedule);
         //console.log(typeof plan.schedule.limitStartDow);
@@ -204,6 +204,9 @@ const BuildHeaderForm = Form.create({
             // }),
             version: createFormField({
                 value: plan.version
+            }),
+            note: createFormField({
+                value: versionNote || ''
             }),
         };
     }

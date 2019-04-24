@@ -39,7 +39,7 @@ const withQuery = graphql(
             const {elements=[]} = plan || {};
             return {
                 loading: data.loading,
-                plan: plan,
+                plan: {...plan, type:'pathway'},
                 elements: elements,
             }
 

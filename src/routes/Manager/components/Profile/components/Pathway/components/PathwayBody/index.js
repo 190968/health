@@ -5,6 +5,7 @@ import {PathwayBodyElement} from "./containers/PathwayBodyElement";
 import {compose, withState, withHandlers, withProps} from 'recompose';
 import {withSpinnerWhileLoading} from "../../../../../../../Modal/components/index";
 import TimelineElementModal from '../../../TimelineLayout/components/Timeline/containers/TimelineElementModal';
+import { withPlanElementSkippedElements, filterSkippedPlanElements } from '../../../../../../../../components/Plan/utils';
 
 
 
@@ -51,21 +52,27 @@ const TimelineElementModalEnhanced = compose(
 
 
 const PathwayBody = props => {
-    const {user, pathway = {}, timelineElementToAdd: element, onHide, onDrop, currentInOrder, i, setTimelineElementToAdd} = props;
-    const {elements, id} = pathway;
+    const {user, pathway = {}, timelineElementToAdd: element, onHide, onDrop, currentInOrder, i, setTimelineElementToAdd, refetchTimeline, ...otherProps} = props;
+    const {elements } = pathway;
+
+    //prepareSkipp//
+    const {skippedElementsByRef} = otherProps;
+
+    const filteredElements = filterSkippedPlanElements(elements, skippedElementsByRef);
+    // filterSkippedPlanElements
     return (<React.Fragment>
-        {props.openTimelineModal && <TimelineElementModalEnhanced user={user} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} {...element} onHide={onHide}/>}
-        {elements ?
+        {props.openTimelineModal && <TimelineElementModalEnhanced user={user} setTimelineElementToAdd={setTimelineElementToAdd} pathway={pathway} refetchTimeline={refetchTimeline} {...element} onHide={onHide}/>}
+        {filteredElements ?
                 <List
                     size="small"
                     itemLayout="vertical"
                     split={false}
-                    dataSource={elements}
+                    dataSource={filteredElements}
                     renderItem={(item, i) => {
                         return <List.Item
                             id={'field' + item.id}
                             key={item.id}>
-                            <PathwayBodyElement plan={{...pathway, type: 'pathway'}} i={i} currentInOrder={currentInOrder} element={item} user={user}
+                            <PathwayBodyElement {...otherProps} plan={{...pathway, type: 'pathway'}} i={i} currentInOrder={currentInOrder} element={item} user={user}
                                                 onDrop={onDrop}/>
                         </List.Item>
                     }}
@@ -111,7 +118,7 @@ const enhance = compose(
             if (currentElements.length > 0) {
                 //element = .itemInfo;
                 //console.log(currentElements[0]);
-                props.onDrop({element: currentElements[0]});
+                //props.onDrop({element: currentElements[0]});
 
                 //props.setOpenElement(false);
             }
@@ -121,6 +128,7 @@ const enhance = compose(
              }*/
         }
     }),
+    withPlanElementSkippedElements
     //branch(props => props.openElement, renderComponent(TimelineElementModal))
 )
 //       openElement, setOpenElement

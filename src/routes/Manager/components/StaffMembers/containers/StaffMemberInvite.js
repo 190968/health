@@ -76,7 +76,8 @@ const enhance = compose(
             roleFormatted = 'Analyst';
             break;
             case 'employer':
-            roleFormatted = 'Support Staff';
+            case 'support':
+            roleFormatted = 'Support Staff Member';
             break;
         }
         return {modalTitle: 'Invite '+roleFormatted}

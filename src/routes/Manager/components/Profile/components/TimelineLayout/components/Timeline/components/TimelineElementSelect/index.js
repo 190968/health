@@ -4,17 +4,17 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
-import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
+import {FitIcon, IconCustom} from "../../../../../../../../../../components/FitIcon/index";
 import { SelectFromList } from '../../../../../../../../../../components/UI/SelectFromList';
 const Option = Select.Option;
 
 
 export const getTimelineElementsConst = (includeViewOnly=false) => {
     let items = [
-        {name:'Treatment', type:'treatment', icon:<FitIcon icon='treatment' />},
-        {name:'Health', type:'health', icon:<FitIcon icon='health' />},
+        {name:'Treatment', type:'treatment', icon:<IconCustom type='treatment' />},
+        {name:'Health', type:'health', icon:<IconCustom type='health' />},
         //{name:'Diagnosis', type:'diagnosis', icon:<FitIcon icon='diagnosis' />},
-        {name:'Stage', type:'cancer_stage', icon:<FitIcon icon='stage' />},
+        {name:'Stage', type:'cancer_stage', icon:<IconCustom type='stage' />},
         //{name:'Regimen', type:'regimen'},
         {name:'To Do', type:'checklist', icon:<FitIcon icon='to-do' />},
         {name:'Link', type:'link', icon:<Icon type="link"/>},

@@ -46,6 +46,11 @@ const Dropbox = require('@uppy/dropbox')
                  break;
              case 'attachments':
                 return 'ac4d8a2e9fbb4e8fa36f540798e8176b';
+            case 'plan_thumbnails':
+                return '8d4b88cf17fc41738d7660adeb733b5e';
+            case 'network_logo':
+                return '75690c8bd20c4843ac323e79dfb1bfe6';
+
                  /*
                  use: {
           steps: [ ':original' ],

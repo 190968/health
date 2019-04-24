@@ -7,7 +7,7 @@ const enhance = compose(
 	withDeleteCohortUserMutation,
 	withHandlers({
 		handleDelete: (props) => () => {
-			props.deleteScreeningUser().then(() => {
+			props.deleteCohortUser().then(() => {
                 if (props.refetch) {
                     props.refetch();
                 }

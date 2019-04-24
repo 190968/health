@@ -1,7 +1,17 @@
 import PathwayBodyElementPure from '../components/PathwayBodyElement';
 import { DragSource } from 'react-dnd';
 
+const PATHWAY_DRAGGABLE_ELEMENTS = [
+	'checklist',
+	'clinical_note',
+	'treatment',
+	'link',
+	'ap',
+	'media',
+]
 export const pathwayElementCanBeDraggable = (element) => {
+	const {type} = element || {};
+	return PATHWAY_DRAGGABLE_ELEMENTS.includes(type);
 	return element.type !== 'decision' && element.type !== 'condition';
 };
 

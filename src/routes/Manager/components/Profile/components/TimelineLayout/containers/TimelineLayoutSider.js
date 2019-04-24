@@ -9,7 +9,7 @@ const enhance = compose(
     withProps(props => {
         const {elements=[], showPathway} = props;
         let {activeElement, activeTab} = props;
-        //console.log(elements);
+        console.log(elements);
         let panes = elements.map((el, i) => {
             return { title: getTimelineElementCardTitle(el), content: el, key: 'item_'+el.id }
         });

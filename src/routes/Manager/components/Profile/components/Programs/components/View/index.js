@@ -16,7 +16,7 @@ const ProgramView = props => {
 
     const {userProgram, program, patient} = props;
     //console.log(program);
-    const {name, description, typeText, logo, categories=[], phone, fax, website,address,bussinessHours, email,icon,communities=[],languages=[],genders=[],locations=[], getPatientReferral} = program || {}
+    const {name, description, typeText, logo, categories=[], phone, fax, website,address,businessHours, email,icon,communities=[],languages=[],genders=[],locations=[], getPatientReferral} = program || {}
     const hasReferral = getPatientReferral;
     const {isApproved=false} = getPatientReferral || {};
 
@@ -36,7 +36,7 @@ const ProgramView = props => {
         ['Website', website],
         ['Email', email],
         ['Address', address && <AddressFieldView address={address} />],
-        ['Bussiness Hours', bussinessHours],
+        ['Bussiness Hours', businessHours],
         ['Communities', communities && communities.map(item => item.label)],
         ['Language', languages && languages.map(item => item.label)],
         ['Gender', genders && genders.map(item => item.label)],

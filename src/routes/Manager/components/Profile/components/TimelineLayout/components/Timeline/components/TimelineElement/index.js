@@ -258,7 +258,10 @@ export const TimelineElementView = (item, props={}) => {
             } else {
                 activityText = <PlanAvatar plan={plan} />;
             }
-            progress = plan.title;
+            if (!getOnlyActivity) {
+                progress = plan.title;
+            }
+           
             break;
         case 'plan_created':
             icon = <FitIcon icon="actionplan"/>;

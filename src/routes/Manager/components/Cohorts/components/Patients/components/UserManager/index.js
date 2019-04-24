@@ -1,6 +1,7 @@
 import React from 'react';
 import {Form} from 'antd';
 import PatientSelect from '../../../../../../../../components/Autosuggest/containers/PatientSelect';
+import PeopleSelect from '../../../../../../../../components/Autosuggest/containers/PeopleSelect';
 
 const FormItem = Form.Item;
 
@@ -17,10 +18,24 @@ const formItemLayoutDefault = {
 };
 
 const CohortUserManager = props => {
-    const {screening, form, formItemLayout=formItemLayoutDefault} = props;
+    const {role, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator} = form;
+    
     return <Form>
-        <FormItem
+
+        {role == 'member' ?  <FormItem
+            {...formItemLayout}
+            label="Select Member"
+        >
+            {getFieldDecorator('patients', {
+                rules: [{
+                    required: true,
+                    message: "Please Select Member",
+                }],
+            })(
+                <PeopleSelect mode={'multiple'} />
+            )}
+        </FormItem> : <FormItem
             {...formItemLayout}
             label="Select Patient"
         >
@@ -32,7 +47,7 @@ const CohortUserManager = props => {
             })(
                 <PatientSelect mode={'multiple'} />
             )}
-        </FormItem>
+        </FormItem>}
           
     </Form>
 }

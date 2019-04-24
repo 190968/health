@@ -60,7 +60,9 @@ const LinkElementBuilder = (props) => {
             >
                 {getFieldDecorator('url', {
                         initialValue:url,
-                        rules: [{type: 'url', required: true, message: "Enter Url, starting with http:// or https://", whitespace: true}],
+                        rules: [
+                            { transform: (value) => value.trim() },
+                            {type: 'url', required: true, message: "Enter Url, starting with http:// or https://"}],
                     }
                 )(
                     <Input />

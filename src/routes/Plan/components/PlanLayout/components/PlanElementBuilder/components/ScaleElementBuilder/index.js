@@ -4,11 +4,12 @@ import { compose, withHandlers, withState, withProps, branch, withStateHandlers}
 import messages from './messages';
 import {injectIntl} from 'react-intl';
 import Options from '../../../../../../../../components/FormCustomFields/components/Options';
+import PlanElementBrahmsFormField from '../../_brahms';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
 
-const formItemLayoutDefault = {
+const formItemLayout = {
     labelCol: {span: 4},
     wrapperCol: {span: 20},
 };
@@ -29,7 +30,7 @@ const ScaleElementOptionsPure = (props) => {
             form.getFieldDecorator(`keys[${index}]`, {initialValue: k});
             return (
                 <FormItem
-                    {...(index === 0 ? formItemLayoutDefault : formTailLayout)}
+                    {...(index === 0 ? formItemLayout : formTailLayout)}
                     label={index === 0 ? 'Options' : ''}
                     required={true}
                     key={index}
@@ -105,14 +106,15 @@ const ScaleElementOptions = enhance(ScaleElementOptionsPure);
 
 
 const ScaleElementBuilder = (props) => {
-    const {form, loading, intl, scales=[], formItemLayout=formItemLayoutDefault, details={}, updateOptions, options=[], keys=[], uuid=0, plan, mode /*options=[]*/} = props;
-    const {getFieldDecorator} = form;
+    const {form, loading, intl, scales=[], details={}, element, options=[], keys=[], uuid=0, plan, mode, type /*options=[]*/} = props;
+    const {getFieldDecorator, getFieldValue} = form;
     const {scaleId='', label=''/*, options:options = []*/} = details || {};
 
+    const showBrahms = plan;// && id;
     //console.log(form.getFieldValue('options'));
     //console.log(keys);//
     //const options = form.getFieldValue('options') || optionsInit;
-    console.log(props);
+    // console.log(props);
     return (
         <React.Fragment>
             <FormItem
@@ -146,7 +148,7 @@ const ScaleElementBuilder = (props) => {
 
             <Options form={form} options={options} formItemLayout={formItemLayout} />
             {/* <ScaleElementOptions options={options} setUUID={props.setUUID} setKeys={props.setKeys} keys={keys} uuid={uuid} form={form} /> */}
-            {/* {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options}   element={element}  possibleOptionsFormatter={possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />} */}
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} element={{type, ...element}} plan={plan} mode={mode} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
    
         </React.Fragment>
     );

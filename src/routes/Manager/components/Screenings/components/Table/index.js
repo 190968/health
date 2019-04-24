@@ -47,7 +47,7 @@ const columns = [{
     key: 'population',
     render: (getPopulation, info) => {
         const {totalCount} = getPopulation;
-        return <ScreeningPopulationButton screening={info} label={totalCount} />
+        return <ScreeningPopulationButton screening={info} showLabel label={totalCount} />
     }
   }, {
     title: 'Completion',

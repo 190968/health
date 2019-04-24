@@ -22,13 +22,18 @@ const formTailLayout = {
  
 
 const ConditionElementBuilder = (props) => {
-    const {form, intl, details, keys, plan, mode, element} = props;
+    const {form, intl, details, type, plan, mode, element} = props;
     const {getFieldDecorator, getFieldValue} = form;
     // const {itemInfo={}, footnote=''} = element || {};
     // const blankOption = ;
     const {id, label:title, options = [{id:'', label:''}, {id:'', label:''}] } = details || {};
     // console.log(blankOption);
     const showBrahms = plan;// && id && id !== '';
+    // if (showBrahms) {
+    //     if (plan.type === 'pathway') {
+    //         showBrahms = false;
+    //     }
+    // }
     return (
 
         <React.Fragment>
@@ -49,7 +54,7 @@ const ConditionElementBuilder = (props) => {
 
             {/* <AdditionalInfo form={form} formItemLayout={formItemLayout} footnote={footnote} /> */}
 
-            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} plan={plan} mode={mode} element={element}  possibleOptionsFormatter={props.possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
+            {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} plan={plan} mode={mode} element={{type, ...element}}  possibleOptionsFormatter={props.possiblePlanElementOptionsFormatter} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} />}
    
         </React.Fragment>
     );

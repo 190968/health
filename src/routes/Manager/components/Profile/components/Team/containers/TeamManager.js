@@ -75,10 +75,20 @@ const withCareTeamQuery = graphql(GET_PATIENT_CARE_TEAM_QUERY, {
         // //
         const {getNetworkProfessionals} = management || {};
         let {edges:items=[]} = getNetworkProfessionals || {};
+        const existingItems = [];
         items = items.map(item => {
             const {id,user, roleTitle} = item;
-
+            // check if exists
+            existingItems.push(id);
             return {id:id, title: user.fullName, description:roleTitle, key:id}; 
+        });
+        // add team members as well
+        const newItems = edges.filter(user => !existingItems.includes(user.objectId));
+        console.log(newItems, 'newItems');
+        newItems.map(item => {
+            const {user, objectId, roleText} = item;
+            items.push({id:objectId, title: user.fullName, description:roleText, key:objectId})
+            return null;
         })
         return {loading: data.loading, teamMembers:edges, items}
     },

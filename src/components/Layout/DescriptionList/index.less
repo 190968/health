@@ -39,6 +39,17 @@
     }
   }
 
+  &.horizontal-free .description {
+    display: flex;
+    justify-content: flex-end;
+    .term {
+      white-space: initial;
+    }
+    .detail {
+      flex: 2 1;
+    }
+  }
+
   .description.highlight {
     border: 1px solid #e8e8e8;
     border-radius: 3px;

@@ -19,18 +19,32 @@ const convertElementsToCode = (elements, props) => {
 	elements.map((element, i) => {
 		const { id, itemType, typeText, itemInfo, hasChildren/*, childrenElements=[]*/} = element;
 
-		const data = { key: id, name: typeText, bgColor: '#e6f7ff', color: '#91d5ff', itemInfo,  text: ''  };
+		// dark color  bgColor: '#a0b2c0', color: '#093f63',
+		// blue color   bgColor: '#c6f2fa', color: '#65dff3',
+		// greeen color  color: '#a5ca3e', bgColor: '#dbeab6'
+		// orange color  color: '#ff7f02', bgColor: '#ffcda8'
+		const data = { key: id, name: typeText, bgColor: '#c6f2fa', color: '#65dff3', itemInfo,  text: ''  };
 		let haveConnection = true;
 		let extraData = [];
 
 		//const childrenElements = elementsByElements[id] || null;
 		
-
+		console.log(element, 'FlowElement');
 		switch (itemType) {
 			case 'clinical_note':
-				const {title, note=''} = itemInfo;
+				const {title, note='', attachments=[]} = itemInfo;
 				data['name'] = title;
-				data['text'] = note;
+				let clinicalNote = note;
+				if (attachments.length > 0) {
+					const types = attachments.map(at => {
+						const {type:attType} = at;
+						// clinicalNote += attType;
+						return attType;
+					});
+
+					clinicalNote += types.join(', ');
+				}
+				data['text'] = clinicalNote;
 				break;
 			case 'checklist':
 				let todoHtml = '';
@@ -47,19 +61,19 @@ const convertElementsToCode = (elements, props) => {
 			case 'decision':
 			// console.log(itemInfo);
 				const { options = [] } = itemInfo;
-				data.bgColor = '#5ac6c4';
-				data.color = '#b7eb8f';
+				data.bgColor = '#dbeab6';
+				data.color = '#a5ca3e';
 				options.map((option) => {
 					const { label, id:value } = option;
-					nodeDataArray.push({ key: 'opt' + value, name: label, color: 'green', bgColor: '#5ac6c4' });
+					nodeDataArray.push({ key: 'opt' + value, name: label, color: '#a5ca3e', bgColor: '#dbeab6' });
 					linkDataArray.push({ from: id, to: 'opt' + value });
 
 					//
 					const childrenElements = getConnectedElements.filter(connectedElement => {
 						return connectedElement.parentId === id && connectedElement.parentValue === value;
 					})
-					console.log(getConnectedElements, 'getConnectedElements');
-					console.log(childrenElements, 'childrenElements');
+					// console.log(getConnectedElements, 'getConnectedElements');
+					// console.log(childrenElements, 'childrenElements');
 					if (childrenElements) {
 
 						//const childrenElement = childrenElements[value] || [];
@@ -70,12 +84,11 @@ const convertElementsToCode = (elements, props) => {
 							// append children
 							const childrenElement = childrenElements.map(child => child.element);
 							const childrenCodes = convertElementsToCode(childrenElement, props);
-							console.log(childrenCodes);
+							// console.log(childrenCodes);
 							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
 
 							extraData = [...extraData, ...childrenNodeDataArray];
 							linkDataArray = [...linkDataArray, ...childrenLinkDataArray];
-							//console.log(childrenNodeDataArray);
 							// add connection as well
 							if (childrenNodeDataArray[0]) {
 								const {key:childrenID} = childrenNodeDataArray[0];
@@ -95,7 +108,8 @@ const convertElementsToCode = (elements, props) => {
 			case 'treatment':
 				let treatHtml = '';
 				const { elements = [] } = itemInfo;
-				data.color = '#b7eb8f';
+				data.bgColor = '#a0b2c0';
+				data.color = '#093f63';
 				elements.map((option) => {
 					const { type } = option;
 					//nodeDataArray.push({ key: 'opt' + value, name: label, color: 'green' });
@@ -108,37 +122,29 @@ const convertElementsToCode = (elements, props) => {
 			case 'condition':
 				const { options: condOption = [], label } = itemInfo;
 				data.name = label;
-				data.bgColor = '#fff1f0';
-				data.color = '#fff1f0';
+				data.bgColor = '#ffcda8';
+				data.color = '#ff7f02';
 				let condItems = [];
 				condOption.map((option) => {
 					const { label, id:value } = option;
-					extraData.push({ key: 'cond' + value, name: label, color: 'blue', bgColor: '#5ac6c4' });
+					extraData.push({ key: 'cond' + value, name: label, color: '#ff7f02', bgColor: '#ffcda8' });
 					linkDataArray.push({ from: id, to: 'cond' + value });
 					//console.log(childrenElements);
 					const childrenElements = getConnectedElements.filter(connectedElement => {
 						return connectedElement.parentId === id && connectedElement.parentValue === value;
 					})
-					// console.log(getConnectedElements, 'getConnectedElements');
-					// console.log(childrenElements, 'childrenElements');
 					if (childrenElements) {
-
-					 
 						if (childrenElements.length > 0) {
 							// append children
 							const childrenElement = childrenElements.map(child => child.element);
 							const childrenCodes = convertElementsToCode(childrenElement, props);
-							// console.log(childrenCodes);
 							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
 
 							extraData = [...extraData, ...childrenNodeDataArray];
 							linkDataArray = [...linkDataArray, ...childrenLinkDataArray];
-							//console.log(childrenNodeDataArray);
 							// add connection as well
 							if (childrenNodeDataArray[0]) {
 								const {key:childrenID} = childrenNodeDataArray[0];
-								//console.log(childrenID, 'childrenID');
-								//nodeDataArray.push(childrenNodeDataArray[1]);
 								linkDataArray.push({ from:  'cond' + value , to:childrenID });
 							}
 						}
@@ -171,6 +177,15 @@ const convertElementsToCode = (elements, props) => {
 				//linkDataArray = [...linkDataArray, childrenCodes.linkDataArray];
 
 				break;
+			case 'media':
+				const {filename, mediaType} = itemInfo;
+				//data['name'] = mediaType;
+				data['text'] = mediaType;
+				break;
+			case 'ap':
+				const {title:planTitle} = itemInfo;
+				data['text'] = planTitle;
+				break;
 		}
 
 		
@@ -183,8 +198,8 @@ const convertElementsToCode = (elements, props) => {
 		if (i > 0 && haveConnection) {
 			// if this is not the fist item
 			const { id: prevId, itemType:prevItemType } = prevElement;
-			if (prevItemType !== 'decision')
-			linkDataArray.push({ from: prevId, to: id });
+			if (prevItemType !== 'decision' && prevItemType !== 'condition')
+				linkDataArray.push({ from: prevId, to: id });
 		}
 
 		// let label = 'op' + i;
@@ -209,8 +224,8 @@ const convertElementsToCode = (elements, props) => {
 	});
 
 	//rules += 'e';
-	console.log(nodeDataArray);
-	console.log(linkDataArray);
+	// console.log(nodeDataArray);
+	// console.log(linkDataArray);
 
 	return {
 		nodeDataArray,

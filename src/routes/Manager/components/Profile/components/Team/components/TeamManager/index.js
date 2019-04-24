@@ -16,6 +16,7 @@ const TeamManager = (props) => {
         dataSource={items}
         showSearch
         operations={['Add', 'Remove']}
+        titles={['All Staff','Care Team']}
         listStyle={{
             width: 220,
             height: 300,

@@ -9,6 +9,7 @@ import moment from 'moment';
 import { TableColumnSearch, TableColumnDates } from '../../../../../../components/Tables/TableColumn';
 import { AdherenceProgress } from '../../../../../../components/Network/UIElements/adherenceProgress';
 import { TableWithMessage } from '../../../../../../components/Tables';
+import AvatarWithName from '../../../../../User/components/AvatarWithName';
 
 export const PatientsTable = (props) => {
 	const {
@@ -82,7 +83,8 @@ export const PatientsTable = (props) => {
 						filterIcon: <Icon type="search" />
 					};
 					const { id, fullName } = info;
-					return <Link to={'/u/' + id}>{fullName}</Link>;
+					return <AvatarWithName user={info} useLink />;
+					//return <Link to={'/u/' + id}>{fullName}</Link>;
 					break;
 				case 'adherence':
 				case 'med_adherence':

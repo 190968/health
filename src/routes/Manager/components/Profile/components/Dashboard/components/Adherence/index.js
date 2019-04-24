@@ -27,17 +27,6 @@ const ProfileAdherence = (props) => {
 		<Card title={'Adherence'}>
 			<Row style={{ textAlign: 'center' }}>
 				<Col span={12}>
-					<PieChart width={85} height={85} style={{margin:'auto'}}>
-						<Pie data={medData}  innerRadius={30} outerRadius={40} dataKey={'value'}>
-						<Label value={medAdherenceLevel+'%'} position="center" />
-							{medData.map((entry, index) => {
-								return <Cell key={index} fill={entry.fill} />;
-							})}
-						</Pie>
-					</PieChart>
-					Medication
-				</Col>
-				<Col span={12}>
 				<PieChart width={85} height={85} style={{margin:'auto'}}>
 						<Pie data={genData}  innerRadius={30} outerRadius={40} dataKey={'value'}>
 						<Label value={generalAdherenceLevel+'%'} position="center" />
@@ -47,6 +36,17 @@ const ProfileAdherence = (props) => {
 						</Pie>
 					</PieChart>
 					Overall
+				</Col>
+				<Col span={12}>
+					<PieChart width={85} height={85} style={{margin:'auto'}}>
+						<Pie data={medData}  innerRadius={30} outerRadius={40} dataKey={'value'}>
+						<Label value={medAdherenceLevel+'%'} position="center" />
+							{medData.map((entry, index) => {
+								return <Cell key={index} fill={entry.fill} />;
+							})}
+						</Pie>
+					</PieChart>
+					Medication
 				</Col>
 			</Row>
 		</Card>
