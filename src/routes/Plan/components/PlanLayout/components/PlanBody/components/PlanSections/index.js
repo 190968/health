@@ -1,5 +1,5 @@
 import React from 'react';
-import PlanSection from '../../../../containers/PlanSection';
+import PlanSection from '../../../../components/PlanSection';
 import {Row, Col} from 'antd';
 import { filterSkippedPlanSections } from '../../../../../../../../components/Plan/utils';
 const PlanSections = props => {
@@ -12,13 +12,7 @@ const PlanSections = props => {
 
         if (currentKeyI === i) {
             const isLastSection = i===activitiesNum-1;
-            const list = <Row key={section.id}>
-                <Col xs={24}>
-                    <PlanSection {...otherProps} item={section}  isLastSection={isLastSection} />
-                </Col>
-            </Row>;
-
-            return list;
+            return <PlanSection key={section.id} {...otherProps} item={section} isLastSection={isLastSection} />;
         }
         return null;
     });

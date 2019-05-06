@@ -14,12 +14,20 @@ body {
 .link {
   text-decoration: underline;
   cursor: pointer;
+  color: #385898;
   &:hover {
     text-decoration: none
   }
 
   &.grey {
     color: #ccc;
+  }
+  &.dashed {
+    border-bottom:1px dashed;
+    text-decoration: none;
+    &:hover {
+      border-bottom:none;
+    }
   }
 
   &.drawer:not(.with-icon) {
@@ -503,6 +511,12 @@ body {
     .ant-form-item-control {
       line-height:1em;
     }
+  }
+  &.no-margin {
+    margin-bottom: 0;
+  }
+  &.half-margin {
+    margin-bottom: 12px;
   }
 
 

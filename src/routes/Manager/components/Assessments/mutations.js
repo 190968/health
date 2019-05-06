@@ -6,6 +6,7 @@ import { BrahmsFragment } from '../../../../components/Brahms/fragments';
  import {withAssessmentQuery} from './queries';
 import { AssessmentFragment } from '../../../../components/Assessment/fragments';
 import { compose, branch } from 'recompose';
+import { withSpinnerWhileLoading } from '../../../../components/Modal';
 
 const DELETE_USER_ASSESSMENT_MUTATION = gql`
     mutation DELETE_USER_ASSESSMENT($id: UID!, $userId:UID!){
@@ -226,6 +227,7 @@ const withUpdateAssessmentMutation = graphql(UPDATE_ASSESSMENT_MUTATION, {
 
 const withUpdateAssessmentMutationQuery = compose(
     withAssessmentQuery,
+    withSpinnerWhileLoading,
     withUpdateAssessmentMutation
 );
 export const withCreateOrUpdateAssessment = branch(props => props.assessment, withUpdateAssessmentMutationQuery, withCreateAssessmentMutation);

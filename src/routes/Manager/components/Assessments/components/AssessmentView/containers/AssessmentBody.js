@@ -35,22 +35,6 @@ const enhance = compose(
                 // loop reported questions to understand if we need to skip
                 answeredQuestions.map((question, i) => {
                     const { id, getBrahmsRules = [], isAnswerBasedQuestion = false } = question || {};
-                    // if (type == 'yes_no') {
-                    //     // find report for this question
-                    //     const questionReport = getReportedValues.find(report => report.questionId === question.id);
-                    //     const { getAnswers = [] } = question || {};
-                    //     const { answerId } = questionReport || {};
-                    //     // find answer
-                    //     const answer = getAnswers.find(answer => answer.id === answerId);
-                    //     // const answer = getAnswers.find(answer => answer.idForReported === answerId);
-                    //     // console.log(questionReport, 'questionReport');
-                    //     // console.log(answer, 'answer');
-                    //     // prepare skipped questions
-                    //     let { questionsToSkip, skipToSectionQuestion } = prepareAssessmentSkippedQuestions({ i, answer, sections: getSections, section, question, report: questionReport });
-                    //     skippedByQuestions[id] = questionsToSkip;
-                    //     skipSectionQuestion[id] = skipToSectionQuestion;
-                    //     // add selected brahm rules by question
-                    // }
 
                     // if we have reports go to rules
                     const questionReports = getReportedValues.filter(report => report.questionId === question.id);
@@ -85,8 +69,6 @@ const enhance = compose(
                 });
             });
         }
-        console.log(skippedByQuestions, 'skippedByQuestions FROM INIT');
-        console.log(skipSectionQuestion, 'skipSectionQuestion FROM INIT');
         return {
             brahmRules,// brahms rules for the entire assessment
             skippedByQuestions,// skipped questions by question
@@ -190,40 +172,6 @@ const enhance = compose(
             // find skipped by question
             const { getSections = [] } = assessment || {}
 
-            // // find current and next Question
-            // let doCollection = false;
-            // let questionsToSkip = [];
-            // let skipToSectionQuestion = [];
-            // getSections.map(section => {
-            //     const { getQuestions = [] } = section;
-            //     getQuestions.map((question, qi) => {
-            //         // if we need to end the collection
-            //         if (question.id === nextQuestionId) {
-            //             doCollection = false;
-            //         }
-
-            //         if (doCollection) {
-            //             // start to collect skipped questions
-            //             questionsToSkip.push(question.id);
-            //         }
-            //         // start with next question
-            //         if (question.id === currentQuestionId) {
-            //             doCollection = true;
-            //         }
-            //     })
-            // })
-
-            // let skipByQuestion = {};
-            // let skipSectionQuestion = {};
-            // skipByQuestion[currentQuestionId] = questionsToSkip;
-            // skipSectionQuestion[currentQuestionId] = skipToSectionQuestion;
-
-            // props.setQuestionsToSkip(skipByQuestion, skipSectionQuestion, questionsToSkip);
-            // ///
-
-
-
-
             const { questionsToSkip: goToquestionsToSkip, skipToSectionQuestion: goToskipToSectionQuestion } = prepareAssessmentskippedQuestionsByNextId({ getSections, currentQuestionId, nextQuestionId })
             // save questions
             let skippedByQuestions = {};
@@ -293,6 +241,32 @@ const enhance = compose(
             });
         },
     }),
+
+
+    withStateHandlers(props => {
+        const {elements=[]} = props;
+        const elementsLength = elements ? elements.length-1 : -1;
+        return {currentSectionInOrder:0,currentQuestionInOrder:0}
+    }, {
+        setCurrentSectionQuestion: props => (sectionI, questionI) => {
+            return {
+                currentSectionInOrder:sectionI,
+                currentQuestionInOrder:questionI,
+            }
+        },
+        increaseCurrentElement: props => () => {
+            const {currentInOrder} = props;
+            return {
+                currentInOrder:currentInOrder+1
+            }
+        },
+        decreaseCurrentElement: props => () => {
+            const {currentInOrder} = props;
+            return {
+                currentInOrder:currentInOrder-1
+            }
+        }
+    })
 );
 export const AssessmentBody = enhance(AssessmentBodyPure);
 export default AssessmentBody;

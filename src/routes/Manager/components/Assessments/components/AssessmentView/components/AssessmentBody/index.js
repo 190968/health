@@ -20,7 +20,7 @@ var ScrollElement = Scroll.Element;
  * if we have showAllQuestions = false - means we need to show question by question. if it's like that, showAllSections automatically becomes false
  */
 const AssessmentBody = props => {
-    const {assessment, sections=[], ...otherProps} = props;
+    const {assessment, sections=[], loading, ...otherProps} = props;
     const {showAllSections=true, showAllQuestions=true, showBrahms, showValidAnswer} = assessment || {};
 
     const {isBuilderMode=false, isPreviewMode=false, isCompleted, report, getReport, skippedQuestions=[],skippedByQuestions=[]} = otherProps || {};
@@ -44,7 +44,9 @@ const AssessmentBody = props => {
     {/* {isBuilderMode ? <SectionsListWithSortable {...props} useDragHandle getReportedValues={getReportedValues} />:  */}
     <SectionsList {...props} useDragHandle getReportedValues={getReportedValues} />
 
-    {(isBuilderMode && (!sections || sections.length == 0)) && <EmptyList><div style={{marginBottom:10}}>No Sections added</div> <AssessmentSectionManagerButton assessment={assessment} label={'Add First Section'} /></EmptyList>}
+    {(isBuilderMode && (!sections || sections.length == 0)) && <EmptyList>
+        No Sections added
+        <AssessmentSectionManagerButton assessment={assessment} label={'Add First Section'} /></EmptyList>}
 
     {isCompleted && <ScrollElement name="completedBlock">
     {showQuestionValidAnswer && <AssessmentQuestionValidAnswers sections={sections}  />}
@@ -73,7 +75,7 @@ const SectionsListPure = props => {
         return <EmptyList>Nothing to preview</EmptyList>;
     }
     return sections.map((section, i) => {
-        return <AssessmentSectionSortable key={section.id} collection={'sections'} index={i} sections={sections} i={i} section={section} reportedValues={getReportedValues} {...props} />
+        return <AssessmentSectionSortable key={section.id} collection={'sections'} index={i} sections={sections}  i={i} section={section} reportedValues={getReportedValues} {...props} />
     })
 }
 

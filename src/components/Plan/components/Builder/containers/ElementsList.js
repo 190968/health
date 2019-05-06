@@ -17,36 +17,17 @@ export const PlanElementsListBuilderEnhancer = compose(
     //     }
     // }),
     withUpdatePlanElementsOrderMutation,
-    // withProps(props => {
-    //     let propsUpdated = {};
-    //     if (props.isBuilderMode && !props.isPreviewMode) {
-    //         propsUpdated = {
-    //             useDragHandle: true,
-    //             lockAxis: 'y',
-    //             onSortEnd: props.onSortEnd,
-    //             useWindowAsScrollContainer: true
-    //         }
-    //     }
-
-
-    //     const {elements2=null} = props;
-    //     const {elements=[]} = props;
-
-    //     propsUpdated.elements = elements2 ? elements2 : elements;
-        
-    //     return propsUpdated;
-    // }),
     
-    // branch(props => props.isBuilderMode, withUpdateOrderMutation),
     withHandlers({
         onSortEnd: props => ({oldIndex, newIndex}) => {
+            console.log('SORT END')
             const elements = arrayMove(props.elements, oldIndex, newIndex);
 
             const ids = elements.map(element => element.id);
             const hide = message.loading('Saving...');
             props.updateElementsOrder(ids, elements).then(() => {
                 hide();
-                // props.updateElements(elements);
+                //props.updateElements(elements);
             });
             
             // props.updateOrder(elements);
@@ -54,15 +35,18 @@ export const PlanElementsListBuilderEnhancer = compose(
     }),
     // props for sorting
     withProps(props => {
+        // console.log(props);
         return {
             useDragHandle: true,
             lockAxis: 'y',
+            hideSortableGhost:false,
             // onSortEnd: props.onSortEnd,
-            useWindowAsScrollContainer: true
+            lockToContainerEdges: true,
+            helperClass: 'sorting-now'
+            // useWindowAsScrollContainer: true
         }
     }),
-    SortableContainer,
-
+    SortableContainer
 );
 
 // const enhance = compose(

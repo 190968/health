@@ -19,6 +19,7 @@ const enhance = compose(
             form.validateFields((err, values) => {
                 if (!err) {
                     const input = prepareProgramInput(values);
+                    
                     let finish = null;
                     if (program) {
                         finish = props.updateProgram(input)

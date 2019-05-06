@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Button, Card, List, Input } from 'antd';
-import { message, Modal, Divider, Tooltip, Icon } from 'antd';
+import { message, Modal, Divider, Tooltip, Affix } from 'antd';
 import { PlanElementListItem } from '../../containers/PlanElement';
 import PlanElementsSelectbox from '../../components/PlanElementsSelectbox';
 import { withApollo } from 'react-apollo';
@@ -12,6 +12,8 @@ import { SortableElement } from 'react-sortable-hoc';
 import { branch, compose, withHandlers, withProps, withState, renderComponent } from 'recompose';
 import { PlanLessonCompleteButton } from './containers/PlanLessonCompleteButton';
 import { PlanElementManagerButton } from '../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
+import PlanBuilderElementSelect from '../../../../../../components/Plan/components/Builder/components/SelectElementType/inline';
+import { PlanElementsList } from '../../../../../../components/Plan/components/Body/containers/ElementsList';
 
 // const PlanElementEnhanced = compose(
 //     branch(props => props.isBuilderMode, SortableElement)
@@ -23,7 +25,7 @@ export class PlanLesson extends React.Component {
 		this.state = {
 			isClicked: false,
 			loading: false
-		}; 
+		};
 		this.clearLoading = this.clearLoading.bind(this);
 	}
 
@@ -132,38 +134,37 @@ export class PlanLesson extends React.Component {
 	};
 
 	render() {
+		const { item, isLastLesson, showNextLesson, showFirstSection, ...otherProps } = this.props;
 		const {
 			upid,
-			plan,
-			item = {},
-			isLastLesson,
 			haveSections,
 			isBuilderMode,
 			isPreviewMode,
-			loading,
-			showNextLesson,
-			showFirstSection,
-			elements = [],
-			...otherProps
-		} = this.props;
+		} = otherProps;
+
+		const { elements = [] } = item || {};
 
 		const footer = (!isBuilderMode/* && (elements || isLastLesson)*/) && <PlanLessonCompleteButton upid={upid} lesson={item} isLastLesson={isLastLesson} showNextLesson={showNextLesson} showFirstSection={showFirstSection} haveSections={haveSections} label={isLastLesson ? haveSections > 0 ? 'Go to Activities' : 'Finish' : 'Next Lesson'} />;
 		let title = item.title || '';
 		const lessonId = item.id;
-		if (isBuilderMode) {
+		if (isBuilderMode && !isPreviewMode) {
 			title = <Input defaultValue={item.title} placeholder="Title" onKeyUp={this.updateLabel} />;
 		}
 		//console.log(loading);
 
 		return (
-			<Card title={title}>
-				{/* {1 == 5 &&
-					isBuilderMode &&
-					!isPreviewMode && <PlanElementsSelectbox mode="lesson" lessonId={lessonId} plan={plan} />} */}
+			<Card title={title} type={'pure'}>
+				<PlanElementsList {...otherProps} lesson={item} elements={elements} />
+				{/* 			
+			{(isBuilderMode && !isPreviewMode) && <Affix>
+				<PlanBuilderElementSelect {...this.props} />
+			</Affix>}
+				 
 				{elements ? (
 					<List
 						size="large"
 						itemLayout="vertical"
+						className="plan-elements"
 						split={false}
 						dataSource={elements}
 						renderItem={(item, i) => {
@@ -187,8 +188,8 @@ export class PlanLesson extends React.Component {
 					/>
 				) : (
 						<EmptyResults {...this.props} lessonId={lessonId} />
-					)}
-			<CardFooter>{footer}</CardFooter>
+					)} */}
+				<CardFooter>{footer}</CardFooter>
 			</Card>
 		);
 	}
@@ -197,34 +198,23 @@ export class PlanLesson extends React.Component {
 /**
  * Enhance Plan element
  */
-const PlanElementEnhanced = compose(branch((props) => props.isBuilderMode && !props.isPreviewMode, SortableElement))(PlanElementListItem);
+// const PlanElementEnhanced = compose(branch((props) => props.isBuilderMode && !props.isPreviewMode, SortableElement))(PlanElementListItem);
 
-const EmptyResultsPure = (props) => {
-	return <EmptyList>No elements have been added yet</EmptyList>;
-};
+// const EmptyResultsPure = (props) => {
+// 	return <EmptyList>No elements have been added yet</EmptyList>;
+// };
 
-const PlanElementAddLine = (props) => {
-	return (
-		<Divider className="element-actions">
-			<PlanElementManagerButton mode="lesson" buttonType={'primary'} shape={'round'} lessonId={props.lessonId} plan={props.plan} />
-		</Divider>
-	);
-};
+// const PlanElementAddLine = (props) => {
+// 	return (
+// 		<Divider className="element-actions">
+// 			<PlanElementManagerButton mode="lesson" buttonType={'primary'} shape={'round'} lessonId={props.lessonId} plan={props.plan} />
+// 		</Divider>
+// 	);
+// };
 
-// const PlanElementAddLine = compose(
-// 	withState('modalAdd', 'setModal', false),
-// 	withHandlers({
-// 		openAddElement: (props) => () => {
-// 			props.setModal(true);
-// 		},
-// 		openHideElement: (props) => () => {
-// 			props.setModal(false);
-// 		}
-// 	})
-// )(PlanElementAddLinePure);
 
-const EmptyResults = compose(branch((props) => props.isBuilderMode === true, renderComponent(PlanElementAddLine)))(
-	EmptyResultsPure
-);
+// const EmptyResults = compose(branch((props) => props.isBuilderMode === true, renderComponent(PlanElementAddLine)))(
+// 	EmptyResultsPure
+// );
 
 export default withApollo(PlanLesson);

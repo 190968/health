@@ -43,8 +43,8 @@ const PlanElementBox = (props) => {
 		schedule,
 		mode,
 		i = 0,
-		lessonId,
-		sectionId,
+		lesson,
+		section,
 		parentId,
 		parentValue,
 		showElementsAsCard = false,
@@ -342,7 +342,7 @@ const PlanElementBox = (props) => {
 		// text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
 			fieldTitle = '';
 			field = (
-				<div style={{background1:bgColor, padding:'10px 0', marginBottom:10}}>
+				<div style={{background1:bgColor, marginBottom:10}}>
 				{text}
 				</div>
 				// 	// message={getTipBoxTypeLabel(tipType)}
@@ -424,14 +424,21 @@ const PlanElementBox = (props) => {
 	let className = isBuilderMode ? 'element' : '';
 	//onsole.log(currentInOrder);
 	//console.log(i);
-	if (currentInOrder === i) {
-		className += ' active-element';
+	if (isBuilderMode && !isPreviewMode) {
+		if (currentInOrder === i) {
+			className += ' active-element';
+		}
 	}
 	//console.log(props);
 	let addBeforeEl = null;
 	let addAfterEl = null;
+	showAdd = false;
+	if (parentId) {
+		showAdd = true;
+	}
 	if (isBuilderMode && !isPreviewMode) {
 		if (props.element) {
+			// showAdd = true;
 			//console.log(parentId);
 			//console.log(parentValue);
 			// if we have elemnent - add as parent
@@ -440,8 +447,8 @@ const PlanElementBox = (props) => {
 					element={element}
 					// id={id}
 					i={i}
-					lessonId={lessonId}
-					sectionId={sectionId}
+					lesson={lesson}
+					section={section}
 					plan={plan}
 					type=""
 					//view="decision"
@@ -457,8 +464,8 @@ const PlanElementBox = (props) => {
 					element={element}
 					// id={id}
 					i={i}
-					lessonId={lessonId}
-					sectionId={sectionId}
+					lesson={lesson}
+					section={section}
 					plan={plan}
 					type=""
 					//view="decision"
@@ -474,8 +481,8 @@ const PlanElementBox = (props) => {
 				<PlanElementActions
 					id={id}
 					i={i}
-					lessonId={lessonId}
-					sectionId={sectionId}
+					lesson={lesson}
+					section={section}
 					plan={plan}
 					type=""
 					mode={mode}
@@ -489,8 +496,8 @@ const PlanElementBox = (props) => {
 				<PlanElementActions
 					id={id}
 					i={i}
-					lessonId={lessonId}
-					sectionId={sectionId}
+					lesson={lesson}
+					section={section}
 					plan={plan}
 					type=""
 					mode={mode}
@@ -504,9 +511,7 @@ const PlanElementBox = (props) => {
 	} else {
 		showAdd = false;
 	}
-	if (isPathway) {
-		showAdd = false;
-	}
+	 
 	// showAdd = false;
 	return (
 		<div className={className} style={{ position: 'relative', width: '100%' }} onClick={updateCurrentElement}>
@@ -532,8 +537,8 @@ const PlanElementBox = (props) => {
 							element={element}
 							id={id}
 							i={i}
-							lessonId={lessonId}
-							sectionId={sectionId}
+							lesson={lesson}
+							section={section}
 							plan={plan}
 							type=""
 							mode={mode}

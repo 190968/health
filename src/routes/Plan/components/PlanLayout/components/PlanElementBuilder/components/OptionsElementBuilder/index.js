@@ -4,8 +4,10 @@ import { compose, withHandlers, withState} from 'recompose';
 import ScaleElementOptions from './options';
 import messages from './messages';
 import {injectIntl} from 'react-intl';
-import Options from '../../../../../../../../components/FormCustomFields/components/Options';
+// import Options from '../../../../../../../../components/FormCustomFields/components/Options';
 import PlanElementBrahmsFormField from '../../_brahms';
+import { CustomOptionsList } from '../../../../../../../../components/FormCustomFields/containers/CustomOptionsList';
+import FootnoteManager from '../../../../../../../../components/Footnote/components/Manager';
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -18,6 +20,37 @@ const formTailLayout = {
     labelCol: {span: 4},
     wrapperCol: {span: 20, offset: 4},
 };
+
+const OptionItemPure = props => {
+    const {value, onChange, updateFootnote} = props;
+    const {label, footnote} = value || {} ;
+    const {text} = footnote || {};
+    return <Input value={label} onChange={onChange} suffix={<FootnoteManager placement={'topRight'} footnote={footnote} onChange={updateFootnote} content={'fffff'} />} />;
+}
+const enhance = compose(
+    withHandlers({
+        onChange: props => (e) => {
+            const {value} = props;
+            const label = e.target.value;
+            // console.log(props, 'props the Option');
+            // console.log(value, 'valueOf the Option');
+            if (props.onChange) {
+                props.onChange({...value, label});
+            }
+        },
+        updateFootnote: props => (footnote) => {
+            const {value} = props;
+            // const text = e.target.value;
+            // let {footnote} = value;
+            if (props.onChange) {
+                props.onChange({...value, footnote});
+            }
+            // console.log(text);
+        }
+    })
+);
+
+const OptionItem = enhance(OptionItemPure);
 
 const OptionsElementBuilder = (props) => {
     // console.log(props);
@@ -41,7 +74,18 @@ const OptionsElementBuilder = (props) => {
                 )}
             </FormItem>
 
-            <Options form={form} options={options} formItemLayout={formItemLayout} />
+            <FormItem
+            {...formItemLayout}
+            label="Options"
+        >
+             {getFieldDecorator('options', {
+                initialValue: options,
+            })(
+                <CustomOptionsList CustomComponent={OptionItem} blankItem={[]} />
+            )}
+        </FormItem> 
+
+            {/* <Options form={form} options={options} formItemLayout={formItemLayout} /> */}
 
             {/* <ScaleElementOptions options={options} form={form} /> */}
 

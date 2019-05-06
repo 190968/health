@@ -10,12 +10,6 @@ import { message } from 'antd';
 // import { PathwayElementsFragment, PlanSectionElementsFragment, PlanLessonElementsFragment, PlanIntroElementsFragment } from '../../fragments';
 
 
-const UpdatePlanElementsOrder_QUERY = gql`
-    mutation updatePlanElementsOrder($planId: UID!, $mode: String!, $ids: [UID]! $lessonId: UID ) {
-        updatePlanElementsOrder(planId:$planId, mode: $mode, ids: $ids, id:$lessonId)
-    }
-`;
-
 
 
 
@@ -139,13 +133,31 @@ export const PlanIntroElementsFragment =  gql`
     ${PlanElementPureFragment}
  `;
 
+
+
+const UpdatePlanElementsOrder_QUERY = gql`
+    mutation updatePlanElementsOrder($planId: UID!, $mode: String!, $ids: [UID]! $lessonId: UID ) {
+        updatePlanElementsOrder(planId:$planId, mode: $mode, ids: $ids, id:$lessonId)
+    }
+`;
+
+
 export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrder_QUERY, {
     props: ({ownProps, mutate}) => ({
         updateElementsOrder: (ids, elements) => {
-            console.log(ownProps);
-            const {item, plan, mode} = ownProps;
-            const {id=null} = item || {};
+            // console.log(ownProps);
+            const {lesson, section, plan, mode} = ownProps;
+            const {id:lessonId=null} = lesson || {};
+            const {id:sectionId=null} = section || {};
             const {id:planId} = plan || {};
+            let id = null;
+            if (lesson) {
+                id = lessonId;
+            }
+            if (section) {
+                id = sectionId;
+            }
+
             return mutate({
                 variables: {planId, mode, ids, id},
                 optimisticResponse: {
@@ -191,7 +203,8 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
                             fragmentName: "PlanLessonElements",
                         });
 
-
+                        console.log(pathway,'lessons');
+                        console.log(elements,'lessonselements');
                         client.writeFragment({
                             id: 'PlanBodyLesson:'+lessonId, // `id` is any id that could be returned by `dataIdFromObject`.
                             fragment: PlanLessonElementsFragment,
@@ -290,7 +303,6 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
              let refetchQueries = [];
              console.log(ownProps);
              if (parentId) {
-                 console.log(ownProps);
                 refetchQueries.push({
                     query: PLAN_ELEMENT_CHILDREN_QUERY,
                     variables: {id:parentId, planId, elementValue:parentValue}
@@ -298,27 +310,28 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
             }
             switch(mode) {
                 case 'lesson':
-                refetchQueries.push({
-                    query: GET_PLAN_LESSON_ELEMENTS_QUERY,
-                    variables: {id:planId, lessonId:ownProps.lessonId}
-                });
-                break;
+                    const {lesson} = ownProps;
+                    const {id:lessonId} = lesson || {};
+                        refetchQueries.push({
+                            query: GET_PLAN_LESSON_ELEMENTS_QUERY,
+                            variables: {id:planId, lessonId}
+                        });
+                    break;
                 case 'activity':
-                refetchQueries.push({
-                    query: GET_PLAN_SECTION_ELEMENTS_QUERY,
-                    variables: {id:planId, activityId:ownProps.sectionId}
-                });
-                
-                break;
+                    const {section} = ownProps;
+                    const {id:sectionId} = section || {};
+                    refetchQueries.push({
+                        query: GET_PLAN_SECTION_ELEMENTS_QUERY,
+                        variables: {id:planId, activityId:sectionId}
+                    });
+                    break;
             }
-            // console.log(ownProps);
+            console.log(refetchQueries);
 
             const hide = message.loading('Deleting...');
             return mutate({
                 variables: { planId, id},
-
                 refetchQueries,
-
                 update: (client, { data: { planElementReport } }) => {
                     const {mode, plan, parentId} = ownProps;
                     hide();

@@ -12,5 +12,5 @@ export const PlanElementBuilderEnhancer = compose(
             key: 'item-'+i
         }
     }),
-    branch(props => props.isBuilderMode, SortableElement)
+    SortableElement
 );

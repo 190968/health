@@ -29,8 +29,7 @@ const enhance = compose(
             window.$R('#content', {
                 minHeight: '100px',
                 plugins: ['alignment','fontcolor','fontsize', 'fontfamily', 'widget', 'video', 'table', 'imagemanager'],
-                imageUpload: 'http://2clinic.fitangolocal.com/scripts/ajax/utilities/upload/wysiwyg_upload_url.php',
-                //imageUpload: 'https://fitangodemo.fitango.com/scripts/ajax/utilities/upload/wysiwyg_upload_url.php',
+                imageUpload: 'https://cdn.fitango.com/scripts/ajax/utilities/upload/wysiwyg_upload_url.php',
                 imageUploadParam: 'file',
                 callbacks: {
                     synced: function(html)

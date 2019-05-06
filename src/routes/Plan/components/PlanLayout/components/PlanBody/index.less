@@ -11,12 +11,20 @@
 }
 
 .plan-menu {
+  padding:0;
+  margin:0;
   .ant-menu-inline {
     border-right:none;
   }
 }
 
 .plan-body {
+
+  .ant-card-type-pure > .ant-card-body {
+    padding-top: 1px !important;
+  }
+  
+
   .ant-list {
 
     .element > .ant-card {
@@ -40,17 +48,22 @@
     .ant-list-item {
       // padding:0;
       
-      
-      .ant-card-head-title {
-        white-space: initial;
-        padding-bottom:8px;
+      .ant-card-extra {
+        padding:0 !important;
       }
 
-      &:first-child {
+      .ant-card-head-title {
+        white-space: initial;
+        padding-bottom:4px;
+        font-weight:bold;
+        font-size: 13px;
+      }
+
+      // &:first-child {
         .ant-card-head-title {
           padding-top:0;
         }
-      }
+      // }
     }
 
   }

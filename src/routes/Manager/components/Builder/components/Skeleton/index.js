@@ -29,7 +29,7 @@ export const BuilderSkeleton = props => {
                     'minHeight': '100vh',
                     'flexDirection':'column'}}>
 
-                    <Header style={{background: '#fff', padding: 0}}>
+                    <Header style={{background: '#fff', padding: 0, boxShadow: '1px 1px 1px #ccc', zIndex: 1}}>
                         <div style={{
                             height: 64,
                             background: '#fff',

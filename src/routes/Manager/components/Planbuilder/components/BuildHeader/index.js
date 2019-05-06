@@ -6,6 +6,8 @@ import moment from 'moment';
 import messages from './messages';
 import Scheduling from './components/Scheduling';
 import PlanBuilderThumbnails from './components/Thumbnails';
+import { prepareUrlForForm } from '../../../../../../components/FormCustomFields/components/Attachments';
+import { SimpleUpload } from '../../../../../../components/FormCustomFields/components/Attachments/upload';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 const {Header, Content} = Layout;
@@ -123,10 +125,23 @@ class BuildHeader extends React.Component{
                     )}
                 </FormItem>
             </Card>
-
-            {getFieldDecorator('thumbs')(
-                <PlanBuilderThumbnails />
+            <Card title={'Plan Photo'}>
+            {getFieldDecorator('thumbs', {
+                // initialValue: (logo),
+                rules: [{
+                    required: true,
+                    // message: "Please enter name",
+                }],
+            })(
+                <SimpleUpload template='plan_thumbnails' />
+                // <PlanBuilderThumbnails />
             )}
+            </Card>
+            {/* {getFieldDecorator('logo', {
+            
+        })(
+            <SimpleUpload template='network_logo' />
+        )} */}
             
 
                 {needScheduling && <Scheduling form={form} formItemLayout={formItemLayout} tailFormItemLayout={tailFormItemLayout} />}
@@ -166,7 +181,7 @@ const BuildHeaderForm = Form.create({
                 value: description,
             }),
             thumbs: createFormField({
-                value: large,
+                value: prepareUrlForForm(large),
             }),
             // schedule
             'schedule[type]': createFormField({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Card, List, Input } from 'antd';
+import { Row, Col, Button, Card, List, Input, Affix } from 'antd';
 import { message, Modal, Divider, Tooltip, Icon } from 'antd';
 import { PlanElementListItem } from '../../containers/PlanElement';
 import PlanElementsSelectbox from '../../components/PlanElementsSelectbox';
@@ -12,6 +12,9 @@ import moment from 'moment';
 import { EmptyList } from '../../../../../../components/Loading/index';
 import { branch, compose, withHandlers, withProps, withState, renderComponent } from 'recompose';
 import { PlanElementManagerButton } from '../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
+import PlanBuilderElementSelect from '../../../../../../components/Plan/components/Builder/components/SelectElementType/inline';
+import { PlanElementsList } from '../../../../../../components/Plan/components/Body/containers/ElementsList';
+
 
 const updateSectionMutation = gql`
 			mutation updateActivityTitle($id: UID!, $planId: UID!, $title: String!) {
@@ -100,7 +103,17 @@ export class PlanSection extends React.Component {
 	};
 
 	render() {
-		const { upid, date, user, item, isLastSection, isBuilderMode, isPreviewMode, plan, elements = [], ...otherProps } = this.props;
+
+		const { item, isLastSection, ...otherProps } = this.props;
+		const {
+			upid,
+			isPreviewMode,
+			isBuilderMode,
+		} = otherProps;
+
+		const { elements = [] } = item || {};
+
+		// const { upid, date, user, item, isLastSection, isBuilderMode, isPreviewMode, plan, elements = [], ...otherProps } = this.props;
 		const footer =
 			!isBuilderMode && (elements !== null && (item.elements.length > 0 || isLastSection))
 				? [
@@ -116,23 +129,26 @@ export class PlanSection extends React.Component {
 
 		const sectionId = item.id || '';
 		let title = item.title || '';
-		if (isBuilderMode) {
+		if (isBuilderMode && !isPreviewMode) {
 			title = <Input defaultValue={item.title} placeholder="Title" onKeyUp={this.updateLabel} />;
 		}
 
 		return (
-			<Card title={title}  actions={footer}>
-				{/* {1 === 5 &&
-				isBuilderMode &&
-				!isPreviewMode && (
-					<PlanElementsSelectbox mode="section" sectionId={sectionId} plan={plan} schedule={true} />
-				)} */}
+			<Card title={title}  type={'pure'} actions={footer}>
+
+				<PlanElementsList {...otherProps} mode="section" section={item} elements={elements} />
+
+				{/* {(isBuilderMode && !isPreviewMode) && <Affix>
+				<PlanBuilderElementSelect {...this.props} />
+			</Affix>}
+				 
 				{elements && elements.length > 0 ? (
 					<List
 						size="large"
 						itemLayout="vertical"
 						split={false}
 						dataSource={elements}
+						className="plan-elements"
 						renderItem={(item, i) => {
 							return (
 								<PlanElementEnhanced
@@ -157,52 +173,52 @@ export class PlanSection extends React.Component {
 					/>
 				) : (
 					<EmptyResults {...this.props} />
-				)}
+				)} */}
 			</Card>
 		);
 	}
 }
 
-/**
- * Enhance Plan element
- */
-const PlanElementEnhanced = compose(branch((props) => props.isBuilderMode && !props.isPreviewMode, SortableElement))(PlanElementListItem);
+// /**
+//  * Enhance Plan element
+//  */
+// const PlanElementEnhanced = compose(branch((props) => props.isBuilderMode && !props.isPreviewMode, SortableElement))(PlanElementListItem);
 
-const EmptyResultsPure = (props) => {
-	return <EmptyList>No elements have been added yet</EmptyList>;
-};
+// const EmptyResultsPure = (props) => {
+// 	return <EmptyList>No elements have been added yet</EmptyList>;
+// };
 
-const PlanElementAddLine = (props) => {
-	return (
-		<Divider className="element-actions">
-			{/* {props.modalAdd && (
-				<Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}>
-					<PlanElementsSelectbox mode="section" sectionId={props.item.id} plan={props.plan} plan={props.plan} />
-				</Modal>
-			)} */}
+// const PlanElementAddLine = (props) => {
+// 	return (
+// 		<Divider className="element-actions">
+// 			{/* {props.modalAdd && (
+// 				<Modal title="Select Element" visible={true} footer={false} onCancel={props.openHideElement}>
+// 					<PlanElementsSelectbox mode="section" sectionId={props.item.id} plan={props.plan} plan={props.plan} />
+// 				</Modal>
+// 			)} */}
 
-			<PlanElementManagerButton mode="section" buttonType={'primary'} label={'Add First Element'} shape={'round'} sectionId={props.item.id} plan={props.plan} />
-			{/* <Tooltip title="Add Element" onClick={props.openAddElement}>
-				<Icon type="plus-circle-o" style={{ cursor: 'pointer' }} /> Add First Element
-			</Tooltip> */}
-		</Divider>
-	);
-};
+// 			<PlanElementManagerButton mode="section" buttonType={'primary'} label={'Add First Element'} shape={'round'} sectionId={props.item.id} plan={props.plan} />
+// 			{/* <Tooltip title="Add Element" onClick={props.openAddElement}>
+// 				<Icon type="plus-circle-o" style={{ cursor: 'pointer' }} /> Add First Element
+// 			</Tooltip> */}
+// 		</Divider>
+// 	);
+// };
 
-// const PlanElementAddLine = compose(
-// 	withState('modalAdd', 'setModal', false),
-// 	withHandlers({
-// 		openAddElement: (props) => () => {
-// 			props.setModal(true);
-// 		},
-// 		openHideElement: (props) => () => {
-// 			props.setModal(false);
-// 		}
-// 	})
-// )(PlanElementAddLinePure);
+// // const PlanElementAddLine = compose(
+// // 	withState('modalAdd', 'setModal', false),
+// // 	withHandlers({
+// // 		openAddElement: (props) => () => {
+// // 			props.setModal(true);
+// // 		},
+// // 		openHideElement: (props) => () => {
+// // 			props.setModal(false);
+// // 		}
+// // 	})
+// // )(PlanElementAddLinePure);
 
-const EmptyResults = compose(branch((props) => props.isBuilderMode === true, renderComponent(PlanElementAddLine)))(
-	EmptyResultsPure
-);
+// const EmptyResults = compose(branch((props) => props.isBuilderMode === true, renderComponent(PlanElementAddLine)))(
+// 	EmptyResultsPure
+// );
 
 export default withRouter(withApollo(PlanSection));

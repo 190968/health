@@ -41,12 +41,21 @@ export const Empty = ({text}) => {
    return <div className="ant-list-empty-text">{text}</div>
 }
 
-export const EmptyList = ({children, noImage}) => {
+export const EmptyList = (props) => {
+    const {noImage} = props;
+    let {children} = props;
     if (noImage) {
         return <div className="ant-list-empty-text">{children}</div>
     }
-    return <div className="ant-list-empty-text"><EmptyAntd description={children} /></div>;
-    
+    console.log(children, 'childrenchildrenchildren');
+    if (children.length > 1) {
+        
+        const text = children[0];
+        children = children.filter((c,i) =>i>0);
+        return <div className="ant-list-empty-text"><EmptyAntd description={text} /> <div style={{marginTop:10}}>{children}</div></div>;
+    } else {
+        return <div className="ant-list-empty-text"><EmptyAntd description={children} /></div>;
+    }
 }
 
 

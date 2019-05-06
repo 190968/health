@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { NavLink, Route } from 'react-router-dom';
+import './index.less';
 import LayoutHeader from '../../../../../../layouts/components/Header';
 import LoadingPage from '../../../../../../components/LoadingPage';
 import { BuilderSkeleton } from '../Skeleton';
@@ -11,10 +12,10 @@ const { Header, Content, Sider, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
 
 const BuilderLayout = props => {
-    const { logo, header, menu, children:content} = props;
+    const { logo, header, menu, children:content, useNoMargins=false} = props;
     const { mainUrl, exitUrl, menuItems=[], selectedItem, openItem } = menu;
 
-    return <Layout>
+    return <Layout className={'planbuilder-layout'}>
         <Sider style={{
             // overflow: 'auto', height: '100vh', position: 'fixed', left: 0,
         }}
@@ -58,7 +59,7 @@ const BuilderLayout = props => {
                 'flexDirection': 'column'
             }}>
 
-                <Header style={{ background: '#fff', padding: 0 }}>
+                <Header style={{ background: '#fff', padding: 0, boxShadow: '1px 1px 1px #ccc', zIndex: 1 }}>
                     <div style={{
                         height: 64,
                         background: '#fff',
@@ -67,7 +68,7 @@ const BuilderLayout = props => {
                         <center><h3>{header}</h3></center>
                     </div>
                 </Header>
-                <Content >
+                <Content style={useNoMargins ? {padding:0} : {}}>
                     <div style={{ margin: 'auto' }}>
                         {content}
                     </div>

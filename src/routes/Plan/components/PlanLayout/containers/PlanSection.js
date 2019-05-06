@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { GET_PATIENT_POINTS_QUERY } from '../../../../../layouts/components/Header/components/RightMenu/containers/HeaderPoints';
 import { withUpdatePlanElementsOrderMutation } from '../../../../../components/Plan/components/Builder/mutations';
+import { withPlanElementsSelectorEnhancer } from '../../../../../components/Plan/components/Body/containers/ElementsList';
 
 
 const reportOnSection_MUTATION = gql`
@@ -89,6 +90,7 @@ const builderEnhance = compose(
 const enhance = compose(
     withMutation,
     branch(props => props.isBuilderMode && !props.isPreviewMode, builderEnhance),
+    withPlanElementsSelectorEnhancer,
     withProps(props => {
         const {item={}} = props;
         const {elements=[]} = item;

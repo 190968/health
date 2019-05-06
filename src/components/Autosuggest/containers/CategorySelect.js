@@ -1,20 +1,24 @@
-import CategorySelect from '../components/CategorySelect';
+import CategorySelectPure from '../components/CategorySelect';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withApollo } from 'react-apollo'
 
 export const CategorySelectQUERY = gql`
- query GET_MAIN_CATEGORY($isMedical:Boolean) {
-getMainCategories(isMedical:$isMedical){
-  name
-  id  
-}
-}
+    query GET_MAIN_CATEGORY($isMedical:Boolean) {
+        getMainCategories(isMedical:$isMedical){
+            id
+            name
+            # getChildrenCategories {
+            #     id
+            #     name
+            # } 
+        }
+    }
 `;
 
 
 
-const CategorySelectWithQuery = graphql(CategorySelectQUERY,
+const withQuery = graphql(CategorySelectQUERY,
     {
         options: () => {
             return {
@@ -38,4 +42,5 @@ const CategorySelectWithQuery = graphql(CategorySelectQUERY,
 
 
 
-export default withApollo(CategorySelectWithQuery(CategorySelect));
+export const CategorySelect = withQuery(CategorySelectPure);
+export default CategorySelect;

@@ -17,7 +17,7 @@ const PlanElementItem = (props) => {
     //     questionCardExtra.push(<PlanElementDeleteButton  key={'delete'}  plan={plan} element={element} />);
     // }
 
-    return <List.Item key={element.id}>
+    return <List.Item>
     <PlanElement {...props} />
 </List.Item>;
 }

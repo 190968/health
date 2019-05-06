@@ -89,11 +89,7 @@ const injectPlanBodyQuery = graphql(
         },
     }
 );
-
-
-// const enhance = compose(
-//     ,
-// );
+ 
 export default injectPlanBodyQuery(PlanBody);
 
 

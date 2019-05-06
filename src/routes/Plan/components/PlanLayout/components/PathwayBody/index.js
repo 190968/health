@@ -12,7 +12,7 @@ const PathwayBody = (props) => {
     }
     const {skippedElementsByRef} = otherProps;
     const filteredElements = filterSkippedPlanElements(elements, skippedElementsByRef);
-    return <PlanElementsList {...props} elements={filteredElements} />
+    return <PlanElementsList {...props} mode="pathway" elements={filteredElements} />
 }
 
 export default PathwayBody;

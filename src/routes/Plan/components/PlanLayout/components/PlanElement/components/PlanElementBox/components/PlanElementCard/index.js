@@ -7,10 +7,10 @@ const PlanElementCard = props => {
     const { children, element, showTitle, isBuilderMode, withCompleteCheckmark=false, isPreviewMode=false, extra = {}, plan={} } = props;
     const { footnote = '', reference = '' } = element;
     const {type} = plan;
-    const showType = type !== 'ap';
-    let bordered = showType;
-	let hoverable = isBuilderMode && !isPreviewMode;
-	let title = showTitle ? getPlanElementLabelFromElement(element, { isBuilderMode: isBuilderMode, footnote, showType }) : false; //'Add name of'
+    const showType =  type !== 'ap';
+    let bordered = type !== 'ap';
+	let hoverable = false;//isBuilderMode && !isPreviewMode;
+	let title = showTitle ? getPlanElementLabelFromElement(element, { isBuilderMode, isPreviewMode, footnote, showType }) : false; //'Add name of'
 	console.log(title, 'title');
 	if (title && withCompleteCheckmark) {
 		title = <React.Fragment>

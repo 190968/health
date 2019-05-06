@@ -84,7 +84,7 @@ const PlanbuilderLayout = (props) => {
     }
 
     //console.log(openItem);
-    //console.log(selectedItem);
+    // console.log(selectedItem, 'selectedItem');
 
     return (
         <Layout style={{minHeight: '100vh'}}>

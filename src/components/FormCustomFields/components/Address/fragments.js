@@ -29,4 +29,18 @@ export const AddressInfoFragment = gql`
     ${CountryInfoFragment}
     ${StateInfoFragment}
 `;
+export const AddressNoStreetFragment = gql`
+    fragment AddressNoStreet on Address {
+        country {
+            ...CountryInfo
+        }
+        state {
+           ...StateInfo
+        }
+        city
+        zipcode
+    }
+    ${CountryInfoFragment}
+    ${StateInfoFragment}
+`;
 

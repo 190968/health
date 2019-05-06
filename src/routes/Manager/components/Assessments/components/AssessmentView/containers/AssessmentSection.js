@@ -43,15 +43,15 @@ const enhance = compose(
             // check if we have 
             const skippedQuestions = skippedByQuestions[id] || [];
             const nextSectionQuestion = skipSectionQuestion[id] || false;
-            console.log(props, 'props');
-            console.log(nextQuestion, 'nextQuestion');
-            console.log(skippedByQuestions, 'skippedByQuestions');
-            console.log(skippedQuestions, 'skippedQuestions');
+            // console.log(props, 'props');
+            // console.log(nextQuestion, 'nextQuestion');
+            // console.log(skippedByQuestions, 'skippedByQuestions');
+            // console.log(skippedQuestions, 'skippedQuestions');
             props.setSkippedQuestions(skippedQuestions);
-            console.log(skippedQuestions);
-            console.log(skippedQuestions);
-            console.log(nextQuestion, 'nextQuestion');
-            console.log(skipSectionQuestion, 'skipSectionQuestion');
+            // console.log(skippedQuestions);
+            // console.log(skippedQuestions);
+            // console.log(nextQuestion, 'nextQuestion');
+            // console.log(skipSectionQuestion, 'skipSectionQuestion');
            
             if (nextSectionQuestion) {
                 const {sectionI, nextSectionId, questionI, nextQuestionId} = nextSectionQuestion;
@@ -68,11 +68,11 @@ const enhance = compose(
                         nextQuestionIndex = getQuestions.findIndex(question => question.id === nextQuestionId);
                     }
                 });
-                console.log(props );
-                console.log(question );
-                console.log(nextSectionQuestion, 'nextSectionQuestion' );
-                console.log(nextSectionIndex, 'nextSectionIndex');
-                console.log(nextQuestionIndex, 'nextQuestionIndex');
+                // console.log(props );
+                // console.log(question );
+                // console.log(nextSectionQuestion, 'nextSectionQuestion' );
+                // console.log(nextSectionIndex, 'nextSectionIndex');
+                // console.log(nextQuestionIndex, 'nextQuestionIndex');
                 props.setCurrentSection(nextSectionIndex);
                 props.setCurrentQuestion(nextQuestionIndex);
             } else {
@@ -95,12 +95,16 @@ const enhance = compose(
                 message.success('Order has been updated');
                 hide();
             });
+        },
+        setCurrentQuestionInSection: props => (questionI) => {
+            const {i} = props;
+            props.setCurrentSectionQuestion(i, questionI);
         }
     }),
     withStateHandlers(props => ({openBrahms:false}), {
         toggleBrahms: props => () => {
             return {openBrahms: !props.openBrahms}
-        }
+        },
     })
 );
 const AssessmentSection = enhance(AssessmentSectionPure);

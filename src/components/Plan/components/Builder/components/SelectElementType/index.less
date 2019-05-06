@@ -1,22 +1,37 @@
+.select-inline-label {
+    font-size:0.7em;
+    color: #666;
+}
 .select-inline {
     background: #fff;
     padding: 10px;
+    padding-top:0px;
+    padding-bottom: 13px;
     border:1px solid #ccc;
     margin-bottom:10px;
+
+    .ant-col  {
+        margin-right: 25px;
+        &:last-child {
+            margin-right:0;
+        }
+    }
     .ant-col > span {
-        font-size:1.3em;
-        line-height: 1em;
+        font-size:1.6em;
+        line-height: 0.9em;
     }
 
     &-item {
         border: 1px solid #ccc;
         padding:4px;
-        margin:1px;
+        margin:2px;
         display: inline-block;
+        background: #fff;
         cursor: pointer;
 
         &:hover {
             box-shadow: 0px 0px 4px 1px #90d5ff;
+            // color: #90d5ff;
         }
     }
 }
@@ -25,5 +40,23 @@
     .select-inline {
         border-color: transparent;
         box-shadow: 0px 2px 3px -1px #ccc;
+    }
+}
+
+// for planbuilder
+.plan-body {
+    .select-inline {
+        margin: 0;
+        margin-top:-1px;
+        border-right:0;
+        border-left:0;
+        background: #ebf7ff;
+        // background: #fff;
+        padding-left:24px;
+    }
+    .ant-affix {
+        .select-inline {
+            margin: 0;
+        }
     }
 }

@@ -50,7 +50,10 @@ export const getPlanElementsList = mode => {
 
     let inputElements = [
         {type:'tracker', label:'Tracker', icon: <IconCustom type="tracker"/>},
-        {type:'options', label:'Options', icon: <IconCustom type="options"/>},
+        // {type:'options', label:'Options', icon: <IconCustom type="options"/>},
+        {type:'choice_input', label:'Multiple Choice', icon: <IconCustom type="multiple-choice"/>},
+        {type:'radio_input', label:'Select One', icon: <IconCustom type="select-one-alt"/>},
+        {type:'dropdown', label:'Dropdown', icon: <IconCustom type="dropdown"/>},
         {type:'textInput', label:'Input', icon: <IconCustom type="input"/>},
         {type:'scale', label:'Scale', icon: <IconCustom type="scale"/>},
         {type:'fileInput', label:'File', icon: <IconCustom type="file"/>},
@@ -74,7 +77,7 @@ export const getPlanElementsList = mode => {
         {type:'line', label:'Line', icon: <IconCustom type="line"/>},
         {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
         {type:'link', label:'Link', icon:<IconCustom type="link"/>},
-        {type:'embed', label:'Embed', icon: <Icon type="code" />},
+        {type:'embed', label:'Embed', icon: <Icon type="code" style={{verticalAlign:'middle'}} />},
     ];
 
     if (mode === 'lesson') {
@@ -95,6 +98,7 @@ export const getPlanElementsList = mode => {
                 // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
                 {label:'Link', type:'link', icon:<IconCustom type="link"/>},//
                 {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
+                {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
             ], 14]
         );
 

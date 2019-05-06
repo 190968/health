@@ -6,6 +6,13 @@ import {PlanElement} from '../../containers/Element';
 import { ListWithMessage } from '../../../../../UI/List';
 import { PlanElementManagerButton } from '../../../Builder/components/Buttons/components/ElementManager';
 import PlanbuilderElementSelect from '../../../Builder/components/SelectElementType/inline';
+import './index.less';
+import {
+    SortableContainer,
+    SortableElement,
+    SortableHandle,
+  } from 'react-sortable-hoc';
+
 // import { PlanElementManagerButton } from '../../../../../../routes/Manager/components/Planbuilder/components/Buttons/components/PlanElementManager';
 // // import {EmptyList} from "../../../../../../components/Loading/index";
 // import {PlanElementListItem} from '../../containers/PlanElement';
@@ -17,26 +24,37 @@ import PlanbuilderElementSelect from '../../../Builder/components/SelectElementT
 // import { ListWithMessage } from '../../../../../../components/UI/List';
 // import { PlanElementManagerButton } from '../../../../../Manager/components/Planbuilder/components/Buttons/components/PlanElementManager';
 // import { PlanElementBuilderView } from '../../../../../../components/Plan/components/Builder/containers/ElementView';
+const DragHandle = SortableHandle(() => <span>::</span>);
+const Sortableelement = SortableElement(props => {
+    return <li>
+    <DragHandle />
+    {props.value}
+  </li>
+});
+const SortableExample = (props => {
+    const {elements} = props;
+    return <ul>{elements.map((e, index) => <Sortableelement key={`item-${index}`} index={index} value={'item'+e.id} />)}</ul>
 
-
+});
 const PlanElementsList = (props) => {
     const {elements=[], isBuilderMode, plan, updateSkippedElements, updateBrahmRules, brahmRules, isPreviewMode, isDraggable, date, ...otherProps} = props;
     // console.log(props, 'propspropspropsprops');
-    return (<>
-     <Affix>
+    const {mode} = otherProps;
+    return (<div>
+     {(isBuilderMode && !isPreviewMode) && <Affix>
         <PlanbuilderElementSelect {...props} />
-    </Affix>
-    <Card bordered={false}>
+    </Affix>}
+    <Card bordered={false} className={'plan-elements-wrap'}>
+    {/* <SortableExample elements={elements} /> */}
     <ListWithMessage
-        emptyMessage={<EmptyResultsPure plan={plan} isPreviewMode={isPreviewMode} />}
+        emptyMessage={<EmptyResultsPure plan={plan} isPreviewMode={isPreviewMode} mode={mode} />}
         itemLayout="vertical"
-        className="plan-elements"
+        className={"plan-elements plan-elements-type-"+mode}
         split={false}
         dataSource={elements}
         renderItem={(element, i) => <PlanElement 
             {...otherProps}
-            key={'item' + i} 
-            mode="pathway" 
+            key={'item' + element.id} 
             i={i}
             plan={plan} 
             element={element} 
@@ -51,20 +69,30 @@ const PlanElementsList = (props) => {
             />
     }
     />
-    </Card></>)
+    </Card></div>)
 }
 
 export default PlanElementsList;
 
 
-const EmptyResultsPure = ({plan, isPreviewMode}) => {
+const EmptyResultsPure = ({plan, isPreviewMode, mode}) => {
     if (isPreviewMode) {
         return 'No elements have been added yet';
     }
     const {type} = plan;
-    if (type === 'pathway') {
-        return 'To Begin building your Pathway, select from one of the elements above.';
+    switch(type) {
+        case 'pathway':
+            return 'To Begin building your Pathway, select from one of the elements above.';
     }
+    switch(mode) {
+        case 'lesson':
+            return 'To Begin building your Lesson, select from one of the elements above.';
+        case 'section':
+            return 'To Begin building your Activity, select from one of the elements above.';
+        case 'introduction':
+            return 'To Begin building your Introduction, select from one of the elements above.';
+    }
+    
     return <>{/*<div>No elements have been added yet</div>*/} <PlanElementManagerButton plan={plan} buttonType={'primary'} mode={'pathway'} shape={'round'} label={'Add First Element'} /></>;
 }
 

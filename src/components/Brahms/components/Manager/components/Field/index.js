@@ -39,7 +39,7 @@ export default BrahmsAsField;
 const customPanelStyle = {
     background: '#f7f7f7',
     borderRadius: 4,
-    marginBottom: 24,
+    // marginBottom: 24,
     border: 0,
     overflow: 'hidden',
   };
@@ -49,8 +49,8 @@ export const BrahmsRulesView = props => {
         return null;
     }
     const defaultActiveKey = openBrahms ? ['1'] : null;
-    return <Collapse bordered={false} defaultActiveKey={defaultActiveKey} expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
-    <Collapse.Panel header={<><IconCustom type="brahms" style={{marginLeft:-5}} /> BRAHMS</>} key="1" style={customPanelStyle} >
+    return <Collapse bordered={false} style={{marginTop:5}} defaultActiveKey={defaultActiveKey} expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
+    <Collapse.Panel header={<div style={{lineHeight:'1em'}} ><IconCustom type="brahms" style={{verticalAlign1:'center',marginLeft:-5}} /> <span style={{verticalAlign: 'middle'}}>BRAHMS</span></div>} key="1" style={customPanelStyle} >
         <ListWithMessage
             emptyMessage={false}
             itemLayout="horizontal"

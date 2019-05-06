@@ -6,7 +6,8 @@ import { formatPlanElementByTitle } from '../../routes/Plan/components/PlanLayou
 export const getPlanElementLabelFromElement = (element, props={}) => {
     const {itemInfo:item={}, type, typeText} = element || {};
     const {itemType = type} = element || {};
-    const {isBuilderMode=false, showType=true} = props;
+    let {isBuilderMode=false, isPreviewMode=false, showType=true} = props;
+    const isBuilderNotPreviewMode = !isPreviewMode && isBuilderMode;
     let fieldTitle = '';
     console.log(type);
     let prefix = itemType !== 'media' ? formatPlanElementByTitle({type}) : '';
@@ -45,7 +46,7 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             break;
         case 'instruction':
         case 'instruction_embed':
-            if (showType) {
+            if (showType || isBuilderNotPreviewMode) {
                 fieldTitle = 'Instruction';
             }
             break;
@@ -53,12 +54,12 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             fieldTitle = item.title || '';
             break;
         case 'line':
-            if (showType) {
+            if (showType || isBuilderNotPreviewMode) {
                 fieldTitle = 'Line';
             }
             break;
         case 'instruction_tipbox':
-            if (showType) {
+            if (showType || isBuilderNotPreviewMode) {
                 fieldTitle = 'Tipbox';
             }
             break;
@@ -74,14 +75,14 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             fieldTitle = item.title;
             break;
         case 'diagnosis':
-        if (showType) {
-            fieldTitle = 'Diagnosis';
-        }
+            if (showType|| isBuilderNotPreviewMode) {
+                fieldTitle = 'Diagnosis';
+            }
             break;
         case 'cancer_stage':
-        if (showType) {
-            fieldTitle = 'Stage';
-        }
+            if (showType|| isBuilderNotPreviewMode) {
+                fieldTitle = 'Stage';
+            }
             break;
         case 'alias':
             fieldTitle = item.label || '';
@@ -392,8 +393,8 @@ export const filterSkippedPlanSections = (sections,skippedElementsByRef, hideEmp
     // console.log(newSections);
     // console.log(hideEmptySections);
     // if we need to hide empty sections (should be false for builder)
-    if (hideEmptySections) {
-        newSections = newSections.filter(section => section.elements.length > 0);
+    if (hideEmptySections && newSections) {
+        newSections = newSections.filter(section => section.elements && section.elements.length > 0);
     }
     // console.log(newSections);
     return newSections;

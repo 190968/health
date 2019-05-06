@@ -11,7 +11,7 @@ export default class TextElement extends React.PureComponent {
 
     render() {
         const {item} = this.props;
-        return <div className="wysiwyg-block" dangerouslySetInnerHTML={{__html: item.text}}></div>;
+        return <div className="wysiwyg-block redactor-styles" dangerouslySetInnerHTML={{__html: item.text}}></div>;
 
 
     }

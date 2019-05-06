@@ -5,10 +5,15 @@ export const ProgramFragment = gql`
     fragment Program on NetworkProgram {
         id
         title
+        programType
         typeText
         categories{
             id
             name
+            getSubCategories {
+                id
+                name
+            }
         }
         address {
             ...AddressInfo

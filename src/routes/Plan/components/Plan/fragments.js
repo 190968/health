@@ -141,9 +141,14 @@ export const ElementOptionsFragment = gql`
           id
           label
           isVertical
-          options {
+          options:optionsWithFootnote {
             id
             label
+            footnote {
+                id
+                text
+                color
+            }
           }
     }
 `;
@@ -334,15 +339,7 @@ export const PlanElementFragment = gql`
                 ... on PlanElementScale {
                   ...ScaleElement
                 }
-                ... on PlanElementRadio {
-                  id
-                  label
-                  isVertical
-                  options {
-                    id
-                    label
-                  }
-                }
+                
                 ... on PlanElementTextInput {
                   id
                   label
@@ -446,15 +443,7 @@ export const PlanElementPureFragment = gql`
                 ... on PlanElementScale {
                   ...ScaleElement
                 }
-                ... on PlanElementRadio {
-                  id
-                  label
-                  isVertical
-                  options {
-                    id
-                    label
-                  }
-                }
+                 
                 ... on PlanElementTextInput {
                   id
                   label

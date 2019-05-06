@@ -4,7 +4,9 @@ import AddressField from '../../../../../../components/FormCustomFields/componen
 import PhoneField from '../../../../../../components/FormCustomFields/components/Phone';
 import { SimpleUpload } from '../../../../../../components/FormCustomFields/components/Attachments/upload';
 import { prepareUrlForForm } from '../../../../../../components/FormCustomFields/components/Attachments';
-
+import { NetworkProgramCategorySelect, prepareNetworkProgramCategoryForForm } from '../../../../../../components/Autosuggest/containers/NetworkProgramCategorySelect';
+import { CustomOptionsList } from '../../../../../../components/FormCustomFields/containers/CustomOptionsList';
+import {withProps, compose, withHandlers} from 'recompose';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -20,10 +22,27 @@ const formItemLayoutDefault = {
     },
 };
 
+const enhance = compose(
+    withHandlers({
+        onChange: props => (value, selectedOptions) => {
+            // console.log(value, 'value');
+            // console.log(selectedOptions, 'selectedOptions');
+            if (props.onChange) {
+                // const categoryId = value[value.length-1];
+                props.onChange(value);
+            }
+        }
+    })
+);
+const NetworkProgramCategorySelectEnhanced = enhance(NetworkProgramCategorySelect);
+
+
+
 const ProgramManager = props => {
     const { program, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {title, logo, description, website, address, type, businessHours} = program || {};
+    const {title, logo, description, website, address, programType, businessHours, categories} = program || {};
+    console.log(categories, 'categories');
     return <Form>
         <FormItem
             {...formItemLayout}
@@ -74,7 +93,7 @@ const ProgramManager = props => {
                 label="Type"
             >
             {getFieldDecorator('type', {
-                initialValue: type,
+                initialValue: programType,
             })(
                 <Select
                 placeholder={"Select value"}
@@ -89,7 +108,11 @@ const ProgramManager = props => {
             {...formItemLayout}
             label="Category"
         >
-             
+             {getFieldDecorator('categoryIds', {
+                initialValue: categories.map(c => prepareNetworkProgramCategoryForForm(c)),
+            })(
+                <CustomOptionsList CustomComponent={NetworkProgramCategorySelectEnhanced} blankItem={[]} />
+            )}
         </FormItem> 
         <FormItem
             {...formItemLayout}

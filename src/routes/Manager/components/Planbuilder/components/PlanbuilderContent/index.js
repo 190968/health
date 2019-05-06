@@ -4,6 +4,7 @@ import {Layout, Menu, Steps, Icon} from 'antd';
 import BuildHeader from '../../containers/BuildHeader';
 import BuildHeaderPathway from '../../containers/BuildHeaderPathway';
 import BuildBody from '../../containers/BuildBody';
+import BuildOptions from '../../containers/BuildOptions';
 import Preview from '../../components/Preview';
 import Publish from '../../containers/Publish';
 import BuildBodyPathway from '../../containers/BuildBodyPathway';
@@ -18,7 +19,7 @@ const Build = (props) => {
 };
 
 
-const RouteWithSubRoutes = route => {
+export const RouteWithSubRoutes = route => {
     return (
         <Route
             path={route.path}
@@ -80,6 +81,11 @@ const PlanbuilderContent = props => {
                         path: mainUrl + "/body",
                         component: isPathway ? BuildBodyPathway : BuildBody,
                         params
+                    },
+                    {
+                        path: mainUrl + "/options",
+                        component: BuildOptions,
+                        params: { ...params, mainUrl:mainUrl + "/options"}
                     },
                     {
                         path: mainUrl,

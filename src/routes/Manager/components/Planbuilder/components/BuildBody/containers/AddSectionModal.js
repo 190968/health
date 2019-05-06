@@ -7,15 +7,6 @@ import {PlanElementPureFragment} from "../../../../../../Plan/components/Plan/fr
 const AddPlanLessonMutation=gql`
  mutation addPlanActivity($planId: UID!, $title: String!) {
         addPlanActivity(planId: $planId, title: $title) {
-              id,
-              title
-        }
-    }
-`;
-
-const PLAN_BODY_ACTIVITIES_QUERY = gql`
-    query PB_PLAN_BODY_ACTIVITIES ($id: UID!) {
-        plan (id: $id) {
             id
             activities {
                 id
@@ -28,19 +19,14 @@ const PLAN_BODY_ACTIVITIES_QUERY = gql`
     }
     ${PlanElementPureFragment}
 `;
-
-
+ 
 const withMutation = graphql(AddPlanLessonMutation, {
     props: ({ ownProps, mutate }) => ({
         submitLesson: (title) => {
             return mutate({
                 variables: {planId: ownProps.plan.id, title: title},
-                refetchQueries: [{
-                    query: PLAN_BODY_ACTIVITIES_QUERY,
-                    variables: { id: ownProps.plan.id},
-                }],
             }).then((data) => {
-                ownProps.onHide();
+                ownProps.onSuccess();
                 message.success('Activity has been Added');
             })},
     }),

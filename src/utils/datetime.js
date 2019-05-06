@@ -31,6 +31,10 @@ export const getMomentFromUTCTime = (time, format = 'HH:mm:ss') => {
     return time && moment.utc(time, format).local();
 }
 
+export const prepareDateForForm = (date, isUndefined = false) => {
+    return date ? moment(date) : (isUndefined ? undefined : moment());
+}
+
 export const prepareTimeInput = (time, format = 'HH:mm') => {
     return moment.utc(time, format).format('HH:mm:ss');
 }

@@ -83,7 +83,7 @@ const AssessmentSection = props => {
         // cardExtra.push(openBrahms ? <Icon type="eye" onClick={props.toggleBrahms} /> : <Icon type="eye-invisible" onClick={props.toggleBrahms} />);
 
         // toggleState
-        cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} />);
+        // cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} />);
         cardActions.push(<AssessmentSectionManagerButton key={'addSection'} buttonType={'dashed'} assessment={assessment} afterSection={section} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
     } else if (showBottomButtons) {
 
@@ -111,7 +111,7 @@ const AssessmentSection = props => {
 
         {sectionIsDimmed && <div className={'dimmed-block'} />}
           
-        <AssessmentQuestionsList isBuilderMode useDragHandle lockAxis={'y'} onSortEnd={props.handleUpdateQuestionOrder} questionsToShow={questionsToShow} {...opts}  /> 
+        <AssessmentQuestionsList sectionOrder={i} useDragHandle lockAxis={'y'} onSortEnd={props.handleUpdateQuestionOrder} questionsToShow={questionsToShow} {...opts}  /> 
         
     </Card>
 }
@@ -124,6 +124,7 @@ export default AssessmentSection;
 const AssessmentQuestionsListPure = props => {
     const {questionsToShow, ...otherProps} = props;
     const {section={}} = props;
+    // console.log(props, 'QUESTION PROPS');
     // return <ul>{questionsToShow.map((question, i) => <AssessmentQuestionCurrent index={i} isBuilderMode question={question} i={i} key={`item-${i}`}  />)}</ul>
     return <ListWithMessage
     emptyMessage={'No Questions'}
@@ -132,7 +133,7 @@ const AssessmentQuestionsListPure = props => {
     size={'small'}
     split={false}
     renderItem={(question, i) => {
-        return <AssessmentQuestionCurrent {...otherProps} index={i} collectionaa={'section-'+section.id} question={question} i={i} key={`item-${i}`} />;
+        return <AssessmentQuestionCurrent {...otherProps} index={i} collectionaa={'section-'+section.id} question={question} i={i} key={`item-${question.id}`} />;
     }}
 />;
 }
@@ -155,9 +156,23 @@ const AssessmentQuestionBody = ({isBuilderMode, assessment, section, question, i
         questionCardExtra.push(<DragHandle key="drag" style={{marginLeft:5}} />);
         questionCardExtra.push(<AssessmentQuestionDeleteButton  key={'delete'}  assessment={assessment} section={section} question={question} />);
     }
-    return <List.Item key={question.id}>
+    // const {currentSectionInOrder, sectionOrder, currentQuestionInOrder} = otherProps;
+    let isSelectedElement = false;
+    // const isSelectedElement = currentSectionInOrder === sectionOrder &&  currentQuestionInOrder === i;
+    // console.log(otherProps, 'otherProps');
+    // console.log(currentSectionInOrder, 'currentSectionInOrder');
+    // console.log(sectionOrder, 'sectionOrder');
+    // console.log(currentQuestionInOrder, 'currentQuestionInOrder');
+    // console.log(i, 'i');
+    // console.log(isSelectedElement, 'isSelectedElement');
+    // console.log(i, 'isSelectedElement');
+
+    // is active
+    return <List.Item key={question.id} >
+        <div className={isSelectedElement ? 'selected-element' : ''}>
         <List.Item.Meta title={<div><strong style={{fontSize: '1.1em'}}>{(showQuestionNumber ? (i + 1) + '. ' : '') + question.title}</strong> <div className={'ant-card-extra'} style={{ float: 'right', padding: '0 !important' }}>{questionCardExtra}</div></div>} description={question.description} />
-        <AssessmentQuestion key={question.id} i={i}   question={question} isPastSection={isPastSection} isLastSection={isLastSection} isFirstSection={isFirstSection} showAllQuestions={showAllQuestions} section={section} {...otherProps} />
+        <AssessmentQuestion key={question.id} i={i}  question={question} isPastSection={isPastSection} isLastSection={isLastSection} isFirstSection={isFirstSection} showAllQuestions={showAllQuestions} section={section} {...otherProps} />
+        </div>
     </List.Item>;
 }
 const AssessmentQuestionCurrent = compose(

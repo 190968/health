@@ -8,7 +8,7 @@ import { PageHeaderLayout } from '../../../../../../components/Layout/PageHeader
 import { CardExtraSplit } from '../../../../../../components/Card/components/CardExtraSplit';
 
 const AssessementView = props => {
-    const {userAssessment, user, date, handleNewReport, ...otherProps} = props;
+    const {userAssessment, user, date, loading, handleNewReport, ...otherProps} = props;
     let {assessment} = props;
     const {report} = otherProps;
     const {canReport} = userAssessment || {};
@@ -18,7 +18,7 @@ const AssessementView = props => {
     if (isCompleted) {
         assessment = {...assessment, showAllQuestions: true, showAllSections:true};
     }
-
+// console.log(props, 'propspropsprops');
     const extra = <>
         {showProgress && <CardExtraSplit style={{minWidth: 200}} ><Progress percent={progress} /></CardExtraSplit>}
         <CardExtraSplit> <AssessmentSettingsButton userAssessment={userAssessment} user={user} date={date} /></CardExtraSplit>
@@ -28,6 +28,7 @@ const AssessementView = props => {
     title={name}
     action={extra}
     mainAffix
+    loading={loading}
     // action={<CardExtraItems>
     //     {/* <CardQuickFilter size={'default'} filters={filters} value={props.status || 'all'} onChange={props.loadByStatus} /> */}
     //     {/* <BrahmManagerButton icon={'plus'} refetch={props.refetch} /> */}

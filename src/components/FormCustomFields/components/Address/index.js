@@ -11,14 +11,14 @@ const Option = Select.Option;
 
 const AddressFieldPure = props => {
 
-    const { states=[], disabled=false } = props;
+    const { states=[], disabled=false, noStreet=false } = props;
     const { line1, line2, country, city, state, zipcode } = props || {};
     const {id:countryId} = country || {};
     const isUS = countryId === 'MQ';
     return (
         <React.Fragment>
-            <Input value={line1} disabled={disabled} onChange={props.handleLine1} placeholder={'Line 1'} />
-            <Input value={line2} disabled={disabled} onChange={props.handleLine2} placeholder={'Line 1'} />
+            {!noStreet && <Input value={line1} disabled={disabled} onChange={props.handleLine1} placeholder={'Line 1'} />}
+            {!noStreet && <Input value={line2} disabled={disabled} onChange={props.handleLine2} placeholder={'Line 1'} />}
             <InputGroup >
                 <Col span={12}>
                     <CountrySelect value={country} disableSelect={disabled} onChange={props.handleCountry} placeholder={'Country'} style={{ width: '100%' }} />

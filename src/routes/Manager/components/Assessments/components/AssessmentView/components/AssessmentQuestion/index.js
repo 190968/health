@@ -180,11 +180,15 @@ const AssessmentQuestion = props => {
     // console.log(showAllQuestions, 'question');
     // console.log(showBottomButtons, 'question');
     //  console.log(initialValue, 'initialValue');
+    let onClick;
+    if (isBuilderMode) {
+        onClick = props.setCurrentQuestionInSection;
+    }
+    
    
     return <div className={'relative'}>
 
-
-        <div className={'relative'}>
+        <div className={'relative'} onClick={onClick}>
         {questionIsDimmed && <div className={'dimmed-block'} />}
 
         <FormItem

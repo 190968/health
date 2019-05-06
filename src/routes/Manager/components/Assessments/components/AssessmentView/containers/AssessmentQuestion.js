@@ -313,6 +313,10 @@ const enhance = compose(
 
             return formatAssessmentGoToElement(elementId, props);
             
+        },
+        setCurrentQuestionInSection: props => () => {
+            const {i} = props;
+            props.setCurrentQuestionInSection(i)
         }
     })
 );

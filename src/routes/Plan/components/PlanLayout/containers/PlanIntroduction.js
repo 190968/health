@@ -2,6 +2,7 @@ import PlanIntroduction from '../components/PlanIntroduction'
 import {arrayMove, SortableContainer, SortableElement,} from 'react-sortable-hoc';
 import {branch, compose, withHandlers, withProps, withState} from 'recompose';
 import { withUpdatePlanElementsOrderMutation } from '../../../../../components/Plan/components/Builder/mutations';
+import { withPlanElementsSelectorEnhancer } from '../../../../../components/Plan/components/Body/containers/ElementsList';
 
 
 
@@ -54,6 +55,7 @@ const builderEnhance = compose(
 
 const enhance = compose(
     branch(props => props.isBuilderMode, builderEnhance),
+    withPlanElementsSelectorEnhancer
     // withProps(props => {
     //     const {item={}} = props;
     //     const {elements=[]} = item;

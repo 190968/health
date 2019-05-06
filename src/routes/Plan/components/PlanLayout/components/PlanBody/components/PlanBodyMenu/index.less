@@ -1,6 +1,13 @@
 .ant-menu.ant-menu-plan {
     background: transparent;
 
+    .ant-menu-sub {
+        padding-top:12px;
+    }
+    > .ant-menu-item {
+        background: #fff;
+        padding-left:20px;
+    }
     > .ant-menu-submenu {
         margin-top:16px;
         &:first-child {
@@ -10,29 +17,39 @@
         &.tour-planmenu-activities {
             .ant-menu-submenu-title {
                 background: #1da1ff;
+                background: #f7983f;
+                background: #8a3ff7;
+            }
+            .ant-menu-item-selected {
+                color: #8a3ff7;
+                &::after {
+                    border-right-color: #8a3ff7;
+                }
             }
         }
 
         &.tour-planmenu-lessons {
             .ant-menu-item:hover {
                 color: #8dc800;
+                color: #4dd422;
             }
             .ant-menu-item-selected {
-                color: #8dc800;
+                color: #4dd422;
                 &::after {
-                    border-right-color: #8dc800;
+                    border-right-color: #4dd422;
                 }
             }
         }
         
     }
     .ant-menu-submenu-title {
-        text-transform: uppercase;
+        // text-transform: uppercase;
         color: #fff;
-        background: #8dc800;
+        background: #4dd422;
         margin-top:0;
         margin-bottom:0;
         text-align: center;
+        // font-size:1.1em;
         i {
             font-size:1.2em;
         }
@@ -51,7 +68,7 @@
             // font-size:1.1em;
         }
         .ant-menu-sub {
-            padding-top:10px;
+            // padding-top:10px;
         }
     }
 

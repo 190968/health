@@ -31,7 +31,7 @@ const ActionPlanBuilderLayout = props => {
     let menuItems = [];
     let selectedItem = action;
     let openItem = action;
-    if (['body', 'header', 'build'].includes(action)) {
+    if (['body', 'header', 'build', 'options'].includes(action)) {
         openItem = 'build';
         if (action === 'build') {
             selectedItem = 'header';
@@ -45,7 +45,7 @@ const ActionPlanBuilderLayout = props => {
         children = [
             { label: 'Settings', key: 'header', disabled },
             { label: 'Body', key: 'body', disabled },
-            {label: 'Options', key: 'options', disabled:true}
+            { label: 'Options', key: 'options', disabled }
         ];
     menuItems.push({
         label: <React.Fragment><Icon type="layout" /> <span>Build</span></React.Fragment>, key: 'build', children: children
@@ -69,7 +69,9 @@ const ActionPlanBuilderLayout = props => {
         mainUrl, exitUrl:'/actionplans', menuItems, selectedItem, openItem
     }
 
-    return <BuilderLayout logo={<center>ActionPlan Builder</center>} header={title} menu={menu} >
+    const useNoMargins = selectedItem === 'options';
+
+    return <BuilderLayout logo={<center>ActionPlan Builder</center>} header={title} menu={menu} useNoMargins={useNoMargins} >
         <PlanbuilderContent {...props} routes={menuItems} mainUrl={mainUrl}  />
     </BuilderLayout>
 }

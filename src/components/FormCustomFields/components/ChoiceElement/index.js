@@ -1,5 +1,6 @@
 import React from 'react'
 import {Checkbox, Radio, Select} from 'antd';
+import FootnoteView from '../../../Footnote/components/View';
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
@@ -26,12 +27,12 @@ export const ChoiceElement = props => {
     const { mode, value, idInsteadValue=false, isMultiple=false, isDropdown=false, disabled=false, showPrefix=false, prefixAsNumber=false, onChange} = props;
     let {options=[]} = props;
     if (idInsteadValue) {
-        console.log(options);
+        // console.log(options);
         options = options.map(o => {
-            const {id, label} = o;
-            return {value:id, label};
+            const {id, label, ...otherProps} = o;
+            return {value:id, label, ...otherProps};
         });
-        console.log(options);
+        // console.log(options);
     }
     if (isMultiple || mode == 'multiple') {
 
@@ -39,9 +40,10 @@ export const ChoiceElement = props => {
          // if it's multiple, check use checkboxes
          return <CheckboxGroup value={value} onChange={onChange} disabled={disabled} >
          {options.map((option, i) => {
-             const {value, label} = option;
+             const {value, label, footnote} = option;
+             const {text:footnoteText} = footnote || {};
              const prefix = prefixAsNumber ? i+1 : answer_abc_num.nextChar((i+1));
-             return <Checkbox key={i} value={value} style={vertStyle} >{showPrefix && prefix+'. '}{label}</Checkbox>;
+             return <Checkbox key={i} value={value} style={vertStyle} >{showPrefix && prefix+'. '}{label} <FootnoteView footnote={footnote} /></Checkbox>;
          })}
      </CheckboxGroup>
         
@@ -60,9 +62,9 @@ export const ChoiceElement = props => {
        
         return <RadioGroup onChange={onChange} value={value} disabled={disabled}>
         {options.map((option, i) => {
-             const {value, label} = option;
+             const {value, label, footnote} = option;
              const prefix =  prefixAsNumber ? i+1 : answer_abc_num.nextChar((i+1));
-            return <Radio key={i} value={value} style={radioStyle} >{showPrefix && prefix+'. '}{label}</Radio>;
+            return <Radio key={i} value={value} style={radioStyle} >{showPrefix && prefix+'. '}{label} <FootnoteView footnote={footnote} /></Radio>;
         })}
         </RadioGroup>
     }

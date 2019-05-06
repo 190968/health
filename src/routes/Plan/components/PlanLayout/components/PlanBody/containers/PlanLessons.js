@@ -1,5 +1,4 @@
 import PlanLessonsPure from '../components/PlanLessons';
-// import { withPlanElementSkippedElements } from '../../../containers/PlanBody';
 import { compose, withProps, defaultProps } from 'recompose';
 import { withPlanElementSkippedElements } from '../../../../../../../components/Plan/utils';
 

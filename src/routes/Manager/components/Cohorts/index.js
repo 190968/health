@@ -1,5 +1,4 @@
 import React from 'react';
-import {} from 'antd';
 import {
     Layout, Menu, Input, Button, Divider
   } from 'antd';
