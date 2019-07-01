@@ -15,7 +15,7 @@ const AliasModal = compose(
 )(PlanElementChildrenList);
 
 export const AliasElement = props => {
-    const {element={}, toggleChildren, viewModal = false, onDrop, plan, isDraggable, isBuilderMode, mode} = props;
+    const {element={}, toggleChildren, showChildren, viewModal = false, onDrop, plan, isDraggable, isBuilderMode, mode} = props;
     const {itemInfo={}} = element;
     let {btnLabel='Show', hasElement=false} = itemInfo;
     return <React.Fragment>
@@ -29,7 +29,8 @@ const enhance = compose(
     withState('viewModal', 'setViewModal'),
     withHandlers({
         toggleChildren: props => value => {
-            props.setViewModal(!props.viewModal);
+            props.showChildren();
+            //props.setViewModal(!props.viewModal);
         }
     })
 );

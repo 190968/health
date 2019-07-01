@@ -28,9 +28,11 @@ const enhance = compose(
             const triggerChange = this.props.triggerChange;
             window.$R('#content', {
                 minHeight: '100px',
-                plugins: ['alignment','fontcolor','fontsize', 'fontfamily', 'widget', 'video', 'table', 'imagemanager'],
+                plugins: ['alignment','fontcolor','fontsize', 'fontfamily', 'widget', 'video', 'table', 'imagemanager', 'inlinestyle'],
                 imageUpload: 'https://cdn.fitango.com/scripts/ajax/utilities/upload/wysiwyg_upload_url.php',
                 imageUploadParam: 'file',
+                imageResizable: true,
+                imagePosition: true,
                 callbacks: {
                     synced: function(html)
                     {

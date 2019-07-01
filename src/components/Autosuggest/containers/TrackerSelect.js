@@ -26,7 +26,8 @@ const withQuery = graphql(TRACKERS_LIST_QUERY,
                     userId
                 },
                 fetchPolicy: 'network-only'
-            }},
+            }
+        },
         props: ({ data }) => {
             if (!data.loading) {
                 return {

@@ -25,6 +25,7 @@ export const getTimelineElementsConst = (includeViewOnly=false) => {
         //{name:'Clinical Trial', type:'clinical_trial', icon:<FitIcon icon='regimen' />},
         {name:'Media', type:'media', icon:<Icon type='file' />},
         {name:'Treatment Plan', type:'treatment_plan', icon:<FitIcon icon='treatment' />},
+        {name:'Discharge Plan', type:'discharge_plan', icon:<Icon type="carry-out" />},
         {name:'Transition', type:'new_transition', icon:<Icon type='database' />},
         //{name:'Care Plan', type:'discharge'},
     ];

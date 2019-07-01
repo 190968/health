@@ -7,15 +7,16 @@ import './index.less';
 
 
 const DecisionElement = (props) => {
-    // console.log(props);
-    const {id, item, plan, isDraggable, onDrop, isPreviewMode, isBuilderMode, mode, ...otherProps} = props;
+    // console.log(props, 'decision');
+    const {id, item, plan, isDraggable, onDrop, isPreviewMode, element, isBuilderMode, mode, ...otherProps} = props;
+    // const {} = otherProps;
     const {options} = item;
     const blocksTotal = options.length;
 
     return options.map((option, i) => {
 
         return <React.Fragment key={i}>
-                <DecisionElementOption {...otherProps} id={id} i={i} item={item}  plan={plan} isDraggable={isDraggable} onDrop={onDrop} isPreviewMode={isPreviewMode} isBuilderMode={isBuilderMode} mode={mode} option={option} />
+                <DecisionElementOption {...otherProps} id={id} i={i} item={item}  plan={plan} isDraggable={isDraggable} onDrop={onDrop} isPreviewMode={isPreviewMode} isBuilderMode={isBuilderMode} mode={mode} option={option} parentElement={element} elementValue={option.id} />
             {(blocksTotal > 1 && blocksTotal > i+1) && <Divider className="decision-divider" orientation="left">OR</Divider>}
         </React.Fragment>
     });

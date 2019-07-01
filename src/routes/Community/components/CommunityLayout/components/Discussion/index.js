@@ -23,17 +23,18 @@ class Discussions extends React.Component{
 
     render(){
         const {loading,discussion,user, handleBreadcrumbChange} = this.props;
+        console.log(this.props);
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
             );
         }
         //handleBreadcrumbChange([['aaa','bbbb']]);
-        const {title,id,text,createdAt,category,author,replies} = discussion;
+        const {title,id,text,createdAt,category,author,replies} = discussion || {};
         return(
             <div>
-                    <DiscussionView user={user} discussion={{title,category,id,text,author,createdAt}}  discussionDelete={this.props.discussionDelete}/>
-                    <CommentsView user={user} discussion={{id,category,replies}} onSubmit={this.props.onSubmit} discussionReply={this.props.discussionReply}   />
+                    <DiscussionView user={user} discussion={discussion}  discussionDelete={this.props.discussionDelete}/>
+                    <CommentsView user={user} discussion={discussion} onSubmit={this.props.onSubmit} discussionReply={this.props.discussionReply}   />
             </div>
         );
     }

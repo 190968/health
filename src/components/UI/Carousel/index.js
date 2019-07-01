@@ -1,11 +1,17 @@
-import { Carousel as AntCarousel, Icon } from 'antd';
+import { Carousel as AntCarousel, Icon,  Row, Col } from 'antd';
 import React from 'react';
 import './index.less';
 
 
 export const Carousel = (props) => {
-	const { items, slidesToShow=3, ...otherProps } = props;
+	const { items, slidesToShow=3, perLine, gutter=5, ...otherProps } = props;
 	//const slidesToShow = info.length >= limit ? limit : info.length;
+	if (perLine > items.length) {
+		const span = perLine;
+		return <Row gutter={gutter}>
+			{items.map((el, i) => <Col key={i} span={24/span}>{el}</Col>)}
+		</Row>
+	}
 	return <AntCarousel
 				className={'dots-under'}
 				slidesToShow={slidesToShow}

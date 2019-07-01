@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import DecisionElementOption from '../components/DecisionElementOption';
-import {PLAN_ELEMENT_CHILDREN_QUERY} from "../../../../PlanLayout/components/PlanElement/containers/queries";
+import {PLAN_ELEMENT_CHILDREN_QUERY, PathwayElementChildrenListWithQuery} from "../../../../PlanLayout/components/PlanElement/containers/queries";
 import { compose, branch, withState, withProps, withHandlers } from 'recompose';
 import { withSpinnerWhileLoading } from '../../../../../../Modal/components';
 import { DragSource } from 'react-dnd';
@@ -81,14 +81,20 @@ const addChildEnhancement = compose(
 );
 
 const enhance = compose(
-    withQuery,
+    // withQuery,
+    branch(props => {
+        const {plan} = props;
+        const {type} = plan || {};
+        // console.log(type, 'pathwaytype');
+        return type === 'pathway';
+    }, PathwayElementChildrenListWithQuery , withQuery),
     withSpinnerWhileLoading,
     withProps(props => {
         const {elements=[]} = props;
         const preventDraggable = elements.filter(element => element.type==='decision' || element.type==='condition');
         const preventCardDraggable = elements.length === 0 || preventDraggable.length > 0;
-        console.log(props, 'preventCardDraggable');
-        console.log(preventCardDraggable, 'preventCardDraggable');
+        // console.log(props, 'preventCardDraggable');
+        // console.log(preventCardDraggable, 'preventCardDraggable');
         return {preventCardDraggable};
     }),
     withHandlers({

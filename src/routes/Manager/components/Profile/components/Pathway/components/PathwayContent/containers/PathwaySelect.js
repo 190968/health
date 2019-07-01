@@ -45,6 +45,7 @@ const JoinPathwayMutation = gql`
             pathway {
                 id
                 title
+                version
             }
         }
     }

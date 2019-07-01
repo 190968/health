@@ -1,10 +1,6 @@
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
 import IdleTimer from 'react-idle-timer';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
 import {BasicRoutes, CoreNotAuthorizedRoutes, UseRoutes, CoreNotAuthorizedRoutesWithProps} from './routes';
 // import extra
 import { Spin, Modal, Icon } from 'antd';
@@ -14,9 +10,7 @@ import { ActiveNetworkProvider, ActiveUserProvider } from '../components/App/app
 import ManagerLayout from './components/ManagerLayout';
 import PatientLayout from './components/PatientLayout';
 import { withCurrentUser, withCurrentUserAndNetwork } from '../queries/user';
-import { withCurrentNetwork } from '../queries/network';
 import { compose, withState, withHandlers } from 'recompose';
-import Register from '../routes/User/containers/registerContainer';
 
 /**
  * Show proper layout according to current role
@@ -175,4 +169,4 @@ const CoreWithNetworkUser = (props) => {
 		</ActiveNetworkProvider>;
 }
 
-export default (CoreWithNetworkUser);
+export default CoreWithNetworkUser;

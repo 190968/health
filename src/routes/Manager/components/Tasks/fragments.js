@@ -1,6 +1,9 @@
 import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../User/fragments';
 import { PlanCardFragment, UserPlanFragment } from '../../../Plan/components/Plan/fragments';
+import { DmeFragment } from '../../../../components/DME/fragments';
+import { MedicationInfoFragment } from '../../../Plan/components/MedicationPlan/components/Medication/components/fragments';
+import { TrackerPlanTrackerFragment } from '../../../Plan/components/BiometricPlan/fragments';
 
 export const TaskAttachmentInfoFragment = gql`
 fragment TaskAttachmentInfo on TaskAttachment {
@@ -27,12 +30,28 @@ fragment TaskAttachmentInfo on TaskAttachment {
             endDate
             repeatedDays
         }
-        
+        ... on Dme {
+            ...Dme
+        }
+        ... on Medication {
+            ...MedicationInfo
+            timesPerHour {
+                id
+                time
+                quantity
+            }
+        }
+        ... on TrackerPlanTracker {
+            ...TrackerPlanTracker
+        }
     }
     attachmentStatus:status
 }
 ${PlanCardFragment}
 ${UserPlanFragment}
+${DmeFragment}
+${MedicationInfoFragment}
+${TrackerPlanTrackerFragment}
 `;
 
 export const TaskInfoFragment = gql`

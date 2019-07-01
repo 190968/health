@@ -18,11 +18,17 @@ const PB_PLAN_BODY_QUERY = gql`
             elements {
                 ...PlanElement,
             }
+            getConnectedElements   {
+                parentId
+                parentValue
+                element {
+                    ...PlanElement
+                }
+            }
         }
     }
     ${PlanElementPureFragment}
 `;
-
 
 // 1- add queries:
 const withQuery = graphql(

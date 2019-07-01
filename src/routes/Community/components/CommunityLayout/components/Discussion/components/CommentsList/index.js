@@ -14,6 +14,8 @@ import {
 import messages from './messages';
 import { ListWithMessage } from '../../../../../../../../components/UI/List';
 import AvatarWithName from '../../../../../../../User/components/AvatarWithName';
+import { compose } from 'recompose';
+import { withToggleModal } from '../../../../../../../../components/Modal';
 const IconText = ({ type, text }) => (
     <span>
     <Icon type={type} style={{ marginRight: 8 }} />
@@ -22,7 +24,7 @@ const IconText = ({ type, text }) => (
 );
 
 
-const ExampleComment = (comment) => {
+const DiscussionCommentItemPure = (comment) => {
     console.log(comment);
     /*
     createdAt: "2015-10-20T20:16:00+00:00"
@@ -33,11 +35,13 @@ replies: {totalCount: 0, edges: Array(0), __typename: "CommentsConnection"}
 text: "sdff"
 unread: true
 */
-    const {text, author, createdAt, replies} = comment;
+    const {id, text, author, createdAt, replies, toggleModal, showModal} = comment;
     const {edges=[]} = replies || {};
     
-    return <Comment
-      actions={[<span>Reply to</span>]}
+    return <>
+    {showModal && <CommentModal params={id} onHide={toggleModal} /*parentMessageId={props.match.params.id}*/ />}
+    <Comment
+      actions={[<span onClick={toggleModal}>Reply to</span>]}
       datetime={moment(createdAt).format('lll')}
       author={<AvatarWithName user={author} onlyName />}
       avatar={(
@@ -51,11 +55,11 @@ unread: true
             dataSource={edges}
             header={`${edges.length} ${edges.length > 1 ? 'replies' : 'reply'}`}
             itemLayout="horizontal"
-            renderItem={props => <ExampleComment {...props} />}
+            renderItem={props => <DiscussionCommentItem {...props} />}
         />}
-    </Comment>
+    </Comment></>
 };
-
+const DiscussionCommentItem = withToggleModal(DiscussionCommentItemPure);
 const DiscussionComment = props => {
     const {discussion} = props;
     const {replies} = discussion || {};
@@ -66,7 +70,7 @@ const DiscussionComment = props => {
     dataSource={edges}
     header={`${edges.length} ${edges.length > 1 ? 'replies' : 'reply'}`}
     itemLayout="horizontal"
-    renderItem={props => <ExampleComment {...props} />}
+    renderItem={props => <DiscussionCommentItem {...props} />}
   />
 
 }
@@ -76,6 +80,7 @@ class DiscussionComment2 extends React.Component{
 
 
     showModal = (param) => {
+        console.log(param);
         this.setState({
             visibleReplyModal: true,
             id:param

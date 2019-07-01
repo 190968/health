@@ -5,20 +5,19 @@ import React from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import './register.css'
 
-import { Modal,Card, Form,  DatePicker, Input, Radio, Button, Checkbox } from 'antd';
+import { Modal, Card, Form,  DatePicker, Input, Radio, Button, Checkbox, Layout } from 'antd';
 import { withApollo } from 'react-apollo'
 import {
     injectIntl,
     FormattedMessage
 } from 'react-intl';
-import ru from './i18n/ru';
-import en from './i18n/en';
 import moment from 'moment';
 import {PhoneField, phoneFieldValidator} from '../../../../components/FormCustomFields/components/Phone';
 import { RegisterOrganization } from '../../containers/RegisterOrganization';
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const FormItem = Form.Item;
+const {Header, Content} = Layout;
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -138,16 +137,16 @@ class NormalRegisterForm extends React.Component {
 
 
 
-        if (1===1) {
-            return <RegisterOrganization />
-        }
+        // if (1===1) {
+        //     return <RegisterOrganization />
+        // }
         const phoneNumberError = form.getFieldError('phone[number]');
         const { getFieldDecorator } = this.props.form;
         const { intl } = this.props;
         const termsOfUseLink = <a onClick={this.showTerms}>{intl.messages.terms_of_use}</a>;
         const policyLink = <a onClick={this.showPolicy}>{intl.messages.privacy_policy}</a>;
-        return (
-            <div className="register-form" style={{padding:'0 20%'}}>
+        const regForm = (
+            <div className="register-form" style={{marginTop:20,padding:'0 20%'}}>
                 <Card
                     title={intl.messages.user_sign_up}
                 >
@@ -276,7 +275,7 @@ class NormalRegisterForm extends React.Component {
                         valuePropName: 'checked',
 
                      })(
-                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} >agreement</Checkbox>
+                        <Checkbox onChange={this.handleCheckboxChange.bind(this)} >I consent</Checkbox>
                     )}
                 </FormItem>
                 <FormItem {...tailFormItemLayout}>
@@ -289,6 +288,16 @@ class NormalRegisterForm extends React.Component {
                 </Card>
             </div>
         );
+
+
+        return <div style={{height:'100%', display: 'flex', 'minHeight': '100vh', 'flexDirection':'column'}}>
+    <Header style={{background:'#fff', textAlign: 'center'}}>
+       <Link to={'/'}><img alt={currentNetwork.name} className="logo" style={{height:'50px', marginRight:'5px'}} src={currentNetwork.logo} /></Link>
+    </Header>
+    <Content className={'userside'}>
+        {regForm}
+    </Content>
+    </div>
     }
 }
 

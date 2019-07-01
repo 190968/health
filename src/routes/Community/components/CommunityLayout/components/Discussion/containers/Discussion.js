@@ -18,6 +18,7 @@ import Discussion from '../index.js';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../../../../User/fragments.js';
+import { withDiscussionReplyMutation } from '../mutations.js';
 
 
 // import {MedicationPlan} from "../../PlansList/components/MedicationPlan/containers";
@@ -44,13 +45,20 @@ const DISCUSSION  = gql`
            canJoin
            name
          }
+         attachments {
+            id
+            type
+            label
+            url
+            size
+         }
          author {
             ...UserInfo
          }
          views
          replies {
               totalCount
-              edges{
+              edges {
                     id
                     text
                     date
@@ -80,17 +88,7 @@ const DISCUSSION  = gql`
 }
 ${UserInfoFragment}
 `;
-const discussionReply = gql`
-   mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {
 
-  discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
-         id
-         text
-    createdAt
-    isImportant
-    unread
-       }
-}`;
 const discussionDelete = gql`
   mutation discussionDelete($id:UID!) {
 
@@ -106,7 +104,7 @@ const withQuery = graphql(DISCUSSION, {
             fetchPolicy: 'network-only'
         }},
     props: ({  data }) => {
-
+        // console.log(data);
         if (!data.loading) {
             return {
                 user:data.user,
@@ -119,23 +117,8 @@ const withQuery = graphql(DISCUSSION, {
         }
     },
 })(Discussion);
-const withMutation = graphql(discussionReply, {
-    props: ({ mutate, ownProps }) => ({
-        discussionReply: (text,id,parentMessageId) => {
-            return mutate({
-                variables:  {
-                    id: id,
-                    message: text,
-                    parentMessageId:parentMessageId
-                },
-                refetchQueries: [{
-                    query: DISCUSSION,
-                    variables: {id: ownProps.match.params.id}
-                }],
-            })
-        },
-    }),
-});
+
+
 const withMutationDelete = graphql(discussionDelete, {
     props: ({ ownProps, mutate }) => ({
         discussionDelete: (id) => {
@@ -148,7 +131,7 @@ const withMutationDelete = graphql(discussionDelete, {
     }),
 });
 const WithMutations = compose(
-    withMutation,
+    withDiscussionReplyMutation,
     withMutationDelete
 );
 const mapStateToProps = (state) => {

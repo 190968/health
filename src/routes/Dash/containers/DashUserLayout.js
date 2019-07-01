@@ -1,9 +1,7 @@
-import { connect } from 'react-redux'
 import DashLayout from 'routes/Dash/components/DashUserLayout'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
-import Biometric from 'routes/Plan/components/BiometricPlan/components/Biometric/components';
 import { withCurrentUser } from '../../../queries/user';
 import {compose,defaultProps} from 'recompose';
 import { PlanCardFragment } from '../../Plan/components/Plan/fragments';

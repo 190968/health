@@ -6,6 +6,7 @@ import { compose, withStateHandlers } from 'recompose';
 import { withSpinnerWhileLoading } from '../../../../../components/Modal';
 import { validateBrahms, getNextObjectFromRules } from '../../../../../components/Brahms/utils';
 import { prepareSkippedPlanElementsByNextId } from '../../../../../components/Plan/utils';
+import { withPlanContextProvider } from '../../../../../components/Plan/planContext';
 
 
 
@@ -16,6 +17,13 @@ const PB_PLAN_BODY_QUERY = gql`
             id
             elements {
                 ...PlanElement,
+            }
+            getConnectedElements {
+                parentId
+                parentValue
+                element {
+                    ...PlanElement
+                }
             }
         }
     }
@@ -51,6 +59,7 @@ const injectPathwayBodyQuery = graphql(
 const enhance = compose(
     injectPathwayBodyQuery,
     withSpinnerWhileLoading,
+    withPlanContextProvider,
     withStateHandlers(props => {
         const {elements=[],  plan, mode} = props;
         const getReportedValues = [];
@@ -99,6 +108,7 @@ const enhance = compose(
         return {
             brahmRules,
             elements,
+            // planInitialelements,
             skippedElementsByRef:{}
         };
     }, {

@@ -27,8 +27,8 @@ const enhance = compose(
     Form.create(),
     withCreateOrUpdateAssessmentQuestion,
     withState('type', 'setType', props => {
-        const {question} = props;
-        const {type} = question || {};
+        const {question, type:initType} = props;
+        const {type=initType} = question || {};
         return type
     }),
     branch(props => {
@@ -37,14 +37,15 @@ const enhance = compose(
     }, renderComponent(AssessmentQuestionSelect)),
     withHandlers({
         onSubmit: props => () => {
-            const {form, question, type:typeInit} = props;
-            console.log('Submit');
+            const {form, question, order, type:typeInit, increaseCurrentQuestion} = props;
+            // console.log('Submit');
             form.validateFields((err, values) => {
                 if (!err) {
-                    console.log(props);
-                    console.log(values);
+                    // console.log(props);
+                    // return true;
+                    // console.log(values);
                     const {type=typeInit} = question || {};
-                    const input = prepareAssessmentQuestionInput(values, type);
+                    const input = prepareAssessmentQuestionInput(values, type, order);
                     // submit the section
                     let finish =  question ? props.updateAssessmentQuestion(input) : props.createAssessmentQuestion(input);
                     
@@ -55,6 +56,10 @@ const enhance = compose(
                         }
                         if (props.refetch) {
                             props.refetch();
+                        }
+                        // console.log(props, 'aadddedprops');
+                        if (increaseCurrentQuestion) {
+                            increaseCurrentQuestion(order);
                         }
                     });
                 }
@@ -82,12 +87,12 @@ const enhance = compose(
 export const AssessmentQuestionManager = enhance(AssessmentQuestionManagerPure);
 
 
-const prepareAssessmentQuestionInput = (values, type) => {
+const prepareAssessmentQuestionInput = (values, type, order) => {
     // console.log(values,'valuesvaluesvalues');
     const {title,  description, parentQuestionId, answers=[], brahms} = values;
 
     const brahmsInput = prepareBrahmsInput(brahms);
-    let input = {title, description, parentQuestionId, type, brahms:brahmsInput};
+    let input = {title, order, description, parentQuestionId, type, brahms:brahmsInput};
     if (type === 'input') {
         const {isNumeric} = values;
         input.openEndedInput = {isNumeric};

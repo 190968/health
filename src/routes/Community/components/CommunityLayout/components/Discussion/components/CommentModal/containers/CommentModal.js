@@ -17,86 +17,84 @@ import {compose} from 'react-apollo';
 import CommentModal from '../components/'
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { withDiscussionReplyMutation } from '../../../mutations';
 
-const DISCUSSION  = gql`
- query GET_DISCUSSION($id:UID) {
-   user{
-    id
-  }
-    discussion(id:$id) {
-         id
-         title
-         text
-         createdAt
-         category {
-           id
-           isJoined
-           canJoin
-           name
-         }
-         author {
-            id
-         }
-         views
-         replies {
-              totalCount
-              edges{
-                    id
-                    text
-                    date
-                    createdAt
-                    isImportant
-                    unread
-                    replies {
-                      totalCount
-                      edges{
-                            id
-                            text
-                            date
-                            createdAt
-                            isImportant
-                            unread
-                      }
-                  }    
-              }
-          }      
-    }
-}
-`;
-const discussionReply = gql`
-   mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {
-  discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
-         id
-         text
-    createdAt
-    isImportant
-    unread
-       }
-}
-`;
+// const DISCUSSION  = gql`
+//  query GET_DISCUSSION($id:UID) {
+//     discussion(id:$id) {
+//          id
+//          title
+//          text
+//          createdAt
+//          category {
+//            id
+//            isJoined
+//            canJoin
+//            name
+//          }
+//          author {
+//             id
+//          }
+//          views
+//          replies {
+//               totalCount
+//               edges{
+//                     id
+//                     text
+//                     date
+//                     createdAt
+//                     isImportant
+//                     unread
+//                     replies {
+//                       totalCount
+//                       edges{
+//                             id
+//                             text
+//                             date
+//                             createdAt
+//                             isImportant
+//                             unread
+//                       }
+//                   }    
+//               }
+//           }      
+//     }
+// }
+// `;
+// const discussionReply = gql`
+//    mutation discussionReply($id:UID!,$parentMessageId:UID,$message:String!) {
+//   discussionReply(id:$id,parentMessageId:$parentMessageId,message:$message) {
+//          id
+//          text
+//     createdAt
+//     isImportant
+//     unread
+//        }
+// }
+// `;
 
-const withMutation = graphql(discussionReply, {
-    props: ({ mutate, ownProps }) => ({
-        discussionReply: (text,id,parentMessageId) => {
-            return mutate({
-                variables:  {
-                    id: id,
-                    message: text,
-                    parentMessageId:parentMessageId
-                },
-                refetchQueries: [{
-                    query: DISCUSSION,
-                    variables: {id: id}
-                }],
-            }).then(({data})=>{
-                ownProps.unshowModal();
-            })
-        },
-    }),
-});
+// const withMutation = graphql(discussionReply, {
+//     props: ({ mutate, ownProps }) => ({
+//         discussionReply: (text,id,parentMessageId) => {
+//             return mutate({
+//                 variables:  {
+//                     id: id,
+//                     message: text,
+//                     parentMessageId:parentMessageId
+//                 },
+//                 refetchQueries: [{
+//                     query: DISCUSSION,
+//                     variables: {id: id}
+//                 }],
+//             }).then(({data})=>{
+//                 ownProps.unshowModal();
+//             })
+//         },
+//     }),
+// });
 
 const WithMutations = compose(
-    withMutation
+    withDiscussionReplyMutation
 );
 const mapStateToProps = (state) => {
     return {
@@ -106,7 +104,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onSubmit: (value) => {
-        return ownProps.discussionReply(value.text,ownProps.match.params.id);
+        return ownProps.discussionReply(value.text,ownProps.match.params.id).then(() => {
+            ownProps.onHide();
+        });
     }
 });
 

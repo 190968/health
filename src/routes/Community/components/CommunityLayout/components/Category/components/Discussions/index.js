@@ -50,7 +50,8 @@ class Discussions extends React.Component{
             );
         }
         const { intl } = this.props;
-        const {name,discussions=[], canAdd} = this.props;
+        const {category, discussions=[], canAdd} = this.props;
+        const {name} = category || {};
 
 
         return(

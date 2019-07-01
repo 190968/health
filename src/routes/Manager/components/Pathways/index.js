@@ -15,7 +15,7 @@ const filters = [
 ];
  
 const Pathways = props => {
-        const {pathways, loading, total, searchText, emitEmpty, onSearch} = props;
+        const {total} = props;
         return (
             <PageHeaderLayout title={'Pathways ' + (total > 0 ? ' (' + total + ')' : '')}
                               action={<CardExtraItems>

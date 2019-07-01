@@ -27,4 +27,4 @@ export const CardQuickFilter = withHandlers({
 	}
 })(CardQuickFilterPure);
 
-export const CardExtraSplit = CardExtraSplit;
+export const CardExtraSplit = CardExtraSplitPure;

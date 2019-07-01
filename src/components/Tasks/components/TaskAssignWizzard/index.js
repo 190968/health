@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, Button} from 'antd';
-import TaskManagerAttachmentItem from '../Attachments/components/Item';
 import { DrawerFooter } from '../../../Modal';
+import TaskManagerAttachmentItem from '../../../FormCustomFields/components/AttachmentsModules/components/Item';
 
 const TaskAssignWizzard = props => {
     const {attachments} = props;

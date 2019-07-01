@@ -41,9 +41,11 @@ const enhance = compose(
 	withState('value', 'setValue', props => {
 		const {measurement, report, reports=[]} = props;
 		let { value=''} = props;
+		console.log(props);
 		if (report) {
 			value = report.valueFormatted;
 		}
+		console.log(value);
 		value = formatTrackerValue({measurement, value});
 		return value;
 	}),

@@ -7,7 +7,7 @@ import { ColorSelect } from '../../../FormCustomFields/containers/ColorSelect';
 const TextArea = Input.TextArea;
 
 const FootnoteFieldPure = props => {
-  const { footnote, form, onChange } = props || {};
+  const { footnote, form, onChange, showButton=false } = props || {};
   const { text, color } = footnote || {};
   const { getFieldDecorator } = form;
   return <>
@@ -27,12 +27,15 @@ const FootnoteFieldPure = props => {
         <ColorSelect />
       )}
     </div>
-    <div style={{ textAlign: 'right' }}>
+    {showButton && <div style={{ textAlign: 'right' }}>
       <Button type={'link'} size={'small'} onClick={onChange}>Close</Button>
-    </div>
+    </div>}
 
   </>
 }
+// const enhanceFormField = compose();
+// export const FootnoteFormField = enhanceFormField(FootnoteFieldPure);
+
 const enhanceForm = compose(
   Form.create(),
   withHandlers({
@@ -50,11 +53,13 @@ const enhanceForm = compose(
   })
 )
 const FootnoteField = enhanceForm(FootnoteFieldPure);
+export const FootnoteFormField = FootnoteField;
 const FootnoteManager = props => {
   const { isToggled, toggleState, footnote, placement, onChange } = props;
+  const {text} = footnote || {};
   return <Popover
     overlayClassName={'footnote'}
-    content={<FootnoteField footnote={footnote} onChange={onChange} onHide={toggleState} />}
+    content={<FootnoteField footnote={footnote} onChange={onChange} onHide={toggleState} showButton />}
     placement={placement}
     title="Add/Edit a Footnote"
     trigger="click"
@@ -62,7 +67,7 @@ const FootnoteManager = props => {
   // onVisibleChange={toggleState}
 
   >
-    <Icon type="bulb" onClick={toggleState} />
+  {(text && text !== '') ? <Icon type="bulb" theme="twoTone" onClick={toggleState} /> : <Icon type="bulb" onClick={toggleState} />}
   </Popover>
 }
 

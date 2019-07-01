@@ -5,7 +5,7 @@ import { withToggleModal } from '../../../../../../Modal';
 import { IconCustom } from '../../../../../../FitIcon';
 
 const AssessmentQuestionManagerButtonPure = props => {
-    const {showModal, toggleModal, icon, asButton=true, ...otherProps} = props;
+    const {showModal, toggleModal, icon, asButton=true, label, ...otherProps} = props;
     const {question} = props;
     // console.log(userAssessment);
     let iconHtml = <Icon type={'edit'} onClick={toggleModal} />;
@@ -14,7 +14,7 @@ const AssessmentQuestionManagerButtonPure = props => {
     }
     return <React.Fragment>
         {showModal && <AssessmentQuestionManager  {...otherProps}  onHide={toggleModal} />}
-        {question ?  iconHtml : <Button type={'primary'} icon={'plus'} onClick={toggleModal}>Add Question</Button>}
+        {label ? <span onClick={toggleModal}>{label}</span> : (question ?  iconHtml : <Button type={'primary'} icon={'plus'} onClick={toggleModal}>Add Question</Button>)}
     
     </React.Fragment>
 }

@@ -6,6 +6,7 @@ import { compose, withHandlers, withState, withProps, branch, renderComponent} f
 import CalculatorTest from './components/CalculatorTest';
 import Formula, {formatFormula} from './components/Formula';
 import messages from './messages';
+import { CustomOptionsList } from '../../../../../../../../components/FormCustomFields/containers/CustomOptionsList';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 const { toString, toContentState, Nav } = Mention;
@@ -44,6 +45,26 @@ const getSuggestion = (tracker) => {
     </Nav>
 }
 
+
+
+
+
+
+
+const OptionItem = props => {
+    const {value, onChange, updateFootnote} = props;
+    const {label} = value || {} ;
+    const onChange2 = e => {
+        const {value} = props;
+        const label = e.target.value;
+        if (props.onChange) {
+            props.onChange({...value, label});
+        }
+    }
+    return <Input value={label} onChange={onChange2} />;
+}
+
+
 // const onSearchChange = (value) => {
 //     const searchValue = value.toLowerCase();
 //     const filtered = webFrameworks.filter(item =>
@@ -56,16 +77,15 @@ const getSuggestion = (tracker) => {
 const CalculatorElementBuilder = (props) => {
     const {form, intl,  details={}, loading, trackers=[], onTest, showTest, validateFormula} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {title='', formulaString=''} = details || {};
+    const {title, formulaString='', tokens:existingTrackers=[], calculatorCustomFields=[]} = details || {};
+    // console.log(props);
+    
 
-    const suggestions = trackers.map(tracker => getSuggestion(tracker));
-
-    const titleDefault = getFieldValue('title');
-    getFieldDecorator('trackers');
+    getFieldDecorator('trackers', {initialValue:existingTrackers});
     const formula = getFieldValue('formulaString');
     return (
         <React.Fragment>
-            {showTest && <CalculatorTest title={title} form={form} formula={toString(formula)} trackers={trackers} onHide={props.onHideTest} />}
+            {showTest && <CalculatorTest title={title} form={form} formula={formula} trackers={trackers} onHide={props.onHideTest} />}
             <FormItem
                 {...formItemLayout}
                 label={intl.formatMessage(messages.title)}
@@ -78,20 +98,33 @@ const CalculatorElementBuilder = (props) => {
                     <Input />
                 )}
             </FormItem>
-            {titleDefault !== '' &&
+
+            <FormItem
+            {...formItemLayout}
+            label="Fields"
+            >
+             {getFieldDecorator('fields', {
+                initialValue: calculatorCustomFields,
+            })(
+                <CustomOptionsList CustomComponent={OptionItem} blankItem={[]} buttonLabel={'Add Field'} />
+            )}
+            </FormItem> 
+
+            {getFieldValue('title') &&
             <FormItem
                 {...formItemLayout}
-                label={titleDefault}
-                extra="Use @ tag to select trackers. Please add a space before and after @. \n You can use numbers, trackers and +, -, (, ), * / ^"
+                label={'Formula'}
+                extra="Use @ tag to select trackers. Use # tag to select custom fields. Please add a space before and after @ or #. \n You can use numbers, trackers, fields and +, -, (, ), * / ^"
             >
                 {getFieldDecorator('formulaString', {
-                        initialValue: toContentState(formulaString),
+                        initialValue: formulaString,
                         rules: [{required: true, validator: validateFormula, message: "Enter Formula"}],
                     }
                 )(
                     <Formula
                         loading={loading}
-                        suggestions={suggestions}
+                        trackers={trackers}
+                        fields={getFieldValue('fields')}
                         form={form}
                     />
                 )}
@@ -122,12 +155,12 @@ const enhance = compose(
         // },
         validateFormula: props => (rule, value, callback) => {
             console.log(value);
-            const formula = toString(value);
-            const formulaString = formatFormula(formula);
+            const formulaString = value;//toString(value);
+            // const formulaString = formatFormula(formula);
             // replace all digits in formula
 
             //console.log(formulaString);
-            const { getFieldValue } = props.form
+            // const { getFieldValue } = props.form
             if (formulaString && formulaString === '') {
                 callback('Wrong formula')
             }

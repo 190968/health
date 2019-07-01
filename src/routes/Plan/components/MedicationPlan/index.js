@@ -23,9 +23,9 @@ const MedicationPlan = (props) => {
 	extra = (
 		<React.Fragment>
 		
-			<CardExtraSplit>
+			{/* <CardExtraSplit>
 				{activeLayout === 'table' ? <Tooltip title={'Show List'}><Button icon="bars" size={'small'} onClick={() => setActiveLayout('list')} /></Tooltip> : <Tooltip title={'Show Table'}><Button icon="table" size={'small'}  onClick={() => setActiveLayout('table')}  /></Tooltip>}
-			</CardExtraSplit>
+			</CardExtraSplit> */}
 			
 			{medicationPlanExists && <CardExtraSplit>
 				<Button.Group>

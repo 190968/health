@@ -16,7 +16,6 @@ export default defineMessages({
             "defaultMessage": "Version",
             "description": "Version"
         },
-
     'continue': {
         "id": "pb.continue",
         "defaultMessage": "Continue",

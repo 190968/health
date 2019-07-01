@@ -1,24 +1,20 @@
-/**
- * Created by Pavel on 21.12.2017.
- */
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
     FormattedMessage,
 } from 'react-intl';
 
-import moment, { now } from 'moment';
-import { Table, Form, List, Radio, Row, TimePicker, Col, Select, Input } from 'antd';
+import moment from 'moment';
+import { Table, Form, Radio, Select, Input } from 'antd';
 import { StartEndForm, TimeField } from "../../../../../../../../components/FormCustomFields";
 import { DrawerFooter } from '../../../../../../../../components/Modal';
+import { formatTimeForField } from '../../../../../../../../components/Other/utils';
 
 const { Option } = Select;
 const FormItem = Form.Item;
-const format = 'h:mm a';
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
-const formItemLayout = {
+const formItemLayoutDefault = {
     labelCol: {
         xs: { span: 20 },
         sm: { span: 5 },
@@ -43,93 +39,82 @@ const tailFormItemLayout = {
 };
 
 
-
-const MedicationManager = props => {
-    console.log(props);
-    const { form, medication } = props;
+export const MedicationManagerFormFields = props => {
+    const { form, medication, formItemLayout = formItemLayoutDefault } = props;
     const { getFieldDecorator, getFieldValue, getFieldsValue, getFieldError, getFieldsError } = form;
 
-    let { type, timesPerDay, timesPerHour = [], quantity, startDate, endDate, purpose, sideEffects, directions } = medication || {};
+    let { medicationType, timesPerDay, timesPerHour = [], quantity, startDate, endDate, purpose, sideEffects, directions } = medication || {};
 
     if (timesPerDay === 0) {
         timesPerDay = 1;
     }
 
+    const { timesNum = 0 } = props;
 
+    // const typeSelected = getFieldValue('type') !== "";
 
-    const { timesAtHours = 0 } = props;
-
-    const typeSelected = getFieldValue('type') !== "";
-
-    const timesPerHourError = getFieldError('timesPerHour');
-    const timesPerDayError = getFieldError('timesPerHour');
-    const timesAtHoursError = getFieldError('timesAtHours');
+    const timesPerHourError = getFieldError('timesNum');
+    // const timesPerDayError = getFieldError('timesPerHour');
+    const timesAtHoursError = getFieldError('timesPerHour');
     //const formErrors = getFieldsError();
 
-    const enteredType = getFieldValue('type') || type;
+    const enteredType = getFieldValue('medicationType') || medicationType;
 
-    // console.log(enteredType);
-    // console.log(type);
+    return <>
+        <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Regimen"
+                description="Regimen" />}
+        >
+            {getFieldDecorator('medicationType', {
+                initialValue: medicationType,
+                rules: [{
+                    required: true, message: 'Please Select',
+                }],
+            })(
+                <RadioGroup onChange={props.onTotal}>
+                    <RadioButton value="at_times">At specific times</RadioButton>
+                    <RadioButton value="along_day">Along the day</RadioButton>
+                    <RadioButton value="as_needed">As needed</RadioButton>
+                </RadioGroup>
+            )}
+        </FormItem>
 
+        {enteredType === "at_times" &&
+            <React.Fragment>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="medication.times_per_day" defaultMessage="Times per Day" description="Times per Day" />}
+                    help={timesPerHourError || ''}
+                    validateStatus={timesPerHourError ? 'error' : ''}
+                >
+                    <TimesSelector onSelectTimes={props.onSelectTimes} getFieldDecorator={getFieldDecorator} value={timesNum} name={'timesNum'} />
+                </FormItem>
+                {timesNum > 0 && <FormItem
+                    {...formItemLayout}
+                    label={'Dosage'}
+                >
+                    <TakeAtTimesTable timesNum={timesNum} timesPerHour={timesPerHour} getFieldDecorator={getFieldDecorator} errors={timesAtHoursError} getFieldsValue={getFieldsValue} />
+                </FormItem>}
+            </React.Fragment>}
 
-    return (<React.Fragment>
-        <Form>
-
-            <FormItem
-                {...formItemLayout}
-                label={<FormattedMessage id="user.settings.basic.title" defaultMessage="Regimen"
-                    description="Regimen" />}
-            >
-                {getFieldDecorator('type', {
-                    initialValue: type,
-                    rules: [{
-                        required: true, message: 'Please Select',
-                    }],
-                })(
-                    <RadioGroup onChange={props.onTotal}>
-                        <RadioButton value="at_times">At specific times</RadioButton>
-                        <RadioButton value="along_day">Along the day</RadioButton>
-                        <RadioButton value="as_needed">As needed</RadioButton>
-                    </RadioGroup>
-                )}
-            </FormItem>
-
-            {enteredType === "at_times" &&
-                <React.Fragment>
-                    <FormItem
-                        {...formItemLayout}
-                        label={<FormattedMessage id="medication.times_per_day" defaultMessage="Times per Day"
-                            description="Times per Day" />}
-                        help={timesPerHourError || ''}
-                        validateStatus={timesPerHourError ? 'error' : ''}
-                    >
-                        <TimesSelector onSelectTimes={props.onSelectTimes} getFieldDecorator={getFieldDecorator} value={timesPerHour.length} name={'timesPerHour'} />
-                    </FormItem>
-                    {timesAtHours > 0 && <FormItem
-                        {...formItemLayout}
-                        label={'Dosage'}
-                    >
-                        <TakeAtTimesTable timesAtHours={timesAtHours} timesPerHour={timesPerHour} getFieldDecorator={getFieldDecorator} errors={timesAtHoursError} getFieldsValue={getFieldsValue} />
-                    </FormItem>}
-                </React.Fragment>}
-
-            {enteredType && enteredType !== "at_times" && <FormItem
-                {...formItemLayout}
-                label={'Dosage'}
-            >
-                <TakeDailyTable timesPerDay={timesPerDay} quantity={quantity} getFieldDecorator={getFieldDecorator} onSelectTimes={props.onSelectTimes} onTotal={props.onTotal} errors={getFieldsError()} />
-            </FormItem>
-            }
+        {enteredType && enteredType !== "at_times" && <FormItem
+            {...formItemLayout}
+            label={'Dosage'}
+        >
+            <TakeDailyTable timesPerDay={timesPerDay} quantity={quantity} getFieldDecorator={getFieldDecorator} onSelectTimes={props.onSelectTimes} onTotal={props.onTotal} errors={getFieldsError()} />
+        </FormItem>
+        }
 
 
-            <FormItem
-                {...formItemLayout}
-                label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period" />}
-            >
-                <StartEndForm startDate={startDate} endDate={endDate} form={props.form} />
-            </FormItem>
+        <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="medication.period" defaultMessage="Period" description="Period" />}
+        >
+            <StartEndForm startDate={startDate} endDate={endDate} form={props.form} />
+        </FormItem>
 
-            {/*<FormItem
+        {/*<FormItem
                     {...formItemLayout}
                     label={<FormattedMessage id="user.settings.basic.tdegsiftdle" defaultMessage="Image"
                                              description="Image"/>}
@@ -144,50 +129,58 @@ const MedicationManager = props => {
                     )}
                 </FormItem>*/}
 
-            {!props.showAdvance ?
+        {!props.showAdvance ?
+            <FormItem
+                {...tailFormItemLayout}
+            >
+                <a onClick={props.toggleAdvanced}>Advanced</a>
+            </FormItem>
+            :
+            <div>
                 <FormItem
-                    {...tailFormItemLayout}
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.tdgsiftdle" defaultMessage="Purpose"
+                        description="Purpose" />}
                 >
-                    <a onClick={props.toggleAdvanced}>Advanced</a>
+                    {getFieldDecorator('purpose', {
+                        initialValue: purpose,
+                    })(
+                        <Input />
+                    )}
                 </FormItem>
-                :
-                <div>
-                    <FormItem
-                        {...formItemLayout}
-                        label={<FormattedMessage id="user.settings.basic.tdgsiftdle" defaultMessage="Purpose"
-                            description="Purpose" />}
-                    >
-                        {getFieldDecorator('purpose', {
-                            initialValue: purpose,
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label={<FormattedMessage id="user.settings.basic.tdsitfdle1" defaultMessage="Directions"
-                            description="Directions" />}
-                    >
-                        {getFieldDecorator('directions', {
-                            initialValue: directions,
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label={<FormattedMessage id="user.settings.basic.tddsitdle1"
-                            defaultMessage="Side Effects" description="Side Effects" />}
-                    >
-                        {getFieldDecorator('sideEffects', {
-                            initialValue: sideEffects,
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-                </div>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.tdsitfdle1" defaultMessage="Directions"
+                        description="Directions" />}
+                >
+                    {getFieldDecorator('directions', {
+                        initialValue: directions,
+                    })(
+                        <Input />
+                    )}
+                </FormItem>
+                <FormItem
+                    {...formItemLayout}
+                    label={<FormattedMessage id="user.settings.basic.tddsitdle1"
+                        defaultMessage="Side Effects" description="Side Effects" />}
+                >
+                    {getFieldDecorator('sideEffects', {
+                        initialValue: sideEffects,
+                    })(
+                        <Input />
+                    )}
+                </FormItem>
+            </div>
 
-            }
+        }
+    </>;
+}
+const MedicationManager = props => {
+
+    return (<React.Fragment>
+        <Form>
+            <MedicationManagerFormFields {...props} />
+
         </Form>
         <DrawerFooter onSubmit={props.onSubmit} onHide={props.onHide} />
     </React.Fragment>
@@ -195,10 +188,10 @@ const MedicationManager = props => {
 }
 
 export default MedicationManager;
- 
+
 const TakeAtTimesTable = props => {
-    const { timesAtHours, timesPerHour, getFieldDecorator, getFieldsValue, errors = [] } = props;
-    // console.log(errors);
+    const { timesNum, timesPerHour, getFieldDecorator, getFieldsValue, errors = [] } = props;
+    // console.log(errors, 'errors');
     const columns = [{
         title: 'At Times',
         dataIndex: 'time',
@@ -209,17 +202,19 @@ const TakeAtTimesTable = props => {
             const err = errors[i] || {};
             const errText = err.time || false;
             // console.log(err);
+            // console.log(time);
+            // console.log(formatTimeForField(time));
             return <FormItem
                 help={errText || ''}
                 validateStatus={errText ? 'error' : ''}
             >
-                {getFieldDecorator('timesAtHours[' + i + '][time]', {
+                {getFieldDecorator('timesPerHour[' + i + '][time]', {
                     initialValue: time,
                     rules: [{
                         required: true, message: 'Select Time',
                     }],
                 })(
-                    <TimeField format={format} minuteStep={5} use12Hours={true}
+                    <TimeField minuteStep={5} use12Hours={true}
                         disabledHours={() => getDisabledHours(lastTime)}
                         disabledMinutes={(selectedHour) => getDisabledMinutes(selectedHour, lastTime)}
                     />
@@ -238,7 +233,7 @@ const TakeAtTimesTable = props => {
                 help={errText || ''}
                 validateStatus={errText ? 'error' : ''}
             >
-                <QuantitySelector getFieldDecorator={getFieldDecorator} value={quantity} name={'timesAtHours[' + i + '][quantity]'} /></FormItem>;
+                <QuantitySelector getFieldDecorator={getFieldDecorator} value={quantity} name={'timesPerHour[' + i + '][quantity]'} /></FormItem>;
         }
     }];
 
@@ -247,15 +242,15 @@ const TakeAtTimesTable = props => {
 
 
 
-    
+
     let dataSource = [];
 
     let lastTime = null;
 
 
-    const timesAtHourExisted = getFieldsValue()['timesAtHours'];
+    const timesAtHourExisted = getFieldsValue()['timesPerHour'];
     // if we selected at times
-    for (let i = 0; i < timesAtHours; i++) {
+    for (let i = 0; i < timesNum; i++) {
 
         // check if we have times per hour
         let timePerHour = timesPerHour[i] || false;
@@ -288,7 +283,8 @@ const TakeAtTimesTable = props => {
             // console.log(timePerHour, 'timePerHour');
         } else {
             // console.log(timePerHour);
-            timePerHour = { ...timePerHour, time: moment(timePerHour.time, format) };
+            // timePerHour = { ...timePerHour, time: moment(timePerHour.time, format) };
+            timePerHour = { ...timePerHour, time: formatTimeForField(timePerHour.time, { isUTC: true }) };
         }
         //console.log(timePerHour);
 
@@ -304,7 +300,7 @@ const TakeAtTimesTable = props => {
     }
 
 
-    console.log(dataSource);
+    // console.log(dataSource);
 
 
 
@@ -400,7 +396,7 @@ const QuantitySelector = props => {
         rules: [{
             required: true, message: 'Select Quantity',
         }],
-    })(<Select placeholder="Quantity"  /*onChange={props.onTotal}*/ >
+    })(<Select placeholder="Quantity" style={{width:'100%'}}  /*onChange={props.onTotal}*/ >
         <Option value={0.25}>¼</Option>
         <Option value={0.50}>½</Option>
         <Option value={0.75}>¾</Option>

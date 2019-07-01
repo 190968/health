@@ -51,3 +51,4 @@ const enhance = compose(
     })
 )
 export const SimpleUpload = enhance(SimpleUploadPure);
+export const FileSingleUpload = SimpleUpload;

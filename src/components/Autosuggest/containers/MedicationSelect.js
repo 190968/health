@@ -13,10 +13,15 @@ export const GET_MEDICATIONS_LIST_QUERY = gql`
 `;
 
 const withQuery = graphql(GET_MEDICATIONS_LIST_QUERY, {
-	options: () => {
+	options: (ownProps) => {
+		const {user} = ownProps;
+		const {id:userId} = user || {}
 		return {
+			variables: {
+				userId
+			},
 			fetchPolicy: 'network-only'
-		};
+		}
 	},
 	props: ({ data }) => {
 		if (!data.loading) {

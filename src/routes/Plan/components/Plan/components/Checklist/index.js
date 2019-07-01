@@ -1,6 +1,7 @@
 import React from 'react'
 
 import {Checkbox, Card} from 'antd';
+import FootnoteView from '../../../../../../components/Footnote/components/View';
 const CheckboxGroup = Checkbox.Group;
 
 
@@ -50,7 +51,7 @@ export default class PlanChecklist extends React.Component {
 
     render() {
 
-        const {item, isBuilderMode, simple=false, disabled=false} = this.props;
+        const {item,  simple=false, disabled=false} = this.props;
         const {value} = this.state;
         //const {label} = item;
 
@@ -62,10 +63,9 @@ export default class PlanChecklist extends React.Component {
         var options = item.options;
         let plainOptions = [];
         options.map((option) => {
-            const coid = option.id;
-            const name = option.label;
+            const {id, label, footnote} = option;
 
-            plainOptions.push(<Checkbox key={coid} value={coid} style={radioStyle} >{name}</Checkbox>);
+            plainOptions.push(<Checkbox key={id} value={id} style={radioStyle} >{label} <FootnoteView footnote={footnote} /></Checkbox>);
             return option;
         });
 

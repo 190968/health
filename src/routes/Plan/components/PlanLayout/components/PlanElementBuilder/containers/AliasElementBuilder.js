@@ -1,11 +1,11 @@
 import React from 'react';
-import {withApollo} from 'react-apollo';
-import { compose, withHandlers, withState, withProps, branch, renderComponen, lifecycle} from 'recompose';
-import AliasElementBuilder, {prepareInput} from '../components/AliasElementBuilder';
-import {Form} from 'antd';
-import {modalHOC, withSpinnerWhileLoading} from "../modal";
-import {PathwayBodyWithQuery} from "../components/AliasElementBuilder/containers/queries";
-import {PLAN_ELEMENT_CHILDREN_QUERY} from "../../PlanElement/containers/queries";
+import { withApollo } from 'react-apollo';
+import { compose, withHandlers, withState, withProps, branch, renderComponen, lifecycle } from 'recompose';
+import AliasElementBuilder, { prepareInput } from '../components/AliasElementBuilder';
+import { Form } from 'antd';
+import { modalHOC, withSpinnerWhileLoading } from "../modal";
+import { PathwayBodyWithQuery } from "../components/AliasElementBuilder/containers/queries";
+import { PLAN_ELEMENT_CHILDREN_QUERY } from "../../PlanElement/containers/queries";
 import { getPlanElementLabelFromElement } from '../../../../../../../components/Plan/utils';
 
 let queryOptions = {
@@ -29,11 +29,11 @@ const enhance = compose(
 
 
     withProps(props => {
-        const {elements=[]} = props;
+        const { elements = [] } = props;
         //console.log(props);
-        const {element={}} = props;
-        const {itemInfo={}} = element;
-        const {elementRoute=[]} = itemInfo;
+        const { element = {} } = props;
+        const { itemInfo = {} } = element || {};
+        const { elementRoute = [] } = itemInfo || {};
         let options = elements.map(element => {
 
             const isLeaf = checkIfLeaf(element.type);
@@ -59,62 +59,26 @@ const enhance = compose(
         //     return null;
         // });
 
-        return {options}
+        return { options }
     }),
     withState('options', 'setOptions', props => props.options),
-    withHandlers({
-        saveElement: props => callback => {
-
-            props.handleSave({prepareInput, callback} );
-
-            // props.form.validateFields((err, values) => {
-            //     //console.log(err);
-            //     //console.log(values);
-            //     //return false;
-            //     //console.log(props.form.isFieldsTouched());
-            //     //console.log(props.form.isFieldsTouched());
-            //     console.log(props);
-            //     if (!err) {
-            //
-            //         //if (props.form.isFieldsTouched()) {
-            //             const callbackSave = (element) => {
-            //                 //console.log(element);
-            //                 // save the new info
-            //                 //props.setElement(element);
-            //                 callback();
-            //             }
-            //             const valuesPrepared = props.prepareInput(values);
-            //             //console.log(valuesPrepared);
-            //             props.handleSave({input:valuesPrepared, callback:callbackSave} );
-            //         //}
-            //     }
-            // });
-        },
-        onChange: props => value => {
-            console.log(value);
-        },
-
-    }),
 
     withApollo,
 
     withHandlers({
-        onSubmit: props => event => {
-            props.saveElement(props.onHide);
-        },
         loadData: props => selectedOptions => {
             const targetOption = selectedOptions[selectedOptions.length - 1];
             targetOption.loading = true;
 
             // load options lazily
-            
+
             queryOptions.variables = {
-                planId:props.plan.id,
+                planId: props.plan.id,
                 id: targetOption.value
             };
 
             props.client.query(queryOptions)
-                .then(({data: {loading, planElement: {childrenElements=[]}}}) => {
+                .then(({ data: { loading, planElement: { childrenElements = [] } } }) => {
 
                     console.log(childrenElements);
                     if (!loading) {
@@ -136,7 +100,7 @@ const enhance = compose(
                             console.log([...props.options, props.options]);
                             props.setOptions([...props.options, props.options]);
                         } else {
-                            targetOption.isLeaf= checkIfLeaf(targetOption.type);
+                            targetOption.isLeaf = checkIfLeaf(targetOption.type);
                         }
                     }
 
@@ -155,15 +119,14 @@ const enhance = compose(
     }),
     lifecycle({
         componentDidMount() {
-            console.log(this.props);
-            let {options, element={}} = this.props;
-            const {itemInfo={}} = element;
+            // console.log(this.props);
+            let { options, details = {} } = this.props;
             //console.log(element);
             //console.log(itemInfo);
-            const {elementRoute=[]} = itemInfo;
+            const { elementRoute = [] } = details || {};
             //console.log(elementRoute);
             let level = 0;
-              options.map(option => {
+            options.map(option => {
 
                 if (!option.isLeaf) {
                     //
@@ -172,15 +135,24 @@ const enhance = compose(
                         // if we have such route
                         this.props.loadData([option]);
                     }
-
                 }
 
                 return option;
             });
-
-           // this.props.setOptions(options);
         }
     }),
-    modalHOC,
 )
-export default Form.create()(enhance(AliasElementBuilder));
+export default enhance(AliasElementBuilder);
+
+
+
+export const preparePlanElementAliasInput = (values) => {
+    const { elementId = [], label, btnLabel } = values;
+    const element = elementId[elementId.length - 1];
+    return {
+        elementId: element,
+        elementRoute: elementId,
+        label,
+        buttonLabel: btnLabel
+    }
+}

@@ -7,8 +7,8 @@ import './index.less';
 import { compose } from 'react-apollo';
 const TableColumnSearchPure = (props) => {
 	const { search, onSearch, onClear, placeholder = 'Search' } = props;
-	const suffix = search ? <Tooltip title={'Reset'}><Icon type="close-circle" onClick={onClear} className={'pointer'} /></Tooltip> : <Icon type="search" />;
-
+	const suffix = search ? null/*<Tooltip title={'Reset'}><Icon type="close-circle" onClick={onClear} className={'pointer'} /></Tooltip>*/ : <Icon type="search" />;
+	const allowClear = search !== '';
 	return (
 		<div className="custom-filter-dropdown">
 			<Input
@@ -18,7 +18,7 @@ const TableColumnSearchPure = (props) => {
 				defaultValue={search}
 				onChange={onSearch}
 				onPressEnter={onSearch}
-				// allowClear
+				allowClear={allowClear}
 			/>
 		</div>
 	);
@@ -28,10 +28,15 @@ const TableColumnSearchPure = (props) => {
 const enh = compose(
 	withHandlers({
 		onSearch: props => (value) => {
-			console.log(props);
-			console.log(value.target.value);
+			// console.log(props);
+			// console.log(value.target.value);
 			if (props.onSearch) {
 				props.onSearch(value.target.value);
+			}
+		},
+		onClear: props => () => {
+			if (props.onSearch) {
+				props.onSearch(null);
 			}
 		}
 	}),

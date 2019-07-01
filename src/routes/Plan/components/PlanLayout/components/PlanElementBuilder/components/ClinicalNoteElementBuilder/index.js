@@ -4,6 +4,7 @@ import {Form, Input} from 'antd';
 import {compose, withHandlers, withState, withProps} from 'recompose';
 import {Attachments, prepareAttachmentsForForm} from "../../../../../../../../components/FormCustomFields/components/Attachments/index";
 import messages from './messages';
+import { FootnoteFormField } from '../../../../../../../../components/Footnote/components/Manager/field';
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
 
@@ -19,7 +20,7 @@ const formTailLayout = {
 const ClinicalNoteElementBuilder = (props) => {
     const {form, intl, details, attachments=[]} = props;
     const {getFieldDecorator} = form;
-    const {title, note} = details || {};
+    const {title, note, footnote} = details || {};
 
     // getFieldDecorator('attachments', {initialValue: []});
     // console.log(prepareAttachmentsForForm(attachments));
@@ -58,6 +59,16 @@ const ClinicalNoteElementBuilder = (props) => {
             >
                 <Attachments onClose={props.onCloseAttachments} attachments={attachments} />
             </FormItem>
+            <FormItem
+            {...formItemLayout}
+            label="Footnote"
+            >
+             {getFieldDecorator('footnote', {
+                initialValue: footnote,
+            })(
+                <FootnoteFormField />
+            )}
+            </FormItem> 
         </React.Fragment>
     );
 }
@@ -81,7 +92,7 @@ const enhance = compose(
             let attachmentsForm = [];
 
 
-            const attachmentsPure = attachments.map(attachment => {
+            attachments.map(attachment => {
                 //console.log();
                 const {uploads = []} = attachment;
                 const fields = uploads.map(upload => {

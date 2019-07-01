@@ -13,6 +13,18 @@ export const formatDateTimeToday = (date, opts) => {
     return formatDateToday(date, {...opts, format, todayTime:true})
 }
 
+
+export const formatDate = (date, opts) => {
+    let {format='l'} = opts || {};
+    // if (!format) {
+    //     format = 'lll';
+    // }
+    // if (easyMode) {
+    //     format = 'l';
+    // }
+    return formatDateToday(date, {...opts, format, todayTime:false})
+}
+
 export const formatTimeForInput = (time) => {
 
     return moment.utc(time).format('HH:mm:ss');
@@ -21,8 +33,26 @@ export const formatTimeForInput = (time) => {
 
 export const formatTimeForField = (time, props) => {
     const {isUTC=false} = props || {};// if the value us in UTC
+    //  console.log(time, 'timetimetimetime');
+    //     console.log(moment.utc(time, 'HH:mm').format('LT'));
+    //     console.log(moment(time, 'HH:mm').format('LT'));
+    // let d = moment();
+    // d = d.format('YYYY-MM-DD');
+    // let t = moment(time, 'HH:mm');
+    
+    // t = t.format('HH:mm:ss');
+
+    // const dateTime = moment.utc(d+ ' ' +t,'YYYY-MM-DD HH:mm:ss');
+    // const dateTime1 = moment.utc(d+ ' ' +t,'YYYY-MM-DD HH:mm:ss');
+    // console.log(dateTime);
+    // console.log(dateTime.format('llll'));
+    // console.log(dateTime1.local().format('llll'));
+
     if (isUTC) {
-        return time && moment.utc(time, 'HH:mm');
+        // console.log(time, 'timetimetimetime');
+        // console.log(moment.utc(time, 'HH:mm'));
+        // console.log(moment(time, 'HH:mm'));
+        return time && moment.utc(time, 'HH:mm').local();
     }
     return time && moment(time, 'HH:mm');
 }

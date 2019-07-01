@@ -6,6 +6,7 @@ import messages from './messages';
 import Upload from '../../../../../../../../components/FormCustomFields/upload';
 import MediaPreview from './components/MediaPreview';
 import {Attachments, prepareAttachmentsForForm} from "../../../../../../../../components/FormCustomFields/components/Attachments/index";
+import { getMediaTypeInfo } from '../../../../../../../../components/FormCustomFields/containers/FileUpload';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
@@ -20,49 +21,7 @@ const formTailLayout = {
     labelCol: {span: 5},
     wrapperCol: {span: 19, offset: 5},
 };
-
-export const getMediaTypeInfo = (type) => {
-    console.log(type);
-    let template = '';
-    let note = '';
-    let name = type;
-    let allowedFileTypes = ['application/*'];
-    switch(type) {
-        case 'document':
-            template='document';
-            name = 'Document';
-            break;
-        case 'ppt':
-            //note = '.ppt, .pptx';
-            template = 'ppt';
-            break;
-        case 'image':
-            note = '.jpeg, .jpg, .gif, .tiff, .png, .bmp';
-            allowedFileTypes = ['image/*'];
-            template = 'instructions_image';
-            name = 'Image';
-            break;
-        case 'video':
-        case 'import':
-            note = '.avi, .mpg, mpeg, .mov, .mp4, 3gp, .flv, H.263, H.264, .webm';
-            allowedFileTypes = ['video/*'];
-            template = 'instructions_video';
-            name = 'Video';
-            break;
-        case 'audio':
-            allowedFileTypes = ['audio/*'];
-            note = '.mp4, .mp3, .mp2';
-            template = 'mp3';
-            name = 'Audio';
-            break;
-        case 'pdf':
-            note = '.pdf';
-            template = 'pdf';
-            break;
-    }
-// console.log({name, template, note, allowedFileTypes});
-    return {name, template, note, allowedFileTypes};
-}
+ 
 
 const MediaElementBuilder = (props) => {
     //console.log(props);

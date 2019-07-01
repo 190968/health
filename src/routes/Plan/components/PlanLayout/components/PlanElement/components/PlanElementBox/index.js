@@ -12,6 +12,7 @@ import PlanScale from '../../../../../Plan/components/PlanScale';
 import PlanMedia from '../../../../../Plan/components/PlanMedia';
 import LinkElement from '../../../../../Plan/components/LinkElement';
 import AliasElement from '../../../../../Plan/components/AliasElement';
+import {PlanAttachmentsElement} from '../../../../../Plan/containers/AttachmentsElement';
 import TextElement from '../../../../../Plan/components/TextElement';
 import ClinicalNoteElement from '../../../../../Plan/components/ClinicalNoteElement';
 import TreatmentElement from '../../../../../Plan/components/TreatmentElement';
@@ -27,11 +28,15 @@ import { BrahmsRulesView } from '../../../../../../../../components/Brahms/compo
 import { BrahmsElementOutput } from '../../../../../../../../components/Brahms/components/View/components/Output';
 import { possiblePlanElementOptionsFormatter } from '../../../PlanElementBuilder';
 import { SideToSide } from '../../../../../../../../components/Layout/Flexbox';
+import FootnoteView from '../../../../../../../../components/Footnote/components/View';
+import { checkIfPlanElementIsInput } from '../../../../../../../../components/Plan/utils';
+import { Attachments } from '../../../../../../../../components/FormCustomFields/components/Attachments';
 
 const PlanElementBox = (props) => {
 	let {
 		currentInOrder = null,
 		element,
+		elements,
 		date,
 		isDraggable,
 		onDrop,
@@ -49,9 +54,10 @@ const PlanElementBox = (props) => {
 		parentValue,
 		showElementsAsCard = false,
 		withCompleteCheckmark = false,
-		notClickable=false,
+		notClickable = false,
+		checkOnBrahmsExecution,
 		// currentInOrder:0}
-        updateCurrentElement
+		updateCurrentElement
 	} = props;
 
 	const { id, itemType, type, itemInfo, reports, hasChildren = false, getBrahmsRules } = element || {};
@@ -66,11 +72,11 @@ const PlanElementBox = (props) => {
 	let showTitle = true;
 	let titleExtra = false;
 	//console.log(props);
-	const {type:planType} = plan;
+	const { type: planType } = plan;
 	const isPathway = planType === 'pathway';
-	let defaultProps = {item, disabled:notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode  }
-	const {brahmRules=[]} = props;
-	const {rules:brahms} = brahmRules.find(report => report.element.id === element.id) || {};
+	let defaultProps = { item, disabled: notClickable, date, user, onChange: props.onChange, isBuilderMode, isPreviewMode }
+	const { brahmRules = [] } = props;
+	const { rules: brahms } = brahmRules.find(report => report.element.id === element.id) || {};
 	const hasReports = reports && reports.length > 0;
 	let possibleOptions;
 	switch (itemType) {
@@ -80,11 +86,11 @@ const PlanElementBox = (props) => {
 			// const {reports:trackerReports=[]} = item;
 			// console.log(reports);
 			//showTitle = false;
-			const {description, textBefore} = item || {};
+			const { description, textBefore } = item || {};
 			field = <>
-			{textBefore && <div style={{marginBottom:5}}>{textBefore}</div>}
-			<TrackerInput {...defaultProps} measurement={item} />
-			{description && <div  style={{marginTop:5}}>{description}</div>}
+				{textBefore && <div style={{ marginBottom: 5 }}>{textBefore}</div>}
+				<TrackerInput {...defaultProps} measurement={item} />
+				{description && <div style={{ marginTop: 5 }}>{description}</div>}
 			</>;
 			break;
 		case 'choice_input':
@@ -92,7 +98,7 @@ const PlanElementBox = (props) => {
 
 			if (itemType === 'checklist' && isPathway) {
 				// if it's pathway and the checklist - always disabled
-				defaultProps.disabled=true;
+				defaultProps.disabled = true;
 			}
 			// reportValues = reports && reports.map((report) => report.value);
 			// reportValues = reportValues && reportValues[0];
@@ -107,7 +113,7 @@ const PlanElementBox = (props) => {
 			);
 			//const vertically = item.is_vertically;
 			fieldTitle = item.label;
-			const {options} = item;
+			const { options } = item;
 			possibleOptions = options;
 
 			break;
@@ -123,36 +129,36 @@ const PlanElementBox = (props) => {
 				/>
 				// <PlanRadio reports={reportValues} {...defaultProps} />
 			);
-			
+
 			fieldTitle = item.label;
-			const {options:radioOptions} = item;
+			const { options: radioOptions } = item;
 			possibleOptions = radioOptions;
-			
+
 			break;
-			case 'dropdown_input':
-				// reportValues = reports && reports.map((report) => report.value);
-				// reportValues = reportValues && reportValues[0];
-				// reportValues = reportValues && reportValues[0];
-				fieldTitle = item.label;
-				if (itemType === 'condition') {
-					//addAfter = false;
-				}
-				field = (
-					<PlanChoice
+		case 'dropdown_input':
+			// reportValues = reports && reports.map((report) => report.value);
+			// reportValues = reportValues && reportValues[0];
+			// reportValues = reportValues && reportValues[0];
+			fieldTitle = item.label;
+			if (itemType === 'condition') {
+				//addAfter = false;
+			}
+			field = (
+				<PlanChoice
 					reports={reports}
 					{...defaultProps}
 					isDropdown
 					idInsteadValue
-					/>
-					// <PlanDropdown
-					// 	showChildren={props.showChildren}
-					// 	hasChildren={hasChildren}
-					// 	reports={reportValues}
-					// 	{...defaultProps}
-					// />
-				);
-				const {options:dropdownOptions} = item;
-				possibleOptions = dropdownOptions;
+				/>
+				// <PlanDropdown
+				// 	showChildren={props.showChildren}
+				// 	hasChildren={hasChildren}
+				// 	reports={reportValues}
+				// 	{...defaultProps}
+				// />
+			);
+			const { options: dropdownOptions } = item;
+			possibleOptions = dropdownOptions;
 
 			break;
 		case 'text_input':
@@ -168,7 +174,7 @@ const PlanElementBox = (props) => {
 			);
 
 			break;
-		
+
 		case 'condition':
 			reportValues = reports && reports.map((report) => report.valueId);
 			reportValues = reportValues && reportValues[0];
@@ -187,27 +193,30 @@ const PlanElementBox = (props) => {
 					{...defaultProps}
 				/>
 			);
-			const {options:condiOptions} = item;
+			const { options: condiOptions } = item;
 			possibleOptions = condiOptions;
 			break;
 		case 'decision':
-		const {updateSkippedElements,
-			updateBrahmRules,
-			brahmRules} = props;
+			const { updateSkippedElements,
+				updateBrahmRules,
+				brahmRules } = props;
 			reportValues = reports && reports.map((report) => report.valueId);
 			reportValues = reportValues && reportValues[0];
 			reportValues = reportValues && reportValues[0];
 
-			const { footnote } = element;
-			if (footnote) {
-				titleExtra = <FootNoteButton footnote={footnote} />;
-			}
+			// const { footnote } = item;
+			// console.log(footnote, 'footnotefootnotefootnote');
+			// if (footnote) {
+			// 	titleExtra = <FootnoteView footnote={footnote} />;
+			// }
 			//fieldTitle = item.label;
 			field = (
 				<DecisionElement
 					id={id}
 					plan={plan}
 					mode={mode}
+					element={element}
+					elements={elements}
 					isDraggable={isDraggable}
 					onDrop={onDrop}
 					showChildren={props.showChildren}
@@ -216,6 +225,7 @@ const PlanElementBox = (props) => {
 					updateSkippedElements={updateSkippedElements}
 					updateBrahmRules={updateBrahmRules}
 					brahmRules={brahmRules}
+					checkOnBrahmsExecution={checkOnBrahmsExecution}
 					{...defaultProps}
 				/>
 			);
@@ -228,18 +238,21 @@ const PlanElementBox = (props) => {
 			fieldTitle = item.label;
 
 			field = (
-				<PlanScale  reports={reportValues} {...defaultProps} />
+				<PlanScale reports={reportValues} {...defaultProps} />
 			);
 
 			break;
 		case 'file_input':
 			fieldTitle = item.label;
+			reportValues = reports && reports.map((report) => report.attachments);
+			reportValues = reportValues && reportValues[0];
 			field = (
-				<Upload>
-					<Button disabled>
-						<Icon type="upload" /> Upload
-					</Button>
-				</Upload>
+				<PlanAttachmentsElement reports={reportValues} {...defaultProps} />
+				// <Upload>
+				// 	<Button disabled>
+				// 		<Icon type="upload" /> Upload
+				// 	</Button>
+				// </Upload>
 			);
 			break;
 		case 'exam_input':
@@ -275,13 +288,13 @@ const PlanElementBox = (props) => {
 			break;
 		case 'instruction_tipbox':
 			// console.log(item);
-			const {icon, tipType, color:bgColor, iconAlign} = item;
-			const {id:iconId, url:iconUrl} = icon;
+			const { icon, tipType, color: bgColor, iconAlign } = item;
+			const { id: iconId, url: iconUrl } = icon;
 			let text = '';
 			let tipboxIcon = null;
 			if (iconId) {
 				const tipStyle = {
-					fontWeight:'bold',
+					fontWeight: 'bold',
 					textTransform: 'uppercase',
 					fontSize: '0.7em'
 				}
@@ -297,14 +310,14 @@ const PlanElementBox = (props) => {
 					// </div>
 
 					text = <SideToSide>
-					<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div  dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
-					<div style={{textAlign:'center', paddingLeft:10}}>
-						<img src={iconUrl} style={{maxWidth:80}} /> 
-						<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
-					</div>
-			</SideToSide>
+						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div className={'redactor-styles'} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+						<div style={{ textAlign: 'center', paddingLeft: 10 }}>
+							<img src={iconUrl} style={{ maxWidth: 80 }} />
+							{/* <div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div> */}
+						</div>
+					</SideToSide>
 					// 	<Col sm={4} style={{paddingRight:10, textAlign:'center'}}>
-						
+
 					// 	</Col>
 					// 	<Col sm={20}></Col>
 					// </Row>;
@@ -325,25 +338,25 @@ const PlanElementBox = (props) => {
 					// 	<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div style={{marginLeft:100}} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
 					// </div>
 
-				text = <SideToSide>
-						<div style={{textAlign:'center', paddingRight:10}}>
-							<img src={iconUrl} style={{maxWidth:80}} /> 
-							<div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div>
+					text = <SideToSide>
+						<div style={{ textAlign: 'center', paddingRight: 10 }}>
+							<img src={iconUrl} style={{ maxWidth: 80 }} />
+							{/* <div style={tipStyle}>{getTipBoxTypeLabel(tipType)}</div> */}
 						</div>
-						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div  dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
-				</SideToSide>
-				 
+						<ReactFitText compressor={3.5} minFontSize={16} maxFontSize={18}><div className={'redactor-styles'} dangerouslySetInnerHTML={{ __html: item.text }} /></ReactFitText>
+					</SideToSide>
+
 				}
-				
+
 			} else {
 				text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
 			}
 			// console.log(bgColor, 'bgColor');
-		// text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
+			// text = <div dangerouslySetInnerHTML={{ __html: item.text }} />;
 			fieldTitle = '';
 			field = (
-				<div style={{background1:bgColor, marginBottom:10}}>
-				{text}
+				<div style={{ background1: bgColor, marginBottom: 10 }}>
+					{text}
 				</div>
 				// 	// message={getTipBoxTypeLabel(tipType)}
 				// 	description={text}
@@ -379,6 +392,7 @@ const PlanElementBox = (props) => {
 				<AliasElement
 					onDrop={onDrop}
 					isBuilderMode={isBuilderMode}
+					showChildren={props.showChildren}
 					plan={plan}
 					upid={upid}
 					i={i}
@@ -387,25 +401,30 @@ const PlanElementBox = (props) => {
 			);
 			break;
 		case 'ap':
-			const {thumb, title:planTitle} = itemInfo || {};
-			const {medium=''} = thumb || {};
+			const { thumb, title: planTitle } = itemInfo || {};
+			const { medium = '' } = thumb || {};
 			fieldTitle = planTitle;
-				
-                // return <div key={title}>  <AcceptPlanButton plan={plan} label={<Card cover={medium} ><Avatar shape="square" src={medium} /> {title}</>} /> </div>;
+
+			const planActions = [];
+			if (!isPathway) {
+				planActions.push(<AcceptPlanButton disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Button type={'orange'}>Assign ActionPlan</Button>} />);
+			}
+			// return <div key={title}>  <AcceptPlanButton plan={plan} label={<Card cover={medium} ><Avatar shape="square" src={medium} /> {title}</>} /> </div>;
 			field = <Row gutter={16}>
-				<Col span={8} key={title}> 
-                <Card cover={<img src={medium} />} actions={[ <AcceptPlanButton  disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Button type={'orange'}>Get ActionPlan</Button>} />]} >
-                <Card.Meta title={planTitle} /> 
-                </Card> 
-                </Col>
+				<Col span={8} key={title}>
+					<Card cover={<img src={medium} />} actions={planActions} >
+						<Card.Meta title={planTitle} />
+					</Card>
+				</Col>
 			</Row>;
-			
-		// field = <AcceptPlanButton disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Card cover={<img src={medium} />} hoverable>
-		// <Card.Meta title={planTitle} /> 
-		// </Card>} />;
+
+			// field = <AcceptPlanButton disabled={isBuilderMode || isPreviewMode} plan={itemInfo} label={<Card cover={<img src={medium} />} hoverable>
+			// <Card.Meta title={planTitle} /> 
+			// </Card>} />;
 
 			break;
 		case 'calculator':
+			const {connectDragSource} = props;
 			//fieldTitle = itemInfo.title;
 			//console.log(element);
 			//console.log(itemInfo);
@@ -415,6 +434,9 @@ const PlanElementBox = (props) => {
 					upid={upid}
 					actFieldId={id}
 					element={itemInfo}
+					connectDragSource={connectDragSource}
+					isDraggable={isDraggable}
+					onDrop={onDrop}
 					{...defaultProps}
 				/>
 			);
@@ -454,7 +476,7 @@ const PlanElementBox = (props) => {
 					//view="decision"
 					mode={mode}
 					schedule={schedule}
-					buttons={[ 'addBefore' ]}
+					buttons={['addBefore']}
 					parentId={parentId}
 					parentValue={parentValue}
 				/>
@@ -471,7 +493,7 @@ const PlanElementBox = (props) => {
 					//view="decision"
 					mode={mode}
 					schedule={schedule}
-					buttons={[ 'addAfter' ]}
+					buttons={['addAfter']}
 					parentId={parentId}
 					parentValue={parentValue}
 				/>
@@ -487,7 +509,7 @@ const PlanElementBox = (props) => {
 					type=""
 					mode={mode}
 					schedule={schedule}
-					buttons={[ 'addBefore' ]}
+					buttons={['addBefore']}
 					parentId={parentId}
 					parentValue={parentValue}
 				/>
@@ -502,7 +524,7 @@ const PlanElementBox = (props) => {
 					type=""
 					mode={mode}
 					schedule={schedule}
-					buttons={[ 'addAfter' ]}
+					buttons={['addAfter']}
 					parentId={parentId}
 					parentValue={parentValue}
 				/>
@@ -511,18 +533,29 @@ const PlanElementBox = (props) => {
 	} else {
 		showAdd = false;
 	}
-	 
+
+	let onClick;
+	// update current element only on click
+	if (isBuilderMode && !isPreviewMode) {
+		onClick = updateCurrentElement;
+	// } else if (isPathway) {
+	// 	// probably this better to listed onchange for the input. if we've changed - then update currentElement 
+	// 	const isInputType = checkIfPlanElementIsInput({element});
+	// 	if (isInputType) {
+	// 		onClick = updateCurrentElement;
+	// 	}
+	}
 	// showAdd = false;
 	return (
-		<div className={className} style={{ position: 'relative', width: '100%' }} onClick={updateCurrentElement}>
+		<div className={className} style={{ position: 'relative', width: '100%' }} onClick={onClick}>
 
-		{/* {(isPathway && hasReports) && <div className={'dimmed-block'}></div>} */}
+			{/* {(isPathway && hasReports) && <div className={'dimmed-block'}></div>} */}
 			{showAdd &&
-			i === 0 && (
-				<Divider className="element-actions" style={{ marginTop: -10 }}>
-					{addBeforeEl}
-				</Divider>
-			)}
+				i === 0 && (
+					<Divider className="element-actions" style={{ marginTop: -10 }}>
+						{addBeforeEl}
+					</Divider>
+				)}
 
 			<PlanElementCard
 				showTitle={showTitle}
@@ -530,7 +563,7 @@ const PlanElementBox = (props) => {
 				isBuilderMode={isBuilderMode}
 				isPreviewMode={isPreviewMode}
 				withCompleteCheckmark={withCompleteCheckmark}
-                plan={plan}
+				plan={plan}
 				extra={
 					isBuilderMode && !isPreviewMode ? (
 						<PlanElementActions
@@ -547,22 +580,22 @@ const PlanElementBox = (props) => {
 							parentValue={parentValue}
 						/>
 					) : (
-						titleExtra
-					)
+							titleExtra
+						)
 				}
 			>
 				{field}
 
 				{(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} possibleOptions={possibleOptions} possibleOptionsFormatted={possiblePlanElementOptionsFormatter} /*renderRule={questionBrahmItem} possibleOptions={getAnswers}*/ formatGoToElement={props.formatGoToElement} />}
-				{(brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} /> }
-        
+				{(brahms && brahms.length > 0) && <BrahmsElementOutput rules={brahms} />}
+
 			</PlanElementCard>
 			{showAdd &&
-			addAfter && (
-				<Divider className="element-actions" style={{ marginBottom: mode!=='diagnosis' ? 10 : -15 }}>
-					{addAfterEl}
-				</Divider>
-			)}
+				addAfter && (
+					<Divider className="element-actions" style={{ marginBottom: mode !== 'diagnosis' ? 10 : -15 }}>
+						{addAfterEl}
+					</Divider>
+				)}
 		</div>
 	);
 };

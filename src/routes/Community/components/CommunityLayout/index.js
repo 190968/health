@@ -13,26 +13,32 @@ import Motivators from '../../../User/containers/motivatorsContainer';
 //import CareTeam from '../../../User/containers/careTeamContainer';
 import Family from '../../../User/containers/familyContainer';
 import DiscussionsList from './components/Discussion/containers/DiscussionsList.js';
-class CommunityLayout extends React.Component{
-    render(){
-        const {info,loading, user_id} = this.props;
+import { withActiveNetwork } from '../../../../components/App/app-context.js';
+const CommunityLayout = props => {
+        const {info,loading, currentNetwork} = props;
+        const {networkModuleExists} = currentNetwork || {};
         if (loading) {
             return (
                 <Card loading >Loading!!!</Card>
             );
         }
-        return <Row gutter={20}>
-               <Col xs={24} md={14} lg={15} xl={17}>
-                    <MyCommutinies />
-                    <DiscussionsList />
-                    <MainCategories info={info} />
-               </Col>
-               <Col xs={24} md={10} lg={9} xl={7}>
-                    <CategoryNews />
-                    <Motivators />
-                    <Family  />
-               </Col>
-            </Row>
-    }
+        if (networkModuleExists('is_mcgrawhill')) {
+            return <>
+                <MainCategories info={info} label={'Books'} slidesToShow={6} />
+                <DiscussionsList />
+            </>
+        }
+    return <Row gutter={20}>
+            <Col xs={24} md={14} lg={15} xl={17}>
+                <MyCommutinies />
+                <DiscussionsList />
+                <MainCategories info={info} />
+            </Col>
+            <Col xs={24} md={10} lg={9} xl={7}>
+                <CategoryNews />
+                <Motivators />
+                <Family  />
+            </Col>
+        </Row>
 }
-export default withApollo(withRouter(CommunityLayout));
+export default withActiveNetwork(withApollo(withRouter(CommunityLayout)));

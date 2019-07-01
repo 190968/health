@@ -8,6 +8,7 @@ import { withDrawer, withSpinnerWhileLoading } from '../../../../../components/M
 import TrackerSelect from '../../../../../components/Autosuggest/containers/TrackerSelect';
 import { withLoadingButton } from '../../../../../components/Loading';
 import { UserInfoFragment } from '../../../../User/fragments';
+import { prepareDateInput } from '../../../../../utils/datetime';
 
 const GET_TRACKER_QUERY = gql`
 	query GET_TRACKER_QUERY($id: UID, $user_id: UID!, $amid: UID, $getTrackerInfo: Boolean!) {
@@ -251,32 +252,9 @@ const enhance = compose(
 
             form.validateFields((err, values) => {
                 if (!err) {
-                    const {
-                        criticalRangeMin,
-                        criticalRangeMax,
-                        normalRangeMin,
-                        normalRangeMax,
-                        attachDiagnoses,
-                        timesToReport,
-                        graph,
-                        columns,
-                        startDate,
-                        endDate
-                    } = values;
-
-                    const startDateYMD = startDate.format('YYYY-MM-DD');
-                    const endDateYMD = endDate ? endDate.format('YYYY-MM-DD') : '';
-                    const input = {
-                        amid: measurement.id,
-                        graph: graph,
-                        timesToReport: timesToReport,
-                        criticalRange: { min: criticalRangeMin, max: criticalRangeMax },
-                        normalRange: { min: normalRangeMin, max: normalRangeMax },
-                        columnsFull:columns,
-                        icd10Codes: attachDiagnoses,
-                        startDate: startDateYMD,
-                        endDate: endDateYMD
-					};
+                    
+					const input = prepareTrackerInput({measurement, ...values});
+					
 					
 					props.setLoadingButton(true);
 					const hide = message.loading('Saving...');
@@ -293,3 +271,34 @@ const enhance = compose(
 
 );
 export const TrackerManager = enhance(TrackerManagerPure);
+
+
+export const prepareTrackerInput = (values) => {
+	const {
+		measurement,
+		criticalRangeMin,
+		criticalRangeMax,
+		normalRangeMin,
+		normalRangeMax,
+		attachDiagnoses,
+		timesToReport,
+		graph,
+		columns,
+		startDate,
+		endDate
+	} = values;
+	const {id: amid} = measurement || {};
+	const startDateYMD = prepareDateInput(startDate);
+	const endDateYMD = endDate ? prepareDateInput(endDate) : '';
+	return {
+		amid,
+		graph,
+		timesToReport,
+		criticalRange: { min: criticalRangeMin, max: criticalRangeMax },
+		normalRange: { min: normalRangeMin, max: normalRangeMax },
+		columnsFull:columns,
+		icd10Codes: attachDiagnoses,
+		startDate: startDateYMD,
+		endDate: endDateYMD
+	};
+}

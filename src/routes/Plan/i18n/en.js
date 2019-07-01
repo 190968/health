@@ -3,8 +3,8 @@ import { defineMessages } from 'react-intl';
 export const PlanI18nEn = defineMessages({
     "myPlans": {
         "id": "user_aps_title",
-        "defaultMessage": "{isSelf, select, true {My } false {{name}}} Actionplans {count, plural, =0 {} other {({count})}}",
-        "description": "My Family"
+        "defaultMessage": "{isSelf, select, true {My } false {{name}}} {type} {count, plural, =0 {} other {({count})}}",
+        "description": "My ActionPlans"
     },
     "noPlans": {
         "id": "user_aps_empty",

@@ -62,7 +62,7 @@ const enhance = compose(
                     values.push(goToElementId);
                 }
             } else {
-                values = goToElementId;
+                values = [goToElementId];
             }
            
         }
@@ -74,8 +74,8 @@ const enhance = compose(
             // const value = e.target.value;
             // const input = prepareBrahmsGoToAction(value);
             const goToElementId = value[value.length-1] || null;
-            console.log(value);
-            console.log(goToElementId, 'goToElementId');
+            // console.log(value);
+            // console.log(goToElementId, 'goToElementId');
             // console.log(selectedOptions);
             props.onChange({goToElementId});
             return {

@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import {message} from 'antd';
 import {PlanElementPureFragment} from "../../../../../../Plan/components/Plan/fragments";
 
-const AddPlanLessonMutation=gql`
+const AddPlanSectionMutation=gql`
  mutation addPlanActivity($planId: UID!, $title: String!) {
         addPlanActivity(planId: $planId, title: $title) {
             id
@@ -20,13 +20,13 @@ const AddPlanLessonMutation=gql`
     ${PlanElementPureFragment}
 `;
  
-const withMutation = graphql(AddPlanLessonMutation, {
+const withMutation = graphql(AddPlanSectionMutation, {
     props: ({ ownProps, mutate }) => ({
         submitLesson: (title) => {
             return mutate({
                 variables: {planId: ownProps.plan.id, title: title},
             }).then((data) => {
-                ownProps.onSuccess();
+                ownProps.onSuccess('activities');
                 message.success('Activity has been Added');
             })},
     }),

@@ -27,6 +27,7 @@ class Category extends React.Component{
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.clickJoin = this.clickJoin.bind(this);
+        this.clickUNJoin = this.clickUNJoin.bind(this);
     }
 
     handleChange(value) {
@@ -39,6 +40,7 @@ class Category extends React.Component{
 
     clickUNJoin = () => {
         const { onClick,info} = this.props;
+        console.log(this.props);
         return onClick(info.id);
     }
 
@@ -58,8 +60,8 @@ class Category extends React.Component{
             );
         }
         const { intl } = this.props;
-        const {name,canJoin,news, isJoined,articles,discussions,categories,plans} = info;
-console.log("pasha---------------",news);
+        const {name,canJoin,news, isJoined,articles,categories,plans} = info;
+// console.log("pasha---------------",news);
         let categoriesKV = [];
         categories.forEach((item)=>{
             categoriesKV.push({value:item.id, text:item.name});
@@ -95,7 +97,7 @@ console.log("pasha---------------",news);
                   <CategoryTmp clickJoin={this.clickJoin} clickUNJoin={this.clickUNJoin} info={info}/>
                 {categories.length > 0 && <ListCommunityForm name={name}  categories={categories} />}
                 {news.totalCount > 0 && <News info={news}  />}
-                <DiscussionsForm categoryId={info.id} name={name} discussions={discussions} canAdd={canJoin && isJoined} />
+                <DiscussionsForm category={info} canAdd={canJoin && isJoined} />
                 {plans.length > 0 && <Plan  plans={plans}/>}
             </div>
         );

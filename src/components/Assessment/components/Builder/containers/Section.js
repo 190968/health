@@ -12,7 +12,7 @@ const enhance = compose(
     withCreateOrUpdateAssessmentSection,
     withHandlers({
         onSubmit: props => () => {
-            const {form, section} = props;
+            const {form, section, order, increaseCurrentSection} = props;
             form.validateFields((err, values) => {
                 if (!err) {
                     // submit the section
@@ -25,6 +25,9 @@ const enhance = compose(
                         }
                         if (props.refetch) {
                             props.refetch();
+                        }
+                        if (increaseCurrentSection) {
+                            increaseCurrentSection(order+1);
                         }
                     });
                 }

@@ -1,18 +1,9 @@
 import React from 'react';
-import { Row, Col, Button, Card, List, Input, Affix } from 'antd';
-import { message, Modal, Divider, Tooltip, Icon } from 'antd';
-import { PlanElementListItem } from '../../containers/PlanElement';
-import PlanElementsSelectbox from '../../components/PlanElementsSelectbox';
-import { SortableElement } from 'react-sortable-hoc';
+import { message, Button, Card, Input } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment';
-
-import { EmptyList } from '../../../../../../components/Loading/index';
-import { branch, compose, withHandlers, withProps, withState, renderComponent } from 'recompose';
-import { PlanElementManagerButton } from '../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
-import PlanBuilderElementSelect from '../../../../../../components/Plan/components/Builder/components/SelectElementType/inline';
 import { PlanElementsList } from '../../../../../../components/Plan/components/Body/containers/ElementsList';
 
 
@@ -44,11 +35,21 @@ export class PlanSection extends React.Component {
 
 	saveSection = (e, sectionId, isLastSection) => {
 		const { date, item, history } = this.props;
+		const {completed} = item || {};
+		if (completed) {
+			if (isLastSection) {
+				// message.success('Congrats!');
+				history.push('/'); // redirect to the dashboard
+			} else {
+				// message.success(item.title + ' is now completed for ' + moment(date).format('L'));
+				this.props.showNextSection();
+			}
+			return;
+		}
 		this.setState({
 			loading: true
 		});
-		this.props
-			.sectionReport(sectionId)
+		this.props.sectionReport(sectionId)
 			.then(({ data }) => {
 				if (isLastSection) {
 					message.success('Congrats!');
@@ -136,7 +137,7 @@ export class PlanSection extends React.Component {
 		return (
 			<Card title={title}  type={'pure'} actions={footer}>
 
-				<PlanElementsList {...otherProps} mode="section" section={item} elements={elements} />
+				<PlanElementsList {...otherProps} mode="section" section={item} elements={elements} schedule={true} />
 
 				{/* {(isBuilderMode && !isPreviewMode) && <Affix>
 				<PlanBuilderElementSelect {...this.props} />

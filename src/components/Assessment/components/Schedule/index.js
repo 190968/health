@@ -2,6 +2,8 @@ import React from 'react';
 import {Form, Radio, Select} from 'antd';
 import moment from 'moment';
 import { DateField, TimeField } from '../../../FormCustomFields';
+import { formatTimeForField } from '../../../Other/utils';
+import { prepareDateForForm } from '../../../../utils/datetime';
 
 const formItemLayoutDefault = {
     labelCol: {
@@ -36,18 +38,24 @@ const DOWS = [
 ]
 
 const AssessmentSchedule = props => {
-    const { form, checkStartDate, checkEndDate, formItemLayout=formItemLayoutDefault, startDate, endDate } = props;
+    const { form, checkStartDate, checkEndDate, formItemLayout=formItemLayoutDefault, startDate:startDateInitial, endDate:endDateInitial, schedule } = props;
     const {getFieldDecorator, getFieldValue} = form || {}; 
     let endDateError = form.getFieldError('endDate');
     endDateError = endDateError || form.getFieldError('end_date_set');
-    console.log(endDateError, 'endDateError');
+    const {startDate=startDateInitial, endDate=endDateInitial, dows, startTime} = schedule || {};
+
+    let repeating = undefined;
+    if (dows) {
+        repeating = 'dows';
+    }
+
     return <React.Fragment>
         <FormItem
             {...formItemLayout}
             label="Start Date"
         >
             {getFieldDecorator('startDate', {
-                initialValue: startDate ? moment(startDate) : moment(),
+                initialValue: prepareDateForForm(startDate, true),
                 rules: [{
                     required: true, message: 'Please Select Start Date',
                 }],
@@ -61,7 +69,7 @@ const AssessmentSchedule = props => {
             label="Repeating"
         >
             {getFieldDecorator('repeating', {
-                //initialValue: moment(),
+                initialValue: repeating,
                 rules: [{
                     required: true, message: 'Please Select Repeating',
                 }],
@@ -79,7 +87,7 @@ const AssessmentSchedule = props => {
             label="Repeating"
         >
             {getFieldDecorator('dows', {
-                //initialValue: moment(),
+                initialValue: dows,
                 rules: [{
                     required: true, message: 'Please Select Days',
                 }],
@@ -101,7 +109,7 @@ const AssessmentSchedule = props => {
             help={endDateError || ''}
         >
             {getFieldDecorator('endDate', {
-                                initialValue: endDate ? moment(endDate) : undefined,
+                                initialValue: prepareDateForForm(endDate),
                                 rules: [{
                                     validator: props.validateEndDate,
                                     message: 'End date must be after Start Date',
@@ -116,6 +124,7 @@ const AssessmentSchedule = props => {
             label="Time"
         >
             {getFieldDecorator('startTime', {
+                initialValue: startTime ? formatTimeForField(startTime) : undefined,
             })(
                 <TimeField />
             )}

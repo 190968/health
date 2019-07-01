@@ -10,6 +10,7 @@ import { TableWithMessage } from '../../../../../../components/Tables';
 import { getTableDateProps } from '../../../../../../components/Tables/TableColumn';
 import { StatusTag } from '../../../../../../constants/statuses';
 import AvatarWithName from '../../../../../User/components/AvatarWithName';
+import TaskAssignButton from '../../../../../../components/Tasks/components/TaskAssignButton';
  
 
  
@@ -48,6 +49,7 @@ const ActionplansTable = props => {
             render: (info) => {
                 const items = [
                     {key:'edit', content:  <ActionplansManagerButton  plan={info} />},
+                    {key:'assign', content:  <TaskAssignButton label={'Assign'} asMenuItem size={'default'} mode={'simple'} assignObject={{type: 'ap', plan:info}} />},
                     {key:'delete', content: <ActionplansDeleteButton  plan={info} refetch={props.refetch} asMenuItem />}
                 ];
                 return <SettingsDropdown items={items} />

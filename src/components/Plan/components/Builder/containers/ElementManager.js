@@ -9,6 +9,7 @@ import { prepareBrahmsInput } from '../../../../Brahms/components/Manager/contai
 import { withCreateOrUpdatePlanElement } from '../mutations';
 import { preparePlanElementChecklistInput } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/containers/ChecklistElementBuilder';
 import { preparePlanElementApInput } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/containers/ApElementBuilder';
+import { preparePlanElementAliasInput } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/containers/AliasElementBuilder';
 import { preparePlanElementClinicalNoteInput } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/containers/ClinicalNoteElementBuilder';
 import { preparePlanElementScaleInput } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/containers/ScaleElementBuilder';
 import { preparePlanElementTextInput } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/containers/TextElementBuilder';
@@ -27,8 +28,9 @@ import { preparePlanElementAssessmentInput } from '../../../../../routes/Plan/co
 import { getPlanElementLabelFromElement } from '../../../utils';
 import DefaultI18nEn from '../../../../../i18n/en';
 import { prepareTreatmentInput } from '../../../../../routes/Health/components/Forms/containers/Treatment';
-import PlanElementSchedule from '../../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementManager/components/PlanElementSchedule';
+import PlanElementSchedule from '../../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementManager/containers/PlanElementSchedule';
 import { formatPlanElementByTitle } from '../../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementSelect';
+import { withLoadingButton } from '../../../../Loading';
 
 
 const enhance = compose(
@@ -44,6 +46,7 @@ const enhance = compose(
         return !type;
     }, renderComponent(PlanElementBuilderSelect)),
     withCreateOrUpdatePlanElement,
+    withLoadingButton,
     withHandlers({
         onSubmit: props => ({ callback:callbackInput }) => {
             // console.log(props, 'Props before input');
@@ -52,8 +55,8 @@ const enhance = compose(
             props.form.validateFields((err, values) => {
                 //console.log(err);
                 //console.log(values);
-                console.log(props);
-                console.log(type);
+                // console.log(props);
+                // console.log(type);
                 if (!err) {
                     // prepare
                     switch(type) {
@@ -65,29 +68,24 @@ const enhance = compose(
                             type = 'media';
                             break;
                     }
-                    console.log(type);
+                    // console.log(type);
                     let input = preparePlanElementInput({ values, order, type });
 
                     const callback = () => {
-                        if (props.increaseCurrentElement) {
-                            props.increaseCurrentElement();
-
+                        if (props.updateCurrentElement) {
+                            props.updateCurrentElement(order);
                         }
                         if (callbackInput) {
                             callbackInput();
                         }
                     }
-                    //input.extra = values.extra || null;
-                    // add additional info
-
-                    // if schedule - add schedule
-                    // console.log(values, 'Element values');
-                    // console.log(input, 'Element Input');
-                    // console.log(props, 'props');
+                     
                     const hide = message.loading('Saving...');
+                    props.setLoadingButton(true);
                     if (props.addPathwayElement) {
                         props.addPathwayElement(input, type).then(({ data }) => {
                             hide();
+                            props.setLoadingButton(false);
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -98,6 +96,7 @@ const enhance = compose(
                     } else if (props.addLessonElement) {
                         props.addLessonElement(input, type).then(({ data }) => {
                             hide();
+                            props.setLoadingButton(false);
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -108,6 +107,7 @@ const enhance = compose(
                     } else if (props.addActivityElement) {
                         props.addActivityElement(input, type).then(({ data }) => {
                             hide();
+                            props.setLoadingButton(false);
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -118,6 +118,7 @@ const enhance = compose(
                     } else if (props.addIntroElement) {
                         props.addIntroElement(input, type).then(({ data }) => {
                             hide();
+                            props.setLoadingButton(false);
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -128,6 +129,7 @@ const enhance = compose(
                     } else if (props.addChildElement) {
                         props.addChildElement(input, type).then(({ data }) => {
                             hide();
+                            props.setLoadingButton(false);
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -138,6 +140,7 @@ const enhance = compose(
                     } else if (props.updateElement) {
                         props.updateElement(input).then(({ data }) => {
                             hide();
+                            props.setLoadingButton(false);
                             if (props.onHide) {
                                 props.onHide();
                             }
@@ -149,10 +152,6 @@ const enhance = compose(
                 }
             });
         },
-        // formatGoToElement: props => element => {
-        //     return 1;
-        //     // return formatAssessmentGoToElement(element, props);
-        // }
     }),
     withProps(props => {
         // console.log(props);
@@ -178,15 +177,16 @@ const enhance = compose(
 // );
 
  const managerDrawerHoc = WrappedComponent => {
-     const aaaa = props => {
-         console.log(props);
+     const PlanElementManagerHOC = props => {
+        //  console.log(props);
          return <>
          <WrappedComponent {...props} />
          <PlanElementSchedule {...props}   />
+         {/* <PlanElementSchedule {...this.props} formItemLayout={formItemLayout} /> */}
          </>
      }
 
-     return enhance(aaaa);
+     return enhance(PlanElementManagerHOC);
  }
 
 export const PlanElementBuilder = managerDrawerHoc(PlanElementBuilderPure);
@@ -196,11 +196,14 @@ const preparePlanElementInput = ({ order, values, type }) => {
     const { brahms, schedule, ...otherProps } = values;
     let input = { schedule, order };
     input.brahms = prepareBrahmsInput(brahms);
-    console.log(type, 'type');
-    console.log(otherProps, 'otherProps');
+    // console.log(type, 'type');
+    // console.log(otherProps, 'otherProps');
     switch (type) {
         case 'checklist':
             input.optionsElement = preparePlanElementChecklistInput(otherProps);
+            break;
+        case 'alias':
+            input.aliasElement = preparePlanElementAliasInput(otherProps);
             break;
         case 'ap':
             input.apElement = preparePlanElementApInput(otherProps);
@@ -255,6 +258,6 @@ const preparePlanElementInput = ({ order, values, type }) => {
             input.treatmentElement = prepareTreatmentInput(otherProps);
             break;
     }
-    console.log(input, 'input');
+    // console.log(input, 'input');
     return input;
 }

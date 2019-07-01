@@ -13,6 +13,7 @@ import {
 import { compose, renderComponent, branch } from 'recompose';
 import { EmptyList } from '../../../../../../../../components/Loading';
 import { AssessmentQuestionValidAnswers } from '../AssessmentQuestion';
+import { AssesmentQuestionElementSelect } from '../../../../../../../../components/Assessment/components/Builder/components/Question/select_inline';
 
 var ScrollElement = Scroll.Element;
 /**
@@ -23,7 +24,7 @@ const AssessmentBody = props => {
     const {assessment, sections=[], loading, ...otherProps} = props;
     const {showAllSections=true, showAllQuestions=true, showBrahms, showValidAnswer} = assessment || {};
 
-    const {isBuilderMode=false, isPreviewMode=false, isCompleted, report, getReport, skippedQuestions=[],skippedByQuestions=[]} = otherProps || {};
+    const {isBuilderMode=false, isPreviewMode=false, currentSectionInOrder, currentQuestionInOrder, increaseCurrentQuestion, isCompleted, report, getReport, skippedQuestions=[],skippedByQuestions=[]} = otherProps || {};
     const {getReportedValues} = getReport || {};
     const sectionsLength = sections.length;
 
@@ -37,10 +38,11 @@ const AssessmentBody = props => {
    
     //const assessmentUpdated = {...assessment, getSections:sections};
     // console.log(props, 'assessment');
+    const currentSection = sections.find((s,i) => i === currentSectionInOrder);
     // show bottom buttons we we can report and not a preview not completed or have only one section or have sections and this is the last one
     const showBottomButtons = (!isBuilderMode && !isPreviewMode && !isCompleted && ((showAllSections && showAllQuestions) && sectionsLength === 1));
     return <React.Fragment>
-
+        {(isBuilderMode && !isPreviewMode && sections.length > 0) && <AssesmentQuestionElementSelect assessment={assessment} section={currentSection} currentInOrder={currentQuestionInOrder} increaseCurrentQuestion={increaseCurrentQuestion} />}
     {/* {isBuilderMode ? <SectionsListWithSortable {...props} useDragHandle getReportedValues={getReportedValues} />:  */}
     <SectionsList {...props} useDragHandle getReportedValues={getReportedValues} />
 

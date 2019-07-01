@@ -56,8 +56,11 @@ const PlanstoreContent = props => {
     //const hasMore = true;
     // console.log(plans);
     const limit = 1;
-    const firstMajor = plans.splice(0, limit);
-    const restPlans = plans.splice(limit);
+
+    // const firstMajor = plans.splice(0, limit);
+    // const restPlans = plans.splice(limit);
+    const restPlans = plans;
+
 
     // console.log(firstMajor);
     // console.log(restPlans);
@@ -83,11 +86,11 @@ const PlanstoreContent = props => {
             />}
             {plans.length > 0 ?
                 <div className={'tour-planstore'}>
-                    <Row gutter={16} style={{ marginBottom: 16 }}>
+                    {/* <Row gutter={16} style={{ marginBottom: 16 }}>
                         {firstMajor.map(plan => {
                             return <Col xs={24 / limit} key={plan.id}><PlanWidget info={plan} wide /></Col>
                         })}
-                    </Row>
+                    </Row> */}
 
                     <InfiniteScroll
                         initialLoad={false}

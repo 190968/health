@@ -2,13 +2,14 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import { Form,Row, Col,Button,Input,Icon } from 'antd';
+import { Form, Comment, Row, Col,Button,Input,Icon } from 'antd';
 import Avatar from '../../../../../User/components/Avatar';
 import messages from './messages';
 
 import {
     injectIntl,
 } from 'react-intl';
+import AvatarWithName from '../../../../../User/components/AvatarWithName';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -35,12 +36,17 @@ class InputBox extends React.Component{
             const { getFieldDecorator } = this.props.form;
         return(
         <Form onSubmit={this.handleSubmit} >
-            <Row type="flex" justify="space-between" align="middle">
-            {/* <Col span={2}>
-                <Avatar info={user}  />
-            </Col> */}
-            <Col span={21}>
-                <FormItem style={{margin:0}}>
+
+
+            <Comment
+                // actions={actions}
+                // author={<AvatarWithName user={user} onlyName/>}
+                avatar={
+                    <AvatarWithName user={user} onlyAvatar/>
+                }
+                content={
+                    <>
+                     <FormItem style={{margin:0}}>
                     {getFieldDecorator('text', {
                         rules: [{ required: true, message:"Input text Please" , whitespace: true }],
                     })(
@@ -52,13 +58,14 @@ class InputBox extends React.Component{
 
                     )}
                 </FormItem>
-            </Col>
-            <Col offset1={1} span={2}>
+                <div style={{textAlign:'right'}}>
                 {
-                    isJoined ? <Button type="primary" size="large" block htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled type="primary"  size="large" htmlType="submit">{intl.formatMessage(messages.post)}</Button>
+                    isJoined ? <Button type="primary" htmlType="submit">{intl.formatMessage(messages.post)}</Button>:<Button disabled   htmlType="submit">{intl.formatMessage(messages.post)}</Button>
+                }</div>
+                    </>
                 }
-            </Col>
-            </Row>
+            />
+
         </Form>
         );
     }

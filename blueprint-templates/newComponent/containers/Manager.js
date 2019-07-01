@@ -39,7 +39,7 @@ const enhance = compose(
 
         const {intl, {{camelCase $moduleName}} } = props;
         const {id} = {{camelCase $moduleName}} || {};
-        const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, {isUpdate: (id && id !== ''), title: '{{pascalCase $moduleName}}'})
+        const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, {isUpdate: (id && id !== ''), title: '{{ name }}'})
         return {
             modalTitle: title
         }

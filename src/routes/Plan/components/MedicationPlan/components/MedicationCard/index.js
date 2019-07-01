@@ -12,7 +12,7 @@ import {MedsI18nEn as messages} from '../../i18n/en';
 
 export const getMedicationTotalPills = ({medication}) => {
     let total = 0;
-    const { type, timesPerDay, quantity, timesPerHour } = medication || {};
+    const { medicationType:type, timesPerDay, quantity, timesPerHour } = medication || {};
     switch(type) {
         case 'at_times':
         return timesPerHour.length;
@@ -42,7 +42,7 @@ export const getMedicationReportedPills = ({medication}) => {
 }
 export const getMedicationQuantity = ({medication}) => {
     let total = 0;
-    const { type, timesPerDay, quantity, timesPerHour } = medication || {};
+    const { meedicationType:type, timesPerDay, quantity, timesPerHour } = medication || {};
     switch(type) {
         case 'at_times':
         if (timesPerHour && timesPerHour.length > 0) {
@@ -56,11 +56,11 @@ export const getMedicationQuantity = ({medication}) => {
     return total;
 }
 
-const getMedicationPrescription = ({medication}) => {
+export const getMedicationPrescription = ({medication}) => {
     let prescription = 'Take ';
-    const { type, drug, timesPerDay, quantity, timesPerHour } = medication || {};
-    const { name, dosage, form } = drug;
-    switch(type) {
+    const { medicationType, drug, timesPerDay, quantity, timesPerHour=[] } = medication || {};
+    const { name, dosage, form } = drug || {};
+    switch(medicationType) {
         case 'at_times':
         // if (timesPerHour && timesPerHour.length > 0) {
         //     total = timesPerHour[0].quantity;

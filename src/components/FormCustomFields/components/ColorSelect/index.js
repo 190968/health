@@ -8,7 +8,9 @@ const colors = [
     '#ca453a',
     '#8e5c9a',
     '#efc65d',
-    '#a8a9ad'
+    '#a8a9ad',
+    '#281784',
+    '#000000',
 ]
 
 const ColorItemPure = props => {
@@ -26,9 +28,10 @@ const ColorItem = enhance(ColorItemPure);
 const ColorSelect = props => {
     const {value, onChange} = props;
     let colorsToUse = colors;
-    if (!colors.includes(value)) {
+    if (value && !colors.includes(value)) {
         colorsToUse.push(value);
     }
+    console.log(colorsToUse, 'colorsToUse');
     return <div className={'color-select'}>{colors.map(c=> <ColorItem key={c} color={c} value={value} onChange={onChange} />)}</div>;
 }
 

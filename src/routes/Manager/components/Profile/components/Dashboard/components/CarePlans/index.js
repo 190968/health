@@ -1,12 +1,11 @@
 import React from 'react';
 import {Card, Table, Progress} from 'antd';
 import Truncate from 'react-truncate';
-import moment from 'moment';
-import { Link } from 'react-router-dom';
 import SettingsDropdown from '../../../../../../../../components/UI/SettingsDropdown';
 import { UserPlanDeleteButton } from '../../../../../../../Plan/components/Buttons/containers/UserPlanDeleteButton';
 import CardExtras from '../../../../../../../../components/Card';
 import { getTableDateProps } from '../../../../../../../../components/Tables/TableColumn';
+import { PlanLink } from '../../../../../../../../components/Plan/components/Link';
 
 export const UserActionPlansTable = props => {
 
@@ -14,10 +13,12 @@ export const UserActionPlansTable = props => {
     const total = plans.length;
     const columns = [{
         title: 'Title',
-        dataIndex: 'title',
+        // dataIndex: 'title',
         key: 'title',
-        render: (title, plan) => {
-            return <Link to={'/plan/'+plan.id} style={{width:'100%', display:'inline-block'}}><Truncate >{title}</Truncate></Link>
+        render: (info) => {
+            const {plan} = info || {};
+            const {title} = plan || {};
+            return <PlanLink plan={plan} userPlan={info} label={title}  style={{width:'100%', display:'inline-block'}}/>
         },
     },
         {
@@ -47,7 +48,7 @@ export const UserActionPlansTable = props => {
             title: '',
             key: 'actions',
             width:50,
-            render: (title, info) => {
+            render: (info) => {
                 const {id, plan} = info;
                 let items = [];
                 //items.push({key:'edit', content: <Link to={'/pb/'+plan.id}>Edit</Link>});
@@ -57,11 +58,12 @@ export const UserActionPlansTable = props => {
             },
         },
     ];
-    const dataSource = plans.map((info, i) => {
-        const {id, plan} = info;
+    const dataSource = plans
+    // plans.map((info, i) => {
+    //     const {id, plan} = info;
 
-        return {id, title: plan.title, key:i};
-    });
+    //     return {id, title: plan.title, key:i};
+    // });
     const pageOpts = {
         //onChange: changePage,
         pageSize:5,
@@ -85,7 +87,7 @@ export const UserActionPlansTable = props => {
 
 
     return (<Card type="table" title={'Plans Of Care '+ (total > 0 ? ' ('+total+')' : '')} extra={extra} >
-            <Table size="middle" dataSource={dataSource} columns={columns} pagination={pageOpts} loading={loading} />
+            <Table size="middle" dataSource={dataSource} rowKey={'id'} columns={columns} pagination={pageOpts} loading={loading} />
         </Card>)
 }
 

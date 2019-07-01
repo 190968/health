@@ -2,17 +2,19 @@
 import { compose, withStateHandlers } from 'recompose';
 import { validateBrahms, getNextObjectFromRules } from '../Brahms/utils';
 import { formatPlanElementByTitle } from '../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementSelect';
+import { getTipBoxTypeLabel } from '../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/components/TipboxElementBuilder';
 
 export const getPlanElementLabelFromElement = (element, props={}) => {
     const {itemInfo:item={}, type, typeText} = element || {};
-    const {itemType = type} = element || {};
+    const {itemType = type, footnote} = element || {};
     let {isBuilderMode=false, isPreviewMode=false, showType=true} = props;
     const isBuilderNotPreviewMode = !isPreviewMode && isBuilderMode;
     let fieldTitle = '';
-    console.log(type);
+    // console.log(element, 'elementelementelementelement');
+    // console.log(type);
     let prefix = itemType !== 'media' ? formatPlanElementByTitle({type}) : '';
-    console.log(prefix, 'prefix');
-    console.log(element, item);
+    // console.log(prefix, 'prefix');
+    // console.log(element, item);
     switch(itemType) {
         default: break;
         case 'measurement_input':
@@ -59,9 +61,10 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             }
             break;
         case 'instruction_tipbox':
-            if (showType || isBuilderNotPreviewMode) {
-                fieldTitle = 'Tipbox';
-            }
+            const {tipType} = item || {};
+            //if (showType || isBuilderNotPreviewMode) {
+                fieldTitle = getTipBoxTypeLabel(tipType);//'Tip';
+            //}
             break;
         case 'link':;
             fieldTitle = item.label;
@@ -92,12 +95,15 @@ export const getPlanElementLabelFromElement = (element, props={}) => {
             break;
 
     }
-    console.log(showType, 'showType');
-    console.log(isBuilderMode, 'isBuilderMode');
+    // console.log(showType, 'showType');
+    // console.log(isBuilderMode, 'isBuilderMode');
     if (showType && isBuilderMode) {
         fieldTitle = prefix+(fieldTitle !== '' ? ' – ' : '')+ fieldTitle;
     }
-    console.log(fieldTitle, 'fieldTitle');
+    // if (footnote) {
+    //     fieldTitle 
+    // }
+    // console.log(fieldTitle, 'fieldTitle');
     return fieldTitle;
 }
 
@@ -133,7 +139,7 @@ export const planElementCanHaveBrahms = ({element}) => {
 export const withPlanElementSkippedElements = compose(
     // // withSpinnerWhileLoading,
     withStateHandlers(props => {
-        console.log(props, 'propspropspropsprops');
+        // console.log(props, 'propspropspropsprops');
         const {items=[], mode} = props;// sections or lessons
         let getReportedValues = [];
         let skippedElementsByRef = {};
@@ -141,10 +147,6 @@ export const withPlanElementSkippedElements = compose(
         let brahmRules = [];
         let rules = [];
 
-
-        if (mode === 'section') {
-            // items.map()
-        }
         // now check if we need to skip elements according to our reported elements
         // if we have report
         if (mode === 'section') {
@@ -159,7 +161,7 @@ export const withPlanElementSkippedElements = compose(
             //         // if we have reports go to rules
                     const questionReports = reports || [];//getReportedValues.filter(report => report.questionId === question.id);
                     let questionRules = [];
-                    console.log(questionReports);
+                    // console.log(questionReports);
                     questionReports.map(questionReport => {
                         const { answerId, value } = questionReport || {};
                         let goTorules = [];
@@ -241,8 +243,8 @@ export const withPlanElementSkippedElements = compose(
             // map sections for answers
             
         }
-        console.log(skippedElementsByRef);
-        console.log(brahmRules);
+        // console.log(skippedElementsByRef);
+        // console.log(brahmRules);
         return {
             brahmRules,
             // elements,
@@ -281,7 +283,8 @@ export const withPlanElementSkippedElements = compose(
 );
 export const prepareSkippedPlanElementsByNextId = (props) => {
     //  console.log(props);
-    const { elements, currentId, nextId, plan, mode } = props;
+    const { elements, nextId, mainLevelElement, plan, mode } = props;
+    let {currentId} = props;
     // find current and next Question
     let doCollection = false;
     let questionsToSkip = [];
@@ -328,15 +331,21 @@ export const prepareSkippedPlanElementsByNextId = (props) => {
         let sectionsByElementsToSkip = {};
         elementsToSkip[currentId] = questionsToSkip;
         sectionsByElementsToSkip[currentId] = skipToSectionQuestion;
-        console.log(sectionsByElementsToSkip, 'sectionsByElementsToSkip');
+        // console.log(sectionsByElementsToSkip, 'sectionsByElementsToSkip');
         return { elementsToSkip, sectionsByElementsToSkip, questionsToSkip };
-
-
-
-
-
-
     } else {
+        console.log(mainLevelElement, 'mainLevelElement');
+        console.log(currentId, 'currentId');
+        const {id:mainLevelElementId} = mainLevelElement || {};
+        if (mainLevelElementId !== currentId) {
+            // if main level is not the same as current Id, then use main Level
+            //console.log('')
+            currentId = mainLevelElementId;
+        }
+        // search if we have element
+        console.log(elements, 'elements to map');
+        console.log(nextId, 'nextId');
+        console.log(currentId, 'currentId');
         console.log(props);
         elements.map((question, questionI) => {
             // if this is the current question - start to collect skipped questions
@@ -355,6 +364,7 @@ export const prepareSkippedPlanElementsByNextId = (props) => {
             }
         });
 
+        console.log(questionsToSkip);
         let elementsToSkip = {};
         elementsToSkip[currentId] = questionsToSkip;
         return { elementsToSkip, sectionsByElementsToSkip: {} };
@@ -371,7 +381,11 @@ export const filterSkippedPlanElements = (elements, skippedElementsByRef) => {
         const skippedByElement = skippedElementsByRef[qid];
         skippedElements = [...skippedElements, ...skippedByElement];
     }
-    const newElements = elements.filter(({id}) => !skippedElements.includes(id))
+    let newElements = [];
+    if (elements && elements.length > 0) {
+        newElements = elements.filter(({id}) => !skippedElements.includes(id));
+    }
+    
     return newElements;
 }
 
@@ -436,44 +450,41 @@ export const formatPlanGoToElement = (elementId, props) => {
     
     
 }
-// export const handleOnClickPlanbrahms = props => {
-//     const {valueToUse, getBrahmsRules, isAnswerBasedQuestion} = props;
-//     let {skippedElementsByRef} = props;
-//     let rules = [];
-//     let goTorules = [];
-//     // if this is an array, then do the loop
-//     if (Array.isArray(valueToUse)) {
-//         for (var key in valueToUse) {
-//             const valueToUseFromArray = valueToUse[key];
-//             //
-//             rules = validateBrahms({ rules: getBrahmsRules, value: valueToUseFromArray, isAnswerBasedQuestion });
-//             if (rules.length > 0) {
-//                 questionRules = [...questionRules, ...rules];
-//             }
-//             // goto
-//             const goTorulesFromArray = validateBrahms({ rules: getBrahmsRules, value: valueToUseFromArray, isAnswerBasedQuestion, type: ['goto','stop'] });
-//             if (goTorulesFromArray.length > 0) {
-//                 goTorules = [...goTorules, ...goTorulesFromArray];
-//             }
-//         }
-//     } else {
-//         rules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion });
-//         // save brahms
-//         if (rules.length > 0) {
-//             questionRules = [...questionRules, ...rules];
-//         }
-//         // goto
-//         goTorules = validateBrahms({ rules: getBrahmsRules, value: valueToUse, isAnswerBasedQuestion, type: ['goto','stop'] });
-//     }
 
-//     if (goTorules.length > 0) {
-//         // find answer
-//         // find next skipped item
-//         const nextQuestionId = getNextObjectFromRules({ rules: goTorules });
-//         const { questionsToSkip: goToquestionsToSkip, skipToSectionQuestion: goToskipToSectionQuestion } = prepare({ getSections, currentQuestionId: id, nextQuestionId })
-//         skippedByQuestions[id] = goToquestionsToSkip;
-//         skipSectionQuestion[id] = goToskipToSectionQuestion;
-//     }
+export const checkIfPlanElementIsInput = ({element, type, includeAlias=false}) => {
+    const {itemType=type} = element || {};
+    let isInput = false;
+    if (includeAlias) {
+        // include alias if we have the first item as go to and we should stop untill we click on the button
+        switch(itemType) {
+            case 'alias':
+            case 'condition':
+                return true;
+        }
+        // if (itemType === 'alias') {
+        //     return true;
+        // }
+    }
+    switch(itemType) {
+        // default: break;
+        case 'measurement_input':
+        case 'choice_input':
+        case 'checklist':
+        case 'radio_input':
+        case 'text_input':
+        case 'dropdown_input':
+        case 'condition':
+        case 'decision':
+        case 'scale_input':
+        case 'file_input':
+        //case 'alias':
+        //case 'exam_input':
+        isInput = true;
+        break;
+    }
+    return isInput;
+}
 
-//     return {skippedElementsByRef}
-// }
+export const canUsePlanElementNextButton = props => {
+    return true;
+}

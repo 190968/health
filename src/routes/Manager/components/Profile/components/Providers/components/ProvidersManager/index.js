@@ -22,7 +22,7 @@ const ProvidersManager = ({form, formItemLayout, targetKeys, selectedKeys, handl
         >
             {getFieldDecorator('providerId', {})(
 
-                <ProviderSelect />
+                <ProviderSelect getFullInfo={false} />
             )}
         </FormItem>
 

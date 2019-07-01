@@ -7,6 +7,8 @@
     > .ant-menu-item {
         background: #fff;
         padding-left:20px;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
     }
     > .ant-menu-submenu {
         margin-top:16px;
@@ -14,29 +16,37 @@
             margin-top:0;
         }
 
+        // .ant-menu-item-label {
+        //     background: red;
+        // }
+
         &.tour-planmenu-activities {
             .ant-menu-submenu-title {
                 background: #1da1ff;
                 background: #f7983f;
-                background: #8a3ff7;
-            }
-            .ant-menu-item-selected {
-                color: #8a3ff7;
-                &::after {
-                    border-right-color: #8a3ff7;
-                }
-            }
-        }
-
-        &.tour-planmenu-lessons {
-            .ant-menu-item:hover {
-                color: #8dc800;
-                color: #4dd422;
+                background: #4dd422;
             }
             .ant-menu-item-selected {
                 color: #4dd422;
                 &::after {
                     border-right-color: #4dd422;
+                }
+            }
+        }
+
+        &.tour-planmenu-lessons {
+            .ant-menu-submenu-title {
+                background: #ff7a45;
+            }
+            .ant-menu-item:hover {
+                color: #8dc800;
+                color: #4dd422;
+                color: #ff7a45;
+            }
+            .ant-menu-item-selected {
+                color: #ff7a45;
+                &::after {
+                    border-right-color: #ff7a45;
                 }
             }
         }
@@ -74,6 +84,23 @@
 
     .ant-menu-item {
         margin:0;
+        min-height: auto;
+        height: auto;
+        white-space:normal;
+        overflow: initial;
+        min-height: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        line-height: 1.2em;
+        i {
+            float:left;
+        }
+        .ant-menu-item-label {
+            margin-left:25px;
+            line-height: 1.5em;
+            display: block;
+            margin-top:-3px;
+        }
     }
     .ant-menu-item-selected {
         background: transparent;

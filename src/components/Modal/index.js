@@ -104,11 +104,18 @@ export const Spinner = () =>
     //<Modal visible={true} footer={false} closable={false} width={50}>
     <center style={{lineHeight:'10em'}}><Spin indicator={antIcon} /></center>
     //</Modal>;
+export const ModalSpinner = () => <Modal className={'transparent'} centered visible={true} footer={false} closable={false} width={50}><center><Spinner /></center></Modal>
 
 const isLoading = ({ loading=false }) => loading;
+
 export const withSpinnerWhileLoading = branch(
     isLoading,
     renderComponent(Spinner)
+);
+
+export const withModalSpinnerWhileLoading = branch(
+    isLoading,
+    renderComponent(ModalSpinner)
 );
 // const enhance = compose(
 //     withSpinnerWhileLoading

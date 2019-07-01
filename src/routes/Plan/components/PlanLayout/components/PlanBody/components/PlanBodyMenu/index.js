@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Truncate from 'react-truncate';
 import { Menu, Icon } from 'antd';
 import { withApollo } from 'react-apollo';
 import AddLessonModal from '../../../../../../../Manager/components/Planbuilder/components/BuildBody/containers/AddLessonModal';
@@ -13,7 +13,7 @@ const SubMenu = Menu.SubMenu;
 
 const menuItem = item => {
     //console.log(item);
-    return <React.Fragment>{item.completed ? <Icon type="check" /> : <i className="anticon anticon-circle"><svg viewBox="64 64 896 896"  width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path></svg></i>}{item.title}</React.Fragment>
+    return <React.Fragment>{item.completed ? <Icon type="check" /> : <i className="anticon anticon-circle"><svg viewBox="64 64 896 896"  width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path></svg></i>} <span className={'ant-menu-item-label'}><Truncate lines={2}>{item.title}</Truncate></span></React.Fragment>
 }
 
  const PlanBodyMenuPure = props => {
@@ -42,7 +42,7 @@ const menuItem = item => {
             {isBuilderMode && <Menu.Item key='introduction' style={{marginBottom:0, textAlign:'center'}} >  Introduction</Menu.Item>}
 
             {((isBuilderMode && !isPreviewMode) || lessons.length > 0) && 
-                <SubMenu key="lessons" className={'tour-planmenu-lessons'} title={<span>{/*<Icon type="info-circle-o" />*/}Know It{/*<GetGlobalLabel type="lessons" />*/}</span>}>
+                <SubMenu key="lessons" className={'tour-planmenu-lessons'} title={<span>{/*<Icon type="info-circle-o" />*/}Know It!{/*<GetGlobalLabel type="lessons" />*/}</span>}>
                     {lessons.map((lesson, i) => (<Menu.Item key={'lessons_'+i} i={i}>{menuItem(lesson)}</Menu.Item>))}
                     {isBuilderMode && !isPreviewMode && <Menu.Item key='addLesson' style={{marginBottom:0}} > <span className={'link dashed'} style={{marginLeft:24}} > Add a <GetGlobalLabel type="lesson" /></span></Menu.Item>}
                 </SubMenu>}
@@ -98,10 +98,10 @@ const enhance = compose(
             // console.log(currentTab);
             onClick(currentTab, e.item.props.index);
         },
-        openLast: props => () => {
-            const {currentTab, onClick, activities, lessons} = props;
+        openLast: props => (currentTab) => {
+            const {onClick, activities, lessons} = props;
             let {currentKeyI} = props;
-            // console.log(props);
+            // console.log(currentTab, 'currentTab');
             switch (currentTab) {
                 case 'lessons':
                     currentKeyI = lessons.length-1;
@@ -112,6 +112,7 @@ const enhance = compose(
                     props.setOpenAddSection(false);
                     break;
             }
+            // console.log(currentTab, 'currentTab');
             // console.log(currentKeyI, 'currentKeyI');
             onClick(currentTab, currentKeyI);
         }

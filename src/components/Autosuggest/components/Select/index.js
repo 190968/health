@@ -27,9 +27,35 @@ const SelectPure = props => {
     } else {
         options = items.map(d => <Option key={valueFormat(d)}>{labelFormat(d)}</Option>);
     }
-    // console.log(props, 'value')
-    //console.log(value, 'Select value')
 
+   
+    if (labelInValue) {
+        // check if we have this item in the array
+        if (Array.isArray(value)) {
+
+            value.map(v => {
+                const {key, label} = v;
+                const existingItem = items.find(i => i.id === key);
+                if (!existingItem) {
+                    options.push(<Option key={key}>{label}</Option>);
+                }
+                return null;
+            });
+
+        } else {
+            // console.log(value, 'value');
+            const {key, label} = value || {};
+            if (key) {
+                const existingItem = items.find(i => i.id === key);
+                // console.log(existingItem, 'existingItem');
+                if (!existingItem) {
+                    options.push(<Option key={key}>{label}</Option>);
+                }
+            }
+        }
+    }
+
+    console.log(options);
     return (<AntdSelect 
         style={{ width: '100%' }}
         {...otherProps}
@@ -59,6 +85,7 @@ const withFullValue = compose(
     withProps(props => {
         return {
             labelInValue:true,
+            // items
         };
     }),
     // from object to value
@@ -75,6 +102,7 @@ const withFullValue = compose(
             }
             let option = undefined;
             // console.log(value);
+            // console.log(items);
             // console.log(Array.isArray(value));
             if (Array.isArray(value)) {
 
@@ -104,7 +132,7 @@ const withFullValue = compose(
                 });
                 
             }
-            console.log(option);
+            // console.log(option);
             props.onChange(option);
             props.setValue(value);
         },
@@ -182,7 +210,7 @@ const enhance = compose(
             // if (props.onSelect) {
             //     props.onSelect(value);
             // }
-            //console.log(value);
+            // console.log(value);
             props.onChange(value);
             props.setValue(value);
         },

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Button, Tooltip, Icon, Popconfirm} from 'antd'
+import {Input, Tooltip, Icon, Popconfirm} from 'antd'
 import {compose, withHandlers, renderComponent, renderNothing, branch} from 'recompose';
 import './index.less';
 
@@ -38,7 +38,7 @@ const BlankComponent = props => {
     const {CustomComponent, minOptions=1, options, deleteOption, ...otherProps} = props;
     // const {value, index} = otherProps;
     return <div className={'custom-option-line'}>
-            <div className={'option-component'}><CustomComponent {...otherProps} /></div>
+            <div className={'option-component'}>{CustomComponent ? <CustomComponent {...otherProps} /> : <Input />}</div>
             {/* {options.length > minOptions && <div className={'delete-line'}><DeleteLine onClick={deleteOption} /></div>} */}
             <div className={'delete-line'}><DeleteLine onClick={deleteOption} {...otherProps} /></div>
         </div>;

@@ -48,7 +48,7 @@ export const EmptyList = (props) => {
         return <div className="ant-list-empty-text">{children}</div>
     }
     console.log(children, 'childrenchildrenchildren');
-    if (children.length > 1) {
+    if (Array.isArray(children) && children.length > 1) {
         
         const text = children[0];
         children = children.filter((c,i) =>i>0);

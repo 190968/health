@@ -8,6 +8,7 @@ import {TumorboardSimpleFragment} from "../../../Tumorboard/containers/Tumorboar
 import {PlanCardFragment, UserPlanFragment} from "../../../../../Plan/components/Plan/fragments";
 import { VisitInfoFragment } from '../Visits/fragments';
 import { TransitionInfoFragment } from '../Transitions/queries';
+import { DischargePlanFragment } from '../../../../../../components/Plan/components/DischargePlan/fragments';
 
 export const TimelineElementActivityFragment  = gql`
     fragment TimelineElementActivity on TimelineElement {
@@ -15,6 +16,7 @@ export const TimelineElementActivityFragment  = gql`
             ... on TimelineElementBasic {
               id
               text
+              extraDetails
               __typename
             }
             ... on PlanElementLink {
@@ -41,6 +43,9 @@ export const TimelineElementActivityFragment  = gql`
             }
             ... on Plan {
                 ...PlanCardInfo
+            }
+            ... on DischargePlan {
+                ...DischargePlan
             }
              ... on UserPlan {
                 ...UserPlanInfo
@@ -71,6 +76,7 @@ export const TimelineElementActivityFragment  = gql`
      ${ElementMediaFragment}
      ${TransitionInfoFragment}
      ${VisitInfoFragment}
+     ${DischargePlanFragment}
      
 `;
 

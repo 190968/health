@@ -45,11 +45,11 @@ const DiscussionListItem = props => {
     const {totalCount} = replies || {};
 
     const actions = [/*<IconText type="clock-circle-o" text={moment(createdAt || replyCreatedAt).format('lll')} />,*/<IconText type="eye-o" text={views} />, <IconText type="like-o" text="0" />, <Link to={'/community/discussion/' + id} style={{color: 'inherit'}}><IconText type="message" text={totalCount} /></Link>];
-    return <List.Item><Comment
+    return <List.Item><Comment 
     actions={actions}
     author={title}
     avatar={<Avatar user={replyAuthor || author}/>}
-    content={lastReply.text || discussion.text}
+    content={<Link to={'/community/discussion/' + id}>{lastReply.text || discussion.text}</Link>}
     datetime={moment(createdAt || replyCreatedAt).format('lll')}
   /></List.Item>;
     // return <List.Item key={id}

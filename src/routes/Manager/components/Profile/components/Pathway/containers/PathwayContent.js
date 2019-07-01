@@ -1,7 +1,8 @@
 import PathwayContentPure from '../components/PathwayContent';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import {compose} from 'recompose';
+import {compose, withState} from 'recompose';
+import { withSpinnerWhileLoading } from '../../../../../../../components/Modal';
 export const GET_USER_PATHWAY_QUERY  = gql`
  query GET_USER_PATHWAY ($userId: UID!) {
   getUserPathway (userId: $userId) {
@@ -19,7 +20,7 @@ export const GET_USER_PATHWAY_QUERY  = gql`
 }
 `;
 
-const withQuery = graphql(GET_USER_PATHWAY_QUERY, {
+export const withUserPathwayQuery = graphql(GET_USER_PATHWAY_QUERY, {
     options: (ownProps) => {
         return {
             variables: {
@@ -28,21 +29,19 @@ const withQuery = graphql(GET_USER_PATHWAY_QUERY, {
         }
     },
     props: ({ data }) => {
-        const userPathway =  data.getUserPathway || {};
+        const {refetch} = data;
+        const userPathway = data.getUserPathway || {};
         const {pathway} = userPathway || {};
-        if (data.getUserPathway || !data.loading) {
-            return {
-                userPathway: userPathway,
-                pathway,
-                //pathwayId: data.getUserPathway.pathway.id,
-                loading: data.loading
-            }
-        }
-        else {
-            return {loading: data.loading}
+        return {
+            userPathway,
+            pathway,
+            refetch,
+            loading: data.loading
         }
     },
 });
+
+
 
 
 
@@ -75,6 +74,11 @@ const JOIN_PATHWAY_MUTATION = gql`
             pathway {
                 id
                 title
+                version
+                cancer {
+                    id
+                    title
+                }
             }
         }
     }
@@ -95,10 +99,44 @@ const withJoinMutation = graphql(JOIN_PATHWAY_MUTATION, {
 });
 
 const enhance = compose(
-    withQuery,
+    withUserPathwayQuery,
+    withSpinnerWhileLoading,
+    withState('userPathway', 'setUserPathway', props => props.userPathway),
     withMutation,
     withJoinMutation
 );
 
 const PathwayContent = enhance(PathwayContentPure);
 export default PathwayContent;
+
+
+// const GET_USER_PATHWAY_BY_ID_QUERY  = gql`
+//  query GET_USER_PATHWAY_BY_ID ($id: UID!) {
+//   getPathway (id: $id) {
+//         id
+//         title
+//         version
+//         cancer {
+//             id
+//             title
+//         }
+//   }
+// }
+// `;
+
+// export const withUserPathwayByIdQuery = graphql(GET_USER_PATHWAY_BY_ID_QUERY, {
+//     options: (ownProps) => {
+//         return {
+//             variables: {
+//                 id: ownProps.pathway.id,
+//             },
+//         }
+//     },
+//     props: ({ data }) => {
+//         const {pathway} = data || {};
+//             return {
+//                 pathway,
+//                 loading: data.loading
+//             }
+//     },
+// });

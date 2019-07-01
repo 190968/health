@@ -1,6 +1,6 @@
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-import { PlanElementPureFragment } from '../../../../routes/Plan/components/Plan/fragments';
+import { PlanElementPureFragment, PathwayConnectedElementsFragment } from '../../../../routes/Plan/components/Plan/fragments';
 import { withAddIntroMutation, withAddSectionMutation, withAddLessonMutation, withAddPathwayMutation } from '../../../../routes/Plan/components/PlanLayout/components/PlanElementBuilder/mutations';
 import {compose, branch } from 'recompose';
 import { withPlanAddChildElementMutation } from '../../../../routes/Plan/components/PlanLayout/components/PlanElement/components/PlanElementChildrenList/containers/PlanElementChildrenManager';
@@ -104,6 +104,9 @@ export const PathwayElementsFragment =  gql`
    }
     ${PlanElementPureFragment}
  `;
+
+
+
 export const PlanLessonElementsFragment =  gql`
    fragment PlanLessonElements on PlanBodyLesson {
         id
@@ -136,8 +139,8 @@ export const PlanIntroElementsFragment =  gql`
 
 
 const UpdatePlanElementsOrder_QUERY = gql`
-    mutation updatePlanElementsOrder($planId: UID!, $mode: String!, $ids: [UID]! $lessonId: UID ) {
-        updatePlanElementsOrder(planId:$planId, mode: $mode, ids: $ids, id:$lessonId)
+    mutation updatePlanElementsOrder($planId: UID!, $mode: String!, $ids: [UID]! $lessonId: UID, $parentId: UID, $parentOptionId: UID ) {
+        updatePlanElementsOrder(planId:$planId, mode: $mode, ids: $ids, id:$lessonId, parentId: $parentId, parentOptionId: $parentOptionId)
     }
 `;
 
@@ -145,11 +148,12 @@ const UpdatePlanElementsOrder_QUERY = gql`
 export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrder_QUERY, {
     props: ({ownProps, mutate}) => ({
         updateElementsOrder: (ids, elements) => {
-            // console.log(ownProps);
-            const {lesson, section, plan, mode} = ownProps;
+            // console.log(ownProps, 're-order elements');
+            const {lesson, section, plan, mode, parentElement, parentValue:parentOptionId} = ownProps;
             const {id:lessonId=null} = lesson || {};
             const {id:sectionId=null} = section || {};
             const {id:planId} = plan || {};
+            const {id:parentId} = parentElement || {};
             let id = null;
             if (lesson) {
                 id = lessonId;
@@ -159,7 +163,7 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
             }
 
             return mutate({
-                variables: {planId, mode, ids, id},
+                variables: {planId, mode, ids, id, parentId, parentOptionId},
                 optimisticResponse: {
                     __typename: "Mutation",
                     updatePlanElementsOrder: {
@@ -168,32 +172,63 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
                 },
                 update: (client, { data: { planElementReport } }) => {
                     const {mode, plan} = ownProps;
-                    console.log(elements, mode);
+                    // console.log(elements, mode);
                     if (mode === 'pathway') {
-                        // if it's pathway - remov
-                        let pathway = client.readFragment({
-                            id: 'Pathway:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
-                            fragment: PathwayElementsFragment,
-                            fragmentName: "PathwayElements",
-                        });
+                        if (parentId) {
+                            let pathway = client.readFragment({
+                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: PathwayConnectedElementsFragment,
+                                fragmentName: "PathwayConnectedElements",
+                            });
+                            // if we have parent elements, remove from connected elements
+                            let {getConnectedElements=[]} = pathway || {};
+                            // console.log(getConnectedElements, 'getConnectedElements');
+                            // console.log(parentId, 'parentId');
+                            // console.log(parentOptionId, 'parentOptionId');
+                            // remove connected children of this element and option ID
+                            getConnectedElements = getConnectedElements.filter(element =>  {
+                                return !(element.parentId === parentId && element.parentValue === parentOptionId);
+                            });
+                            // console.log(getConnectedElements, 'getConnectedElements');
 
-                        const newPathway = {
-                            ...pathway,
-                            elements: elements,
-                            __typename:'Pathway'
+                            elements.forEach(el => {
+                                getConnectedElements.push({
+                                    parentId,
+                                    parentValue:parentOptionId,
+                                    element:el,
+                                    "__typename": "PlanBodyConnectedElement"
+                                });
+                            })
+                            getConnectedElements = getConnectedElements.length > 0 ? getConnectedElements : [];
+                            // console.log(getConnectedElements, 'getConnectedElements');
+                            client.writeFragment({
+                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: PathwayConnectedElementsFragment,
+                                fragmentName: "PathwayConnectedElements",
+                                data: {
+                                    ...pathway,
+                                    getConnectedElements: getConnectedElements,
+                                    __typename: 'Pathway'
+                                },
+                            });
+                        } else {
+                            // update elements for pathway
+                            let pathway = client.readFragment({
+                                id: 'Pathway:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: PathwayElementsFragment,
+                                fragmentName: "PathwayElements",
+                            });
+                            client.writeFragment({
+                                id: 'Pathway:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: PathwayElementsFragment,
+                                fragmentName: "PathwayElements",
+                                data: {
+                                    ...pathway,
+                                    elements: elements,
+                                    __typename:'Pathway'
+                                },
+                            });
                         }
-                        console.log(pathway);
-                        console.log(newPathway);
-                        client.writeFragment({
-                            id: 'Pathway:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
-                            fragment: PathwayElementsFragment,
-                            fragmentName: "PathwayElements",
-                            data: {
-                                ...pathway,
-                                elements: elements,
-                                __typename:'Pathway'
-                            },
-                        });
                     } else if (mode === 'lesson') {
                         const lessonId = id;
                         // if it's pathway - remov
@@ -203,8 +238,8 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
                             fragmentName: "PlanLessonElements",
                         });
 
-                        console.log(pathway,'lessons');
-                        console.log(elements,'lessonselements');
+                        // console.log(pathway,'lessons');
+                        // console.log(elements,'lessonselements');
                         client.writeFragment({
                             id: 'PlanBodyLesson:'+lessonId, // `id` is any id that could be returned by `dataIdFromObject`.
                             fragment: PlanLessonElementsFragment,
@@ -236,14 +271,14 @@ export const withUpdatePlanElementsOrderMutation = graphql(UpdatePlanElementsOrd
                             },
                         });
                     } else if (mode == 'introduction') {
-                            console.log(elements);
+                            // console.log(elements);
                             // if it's pathway - remov
                             let pathway = client.readFragment({
                                 id: 'Plan:'+planId, // `id` is any id that could be returned by `dataIdFromObject`.
                                 fragment: PlanIntroElementsFragment,
                                 fragmentName: "PlanIntroElements",
                             });
-                            console.log(pathway);
+                            // console.log(pathway);
 
 
                             client.writeFragment({
@@ -301,13 +336,13 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
              const {id:planId} = plan || {};
              const {id} = element || {};
              let refetchQueries = [];
-             console.log(ownProps);
-             if (parentId) {
-                refetchQueries.push({
-                    query: PLAN_ELEMENT_CHILDREN_QUERY,
-                    variables: {id:parentId, planId, elementValue:parentValue}
-                });
-            }
+            //  console.log(ownProps);
+            //  if (parentId) {
+            //     refetchQueries.push({
+            //         query: PLAN_ELEMENT_CHILDREN_QUERY,
+            //         variables: {id:parentId, planId, elementValue:parentValue}
+            //     });
+            // }
             switch(mode) {
                 case 'lesson':
                     const {lesson} = ownProps;
@@ -317,7 +352,7 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
                             variables: {id:planId, lessonId}
                         });
                     break;
-                case 'activity':
+                case 'section':
                     const {section} = ownProps;
                     const {id:sectionId} = section || {};
                     refetchQueries.push({
@@ -326,7 +361,7 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
                     });
                     break;
             }
-            console.log(refetchQueries);
+            // console.log(refetchQueries);
 
             const hide = message.loading('Deleting...');
             return mutate({
@@ -336,43 +371,52 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
                     const {mode, plan, parentId} = ownProps;
                     hide();
                     // console.log(parentId);
-                    if (parentId) {
-                        // update element
-                        let pathway = client.readFragment({
-                            id: 'PlanBodyElement:' + parentId, // `id` is any id that could be returned by `dataIdFromObject`.
-                            fragment: planElementChildrenFragment,
-                            fragmentName: "PlanBodyElements",
-                        });
+                    if (mode === 'pathway') {
+                        // updating pathway element
+                        
+                        let pathway;
+                        if (parentId) {
+                            pathway = client.readFragment({
+                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: PathwayConnectedElementsFragment,
+                                fragmentName: "PathwayConnectedElements",
+                            });
+                            // if we have parent elements, remove from connected elements
+                            let {getConnectedElements=[]} = pathway || {};
+                            // console.log(getConnectedElements, 'getConnectedElements');
+                            // console.log(parentId, 'parentId');
+                            // console.log(parentValue, 'parentValue');
+                            // mayee need to add also the value, as we remove from option as well
+                            getConnectedElements = getConnectedElements.filter(element =>  {
+                                if (element.parentId !== parentId && element.parentValue !== parentValue) {
+                                    return true;
+                                } else {
+                                    return element.element.id !== id;
+                                }
+                            });
+                            getConnectedElements = getConnectedElements.length > 0 ? getConnectedElements : [];
+                            // console.log(getConnectedElements, 'getConnectedElements');
+                            client.writeFragment({
+                                id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: PathwayConnectedElementsFragment,
+                                fragmentName: "PathwayConnectedElements",
+                                data: {
+                                    ...pathway,
+                                    getConnectedElements: getConnectedElements,
+                                    __typename: 'Pathway'
+                                },
+                            });
 
-                        console.log(pathway);
-                        // let {childrenElements:elements} = pathway;
-                        // elements = elements.filter(element => element.id !== id);
-                        // elements = elements.length > 0 ? elements : [];
-                        //
-                        // client.writeFragment({
-                        //     id: 'PlanBodyElement:' + parentId, // `id` is any id that could be returned by `dataIdFromObject`.
-                        //     fragment: planElementChildrenFragment,
-                        //     fragmentName: "PlanBodyElements",
-                        //     data: {
-                        //         ...pathway,
-                        //         childrenElements: elements,
-                        //         __typename: 'PlanBodyElement'
-                        //     },
-                        // });
-
-                    } else {
-                        if (mode === 'pathway') {
-                            // if it's pathway - remov
-                            let pathway = client.readFragment({
+                        } else {
+                            pathway = client.readFragment({
                                 id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
                                 fragment: pathwayFragment,
                                 fragmentName: "PathwayElements",
                             });
-
-                            let {elements} = pathway;
+                            let {elements} = pathway || {};
                             elements = elements.filter(element => element.id !== id);
                             elements = elements.length > 0 ? elements : [];
-
+                            // console.log(elements);
                             client.writeFragment({
                                 id: 'Pathway:' + plan.id, // `id` is any id that could be returned by `dataIdFromObject`.
                                 fragment: pathwayFragment,
@@ -383,8 +427,34 @@ export const withDeletePlanElementMutation = graphql(deletePlanElement, {
                                     __typename: 'Pathway'
                                 },
                             });
-                        } else {
+                        }
+                    } else {
+                        if (parentId) {
+                            // update connected elements
+                            let pathway = client.readFragment({
+                                id: 'PlanBodyElement:' + parentId, // `id` is any id that could be returned by `dataIdFromObject`.
+                                fragment: planElementChildrenFragment,
+                                fragmentName: "PlanBodyElements",
+                            });
 
+                            console.log(pathway);
+                            // let {childrenElements:elements} = pathway;
+                            // elements = elements.filter(element => element.id !== id);
+                            // elements = elements.length > 0 ? elements : [];
+                            //
+                            // client.writeFragment({
+                            //     id: 'PlanBodyElement:' + parentId, // `id` is any id that could be returned by `dataIdFromObject`.
+                            //     fragment: planElementChildrenFragment,
+                            //     fragmentName: "PlanBodyElements",
+                            //     data: {
+                            //         ...pathway,
+                            //         childrenElements: elements,
+                            //         __typename: 'PlanBodyElement'
+                            //     },
+                            // });
+
+                        } else {
+                            
                         }
                     }
                 },

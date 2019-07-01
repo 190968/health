@@ -22,7 +22,7 @@ const enhance = compose(
             form.validateFields((err, values) => {
                 if (!err) {
                     //const input = prepareBrahmsRuleInput(values);
-                    console.log(values);
+                    // console.log(values);
                     props.onChange(values);
                     props.onHide();
                 }
@@ -31,8 +31,8 @@ const enhance = compose(
     }),
     withProps(props => {
 
-        const { intl, answer } = props;
-        const { id } = answer || {};
+        const { intl, rule } = props;
+        const { id } = rule || {};
         const title = intl.formatMessage(DefaultI18nEn.createUpdateSomething, { isUpdate: (id && id !== ''), title: 'Rule' })
         return {
             modalTitle: title,

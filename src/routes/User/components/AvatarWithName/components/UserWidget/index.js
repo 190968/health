@@ -12,10 +12,8 @@ const TabPane = Tabs.TabPane;
 const ButtonGroup = Button.Group;
 const UserWidget = props => {
     const { onHide, loading, toggleModal, user, asButton = true, role, ...otherProps } = props;
-    console.log(loading);
-    console.log(user);
-    const { birthday, genderText, age,  lastLogin, phone, address } = user;
-    let {  getPossibleRoles = [] } = user;
+    const { birthday, genderText, age,  lastLogin, phone, address } = user || {};
+    let {  getPossibleRoles = [] } = user || {};
 
     if (role) {
         getPossibleRoles = [role];

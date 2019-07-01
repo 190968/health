@@ -2,6 +2,8 @@ import UserHealthTable from '../components/UserHealthTable';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import {HealthElementFragment} from "../components/fragments";
+import { compose } from 'recompose';
+import { ifModuleExists } from '../../../components/App/app-context';
 
 export const GET_USER_HEALTH_QUERY = gql`
     query GET_USER_HEALTH ($userId: UID!, $isFamily: Boolean, $cursors: CursorInput) {
@@ -65,5 +67,9 @@ const withQuery = graphql(
     }
 );
 
-export const DiagnosesList = withQuery(UserHealthTable);
+const enhance = compose(
+    ifModuleExists('health'),
+    withQuery
+);
+export const DiagnosesList = enhance(UserHealthTable);
 export default DiagnosesList;

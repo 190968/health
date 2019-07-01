@@ -1,11 +1,11 @@
 import Item from '../components/Item';
-import { compose, withProps, branch, renderComponent, withState, withHandlers } from 'recompose';
+import { compose, withHandlers } from 'recompose';
 
 const enhance = compose(
     withHandlers({
         onDelete: props => () => {
-            const {attachment} = props;
-            props.deleteAttachment(attachment);
+            const {attachment, i} = props;
+            props.deleteAttachment(attachment, i);
         }
     })
 );

@@ -85,7 +85,7 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
             //bordered
             dataSource={files}
             renderItem={(attachment, i) => {
-                //console.log(attachment);
+                console.log(attachment);
                 let element = '';
                 let {type='', label='', size=0} = attachment;
 
@@ -112,6 +112,7 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
                     // if (limit === 1) {
                     //     element = {element};
                     // } else {
+                        // console.log(formatBytes(size,2), 'size');
                         element = <List.Item>
                             {/* <List.Item.Meta
                                 avatar={<div>{icon}</div>}
@@ -129,10 +130,10 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
                     //}
 
                 } else {
-                    element = <Col sm={8} md={12}  key={i}>
+                    element = <Col /*sm={8} md={12}*/  key={i}>
                         <span style={{float:'right'}}>{actions}</span>
                         <div>{attachment.url && attachment.url !== '' ?
-                            <a href={attachment.url} target="_blank">{i + 1}. {image} {label}</a>
+                            <a href={attachment.url} target="_blank">{i + 1}. {image} {label} {formatBytes(size,2)}</a>
                             :
                             <Tooltip title="Broken Link. Please reupload the file"><span>{i + 1}. {image} {label}</span></Tooltip>}
                         </div>
@@ -151,6 +152,9 @@ export const AttachmentsList = ({attachments, isEditable=true, showPreview=true,
 
 
 export const prepareAttachmentsInput = attachments => {
+    if (!attachments) {
+        return null;
+    }
     // console.log(attachments, 'attachments');
     return attachments.map(a=> {
         const {id, existedId} = a;

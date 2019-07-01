@@ -1,12 +1,13 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
-import {Card, List, Badge, Modal, Icon} from 'antd';
+// import {Card, List, Badge, Modal, Icon} from 'antd';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
-import PlanElement from '../../../../../../../../components/PlanLayout/components/PlanElement';
-import {EmptyList} from "../../../../../../../../../../components/Loading/index";
-import PlanElementChildrenSelect from "../../../../../../../../components/PlanLayout/components/PlanElement/components/PlanElementChildrenList/components/PlanElementChildrenSelect";
+// // import PlanElement from '../../../../../../../../components/PlanLayout/components/PlanElement';
+// import {EmptyList} from "../../../../../../../../../../components/Loading/index";
+// import PlanElementChildrenSelect from "../../../../../../../../components/PlanLayout/components/PlanElement/components/PlanElementChildrenList/components/PlanElementChildrenSelect";
 
 import { compose, withProps, branch, withHandlers , defaultProps, withState} from 'recompose';
+import { PlanElement } from '../../../../../../../../../../components/Plan/components/Body/containers/Element';
 
 
 

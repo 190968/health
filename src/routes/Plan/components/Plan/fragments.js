@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 import { UserInfoFragment } from '../../../User/fragments';
 import { TreatmentElementFragment, TreatmentInfoFragment } from '../../../Health/components/fragments';
 import { BrahmsFragment } from '../../../../components/Brahms/fragments';
+import { FootnoteFragment } from '../../../../components/Footnote/fragments';
 
 export const PlanCardFragment = gql`
         fragment PlanCardInfo on Plan {
@@ -75,11 +76,12 @@ export const UserPlanFragment = gql`
 
 export const PathwayCardFragment = gql`
         fragment PathwayCardInfo on Pathway {
-            id,
-            title,
+            id
+            title
             description
             version
             versionNote
+            showByElement
         }
 `;
 
@@ -133,24 +135,30 @@ export const ElementClinicalNoteFragment = gql`
             url
             size
         }
+        footnote {
+            ...Footnote
+        }
     }
+    ${FootnoteFragment}
 `;
 
 export const ElementOptionsFragment = gql`
     fragment OptionsElement on PlanElementChecklist {
-          id
-          label
-          isVertical
-          options:optionsWithFootnote {
+        id
+        label
+        isVertical
+        options:optionsWithFootnote {
             id
             label
             footnote {
-                id
-                text
-                color
+                ...Footnote
             }
-          }
+        }
+        footnote {
+            ...Footnote
+        }
     }
+    ${FootnoteFragment}
 `;
 
 export const ElementScaleFragment = gql`
@@ -285,6 +293,10 @@ export const ElementCalculatorFragment = gql`
                 ...TrackerReportFields
            }
         }
+        calculatorCustomFields {
+            id
+            label
+        }
     }
     ${ElementTrackerReportFragment}
     ${ElementTrackerFragment}
@@ -314,6 +326,13 @@ export const PlanElementReportFragment = gql`
             value
             valueId
             date
+            attachments {
+                id
+                type
+                label
+                url
+                size
+            }
         }
 `;
 
@@ -369,6 +388,7 @@ export const PlanElementFragment = gql`
                         columnId
                         isCritical
                         value
+                        valueFormatted
                         comments
                     }
                 }
@@ -516,3 +536,16 @@ export const PlanElementPureFragment = gql`
 
 
 
+export const PathwayConnectedElementsFragment =  gql`
+   fragment PathwayConnectedElements on Pathway {
+        id
+        getConnectedElements {
+            parentId
+            parentValue
+            element {
+                ...PlanElement
+            }
+        }
+   }
+    ${PlanElementPureFragment}
+ `;

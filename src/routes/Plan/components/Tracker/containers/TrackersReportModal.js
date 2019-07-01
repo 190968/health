@@ -1,9 +1,12 @@
 import React from 'react';
-import { Modal, Form, message, Button} from 'antd';
-import { compose, withHandlers, withState, withProps, branch, renderComponent} from 'recompose';
+import { Form, message, Button, Card, Drawer } from 'antd';
+import { compose, withHandlers, withProps } from 'recompose';
 import Tracker from '../index';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import { TableWithMessage } from '../../../../../components/Tables';
+import { formatTrackerValue } from '../../BiometricPlan/components/TrackerCard/components/TrackerCardValue';
+import { withDrawer } from '../../../../../components/Modal';
 
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -36,38 +39,102 @@ const withMutation = graphql(reportOnTracker, {
 
 const enhance = compose(
     withMutation,
-    withHandlers({
-        onChange: props => value => {
+    withHandlers(({onChange, onClick}) => {
+		let timer = null;
 
+		return {
+			onChange: props => (value) => {
+ 
 
-            clearTimeout(this.timer);
+               
+    //             props.trackerReport(report).then(() => {
+    //                 message.success('Saved');
+    //             }).catch(e => {
 
-            this.timer = setTimeout(() => {
-                //console.log(value);
-                const report = {value, date:props.date}
-                props.trackerReport(report).then(() => {
-                    message.success('Saved');
-                }).catch(e => {
-
-                });
-            }, 500);
-        }
+    //             });
+                 
+				const { item: measurement , onChange, date} = props;
+		
+				// let value = event.target.value;
+				//console.log(value, 'INputValue');
+                
+                
+                // const report = {value, date:props.date}
+				clearTimeout(timer);
+		
+					timer = setTimeout(() => {
+                        //console.log(value);
+                        const valueFormatted = formatTrackerValue({measurement, value});
+                        const report = {value:valueFormatted, date}
+                        props.trackerReport(report).then(() => {
+                            message.success('Saved');
+                        }).catch(e => {
+        
+                        });
+                    }, 500);
+			}
+		}
     })
+    
+    // withHandlers({
+    //     onChange: props => value => {
+
+
+    //         clearTimeout(this.timer);
+
+    //         this.timer = setTimeout(() => {
+    //             //console.log(value);
+    //             const report = {value, date:props.date}
+    //             props.trackerReport(report).then(() => {
+    //                 message.success('Saved');
+    //             }).catch(e => {
+
+    //             });
+    //         }, 500);
+    //     }
+    // })
 );
 
 const TrackerEnhanced = enhance(Tracker);
 
 
-const TrackersReportModal = ({date='', trackers, onHide}) => {
+const TrackersReportModal = ({date='', trackers, loading, onHide}) => {
+    console.log(trackers, 'trackers');
+    
 
-    const modalTitle = trackers.length === 1 ? 'Report on '+(trackers[0].label) : 'Report on following trackers';
-    return <Modal
-        title={modalTitle}
-        visible={true}
-        onCancel={onHide}
-        footer={[<Button type="primary" onClick={onHide}>Finish</Button>]}
-    >
-        {trackers.map((option, index) => {
+const columns = [{
+    title: 'Tracker',
+    dataIndex: 'label',
+    key: 'tracker'
+  },
+  {
+    title: 'Report',
+    key: 'field',
+    width: 150,
+    render: tracker => <TrackerEnhanced item={tracker} date={date} />
+  },
+  {
+        title: 'Units',
+        dataIndex: 'units',
+        key: 'units',
+        width: 100,
+        render: units => units.name
+    }
+];
+
+    return  <Card type="table" >
+        <TableWithMessage
+            emptyMessage={'No Trackers'}
+            showHeader={false}
+            size="middle" 
+            dataSource={trackers} 
+            rowKey={'id'} 
+            columns={columns}
+            loading={loading}
+        />
+    </Card>
+
+        {/* {trackers.map((option, index) => {
             return (
                 <FormItem
                     {...formItemLayout}
@@ -79,8 +146,7 @@ const TrackersReportModal = ({date='', trackers, onHide}) => {
 
                 </FormItem>
             )
-        })}
-        </Modal>;
+        })} */}
 };
 
 
@@ -91,6 +157,13 @@ const TrackersReportModal = ({date='', trackers, onHide}) => {
 
 
 
+const enhance2 = compose(
+    withProps(props => {
+        const {trackers=[]} = props;
+        const modalTitle = trackers.length === 1 ? 'Report on '+(trackers[0].label) : 'Report on following trackers';
+        return {modalTitle}
+    }),
+    withDrawer
+);
 
-
-export default TrackersReportModal;
+export default enhance2(TrackersReportModal);

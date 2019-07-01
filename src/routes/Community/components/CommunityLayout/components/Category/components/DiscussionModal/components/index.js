@@ -8,6 +8,7 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './discussionModal.json';
+import { FileUpload } from '../../../../../../../../../components/FormCustomFields/containers/FileUpload.js';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const formItemLayout = {
@@ -82,6 +83,15 @@ class DiscussionModal extends React.Component{
                                 rules: [{ required: true, message:"Input text Please" , whitespace: true }],
                             })(
                                 <TextArea  autosize={{ minRows: 2 }} />
+                            )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label={'Attachments'}
+                        >
+                            {getFieldDecorator('attachments',{
+                            })(
+                                <FileUpload type={'document'} />
                             )}
                         </FormItem>
                     </Form>

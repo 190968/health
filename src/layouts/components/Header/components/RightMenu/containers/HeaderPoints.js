@@ -3,7 +3,7 @@ import HeaderPointsPure from '../components/HeaderPoints';
 import {notification, Progress} from 'antd';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { withActiveUser } from '../../../../../../components/App/app-context';
+import { withActiveUser, ifModuleExists } from '../../../../../../components/App/app-context';
 import {compose, lifecycle} from 'recompose';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import messages from '../components/HeaderPoints/i18n/en';
@@ -52,6 +52,7 @@ const withQuery = graphql(GET_PATIENT_POINTS_QUERY, {
 });
 
 const enhance = compose(
+    ifModuleExists('points'),
     withActiveUser,
     withQuery,
     injectIntl,

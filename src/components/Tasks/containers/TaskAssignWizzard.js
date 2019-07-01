@@ -3,25 +3,27 @@ import {message} from 'antd';
 import { compose, branch, withStateHandlers, renderComponent, withProps, withHandlers } from 'recompose';
 import { withPatientSelectIfNeededModal } from '../../Autosuggest/containers/PatientSelect';
 import { withPatientOrAroundSelect } from '../components/TaskAssignWizzard/containers/SelectPatientOrAround';
-import { TaskManagerAttachmentTypeSelect } from '../components/Attachments/containers/SelectType';
+// import { TaskManagerAttachmentTypeSelect } from '../components/Attachments/containers/SelectType';
 import { withDrawer } from '../../Modal';
 import { withAssignToPatientMutation } from '../mutations';
 import { prepareTaskAttachmentInput } from '../../FormCustomFields/components/AttachmentsModules';
+import { AttachmentModuleTypeSelect } from '../../FormCustomFields/components/AttachmentsModules/containers/SelectType';
 
 
 
 
 const AttachmentSelect = withProps(props => {
+    // console.log(props, 'ppppppp');
     const { assignObject } = props;
     const { type } = assignObject || {};
     return { type}
-})(TaskManagerAttachmentTypeSelect);
+})(AttachmentModuleTypeSelect);
 
-const useSelectAttachmentIfNeeded = branch(props => {
-    const { assignObject } = props;
-    const { id } = assignObject || {};
-    return !id
-}, renderComponent(AttachmentSelect));
+// const useSelectAttachmentIfNeeded = branch(props => {
+//     const { assignObject } = props;
+//     const { id } = assignObject || {};
+//     return !id
+// }, renderComponent(AttachmentSelect));
 
 // If we need to select the assign object
 const withAssignObjectEnhancer = compose(

@@ -50,7 +50,7 @@ export const OPTIONS_CONDITIONAL = [
 
 
 const BrahmsRuleManager = props => {
-        // console.log(props, 'BrahmsRuleManager');
+        console.log(props, 'BrahmsRuleManager');
         const {label, type, renderInputValue, rule, form, possibleOptions=[], possibleOptionsFormatter, GoToComponent, onSubmit, assessment, plan, mode, ...otherProps } = props;
         let {excludeActions=[]} = otherProps;
         // if (mode === 'pathway') {

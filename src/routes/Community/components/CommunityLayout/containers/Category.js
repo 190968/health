@@ -2,13 +2,13 @@
  * Created by Pavel on 10.01.2018.
  */
 //import React from 'react'
-import {connect} from 'react-redux'
 import {compose} from 'react-apollo';
 import {message} from 'antd';
 
 import Category from '../components/Category';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
+import { withHandlers } from 'recompose';
 
 
 const CATEGORY = gql`
@@ -211,22 +211,18 @@ export const withMutationUnjoin = graphql(categoryUnjoinMutate, {
     }),
 });
 
-const mapStateToProps = (state) => {
 
-    return {};
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    onSubmit: (id) => {
-        ownProps.categoryJoin(id).then(({data}) => {
-            message.success('Joined Community');
-        })
-    },
-    onClick: (id) => {
-        ownProps.categoryUnjoin(id).then(({data}) => {
-            message.warning('Left Community');
-        })
-    },
-});
-
-export default compose(withQuery, withMutation, withMutationUnjoin, connect(mapStateToProps, mapDispatchToProps))((Category));
+export default compose(withQuery, withMutation, withMutationUnjoin, 
+    withHandlers({
+        onSubmit: props => (id) => {
+            props.categoryJoin(id).then(({data}) => {
+                message.success('Joined Community');
+            })
+        },
+        onClick: props => (id) => {
+            props.categoryUnjoin(id).then(({data}) => {
+                message.warning('Left Community');
+            })
+        },
+    })
+    )(Category);

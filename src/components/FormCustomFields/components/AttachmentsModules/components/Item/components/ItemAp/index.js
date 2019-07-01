@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Avatar } from 'antd';
 import moment from 'moment';
+import { formatSchedule } from '../../../../../../../../utils/datetime';
 
 const AttachmentItemAp = props => {
   console.log(props);
@@ -13,8 +14,11 @@ const AttachmentItemAp = props => {
     return <List.Item.Meta
     avatar={<Avatar src={medium} />}
     title={title}
-    description={"Since "+moment(startDate).format('l')}
+    // description={"Since "+moment(startDate).format('l')}
+    description={formatSchedule({schedule})}
   />
 }
 
 export default AttachmentItemAp;
+
+ 

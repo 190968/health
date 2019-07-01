@@ -8,6 +8,7 @@ import {EmptyList} from "../../../../../../../../../../components/Loading/index"
 import {PlanElementsSelectbox} from "../../../../../../../PlanLayout/components/PlanElementsSelectbox/index";
 import Option from './option';
 import { PlanElementManagerButton } from '../../../../../../../../../../components/Plan/components/Builder/components/Buttons/components/ElementManager';
+import { PlanElementsList } from '../../../../../../../../../../components/Plan/components/Body/containers/ElementsList';
 
 const OptionsElements = props => {
     const {elements=[]} = props;
@@ -22,14 +23,15 @@ const OptionsElements = props => {
         // dataSource={elements}
         // renderItem={(element, i) => <Option  {...props} key={`field-${element.id}`} index={i}  element={element} i={i} collection="decision"  />}
     >
-        {elements.map((element, i) => <Option {...props} key={`option-${element.id}`} index={i} element={element} i={i} collection="decision" />)}
+    <PlanElementsList {...props} isInner />
+        {/* {elements.map((element, i) => <Option {...props} key={`option-${element.id}`} index={i} element={element} i={i} collection="decision" />)} */}
     </div>: <EmptyResults {...props} />);//}<EmptyList>No Elements {props.isBuilderMode && 'yet.'}</EmptyList>);
 }
 
 
 
 const EmptyResultsPure = (props) => {
-    return <EmptyList>No elements have been added yet</EmptyList>;
+    return <EmptyList noImage>No elements have been added yet.</EmptyList>;
 }
 
 

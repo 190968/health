@@ -1,6 +1,5 @@
 import Pathways from '../components/Pathways';
-import React from 'react';
-import {compose,withStateHandlers} from 'recompose';
+import {compose} from 'recompose';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -49,6 +48,7 @@ const withQuery = graphql(
                 const {edges, totalCount} = getPathways || {};
                 const {search} = variables || {};
                 const filterUsed = search !== '';
+                console.log(data, 'data');
                 return {
                     pathways: edges,
                     total: totalCount,
@@ -57,17 +57,18 @@ const withQuery = graphql(
                     filterUsed:filterUsed,
                     refetch:data.refetch,
                     loadByStatus(status) {
-                        return data.fetchMore({
-                            // query: ... (you can specify a different query. FEED_QUERY is used by default)
-                            variables: {
-                                user_id:ownProps.user_id,
-                                status:status
-                            },
-                            updateQuery: (previousResult, {fetchMoreResult}) => {
-                                if (!fetchMoreResult) { return previousResult; }
-                                return fetchMoreResult;
-                            },
-                        });
+                        return data.refetch({status});
+                        // return data.fetchMore({
+                        //     // query: ... (you can specify a different query. FEED_QUERY is used by default)
+                        //     variables: {
+                        //         user_id:ownProps.user_id,
+                        //         status:status
+                        //     },
+                        //     updateQuery: (previousResult, {fetchMoreResult}) => {
+                        //         if (!fetchMoreResult) { return previousResult; }
+                        //         return fetchMoreResult;
+                        //     },
+                        // });
                     },
                     doSearch(search) {
                         return data.refetch({search});
@@ -99,40 +100,7 @@ const withQuery = graphql(
     }
 );
 const enhance = compose(
-    withQuery,
-    withStateHandlers(
-        (props) => (
-            {
-            searchText: '',
-        }),
-        {        
-            onSearch: ({searchText},props) =>(value) => (
-                {
-                    searchText: value.target.value,
-                    pathways: props.pathways.map((record) => {
-                        const match = record.title.match(new RegExp(value.target.value, 'gi'));
-                        if (!match) {
-                            return null;
-                        }                        
-                        return {
-                            ...record,
-                            title: (
-                                <span>
-                      {record.title.split( new RegExp(value.target.value, 'gi')).map((text, i) => (
-                      i > 0 ? [<span className="highlight">{match[0]}</span>, text] : text
-                      ))}
-                    </span>
-                            ),
-                        };
-                    }).filter(record => !!record),
-            }),
-            emitEmpty: ({searchText},props) =>(value) => (
-                {
-                    searchText: '',
-                    pathways: props.pathways
-                     })
-            })        
-
+    withQuery
 );
 
 export default enhance(Pathways);

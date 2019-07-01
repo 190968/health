@@ -41,15 +41,16 @@ export const prepareTimeInput = (time, format = 'HH:mm') => {
 
 export const prepareDateInput = (date, props) => {
     const {utc=false} = props || {};
+    const dateMoment = moment.isMoment(date) ? date : moment(date);
     if (utc) {
-        return date.utc().format('YYYY-MM-DD');
+        return dateMoment.utc().format('YYYY-MM-DD');
         // console.log( );
         // const offset = date.utcOffset()/60;
         // console.log(date.get('hour')+offset);
         // if (date.get('hour')+offset > 24) 
         // date.add(1, 'd'); // Add 1 day, so that t is tomorrow's date at the same time
     }
-    return date.format('YYYY-MM-DD');
+    return dateMoment.format('YYYY-MM-DD');
 }
 export const prepareDateTimeInput = (date, time, props) => {
     const {utc=true} = props || {};
@@ -72,4 +73,34 @@ export const prepareDateTimeInput = (date, time, props) => {
         second: '00'
     });
     return date.local();//.format('YYYY-MM-DD');
+}
+
+
+
+export const formatSchedule = props => {
+  const {schedule} = props || {};
+  const {startDate, endDate, dows, startTime, endTime} = schedule || {};
+  // console.log(schedule, 'schedule');
+  let text = '';
+  if (dows && dows.length > 0) {
+    text = 'Every '+dows.map(dow => dow)+' ';
+  }
+  if (startDate && endDate) {
+    text += 'Between '+moment(startDate).format('l')+' and '+moment(endDate).format('l')
+  } else if (startDate) {
+    text += 'From '+moment(startDate).format('l');
+  } else if (endDate) {
+    text += 'Until '+moment(endDate).format('l');
+  }
+
+  // console.log(startTime);
+  if (startTime && endTime) {
+    text += 'Between '+moment(startTime, 'HH:mm').format('LT')+' and '+moment(endTime, 'HH:mm').format('LT');
+  } else if (startTime) {
+    text += ' @'+ moment(startTime, 'HH:mm').format('LT');
+  } else if (endDate) {
+    text += ' by '+ moment(endTime, 'HH:mm').format('LT');
+  }
+ 
+  return text;
 }

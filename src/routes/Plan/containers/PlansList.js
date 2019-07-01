@@ -4,7 +4,7 @@ import { compose, withHandlers } from 'recompose';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { ifModuleExists, withActiveUser } from '../../../components/App/app-context';
+import { ifModuleExists, withActiveUser, withActiveNetwork } from '../../../components/App/app-context';
 import { PlanCardFragment } from '../components/Plan/fragments';
 import { UserInfoFragment } from '../../User/fragments';
 
@@ -114,6 +114,7 @@ export default compose(
   ifModuleExists('aps'),
   withQuery,
   withActiveUser,
+  withActiveNetwork,
   withHandlers({
     handleStatus: props => (e) => {
       props.loadByStatus(e.key);

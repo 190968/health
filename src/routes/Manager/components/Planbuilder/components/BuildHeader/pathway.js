@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Input,Layout,Select,Form, DatePicker, Radio, Button, message } from 'antd';
+import { Card, Input,Layout,Select,Form, DatePicker, Checkbox, Button, message } from 'antd';
 import { withApollo } from 'react-apollo'
 import {injectIntl} from 'react-intl';
 import moment from 'moment';
@@ -97,7 +97,7 @@ class BuildHeader extends React.Component{
     render(){
         const { intl,form, plan, loading } = this.props;
         const { getFieldDecorator } = form;
-        const {cancer} = plan || {};
+        const {cancer, showByElement} = plan || {};
         if (loading) {
             return <LoadingBox />
         }
@@ -160,6 +160,19 @@ class BuildHeader extends React.Component{
                         rules: [{type:'string',  message:"Enter Release Note" }],
                     })(
                         <Input placeholder="Release Note" />
+                    )}
+                </FormItem>
+
+                <FormItem
+                    {...tailFormItemLayout}
+                    // label={intl.formatMessage(messages.version)}
+                >
+                    {getFieldDecorator('showByElement', {
+                        initialValue: showByElement,
+                        valuePropName: 'checked'
+                        // rules: [{type:'string', required: true, message:"Input Version Please" }],
+                    })(
+                        <Checkbox>Show only one element at a time</Checkbox>
                     )}
                 </FormItem>
 

@@ -24,14 +24,11 @@ const withQuery = graphql(
             }
         }),
         props: ({data}) => {
-            if (!data.loading) {
+            const {getTumorboards} = data.patient || {};
                 return {
-                    items: data.patient.getTumorboards,
+                    items: getTumorboards,
                     loading: data.loading,
                 }
-            } else {
-                return {loading: data.loading}
-            }
         },
     }
 );

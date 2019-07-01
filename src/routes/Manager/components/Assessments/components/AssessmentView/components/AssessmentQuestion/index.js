@@ -13,7 +13,8 @@ import { formatTimeForField } from '../../../../../../../../components/Other/uti
 const FormItem = Form.Item;
 
 const AssessmentQuestion = props => {
-    const {isPreviewMode=false, isBuilderMode=false, form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules, openBrahms=false} = props;
+    
+    const {isPreviewMode=false, isBuilderMode=false, form,canReport=false, assessment, question, section, onChange, isCompleted, report, isFirstSection, isLastSection, brahmRules=[], openBrahms=false} = props;
     const {title, description, type, isNumeric, numberAsPrefix=false, isMultiple, getAnswers=[], getBrahmsRules=[]} = question || {};
     
     const haveBrahmsAndToExecute = props.ifValidateOnBrahms(true);
@@ -36,14 +37,13 @@ const AssessmentQuestion = props => {
     // console.log(props, 'propspropspropspropsprops');
     let defaultProps = {numberAsPrefix, disabled: ((isCompleted || !canReport) && !isPreviewMode), onChangeReport:onChange, reports:questionReports};
 
-
     let {
         isAllMandatory,
         allowGoBack,
         showAllQuestions,
         showAllSections, 
         showBrahms,
-        showValidAnswer } = assessment;
+        showValidAnswer } = assessment || {};
         if (isCompleted) {
             showAllQuestions = true;
             showAllSections = true;
@@ -180,15 +180,12 @@ const AssessmentQuestion = props => {
     // console.log(showAllQuestions, 'question');
     // console.log(showBottomButtons, 'question');
     //  console.log(initialValue, 'initialValue');
-    let onClick;
-    if (isBuilderMode) {
-        onClick = props.setCurrentQuestionInSection;
-    }
-    
+   
+    // console.log(isBuilderMode, 'isBuilderMode');
    
     return <div className={'relative'}>
 
-        <div className={'relative'} onClick={onClick}>
+        <div className={'relative'} >
         {questionIsDimmed && <div className={'dimmed-block'} />}
 
         <FormItem
@@ -203,7 +200,8 @@ const AssessmentQuestion = props => {
            </FormItem>
         </div>
         {(!isPreviewMode && isBuilderMode && getBrahmsRules && getBrahmsRules.length > 0) && <BrahmsRulesView rules={getBrahmsRules} renderRule={questionBrahmItem} possibleOptions={getAnswers} formatGoToElement={props.formatGoToElement} openBrahms={openBrahms} />}
-            {((showBrahms === 'question' || showBrahms === 'both') && brahms && (brahms.length > 0 && !haveBrahmsAndToExecute)) && <BrahmsElementOutput rules={brahms} /> }
+        
+        {((showBrahms === 'question' || showBrahms === 'both') && brahms && (brahms.length > 0 && !haveBrahmsAndToExecute)) && <BrahmsElementOutput rules={brahms} /> }
         
         {/* {showQuestionValidAnswer && <AssessmentQuestionValidAnswers answers={getAnswers} />} */}
 

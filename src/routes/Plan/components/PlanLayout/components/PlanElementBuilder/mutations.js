@@ -201,10 +201,10 @@ export const withAddPathwayMutation = graphql(AddPathwayElementMutation, {
             const inputOrder = {...input, order};
             return mutate({
                 variables: {planId:ownProps.plan.id, type:type, input:inputOrder},
-                refetchQueries: [{
-                    query: PATHWAY_ELEMENTS_QUERY,
-                    variables: {id:ownProps.plan.id}
-                }],
+                // refetchQueries: [{
+                //     query: PATHWAY_ELEMENTS_QUERY,
+                //     variables: {id:ownProps.plan.id}
+                // }],
             })
         },
     }),

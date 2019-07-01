@@ -28,6 +28,20 @@ const formItemLayout = {
     },
 };
 
+
+const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 24,
+            offset: 0,
+        },
+        sm: {
+            span: 14,
+            offset: 6,
+        },
+    },
+};
+
 const radioStyle = {
       display: 'block',
       height: '30px',
@@ -66,14 +80,15 @@ const FormField = props => {
     let initialValue = report.value || initialValueId;
     
     // console.log(report);
-    // console.log(initialValue);
+    
     
 
     let fieldName =  'field['+id+']';
     let noFieldDecorator = false;// do not show fieldDecorator
     let className;
     
-    
+    let showLabel = true;
+    let fieldDecorationProps = {};
     //console.log(props);
     switch(type) {
         // case 'full_name':
@@ -140,6 +155,15 @@ const FormField = props => {
                 })}
             </Checkbox.Group>
             break;
+        case 'confirm':
+                console.log(initialValue);
+            initialValue = initialValue && initialValue !== '';
+           
+            field = <Checkbox >{label}</Checkbox>;
+            showLabel = false;
+            fieldDecorationProps.valuePropName = 'checked';
+            //valuePropName: 
+            break;
         case 'plain':
             field = <Input />;
             break;
@@ -156,11 +180,12 @@ const FormField = props => {
             break;
     }
 
+    const formItemStyle = showLabel ? formItemLayout : tailFormItemLayout;
     if (field) {
 
         if (noFieldDecorator) {
-            return <FormItem {...formItemLayout}
-            label={label}
+            return <FormItem {...formItemStyle}
+            label={showLabel && label}
             required={required}
             >
             {field}
@@ -176,12 +201,12 @@ const FormField = props => {
         //    <div>1</div>
         // )
         // console.log(initialValue);
-        return <FormItem {...formItemLayout}
-        label={label}
+        return <FormItem {...formItemStyle}
+        label={showLabel && label}
         required={required}
         className={className}
         >
-        {getFieldDecorator(fieldName, {initialValue})(
+        {getFieldDecorator(fieldName, {initialValue, ...fieldDecorationProps})(
             field
         )}
         </FormItem>;

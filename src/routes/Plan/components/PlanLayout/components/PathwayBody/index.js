@@ -10,8 +10,10 @@ const PathwayBody = (props) => {
     if (loading) {
         return <LoadingPageSpinner />;
     }
+    // console.log(props, 'pathway body props');
     const {skippedElementsByRef} = otherProps;
     const filteredElements = filterSkippedPlanElements(elements, skippedElementsByRef);
+    // console.log(filteredElements, 'filteredElementsfilteredElements');
     return <PlanElementsList {...props} mode="pathway" elements={filteredElements} />
 }
 

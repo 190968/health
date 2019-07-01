@@ -6,6 +6,7 @@ import CarePlans from "../../../../components/Dashboard/containers/CarePlans";
 import MedicationPlanBody from "../../../../../../../Plan/containers/MedicationPlan";
 import BiometricPlanBody from "../../../../../../../Plan/containers/BiometricPlan";
 import { SelectPatientPlanButton } from '../../../../../../../Plan/components/Buttons/components/SelectPatientPlanButton';
+import { DmeReferrals } from '../../../../../../../../components/DME/containers/Referrals';
 
 const tabList = [{
     key: 'aps',
@@ -23,6 +24,10 @@ const tabList = [{
         key: 'biometric',
         tab: 'Biometric',
     },
+    {
+        key: 'dme',
+        tab: 'DME',
+    },
 ];
 
 
@@ -37,6 +42,7 @@ export const StakeholdersPure = props => {
         careplans: <CarePlans {...props}  user={user}  />,
         medications: <MedicationPlanBody {...props} user={user}  />,
         biometric: <BiometricPlanBody {...props}  user={user}  />,
+        dme: <DmeReferrals {...props}  user={user}  />,
     };
     return <>
     <div style={{textAlign:'right', marginBottom:5}}>

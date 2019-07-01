@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Avatar, Tag } from 'antd';
 import moment from 'moment';
+import { formatSchedule } from '../../../../../../../../utils/datetime';
 
 const AttachmentItemAssessment = props => {
     const {attachment} = props;
@@ -18,27 +19,3 @@ const AttachmentItemAssessment = props => {
 
 export default AttachmentItemAssessment;
 
-
-const formatSchedule = props => {
-  const {schedule} = props || {};
-  const {startDate, endDate, startTime, dows} = schedule || {};
-  // console.log(schedule, 'schedule');
-  let text = '';
-  if (dows && dows.length > 0) {
-    text = 'Every '+dows.map(dow => dow)+' ';
-  }
-  if (startDate && endDate) {
-    text += 'Between '+moment(startDate).format('l')+' and '+moment(endDate).format('l')
-  } else if (startDate) {
-    text += 'From '+moment(startDate).format('l');
-  } else if (endDate) {
-    text += 'Until '+moment(endDate).format('l');
-  }
- 
-  // console.log(startTime);
-  if (startTime) {
-    text += ' @'+ moment(startTime, 'HH:mm').format('LT');
-  }
-
-  return text;
-}

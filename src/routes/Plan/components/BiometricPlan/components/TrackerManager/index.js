@@ -35,116 +35,129 @@ const RangeItem = props => {
     </div>
 }
 
-const TrackerManager = props => {
-    console.log(props);
-    const { form, columns:columnsPlan = [], tracker, measurement } = props;
+
+export const TrackerManagerFormFields = props => {
+    const { form, formItemLayout, columns: columnsPlan = [], tracker, measurement } = props;
     const { getFieldDecorator } = form || {};
 
     let { timesToReport } = tracker || {};
     timesToReport = timesToReport > 0 ? timesToReport : 1;
+    // console.log(tracker, 'tracker');
+    const { startDate, endDate, columns } = tracker || {};
+    const { graph, criticalRange, normalRange } = measurement || {};
 
-    const { startDate, endDate, criticalRange, normalRange, columns } = tracker || {};
     const { min: criticalRangeMin, max: criticalRangeMax } = criticalRange || {};
     const { min: normalRangeMin, max: normalRangeMax } = normalRange || {};
+    console.log(criticalRangeMin);
+    return <>
+        <FormItem {...formItemLayout} label="Critical Range">
+            <Row>
+                <Col span={10}>
+                    <RangeItem title={'below'}>{getFieldDecorator('criticalRangeMin', {
+                        initialValue: criticalRangeMin
+                        /*rules: [{ type:"float" }]*/
+                    })(
+                        <TrackerInput measurement={measurement} />
 
-    const { graph } = measurement || {};
+                    )}
+                    </RangeItem>
+                </Col>
+                <Col offset={1} span={10}>
+                    <RangeItem title={'after'}>{getFieldDecorator('criticalRangeMax', {
+                        initialValue: criticalRangeMax
+                    })(
+                        <TrackerInput measurement={measurement} />
+                    )}
+                    </RangeItem>
+                </Col>
+            </Row>
+        </FormItem>
+        <FormItem {...formItemLayout} label="Normal Range">
+            <Row>
+                <Col span={10}>
+                    <RangeItem title={'below'}>{getFieldDecorator('normalRangeMin', {
+                        initialValue: normalRangeMin
+                    })(
+                        <TrackerInput measurement={measurement} />
+                    )}
+                    </RangeItem>
+                </Col>
+                <Col offset={1} span={10}>
+                    <RangeItem title={'after'}>{getFieldDecorator('normalRangeMax', {
+                        initialValue: normalRangeMax
+                    })(
+                        <TrackerInput measurement={measurement} />
+                    )}
+                    </RangeItem>
+                </Col>
+            </Row>
+        </FormItem>
 
+        <FormItem {...formItemLayout} label="Columns">
+            {getFieldDecorator('columns', {
+                initialValue: columnsPlan.filter(column => columns.includes(column.id)).map(column => {
+                    const { id, name } = column || {};
+                    return { id, label: name };
+                })
+            })(
+                <TrackerManagerColumns columns={columnsPlan} />
+            )}
+        </FormItem>
+
+        <FormItem {...formItemLayout} label="Reports per Day">
+            {getFieldDecorator('timesToReport', {
+                initialValue: timesToReport,
+                // rules: [
+                //     {
+                //         required: true,
+                //         message: 'Please Select'
+                //     }
+                // ]
+            })(
+                <Select style={{ width: 120 }}>
+                    <Option value={1}>1 Time</Option>
+                    <Option value={2}>2 Times</Option>
+                    <Option value={3}>3 Times</Option>
+                    <Option value={4}>4 Times</Option>
+                    <Option value={5}>5 Times</Option>
+                    <Option value={6}>6 Times</Option>
+                    <Option value={7}>7 Times</Option>
+                    <Option value={8}>8 Times</Option>
+                    <Option value={9}>9 Times</Option>
+                </Select>
+            )}
+        </FormItem>
+        <FormItem
+            {...formItemLayout}
+            label={<FormattedMessage id="biometric.period" defaultMessage="Period" description="Period" />}
+        >
+            <StartEndForm
+                startDate={startDate}
+                endDate={endDate}
+                form={form}
+            />
+        </FormItem>
+        <FormItem {...formItemLayout} label="Graph">
+            {getFieldDecorator('graph', {
+                initialValue: graph
+            })(
+                <Select style={{ width: 120 }}>
+                    <Option value="area">Area</Option>
+                    <Option value="line">Line</Option>
+                    <Option value="bar">Bar</Option>
+                </Select>
+            )}
+        </FormItem>
+    </>;
+}
+
+const TrackerManager = props => {
     return (
         <React.Fragment>
             <Form>
-                <FormItem {...formItemLayout} label="Critical Range">
-                    <Row>
-                        {getFieldDecorator('criticalRangeMin', {
-                            initialValue: criticalRangeMin
-                            /*rules: [{ type:"float" }]*/
-                        })(
-                            <Col span={10}>
-                                <RangeItem title={'below'}><TrackerInput measurement={measurement} /></RangeItem>
-                            </Col>
-                        )}
-                        {getFieldDecorator('criticalRangeMax', {
-                            initialValue: criticalRangeMax
-                        })(
-                            <Col offset={1} span={10}>
-                                <RangeItem title={'after'}><TrackerInput measurement={measurement} /></RangeItem>
-                            </Col>
-                        )}
-                    </Row>
-                </FormItem>
-                <FormItem {...formItemLayout} label="Normal Range">
-                    <Row>
-                        {getFieldDecorator('normalRangeMin', {
-                            initialValue: normalRangeMin
-                        })(
-                            <Col span={10}>
-                                <RangeItem title={'below'}><TrackerInput measurement={measurement} /></RangeItem>
-                            </Col>
-                        )}
-                        {getFieldDecorator('normalRangeMax', {
-                            initialValue: normalRangeMax
-                        })(
-                            <Col offset={1} span={10}>
-                                <RangeItem title={'after'}><TrackerInput measurement={measurement} /></RangeItem>
-                            </Col>
-                        )}
-                    </Row>
-                </FormItem>
 
-                <FormItem {...formItemLayout} label="Columns">
-                    {getFieldDecorator('columns', {
-                        initialValue: columnsPlan.filter(column => columns.includes(column.id)).map(column => {
-                            const{id, name} = column || {};
-                            return {id, label:name};
-                        })
-                    })(
-                        <TrackerManagerColumns columns={columnsPlan} />
-                    )}
-                </FormItem>
+                <TrackerManagerFormFields {...props} formItemLayout={formItemLayout} />
 
-                <FormItem {...formItemLayout} label="Reports per Day">
-                    {getFieldDecorator('timesToReport', {
-                        initialValue: timesToReport,
-                        // rules: [
-                        //     {
-                        //         required: true,
-                        //         message: 'Please Select'
-                        //     }
-                        // ]
-                    })(
-                        <Select style={{ width: 120 }}>
-                            <Option value={1}>1 Time</Option>
-                            <Option value={2}>2 Times</Option>
-                            <Option value={3}>3 Times</Option>
-                            <Option value={4}>4 Times</Option>
-                            <Option value={5}>5 Times</Option>
-                            <Option value={6}>6 Times</Option>
-                            <Option value={7}>7 Times</Option>
-                            <Option value={8}>8 Times</Option>
-                            <Option value={9}>9 Times</Option>
-                        </Select>
-                    )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label={<FormattedMessage id="biometric.period" defaultMessage="Period" description="Period" />}
-                >
-                    <StartEndForm
-                        startDate={startDate}
-                        endDate={endDate}
-                        form={form}
-                    />
-                </FormItem>
-                <FormItem {...formItemLayout} label="Graph">
-                    {getFieldDecorator('graph', {
-                        initialValue: graph
-                    })(
-                        <Select style={{ width: 120 }}>
-                            <Option value="area">Area</Option>
-                            <Option value="line">Line</Option>
-                            <Option value="bar">Bar</Option>
-                        </Select>
-                    )}
-                </FormItem>
             </Form>
             <DrawerFooter onSubmit={props.handleSubmit} onHide={props.onHide} />
         </React.Fragment>

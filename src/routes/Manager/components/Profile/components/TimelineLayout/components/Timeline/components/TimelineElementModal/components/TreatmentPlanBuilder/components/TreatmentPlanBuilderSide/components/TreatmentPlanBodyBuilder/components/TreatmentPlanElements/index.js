@@ -6,9 +6,9 @@ import {defaultProps, branch,compose, withState, withHandlers, lifecycle, withPr
 import {TimelineElementView} from "../../../../../../../../../TimelineElement";
 import {CardComments} from "../../../../../../../../../../../../../../../../../../components/Card/components/CardComments";
 import {withSpinnerWhileLoading} from "../../../../../../../../../../../../../../../../../../components/Modal";
+import { DragHandle } from '../../../../../../../../../../../../../../../../../../components/FormCustomFields/components/Options';
 
 //import {withUpdateOrderMutation} from "./mutation";
-const DragHandle = SortableHandle(() => <Tooltip title="Sort"><span className="sorter-handler"></span></Tooltip>);
 
 
 const TumorboardElementCardPure = props => {
@@ -47,19 +47,6 @@ const TumorboardElementsPure = props => {
     });
 };
 
-
-
-const derivedStateFromProps = (initialState, updateStateValue) => BaseComponent => {
-    class DerivedStateFromProps extends React.Component {
-        state = typeof initialState === 'string' ? this.props[initialState] : initialState;
-        static getDerivedStateFromProps = updateStateValue;
-        render() {
-            return <BaseComponent {...this.props} {...this.state} />;
-        };
-    }
-    return DerivedStateFromProps;
-}
-
 const enhance = compose(
     withSpinnerWhileLoading,
     defaultProps({
@@ -79,12 +66,12 @@ const enhance = compose(
         }
     }),
     withProps(props => {
-        const {elements_sortable=[]} = props;
         return {
             //elements:elements_sortable,
             lockAxis:'y',
             lockToContainerEdges:true,
-            hideSortableGhost:false
+            hideSortableGhost:false,
+            draggableTemplate: 'treatmentPlan'
         }
     }),
     SortableContainer,

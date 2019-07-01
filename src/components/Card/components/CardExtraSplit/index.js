@@ -11,5 +11,11 @@ export const CardExtraSplit = props => {
 
 export const CardExtraItems = props => {
     const {children=[]} = props;
-    return children.map((item, i) => <CardExtraSplit key={i}>{item}</CardExtraSplit>);
+    // console.log(children);
+    if (Array.isArray(children)) {
+        return children && children.map((item, i) => <CardExtraSplit key={i}>{item}</CardExtraSplit>);
+    } else {
+        return children;
+    }
+    
 }

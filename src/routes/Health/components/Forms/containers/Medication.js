@@ -10,7 +10,7 @@ const enhance = compose(
         onSubmit: props => (values) => {
             props.form.validateFields((err, values) => {
                 if (!err) {
-                    let medication = prepareMedicationInput(values);
+                    let medication = prepareHealthMedicationInput(values);
                     const {type} = props;
                     medication = prepareTreatmentElementObjectInput({type, medication});
                     props.onHealthItemSubmit({medication});
@@ -24,7 +24,7 @@ export const MedicationForm = enhance(MedicationPure);
 export const MedicationPureForm = MedicationPure;
 
 
-export const prepareMedicationInput = values => {
+export const prepareHealthMedicationInput = values => {
     const {
         date,
         ...otherProps

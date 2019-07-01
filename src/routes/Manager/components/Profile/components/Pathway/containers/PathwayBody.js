@@ -26,14 +26,26 @@ ${PlanElementPureFragment}
 `;
 
 const GET_PATHWAY_QUERY  = gql`
- query GET_PATHWAY ($id: UID!, $userId: UID!) {
+#  query GET_PATHWAY ($id: UID!/*, $userId: UID!) {
+ query GET_PATHWAY ($id: UID!) {
   getPathway (id:$id) {
     id
     title
+    showByElement
     elements {
         ...PlanElement
-        reports (user_id: $userId) {
-            ...PlanElementReport
+        # reports (user_id: $userId) {
+        #     ...PlanElementReport
+        # }
+    }
+    getConnectedElements {
+        parentId
+        parentValue
+        element {
+            ...PlanElement
+            # reports (user_id: $userId) {
+            #     ...PlanElementReport
+            # }
         }
     }
     cancer {
@@ -55,7 +67,6 @@ const GET_PATHWAY_QUERY  = gql`
   }
 }
 ${PlanElementPureFragment}
-${PlanElementReportFragment}
 `;
 
 const withQuery = graphql(GET_PATHWAY_QUERY, {
@@ -81,6 +92,7 @@ const withQuery = graphql(GET_PATHWAY_QUERY, {
 
 const enhance = compose(
     withQuery,
+
     // withMutation
 );
 export default enhance(PathwayBody);

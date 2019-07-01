@@ -2,7 +2,7 @@
  * Created by Павел on 31.01.2018.
  */
 import React from 'react';
-import {Card,Row,Col,Popconfirm,Tooltip,Icon } from 'antd';
+import {Card,Row,Col,Popconfirm,Tooltip,Icon, Comment } from 'antd';
 import AvatarWithName from '../../../../../../../User/components/AvatarWithName';
 import moment from 'moment';
 import {withRouter} from "react-router-dom";
@@ -10,6 +10,7 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from './messages';
+import { AttachmentsList } from '../../../../../../../../components/FormCustomFields/components/Attachments';
 
 
 class DiscussionView extends React.Component{
@@ -34,12 +35,10 @@ class DiscussionView extends React.Component{
             );
         }
 
-        const {title,text,author,createdAt} = discussion;
+        const {title,text,author,createdAt, attachments} = discussion;
         const {id} = author;
         const {intl}=this.props;
-        return(
-
-                <Card  title={title} extra={
+        return <Card  title={title} extra={
                       <div>
                           {id===user.id ?
                         <Popconfirm title={intl.formatMessage(messages.popconfirm)}
@@ -49,13 +48,27 @@ class DiscussionView extends React.Component{
                         <Tooltip title={intl.formatMessage(messages.delete)}><Icon type="close" /></Tooltip>
                         </Popconfirm> :null}
                           </div>}>
-                    <Row><p>{text}</p></Row>
-                    <Row>
-                    <Col span={2}><AvatarWithName user={user}/></Col>
-                    </Row>
-                    <Row><label>{ moment(createdAt).format('lll')}</label></Row>
+                    
+
+
+                          <Comment
+                            // actions={actions}
+                            author={<AvatarWithName user={user} onlyName/>}
+                            avatar={
+                                <AvatarWithName user={user} onlyAvatar/>
+                            }
+                            content={text}
+                            datetime={
+                            <Tooltip title={moment(createdAt).format('lll')}>
+                                <span>{moment(createdAt).format('lll')}</span>
+                            </Tooltip>
+                            }
+                        />
+
+                        {(attachments && attachments.length > 0) && <div type="pure" bordered={false} style={{marginTop:10}}><AttachmentsList attachments={attachments} isEditable={false}  /></div>}
+        
+                        {/* {text} */}
                 </Card>
-        );
     }
 
 }

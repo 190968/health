@@ -96,6 +96,10 @@ const enhance = compose(
                 hide();
             });
         },
+        setCurrentSection: props => () => {
+            const {i} = props;
+            props.setCurrentSection(i);
+        },
         setCurrentQuestionInSection: props => (questionI) => {
             const {i} = props;
             props.setCurrentSectionQuestion(i, questionI);

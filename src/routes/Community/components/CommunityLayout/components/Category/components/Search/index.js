@@ -35,18 +35,19 @@ class Search extends React.PureComponent{
 
 
     render(){
-        const {items,intl} = this.props;
+        const {items,intl, loading} = this.props;
+        console.log(items, 'items');
         return(
             <div>
                 <AutoComplete
                     dataSource={items}
-                    allowClear={true}
+                   
                     placeholder={intl.formatMessage(messages.search)}
                     filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                     onSearch = {this.onChange}
                     onSelect = {this.onSelect}
                 >
-                    <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+                    <Input  allowClear={true} suffix={loading ? <Icon type="loading" /> : <Icon type="search" className="certain-category-icon" />} />
 
                 </AutoComplete>
             </div>

@@ -2,7 +2,18 @@ const CracoAntDesignPlugin = require("craco-antd");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const WebpackBar = require("webpackbar");
 // const path = require('path');
-
+const ENV = process.env.NODE_ENV;
+const babelPlugins = [
+  // [
+  //   'import',
+  //   { libraryName: 'antd', libraryDirectory: 'es', style: true }, 'antdes'
+  // ]
+  // [
+  //   'babel-plugin-styled-components',
+  //   { displayName: true }
+  // ]
+];
+const babelTestPlugins = [];
 module.exports = {
     webpack: {
         // alias: {
@@ -17,7 +28,8 @@ module.exports = {
             : [])
         ]
       },
-  plugins: [{ plugin: CracoAntDesignPlugin }],
+  plugins: [ENV === 'test' ? {} : { plugin: CracoAntDesignPlugin }],
+  babel: { plugins: ENV === 'test' ? babelTestPlugins : babelPlugins },
   jest: {
     configure: {
       moduleDirectories: ['node_modules'],

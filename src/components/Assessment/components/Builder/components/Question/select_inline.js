@@ -1,9 +1,12 @@
 import React from 'react';
+import {Affix, Tooltip} from 'antd';
 import { SelectFromList } from '../../../../../UI/SelectFromList';
 import { compose, withProps } from 'recompose';
 import { withDrawer } from '../../../../../Modal';
 import { IconCustom } from '../../../../../FitIcon';
-
+import  '../../../../../Plan/components/Builder/components/SelectElementType/index.less';
+// import { AssessmentQuestionManager } from '../../containers/Question';
+import { AssessmentQuestionManagerButton } from '../Buttons/Question';
 const items = [
     {'id': 'list', label: 'Multiple Choice', icon:<IconCustom type="multiple-choice"/>},
     {'id': 'radio', label: 'Select One', icon:<IconCustom type="select-one-alt"/>},
@@ -33,3 +36,20 @@ const enhace = compose(
     withDrawer
 )
 export default enhace(AssessmentQuestionSelect);
+
+
+export const AssesmentQuestionElementSelect = props => {
+    const {currentInOrder, assessment, section, increaseCurrentQuestion} = props;
+    //<IconCustom type="tracker"/>
+    const order = currentInOrder >= 0 ? currentInOrder+1 : 0;
+    // const items = getPlanElementsList(mode);
+    return <Affix><div className={'select-inline'} style={{paddingTop: 13}}>
+        {items.map((item, i2) => {
+            return <span className={'select-inline-item'}  key={i2}>
+            <AssessmentQuestionManagerButton  assessment={assessment} section={section} type={item.id} order={order} label={<Tooltip title={item.label} placement={'bottom'}><span>{item.icon}</span></Tooltip>} increaseCurrentQuestion={increaseCurrentQuestion} />
+        {/* <PlanElementManagerButton {...props} type={item.type} element={null} order={order} asButton={false} label={<Tooltip title={item.label} placement={'bottom'}><span>{item.icon}</span></Tooltip>} /> */}
+        {/* {item.icon} */}
+        </span>
+        })}
+    </div></Affix>;
+}

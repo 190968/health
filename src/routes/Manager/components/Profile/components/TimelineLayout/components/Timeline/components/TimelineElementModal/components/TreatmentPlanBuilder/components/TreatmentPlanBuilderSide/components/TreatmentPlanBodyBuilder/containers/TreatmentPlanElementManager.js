@@ -1,5 +1,3 @@
-import React from 'react';
-import PlanElementBuilder from "../../../../../../../../../../../../../../../../Plan/components/PlanLayout/containers/PlanElementBuilder";
 import { withPlanElementUnion } from '../../../../../../../../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder';
 import { compose, withState, withProps, withHandlers  } from 'recompose';
 import { withModal } from '../../../../../../../../../../../../../../../../../components/Modal';

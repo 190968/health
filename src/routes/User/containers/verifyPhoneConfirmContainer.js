@@ -14,14 +14,17 @@ import gql from 'graphql-tag';
 import {withRouter} from "react-router-dom";
 import LoginForm from "../components/Login";
 import {updatePhoneConfirm} from "../modules/user";
-import { UserInfoPhoneFragment } from '../fragments';
+import { UserInfoPhoneFragment, CurrentUserInfoFragment } from '../fragments';
 import { withCurrentUser } from '../../../queries/user';
 
 
 const verifyPhoneConfirm = gql`
 mutation verifyPhoneConfirm($code:String!) {
-       verifyPhoneConfirm(code:$code)
+       confirmPhoneVerification(code:$code) {
+        ...CurrentUserInfo
+       }
     }
+    ${CurrentUserInfoFragment}
 `;
 
 const withMutation = graphql(verifyPhoneConfirm, {
@@ -32,65 +35,35 @@ const withMutation = graphql(verifyPhoneConfirm, {
             const  {currentUser:user} = ownProps;
             return mutate({
                 variables: {code:code },
-                update: (store, { data: { verifyPhoneConfirm } }) => {
+                // update: (store, { data: { verifyPhoneConfirm } }) => {
 
 
-                    const userOld = store.readFragment({
-                        id: 'User:'+user.id, // `id` is any id that could be returned by `dataIdFromObject`.
-                        fragment: UserInfoPhoneFragment,
-                        fragmentName: 'UserPhoneInfo'
-                    });
+                //     const userOld = store.readFragment({
+                //         id: 'User:'+user.id, // `id` is any id that could be returned by `dataIdFromObject`.
+                //         fragment: UserInfoPhoneFragment,
+                //         fragmentName: 'UserPhoneInfo'
+                //     });
 
-                    console.log(userOld, 'userOld');
+                //     console.log(userOld, 'userOld');
 
-                    notification['success']({
-                        message: 'Phone verified',
-                        description: 'Now you can use the system',
-                      });
+                //     notification['success']({
+                //         message: 'Phone verified',
+                //         description: 'Now you can use the system',
+                //       });
 
-                    store.writeFragment({
-                        id: 'User:'+user.id,
-                        fragment: UserInfoPhoneFragment,
-                        fragmentName: 'UserPhoneInfo',
-                        data: {
-                            ...userOld,
-                            phoneConfirmed: verifyPhoneConfirm,
-                            __typename:'User'
-                        },
-                    });
+                //     store.writeFragment({
+                //         id: 'User:'+user.id,
+                //         fragment: UserInfoPhoneFragment,
+                //         fragmentName: 'UserPhoneInfo',
+                //         data: {
+                //             ...userOld,
+                //             phoneConfirmed: verifyPhoneConfirm,
+                //             __typename:'User'
+                //         },
+                //     });
 
-                    // const userOld2 = store.readFragment({
-                    //     id: 'User:'+user.id, // `id` is any id that could be returned by `dataIdFromObject`.
-                    //     fragment: UserInfoPhoneFragment,
-                    //     fragmentName: 'UserPhoneInfo'
-                    // });
-                    // console.log(userOld2);
-                    /*
-
-
-
-                    // get info from the store
-                    const data = store.readFragment({
-                        query: UserQuery,
-                        variables: {
-                            id: id,
-                        }
-                    });
-
-                    // Write our data back to the cache.
-                    store.writeQuery({
-                        query: UserQuery,
-                        data: {
-                            category: {
-                                ...data.category,
-                                isJoined: false
-                            }
-                        },
-                        variables: {
-                            id: id,
-                        }
-                    });*/
-                },
+                    
+                // },
             })},
     }),
 });

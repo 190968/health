@@ -7,7 +7,19 @@ import { PlanElementManagerButton } from '../Buttons/components/ElementManager';
 const PlanbuilderElementSelect = props => {
     const {currentInOrder, mode} = props;
     //<IconCustom type="tracker"/>
-    const order = currentInOrder >= 0 ? currentInOrder+1 : 0;
+    let order = null;
+    if (currentInOrder === null) {
+        // console.log('no exist');
+        order = 0;
+    } else if (currentInOrder >= 0) {
+        order = currentInOrder+1;
+    } else {
+        order = 0;
+    }
+    // currentInOrder && currentInOrder >= 0 ? currentInOrder+1 : 0;
+    console.log(props, 'props');
+    console.log(currentInOrder, 'currentInOrder');
+    console.log(order, 'order');
     const items = getPlanElementsList(mode);
     return <div className={'select-inline'}>
     <Row type="flex" justify="start">{items.map((group, i) => 

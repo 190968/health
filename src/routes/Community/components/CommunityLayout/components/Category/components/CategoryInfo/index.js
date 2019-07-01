@@ -7,7 +7,7 @@ import ListCommunityForm from '../../components/Communities';
 import Plan from '../../components/PlansList';
 import News from '../../../CategoryNews/components';
 import Search from '../../containers/Search.js';
-import {Card, Popconfirm, Button, Row, Col} from 'antd';
+import {Card, Popconfirm, Button, Row, Col, Icon} from 'antd';
 import {withApollo} from 'react-apollo'
 import {withRouter} from "react-router-dom";
 //import '../../../../style.css';
@@ -15,35 +15,42 @@ import {
     injectIntl
 } from 'react-intl';
 import messages from '../../messages';
+import { withActiveNetwork } from '../../../../../../../../components/App/app-context';
 
 class Category extends React.Component {
     state = {
-        key: 'Overview',
-        noTitleKey: 'Overview',
+        activeTab: null
+        // noTitleKey: 'Overview',
     }
 
     constructor(props) {
+        // console.log(props, 'ppprops');
         super(props);
+        const {info} = props;
+        const {articles} = info || {};
+        const firstArticle = articles[0] || {};
+        const {id:firstArticleId} = firstArticle || {};
+        this.state = {activeTab:firstArticleId}
     }
 
     clickJoin = () => {
-        const {onSubmit, info} = this.props;
-        return onSubmit(info.id);
+        const {clickJoin, info} = this.props;
+        return clickJoin(info.id);
     }
 
     clickUNJoin = () => {
-        const {onClick, info} = this.props;
-        return onClick(info.id);
+        const {clickUNJoin, info} = this.props;
+        return clickUNJoin(info.id);
     }
 
 
-    onTabChange = (key, type) => {
-        this.setState({[type]: key});
+    onTabChange = (key) => {
+        this.setState({activeTab: key});
     }
 
     render() {
         //console.log(this.props);
-        const {info, loading} = this.props;
+        const {info, loading, currentNetwork} = this.props;
 
         if (loading) {
             return (
@@ -51,8 +58,10 @@ class Category extends React.Component {
             );
         }
         const {intl} = this.props;
-        console.log(info);
+        // console.log(info);
         const {name, canJoin, news, isJoined, articles, categories, discussions, plans} = info;
+        const {networkModuleExists} = currentNetwork;
+        const isMcGrawhill = networkModuleExists('is_mcgrawhill')
 
 
         let categoriesKV = [];
@@ -66,16 +75,16 @@ class Category extends React.Component {
             const {thumbs} = item;
             const {medium} = thumbs || {};
             if (!medium) {
-                contentListNoTitle[item.title] = <Row>
+                contentListNoTitle[item.id] = <Row>
                     <Col><h3>{item.title}</h3>
-                    <div dangerouslySetInnerHTML={{__html: item.text}}/>
+                    <div className={'redactor-styles'} dangerouslySetInnerHTML={{__html: item.text}}/>
                 </Col>
             </Row>
             } else {
-            contentListNoTitle[item.title] = <Row>
+            contentListNoTitle[item.id] = <Row>
                 <Col span={16}>
                     <h3>{item.title}</h3>
-                    <div dangerouslySetInnerHTML={{__html: item.text}}/>
+                    <div className={'redactor-styles'} dangerouslySetInnerHTML={{__html: item.text}}/>
                 </Col>
                 <Col offset={1} span={7}>
                     <img src={item.thumbs.medium}/>
@@ -86,7 +95,7 @@ class Category extends React.Component {
         for (let i = 0; i < articles.length; i++) {
             tabListNoTitle.push(
                 {
-                    key: articles[i].title,
+                    key: articles[i].id,
                     tab: articles[i].title,
                 }
             )
@@ -99,10 +108,8 @@ class Category extends React.Component {
                               <Popconfirm title={intl.formatMessage(messages.popTitle)} onConfirm={this.clickUNJoin}
                                           okText={intl.formatMessage(messages.okText)}
                                           cancelText={intl.formatMessage(messages.cancelText)}>
-                                  <Button type="danger"
-                                          onClick={this.props.clickUNJoin}>{intl.formatMessage(messages.leave)}</Button></Popconfirm> :
-                              <Button onClick={this.props.clickJoin}
-                                      type="primary">{intl.formatMessage(messages.join)}</Button> : ''}</Col>
+                                   <Button type="danger"  >{isMcGrawhill ? 'Favorite' : intl.formatMessage(messages.leave)}</Button></Popconfirm> : <Button onClick={this.props.clickJoin} type="orange">{isMcGrawhill ? 'Favorite' : intl.formatMessage(messages.join)}</Button> : ''}
+                        </Col>
                       <Col offset={1} span={16}>
                           <Search categories={categoriesKV}/>
                       </Col>
@@ -110,12 +117,14 @@ class Category extends React.Component {
                   }
 
                   tabList={tabListNoTitle}
+
+                  activeTabKey={this.state.activeTab}
                   onTabChange={(key) => {
-                      this.onTabChange(key, 'noTitleKey');
+                      this.onTabChange(key);
                   }}
             >
                 {
-                    articles.length !== 0 && contentListNoTitle[this.state.noTitleKey]
+                    articles.length !== 0 && contentListNoTitle[this.state.activeTab]
                 }
             </Card>
         );
@@ -123,4 +132,4 @@ class Category extends React.Component {
 
 }
 
-export default withApollo(withRouter(injectIntl(Category)));
+export default withActiveNetwork(withApollo(withRouter(injectIntl(Category))));

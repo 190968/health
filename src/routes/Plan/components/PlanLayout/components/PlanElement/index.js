@@ -27,17 +27,18 @@ const PlanElementPure = (props) => {
 			<PlanElementBox {...props} showChildren={props.setShowChildren} />
 
 			{props.showChildren && (
-				<div
-					style={{
-						padding: 20,
-						paddingRight: 0,
-						background: '#fbfbfb',
-						border: '1px solid #e8e8e8',
-						borderTop: 'none'
-					}}
-				>
+				// <div
+				// 	// style={{
+				// 	// 	padding: 20,
+				// 	// 	paddingRight: 0,
+				// 	// 	background: '#fbfbfb',
+				// 	// 	border: '1px solid #e8e8e8',
+				// 	// 	borderTop: 'none'
+				// 	// }}
+				// >
 					<PlanElementChildrenList
 						elementId={id}
+						parentElement={element}
 						onDrop={onDrop}
 						plan={plan}
 						isDraggable={isDraggable}
@@ -51,7 +52,7 @@ const PlanElementPure = (props) => {
 						brahmRules={brahmRules}
 						user={user}
 					/>
-				</div>
+				// </div>
 			)}
 		</React.Fragment>
 	);

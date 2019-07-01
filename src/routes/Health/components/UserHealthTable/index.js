@@ -10,7 +10,7 @@ import { TableColumnDates, getTableDateProps } from '../../../../components/Tabl
 
 const UserHealthTable = props => {
     const {items=[], user, total, changePage, refetch, loading} = props;
-
+    // const isMcgrawhill = networkModuleExists('is_mcgrawhill')
     const columns = [
         {
             title: 'Type',
@@ -70,8 +70,9 @@ const UserHealthTable = props => {
         hideOnSinglePage: true,
         onChange: changePage,
     };
+    const title = 'Health Records';
 
-    return <Card title={'Health Records'} type={'table'}  extra={<HealthManagerButton user={user} icon={'plus'} refetch={refetch} />}>
+    return <Card title={title} type={'table'}  extra={<HealthManagerButton user={user} icon={'plus'} refetch={refetch} />}>
         <TableWithMessage
         emptyMessage={'No Health Records'}
         dataSource={items} columns={columns} loading={loading} rowKey={'id'} pagination={false} />

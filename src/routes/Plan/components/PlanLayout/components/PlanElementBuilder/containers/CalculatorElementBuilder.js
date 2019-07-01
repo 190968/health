@@ -1,53 +1,12 @@
 import React from 'react';
 import { compose, withHandlers, withState} from 'recompose';
-import CalculatorElementBuilderPure, {prepareInput} from '../components/CalculatorElementBuilder';
-import {Form, Button} from 'antd';
-import {modalHOC, withSpinnerWhileLoading} from "../modal";
-import {ElementTrackerFragment} from "../../../../Plan/fragments";
+import CalculatorElementBuilderPure from '../components/CalculatorElementBuilder';
+import {Button} from 'antd';
+import { withDrawer } from '../../../../../../../components/Modal';
 
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+export const CalculatorElementBuilder = CalculatorElementBuilderPure;
 
-
-
-// add query of trackers
-export const GET_POSSIBLE_SCALES_QUERY = gql`
-    query GET_POSSIBLE_PLAN_TRACKERS  ($pid: UID) {
-        plan(id: $pid) {
-            id
-            getTrackers {
-                ...TrackerElement
-            }
-        }
-    }
-    ${ElementTrackerFragment}
-`;
-
-const CalculatorElementBuilderWithQuery = graphql(
-    GET_POSSIBLE_SCALES_QUERY,
-    {
-        options: (ownProps) => ({
-            variables: {
-                pid: ownProps.plan.id,
-            }
-        }),
-        props: ({data}) => {
-            if (!data.loading) {
-
-                return {
-                    trackers: data.plan.getTrackers,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
-            }
-        },
-    }
-)(CalculatorElementBuilderPure);
-
-export const CalculatorElementBuilder = CalculatorElementBuilderWithQuery;
-
-export const enhance = compose(
+const enhance = compose(
     withState('showTest', 'openTest', false),
     withHandlers({
         // onSubmit: props => callback => {
@@ -82,18 +41,21 @@ const enhanceWithModal = compose(
 
         },
     }),
+    // withDrawer
     // modalHOC,
 )
 
-export default enhanceWithModal(CalculatorElementBuilderWithQuery);
+export default enhanceWithModal(CalculatorElementBuilder);
 
 
 
 export const preparePlanElementCalculatorInput = (values) => {
-    const {title, formulaString, trackers=[]} = values;
+    const {title, formulaString, fields, trackers=[]} = values;
+    // console.log(values, 'calculator values');
     return {
             title,
-            formulaString:toString(formulaString),
-            trackers:trackers
+            formulaString:formulaString,
+            calculatorCustomFields:fields,
+            trackers:trackers.map(t=>t.id)
     }
 }

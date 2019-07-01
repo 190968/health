@@ -122,14 +122,8 @@ export default enhance(ConditionElementBuilder);
 
 
 export const preparePlanElementConditionInput = (values) => {
-    const {title,  keys=[], ids=[], footnote} = values;
-    let {options=[]} = values;
-    // console.log(values);
-    options = options.map(option => {
-        const {label, id} = option;
-        return {id, label}
-    });
-
+    const {title, options=[], footnote} = values;
+    console.log(values, 'values');
     return {
             title,
             options,

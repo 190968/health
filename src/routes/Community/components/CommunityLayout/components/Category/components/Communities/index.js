@@ -6,24 +6,26 @@ import {
 } from 'react-intl';
 import messages from './listCommunity.json';
 import CategoryCard from '../../../CategoryCard';
-class ListCommunity extends React.Component{
+import { withActiveNetwork } from '../../../../../../../../components/App/app-context.js';
+const ListCommunity = props =>{
 
 
 
-    render(){
-        const {loading} = this.props;
+        const {loading, currentNetwork} = props;
         if (loading) {
             return (
                 <Card loading  title="Main Categories">Loading!!!</Card>
             );
         }
-        const { intl } = this.props;
-        const {name,categories} = this.props;
+        const {intl, name,categories} = props;
+        const {networkModuleExists} = currentNetwork;
 
+        const isMcgrawhill = networkModuleExists('is_mcgrawhill');
+        const title = isMcgrawhill ? name.toUpperCase()+' Chapters' : name.toUpperCase()+' COMMUNITIES';
 
         return(
             <Card
-                title={name.toUpperCase()+intl.formatMessage(messages.communities)}
+                title={title}
             >
                     <List
                         split={false}
@@ -38,6 +40,5 @@ class ListCommunity extends React.Component{
                     />
             </Card>
         );
-    }
 }
-export default withApollo(injectIntl(ListCommunity));
+export default withActiveNetwork(withApollo(injectIntl(ListCommunity)));

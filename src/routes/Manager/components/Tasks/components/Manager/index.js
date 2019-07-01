@@ -5,12 +5,13 @@ import messages from './i18n/en';
 import DefaultI18nEn from '../../../../../../i18n/en';
 import PatientSelect from '../../../../../../components/Autosuggest/containers/PatientSelect';
 import { DateField } from '../../../../../../components/FormCustomFields';
-import { TaskManagerAttachments } from '../../../../../../components/Tasks/containers/Attachments';
+// import { TaskManagerAttachments } from '../../../../../../components/Tasks/containers/Attachments';
 import { TaskAssign } from './containers/Assign';
 import { PRIORITIES_LIST } from '../../../../../../constants/priorities';
 import AvatarWithName from '../../../../../User/components/AvatarWithName';
 import { validateTaskAssign } from './components/Assign';
 import { TaskForwardButton } from '../View/components/ForwardButton';
+import { AttachmentsModules } from '../../../../../../components/FormCustomFields/containers/AttachmentsModules';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
@@ -38,7 +39,7 @@ const TaskManager = props => {
 
   const patientSelected = id !== '' || patient && patient.id !== '';
 
-  console.log(getFieldsValue(), 'TASKMANAGER');
+  // console.log(getFieldsValue(), 'TASKMANAGER');
 
   return <Form onSubmit={props.handleSubmit}>
    <FormItem
@@ -167,7 +168,9 @@ const TaskManager = props => {
         //   //   participants:<FormattedMessage {...messages.errParticipants} />,
         //   // }
         // }],
-     })(<TaskManagerAttachments patient={getFieldValue('patient')} form={form} task={task} date={getFieldValue('endDate')} />)}
+     })(<AttachmentsModules patient={getFieldValue('patient')}  date={getFieldValue('endDate')} /*task={task}*/ />)}
+                
+     {/* <TaskManagerAttachments patient={getFieldValue('patient')} form={form} task={task} date={getFieldValue('endDate')} />)} */}
       
     </FormItem>
   </Form>

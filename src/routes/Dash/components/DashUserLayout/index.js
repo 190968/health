@@ -23,6 +23,9 @@ import messages from './i18n/en';
 import { FormattedMessage } from 'react-intl';
 import CareTeam from '../../../User/containers/careTeamContainer';
 import { compose, withHandlers, withProps } from 'recompose';
+import { withActiveNetwork } from '../../../../components/App/app-context';
+import MyCommunities from '../../../Community/components/CommunityLayout/containers/MyCategories';
+import PersonalNotesList from '../../../User/components/PersonalNotes/containers/List';
 
 
 const steps = [
@@ -88,9 +91,10 @@ export class DashUserLayout extends React.Component {
     }
     render () {
         const {
-           loading, date, currentUser
+           loading, date, currentUser, currentNetwork
         } = this.props;
         
+        const {networkModuleExists} = currentNetwork || {};
         //console.log(loading);
         if (loading) {
             //return (<div>Loading...</div>);
@@ -99,9 +103,10 @@ export class DashUserLayout extends React.Component {
             );
         }
         //console.log(date, 'Dash Date');
+        const isMGH = networkModuleExists('is_mcgrawhill');
         return (
            <Row gutter={20}>
-               <Col>
+               {!isMGH && <Col>
                    <Alert
                        style={{marginBottom:24}}
                        message={<FormattedMessage {...messages.userDashTitle} />}
@@ -110,7 +115,7 @@ export class DashUserLayout extends React.Component {
                        showIcon
                        closeText={<Icon type="close" />}
                    />
-               </Col>
+               </Col>}
                <Col xs={24} md={14} lg={15} xl={17} className={'my-first-step'}>
                {this.props.showTour && <Joyride
                 steps={steps}
@@ -140,16 +145,20 @@ export class DashUserLayout extends React.Component {
                    <Assessments ready={!loading} date={date} user={currentUser} />
                    <BiometricPlan ready={!loading} date={date} user={currentUser} />
                    {/* <BiometricPlanOld ready={!loading} date={date} user_id={currentUser.id} /> */}
-                   <UserHealthTable user={currentUser} />
+                   {isMGH ? <PersonalNotesList user={currentUser} asCard /> : <UserHealthTable user={currentUser} />}
                </Col>
                <Col xs={24} md={10} lg={9} xl={7}>
+
                     <UserAppointments user={currentUser} />
                     <UserReferrals user={currentUser} />
-                    <div className={'ant-card tour-careteam'} >
+
+                    {isMGH ? <MyCommunities label={'My Favorites'} asList /> : <div className={'ant-card tour-careteam'} style={{background:'transparent'}} >
                         <CareTeam user={currentUser} />
                         <Motivators user={currentUser} />
                         <Family user={currentUser} />
-                    </div>
+                    </div>}
+                    {/* <MyCo */}
+                    
                </Col>
            </Row>
             // <Form onSubmit={this.handleSubmit}>
@@ -187,6 +196,7 @@ const enhance = compose(
         }
 
     }),
+    withActiveNetwork
 );
 export default enhance(DashUserLayout);
 

@@ -13,9 +13,9 @@ const MedicationsTable = props => {
         
     const {medications=[]} = medicationPlan || {};
 
-    const takeAtTimes = medications.filter(m => m.type === 'at_times');
-    const takeAsNeeded = medications.filter(m => m.type === 'as_needed');
-    const takeDaily = medications.filter(m => m.type === 'along_day');
+    const takeAtTimes = medications.filter(m => m.medicationType === 'at_times');
+    const takeAsNeeded = medications.filter(m => m.medicationType === 'as_needed');
+    const takeDaily = medications.filter(m => m.medicationType === 'along_day');
     // const { takeDaily, takeAsNeeded, takeAtTimes } = medicationPlan.medicationsByType;
 
     let columns = [];

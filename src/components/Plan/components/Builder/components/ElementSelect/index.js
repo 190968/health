@@ -29,7 +29,7 @@ const PlanBuilderElementSelect = props => {
         //     const {id, title} = q;
         //     return {value: id, label: title};
         // });
-       return {value:id, label:getPlanElementLabelFromElement(s, {showType:true}) /*label:title, children*/ } 
+       return {value:id, label: getPlanElementLabelFromElement(s, {showType:true, isBuilderMode:true}) /*label:title, children*/ } 
      })
     }
     return <Cascader options={options} onChange={onChange}  defaultValue={value} style={{width:'100%'}} />

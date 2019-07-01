@@ -336,7 +336,15 @@ body {
   &.full-width {
     .ant-list-item-content {display:none;}
   }
+
+  &-action-split {
+    display:none;
+  }
+  &-action > li {
+    padding-right: 0;
+  }
 }
+
 
 .ant-list-vertical {
 
@@ -534,7 +542,13 @@ body {
   }
 }
 
-
+.ant-modal.transparent {
+  .ant-modal-content {
+    background-color: transparent;
+    -webkit-box-shadow:none;
+    box-shadow:none;
+  }
+}
 
 .ant-modal-close {
   color: #fff;

@@ -69,7 +69,7 @@ class VerifyPhoneForm extends React.Component {
 
 
         return (
-            <div className="register-form"  className={'tinyBoxAlone'} style={{padding:'8% 30% 20px'}}>
+            <div   className={'tinyBoxAlone'} style={{padding:'8% 30% 20px'}}>
                 <Form onSubmit={this.handleSubmit} >
                 <Card
                     title={intl.messages.user_verifyphone_verifyphone}

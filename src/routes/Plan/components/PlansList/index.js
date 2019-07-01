@@ -10,8 +10,8 @@ import './index.less';
 import { EmptyList } from '../../../../components/Loading';
 import {PlanI18nEn as messages} from '../../i18n/en';
 export const PlansList = (props) => {
-	const { plans=[], user, currentUser, loading, list, totalCount=0 } = props;
-
+	const { plans=[], user, currentUser, currentNetwork, loading, list, totalCount=0 } = props;
+	const {networkModuleExists} = currentNetwork;
 	const isSelf = currentUser.id === user.id;
 	const menu = (
 		<Menu onClick={props.handleStatus}>
@@ -21,11 +21,13 @@ export const PlansList = (props) => {
 			<Menu.Item key="archived"><FormattedMessage {...messages.showStatusArchived} /></Menu.Item>
 		</Menu>
 	);
-	console.log(list);
+	const isMcgrawhill = networkModuleExists('is_mcgrawhill')
+	// console.log(list);
 	return (
 		<Card
 		loading={loading}
-			title={<FormattedMessage values={{isSelf:true, count:totalCount}} {...messages.myPlans} />}
+			// title={<FormattedMessage values={{isSelf:true, count:totalCount, type: isMcgrawhill ? 'Books' : 'Actionplans'}} {...messages.myPlans} />}
+			title={(isMcgrawhill ? 'My Saved Chapters' : 'My Actionplans')+(totalCount > 0 ? ' ('+totalCount+')' : '')}
 			extra={
 				<Button.Group>
 					

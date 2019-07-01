@@ -58,7 +58,7 @@ export const BrahmsFullFragment = gql`
 `;
 
 export const BrahmManageFragment = gql`
-    fragment ProviderManage on Provider {
+    fragment BrahmManage on Brahms {
         ...Brahm
     }
     ${ BrahmFragment }

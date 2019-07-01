@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 
 const MY_CATEGORIES = gql`
    query GET_MY_CATEGORIES {
-        account {
-            user {
+      account {
+          user {
             id
             categories
             {
@@ -21,11 +21,10 @@ const MY_CATEGORIES = gql`
                   medium
                   wide
                 }
-               
               }
             }
-            }
-     }
+          }
+      }
 }
 `;
 
@@ -44,5 +43,5 @@ const withQuery = graphql(MY_CATEGORIES, {
     },
 });
 
-
-export default withQuery(MyCategories);
+export const MyCommunities = withQuery(MyCategories);
+export default MyCommunities;

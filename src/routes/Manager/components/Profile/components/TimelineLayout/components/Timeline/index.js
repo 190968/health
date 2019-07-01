@@ -10,7 +10,7 @@ import moment from 'moment';
 
 
 const TimelinePure = props => {
-    const {onlyFilters=false,droppable=false, draggable=false, canDrop=false, isOver=false, items =[], userId, showElement, activeElement, user, isWidget=false} = props;
+    const {onlyFilters=false,droppable=false, draggable=false, canDrop=false, isOver=false, items =[], userId, showElement, activeElement, user, isWidget=false, draggableTemplate} = props;
     const isActive = canDrop && isOver;
     const {filters=null, updateFilters, toggleFilter} = props;
     const {togglePathway, showPathway, onDrop} = props;
@@ -40,15 +40,16 @@ const TimelinePure = props => {
             {!filters || filters.length > 0 ?
                 <Timeline>
                     {items.map((item, i) => {
-                        const {isClinical=false, createdAt, isCritical} = item;
-                        // const {icon} = TimelineElementView(item);
+                        const {isClinical=false, createdAt, creator, isCritical} = item;
+                        const {id, fullName} = creator || {};
+                        // const {icon} = TimelineElementView(item);<Icon type="user" key="user" style={{marginRight:5}}  />, <span key="fullname">{fullName}
                         const icon = isCritical && <Icon type="exclamation-circle" style={{color: 'red'}} />;
                         return <Timeline.Item color={'#ccc'} /*color={isClinical ? "green" : undefined}*/
                         key={i}
                         dot={icon}
                         >
-                        <div style={{color:'#ccc', fontSize: '0.8em', paddingTop:3}}>{moment(createdAt).format('lll')}</div>
-                        <TimelineElement item={item} user={user} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} />
+                        <div style={{color:'#ccc', fontSize: '0.8em', paddingTop:3, marginBottom:2}}>{moment(createdAt).format('lll')} {creator && (<><Icon type="user" key="user" style={{marginLeft:5}}  /> {fullName}</>)}</div>
+                        <TimelineElement item={item} user={user} showElement={showElement} activeElement={activeElement} draggable={draggable} onDrop={onDrop} draggableTemplate={draggableTemplate} />
                         
                         </Timeline.Item>;
                     })}

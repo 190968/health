@@ -21,16 +21,16 @@ Array.prototype.groupBy = function(prop) {
 const MedicationsList = (props) => {
 	const { medicationPlan, loading, medicationType, ...otherProps } = props;
 	let { medications = [] } = medicationPlan || {};
-	 
-	const groupedMedications = medications.groupBy('type')
+	const groupedMedications = medications.groupBy('medicationType')
  
-
+// console.log(groupedMedications);
 	 
 	return types.map(({value:type, label}, i) => {
         const medications = groupedMedications[type] || [];
         if (medications.length === 0) {
             return null;
         }
+        console.log(medications, 'medications');
         return <React.Fragment key={i}>
         <Divider>{label}</Divider>
         <ListWithMessage

@@ -25,7 +25,7 @@ const DescriptionList = (props) => {
     const column = col > 4 ? 4 : col;
 
     if (details) {
-        console.log(details);
+        // console.log(details);
         children = details.map((detail, i) => {
             if (detail.length === 1) {
                 return detail[0];

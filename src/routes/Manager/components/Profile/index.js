@@ -12,6 +12,7 @@ import { PubMedArticlesButton } from '../../../Health/components/PubMedArticles/
 import { FollowUpButton } from './components/Visits/containers/FollowUpButton';
 import NotificationButton from './components/Alerts/components/Button';
 import PatientManagerButton from '../Patients/components/PatientEditButton';
+import { UberRequestButton } from '../../../../components/Uber/components/Button';
 const ButtonGroup = Button.Group;
 
  const menu = (
@@ -167,7 +168,7 @@ const Profile = props => {
                 //     </Col>
                 // </Row>}
                 action={<React.Fragment>
-                    {showExtraHeaderInfo && <CalculatorButton user={user} />}
+                    <UberRequestButton /> {showExtraHeaderInfo && <CalculatorButton user={user} />}
                     {/* {showExtraHeaderInfo && <PubMedArticlesButton search={'Small Cell Lung Cancer'} />} */}
                     {canEdit && <ButtonGroup>
                     <Tooltip title={'Edit Profile'}><PatientManagerButton patient={user} /></Tooltip>

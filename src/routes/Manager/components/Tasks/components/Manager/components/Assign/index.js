@@ -93,7 +93,7 @@ const TaskAssign = props => {
                         message: <FormattedMessage {...messages.errProvider} />
                     }],
 
-                })(<ProviderSelect   />)}
+                })(<ProviderSelect getFullInfo={false}  />)}
             </FormItem>}
 
              {type === 4 && <FormItem

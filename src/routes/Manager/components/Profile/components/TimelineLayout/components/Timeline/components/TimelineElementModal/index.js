@@ -30,6 +30,8 @@ import { preparePlanElementClinicalNoteInput } from '../../../../../../../../../
 import { preparePlanElementLinkInput } from '../../../../../../../../../Plan/components/PlanLayout/components/PlanElementBuilder/containers/LinkElementBuilder';
 import { prepareTreatmentInput } from '../../../../../../../../../Health/components/Forms/containers/Treatment';
 import { prepareDateInput } from '../../../../../../../../../../utils/datetime';
+import { DischargePlanManager } from '../../../../../../../../../../components/Plan/components/DischargePlan/containers/Manager';
+import CalculatorElementBuilder, { prepareTimelineCalculatorInput } from './containers/CalculatorElement';
 
 
 
@@ -59,7 +61,7 @@ const enhance = compose(
     //branch(props => props.id !== '', PlanElementWithQuery),
     //branch(props => props.id !== '', withMutation, withAddMutation),
     mapProps(props => {
-        // console.log(props);
+        console.log(props, 'droppable elmeennt');
         if (props.element) {
             const details = props.element.itemInfo;
             return {...props, details, type:props.element.itemType, resetInitInfo:true};
@@ -75,7 +77,7 @@ const enhance = compose(
         onSubmit: props => ({callback}) => {
             //
             const {type, form} = props;
-            //console.log(input);
+            console.log(type, 'typetype');
             form.validateFields((err, values) => {
 
                 if (!err) {
@@ -97,7 +99,7 @@ const enhance = compose(
                     }
                     const input = {...inputFromElement, sourceInfo}
                     //console.log(input);
-                    props.submitTimelineElement(input).then(() => {
+                    props.submitTimelineElement(input, type).then(() => {
                         // if (elementId !== '') {
                         //     message.success('Updated');
                         // } else {
@@ -168,8 +170,10 @@ const enhance = compose(
         {when: ({type}) => type === 'health', then: HealthManager},
         {when: ({type}) => type === 'ap', then: ApElement},
         {when: ({type}) => type === 'treatment_plan', then: TreatmentPlanBuilder},
+        {when: ({type}) => type === 'discharge_plan', then: DischargePlanManager},
         {when: ({type}) => type === 'media', then: MediaElement },
         {when: ({type}) => type === 'new_transition', then: TransitionManager },
+        {when: ({type}) => type === 'calculator', then: CalculatorElementBuilder },
 
     ]),
 
@@ -208,8 +212,11 @@ const prepareTimelineInput = ({values, type}) => {
         case 'treatment':
             input.treatmentElement = prepareTreatmentInput(otherProps);
             break;
+        case 'calculator':
+            input.calculatorElement = prepareTimelineCalculatorInput(otherProps);
+            break;
     }
-    console.log(input, 'input');
+    // console.log(input, 'input');
     return input;
 }
 

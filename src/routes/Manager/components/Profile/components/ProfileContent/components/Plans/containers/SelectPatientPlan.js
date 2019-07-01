@@ -4,6 +4,8 @@ import { withDrawer } from '../../../../../../../../../components/Modal';
 import { TaskAssignWizzard } from '../../../../../../../../../components/Tasks/containers/TaskAssignWizzard';
 import MedicationManager from '../../../../../../../../Plan/components/MedicationPlan/components/Medication/containers/MedicationManager';
 import {TrackerManager} from '../../../../../../../../Plan/components/BiometricPlan/containers/TrackerManager';
+import { DischargePlanManager } from '../../../../../../../../../components/Plan/components/DischargePlan/containers/Manager';
+import { DmeReferralManager } from '../../../../../../../../../components/DME/components/Referrals/containers/Manager';
 {/* <MedicationManagerButton user={user} date={date} asMenuItem /> */}
 const ApAssignEnhanced = withProps(props => {
     return {
@@ -18,6 +20,8 @@ const enhanceType = compose(
     branch(({type}) => type === 'ap', renderComponent(ApAssignEnhanced)),
     branch(({type}) => type === 'medication', renderComponent(MedicationManager)),
     branch(({type}) => type === 'biometric', renderComponent(TrackerManager)),
+    branch(({type}) => type === 'discharge_plan', renderComponent(DischargePlanManager)),
+    branch(({type}) => type === 'dme', renderComponent(DmeReferralManager)),
 );
 const enhance = compose(
     withState('type', 'setType', props => props.type),

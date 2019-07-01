@@ -32,7 +32,7 @@ class AddLessonModal extends React.Component{
                 title={intl.formatMessage(messages.modalTitle)}
                 visible={true}
                 onCancel={this.props.onHide}
-                okText={intl.formatMessage(messages.send)}
+                okText={'Save'}
                 onOk={this.handleModalSubmit}
             >
                 <Form>

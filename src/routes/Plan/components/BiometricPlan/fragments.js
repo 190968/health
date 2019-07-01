@@ -100,3 +100,18 @@ export const BiometricCardInfoFragment = gql`
             }
             ${TrackerInfoFragment}
 `;
+
+export const TrackerPlanTrackerFragment = gql`
+            fragment TrackerPlanTracker on TrackerPlanTracker {
+                id
+                measurement {
+                    ...TrackerPure
+                }
+                timesToReport
+                columns
+                startDate
+                endDate
+
+            }
+            ${TrackerPureFragment}
+`;

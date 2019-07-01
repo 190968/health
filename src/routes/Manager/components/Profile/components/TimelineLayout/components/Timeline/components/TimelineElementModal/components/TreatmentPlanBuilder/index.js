@@ -12,7 +12,6 @@ import TreatmentPlanElementPreview from './containers/TreatmentPlanElementPrevie
 
 const TreatmentPlanBuilder = props => {
     const {user, treatmentPlan, loading, viewNote=false, tmpElements=[], setTmpElements, onSubmit, onDrop, onHide, appendElement} = props;
-    const span = 12;
     return <Row>
             <Col>
               <TreatmentPlanBuilderSide onDrop={onDrop} onHide={onHide} user={user} onSubmit={onSubmit} treatmentPlan={treatmentPlan} loading={loading} elements={tmpElements}  updateElements={setTmpElements} appendElement={appendElement} />

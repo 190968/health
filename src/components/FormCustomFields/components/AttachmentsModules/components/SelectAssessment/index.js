@@ -15,10 +15,12 @@ const formItemLayoutDefault = {
     },
 };
 export const TaskManagerAttachmentSelectAssessment = props => {
-    const {form, formItemLayout=formItemLayoutDefault, date, assignObject} = props;
+    const {form, formItemLayout=formItemLayoutDefault, date, assignObject, attachment} = props;
     const {getFieldDecorator, getFieldValue} = form;
     // if we pass additional props
     const {cohort} = assignObject || {};
+    const {id, object} = attachment || {};
+    const {schedule} = object || {};
     return <React.Fragment>
 
         <FormItem
@@ -26,6 +28,7 @@ export const TaskManagerAttachmentSelectAssessment = props => {
             label="Select Assessment"
         >
             {getFieldDecorator('assessment', {
+                initialValue: object,
                 rules: [{ required: true, message: 'Please Select Assessment' }],
             })(
                 <AssessmentSelect getFullInfo cohort={cohort} />
@@ -33,7 +36,7 @@ export const TaskManagerAttachmentSelectAssessment = props => {
         </FormItem>
 
         
-        {getFieldValue('assessment') && <AssessmentSchedule assessment={getFieldValue('assessment')} endDate={date} form={form} formItemLayout={formItemLayout} />}
+        {getFieldValue('assessment') && <AssessmentSchedule schedule={schedule} assessment={getFieldValue('assessment')} endDate={date} form={form} formItemLayout={formItemLayout} />}
         {/* {plan && <PlanSchedule  />} */}
         </React.Fragment>
 }

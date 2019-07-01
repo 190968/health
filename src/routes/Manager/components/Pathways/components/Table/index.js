@@ -18,14 +18,14 @@ const dateFormat = 'YYYY/MM/DD';
 const PathwayTable = props => {
      
         const {pathways, loading, total, filterUsed, search} = props;
-
+    console.log(props, 'pathway rpops');
         const showEmpty = total ===0 && !filterUsed;
         const columns = [{
             title: 'Title',
             // dataIndex: 'title',
             key: 'title',
             render: plan => <PathwayManagerButton pathway={plan} label={plan.title} />,
-            filterDropdown: (props) => <TableColumnSearch   onSearch={props.doSearch} search={search} />,
+            filterDropdown: () => <TableColumnSearch onSearch={props.doSearch} search={search} />,
 			filterIcon: <Icon type="search" />
         },
             {
@@ -78,6 +78,7 @@ const PathwayTable = props => {
         <TableWithMessage
         total={total}
         dataSource={pathways} 
+        key={'id'}
         loading={loading} 
         columns={columns} 
         showEmpty={showEmpty}

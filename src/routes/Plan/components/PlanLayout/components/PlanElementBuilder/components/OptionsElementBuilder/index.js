@@ -77,13 +77,13 @@ const OptionsElementBuilder = (props) => {
             <FormItem
             {...formItemLayout}
             label="Options"
-        >
+            >
              {getFieldDecorator('options', {
                 initialValue: options,
             })(
                 <CustomOptionsList CustomComponent={OptionItem} blankItem={[]} />
             )}
-        </FormItem> 
+            </FormItem> 
 
             {/* <Options form={form} options={options} formItemLayout={formItemLayout} /> */}
 

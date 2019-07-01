@@ -17,8 +17,8 @@ const addTimelineElementMutation = gql`
 
 const withMutation = graphql(addTimelineElementMutation, {
     props: ({ ownProps, mutate }) => ({
-        submitTimelineElement: (input) => {
-            const type = ownProps.type || ownProps.element.type;
+        submitTimelineElement: (input, typeInit) => {
+            const type = ownProps.type || ownProps.element.type || typeInit;
             let refetchQueries = [{
                 query: GET_TIMELINE_QUERY,
                 variables: { userId: ownProps.user.id},

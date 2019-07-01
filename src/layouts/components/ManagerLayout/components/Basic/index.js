@@ -111,7 +111,7 @@ const BasicLayout = (props) => {
                             <NavLink to="/cohorts"> <Icon type="cluster" /><span>Cohorts</span></NavLink>
                         </Menu.Item>
                         <Menu.Item key="screenings">
-                            <NavLink to="/screenings"> <Icon type="interation" /><span>Screenings</span></NavLink>
+                            <NavLink to="/screenings"> <Icon type="interaction" /><span>Screenings</span></NavLink>
                         </Menu.Item>
                         <Menu.Item key="campaigns">
                             <NavLink to="/campaigns"> <Icon type="fork" /><span>Campaigns</span></NavLink>

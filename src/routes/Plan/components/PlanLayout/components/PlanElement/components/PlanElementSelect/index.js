@@ -34,7 +34,7 @@ const PLAN_ELEMENT_TYPES = [
     {type:'document', label:'Document', icon:<IconCustom type="document" />},
     //
     {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
-    // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+    {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
     {label:'Decision', type:'decision', icon: <IconCustom type="decision" />},
     {type:'line', label:'Line', icon: <IconCustom type="line"/>},
     {type:'tipbox', label:'Tip', icon: <IconCustom type="tip" />},
@@ -95,7 +95,7 @@ export const getPlanElementsList = mode => {
                 {label:'Conditional', type:'condition', icon: <IconCustom type="conditional"/>},
                 {label:'Clinical Note', type:'clinical_note', icon: <IconCustom type="clinical-note"/>},
                 {label:'Treatment', type:'treatment', icon:<IconCustom type='treatment' />},
-                // {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
+                {label:'Go To', type:'alias', icon: <IconCustom type="go-to"/>},
                 {label:'Link', type:'link', icon:<IconCustom type="link"/>},//
                 {label:'ActionPlan', type:'ap', icon: <IconCustom type="actionPlan"/>},//
                 {type:'calculator', label:'Calculator', icon: <IconCustom type="calculator" />},
@@ -120,7 +120,7 @@ export const getPlanElementsList = mode => {
         );
         //
         elements.push(
-            ['Output', [
+            ['Input', [
                 {type:'choice_input', label:'Multiple Choice', icon: <IconCustom type="multiple-choice"/>},
                 {type:'radio_input', label:'Select One', icon: <IconCustom type="select-one-alt"/>},
                 {type:'dropdown', label:'Dropdown', icon: <IconCustom type="dropdown"/>},

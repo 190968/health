@@ -1,6 +1,5 @@
 import React from 'react';
-import PlanSection from '../../../../components/PlanSection';
-import {Row, Col} from 'antd';
+import PlanSection from '../../../../containers/PlanSection';
 import { filterSkippedPlanSections } from '../../../../../../../../components/Plan/utils';
 const PlanSections = props => {
     const {items:sections=[], currentKeyI, ...otherProps} = props;

@@ -3,7 +3,6 @@ import {Radio} from 'antd';
 import {compose, withHandlers, branch, renderComponent, withState, withProps} from 'recompose';
 import MediaElementBuilderPure from '../components/MediaElementBuilder';
 import {modalHOC, withSpinnerWhileLoading} from "../modal";
-import {getMediaTypeInfo} from "../components/MediaElementBuilder/index";
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;

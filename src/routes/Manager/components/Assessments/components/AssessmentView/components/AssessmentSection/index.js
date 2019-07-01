@@ -1,7 +1,7 @@
 import { Button, Card, List, Icon } from 'antd';
 import React from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { branch, compose } from 'recompose';
+import { branch, compose, withHandlers } from 'recompose';
 import { AssessmentQuestionManagerButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Question';
 import { AssessmentQuestionDeleteButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Question/delete';
 import { AssessmentSectionManagerButton } from '../../../../../../../../components/Assessment/components/Builder/components/Buttons/Section';
@@ -13,7 +13,7 @@ import './index.less';
 
 const AssessmentSection = props => {
     const {section, i, sections=[], ...otherProps} = props;
-    const {isBuilderMode=false, isPreviewMode=false, canReport=false, currentQuestion, currentSection, goPreviousSection, goNextSection, report, openBrahms=false} = otherProps;
+    const {isBuilderMode=false, isPreviewMode=false, currentSectionInOrder, increaseCurrentQuestion, increaseCurrentSection, canReport=false, currentQuestion, currentSection, goPreviousSection, goNextSection, report, openBrahms=false} = otherProps;
     const {title,  getQuestions=[]} = section || {};
     const {assessment} = props;
     const {isCompleted=false, getReportedValues=[]} = report || {};
@@ -63,14 +63,14 @@ const AssessmentSection = props => {
     let questionsToShow = getQuestions;
     // If we show question by question, do not show next questions.
     if (!showAllQuestions) {
-        console.log(section, 'section');
-        console.log(isPastSection, 'isPastSection');
-        console.log(currentQuestion, 'currentQuestion');
-        console.log(questionsToShow, 'currentQuestion');
+        // console.log(section, 'section');
+        // console.log(isPastSection, 'isPastSection');
+        // console.log(currentQuestion, 'currentQuestion');
+        // console.log(questionsToShow, 'currentQuestion');
         questionsToShow = questionsToShow.filter((question, i) => {
             return currentQuestion >= i || isPastSection;
         });
-        console.log(questionsToShow, 'questionsToShow');
+        // console.log(questionsToShow, 'questionsToShow');
     }
 
     // Prepare section Buttons
@@ -83,8 +83,11 @@ const AssessmentSection = props => {
         // cardExtra.push(openBrahms ? <Icon type="eye" onClick={props.toggleBrahms} /> : <Icon type="eye-invisible" onClick={props.toggleBrahms} />);
 
         // toggleState
-        // cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} />);
-        cardActions.push(<AssessmentSectionManagerButton key={'addSection'} buttonType={'dashed'} assessment={assessment} afterSection={section} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
+        // if we have 0 questions, then we show the button
+        // if (questionsToShow.length === 0) {
+        //     cardActions.push(<AssessmentQuestionManagerButton key={'addQuestion'} assessment={assessment} section={section} increaseCurrentQuestion={increaseCurrentQuestion} />);
+        // }
+        cardActions.push(<AssessmentSectionManagerButton key={'addSection'} buttonType={'dashed'} assessment={assessment} afterSection={section} order={i} increaseCurrentSection={increaseCurrentSection} />);//<AssessmentSectionManagerButton assessment={assessment} afterSection={section} />
     } else if (showBottomButtons) {
 
         if (showPreviousButton)
@@ -101,10 +104,13 @@ const AssessmentSection = props => {
         //cardExtra.push(<div style={{width:200}}><Progress /*type="circle" showInfo={false} width={20} strokeWidth={20}*/ percent={progress} /></div>);
     }
     // end Prepare section buttons
-     
-    
-    const opts = {isBuilderMode, assessment, section,  isPastSection, isLastSection, isFirstSection, showAllQuestions, otherProps, openBrahms};
-    return <Card title={title} className={'assessment-section'} type={'inner'} extra={cardExtra} 
+    let isActiveSection = i === currentSectionInOrder; 
+    let onClick = null;
+    if (isBuilderMode) {
+        onClick = props.setCurrentSection;
+    }
+    const opts = { ...otherProps, isBuilderMode, assessment, section,  isPastSection, isLastSection, isFirstSection, showAllQuestions, openBrahms};
+    return <Card title={title} className={'assessment-section '+((isBuilderMode && !isPreviewMode) ? 'builder-mode' : '') + (isActiveSection ? 'active-section':'')} type={'inner'} extra={cardExtra} onClick={onClick}
     actions={cardActions}
     // extra={(!isBuilderMode || isPreviewMode) ? <div style={{width:200}}><Progress /*type="circle" showInfo={false} width={20} strokeWidth={20}*/ percent={progress} /></div> : null}
     >
@@ -133,7 +139,7 @@ const AssessmentQuestionsListPure = props => {
     size={'small'}
     split={false}
     renderItem={(question, i) => {
-        return <AssessmentQuestionCurrent {...otherProps} index={i} collectionaa={'section-'+section.id} question={question} i={i} key={`item-${question.id}`} />;
+        return <AssessmentQuestionCurrent {...otherProps} index={i} collection={'section-'+section.id} question={question} i={i} key={`item-${question.id}`} />;
     }}
 />;
 }
@@ -142,7 +148,8 @@ const AssessmentQuestionsList = compose(
     )(AssessmentQuestionsListPure);
 
 
-const AssessmentQuestionBody = ({isBuilderMode, assessment, section, question, i, isPastSection, isLastSection, isFirstSection, showAllQuestions, otherProps}) => {
+const AssessmentQuestionBody = (props) => {
+    const {isBuilderMode, assessment, section, question, i, isPastSection, isLastSection, isFirstSection, showAllQuestions, ...otherProps} = props;
     const {showQuestionNumber} = assessment || {};
     // return <li>oooooooo <DragHandle /></li>;
     let questionCardExtra = [];
@@ -156,26 +163,30 @@ const AssessmentQuestionBody = ({isBuilderMode, assessment, section, question, i
         questionCardExtra.push(<DragHandle key="drag" style={{marginLeft:5}} />);
         questionCardExtra.push(<AssessmentQuestionDeleteButton  key={'delete'}  assessment={assessment} section={section} question={question} />);
     }
-    // const {currentSectionInOrder, sectionOrder, currentQuestionInOrder} = otherProps;
-    let isSelectedElement = false;
-    // const isSelectedElement = currentSectionInOrder === sectionOrder &&  currentQuestionInOrder === i;
-    // console.log(otherProps, 'otherProps');
-    // console.log(currentSectionInOrder, 'currentSectionInOrder');
-    // console.log(sectionOrder, 'sectionOrder');
-    // console.log(currentQuestionInOrder, 'currentQuestionInOrder');
-    // console.log(i, 'i');
-    // console.log(isSelectedElement, 'isSelectedElement');
-    // console.log(i, 'isSelectedElement');
+    const {currentSectionInOrder, sectionOrder, currentQuestionInOrder} = otherProps;
+    // let isSelectedElement = false;
+    const isSelectedElement = currentSectionInOrder === sectionOrder &&  currentQuestionInOrder === i;
+
+    let onClick;
+    if (isBuilderMode) {
+        onClick = props.setCurrentQuestionInSection;
+    }
 
     // is active
-    return <List.Item key={question.id} >
-        <div className={isSelectedElement ? 'selected-element' : ''}>
+    return <List.Item key={question.id}  >
+        <div className={'assessment-question '+((isBuilderMode && isSelectedElement) ? 'selected-element' : '')} onClick={onClick}>
         <List.Item.Meta title={<div><strong style={{fontSize: '1.1em'}}>{(showQuestionNumber ? (i + 1) + '. ' : '') + question.title}</strong> <div className={'ant-card-extra'} style={{ float: 'right', padding: '0 !important' }}>{questionCardExtra}</div></div>} description={question.description} />
-        <AssessmentQuestion key={question.id} i={i}  question={question} isPastSection={isPastSection} isLastSection={isLastSection} isFirstSection={isFirstSection} showAllQuestions={showAllQuestions} section={section} {...otherProps} />
+        <AssessmentQuestion key={question.id} isBuilderMode={isBuilderMode} i={i}  question={question} isPastSection={isPastSection} isLastSection={isLastSection} isFirstSection={isFirstSection} showAllQuestions={showAllQuestions} section={section} {...props} />
         </div>
     </List.Item>;
 }
 const AssessmentQuestionCurrent = compose(
-     branch(props => props.isBuilderMode, SortableElement)
+     branch(props => props.isBuilderMode, SortableElement),
+     withHandlers({
+        setCurrentQuestionInSection: props => () => {
+            const {i} = props;
+            props.setCurrentQuestionInSection(i)
+        }
+     })
     )(AssessmentQuestionBody);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 const {{pascalCase $moduleName}}View = props => {
-    const {{{camelCase $moduleName}}} = props;
+    const { {{camelCase $moduleName}} } = props;
     const {id, title, createdOn} = {{camelCase $moduleName}} || {};
 
     let details = [

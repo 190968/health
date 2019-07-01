@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactPhotoGrid from 'react-photo-grid';
 import {Timeline, Tag, Tooltip, Card, Popover, Icon, Row, Col, Progress, Badge, Avatar} from 'antd';
 import Truncate from 'react-truncate';
 import moment from 'moment';
@@ -13,7 +12,7 @@ import CancerStage from '../../../../../../../../../Plan/components/Plan/compone
 import './styles.less';
 import TreatmentElement from "../../../../../../../../../Plan/components/Plan/components/TreatmentElement/index";
 import { DragSource } from 'react-dnd'
-import {branch, compose, renderComponent, withHandlers} from 'recompose';
+import {branch, compose, renderComponent, withHandlers, withProps} from 'recompose';
 import TumorboardView from "../../../../../../../Tumorboard/containers/TumorboardView";
 import {FitIcon} from "../../../../../../../../../../components/FitIcon/index";
 import {CommentsModalFromIcon, Comments} from "../../../../../../../../../../components/Comments/index";
@@ -24,13 +23,15 @@ import TransitionDetails from '../../../../../Transitions/components/TransitionD
 import VisitDetails from '../../../../../Visits/components/VisitDetails';
 import { HealthViewNoModal } from '../../../../../../../../../Health/containers/View';
 import { TimelineElementChecklist } from './containers/Checklist';
+import FootnoteView from '../../../../../../../../../../components/Footnote/components/View';
+import { AttachmentsModules } from '../../../../../../../../../../components/FormCustomFields/containers/AttachmentsModules';
 
 export const getTimelineElementCardTitle = (item) => {
     // console.log(item, 'item');
     const {activity={}} = item;
     let {type, typeText=''} = item;
     let elTitle = '';
-    let {title='', label='', text=''} = activity || {};
+    let {title='', label='', text='', footnote} = activity || {};
 
     //console.log(title, 'item');
     switch (type) {
@@ -55,7 +56,7 @@ export const getTimelineElementCardTitle = (item) => {
             break;
         case 'visit':
             //console.log(activity);
-            const {isFollowUp, visitTypeTxt} = activity;
+            const {isFollowUp, visitTypeTxt} = activity || {};
             if (isFollowUp) {
                 typeText = 'Follow Up';
             }
@@ -64,6 +65,10 @@ export const getTimelineElementCardTitle = (item) => {
             break;
         case 'checklist':
             elTitle = label;
+            break;
+        case 'calculator':
+            // console.log(activity);
+            // elTitle = label+'tttitle';
             break;
         case 'health_record':
         case 'add_health':
@@ -109,6 +114,7 @@ export const TimelineElementView = (item, props={}) => {
     const {handleReport=false, getOnlyActivity=false} = props;
 
     const {activity, type, getReport={}} = item;
+    const {footnote} = activity || {};
     //const {key, item, userId, showElement=false, getOnlyActivity=false, activeElement={}} = props;
     //const {activity, isCritical, date, notes, type = '', createdAt, creator = {}, source=''} = item;
     //const {id, fullName} = creator;
@@ -154,17 +160,20 @@ export const TimelineElementView = (item, props={}) => {
             //activityText = ;
             break;
         case 'visit':
-            const {subjective=''} = activity;
+            const {subjective=''} = activity || {};
             progress = subjective;
-            activityText = <VisitDetails visit={activity} />;//<TransitionDetails transition={activity} />;
+            activityText = activity && <VisitDetails visit={activity} />;//<TransitionDetails transition={activity} />;
             //activityText = ;
             break;
         case 'clinical_note':
+           
             icon = <FitIcon icon='clinical-note' />;
             activityText = <ClinicalNoteElement item={activity} cardOpts={ {bordered:false, type:"timeline"}} />;
             if (!getOnlyActivity && activity.note !== '') {
                 body.push(activity.note);
             }
+            const {footnote} = activity;
+            //<FootnoteView footnote={footnote} />
 
             const {attachments = []} = activity;
             let imageData2 = attachments.filter(item => item.type === 'image');
@@ -223,12 +232,13 @@ export const TimelineElementView = (item, props={}) => {
         case 'health_record':
         case 'add_health':
             //activityText = activity.title;
-            console.log(activity);
+            // console.log(activity);
             group = 'health';
             icon = <Icon type='medicine-box' />;
             
             activityText = <HealthViewNoModal healthRecord={activity} />;
-            body.push(activity.title);
+            const {title:acvitityTitle} = activity || {}; 
+            body.push(acvitityTitle);
             break;
         case 'clinical_trial':
             activityText = activity.title;
@@ -268,12 +278,26 @@ export const TimelineElementView = (item, props={}) => {
             activityText = <PlanAvatar plan={activity} />;
             progress = activity.title;
             break;
+        case 'discharge_plan':
+            const {isActive, getAttachments} = activity;
+            icon = <FitIcon icon="actionplan"/>;
+            activityText = <AttachmentsModules value={getAttachments} editable={false} /*  date={getFieldValue('endDate')} /*task={task}*/ />
+            progress = 'Discharge Plan'+(isActive ? '' : ' (Draft)');
+            break;
         case 'plan_approved':
         case 'plan_share_hp_approved':
             icon = <FitIcon icon="actionplan"/>;
             group = 'plan';
             body.push(activity.text);
             break;
+        case 'calculator':
+            const {extraDetails} = activity || {}
+            body.push(extraDetails);
+            // console.log(activity, 'activity');
+                icon = <Icon type="calculator" />;
+                //activityText = extraDetails;
+                //progress = extraDetails;//activity.title;
+                break;
         default:
             //activityText = activity.text;
             body.push(activity.text);
@@ -281,7 +305,10 @@ export const TimelineElementView = (item, props={}) => {
     }
     const color = getColor(group);
 
-    const title = getTimelineElementCardTitle(item);
+    let title = getTimelineElementCardTitle(item);
+    if (footnote) {
+        title = <>{title} <FootnoteView footnote={footnote} /></>
+    }
 
     return {body, color, activityText, image, icon, progress, title};
 }
@@ -289,7 +316,7 @@ export const TimelineElementView = (item, props={}) => {
 
 const TimelineElement = props => {
 
-        const {item, user, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false} = props;
+        const {item, user, showElement=false, getOnlyActivity=false, activeElement={}, handleReport=false, draggable:isDraggable=false} = props;
         const {id: telid, isCritical, notes,  createdAt, creator = {}, source=''} = item;
         const {id, fullName} = creator;
         const {id:activeElementId} = activeElement || {};
@@ -364,7 +391,7 @@ const TimelineElement = props => {
         }
 
 
-        const html =  <Card type={"timeline "+(isCritical && 'critical') + (activeElementId === item.id ? ' active-element' : '')} hoverable onClick={showElement}  >
+        const html =  <Card type={"timeline "+(isCritical ? 'critical' : '') + (isDraggable ? ' isDraggable ' : '') + (activeElementId === item.id ? ' active-element' : '')} hoverable onClick={showElement ? showElement : undefined}  >
             {/* {isCritical && <span style={{position:'absolute', top:0, right:2, lineHeight:'1em'}} ><Tooltip title="Critical"><Badge dot /></Tooltip></span>} */}
             <div className={"timeline-icon"} style={{backgroundColor: color}}>
                 {icon}
@@ -388,8 +415,25 @@ const TimelineElement = props => {
  
 
 
-export const canBeDraggable = (element) => {
-    console.log(element);
+const canBeDraggable = (props) => {
+    const {item:element, draggableTemplate} = props;
+    const {type} = element || {};
+    // console.log(type, 'type');
+    // console.log(props, 'props');
+    switch(draggableTemplate) {
+        case 'treatmentPlan':
+            switch(type) {
+                default:
+                    return false;
+                case 'checklist':
+                case 'clinical_note':
+                case 'diagnosis':
+                case 'assessment':
+                case 'ap':
+                case 'treatment':
+                return true;
+            }
+    }
     return true;
     return element.type !== 'tumorboard';// && element.type !== 'condition';
 }
@@ -411,8 +455,9 @@ const boxSource = {
         }
     },
     canDrag(props, monitor) {
-        // console.log(props);
-        return canBeDraggable(props.element);
+        console.log(props, 'ppppppp');
+        console.log(monitor);
+        return canBeDraggable(props);
     }
 }
 
@@ -429,6 +474,14 @@ const TimelineElementDraggable = DragSource('box', boxSource, (connect, monitor)
 
 const enhance = compose(
     injectIntl,
+    withProps(props => {
+        const {draggable} = props;
+        if (draggable) {
+            return {
+                draggable: canBeDraggable(props)
+            }
+        }
+    }),
     branch(props => props.draggable, renderComponent(TimelineElementDraggable)),
     withHandlers({
         showElement: props => () => {

@@ -7,6 +7,9 @@ import {Options} from "../../../../../../../../components/FormCustomFields/compo
 import AssessmentQuestionBrahmsFormField from '../../../../../../../../components/Assessment/components/Builder/components/Question/_brahms';
 import PlanElementBrahmsFormField from '../../_brahms';
 import { possiblePlanElementOptionsFormatter } from '../..';
+import { CustomOptionsList } from '../../../../../../../../components/FormCustomFields/containers/CustomOptionsList';
+import FootnoteManager from '../../../../../../../../components/Footnote/components/Manager';
+import { FootnoteFormField } from '../../../../../../../../components/Footnote/components/Manager/field';
 
 
 const FormItem = Form.Item;
@@ -21,12 +24,37 @@ const formTailLayout = {
 };
 
 
+const OptionItemPure = props => {
+    const {value, onChange, updateFootnote} = props;
+    const {label, footnote} = value || {} ;
+    // const {text} = footnote || {};
+    return <Input value={label} onChange={onChange} suffix={<FootnoteManager placement={'topRight'} footnote={footnote} onChange={updateFootnote} />} />;
+}
+const enhance = compose(
+    withHandlers({
+        onChange: props => (e) => {
+            const {value} = props;
+            const label = e.target.value;
+            if (props.onChange) {
+                props.onChange({...value, label});
+            }
+        },
+        updateFootnote: props => (footnote) => {
+            const {value} = props;
+            if (props.onChange) {
+                props.onChange({...value, footnote});
+            }
+        }
+    })
+);
+
+const OptionItem = enhance(OptionItemPure);
 // const blankOption = {id:'', label:''};
 
 const ChecklistElementBuilder = (props) => {
     const {form, intl, details={}, /*formItemLayout=formItemLayoutDefault,*/ plan, type, mode, element} = props;
     const {getFieldDecorator, getFieldValue} = form;
-    const {id, label:title, options = [{id:'', label:''}] } = details || {};
+    const {id, label:title, footnote, options = [{id:'', label:''}] } = details || {};
     // console.log(props);
     const showBrahms = plan;// && id && id !== '';
 
@@ -57,7 +85,28 @@ const ChecklistElementBuilder = (props) => {
                 )}
             </FormItem>
 
-            <Options form={form} options={options} title="To Do" formItemLayout={formItemLayout} />
+            <FormItem
+            {...formItemLayout}
+            label="Options"
+            >
+             {getFieldDecorator('options', {
+                initialValue: options,
+            })(
+                <CustomOptionsList CustomComponent={OptionItem} blankItem={[]} />
+            )}
+            </FormItem> 
+            {/* <Options form={form} options={options} title="To Do" formItemLayout={formItemLayout} /> */}
+
+            <FormItem
+            {...formItemLayout}
+            label="Footnote"
+            >
+             {getFieldDecorator('footnote', {
+                initialValue: footnote,
+            })(
+                <FootnoteFormField />
+            )}
+            </FormItem> 
 
             {showBrahms && <PlanElementBrahmsFormField form={form} type={'optionId'} formItemLayout={formItemLayout}  possibleOptions={getFieldValue('options') || options} element={element} plan={plan} mode={mode} GoToComponent={props.GoToComponent} formatGoToElement={props.formatGoToElement} excludeActions={excludeBrahmsActions} />}
    
@@ -67,8 +116,4 @@ const ChecklistElementBuilder = (props) => {
     );
 }
 
-const enhance = compose(
-    injectIntl,
-);
-
-export default enhance(ChecklistElementBuilder);
+export default injectIntl(ChecklistElementBuilder);

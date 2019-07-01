@@ -7,14 +7,14 @@ fragment DrugInfo on MedicationDrug {
                     id
                     form
 }
-`;  
+`;
 export const MedicationInfo = gql`
             fragment MedicationInfo on Medication {
                 id
                 drug {
                     ...DrugInfo
                 }
-                type
+                medicationType
                 timesPerDay
                 quantity
                 directions
@@ -28,6 +28,7 @@ export const MedicationInfo = gql`
             }
             ${DrugInfoFragment}
             `;
+export const MedicationInfoFragment = MedicationInfo;
 export const MedicationReportInfoFragment = gql`
 fragment MedicationReportInfo on MedicationReport {
         id
@@ -37,7 +38,7 @@ fragment MedicationReportInfo on MedicationReport {
         order
         reportedOn
 }
-`;        
+`;
 export const MedicationCardInfo = gql`
             fragment MedicationCardInfo on Medication {
                 ...MedicationInfo
@@ -62,7 +63,7 @@ export const MedicationSummary = gql`
             
         `;
 
-export const MedicationsByType =gql`  
+export const MedicationsByType = gql`  
  fragment MedicationsByType on MedicationPlan {
     medicationsByType (date: $date) {
         takeAtTimes {

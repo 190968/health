@@ -23,7 +23,7 @@ export const AvatarWithName = props => {
         if (!user) {
             return null;
         }
-        let {mode, showEmail=false, truncate=false, showMail=false, isSelf=false, size, onlyName=false, useLink=true, widget=true} = otherProps || {};
+        let {mode, showEmail=false, truncate=false, showMail=false, isSelf=false, size, onlyName=false, onlyAvatar=false, useLink=true, widget=true} = otherProps || {};
         const {id, firstName, fullName,email} = user;
 
         if (isSelf) {
@@ -56,6 +56,8 @@ export const AvatarWithName = props => {
         }
         if (onlyName) {
             avatarWithName = displayName;
+        } else if (onlyAvatar) {
+            avatarWithName = <Avatar user={user} size={size}/>;
         }
         if (widget && useLink) {
             return <UserWidgetButton user={user} displayName={avatarWithName} {...otherProps} />

@@ -6,7 +6,7 @@ export class Biometric extends React.Component {
     // fragment for the plan info
     static fragments = {
         tracker: gql`
-            fragment BiometricCardInfo on TrackerPlanTracker {
+            fragment BiometricCard1Info on TrackerPlanTracker {
                 id
                 measurement {
                     id

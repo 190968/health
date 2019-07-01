@@ -31,14 +31,10 @@ const PlanElementScheduleWithQuery = graphql(
             //fetchPolicy: 'cache-only'
         }),
         props: ({data}) => {
-            console.log(data);
-            if (!data.loading) {
-                return {
-                    planSchedule: data.plan.schedule,
-                    loading: data.loading,
-                }
-            } else {
-                return {loading: data.loading}
+            const {schedule} = data.plan || {};
+            return {
+                planSchedule: schedule,
+                loading: data.loading,
             }
         },
     }

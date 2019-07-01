@@ -4,11 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import messages from './i18n/en';
 import { ListWithMessage } from '../../../../components/UI/List';
 import UserReferralCard from './components/UserReferralCard';
+import { UberRequestButton } from '../../../../components/Uber/components/Button';
 
 const UserReferrals = props => {
     const {programs, total=0, user, loading=false} = props;
     return(
-        <Card loading={loading} type={'list'} title={<FormattedMessage values={{isSelf:true, count:total}} {...messages.myReferrals} />}>
+        <Card loading={loading} type={'list'} extra={<UberRequestButton /> } title={<FormattedMessage values={{isSelf:true, count:total}} {...messages.myReferrals} />}>
                  <ListWithMessage
                     emptyMessage={<FormattedMessage values={{isSelf:true, count:total}} {...messages.noReferrals} />}
                     // split={false}

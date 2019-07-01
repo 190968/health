@@ -52,10 +52,10 @@ const DroppableTPBuilderPure = (props) => {
 	//const isActive = canDrop && isOver;
 	return connectDropTarget(
 		<div><Row>
-            <Col span={'12'}>
-            <Timeline user={user} userId={user.id} draggable onDrop={onDrop} onlyFilters={true} ></Timeline>
+            <Col span={12}>
+            <Timeline user={user} userId={user.id} draggableTemplate={'treatmentPlan'} draggable onDrop={onDrop} onlyFilters={true} ></Timeline>
             </Col>
-            <Col span={'12'}>
+            <Col span={12}>
 			<div style={{marginLeft:5}}><TPBodyBuilderPure {...props} /></div>
             </Col>
 		</Row>

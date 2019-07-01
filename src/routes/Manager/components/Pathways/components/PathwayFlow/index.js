@@ -7,6 +7,7 @@ import { compose, withHandlers, withProps, withState } from 'recompose';
 import './index.less';
 //PlanElementChildrenListWithQue
 const convertElementsToCode = (elements, props) => {
+	console.log(elements, 'received elements');
 	let nodeDataArray = [];
 	let linkDataArray = [];
 
@@ -51,11 +52,11 @@ const convertElementsToCode = (elements, props) => {
 				const {options:todoOptions=[]} = itemInfo;
 				todoOptions.map(option => {
 						const {label} = option;
-						console.log(label);
+						// console.log(label);
 						todoHtml += label+' \n';
 						return null;
 					});
-					console.log(todoHtml);
+					// console.log(todoHtml);
 				data['text'] = todoHtml;
 				break;
 			case 'decision':
@@ -72,28 +73,23 @@ const convertElementsToCode = (elements, props) => {
 					const childrenElements = getConnectedElements.filter(connectedElement => {
 						return connectedElement.parentId === id && connectedElement.parentValue === value;
 					})
-					// console.log(getConnectedElements, 'getConnectedElements');
-					// console.log(childrenElements, 'childrenElements');
+					// if we have children elements
 					if (childrenElements) {
-
-						//const childrenElement = childrenElements[value] || [];
-						//const childrenElement = [];
-						
-						//console.log(childrenElement);
+						// console.log(childrenElements, 'childrenElement');
 						if (childrenElements.length > 0) {
 							// append children
 							const childrenElement = childrenElements.map(child => child.element);
 							const childrenCodes = convertElementsToCode(childrenElement, props);
-							// console.log(childrenCodes);
+							console.log(childrenCodes, 'childrenCodes');
 							const {nodeDataArray:childrenNodeDataArray=[], linkDataArray:childrenLinkDataArray=[]} = childrenCodes;
 
 							extraData = [...extraData, ...childrenNodeDataArray];
 							linkDataArray = [...linkDataArray, ...childrenLinkDataArray];
 							// add connection as well
 							if (childrenNodeDataArray[0]) {
-								const {key:childrenID} = childrenNodeDataArray[0];
-								//console.log(childrenID, 'childrenID');
-								//nodeDataArray.push(childrenNodeDataArray[1]);
+								const connectArr = childrenNodeDataArray.filter(c => c.itemInfo);
+								const {key:childrenID} = connectArr[0];
+								// const {key:childrenID} = childrenNodeDataArray[0];
 								linkDataArray.push({ from:  'opt' + value , to:childrenID });
 							}
 						}
@@ -144,7 +140,9 @@ const convertElementsToCode = (elements, props) => {
 							linkDataArray = [...linkDataArray, ...childrenLinkDataArray];
 							// add connection as well
 							if (childrenNodeDataArray[0]) {
-								const {key:childrenID} = childrenNodeDataArray[0];
+								const connectArr = childrenNodeDataArray.filter(c => c.itemInfo);
+								const {key:childrenID} = connectArr[0];
+								// const {key:childrenID} = childrenNodeDataArray[0];
 								linkDataArray.push({ from:  'cond' + value , to:childrenID });
 							}
 						}
@@ -249,6 +247,7 @@ const PathwayFlow = (props) => {
 	const { elements= [] } = props;
 
 	const chartModel = convertElementsToCode(elements, props);
+	console.log(chartModel, 'chartModel');
 	return (<React.Fragment>
 		<GojsDiagram
 			key="gojsDiagram"

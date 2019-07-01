@@ -313,10 +313,6 @@ const enhance = compose(
 
             return formatAssessmentGoToElement(elementId, props);
             
-        },
-        setCurrentQuestionInSection: props => () => {
-            const {i} = props;
-            props.setCurrentQuestionInSection(i)
         }
     })
 );
@@ -324,6 +320,8 @@ const AssessmentQuestion = enhance(AssessmentQuestionPure);
 export default AssessmentQuestion;
 
 export const formatAssessmentGoToElement = (elementId, props) => {
+    // console.log(elementId, 'elementId');
+    // console.log(props, 'props');
     const {assessment} = props;
     const {getSections=[]} = assessment || {};
     let elementObj = {};

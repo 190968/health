@@ -6,6 +6,8 @@ const items = [
     {'id': 'ap', label: 'ActionPlan'},
     {'id': 'medication', label: 'Medication Plan'},
     {'id': 'biometric', label: 'Biometric Plan'},
+    {'id': 'discharge_plan', label: 'Discharge Plan'},
+    {'id': 'dme', label: 'DME Referral'},
     {'id': 'feeding', label: 'Feeding Plan', disabled:true},
     {'id': 'pt', label: 'Physical Therapy Plan', disabled:true},
     {'id': 'adl', label: 'ADL Plan', disabled:true},

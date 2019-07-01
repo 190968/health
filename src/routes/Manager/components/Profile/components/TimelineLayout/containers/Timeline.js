@@ -9,7 +9,7 @@ import { withSpinnerWhileLoading } from '../../../../../../../components/Modal';
 /** START DROPPABLE */
 const droppableTimeline = props => {
 	const {connectDropTarget} = props;
-	console.log(props, 'dddrrrrop');
+	// console.log(props, 'dddrrrrop');
     //const isActive = canDrop && isOver;
     return connectDropTarget(<div><TimelinePure {...props} /></div>);
 }
@@ -74,7 +74,10 @@ const enhance = compose(
 	withHandlers({
 		hideTimelineElement: (props) => () => {
 			//console.log(props);
-			props.refetchTimeline();
+			if (props.refetchTimeline) {
+				props.refetchTimeline();
+			}
+			
 			//return {openAddElement:false, elementType:''}
 			props.hideTimelineEl();
 		}

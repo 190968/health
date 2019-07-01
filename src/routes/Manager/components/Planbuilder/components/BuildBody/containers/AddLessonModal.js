@@ -33,7 +33,7 @@ const withMutation = graphql(AddPlanLessonMutation, {
             }).then((data) => {
                 // const {addPlanLesson} = data;
                 // const {id}
-                ownProps.onSuccess();
+                ownProps.onSuccess('lessons');
                 message.success('Added');
             })},
     }),

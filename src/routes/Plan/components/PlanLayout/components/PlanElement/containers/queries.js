@@ -30,7 +30,21 @@ export const PLAN_ELEMENT_CHILDREN_QUERY = gql`
 
 
 
-
+/*
+getPathway (id: $id) {
+            id
+            elements {
+                ...PlanElement,
+            }
+            getConnectedElements {
+                parentId
+                parentValue
+                element {
+                ...PlanElement
+                }
+            }
+        }
+        */
 // 1- add queries:
 export const PlanElementChildrenListWithQuery = graphql(
     PLAN_ELEMENT_CHILDREN_QUERY,
@@ -80,6 +94,58 @@ export const PlanElementChildrenListWithQuery = graphql(
 
             } else {
                 return {loading: data.loading}
+            }
+        },
+    }
+);
+
+
+
+export const PATHWAY_CONNECTED_ELEMENTS_QUERY = gql`
+    query GET_PATHWAY_CONNECTED_ELEMENTS ($id: UID!) {
+        getPathway (id: $id) {
+            id
+            getConnectedElements   {
+                parentId
+                parentValue
+                element {
+                ...PlanElement
+                }
+            }
+        }
+    }
+    ${PlanElementPureFragment}
+`;
+
+
+
+/*
+
+        */
+// 1- add queries:
+export const PathwayElementChildrenListWithQuery = graphql(
+    PATHWAY_CONNECTED_ELEMENTS_QUERY,
+    {
+        options: (ownProps) => {
+            const {user, plan} = ownProps;
+            const {id} = plan || {};
+            return {
+                variables: {
+                    id
+                }
+            }
+        },
+        props: ({ownProps,  data }) => {
+            const {getConnectedElements=[]} = data.getPathway || {};
+            const {parentElement, elementValue} = ownProps;
+            const selectedElements = getConnectedElements.filter(el => el.parentId === parentElement.id && elementValue === el.parentValue);
+            // console.log(getConnectedElements, 'getConnectedElements');
+            // console.log(ownProps, 'ownProps');
+            // console.log(selectedElements, 'selectedElements');
+            let elements = selectedElements.map(el => el.element);
+            return {
+                loading: data.loading,
+                elements
             }
         },
     }

@@ -17,11 +17,11 @@ class MainCategories extends React.Component{
 
 
     render(){
-        const {info,loading} = this.props;
+        const {info,loading, label='Main Categories', slidesToShow=4} = this.props;
 
         if (loading) {
             return (
-                <Card loading  title="Main Categories">Loading!!!</Card>
+                <Card loading title={label}>Loading!!!</Card>
             );
         }
         const { intl } = this.props;
@@ -30,17 +30,22 @@ class MainCategories extends React.Component{
             categoriesKV.push({value:item.id, text:item.name});
         });
 
+        
 
-        const items = info.map((item) => <div key={item.id}><div style={{padding:5}}><CategoryCard item={item} /></div></div>);
+        let items = info.map((item) => <div key={item.id}><div style={{padding:5}}><CategoryCard item={item} /></div></div>);
+        
+        // items = items.slice(1,4);
+        const limit = items.length >= slidesToShow ? slidesToShow : items.length;
         return (
             <Card  
-            title={intl.formatMessage(messages.title)}
-            extra={ <Search categories={categoriesKV} />
+            title={label}
+            extra={ <Search categories={categoriesKV} label={label} />
             }
             >
                 <Carousel
                     items={items}
-                    slidesToShow={4}
+                    slidesToShow={limit}
+                    perLine={slidesToShow}
                      />
             </Card>
         );

@@ -109,7 +109,7 @@ const enhance = compose(
                             // const {state={}} = location;
                             // const {from={}} = state;
                             // const {pathname} = from;
-                            message.success('Logged in');
+                            //message.success('Logged in', 2);
  
                         }).catch((error) => {
                             props.setLoadingButton(false);

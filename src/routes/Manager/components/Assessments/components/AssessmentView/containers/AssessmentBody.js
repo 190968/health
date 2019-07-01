@@ -249,21 +249,46 @@ const enhance = compose(
         return {currentSectionInOrder:0,currentQuestionInOrder:0}
     }, {
         setCurrentSectionQuestion: props => (sectionI, questionI) => {
+            // console.log(sectionI, 'sectionI');
+            // console.log(questionI, 'questionI');
             return {
                 currentSectionInOrder:sectionI,
                 currentQuestionInOrder:questionI,
             }
         },
-        increaseCurrentElement: props => () => {
-            const {currentInOrder} = props;
+        setCurrentSection: props => (sectionI) => {
             return {
-                currentInOrder:currentInOrder+1
+                currentSectionInOrder:sectionI,
             }
         },
-        decreaseCurrentElement: props => () => {
-            const {currentInOrder} = props;
+        increaseCurrentSection: props => (order) => {
+            let {currentSectionInOrder} = props;
+
+            if (order) {
+                currentSectionInOrder = order;
+            } else {
+                currentSectionInOrder = currentSectionInOrder+1;
+            }
             return {
-                currentInOrder:currentInOrder-1
+                currentSectionInOrder
+            }
+        },
+        increaseCurrentQuestion: props => (order) => {
+            let {currentQuestionInOrder} = props;
+            console.log(order, 'orderorder');
+            if (order) {
+                currentQuestionInOrder = order;
+            } else {
+                currentQuestionInOrder = currentQuestionInOrder+1;
+            }
+            return {
+                currentQuestionInOrder
+            }
+        },
+        decreaseCurrentQuestion: props => () => {
+            const {currentQuestionInOrder} = props;
+            return {
+                currentQuestionInOrder:currentQuestionInOrder-1
             }
         }
     })
@@ -274,8 +299,8 @@ export default AssessmentBody;
 
 
 export const prepareAssessmentskippedQuestionsByNextId = (props) => {
-    //  console.log(props);
-    const { getSections, currentQuestionId, nextQuestionId } = props;
+    //  console.log(props, 'assessment props');
+    const { getSections=[], currentQuestionId, nextQuestionId } = props;
     // find current and next Question
     let doCollection = false;
     let questionsToSkip = [];

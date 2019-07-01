@@ -2,13 +2,28 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PlanElementChildrenManager from '../components/PlanElementChildrenManager';
 import {PlanElementPureFragment} from "../../../../../../Plan/fragments";
-import {PLAN_ELEMENT_CHILDREN_QUERY} from "../../../containers/queries";
+import {PLAN_ELEMENT_CHILDREN_QUERY, PATHWAY_CONNECTED_ELEMENTS_QUERY} from "../../../containers/queries";
+import { branch } from 'recompose';
 
 
 const addChildElementMutation = gql`
-    mutation addChildElement($parentId: UID!, $parentValue: UID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!) {
+    mutation addChildElement($parentId: UID!, $parentValue: UID!, $planId: UID!, $type:PlanElementEnum!,$input:PlanBodyElementInput!, $isPathway: Boolean!) {
         addPlanChildElement(planId: $planId, type:$type, parentId: $parentId, parentOptionId:$parentValue, input: $input) {
-            planElement {
+            
+            pathway @include(if: $isPathway) {
+                id
+                getConnectedElements   {
+                    parentId
+                    parentValue
+                    element {
+                        ...PlanElement
+                    }
+                }
+            }
+            plan @skip(if: $isPathway) {
+                id
+            }
+            planElement @skip(if: $isPathway) {
                 ...PlanElement
             }
         }
@@ -16,15 +31,29 @@ const addChildElementMutation = gql`
     ${PlanElementPureFragment}
 `;
 
+
  export const withPlanAddChildElementMutation = graphql(addChildElementMutation, {
     props: ({ ownProps, mutate }) => ({
         addChildElement: (input, type) => {
+            const {plan, parentId} = ownProps;
+            const {id:planId, type:planType} = plan || {};
+            const isPathway = planType === 'pathway';
+            let refetchQueries = [];
+
+            // if (isPathway) {
+            //     refetchQueries.push({
+            //         query: PATHWAY_CONNECTED_ELEMENTS_QUERY,
+            //         variables: {id: planId}
+            //     });
+            // } else {
+            //     // {
+            //     //     query: PLAN_ELEMENT_CHILDREN_QUERY,
+            //     //     variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}
+            //     // }
+            // }
             return mutate({
-                variables: {planId:ownProps.plan.id, type:type, parentId:ownProps.parentId, parentValue:ownProps.parentValue, input:input},
-                refetchQueries: [{
-                    query: PLAN_ELEMENT_CHILDREN_QUERY,
-                    variables: {id:ownProps.parentId, planId:ownProps.plan.id, elementValue:ownProps.parentValue}
-                }]
+                variables: {planId, type:type, parentId:parentId, parentValue:ownProps.parentValue, input:input, isPathway},
+                refetchQueries
             })
         },
     }),
