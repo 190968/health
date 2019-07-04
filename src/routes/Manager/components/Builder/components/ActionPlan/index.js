@@ -8,6 +8,7 @@ import { formatDateToday, getSQLDateToday } from '../../../../../../components/O
 import { AssessementManager } from '../../../Assessments/containers/AssessmentManager';
 import BuilderLayout from '../Layout';
 import PlanbuilderContent from '../../../Planbuilder/components/PlanbuilderContent';
+import { GetGlobalLabel } from '../../../../../../components/App/app-context';
 
 const { Header, Content, Sider, Footer } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -71,7 +72,7 @@ const ActionPlanBuilderLayout = props => {
 
     const useNoMargins = selectedItem === 'options';
 
-    return <BuilderLayout logo={<center>ActionPlan Builder</center>} header={title} menu={menu} useNoMargins={useNoMargins} >
+    return <BuilderLayout logo={<center><GetGlobalLabel type={'ap.builder'} defaultValue={'ActionPlan Builder'} /></center>} header={title} menu={menu} useNoMargins={useNoMargins} >
         <PlanbuilderContent {...props} routes={menuItems} mainUrl={mainUrl}  />
     </BuilderLayout>
 }

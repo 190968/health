@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import DefaultI18nEn from '../../../../i18n/en';
 import { CardQuickFilter } from '../../../../components/Card/components/CardQuickFilter';
 import { CardExtraItems } from '../../../../components/Card/components/CardExtraSplit';
+import { GetGlobalLabel } from '../../../../components/App/app-context';
 
 
 
@@ -47,7 +48,7 @@ const Patients = props => {
 
         const total = props.total;
         return (
-            <PageHeaderLayout title={'Patients' + (total > 0 ? ' (' + total + ')' : '')}
+            <PageHeaderLayout title={<><GetGlobalLabel type={'patients'} defaultValue={'Patients'} /> {total > 0 ? ' (' + total + ')' : ''}</>}
                 content=""
                 // extraContent={<Input.Search style={{width:200}} />}
                 action={actions}

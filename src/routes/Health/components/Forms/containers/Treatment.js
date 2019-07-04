@@ -24,6 +24,7 @@ export const TreatmentPureForm = TreatmentPure;
 
 
 export const prepareTreatmentInput = treatment => {
+    const {careTeam, ...otherProps} = treatment || {};
     // const {
     //     //date,
     //     ...otherProps
@@ -32,6 +33,6 @@ export const prepareTreatmentInput = treatment => {
     // console.log(values);
 
     // const {type} = props;
-    return prepareTreatmentElementObjectInput({type:'treatment', treatment});
+    return prepareTreatmentElementObjectInput({type:'treatment', treatment:otherProps});
  
 }

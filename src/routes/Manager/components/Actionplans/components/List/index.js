@@ -7,6 +7,7 @@ import DefaultI18nEn from '../../../../../../i18n/en';
 import { PageHeaderLayout } from '../../../../../../components/Layout/PageHeaderLayout';
 import { CardExtraItems } from '../../../../../../components/Card/components/CardExtraSplit';
 import { CardQuickFilter } from '../../../../../../components/Card/components/CardQuickFilter';
+import { GetGlobalLabel } from '../../../../../../components/App/app-context';
 
 const filters = [
     { value: 'all', label: <FormattedMessage {...DefaultI18nEn.filterAll} /> },
@@ -19,7 +20,7 @@ const filters = [
 const ActionplanssList = props => {
     const {total} = props;
     return <PageHeaderLayout
-        title={'Actionplans'+(total > 0 ? ' ('+total+')' : '')}
+        title={<> <GetGlobalLabel type={'manager.actionplans'} defaultValue={'ActionPlans'} /> {(total > 0 ? ' ('+total+')' : '')}</>}
         action={<CardExtraItems>
             <CardQuickFilter size={'default'} filters={filters} value={props.status || 'all'} onChange={props.loadByStatus} />
             <ActionplanManagerButton icon={'plus'} refetch={props.refetch} />

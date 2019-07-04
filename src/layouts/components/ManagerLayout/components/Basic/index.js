@@ -10,7 +10,7 @@ import {CohortsSubMenu} from './containers/CohortsSubMenu';
 import Logo from './logo';
 import './index.less';
 import ChangeProvider from '../../../Header/components/RightMenu/containers/ChangeProvider';
-import { withActiveNetwork, withActiveUser } from '../../../../../components/App/app-context';
+import { withActiveNetwork, withActiveUser, GetGlobalLabel } from '../../../../../components/App/app-context';
 const {Sider, Header, Content, Footer} = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -92,7 +92,7 @@ const BasicLayout = (props) => {
                             <Menu.Item key="employers"><NavLink to="/staff/employers">Support Staff</NavLink></Menu.Item>
                         </SubMenu>
                         <Menu.Item key="patients">
-                            <NavLink to="/patients"> <Icon type="solution" /><span>Patients</span></NavLink>
+                            <NavLink to="/patients"> <Icon type="solution" /><span><GetGlobalLabel type={'patients'} defaultValue={'Patients'} /></span></NavLink>
                         </Menu.Item>
                         {/* <SubMenu
                             key="patients"
@@ -129,7 +129,7 @@ const BasicLayout = (props) => {
                             title={<span><Icon type="build"/><span>Builders</span></span>}
                         >
                             {/* <Menu.Item key="workflow"><NavLink to="/workflow">Workflow</NavLink></Menu.Item> */}
-                            <Menu.Item key="actionplans"><NavLink to="/actionplans">ActionPlans</NavLink></Menu.Item>
+                            <Menu.Item key="actionplans"><NavLink to="/actionplans"><GetGlobalLabel type={'manager.actionplans'} defaultValue={'ActionPlans'} /></NavLink></Menu.Item>
                             <Menu.Item key="assessments"><NavLink to="/assessments">Assessments</NavLink></Menu.Item>
                             <Menu.Item key="pathways"><NavLink to="/pathways">Pathways</NavLink></Menu.Item>
                             </SubMenu> 

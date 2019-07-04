@@ -4,6 +4,8 @@ import {Form, Input} from 'antd';
 import {TreatmentFormElements} from './containers/Elements';
 import DefaultHealthFields from '../DefaultFields';
 import { prepareExistingHealthElementForMutation } from './containers/ElementManager';
+import PatientSelect from '../../../../../../components/Autosuggest/containers/PatientSelect';
+import PeopleSelect from '../../../../../../components/Autosuggest/containers/PeopleSelect';
 
 const FormItem = Form.Item;
 
@@ -50,6 +52,16 @@ const TreatmentForm = (props) => {
 
             </FormItem>
             <DefaultHealthFields {...props} formItemLayout={formItemLayout} />
+            <FormItem
+                {...formItemLayout}
+                label={'Assign'}
+            >
+                {getFieldDecorator(`careTeam`, {
+                        // initialValue: elements.map(element => prepareExistingHealthElementForMutation(element))
+                    })
+                    (<PeopleSelect role={'careteam'} user={user} />)}
+
+            </FormItem>
         </React.Fragment>
     );
 }
