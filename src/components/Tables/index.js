@@ -1,10 +1,12 @@
-import React from 'react';
-import {Table} from 'antd';
+import React, {useState, useEffect} from 'react';
+import {Table, Drawer} from 'antd';
 import { EmptyList } from '../Loading';
 
 export const TableWithMessage = props => {
+   
     const {emptyMessage='Nothing has been added', buttons, showEmpty=true, ...otherProps } = props;
     const {dataSource=[], loading, total, rowSelection} = otherProps;
+    
     let {pagination={}} = otherProps;
     const {selectedRowKeys=[]} = rowSelection || {};
     // console.log(props);
@@ -31,11 +33,18 @@ export const TableWithMessage = props => {
         if (!emptyMessage) {
             return null;
         }
-        return <EmptyList>{emptyMessage}</EmptyList>;
+        return <EmptyList >{emptyMessage}</EmptyList>;
     }
-    return <Table
-    {...otherProps}
-    pagination={pagination}
-    footer={footer}
-    /> 
+
+   
+    return (
+    <React.Fragment>        
+        <Table        
+        {...otherProps}
+        pagination={pagination}
+        footer={footer}
+         /> 
+        
+    </React.Fragment>
+    )
 }

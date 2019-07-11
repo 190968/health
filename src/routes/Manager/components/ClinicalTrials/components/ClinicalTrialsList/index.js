@@ -1,11 +1,13 @@
-import React from 'react';
-import {Input, Card, Table, Radio, Button, Icon, Tooltip} from 'antd';
+import React, {useState} from 'react';
+import {Input, Card, Table, Radio, Button, Icon, Tooltip, Drawer} from 'antd';
 import {compose, withState, withHandlers, withStateHandlers, withProps} from 'recompose';
 ////import ChemotherapyManager from './containers/ChemotherapyManager';
 import sort from '../../../../../../components/Tables/sort'
-import ClinicalTrialView from '../../containers/ClinicalTrialView';
+
 import {PageHeaderLayout} from "../../../../../../components/Layout/PageHeaderLayout/index";
 import { TableWithMessage } from '../../../../../../components/Tables';
+import ClinicalTrialView from '../../../../../Health/components/View/components/ClinicalTrial';
+import ClinicalTrialViewButton from './Components/Buttons/View';
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -32,14 +34,17 @@ const enhanceTitle = compose(
 );
 const Title = enhanceTitle(CancerTitlePure);
 
+
 const ClinicalTrialsListPure = props => {
+    
     const {items = [], total, changePage, loading = false} = props;
     const suffix = props.searchText ? <Icon type="close-circle-o" onClick={props.emitEmpty}/> : <Icon type="search"/>
     const columns = [{
         title: 'ID',
-        dataIndex: 'nctId',
+        
         key: 'nctId',
         width: 140,
+        render: text => <ClinicalTrialViewButton  clinicalTrial={text}/>,
         // sorter: (a, b) => a.nctId - b.nctId,
         // filterDropdown: (
         //         <Input
@@ -81,7 +86,8 @@ const ClinicalTrialsListPure = props => {
         hideOnSinglePage: true/*, showSizeChanger:true*/
     };
 
-
+   
+    
    
     return (<React.Fragment>
         <PageHeaderLayout title={'Clinical Trials ' + (total > 0 ? ' (' + total + ')' : '')}
@@ -90,16 +96,20 @@ const ClinicalTrialsListPure = props => {
                         //   action={actions}
         >
 
-            <Card type="table">
-                <TableWithMessage
+            <Card type="table" >
+                <TableWithMessage                             
                  dataSource={dataSource} 
                  columns={columns} 
                  total={total}
                  loading={loading}
                  onChange={props.handleTableChange}
+                
                  />
             </Card>
+           
+
         </PageHeaderLayout>
+        
     </React.Fragment>);
 }
 

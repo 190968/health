@@ -151,6 +151,7 @@ class StageManager extends React.Component {
 
                     </div>
                 </Form>
+                yrtyryr
                 </Modal>
             );
         }

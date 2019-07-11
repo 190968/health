@@ -22,7 +22,7 @@ const CancerManager = props => {
     const { cancer, form, formItemLayout=formItemLayoutDefault} = props;
     const {getFieldDecorator, getFieldValue} = form;
     // const {title='', getCohorts=[], getAssessments=[], executeDate, canBeEdited=false} = cancer || {};
-    const {title='', code='', stage, chemotherapies=[]} = cancer;
+    const {title='', code='', stage, chemotherapies=[]} = cancer || {};
     console.log(props);
     return <Form>
         <FormItem

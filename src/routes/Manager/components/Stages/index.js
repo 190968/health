@@ -89,7 +89,7 @@ export default class Stages extends React.Component {
             <RadioButton value="open">Open</RadioButton>
             <RadioButton value="past">Past</RadioButton>
         </RadioGroup>
-        <Tooltip title="Add New Stages"><Button type="primary" onClick={this.addStage}><Icon type="plus"  /></Button></Tooltip>
+        <Tooltip title="Add New Stages"><Button type="primary" onClick={this.addStage}><Icon type="plus"  />adasd</Button></Tooltip>
     </React.Fragment>;
 
       
@@ -105,7 +105,7 @@ export default class Stages extends React.Component {
                  dataSource={stages} 
                  columns={columns} 
                  onChange={this.handleChange}
-                />
+                />                
             </Card>
             </PageHeaderLayout>);
     }

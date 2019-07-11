@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import DescriptionList from '../../../../../../components/Layout/DescriptionList';
+
 const CancerView = props => {
     const cancer = props;
     const {id, title, createdOn} = cancer || {};

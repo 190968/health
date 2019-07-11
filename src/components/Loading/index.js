@@ -52,9 +52,9 @@ export const EmptyList = (props) => {
         
         const text = children[0];
         children = children.filter((c,i) =>i>0);
-        return <div className="ant-list-empty-text"><EmptyAntd description={text} /> <div style={{marginTop:10}}>{children}</div></div>;
+        return <div className="ant-list-empty-text" ><EmptyAntd description={text} /> <div style={{marginTop:10,border:"1px solid blue"}}>{children}</div></div>;
     } else {
-        return <div className="ant-list-empty-text"><EmptyAntd description={children} /></div>;
+        return <div className="ant-list-empty-text" ><EmptyAntd description={children} /></div>;
     }
 }
 

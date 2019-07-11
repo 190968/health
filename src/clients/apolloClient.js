@@ -31,7 +31,7 @@ const errorLink = onError(({ response, operation,networkError, graphQLErrors }) 
     if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 let useDevTools = process.env.NODE_ENV !== 'production';
-let uri = 'http://api.fitangolocal.com/graphql.php';
+let uri = 'http://api.fitangodev.com/graphql.php';
 if (process.env.NODE_ENV === 'production') {
     uri = 'https://api.fitango.com/graphql.php';
 }
