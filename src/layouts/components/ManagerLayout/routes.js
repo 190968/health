@@ -6,7 +6,7 @@ import {asyncLogin} from '../../../routes';
 import {
     Route, Switch
   } from "react-router-dom";
-
+import Cancers215 from '../../../routes/Manager/components/Cancers2';
 export const ManagerRoutes = ({store}) => {
     return (
         <React.Fragment>
@@ -22,6 +22,7 @@ export const ManagerRoutes = ({store}) => {
             <PrivateRoute path="/tumorboards" component={asyncTumorboards(store)}/>
             <PrivateRoute path="/stages" component={asyncStages(store)}/>
             <PrivateRoute path="/cancers" component={asyncCancers(store)}/>
+            <PrivateRoute path="/cancers2" component={Cancers215}/>
             <PrivateRoute path="/chemotherapies" component={asyncChemotherapies(store)}/>
             <PrivateRoute path="/clinicaltrials" component={asyncClinicalTrials(store)}/>
             <PrivateRoute path="/staff/admins" component={asyncNetworkManager(store)}/>

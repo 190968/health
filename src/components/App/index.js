@@ -157,6 +157,6 @@ const AppInnerPure = props => {
 const AppInner = withCurrentUserAndNetwork(withSpinnerWhileLoading(withState('language', 'setLanguage', props => {
     const { currentUser } = props;
     const { localeSimple: locale = 'en' } = currentUser || {};
-    // console.log(locale);
+    console.log(locale);
     return locale;
 })(AppInnerPure)));

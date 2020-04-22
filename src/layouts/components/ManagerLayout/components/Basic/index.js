@@ -143,6 +143,8 @@ const BasicLayout = (props) => {
 
                             {isRoleManager &&  <Menu.Item key="stages"><NavLink to="/stages">Stages</NavLink></Menu.Item>}
                             {isRoleManager &&  <Menu.Item key="cancers"><NavLink to="/cancers">Cancers</NavLink></Menu.Item>}
+                            {isRoleManager &&  <Menu.Item key="cancers2"><NavLink to="/cancers2">Cancers2</NavLink></Menu.Item>}
+
                             {isRoleManager &&  <Menu.Item key="chemotherapies"><NavLink to="/chemotherapies">Chemotherapies</NavLink></Menu.Item>}
                             {isRoleManager &&  <Menu.Item key="payers"><NavLink to="/payers">Payers</NavLink></Menu.Item>}
                             {isRoleManager &&  <Menu.Item key="doctors"><NavLink to="/doctors">Doctors</NavLink></Menu.Item>}

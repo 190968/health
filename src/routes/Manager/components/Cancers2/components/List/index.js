@@ -16,7 +16,7 @@ const CancersList = props => {
     const {total} = props;
 
     return <PageHeaderLayout
-        title={'Cancers'+ (total > 0 ? ' ('+total+')' : 'not')}
+        title={'Cancers'+ (total > 0 ? ' ('+total+')' : '')}
         action={ <CancerManagerButton icon={'plus'} refetch={props.refetch} />}
     >
         <Card type={'table'}><CancersTable {...props} /></Card>

@@ -165,7 +165,7 @@ export const asyncCancers = () => {
 
     return (
         Loadable({
-            loader: () => import(/* webpackChunkName: "cancersChunk" */'../routes/Manager/containers/Cancers'),
+            loader: () => import(/* webpackChunkName: "cancersChunk" */'./Manager/containers/Cancers2'),
             modules: ['../routes/Manager/containers/Cancers'],
             webpack: () => [require.resolveWeak('../routes/Manager/containers/Cancers')],
         })

@@ -4,7 +4,7 @@ import {compose} from 'recompose';
 import { withTableCursors } from '../../../../../components/Tables/hocs';
 
 
-export default compose(
+  export default  compose(
     withCancersQuery,
     withTableCursors
 )(List);

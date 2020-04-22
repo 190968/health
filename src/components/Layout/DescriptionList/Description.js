@@ -31,7 +31,7 @@ const Description = ({ term, column, className, children, highlight, excludeEmpt
     }
     return (
         <Col className={clsString} {...responsive[column]} {...restProps}>
-            {term && <div className={'term'}>{term}</div>}
+            {term && <div className={'term'}>rtte{term}</div>}
             {children !== null && children !== undefined &&
             <div className={'detail'}>{children}</div>}
         </Col>

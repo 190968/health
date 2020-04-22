@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://2clinic.fitangolocal.com/static/myapp",
+  "homepage": "http://444.com/static/myapp",
   "dependencies": {
     "@craco/craco": "^5.2.1",
     "@uppy/core": "^0.28",

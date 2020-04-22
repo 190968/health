@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Table, Drawer} from 'antd';
+import React from 'react';
+import {Table} from 'antd';
 import { EmptyList } from '../Loading';
 
 export const TableWithMessage = props => {

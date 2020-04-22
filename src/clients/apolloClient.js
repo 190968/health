@@ -23,9 +23,9 @@ const errorLink = onError(({ response, operation,networkError, graphQLErrors }) 
                     //localStorage.setItem('token', false);
                 }
 
-            /*console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            ),*/
+            // console.log(
+            //     `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            // )
         });
     }
     if (networkError) console.log(`[Network error]: ${networkError}`);
