@@ -30,7 +30,7 @@
     "icomoon-react": "^1.0.0",
     "inputmask": "^4.0.6",
     "less": "^3.9.0",
-    "mathjs": "^5.4.2",
+    "mathjs": "^7.5.1",
     "moment": "^2.23.0",
     "npm": "^6.9.0",
     "query-string": "^6.4.2",
